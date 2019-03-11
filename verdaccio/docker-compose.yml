@@ -3,8 +3,6 @@ services:
   verdaccio:
     build: .
     container_name: verdaccio
-    ports:
-      - 4873:4873
     volumes:
        - verdaccio:/verdaccio
     - networks:
