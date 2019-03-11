@@ -4,7 +4,7 @@ services:
     build: .
     container_name: verdaccio
     volumes:
-       - verdaccio:/verdaccio
+      - verdaccio:/verdaccio
     networks:
       - traefik_proxy
     labels:

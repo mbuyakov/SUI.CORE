@@ -1,1 +1,5 @@
 .idea
+node_modules
+*.log
+lib
+yarn.lock

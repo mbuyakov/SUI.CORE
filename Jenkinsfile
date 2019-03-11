@@ -1,3 +1,5 @@
+env.DOCKER_HOST = "tcp://176.9.72.49:2375"
+
 pipeline {
     agent any
 
@@ -8,8 +10,22 @@ pipeline {
             }
             steps {
                 sh """
-                export DOCKER_HOST=tcp://176.9.72.49:2375
                 docker-compose -f ./verdaccio/docker-compose.yml up -d --build
+                """
+            }
+        }
+        stage("Build SUI.CORE") {
+            steps {
+                sh """
+                yarn install
+                yarn build
+                """
+            }
+        }
+        stage("Deploy SUI.CORE") {
+            steps {
+                sh """
+                yarn publish --non-interactive --access restricted
                 """
             }
         }
