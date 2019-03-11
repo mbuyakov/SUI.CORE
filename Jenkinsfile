@@ -14,4 +14,12 @@ pipeline {
             }
         }
     }
+    post {
+        success {
+            telegramSend  'SUI.CORE success'
+        }
+        failure {
+            telegramSend 'SUI.CORE failure'
+        }
+    }
 }
