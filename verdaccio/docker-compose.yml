@@ -7,6 +7,16 @@ services:
       - 4873:4873
     volumes:
        - verdaccio:/verdaccio
+    - networks:
+       - traefik_proxy
+    labels:
+      - "traefik.frontend.rule=Host:verdaccio.smp.sm-soft.ru"
+      - "traefik.docker.network=traefik_proxy"
+
+networks:
+  traefik_proxy:
+    external: true
+
 volumes:
   verdaccio:
     driver: local
