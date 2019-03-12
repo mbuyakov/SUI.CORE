@@ -1,0 +1,45 @@
+@import "~antd/lib/style/themes/default";
+
+.row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+
+  > input {
+    width: 0;
+  }
+}
+
+.rowContainer {
+  > * {
+    width: 100%;
+  }
+
+  > *:not(:first-child) {
+    margin-top: @padding-sm;
+  }
+}
+
+.rowGrowLeft {
+  .row();
+
+  > :first-child {
+    flex-grow: 1;
+  }
+
+  > :last-child:not(:first-child) {
+    margin-left: @padding-xs;
+  }
+}
+
+.rowGrowRight {
+  .row();
+
+  > :last-child {
+    flex-grow: 1;
+  }
+
+  > :first-child:not(:last-child) {
+    margin-right: @padding-xs;
+  }
+}
