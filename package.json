@@ -8,6 +8,7 @@
   "types": "lib/index.d.js",
   "scripts": {
     "lint": "tslint --project .",
+    "test": "mocha -r ts-node/register src/**/*.test.ts",
     "unpublish": "node ./unpublish.js",
     "build": "rimraf lib && tsc"
   },
@@ -22,7 +23,12 @@
   "homepage": "https://github.com/mbuyakov/SUI.CORE#readme",
   "author": "el1191 <el1191@woyd.ru>",
   "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2",
     "rimraf": "^2.6.3",
+    "ts-node": "^8.0.3",
     "tslint": "^5.13.1",
     "typescript": "^3.3.3333"
   }
