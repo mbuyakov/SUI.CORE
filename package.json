@@ -7,6 +7,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.js",
   "scripts": {
+    "lint": "tslint --project .",
     "unpublish": "node ./unpublish.js",
     "build": "rimraf lib && tsc"
   },
@@ -22,6 +23,7 @@
   "author": "el1191 <el1191@woyd.ru>",
   "devDependencies": {
     "rimraf": "^2.6.3",
+    "tslint": "^5.13.1",
     "typescript": "^3.3.3333"
   }
 }

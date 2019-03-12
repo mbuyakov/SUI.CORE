@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "tslint:all"
+  ],
+  "rules": {
+    "only-arrow-functions": false,
+    "no-magic-numbers": false,
+    "strict-boolean-expressions": false
+  }
+}

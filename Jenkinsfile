@@ -17,6 +17,7 @@ pipeline {
             steps {
                 sh """
                 yarn install
+                yarn run lint
                 yarn build
                 """
             }
