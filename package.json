@@ -1,0 +1,26 @@
+{
+  "name": "@smsoft/sui-core",
+  "version": "1.0.0",
+  "files": [
+    "lib/**"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.js",
+  "scripts": {
+    "build": "rimraf lib && tsc"
+  },
+  "publishConfig": {
+    "access": "private",
+    "registry": "http://verdaccio.smp.sm-soft.ru"
+  },
+  "repository": "git@github.com:mbuyakov/SUI.CORE.git",
+  "bugs": {
+    "url": "https://github.com/mbuyakov/SUI.CORE/issues"
+  },
+  "homepage": "https://github.com/mbuyakov/SUI.CORE#readme",
+  "author": "el1191 <el1191@woyd.ru>",
+  "devDependencies": {
+    "rimraf": "^2.6.3",
+    "typescript": "^3.3.3333"
+  }
+}

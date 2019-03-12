@@ -1,5 +1,3 @@
-env.DOCKER_HOST = "tcp://176.9.72.49:2375"
-
 pipeline {
     agent any
 
@@ -10,6 +8,7 @@ pipeline {
             }
             steps {
                 sh """
+                export DOCKER_HOST=tcp://176.9.72.49:2375
                 docker-compose -f ./verdaccio/docker-compose.yml up -d --build
                 """
             }
