@@ -24,6 +24,7 @@ pipeline {
         stage("Deploy SUI.CORE") {
             steps {
                 sh """
+                yarn run unpublish
                 yarn publish --non-interactive --access restricted
                 """
             }
