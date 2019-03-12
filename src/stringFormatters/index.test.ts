@@ -113,7 +113,7 @@ describe("StringFormatters", () => {
     chai.assert.equal(stringFormatters.lineFeedScreening(" "), " ");
   });
 
-  it("Line feed screening \"\n\n\"", () => {
+  it("Line feed screening \"\\n\\n\"", () => {
     chai.assert.equal(stringFormatters.lineFeedScreening("\n\n"), "\\n\\n");
   });
 
