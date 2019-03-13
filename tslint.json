@@ -1,6 +1,8 @@
 {
   "extends": [
-    "tslint:all"
+    "tslint:all",
+    "tslint-config-standard",
+    "tslint-config-prettier"
   ],
   "rules": {
     "only-arrow-functions": false,

@@ -1,135 +1,130 @@
-/* tslint:disable:no-import-side-effect no-implicit-dependencies typedef no-null-keyword */
-import * as chai from "chai";
-import "mocha";
-
+/* tslint:disable:no-null-keyword */
 import * as stringFormatters from "./index";
 
-describe("StringFormatters", () => {
-  it("Uncapitalize null", () => {
-    chai.assert.equal(stringFormatters.unCapitalize(null), "");
-  });
+test("Uncapitalize null", () => {
+  expect(stringFormatters.unCapitalize(null)).toBe("");
+});
 
-  it("Uncapitalize \" \"", () => {
-    chai.assert.equal(stringFormatters.unCapitalize(" "), " ");
-  });
-  it("Uncapitalize a", () => {
-    chai.assert.equal(stringFormatters.unCapitalize("a"), "a");
-  });
-  it("Uncapitalize A", () => {
-    chai.assert.equal(stringFormatters.unCapitalize("A"), "a");
-  });
-  it("Uncapitalize Aa", () => {
-    chai.assert.equal(stringFormatters.unCapitalize("Aa"), "aa");
-  });
-  it("Uncapitalize AA", () => {
-    chai.assert.equal(stringFormatters.unCapitalize("AA"), "AA");
-  });
+test('Uncapitalize " "', () => {
+  expect(stringFormatters.unCapitalize(" ")).toBe(" ");
+});
+test("Uncapitalize a", () => {
+  expect(stringFormatters.unCapitalize("a")).toBe("a");
+});
+test("Uncapitalize A", () => {
+  expect(stringFormatters.unCapitalize("A")).toBe("a");
+});
+test("Uncapitalize Aa", () => {
+  expect(stringFormatters.unCapitalize("Aa")).toBe("aa");
+});
+test("Uncapitalize AA", () => {
+  expect(stringFormatters.unCapitalize("AA")).toBe("AA");
+});
 
-  it("Add plural ending null", () => {
-    chai.assert.equal(stringFormatters.addPluralEnding(null), "");
-  });
+test("Add plural ending null", () => {
+  expect(stringFormatters.addPluralEnding(null)).toBe("");
+});
 
-  it("Add plural ending \" \"", () => {
-    chai.assert.equal(stringFormatters.addPluralEnding(" "), " ");
-  });
+test('Add plural ending " "', () => {
+  expect(stringFormatters.addPluralEnding(" ")).toBe(" ");
+});
 
-  it("Add plural ending a", () => {
-    chai.assert.equal(stringFormatters.addPluralEnding("a"), "as");
-  });
+test("Add plural ending a", () => {
+  expect(stringFormatters.addPluralEnding("a")).toBe("as");
+});
 
-  it("Add plural ending y", () => {
-    chai.assert.equal(stringFormatters.addPluralEnding("y"), "ies");
-  });
+test("Add plural ending y", () => {
+  expect(stringFormatters.addPluralEnding("y")).toBe("ies");
+});
 
-  it("Remove plural ending null", () => {
-    chai.assert.equal(stringFormatters.removePluralEnding(null), "");
-  });
+test("Remove plural ending null", () => {
+  expect(stringFormatters.removePluralEnding(null)).toBe("");
+});
 
-  it("Remove plural ending \" \"", () => {
-    chai.assert.equal(stringFormatters.removePluralEnding(" "), " ");
-  });
+test('Remove plural ending " "', () => {
+  expect(stringFormatters.removePluralEnding(" ")).toBe(" ");
+});
 
-  it("Remove plural ending as", () => {
-    chai.assert.equal(stringFormatters.removePluralEnding("as"), "a");
-  });
+test("Remove plural ending as", () => {
+  expect(stringFormatters.removePluralEnding("as")).toBe("a");
+});
 
-  it("Remove plural ending ies", () => {
-    chai.assert.equal(stringFormatters.removePluralEnding("ies"), "y");
-  });
+test("Remove plural ending ies", () => {
+  expect(stringFormatters.removePluralEnding("ies")).toBe("y");
+});
 
-  it("Format SQL timestamp null", () => {
-    chai.assert.equal(stringFormatters.formatSqlTimestamp(null), "");
-  });
+test("Format SQL timestamp null", () => {
+  expect(stringFormatters.formatSqlTimestamp(null)).toBe("");
+});
 
-  it("Format SQL timestamp \" \"", () => {
-    chai.assert.equal(stringFormatters.formatSqlTimestamp(" "), " ");
-  });
+test('Format SQL timestamp " "', () => {
+  expect(stringFormatters.formatSqlTimestamp(" ")).toBe(" ");
+});
 
-  it("Format SQL timestamp 2019-01-01T23:59:59.99999", () => {
-    chai.assert.equal(stringFormatters.formatSqlTimestamp("2019-01-01T23:59:59.99999"), "2019-01-01 23:59:59");
-  });
+test("Format SQL timestamp 2019-01-01T23:59:59.99999", () => {
+  expect(stringFormatters.formatSqlTimestamp("2019-01-01T23:59:59.99999")).toBe("2019-01-01 23:59:59");
+});
 
-  it("Format SQL timestamp aaaa", () => {
-    chai.assert.equal(stringFormatters.formatSqlTimestamp("aaaa"), "aaaa");
-  });
+test("Format SQL timestamp aaaa", () => {
+  expect(stringFormatters.formatSqlTimestamp("aaaa")).toBe("aaaa");
+});
 
-  it("Format SQL timestamp to date null", () => {
-    chai.assert.equal(stringFormatters.formatSqlTimestampToDate(null), "");
-  });
+test("Format SQL timestamp to date null", () => {
+  expect(stringFormatters.formatSqlTimestampToDate(null)).toBe("");
+});
 
-  it("Format SQL timestamp to date \" \"", () => {
-    chai.assert.equal(stringFormatters.formatSqlTimestampToDate(" "), " ");
-  });
+test('Format SQL timestamp to date " "', () => {
+  expect(stringFormatters.formatSqlTimestampToDate(" ")).toBe(" ");
+});
 
-  it("Format SQL timestamp to date 2019-01-01T23:59:59.99999", () => {
-    chai.assert.equal(stringFormatters.formatSqlTimestampToDate("2019-01-01T23:59:59.99999"), "2019-01-01");
-  });
+test("Format SQL timestamp to date 2019-01-01T23:59:59.99999", () => {
+  expect(stringFormatters.formatSqlTimestampToDate("2019-01-01T23:59:59.99999")).toBe("2019-01-01");
+});
 
-  it("Format SQL timestamp to date aaaa", () => {
-    chai.assert.equal(stringFormatters.formatSqlTimestampToDate("aaaa"), "aaaa");
-  });
+test("Format SQL timestamp to date aaaa", () => {
+  expect(stringFormatters.formatSqlTimestampToDate("aaaa")).toBe("aaaa");
+});
 
-  it("Format SQL timestamp to time null", () => {
-    chai.assert.equal(stringFormatters.formatSqlTimestampToTime(null), "");
-  });
+test("Format SQL timestamp to time null", () => {
+  expect(stringFormatters.formatSqlTimestampToTime(null)).toBe("");
+});
 
-  it("Format SQL timestamp to time \" \"", () => {
-    chai.assert.equal(stringFormatters.formatSqlTimestampToTime(" "), " ");
-  });
+test('Format SQL timestamp to time " "', () => {
+  expect(stringFormatters.formatSqlTimestampToTime(" ")).toBe(" ");
+});
 
-  it("Format SQL timestamp to time 2019-01-01T23:59:59.99999", () => {
-    chai.assert.equal(stringFormatters.formatSqlTimestampToTime("2019-01-01T23:59:59.99999"), "23:59:59");
-  });
+test("Format SQL timestamp to time 2019-01-01T23:59:59.99999", () => {
+  expect(stringFormatters.formatSqlTimestampToTime("2019-01-01T23:59:59.99999")).toBe("23:59:59");
+});
 
-  it("Format SQL timestamp to time aaaa", () => {
-    chai.assert.equal(stringFormatters.formatSqlTimestampToTime("aaaa"), "aaaa");
-  });
+test("Format SQL timestamp to time aaaa", () => {
+  expect(stringFormatters.formatSqlTimestampToTime("aaaa")).toBe("aaaa");
+});
 
-  it("Line feed screening null", () => {
-    chai.assert.equal(stringFormatters.lineFeedScreening(null), "");
-  });
+test("Line feed screening null", () => {
+  expect(stringFormatters.lineFeedScreening(null)).toBe("");
+});
 
-  it("Line feed screening \" \"", () => {
-    chai.assert.equal(stringFormatters.lineFeedScreening(" "), " ");
-  });
+test('Line feed screening " "', () => {
+  expect(stringFormatters.lineFeedScreening(" ")).toBe(" ");
+});
 
-  it("Line feed screening \"\\n\\n\"", () => {
-    chai.assert.equal(stringFormatters.lineFeedScreening("\n\n"), "\\n\\n");
-  });
+test('Line feed screening "\\n\\n"', () => {
+  expect(stringFormatters.lineFeedScreening("\n\n")).toBe("\\n\\n");
+});
 
-  it("Add quotes if string null", () => {
-    chai.assert.equal(stringFormatters.addQuotesIfString(null), null);
-  });
+test("Add quotes if string null", () => {
+  expect(stringFormatters.addQuotesIfString(null)).toBe(null);
+});
 
-  it("Add quotes if string \" \"", () => {
-    chai.assert.equal(stringFormatters.addQuotesIfString(" "), "\" \"");
-  });
+test('Add quotes if string " "', () => {
+  expect(stringFormatters.addQuotesIfString(" ")).toBe('" "');
+});
 
-  it("Trim if string null", () => {
-    chai.assert.equal(stringFormatters.trimIfString(null), null);
-  });
+test("Trim if string null", () => {
+  expect(stringFormatters.trimIfString(null)).toBe(null);
+});
 
-  it("Trim if string \" \"", () => {
-    chai.assert.equal(stringFormatters.trimIfString(" "), "");
-  });
+test('Trim if string " "', () => {
+  expect(stringFormatters.trimIfString(" ")).toBe("");
 });

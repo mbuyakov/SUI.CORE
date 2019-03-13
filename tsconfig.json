@@ -1,11 +1,32 @@
 {
   "compilerOptions": {
+    "moduleResolution": "node",
     "target": "es6",
-    "module": "commonjs",
+    "module":"es2015",
+    "lib": [
+      "es2015",
+      "es2016",
+      "es2017",
+      "dom"
+    ],
+    "strict": true,
+    "jsx": "react",
+    "sourceMap": true,
     "declaration": true,
-    "outDir": "./lib",
-    "strict": true
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declarationDir": "dist/types",
+    "outDir": "dist/lib",
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/*.test.*"]
+  "include": [
+    "src/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.test.*"
+  ]
 }

@@ -1,37 +1,75 @@
 {
   "name": "@smsoft/sui-core",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es5.js",
+  "typings": "dist/types/index.d.ts",
   "files": [
-    "lib/**",
-    "styles/**"
+    "dist"
   ],
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
-  "scripts": {
-    "lint": "tslint --project .",
-    "test": "mocha -r ts-node/register src/**/*.test.ts",
-    "unpublish": "node ./unpublish.js",
-    "build": "rimraf lib && tsc"
-  },
-  "publishConfig": {
-    "access": "private",
-    "registry": "http://verdaccio.smp.sm-soft.ru"
-  },
+  "author": "el1191 <el1191@woyd.ru>",
   "repository": "git@github.com:mbuyakov/SUI.CORE.git",
   "bugs": {
     "url": "https://github.com/mbuyakov/SUI.CORE/issues"
   },
   "homepage": "https://github.com/mbuyakov/SUI.CORE#readme",
-  "author": "el1191 <el1191@woyd.ru>",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "scripts": {
+    "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+    "prebuild": "rimraf dist",
+    "build": "tsc --module commonjs && rollup -c rollup.config.js",
+    "postbuild": "cpx \"src/styles/**/*\" \"dist/styles\"",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:prod": "npm run lint && npm run test -- --no-cache",
+    "precommit": "lint-staged",
+    "unpublish": "node ./unpublish.js"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": false,
+    "trailingComma": "all"
+  },
   "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.6",
-    "chai": "^4.2.0",
-    "mocha": "^6.0.2",
-    "rimraf": "^2.6.3",
-    "ts-node": "^8.0.3",
-    "tslint": "^5.13.1",
-    "typescript": "^3.3.3333"
+    "@types/jest": "^23.3.2",
+    "@types/node": "^10.11.0",
+    "cpx": "^1.5.0",
+    "husky": "^1.0.1",
+    "jest": "^23.6.0",
+    "jest-config": "^23.6.0",
+    "lint-staged": "^8.0.0",
+    "lodash.camelcase": "^4.3.0",
+    "prettier": "^1.14.3",
+    "rimraf": "^2.6.2",
+    "rollup-plugin-commonjs": "^9.1.8",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-typescript2": "^0.18.0",
+    "ts-jest": "^23.10.2",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.0.3"
   },
   "dependencies": {
     "antd": "^3.15.0"
