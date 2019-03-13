@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-core",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
