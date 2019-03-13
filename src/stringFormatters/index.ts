@@ -16,7 +16,7 @@ export function unCapitalize(str: string | null | undefined): string {
     return "";
   }
   // If 2 letter in upper case - return original string
-  if (str[1] && (str[1].toUpperCase() === str[1])) {
+  if (str[1] && str[1].toUpperCase() === str[1]) {
     return str;
   }
 
@@ -80,7 +80,7 @@ export function formatSqlTimestamp(timestamp: string | null | undefined): string
  * If input is null - return empty string
  * If input cannot be formatted- return original string
  */
-export function formatSqlTimestampToDate(timestamp: string | null | undefined): string | undefined {
+export function formatSqlTimestampToDate(timestamp: string | null | undefined): string {
   if (!timestamp) {
     return "";
   }
@@ -93,7 +93,7 @@ export function formatSqlTimestampToDate(timestamp: string | null | undefined): 
  * If input is null - return empty string
  * If input cannot be formatted- return original string
  */
-export function formatSqlTimestampToTime(timestamp: string | null | undefined): string | undefined {
+export function formatSqlTimestampToTime(timestamp: string | null | undefined): string {
   if (!timestamp) {
     return "";
   }
