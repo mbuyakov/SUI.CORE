@@ -6,7 +6,7 @@
     "styles/**"
   ],
   "main": "lib/index.js",
-  "types": "lib/index.d.js",
+  "typings": "lib/index.d.ts",
   "scripts": {
     "lint": "tslint --project .",
     "test": "mocha -r ts-node/register src/**/*.test.ts",
