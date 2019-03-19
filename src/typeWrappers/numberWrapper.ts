@@ -1,4 +1,4 @@
-/* tslint:disable:no-any */
+/* tslint:disable:no-any no-unsafe-any*/
 
 /**
  * If type of value is number - return value.
@@ -26,7 +26,6 @@ export function fixIfPossible(value: any, fractionDigits: number = 2): string {
       // tslint:disable-next-line:no-parameter-reassignment
       value = Number(value);
     }
-    // tslint:disable-next-line:no-unsafe-any
     if (Number.isFinite(value)) {
       return value.toFixed(fractionDigits);
     }
