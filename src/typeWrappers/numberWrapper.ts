@@ -26,6 +26,7 @@ export function fixIfPossible(value: any, fractionDigits: number = 2): string {
       // tslint:disable-next-line:no-parameter-reassignment
       value = Number(value);
     }
+    // tslint:disable-next-line:no-unsafe-any
     if (Number.isFinite(value)) {
       return value.toFixed(fractionDigits);
     }
