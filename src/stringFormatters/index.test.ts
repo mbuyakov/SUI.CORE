@@ -1,6 +1,29 @@
 /* tslint:disable:no-null-keyword */
 import * as stringFormatters from "./index";
 
+test("Capitalize null", () => {
+  expect(stringFormatters.capitalize(null)).toBe("");
+});
+
+test('Capitalize " "', () => {
+  expect(stringFormatters.capitalize(" ")).toBe(" ");
+});
+test("Capitalize a", () => {
+  expect(stringFormatters.capitalize("a")).toBe("A");
+});
+test("Capitalize A", () => {
+  expect(stringFormatters.capitalize("A")).toBe("A");
+});
+test("Capitalize Aa", () => {
+  expect(stringFormatters.capitalize("aA")).toBe("AA");
+});
+test("Capitalize AA", () => {
+  expect(stringFormatters.capitalize("AA")).toBe("AA");
+});
+test("Capitalize aa", () => {
+  expect(stringFormatters.capitalize("aa")).toBe("Aa");
+});
+
 test("Uncapitalize null", () => {
   expect(stringFormatters.unCapitalize(null)).toBe("");
 });
