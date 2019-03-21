@@ -37,6 +37,10 @@ test("Add plural ending y", () => {
   expect(stringFormatters.addPluralEnding("y")).toBe("ies");
 });
 
+test("Add plural ending status", () => {
+  expect(stringFormatters.addPluralEnding("status")).toBe("statuses");
+});
+
 test("Remove plural ending null", () => {
   expect(stringFormatters.removePluralEnding(null)).toBe("");
 });
@@ -51,6 +55,10 @@ test("Remove plural ending as", () => {
 
 test("Remove plural ending ies", () => {
   expect(stringFormatters.removePluralEnding("ies")).toBe("y");
+});
+
+test("Remove plural ending statuses", () => {
+  expect(stringFormatters.removePluralEnding("statuses")).toBe("status");
 });
 
 test("Format SQL timestamp null", () => {

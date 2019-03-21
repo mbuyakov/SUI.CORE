@@ -43,6 +43,8 @@ export function addPluralEnding(str: string | null | undefined): string {
       ret = `${str.slice(0, -1)}ie`;
     }
     ret += "s";
+  } else if (str.endsWith("us")) {
+    ret += "es";
   }
 
   return ret;
@@ -57,7 +59,17 @@ export function removePluralEnding(str: string | null | undefined): string {
     return "";
   }
 
-  return str.endsWith("ies") ? `${str.slice(0, -3)}y` : str.endsWith("s") ? str.slice(0, -1) : str;
+  if (str.endsWith("uses")) {
+    return str.slice(0, -2);
+  }
+  if (str.endsWith("ies")) {
+    return `${str.slice(0, -3)}y`;
+  }
+  if (str.endsWith("s")) {
+    return str.slice(0, -1);
+  }
+
+  return str;
 }
 
 const sqlTimestampRegexp: RegExp = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.?\d*/;
