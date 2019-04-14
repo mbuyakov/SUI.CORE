@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-core",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -66,6 +66,7 @@
   },
   "dependencies": {
     "antd": "^3.15.0",
-    "autobind-decorator": "^2.4.0"
+    "autobind-decorator": "^2.4.0",
+    "react": "^16.8.6"
   }
 }
