@@ -2,13 +2,14 @@ import { loadingErrorNotification } from "@/drawUtils";
 import { getClient } from "@/gql/client";
 import { IObjectWithIndex } from "@/other";
 import { ApolloQueryResult } from "apollo-client";
+import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
 /**
  * Stub for PostGraphile error format
  * If promise resolved and resolve contain errors field - print all error in console and throw first error
  */
-function rejectOnError<T>(promise: Promise<ApolloQueryResult<T>>): Promise<T> {
+function rejectOnError<T>(promise: Promise<ApolloQueryResult<T> | FetchResult<T>>): Promise<T> {
   return new Promise<T>(
     (resolve, reject): void => {
       promise
@@ -74,7 +75,8 @@ export function mutate<T>(mutationBody: string | any, extractFirstKey: boolean =
     }),
   );
   if (extractFirstKey) {
-    ret = ret.then(value => {
+    // tslint:disable-next-line:no-any
+    ret = ret.then((value: any) => {
       const keys = Object.keys(value);
       if (keys.length > 1) {
         throw new Error("Multiple key in mutate answer");
