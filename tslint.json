@@ -12,6 +12,7 @@
     "no-submodule-imports": false,
     "no-inferrable-types": false,
     "no-console": false,
+    "no-unbound-method": false,
     "typedef": [
       true,
       "call-signature",

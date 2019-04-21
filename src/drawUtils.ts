@@ -24,27 +24,26 @@ export function errorNotification(messageText: string, description: string | Rea
 /**
  * Draw loading message
  */
-export function loadingMessage<T>(promise: Promise<T>, loadingText: string, errorText: string, successText: string, delay: number = 500): Promise<T> {
-  return new Promise(
-    (resolve, reject): void => {
-      let hideMsg: () => void;
-      const timeout = setTimeout(() => {
-        hideMsg = message.loading(loadingText, 0);
-      }, delay);
-      hideMsg = () => clearTimeout(timeout);
+export async function loadingMessage<T>(promise: Promise<T>, loadingText: string, errorText: string, successText: string, delay: number = 500): Promise<T> {
+  let hideMsg: () => void;
+  const timeout = setTimeout(() => {
+    hideMsg = message.loading(loadingText, 0);
+  }, delay);
 
-      promise
-        .then(value => {
-          hideMsg();
-          message.success(successText, MESSAGE_TIMEOUT);
-          resolve(value);
-        })
-        .catch(reason => {
-          console.error("LOADING FAILED", reason);
-          hideMsg();
-          message.error(errorText, MESSAGE_TIMEOUT);
-          reject(reason);
-        });
-    },
-  );
+  hideMsg = () => {
+    clearTimeout(timeout);
+  };
+
+  try {
+    const promiseRet = await promise;
+    hideMsg();
+    message.success(successText, MESSAGE_TIMEOUT);
+
+    return promiseRet;
+  } catch (e) {
+    console.error("LOADING FAILED", e);
+    hideMsg();
+    message.error(errorText, MESSAGE_TIMEOUT);
+    throw e;
+  }
 }

@@ -21,7 +21,7 @@ export function generateUpdateText(entity: string, id: PossibleId, field: string
 /**
  * Generate promise for Gql update
  */
-export function generateUpdate(entity: string, id: PossibleId, field: string, value: PossibleValue): Promise<void> {
+export async function generateUpdate(entity: string, id: PossibleId, field: string, value: PossibleValue): Promise<void> {
   return mutate(generateUpdateText(entity, id, field, value));
 }
 
@@ -52,7 +52,7 @@ export function generateCreateText(entity: string, fields: object): string {
  * Generate promise for Gql create
  * Available fields types - string, number, boolean
  */
-export function generateCreate(entity: string, fields: object): Promise<void> {
+export async function generateCreate(entity: string, fields: object): Promise<void> {
   return mutate(generateCreateText(entity, fields));
 }
 
