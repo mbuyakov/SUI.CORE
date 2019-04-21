@@ -11,3 +11,8 @@ export type Rendered<T extends React.Component> = React.ReactElement<T["props"]>
 export async function sleep(ms: number): Promise<void> {
   return new Promise((resolve: () => void): Timeout => setTimeout(resolve, ms));
 }
+
+export interface IObjectWithIndex {
+  // tslint:disable-next-line:no-any
+  [index: string]: any;
+}

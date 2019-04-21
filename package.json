@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-core",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -32,18 +32,6 @@
       "git add"
     ]
   },
-  "jest": {
-    "transform": {
-      ".(ts|tsx)": "ts-jest"
-    },
-    "testEnvironment": "node",
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ]
-  },
   "prettier": {
     "semi": true,
     "singleQuote": false,
@@ -51,7 +39,10 @@
   },
   "devDependencies": {
     "@types/jest": "^23.3.2",
+    "@types/lodash": "^4.14.123",
     "@types/node": "^10.11.0",
+    "@types/react": "^16.8.14",
+    "@types/react-dom": "^16.8.4",
     "husky": "^1.0.1",
     "jest": "^23.6.0",
     "jest-config": "^23.6.0",
@@ -66,7 +57,11 @@
   },
   "dependencies": {
     "antd": "^3.15.0",
+    "apollo-client": "^2.5.1",
     "autobind-decorator": "^2.4.0",
+    "graphql": "^14.2.1",
+    "graphql-tag": "^2.10.1",
+    "lodash": "^4.17.11",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }

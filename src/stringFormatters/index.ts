@@ -1,3 +1,18 @@
+import { camelCase as lodashCamelCase } from "lodash";
+
+/**
+ * Camel case string
+ * Stub for lodash function
+ * If input is null or undefined - return empty string
+ */
+export function camelCase(str: string | null | undefined): string {
+  if (!str) {
+    return "";
+  }
+
+  return lodashCamelCase(str);
+}
+
 /**
  * Capitalize first char in string
  */
@@ -10,7 +25,7 @@ export function capitalize(str: string | null | undefined): string {
 }
 
 /**
- * Uncapitalize string.
+ * Uncapitalize string
  * If input is null or undefined - return empty string
  * If 1 and 2 symbol in upper case - return original string
  */
