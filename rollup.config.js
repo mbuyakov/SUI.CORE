@@ -3,7 +3,6 @@ import typescript from 'rollup-plugin-typescript2'
 import commonjs from 'rollup-plugin-commonjs'
 import json from 'rollup-plugin-json'
 import postcss from 'rollup-plugin-postcss'
-import resolve from 'rollup-plugin-node-resolve'
 import url from 'rollup-plugin-url'
 import svgr from '@svgr/rollup'
 import * as ttypescript from 'ttypescript'
@@ -33,7 +32,6 @@ export default {
     }),
     url(),
     svgr(),
-    resolve(),
     tslint({
       throwOnError: true
     }),
