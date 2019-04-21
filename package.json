@@ -1,68 +1,69 @@
 {
   "name": "@smsoft/sui-core",
-  "version": "1.0.17",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
-  "files": [
-    "styles",
-    "lib"
-  ],
+  "version": "1.1.0",
   "author": "el1191 <el1191@woyd.ru>",
   "repository": "git@github.com:mbuyakov/SUI.CORE.git",
   "bugs": {
     "url": "https://github.com/mbuyakov/SUI.CORE/issues"
   },
   "homepage": "https://github.com/mbuyakov/SUI.CORE#readme",
+  "main": "dist/index.js",
+  "typings": "dist/index.js",
+  "module": "dist/index.es.js",
+  "jsnext:main": "dist/index.es.js",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "@/(.*)": "<rootDir>/src/$1"
+    }
   },
   "scripts": {
-    "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
-    "prebuild": "rimraf lib",
-    "build": "tsc --module commonjs",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:prod": "npm run lint && npm run test -- --no-cache",
-    "precommit": "lint-staged",
-    "unpublish": "node ./unpublish.js"
-  },
-  "lint-staged": {
-    "src/**/*.{ts,tsx}": [
-      "prettier --write",
-      "git add"
-    ]
-  },
-  "prettier": {
-    "semi": true,
-    "singleQuote": false,
-    "trailingComma": "all"
-  },
-  "devDependencies": {
-    "@types/graphql": "^14.2.0",
-    "@types/jest": "^23.3.2",
-    "@types/lodash": "^4.14.123",
-    "@types/node": "^10.11.0",
-    "@types/react-dom": "^16.8.4",
-    "husky": "^1.0.1",
-    "jest": "^23.6.0",
-    "jest-config": "^23.6.0",
-    "lint-staged": "^8.0.0",
-    "prettier": "^1.14.3",
-    "rimraf": "^2.6.2",
-    "ts-jest": "^23.10.2",
-    "tslint": "^5.14.0",
-    "tslint-config-prettier": "^1.15.0",
-    "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.0.3"
+    "test": "cross-env CI=1 react-scripts-ts test --env=jsdom",
+    "test:watch": "react-scripts-ts test --env=jsdom",
+    "build": "rollup -c",
+    "start": "rollup -c -w"
   },
   "dependencies": {
-    "antd": "^3.16.3",
+    "antd": "^3.16.4",
     "apollo-client": "^2.5.1",
-    "autobind-decorator": "^2.4.0",
     "graphql": "^14.2.1",
-    "graphql-tag": "^2.10.1",
-    "lodash": "^4.17.11",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
-  }
+    "graphql-tag": "^2.10.1"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  },
+  "devDependencies": {
+    "@svgr/rollup": "^2.4.1",
+    "@types/jest": "^23.1.5",
+    "@types/lodash": "^4.14.123",
+    "@types/react": "^16.3.13",
+    "@types/react-dom": "^16.0.5",
+    "babel-core": "^6.26.3",
+    "babel-runtime": "^6.26.0",
+    "cross-env": "^5.1.4",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts-ts": "^2.16.0",
+    "rollup": "^0.62.0",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-postcss": "^1.6.2",
+    "rollup-plugin-tslint": "^0.2.2",
+    "rollup-plugin-typescript2": "^0.17.0",
+    "rollup-plugin-url": "^1.4.0",
+    "tslint": "^5.16.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^2.8.3"
+  },
+  "files": [
+    "dist",
+    "styles"
+  ]
 }

@@ -1,6 +1,6 @@
 /* tslint:disable:file-name-casing */
 import { CacheManager, ICacheEntry } from "@/cacheManager";
-import { query } from "@/gql";
+import { query } from "@/gql/wrapper";
 import { addPluralEnding, addQuotesIfString, camelCase, capitalize } from "@/stringFormatters";
 
 /**

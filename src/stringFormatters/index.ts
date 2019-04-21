@@ -1,4 +1,6 @@
-import { camelCase as lodashCamelCase } from "lodash";
+// tslint:disable-next-line:ban-ts-ignore
+// @ts-ignore
+import lodashCamelCase from "lodash/camelCase";
 
 /**
  * Camel case string

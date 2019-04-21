@@ -1,4 +1,4 @@
-import { mutate } from "@/gql";
+import { mutate } from "@/gql/wrapper";
 import { IObjectWithIndex } from "@/other";
 import { addQuotesIfString, camelCase, capitalize } from "@/stringFormatters";
 
@@ -22,7 +22,7 @@ export function generateUpdateText(entity: string, id: PossibleId, field: string
  * Generate promise for Gql update
  */
 export async function generateUpdate(entity: string, id: PossibleId, field: string, value: PossibleValue): Promise<void> {
-  return mutate(generateUpdateText(entity, id, field, value));
+  await mutate(generateUpdateText(entity, id, field, value));
 }
 
 /**
@@ -53,7 +53,7 @@ export function generateCreateText(entity: string, fields: object): string {
  * Available fields types - string, number, boolean
  */
 export async function generateCreate(entity: string, fields: object): Promise<void> {
-  return mutate(generateCreateText(entity, fields));
+  await mutate(generateCreateText(entity, fields));
 }
 
 /**

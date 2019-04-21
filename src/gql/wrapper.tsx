@@ -9,13 +9,16 @@ import gql from "graphql-tag";
  * Stub for PostGraphile error format
  * If promise resolved and resolve contain errors field - print all error in console and throw first error
  */
-function rejectOnError<T>(promise: Promise<ApolloQueryResult<T> | FetchResult<T>>): Promise<T> {
+async function rejectOnError<T>(promise: Promise<ApolloQueryResult<T> | FetchResult<T>>): Promise<T> {
   return new Promise<T>(
     (resolve, reject): void => {
       promise
         .then(value => {
           if (value.errors) {
-            value.errors.forEach(error => console.error("PostGraphile error", error));
+            // tslint:disable-next-line:no-any
+            value.errors.forEach((error: any) => {
+              console.error("PostGraphile error", error)
+            });
             reject(value.errors[0].message);
           } else {
             resolve(value.data);
@@ -31,7 +34,7 @@ function rejectOnError<T>(promise: Promise<ApolloQueryResult<T> | FetchResult<T>
  * any - query after gql tag
  */
 // tslint:disable-next-line:no-any
-export function query<T>(queryBody: string | any, extractFirstKey: boolean = false): Promise<T> {
+export async function query<T>(queryBody: string | any, extractFirstKey: boolean = false): Promise<T> {
   if (typeof queryBody === "string") {
     // tslint:disable-next-line:no-parameter-reassignment
     queryBody = gql(queryBody);
@@ -62,7 +65,7 @@ export function query<T>(queryBody: string | any, extractFirstKey: boolean = fal
  * any - mutate after gql tag
  */
 // tslint:disable-next-line:no-any
-export function mutate<T>(mutationBody: string | any, extractFirstKey: boolean = false): Promise<T> {
+export async function mutate<T>(mutationBody: string | any, extractFirstKey: boolean = false): Promise<T> {
   if (typeof mutationBody === "string") {
     // tslint:disable-next-line:no-parameter-reassignment
     mutationBody = gql(mutationBody);
@@ -92,7 +95,7 @@ export function mutate<T>(mutationBody: string | any, extractFirstKey: boolean =
 /**
  * Wrap query to add loadErrorNotification
  */
-export function queryWrapper<T>(originalQuery: Promise<T>): Promise<T> {
+export async function queryWrapper<T>(originalQuery: Promise<T>): Promise<T> {
   return originalQuery.catch(reason => {
     loadingErrorNotification(reason.stack ? reason.stack.toString() : reason.toString());
     throw reason;
