@@ -9,7 +9,6 @@ import svgr from '@svgr/rollup'
 import * as ttypescript from 'ttypescript'
 
 import pkg from './package.json'
-const external = Object.keys(Object.assign({}, pkg.dependencies, pkg.peerDependencies));
 
 export default {
   input: 'src/index.ts',
@@ -45,5 +44,7 @@ export default {
     }),
     commonjs()
   ],
-  external: external
+  external(id) {
+    return id.indexOf('node_modules') >= 0;
+  }
 }

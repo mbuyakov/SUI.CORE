@@ -17,6 +17,9 @@
     "no-inferrable-types": false,
     "no-console": false,
     "no-unbound-method": false,
+    "file-name-casing": false,
+    "no-null-keyword": false,
+    "strict-type-predicates": false,
     "typedef": [
       true,
       "call-signature",
