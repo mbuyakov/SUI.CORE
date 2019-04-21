@@ -24,7 +24,8 @@
     "test": "cross-env CI=1 react-scripts-ts test --env=jsdom",
     "test:watch": "react-scripts-ts test --env=jsdom",
     "build": "rollup -c",
-    "start": "rollup -c -w"
+    "start": "rollup -c -w",
+    "unpublish": "node ./unpublish.js"
   },
   "dependencies": {
     "antd": "^3.16.4",
@@ -42,6 +43,7 @@
     "@types/lodash": "^4.14.123",
     "@types/react": "^16.3.13",
     "@types/react-dom": "^16.0.5",
+    "@zerollup/ts-transform-paths": "^1.7.1",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
     "cross-env": "^5.1.4",
@@ -60,6 +62,7 @@
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^8.0.1",
+    "ttypescript": "^1.5.6",
     "typescript": "^2.8.3"
   },
   "files": [

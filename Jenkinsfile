@@ -17,7 +17,7 @@ pipeline {
             steps {
                 sh """
                 yarn install
-                yarn run test:prod
+                yarn test
                 yarn build
                 """
             }

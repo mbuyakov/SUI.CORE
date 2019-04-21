@@ -6,6 +6,7 @@ import postcss from 'rollup-plugin-postcss'
 import resolve from 'rollup-plugin-node-resolve'
 import url from 'rollup-plugin-url'
 import svgr from '@svgr/rollup'
+import * as ttypescript from 'ttypescript'
 
 import pkg from './package.json'
 const external = Object.keys(Object.assign({}, pkg.dependencies, pkg.peerDependencies));
@@ -39,7 +40,8 @@ export default {
     }),
     typescript({
       rollupCommonJSResolveHack: true,
-      clean: true
+      clean: true,
+      typescript: ttypescript
     }),
     commonjs()
   ],
