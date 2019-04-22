@@ -4,6 +4,7 @@ export * from "./dataKey";
 export * from "./gql";
 export * from "./other";
 export * from "./stringFormatters";
+export * from "./translate";
 export * from "./typeWrappers";
 export * from "./cacheManager";
 export * from "./const";
