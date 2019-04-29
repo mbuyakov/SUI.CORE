@@ -17,3 +17,19 @@ test('[number] Compare "1" null', () => {
 test('[number] Compare "2.23" 3', () => {
   expect(comparators.numberComparator("2.23", 3)).toBe(-0.77);
 });
+
+test("[date] Compare null null", () => {
+  expect(comparators.formattedDateComparator(null, null)).toBe(0);
+});
+
+test('[date] Compare "" null', () => {
+  expect(comparators.formattedDateComparator("", null)).toBe(0);
+});
+
+test('[date] Compare "01.11.2019" null', () => {
+  expect(comparators.formattedDateComparator("01.11.2019", null)).toBe(1572566400000);
+});
+
+test('[date] Compare "01.11.2019" "02.10.2019"', () => {
+  expect(comparators.formattedDateComparator("01.11.2019", "02.10.2019")).toBe(2592000000);
+});

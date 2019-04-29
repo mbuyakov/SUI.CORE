@@ -129,6 +129,19 @@ test("Format SQL timestamp to time aaaa", () => {
   expect(stringFormatters.formatSqlTimestampToTime("aaaa")).toBe("aaaa");
 });
 
+test("Format SQL date null", () => {
+  expect(stringFormatters.formatSqlDate(null)).toBe("");
+});
+test('Format SQL date " "', () => {
+  expect(stringFormatters.formatSqlDate(" ")).toBe(" ");
+});
+test("Format SQL date 2019-01-01", () => {
+  expect(stringFormatters.formatSqlDate("2019-01-01")).toBe("01.01.2019");
+});
+test("Format SQL date aaaa", () => {
+  expect(stringFormatters.formatSqlDate("aaaa")).toBe("aaaa");
+});
+
 test("Line feed screening null", () => {
   expect(stringFormatters.lineFeedScreening(null)).toBe("");
 });
