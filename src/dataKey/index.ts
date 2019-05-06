@@ -87,9 +87,14 @@ export class DataKeyNode {
 export function dataKeysToDataTree(dataKeys: DataKey[], rootKey: string = ""): DataKeyNode {
   // tslint:disable-next-line:completed-docs
   function appendKey(node: DataKeyNode, key: string[] | string): void {
-    if (Array.isArray(key) && key.length === 1) {
-      // tslint:disable-next-line:no-parameter-reassignment
-      key = key[0];
+    if (Array.isArray(key)) {
+      if (key.length === 1) {
+        // tslint:disable-next-line:no-parameter-reassignment
+        key = key[0];
+      }
+      if (key.length === 0) {
+        return;
+      }
     }
 
     if (typeof key === "string") {
