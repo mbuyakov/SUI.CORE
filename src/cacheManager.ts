@@ -50,19 +50,13 @@ export abstract class CacheManager<T, ID = string> {
       await sleep(WAIT_TIME);
     }
 
-    if (!this.loadedStore.get(id)) {
-      const item = await this.__loadById(id);
-      this.store.set(id, item);
-      this.loadedStore.set(id, true);
-
-      return item;
-    }
+    this.loadById(id);
 
     return this.store.get(id);
   }
 
   /**
-   * Load all entries to cache
+   * Load all entries to cache. If use in already loaded CacheManager - reload all entries
    */
   public async loadAll(): Promise<void> {
     this.ready = false;
@@ -74,6 +68,25 @@ export abstract class CacheManager<T, ID = string> {
       this.loadedStore.set(entry.key, true);
     });
     this.ready = true;
+  }
+
+  /**
+   * Load entity in cache by id
+   */
+  public async loadById(id: ID): Promise<void> {
+    if (!this.loadedStore.get(id)) {
+      const item = await this.__loadById(id);
+      this.store.set(id, item);
+      this.loadedStore.set(id, true);
+    }
+  }
+
+  /**
+   * Recreate entity by id
+   */
+  public async reloadById(id: ID): Promise<void> {
+    this.loadedStore.set(id, false);
+    this.loadById(id);
   }
 
   /**
