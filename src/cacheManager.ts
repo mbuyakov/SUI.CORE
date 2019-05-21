@@ -50,7 +50,7 @@ export abstract class CacheManager<T, ID = string> {
       await sleep(WAIT_TIME);
     }
 
-    this.loadById(id);
+    await this.loadById(id);
 
     return this.store.get(id);
   }
@@ -86,7 +86,7 @@ export abstract class CacheManager<T, ID = string> {
    */
   public async reloadById(id: ID): Promise<void> {
     this.loadedStore.set(id, false);
-    this.loadById(id);
+    await this.loadById(id);
   }
 
   /**
