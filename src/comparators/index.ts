@@ -18,6 +18,14 @@ export function numberComparator(a: any, b: any, nullFirst: boolean = true): num
   return (a - b);
 }
 
+/**
+ * Try to cast a and b to number and compare it
+ */
+// tslint:disable-next-line:no-any
+export function numberComparatorFn(nullFirst: boolean): (a: any, b: any) => number {
+  return (a, b) => numberComparator(a, b, nullFirst);
+}
+
 const datePattern = /(\d{2})\.(\d{2})\.(\d{4})/;
 
 /**
