@@ -32,6 +32,14 @@ export abstract class CacheManager<T, ID = string> {
   private readonly store: Map<ID, T> = new Map();
 
   /**
+   * Return entity by id
+   * If entity not in cache - return undefined
+   */
+  public directGetById(id: ID): T | undefined {
+    return this.store.get(id);
+  }
+
+  /**
    * Return all entries from cache
    */
   public async getAllValues(): Promise<T[]> {
@@ -44,6 +52,7 @@ export abstract class CacheManager<T, ID = string> {
 
   /**
    * Return entry by id
+   * If entity not in cache - load
    */
   public async getById(id: ID): Promise<T | undefined> {
     while (!this.ready) {
