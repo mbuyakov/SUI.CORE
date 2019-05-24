@@ -47,3 +47,13 @@ export function groupBy<K, V, U = V[]>(
 
   return groups;
 }
+
+/**
+ * Array to map converter
+ */
+export function toMap<K, V>(array: V[], keyExtractor: (v: V) => K): Map<K, V> {
+  const result = new Map<K, V>();
+  array.forEach(element => result.set(keyExtractor(element), element));
+
+  return result;
+}
