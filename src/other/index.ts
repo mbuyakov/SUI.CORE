@@ -30,3 +30,20 @@ export type Unpacked<T> =
     T extends (...args: any[]) => infer U ? U :
       T extends Promise<infer U> ? U :
         T;
+
+/**
+ * Array groupBy (stolen from lodash)
+ */
+export function groupBy<K, V, U = V[]>(
+  array: V[],
+  keyExtractor: (v: V) => K,
+  combiner: (v: V, values: U | undefined) => U = (v, values) => [...(values as any|| []), v] as any
+): Map<K, U> {
+  const groups = new Map<K, U>();
+  array.forEach((element) => {
+    const key = keyExtractor(element);
+    groups.set(key, combiner(element, groups.get(key)));
+  });
+
+  return groups;
+}
