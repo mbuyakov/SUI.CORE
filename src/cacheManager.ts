@@ -2,6 +2,8 @@ import { sleep } from "@/other";
 
 const WAIT_TIME: number = 100;
 
+export type CacheHandler<ID, T> = (id: ID, item: T | null) => void;
+
 /**
  * Cache entry
  */
@@ -16,6 +18,7 @@ export interface ICacheEntry<T, ID> {
  * Abstract class for create client caches
  */
 export abstract class CacheManager<T, ID = string> {
+
   /**
    * Stores load status
    */
@@ -30,6 +33,16 @@ export abstract class CacheManager<T, ID = string> {
    * Client store
    */
   private readonly store: Map<ID, T> = new Map();
+
+  /**
+   * Id generator for subscribers
+   */
+  private subscribersCounter: number = 0;
+
+  /**
+   * Stores all subscribers
+   */
+  private readonly subscribersStore: Map<number, CacheHandler<ID, T>> = new Map();
 
   /**
    * Return entity by id
@@ -70,10 +83,12 @@ export abstract class CacheManager<T, ID = string> {
   public async loadAll(): Promise<void> {
     this.ready = false;
     this.loadedStore.clear();
-    this.store.clear();
+    this.store.forEach((_, id) => {
+      this.set(id, null);
+    });
     const entries = await this.__loadAll();
     entries.forEach(entry => {
-      this.store.set(entry.key, entry.value);
+      this.set(entry.key, entry.value);
       this.loadedStore.set(entry.key, true);
     });
     this.ready = true;
@@ -85,7 +100,7 @@ export abstract class CacheManager<T, ID = string> {
   public async loadById(id: ID): Promise<void> {
     if (!this.loadedStore.get(id)) {
       const item = await this.__loadById(id);
-      this.store.set(id, item);
+      this.set(id, item);
       this.loadedStore.set(id, true);
     }
   }
@@ -99,6 +114,24 @@ export abstract class CacheManager<T, ID = string> {
   }
 
   /**
+   * Subscibe to update in cache
+   */
+  public subscribe(handler: CacheHandler<ID, T>): number {
+    // tslint:disable-next-line:increment-decrement
+    const id = this.subscribersCounter++;
+    this.subscribersStore.set(id, handler);
+
+    return id;
+  }
+
+  /**
+   * Remove subscibe handler
+   */
+  public unsubscibe(id: number): void {
+    this.subscribersStore.delete(id);
+  }
+
+  /**
    * Load all entries to cache
    * Must be implemented in CacheManager realisation
    */
@@ -109,4 +142,24 @@ export abstract class CacheManager<T, ID = string> {
    * Must be implemented in CacheManager realisation
    */
   protected abstract async __loadById(id: ID): Promise<T>;
+
+  /**
+   * Set value and notify subscribers
+   */
+  private set(id: ID, item: T | null): void {
+    if (item == null) {
+      this.store.delete(id);
+    } else {
+      this.store.set(id, item);
+    }
+
+    this.subscribersStore.forEach((handler) => {
+      try {
+        handler(id, item);
+      } catch (e) {
+        console.error("Exception in CacheManager subscribe handler");
+        console.error(e);
+      }
+    });
+  }
 }
