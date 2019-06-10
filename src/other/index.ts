@@ -61,3 +61,10 @@ export function toMap<K, V, U = V>(
 
   return result;
 }
+
+/**
+ * Find element in array
+ */
+export function findByValue<T, V>(array: T[], valueExtractor: (element: T) => V, value: V): T | undefined {
+  return array.find(element => valueExtractor(element) === value);
+}
