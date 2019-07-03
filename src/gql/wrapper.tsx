@@ -1,8 +1,9 @@
-import { loadingErrorNotification } from "@/drawUtils";
-import { getClient } from "@/gql/client";
-import { IObjectWithIndex } from "@/other";
-import { ApolloQueryResult } from "apollo-client";
-import { FetchResult } from "apollo-link";
+import {getDataByKey} from "@/dataKey";
+import {loadingErrorNotification} from "@/drawUtils";
+import {getClient} from "@/gql/client";
+import {IObjectWithIndex} from "@/other";
+import {ApolloQueryResult} from "apollo-client";
+import {FetchResult} from "apollo-link";
 import gql from "graphql-tag";
 
 /**
@@ -39,11 +40,21 @@ export async function query<T>(queryBody: string | any, extractFirstKey: boolean
     // tslint:disable-next-line:no-parameter-reassignment
     queryBody = gql(queryBody);
   }
+
+  const accessToken = getUserAccessToken();
+
   let ret = rejectOnError<T>(
     getClient().query({
       errorPolicy: "all",
       fetchPolicy: "no-cache",
       query: queryBody,
+      ...(accessToken && {
+        context: {
+          headers: {
+            authorization: `Bearer ${accessToken}`
+          }
+        }
+      })
     }),
   );
   if (extractFirstKey) {
@@ -58,6 +69,16 @@ export async function query<T>(queryBody: string | any, extractFirstKey: boolean
   }
 
   return ret;
+}
+
+// TODO перебросить интерфейсы из RN.PILOT
+/**
+ * Extract user accessToken from window
+ */
+function getUserAccessToken(): string | null {
+  const storeGetState = getDataByKey(window, 'g_app', '_store', 'getState');
+
+  return storeGetState && getDataByKey(storeGetState(), 'user', 'user', 'accessToken') || null;
 }
 
 /**
