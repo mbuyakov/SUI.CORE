@@ -91,11 +91,21 @@ export async function mutate<T>(mutationBody: string | any, extractFirstKey: boo
     // tslint:disable-next-line:no-parameter-reassignment
     mutationBody = gql(mutationBody);
   }
+
+  const accessToken = getUserAccessToken();
+
   let ret = rejectOnError<T>(
     getClient().mutate({
       errorPolicy: "all",
       fetchPolicy: "no-cache",
       mutation: mutationBody,
+      ...(accessToken && {
+        context: {
+          headers: {
+            authorization: `Bearer ${accessToken}`
+          }
+        }
+      })
     }),
   );
   if (extractFirstKey) {
