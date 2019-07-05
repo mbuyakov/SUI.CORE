@@ -82,3 +82,31 @@ test("toMap with valueExtractor", () => {
       ['name6', 6]
     ])]));
 });
+
+
+test("findByValue with existing value", () => {
+  const data = [
+    {name: "name1", value: 1},
+    {name: "name2", value: 2},
+    {name: "name3", value: 3},
+    {name: "name4", value: 4},
+    {name: "name5", value: 5},
+    {name: "name6", value: 6}
+  ];
+
+  expect(JSON.stringify(other.findByValue(data, element => element.value, 4)))
+    .toEqual(JSON.stringify({name: "name4", value: 4}));
+});
+
+test("findByValue with non-existing value", () => {
+  const data = [
+    {name: "name1", value: 1},
+    {name: "name2", value: 2},
+    {name: "name3", value: 3},
+    {name: "name4", value: 4},
+    {name: "name5", value: 5},
+    {name: "name6", value: 6}
+  ];
+
+  expect(other.findByValue(data, element => element.value, 7)).toBeUndefined();
+});
