@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-core",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "author": "el1191 <el1191@woyd.ru>",
   "repository": "git@github.com:mbuyakov/SUI.CORE.git",
   "bugs": {
@@ -28,7 +28,7 @@
     "unpublish": "node ./unpublish.js"
   },
   "dependencies": {
-    "antd": "^3.16.4",
+    "antd": "^3.20.0",
     "apollo-client": "^2.5.1",
     "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",
