@@ -1,6 +1,6 @@
 export type OneOrArray<T> = T | T[];
 
-export type OneOrArrayWithNulls<T> = T | Array<T | null | undefined>;
+export type OneOrArrayWithNulls<T> = T | Array<T | null | undefined | false>;
 
 /**
  * If type of value is T - return array of T.
@@ -23,7 +23,7 @@ export function wrapInArrayFn<T>(): (value: OneOrArray<T>) => T[] {
  * Otherwise return passed array
  */
 export function wrapInArrayWithoutNulls<T>(value: OneOrArrayWithNulls<T>): T[] {
-  return Array.isArray(value) ? value.filter(item => item !== null && item !== undefined) as T[] : [value];
+  return Array.isArray(value) ? value.filter(item => item) as T[] : [value];
 }
 
 /**
