@@ -1,9 +1,14 @@
 /* tslint:disable:no-any no-shadowed-variable */
+import {WrappedFormUtils} from "antd/lib/form/Form";
 import * as React from "react";
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export type Rendered<T extends React.Component> = React.ReactElement<T["props"]>;
+
+// tslint:disable-next-line:completed-docs
+export type FormCreateKostyl<T extends React.Component<{form?: WrappedFormUtils}>> =
+  Omit<T extends React.Component<infer U> ? U : T, 'form'>;
 
 /**
  * Return promise, that resolve after given ms
