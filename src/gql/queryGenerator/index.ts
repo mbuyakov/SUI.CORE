@@ -1,6 +1,6 @@
-import { mutate } from "@/gql/wrapper";
-import { IObjectWithIndex } from "@/other";
-import { addQuotesIfString, camelCase, capitalize } from "@/stringFormatters";
+import {mutate} from "@/gql/wrapper";
+import {IObjectWithIndex} from "@/other";
+import {addQuotesIfString, camelCase, capitalize} from "@/stringFormatters";
 
 export type PossibleId = string | number;
 export type PossibleValue = string | number | boolean;
