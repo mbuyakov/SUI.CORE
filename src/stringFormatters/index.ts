@@ -82,6 +82,9 @@ export function removePluralEnding(str: string | null | undefined): string {
   if (str.endsWith("uses")) {
     return str.slice(0, -2);
   }
+  if (str.endsWith("us")) {
+    return str;
+  }
   if (str.endsWith("ies")) {
     return `${str.slice(0, -3)}y`;
   }
