@@ -1,5 +1,6 @@
 /* tslint:disable:no-any no-shadowed-variable */
 import {WrappedFormUtils} from "antd/lib/form/Form";
+import * as H from "history";
 import * as React from "react";
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -72,4 +73,13 @@ export function toMap<K, V, U = V>(
  */
 export function findByValue<T, V>(array: T[], valueExtractor: (element: T) => V, value: V): T | undefined {
   return array.find(element => valueExtractor(element) === value);
+}
+
+/**
+ * React router location type
+ */
+// tslint:disable-next-line
+export interface location<QueryParams extends { [K in keyof QueryParams]?: string } = {}, S = any> extends H.Location<S> {
+  // tslint:disable-next-line:completed-docs
+  query: QueryParams;
 }
