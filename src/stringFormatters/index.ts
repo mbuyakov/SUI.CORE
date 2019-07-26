@@ -1,5 +1,6 @@
 // tslint:disable-next-line:ban-ts-ignore
 // @ts-ignore
+import {chain} from "@/other";
 import lodashCamelCase from "lodash/camelCase";
 
 /**
@@ -160,6 +161,31 @@ export function lineFeedScreening(str: string | null | undefined): string {
   }
 
   return str.replace(/\n/g, "\\n");
+}
+
+/**
+ * Replace \" to \\"
+ * If input is null - return empty string
+ */
+export function quoteScreening(str: string | null | undefined): string {
+  if (!str) {
+    return "";
+  }
+
+  return str.replace(/"/g, "\\\"");
+}
+
+/**
+ * GQL formatter
+ * @see quoteScreening
+ * @see lineFeedScreening
+ */
+export function formatRawForGraphQL(str: string | null | undefined): string {
+  if (!str) {
+    return "";
+  }
+
+  return chain<string>(str, lineFeedScreening, quoteScreening);
 }
 
 /**

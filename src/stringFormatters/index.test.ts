@@ -152,6 +152,26 @@ test('Line feed screening "\\n\\n"', () => {
   expect(stringFormatters.lineFeedScreening("\n\n")).toBe("\\n\\n");
 });
 
+test("Quote screening null", () => {
+  expect(stringFormatters.quoteScreening(null)).toBe("");
+});
+test('Quote screening " "', () => {
+  expect(stringFormatters.quoteScreening(" ")).toBe(" ");
+});
+test('Quote screening "\\"\\""', () => {
+  expect(stringFormatters.quoteScreening("\"\"")).toBe("\\\"\\\"");
+});
+
+test("Format raw for GraphQL null", () => {
+  expect(stringFormatters.formatRawForGraphQL(null)).toBe("");
+});
+test('Format raw for GraphQL " "', () => {
+  expect(stringFormatters.formatRawForGraphQL(" ")).toBe(" ");
+});
+test('Format raw for GraphQL "\\n\\""', () => {
+  expect(stringFormatters.formatRawForGraphQL("\n\"")).toBe("\\n\\\"");
+});
+
 test("Add quotes if string null", () => {
   expect(stringFormatters.addQuotesIfString(null)).toBe(null);
 });

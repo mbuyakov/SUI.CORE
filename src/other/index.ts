@@ -83,3 +83,13 @@ export interface location<QueryParams extends { [K in keyof QueryParams]?: strin
   // tslint:disable-next-line:completed-docs
   query: QueryParams;
 }
+
+/**
+ * Chain mapper
+ */
+export function chain<OUT, IN = OUT>(src: IN, firstMapper: (src: IN) => OUT, ...mappers: Array<(src: OUT) => OUT>): OUT {
+  let ret = firstMapper(src);
+  ret = mappers.reduce((previousValue, currentValue) => currentValue(previousValue), ret);
+
+  return ret;
+}
