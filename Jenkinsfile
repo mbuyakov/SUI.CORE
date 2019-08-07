@@ -14,6 +14,9 @@ pipeline {
             }
         }
         stage("Build") {
+            when {
+                branch "master"
+            }
             steps {
                 sh """
                 git fetch --tags --force
@@ -22,16 +25,16 @@ pipeline {
                 """
             }
         }
-        stage("Deploy develop") {
-            when {
-                branch "develop"
-            }
-            steps {
-                sh """
-                yarn canary
-                """
-            }
-        }
+//         stage("Deploy develop") {
+//             when {
+//                 branch "develop"
+//             }
+//             steps {
+//                 sh """
+//                 yarn canary
+//                 """
+//             }
+//         }
         stage("Deploy master") {
             when {
                 branch "master"
