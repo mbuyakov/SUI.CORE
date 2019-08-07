@@ -18,7 +18,7 @@
     "update-version": "lerna version --no-push",
     "publish-all": "lerna publish from-package --yes --registry http://verdaccio.smp.sm-soft.ru/",
     "canary": "lerna run build --stream && lerna publish --canary --yes --registry http://verdaccio.smp.sm-soft.ru/",
-    "commit": "git-cz"
+    "commit": "git add . && git-cz"
   },
   "config": {
     "commitizen": {

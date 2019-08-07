@@ -23,3 +23,4 @@ export function GET_DEFAULT_CALENDAR_RANGES(): {[range: string]: RangePickerPres
     "Последние 3 года": [moment().startOf('day').subtract(3, "years"), moment().startOf('day')]
   };
 }
+
