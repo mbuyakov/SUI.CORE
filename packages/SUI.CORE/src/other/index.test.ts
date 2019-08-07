@@ -1,3 +1,4 @@
+/* tslint:disable:completed-docs */
 import * as other from "./";
 
 test("Sleep 5ms async", async () => {
@@ -33,7 +34,7 @@ test("Group sum", () => {
     {name: "name3", value: 7}
   ];
 
-  expect(JSON.stringify([...other.groupBy(data, element => element.name, (element, lastValue: number) => element.value + (lastValue || 0))]))
+  expect(JSON.stringify([...other.groupBy<string, {name: string, value:  number}, number>(data, element => element.name, (element, lastValue) => element.value + (lastValue || 0))]))
     .toEqual(JSON.stringify([...new Map([
     ['name1', 11],
     ['name2', 8],

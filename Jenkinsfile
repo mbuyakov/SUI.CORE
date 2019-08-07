@@ -17,6 +17,7 @@ pipeline {
             steps {
                 sh """
                 yarn install
+                yarn lint
                 yarn test
                 yarn build
                 """
@@ -25,18 +26,9 @@ pipeline {
         stage("Deploy SUI.CORE") {
             steps {
                 sh """
-                yarn run unpublish
                 yarn publish --non-interactive --access restricted
                 """
             }
-        }
-    }
-    post {
-        success {
-            telegramSend  'SUI.CORE success'
-        }
-        failure {
-            telegramSend 'SUI.CORE failure'
         }
     }
 }

@@ -1,7 +1,6 @@
 {
   "extends": [
     "tslint:all",
-    "tslint-config-standard",
     "tslint-config-prettier"
   ],
   "rules": {
@@ -20,6 +19,10 @@
     "file-name-casing": false,
     "no-null-keyword": false,
     "strict-type-predicates": false,
+    "no-use-before-declare": false,
+    "no-async-without-await": false,
+    "strict-comparisons": false,
+    "triple-equals": [true, "allow-null-check"],
     "typedef": [
       true,
       "call-signature",

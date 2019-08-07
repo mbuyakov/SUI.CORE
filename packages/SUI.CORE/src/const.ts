@@ -7,6 +7,7 @@ export const NO_DATA_TEXT = "н/д";
  * Get most popular calendar ranges
  */
 export function GET_DEFAULT_CALENDAR_RANGES(): {[range: string]: RangePickerPresetRange} {
+  // tslint:disable-next-line:comment-format
   // noinspection NonAsciiCharacters
   return {
     "Сегодня": [moment().startOf('day'), moment().endOf('day')],
