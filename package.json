@@ -14,6 +14,7 @@
     "test": "lerna run test --stream",
     "build": "lerna run build --stream",
     "update-version": "lerna version --no-push",
-    "publish-all": "lerna publish from-pckage --yes"
+    "publish-all": "lerna publish from-package --yes",
+    "canary": "lerna run build --stream && lerna publish --canary --yes"
   }
 }
