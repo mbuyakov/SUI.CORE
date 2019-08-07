@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.4](https://github.com/mbuyakov/SUI.CORE/compare/v2.0.3...v2.0.4) (2019-08-07)
+
+
+### Bug Fixes
+
+* **core:** add screening for \t ([635615a](https://github.com/mbuyakov/SUI.CORE/commit/635615a))
+
+
+
+
+
 ## [2.0.3](https://github.com/mbuyakov/SUI.CORE/compare/v2.0.2...v2.0.3) (2019-08-07)
 
 **Note:** Version bump only for package root
