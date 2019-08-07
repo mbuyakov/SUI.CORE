@@ -1,4 +1,4 @@
-import { sleep } from "@/other";
+import { sleep } from "./other";
 
 const WAIT_TIME: number = 100;
 

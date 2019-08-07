@@ -25,10 +25,7 @@
   "jest": {
     "testMatch": [
       "**/*.(spec|test).{ts,tsx}"
-    ],
-    "moduleNameMapper": {
-      "@/(.*)": "<rootDir>/src/$1"
-    }
+    ]
   },
   "prettier": {
     "printWidth": 8000,

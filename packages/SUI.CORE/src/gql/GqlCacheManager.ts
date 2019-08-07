@@ -1,7 +1,8 @@
 /* tslint:disable:file-name-casing */
-import { CacheManager, ICacheEntry } from "@/cacheManager";
-import { query } from "@/gql/wrapper";
-import { addPluralEnding, addQuotesIfString, camelCase, capitalize } from "@/stringFormatters";
+import { CacheManager, ICacheEntry } from "../cacheManager";
+import { addPluralEnding, addQuotesIfString, camelCase, capitalize } from "../stringFormatters";
+
+import { query } from "./wrapper";
 
 /**
  * Wrapper for quick create cache from PG table use Gql query

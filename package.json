@@ -2,6 +2,8 @@
   "name": "root",
   "private": true,
   "devDependencies": {
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2",
     "lerna": "^3.16.4",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0"
@@ -15,6 +17,12 @@
     "build": "lerna run build --stream",
     "update-version": "lerna version --no-push",
     "publish-all": "lerna publish from-package --yes --registry http://verdaccio.smp.sm-soft.ru/",
-    "canary": "lerna run build --stream && lerna publish --canary --yes"
+    "canary": "lerna run build --stream && lerna publish --canary --yes --registry http://verdaccio.smp.sm-soft.ru/",
+    "commit": "git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

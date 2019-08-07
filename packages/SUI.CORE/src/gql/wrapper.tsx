@@ -1,10 +1,12 @@
-import {getDataByKey} from "@/dataKey";
-import {loadingErrorNotification} from "@/drawUtils";
-import {getClient} from "@/gql/client";
-import {IObjectWithIndex} from "@/other";
 import {ApolloQueryResult} from "apollo-client";
 import {FetchResult} from "apollo-link";
 import gql from "graphql-tag";
+
+import {getDataByKey} from "../dataKey";
+import {loadingErrorNotification} from "../drawUtils";
+import {IObjectWithIndex} from "../other";
+
+import {getClient} from "./client";
 
 /**
  * Stub for PostGraphile error format

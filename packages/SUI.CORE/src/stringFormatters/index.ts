@@ -1,6 +1,6 @@
 // tslint:disable-next-line:ban-ts-ignore
 // @ts-ignore
-import {chain} from "@/other";
+import {chain} from "../other";
 import lodashCamelCase from "lodash/camelCase";
 
 /**

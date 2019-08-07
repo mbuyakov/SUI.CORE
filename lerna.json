@@ -4,5 +4,13 @@
   ],
   "version": "2.0.1",
   "npmClient": "yarn",
-  "useWorkspaces": true
+  "useWorkspaces": true,
+  "command": {
+    "publish": {
+      "conventionalCommits": true
+    },
+    "version": {
+      "message": "chore(release): release"
+    }
+  }
 }
