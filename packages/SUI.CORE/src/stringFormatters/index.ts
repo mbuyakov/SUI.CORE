@@ -151,7 +151,7 @@ export function formatSqlDate(timestamp: string | null | undefined): string {
 }
 
 /**
- * Replace \n to \\n
+ * Replace \n to \\n and replace \t to \\t
  * If input is null - return empty string
  */
 export function lineFeedScreening(str: string | null | undefined): string {
@@ -159,7 +159,7 @@ export function lineFeedScreening(str: string | null | undefined): string {
     return "";
   }
 
-  return str.replace(/\n/g, "\\n");
+  return str.replace(/\n/g, "\\n").replace(/\t/g, "\\t");
 }
 
 /**
