@@ -13,6 +13,7 @@
     "lint": "lerna run lint --stream",
     "test": "lerna run test --stream",
     "build": "lerna run build --stream",
-    "update-version": "lerna version --no-push"
-  }
+    "publish-all": "lerna publish from-git"
+  },
+  "version": "0.0.0"
 }
