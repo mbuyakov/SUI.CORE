@@ -18,7 +18,7 @@
     "ci": "yarn lint && yarn test && yarn build",
     "update-version": "lerna version --no-push",
     "publish-all": "lerna publish from-package --yes --registry http://verdaccio.smp.sm-soft.ru/",
-    "canary": "yarn ci && lerna publish --canary --yes --registry http://verdaccio.smp.sm-soft.ru/",
+    "canary": "lerna publish --canary --yes --registry http://verdaccio.smp.sm-soft.ru/",
     "commit": "git add . && git-cz"
   },
   "config": {
