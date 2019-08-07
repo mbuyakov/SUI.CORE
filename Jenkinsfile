@@ -13,17 +13,28 @@ pipeline {
                 """
             }
         }
-        stage("Build") {
+        stage("Build ") {
             steps {
                 sh """
                 yarn install
-                yarn lint
-                yarn test
-                yarn build
+                yarn ci
                 """
             }
         }
-        stage("Deploy") {
+        stage("Deploy develop") {
+            when {
+                branch "develop"
+            }
+            steps {
+                sh """
+                yarn canary
+                """
+            }
+        }
+        stage("Deploy master") {
+            when {
+                branch "master"
+            }
             steps {
                 sh """
                 yarn publish-all
