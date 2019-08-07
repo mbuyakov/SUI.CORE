@@ -26,7 +26,7 @@ pipeline {
         stage("Deploy") {
             steps {
                 sh """
-                lerna publish
+                yarn publish-all
                 """
             }
         }
