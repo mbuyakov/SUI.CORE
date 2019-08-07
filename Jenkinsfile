@@ -13,7 +13,7 @@ pipeline {
                 """
             }
         }
-        stage("Build SUI.CORE") {
+        stage("Build") {
             steps {
                 sh """
                 yarn install
@@ -23,10 +23,10 @@ pipeline {
                 """
             }
         }
-        stage("Deploy SUI.CORE") {
+        stage("Deploy") {
             steps {
                 sh """
-                yarn publish --non-interactive --access restricted
+                lerna publish
                 """
             }
         }
