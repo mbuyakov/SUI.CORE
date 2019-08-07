@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-core",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "main": "dist/index.js",
   "module": "dist/sui.core.esm.js",
   "typings": "dist/index.d.ts",
@@ -16,7 +16,7 @@
   },
   "peerDependencies": {
     "react": ">=16",
-    "react-dom":  ">=16"
+    "react-dom": ">=16"
   },
   "husky": {
     "hooks": {
@@ -50,13 +50,13 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
+    "@types/history": "^4.7.2",
+    "antd": "^3.21.2",
     "apollo-client": "^2.6.3",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
-    "lodash": "^4.17.15",
-    "lodash-es": "^4.17.15",
-    "antd": "^3.21.2",
     "history": "^4.9.0",
-    "@types/history": "^4.7.2"
+    "lodash": "^4.17.15",
+    "lodash-es": "^4.17.15"
   }
 }
