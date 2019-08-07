@@ -27,6 +27,7 @@ pipeline {
             }
             steps {
                 sh """
+                git fetch --tags --force
                 yarn canary
                 """
             }
