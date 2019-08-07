@@ -15,15 +15,16 @@
     "lint": "lerna run lint --stream",
     "test": "lerna run test --stream",
     "build": "lerna run build --stream",
-    "ci":  "yarn lint && yarn test && yarn build",
+    "ci": "yarn lint && yarn test && yarn build",
     "update-version": "lerna version --no-push",
     "publish-all": "lerna publish from-package --yes --registry http://verdaccio.smp.sm-soft.ru/",
-    "canary": "yarn ci && lerna publish --canary --yes --registry http://verdaccio.smp.sm-soft.ru/",
+    "canary": "lerna publish --canary --yes --registry http://verdaccio.smp.sm-soft.ru/",
     "commit": "git add . && git-cz"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "version": "0.0.0"
 }

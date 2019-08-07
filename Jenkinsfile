@@ -13,9 +13,10 @@ pipeline {
                 """
             }
         }
-        stage("Build ") {
+        stage("Build") {
             steps {
                 sh """
+                git fetch --tags --force
                 yarn install
                 yarn ci
                 """
