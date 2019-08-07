@@ -15,7 +15,8 @@
     "lint": "tslint -t verbose -p tsconfig.json -c ./tslint.json 'src/**/*.ts?(x)'"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "react": ">=16",
+    "react-dom": ">=16"
   },
   "husky": {
     "hooks": {
@@ -34,29 +35,12 @@
     "trailingComma": "es5"
   },
   "devDependencies": {
-    "@types/history": "^4.7.2",
-    "@types/jest": "^24.0.17",
-    "@types/lodash": "^4.14.136",
-    "@types/node": "^12.6.9",
-    "@types/react": "^16.8.24",
-    "@types/react-dom": "^16.8.5",
-    "antd": "^3.21.2",
-    "history": "^4.9.0",
-    "husky": "^3.0.2",
-    "prettier": "^1.18.2",
-    "pretty-quick": "^1.11.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
     "tsdx": "^0.7.2",
     "tslib": "^1.10.0",
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "apollo-client": "^2.6.3",
-    "autobind-decorator": "^2.4.0",
-    "graphql": "^14.4.2",
-    "graphql-tag": "^2.10.1",
-    "lodash": "^4.17.15",
-    "lodash-es": "^4.17.15"
+    "@smsoft/sui-core": "^2.0.5",
+    "autobind-decorator": "^2.4.0"
   }
 }
