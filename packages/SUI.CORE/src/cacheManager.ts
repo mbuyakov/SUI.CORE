@@ -60,7 +60,7 @@ export abstract class CacheManager<T, ID = string> {
       await sleep(WAIT_TIME);
     }
 
-    return [...this.store.values()];
+    return Array.from(this.store.values());
   }
 
   /**
