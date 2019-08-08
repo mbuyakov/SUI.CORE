@@ -1,0 +1,56 @@
+@import "~antd/lib/style/themes/default";
+
+.hideButtons button {
+  visibility: hidden;
+}
+
+.baseCardRows {
+  & > *:not(:last-child) {
+    margin-bottom: @padding-sm;
+  }
+}
+
+.baseCardRow {
+  display: flex;
+
+  & > *:not(:last-child) {
+    margin-right: @padding-sm;
+  }
+}
+
+.baseCardCol {
+
+}
+
+.baseCardItem {
+  flex-grow: 1;
+  flex-basis: 0;
+  align-items: baseline;
+  min-width: 0;
+
+  & > *:not(.baseCardItemLabelHorizontal) {
+    flex-grow: 1;
+  }
+}
+
+.baseFormItem {
+  .baseCardItem();
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: -@padding-sm;
+}
+
+.baseCardItemLabelHorizontal {
+  line-height: 40px;
+}
+
+.baseCardItemLabelHorizontal::after {
+  white-space: pre;
+  content: " ";
+}
+
+.baseFormItemVertical {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
