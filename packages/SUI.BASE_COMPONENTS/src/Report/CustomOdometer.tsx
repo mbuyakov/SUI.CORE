@@ -1,10 +1,11 @@
 /* tslint:disable:no-import-side-effect */
-import {DIFFERENCE_ODOMETER, MAIN_ODOMETER, MINUS_ODOMETER, PLUS_ODOMETER, ZERO_ODOMETER} from "@/styles";
 import "odometer/themes/odometer-theme-default.css";
 import * as React from "react";
 // tslint:disable-next-line:ban-ts-ignore
 // @ts-ignore
 import Odometer from "react-odometerjs";
+
+import {DIFFERENCE_ODOMETER, MAIN_ODOMETER, MINUS_ODOMETER, PLUS_ODOMETER, ZERO_ODOMETER} from "../styles";
 
 export interface ICustomOdometerData {
   current: number;

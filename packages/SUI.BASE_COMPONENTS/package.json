@@ -68,6 +68,7 @@
     "history": "^4.9.0",
     "lodash": "^4.17.15",
     "lodash-es": "^4.17.15",
+    "react-odometerjs": "^2.1.1",
     "react-router-dom": "^5.0.1",
     "xlsx": "^0.15.0"
   }

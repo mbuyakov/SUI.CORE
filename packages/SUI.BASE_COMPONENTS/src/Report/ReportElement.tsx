@@ -1,7 +1,8 @@
-import {SMALL_HEADER_PADDING} from "@/styles";
 import {Card} from "antd";
 import {CardType} from "antd/lib/card";
 import * as React from "react";
+
+import {SMALL_HEADER_PADDING} from "../styles";
 
 
 interface IReportElement {
