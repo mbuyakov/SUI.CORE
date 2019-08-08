@@ -3,6 +3,7 @@ export * from "./BaseTable";
 export * from "./Dnf";
 export * from "./utils";
 export * from "./DescriptionItem";
+export * from "./Report";
 export * from "./RouterLink";
 export * from "./RouterLinkCellRender";
 export * from "./styles";
