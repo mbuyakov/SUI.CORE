@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-promised",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "main": "dist/index.js",
   "module": "dist/sui-promised.esm.js",
   "typings": "dist/index.d.ts",
@@ -40,7 +40,7 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@smsoft/sui-core": "^2.1.0",
+    "@smsoft/sui-core": "^2.2.0",
     "autobind-decorator": "^2.4.0"
   }
 }

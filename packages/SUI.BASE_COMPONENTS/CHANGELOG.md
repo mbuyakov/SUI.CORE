@@ -5,15 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [2.2.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.1.0...v2.2.0) (2019-08-08)
 
-**Note:** Version bump only for package @smsoft/sui-promised
-
-
-
-
-
-# [2.1.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.0.5...v2.1.0) (2019-08-07)
-
 
 ### Features
 
-* **promised:** move SUI.PROMISED from repo ([148ace6](https://github.com/mbuyakov/SUI.CORE/commit/148ace6))
+* move SUI.BASE_COMPONENTS from old repo ([350e6de](https://github.com/mbuyakov/SUI.CORE/commit/350e6de))
