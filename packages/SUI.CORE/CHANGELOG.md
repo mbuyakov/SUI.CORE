@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.4.0...v2.4.1) (2019-08-09)
+
+
+### Features
+
+* **other:** and distinctValues function ([611ccba](https://github.com/mbuyakov/SUI.CORE/commit/611ccba))
+
+
+
+
+
+
 # [2.4.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.0.5...v2.4.0) (2019-08-09)
 
 
