@@ -1,11 +1,12 @@
-import { FormCreateKostyl, IObjectWithIndex } from '@smsoft/sui-core';
+
+import {FormCreateKostyl, IObjectWithIndex} from "@smsoft/sui-core";
 import {Button, Card, Divider, Form, Icon} from "antd";
 import {FormComponentProps} from "antd/lib/form";
 import autobind from "autobind-decorator";
 import isEqual from "lodash/isEqual";
 import * as React from "react";
 
-import {AndFormRowElement, ButtonAlignment, formItemLayoutWithOutLabel} from "./AndFormRowElement";
+import {AndFormRowElement, formItemLayoutWithOutLabel} from "./AndFormRowElement";
 import {IClearDnfFromValues, ICommonDnfProps, IResultDnfFormValues} from "./ICommonDnfProps";
 
 
@@ -28,7 +29,6 @@ interface IDnfFromValues<TElements> extends IClearDnfFromValues {
 
 interface IDnfFormProps<T, V = IResultDnfFormValues<T>> {
   addDisjunctionButtonTitle?: string;
-  buttonAlignment?: ButtonAlignment;
   initialState?: IResultDnfFormValues<T>;
   orBehaviorDisabled?: boolean;
 

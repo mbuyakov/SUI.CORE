@@ -1,6 +1,8 @@
 import {WrappedFormUtils} from "antd/lib/form/Form";
 import * as React from "react";
 
+import {ButtonAlignment} from "./AndFormRowElement";
+
 export interface IDnfFormRowElementProps<T = {}> {
   form: WrappedFormUtils;
   id: number;
@@ -21,6 +23,7 @@ export interface ISupportingWrapperFormProps {
 
 export interface ICommonDnfProps<V> extends ISupportingWrapperFormProps {
   addConjunctionButtonTitle?: string;
+  buttonAlignment?: ButtonAlignment;
   defaultSubmitButtonTitle?: string;
   disableAndFormBorder?: boolean;
   disableDefaultSubmitButton?: boolean;
