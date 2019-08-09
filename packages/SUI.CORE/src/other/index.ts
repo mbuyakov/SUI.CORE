@@ -1,4 +1,4 @@
-/* tslint:disable:no-any no-shadowed-variable */
+/* tslint:disable:no-any no-shadowed-variable completed-docs */
 import {WrappedFormUtils} from "antd/lib/form/Form";
 import * as H from "history";
 import * as React from "react";
@@ -66,6 +66,23 @@ export function toMap<K, V, U = V>(
   array.forEach(element => result.set(keyExtractor(element), valueExtractor(element)));
 
   return result;
+}
+
+/**
+ * Extract Distinct values from array
+ */
+export function distinctValues<E, V = E>(params: {
+  array: E[];
+  includeNulls?: boolean;
+  equals?(v1: V, v2: V): boolean;
+  mapper?(element: E): V;
+}): V[] {
+  const equalsFn = params.equals || ((v1, v2) => v1 === v2);
+
+  return params.array
+    .map(params.mapper || (e => e as unknown as V))
+    .filter(params.includeNulls ? () => true : Boolean)
+    .filter((element, index, array) => index === array.findIndex(value => equalsFn(element, value)));
 }
 
 /**
