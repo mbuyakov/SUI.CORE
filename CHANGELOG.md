@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.0.5...v2.4.0) (2019-08-09)
+
+
+### Bug Fixes
+
+* **dnf:** fix buttonAlignment property ([8bb8563](https://github.com/mbuyakov/SUI.CORE/commit/8bb8563))
+* fix array generation from set values ([4fd95b6](https://github.com/mbuyakov/SUI.CORE/commit/4fd95b6))
+* **report:** fix import & dep ([a35cf6c](https://github.com/mbuyakov/SUI.CORE/commit/a35cf6c))
+* fix antd style import ([f112219](https://github.com/mbuyakov/SUI.CORE/commit/f112219))
+
+
+### Features
+
+* **report:** add report components ([845a13f](https://github.com/mbuyakov/SUI.CORE/commit/845a13f))
+* move SUI.BASE_COMPONENTS from old repo ([350e6de](https://github.com/mbuyakov/SUI.CORE/commit/350e6de))
+* **promised:** move SUI.PROMISED from repo ([148ace6](https://github.com/mbuyakov/SUI.CORE/commit/148ace6))
+
+
+
+
+
+
 ## [2.3.2](https://github.com/mbuyakov/SUI.CORE/compare/v2.3.1...v2.3.2) (2019-08-08)
 
 
