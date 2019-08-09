@@ -34,12 +34,12 @@ test("Group sum", () => {
     {name: "name3", value: 7}
   ];
 
-  expect(JSON.stringify([...other.groupBy<string, {name: string, value:  number}, number>(data, element => element.name, (element, lastValue) => element.value + (lastValue || 0))]))
+  expect(JSON.stringify([...other.groupBy<string, { name: string, value: number }, number>(data, element => element.name, (element, lastValue) => element.value + (lastValue || 0))]))
     .toEqual(JSON.stringify([...new Map([
-    ['name1', 11],
-    ['name2', 8],
-    ['name3', 7]
-  ])]));
+      ['name1', 11],
+      ['name2', 8],
+      ['name3', 7]
+    ])]));
 });
 
 test("toMap", () => {
@@ -110,4 +110,60 @@ test("findByValue with non-existing value", () => {
   ];
 
   expect(other.findByValue(data, element => element.value, 7)).toBeUndefined();
+});
+
+test("distinctValues with string[]", () => {
+  expect(JSON.stringify(other.distinctValues({array: ["1", "2", "2", "1", null, "1", "3", null, "1", "4"]})))
+    .toEqual(JSON.stringify(["1", "2", "3", "4"]))
+});
+
+test("distinctValues with string[] and includeNulls", () => {
+  expect(JSON.stringify(other.distinctValues({
+    array: ["1", "2", "2", "1", null, "1", "3", null, "1", "4"],
+    includeNulls: true
+  }))).toEqual(JSON.stringify(["1", "2", null, "3", "4"]))
+});
+
+test("distinctValues with object[] and mapper", () => {
+  expect(JSON.stringify(
+    other.distinctValues({
+      array: [
+        {
+          value: "1"
+        },
+        {
+          value: "2"
+        },
+        {
+          value: "1"
+        }
+      ],
+      mapper: obj => obj.value
+    }))).toEqual(JSON.stringify(["1", "2"]))
+});
+
+test("distinctValues with object[] and equals", () => {
+  expect(JSON.stringify(
+    other.distinctValues({
+      array: [
+        {
+          value: "1"
+        },
+        {
+          value: "2"
+        },
+        {
+          value: "1"
+        }
+      ],
+      equals: (obj1, obj2) => obj1.value === obj2.value
+    })
+  )).toEqual(JSON.stringify([
+    {
+      value: "1"
+    },
+    {
+      value: "2"
+    }
+  ]))
 });
