@@ -378,7 +378,17 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
 
 // tslint:disable-next-line:max-classes-per-file
 export class  DnfForm<T, S> extends React.Component<FormCreateKostyl<InnerDnfForm<T,S>>> {
+
+  private element: JSX.Element | null = null;
+
   public render(): React.ReactNode {
-    return React.createElement(Form.create()(InnerDnfForm), this.props);
+    if (!this.element) {
+      this.element = React.createElement(Form.create()(InnerDnfForm), this.props);
+
+      return this.element;
+    }
+
+    return React.cloneElement(this.element, this.props)
   }
+
 }

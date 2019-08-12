@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.6.0...v2.6.1) (2019-08-12)
+
+
+### Bug Fixes
+
+* **dnf:** fix dnf onChange bug ([516cb94](https://github.com/mbuyakov/SUI.CORE/commit/516cb94))
+
+
+
+
+
+
 # [2.6.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.4.1...v2.6.0) (2019-08-12)
 
 **Note:** Version bump only for package @smsoft/sui-base-components
