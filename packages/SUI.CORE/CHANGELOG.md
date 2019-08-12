@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.3.2...v2.5.0) (2019-08-12)
+
+
+### Features
+
+* **gql:** add GenerateDelete ([4e461ea](https://github.com/mbuyakov/SUI.CORE/commit/4e461ea))
+* **other:** and distinctValues function ([611ccba](https://github.com/mbuyakov/SUI.CORE/commit/611ccba))
+
+
+
+
+
 ## [2.4.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.4.0...v2.4.1) (2019-08-09)
 
 
