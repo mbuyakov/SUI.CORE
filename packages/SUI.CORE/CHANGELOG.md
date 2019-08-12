@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.4.1...v2.6.0) (2019-08-12)
+
+
+### Features
+
+* new formatter for JSON ([dbc4daf](https://github.com/mbuyakov/SUI.CORE/commit/dbc4daf))
+* **gql:** add GenerateDelete ([4e461ea](https://github.com/mbuyakov/SUI.CORE/commit/4e461ea))
+
+
+
+
+
+
 # [2.5.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.3.2...v2.5.0) (2019-08-12)
 
 
