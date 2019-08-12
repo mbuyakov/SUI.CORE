@@ -63,3 +63,33 @@ export async function generateCreate(entity: string, fields: object): Promise<vo
 export function generateCreateFn(entity: string): (fields: object) => Promise<void> {
   return (fields: object) => generateCreate(entity, fields);
 }
+
+/**
+ * Generate Gql mutation for create
+ * Available fields types - string, number, boolean
+ */
+export function generateDeleteText(entity: string, id: PossibleId): string {
+  const camelCaseEntity = camelCase(entity);
+
+  return `mutation {
+  delete${capitalize(camelCaseEntity)}ById(input: {id: ${addQuotesIfString(id)}}) {
+    clientMutationId
+  }
+}`;
+}
+
+/**
+ * Generate promise for Gql create
+ * Available fields types - string, number, boolean
+ */
+export async function generateDelete(entity: string, id: PossibleId): Promise<void> {
+  await mutate(generateDeleteText(entity, id));
+}
+
+/**
+ * Generate promise for Gql create
+ * Available fields types - string, number, boolean
+ */
+export function generateDeleteFn(entity: string): (id: PossibleId) => Promise<void> {
+  return (id: PossibleId) => generateDelete(entity, id);
+}
