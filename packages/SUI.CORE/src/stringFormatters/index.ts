@@ -1,7 +1,5 @@
 import lodashCamelCase from "lodash/camelCase";
 
-import {chain} from "../other";
-
 /**
  * Camel case string
  * Stub for lodash function
@@ -184,7 +182,7 @@ export function formatRawForGraphQL(str: string | null | undefined): string {
     return "";
   }
 
-  return chain<string>(str, lineFeedScreening, quoteScreening);
+  return JSON.stringify(str).slice(1, -1);
 }
 
 /**
