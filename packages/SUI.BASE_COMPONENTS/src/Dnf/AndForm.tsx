@@ -4,7 +4,7 @@ import { DnfForm } from './DnfForm';
 import { ICommonDnfProps, IResultAndFormValues, IResultDnfFormValues } from './ICommonDnfProps';
 
 interface IAndFormProps<T> {
-  cardStyle: React.CSSProperties;
+  cardStyle?: React.CSSProperties;
   initialState?: IResultAndFormValues<T>;
 
   // tslint:disable-next-line:no-any

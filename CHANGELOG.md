@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.3](https://github.com/mbuyakov/SUI.CORE/compare/v2.6.2...v2.6.3) (2019-08-15)
+
+
+### Bug Fixes
+
+* **dnf:** props cardStyle required => optional ([9d40ca3](https://github.com/mbuyakov/SUI.CORE/commit/9d40ca3))
+
+
+
+
+
+
 ## [2.6.2](https://github.com/mbuyakov/SUI.CORE/compare/v2.6.1...v2.6.2) (2019-08-15)
 
 
