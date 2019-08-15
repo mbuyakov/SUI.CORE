@@ -29,6 +29,7 @@ interface IDnfFromValues<TElements> extends IClearDnfFromValues {
 
 interface IDnfFormProps<T, V = IResultDnfFormValues<T>> {
   addDisjunctionButtonTitle?: string;
+  andCardStyle?: React.CSSProperties;
   initialState?: IResultDnfFormValues<T>;
   orBehaviorDisabled?: boolean;
 
@@ -197,7 +198,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
               }],
             })(
               <Card
-                style={{flexGrow: 1, margin: "5px 0px", padding: "5px 10px"}}
+                style={{flexGrow: 1, margin: "5px 0px", padding: "5px 10px", ...this.props.andCardStyle}}
                 bodyStyle={{padding: 0}}
                 bordered={!this.props.disableAndFormBorder}
               >
