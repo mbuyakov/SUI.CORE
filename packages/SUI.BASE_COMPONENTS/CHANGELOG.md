@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.2](https://github.com/mbuyakov/SUI.CORE/compare/v2.6.1...v2.6.2) (2019-08-15)
+
+
+### Features
+
+* **dnf:** and andCardStyle props to Dnf ([15e3213](https://github.com/mbuyakov/SUI.CORE/commit/15e3213))
+
+
+
+
+
+
 ## [2.6.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.6.0...v2.6.1) (2019-08-12)
 
 

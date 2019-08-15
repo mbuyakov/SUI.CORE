@@ -4,6 +4,7 @@ import { DnfForm } from './DnfForm';
 import { ICommonDnfProps, IResultAndFormValues, IResultDnfFormValues } from './ICommonDnfProps';
 
 interface IAndFormProps<T> {
+  cardStyle: React.CSSProperties;
   initialState?: IResultAndFormValues<T>;
 
   // tslint:disable-next-line:no-any
@@ -35,6 +36,7 @@ export class AndForm<TElement>
         orBehaviorDisabled={true}
         orElementValidator={this.props.dnfValidator}
         valuesMapper={AndForm.valuesMapper}
+        andCardStyle={this.props.cardStyle}
       />
     );
   }
