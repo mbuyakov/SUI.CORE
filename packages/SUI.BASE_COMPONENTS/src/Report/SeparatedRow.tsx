@@ -4,6 +4,8 @@ import * as React from "react";
 interface ISeparatedRowProps {
   data: React.ReactNode[][];
   divider?: string | JSX.Element;
+
+  customDivider?(index: number, prevNode: React.ReactNode, nextNode: React.ReactNode): JSX.Element | string;
 }
 
 const defaultDivider = (<Divider type="vertical" style={{margin: 0, backgroundColor: "#888"}}/>);
@@ -11,6 +13,8 @@ const defaultDivider = (<Divider type="vertical" style={{margin: 0, backgroundCo
 export class SeparatedRow extends React.Component<ISeparatedRowProps> {
 
   public render(): JSX.Element {
+    const data = this.props.data;
+
     return (
       <Card
         bordered={false}
@@ -20,9 +24,19 @@ export class SeparatedRow extends React.Component<ISeparatedRowProps> {
           padding: 10
         }}
       >
-        {(this.props.data || []).reduce((previousValue, currentValue, currentIndex) => {
+        {(data || []).reduce((previousValue, currentValue, currentIndex) => {
+          let divider = this.props.customDivider && this.props.customDivider(
+            currentIndex,
+            (currentIndex ? data[currentIndex - 1] : undefined),
+            currentValue
+          );
+
           if (currentIndex !== 0) {
-            previousValue.push(this.props.divider || defaultDivider);
+            divider = divider || this.props.divider || defaultDivider;
+          }
+
+          if (divider) {
+            previousValue.push(divider);
           }
           currentValue.forEach(element => previousValue.push(element));
 
