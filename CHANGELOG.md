@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.6.3...v2.7.0) (2019-08-18)
+
+
+### Features
+
+* **separatedrow:** add customDivider property to SeparatedRow ([c4404bb](https://github.com/mbuyakov/SUI.CORE/commit/c4404bb))
+
+
+
+
+
+
 ## [2.6.3](https://github.com/mbuyakov/SUI.CORE/compare/v2.6.2...v2.6.3) (2019-08-15)
 
 
