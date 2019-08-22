@@ -41,6 +41,30 @@ export function unCapitalize(str: string | null | undefined): string {
   return str[0].toLowerCase() + str.slice(1);
 }
 
+const pluralExclusions: [[string, string]] = [
+  ["person", "people"]
+];
+
+const addPluralExclusions = new Map(pluralExclusions);
+const removePluralExclusions = new Map(pluralExclusions.map(exclusion => [exclusion[1], exclusion[0]]));
+
+/**
+ * Handle plural ending exclusion
+ */
+function handleExclusion(str: string, exclusionMap: Map<string, string>): string | null {
+  const exclusion = Array.from(exclusionMap.keys()).find(exc => str.toLowerCase().endsWith(exc));
+
+  if (exclusion) {
+    const splitPosition = str.length - exclusion.length;
+    const replacedExclusion = str.substr(splitPosition);
+    const shouldCapitalize = replacedExclusion.charAt(0) === replacedExclusion.charAt(0).toUpperCase();
+
+    return `${str.substr(0, splitPosition)}${shouldCapitalize ? capitalize(exclusionMap.get(exclusion)) : exclusionMap.get(exclusion)}`
+  }
+
+  return null;
+}
+
 /**
  * Add plural ending to string
  * If input is null - return empty string
@@ -52,17 +76,21 @@ export function addPluralEnding(str: string | null | undefined): string {
   if (!str.trim()) {
     return str;
   }
-  let ret: string = str;
+  let ret: string | null = handleExclusion(str, addPluralExclusions);
 
-  // If not with plural ending already
-  if (str[str.length - 1] !== "s") {
-    // If string end with "y" - replace ending to "ies"
-    if (str[str.length - 1] === "y") {
-      ret = `${str.slice(0, -1)}ie`;
+  if (!ret) {
+    ret = str;
+
+    // If not with plural ending already
+    if (str[str.length - 1] !== "s") {
+      // If string end with "y" - replace ending to "ies"
+      if (str[str.length - 1] === "y") {
+        ret = `${str.slice(0, -1)}ie`;
+      }
+      ret += "s";
+    } else if (str.endsWith("us")) {
+      ret += "es";
     }
-    ret += "s";
-  } else if (str.endsWith("us")) {
-    ret += "es";
   }
 
   return ret;
@@ -77,20 +105,23 @@ export function removePluralEnding(str: string | null | undefined): string {
     return "";
   }
 
-  if (str.endsWith("uses")) {
-    return str.slice(0, -2);
-  }
-  if (str.endsWith("us")) {
-    return str;
-  }
-  if (str.endsWith("ies")) {
-    return `${str.slice(0, -3)}y`;
-  }
-  if (str.endsWith("s")) {
-    return str.slice(0, -1);
+  let ret: string | null = handleExclusion(str, removePluralExclusions);
+
+  if (!ret) {
+    ret = str;
+
+    if (str.endsWith("uses")) {
+      ret = str.slice(0, -2);
+    } else if (str.endsWith("us")) {
+      ret = str;
+    } else if (str.endsWith("ies")) {
+      ret = `${str.slice(0, -3)}y`;
+    } else if (str.endsWith("s")) {
+      ret = str.slice(0, -1);
+    }
   }
 
-  return str;
+  return ret;
 }
 
 const sqlTimestampRegexp: RegExp = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.?\d*/;

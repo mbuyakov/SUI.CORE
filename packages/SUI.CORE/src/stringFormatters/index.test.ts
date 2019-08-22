@@ -73,6 +73,12 @@ test("Add plural ending y", () => {
 test("Add plural ending status", () => {
   expect(stringFormatters.addPluralEnding("status")).toBe("statuses");
 });
+test("Add plural ending person (exclusion)", () => {
+  expect(stringFormatters.addPluralEnding("person")).toBe("people");
+});
+test("Add plural ending docPerson (exclusion)", () => {
+  expect(stringFormatters.addPluralEnding("docPerson")).toBe("docPeople");
+});
 
 test("Remove plural ending null", () => {
   expect(stringFormatters.removePluralEnding(null)).toBe("");
@@ -88,6 +94,12 @@ test("Remove plural ending ies", () => {
 });
 test("Remove plural ending statuses", () => {
   expect(stringFormatters.removePluralEnding("statuses")).toBe("status");
+});
+test("Remove plural ending people", () => {
+  expect(stringFormatters.removePluralEnding("people")).toBe("person");
+});
+test("Remove plural ending docPeople", () => {
+  expect(stringFormatters.removePluralEnding("docPeople")).toBe("docPerson");
 });
 
 test("Format SQL timestamp null", () => {
