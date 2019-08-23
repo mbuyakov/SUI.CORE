@@ -5,4 +5,6 @@ export interface IBaseCardContext {
 }
 
 // tslint:disable-next-line:no-any variable-name
-export const BaseCardContext = React.createContext<IBaseCardContext>(null as any);
+export const BaseCardContext = React.createContext<IBaseCardContext>({
+  forceRenderTabs: false
+});
