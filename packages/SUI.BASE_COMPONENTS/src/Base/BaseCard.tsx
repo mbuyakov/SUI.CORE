@@ -47,7 +47,7 @@ export class BaseCard<T> extends React.Component<IBaseCardProps<T>, {
     if (firstChildrenIsTab) {
       // tslint:disable-next-line:ban-ts-ignore
       // @ts-ignore
-      body = rows[0].tabs.map((tab, tabIndex) => renderIBaseCardTabLayout(this.props.item, tab, tabIndex));
+      body = rows[0].tabs.map((tab, tabIndex) => renderIBaseCardTabLayout(this.props.item, tab, tabIndex, this.props.forceRenderTabs));
       // this.renderTabPanes(rows[0].tabs)
     } else {
       body = rows.map((row, rowIndex, arr) => renderIBaseCardRowLayout(this.props.item, row, rowIndex, 'card', arr.length, this.isFirstChildrenIsTab()));

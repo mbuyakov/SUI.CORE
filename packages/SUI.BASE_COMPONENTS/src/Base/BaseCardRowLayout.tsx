@@ -1,19 +1,20 @@
 // import MetaTable, { IMetaTableProps } from '@/Meta/MetaTable';
-import {Omit, OneOrArrayWithNulls, wrapInArrayWithoutNulls} from '@smsoft/sui-core';
-import {Descriptions} from 'antd';
+import { Omit, OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '@smsoft/sui-core';
+import { Descriptions } from 'antd';
 import Collapse from 'antd/lib/collapse';
 import Divider from 'antd/lib/divider';
 import Tabs from 'antd/lib/tabs';
 import * as React from 'react';
 
-import {BASE_CARD_ITEM, BASE_CARD_ROW, BASE_CARD_ROWS, BASE_FORM_ITEM} from "../styles";
+import { BASE_CARD_ITEM, BASE_CARD_ROW, BASE_CARD_ROWS, BASE_FORM_ITEM } from '../styles';
 
-import {BaseCard} from './BaseCard';
-import {IBaseCardCollapseLayout, renderIBaseCardCollapseLayout} from './BaseCardCollapseLayout';
-import {IBaseCardColLayout, IBaseFormColLayout} from './BaseCardColLayout';
-import {IBaseCardDescItemLayout, IBaseCardItemLayout, renderIBaseCardItem} from './BaseCardItemLayout';
-import {IBaseCardTabLayout, IBaseFormTabLayout, renderIBaseCardTabLayout} from './BaseCardTabLayout';
-import {IBaseFormDescItemLayout, IBaseFormItemLayout, renderIBaseFormItemLayout} from './BaseFormItemLayout';
+import { BaseCard } from './BaseCard';
+import { IBaseCardCollapseLayout, renderIBaseCardCollapseLayout } from './BaseCardCollapseLayout';
+import { IBaseCardColLayout, IBaseFormColLayout } from './BaseCardColLayout';
+import { BaseCardContext } from './BaseCardContext';
+import { IBaseCardDescItemLayout, IBaseCardItemLayout, renderIBaseCardItem } from './BaseCardItemLayout';
+import { IBaseCardTabLayout, IBaseFormTabLayout, renderIBaseCardTabLayout } from './BaseCardTabLayout';
+import { IBaseFormDescItemLayout, IBaseFormItemLayout, renderIBaseFormItemLayout } from './BaseFormItemLayout';
 
 export interface IBaseCardRowLayout<T> {
   collapsePanels?: Array<IBaseCardCollapseLayout<T>>;
@@ -62,9 +63,13 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
           />
         )
         : (
-          <Tabs defaultActiveKey="0">
-            {wrapInArrayWithoutNulls(row.tabs).map((tab, index) => renderIBaseCardTabLayout(sourceItem, tab, index))}
-          </Tabs>
+          <BaseCardContext.Consumer>
+            {({ forceRenderTabs }) => (
+              <Tabs defaultActiveKey="0">
+                {(row.tabs as Array<IBaseCardTabLayout<T>>).map((tab, index) => renderIBaseCardTabLayout(sourceItem, tab, index, forceRenderTabs))}
+              </Tabs>
+            )}
+          </BaseCardContext.Consumer>
         )
     );
   }
@@ -140,14 +145,14 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
         itemsInRow.push(
           <div className={(item && (item as IBaseFormItemLayout<T>).fieldName) ? BASE_FORM_ITEM : BASE_CARD_ITEM}>
             {item && ((item as IBaseFormItemLayout<T>).fieldName ? renderIBaseFormItemLayout(item as IBaseFormItemLayout<T>) : renderIBaseCardItem(sourceItem, item))}
-          </div>
+          </div>,
         );
       }
 
       rows.push(
         <div className={BASE_CARD_ROW}>
           {itemsInRow}
-        </div>
+        </div>,
       );
     }
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.4](https://github.com/mbuyakov/SUI.CORE/compare/v2.8.3...v2.8.4) (2019-08-23)
+
+
+### Bug Fixes
+
+* move context consumer ([05d2bce](https://github.com/mbuyakov/SUI.CORE/commit/05d2bce))
+
+
+
+
+
 ## [2.8.3](https://github.com/mbuyakov/SUI.CORE/compare/v2.8.2...v2.8.3) (2019-08-23)
 
 

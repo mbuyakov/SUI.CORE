@@ -3,7 +3,6 @@ import Icon from 'antd/lib/icon';
 import Tabs from 'antd/lib/tabs';
 import * as React from 'react';
 
-import {BaseCardContext} from './BaseCardContext';
 import { IBaseCardRowLayout, IBaseFormRowLayout, renderIBaseCardRowLayout } from './BaseCardRowLayout';
 
 export interface IBaseCardTabLayout<T> {
@@ -17,14 +16,10 @@ export type IBaseFormTabLayout<T> = Omit<IBaseCardTabLayout<T>, 'rows'> & {
 }
 
 // tslint:disable-next-line:no-any
-export function renderIBaseCardTabLayout<T>(sourceItem: any, tab: IBaseCardTabLayout<T> | IBaseFormTabLayout<T>, tabIndex: number): JSX.Element {
+export function renderIBaseCardTabLayout<T>(sourceItem: any, tab: IBaseCardTabLayout<T> | IBaseFormTabLayout<T>, tabIndex: number, forceRenderTabs: boolean): JSX.Element {
   return (
-    <BaseCardContext.Consumer key={tabIndex.toString()}>
-      {({forceRenderTabs}) => (
-        <Tabs.TabPane key={tabIndex.toString()} tab={<span>{tab.icon && <Icon type={tab.icon}/>}{tab.title}</span>} forceRender={forceRenderTabs}>
-          {wrapInArrayWithoutNulls(tab.rows).map((row, index, arr) => renderIBaseCardRowLayout(sourceItem, row, index, 'tab', arr.length))}
-        </Tabs.TabPane>
-      )}
-    </BaseCardContext.Consumer>
+    <Tabs.TabPane key={tabIndex.toString()} tab={<span>{tab.icon && <Icon type={tab.icon}/>}{tab.title}</span>} forceRender={forceRenderTabs}>
+      {wrapInArrayWithoutNulls(tab.rows).map((row, index, arr) => renderIBaseCardRowLayout(sourceItem, row, index, 'tab', arr.length))}
+    </Tabs.TabPane>
   );
 }
