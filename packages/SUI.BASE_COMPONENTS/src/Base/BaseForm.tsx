@@ -17,7 +17,7 @@ export type BaseFormChildrenFn = (table: JSX.Element, onClear: () => void, onSub
 // tslint:disable-next-line:no-any
 export type SaveFormFn = (values: IObjectWithIndex) => any;
 
-export type IBaseFormProps<T> = Omit<IBaseCardProps<T>, 'item' | 'rows'> & {
+export type IBaseFormProps<T> = Omit<IBaseCardProps<T>, 'item' | 'rows' | 'forceRenderTabs'> & {
   children: BaseFormChildrenFn
   // tslint:disable-next-line:no-any
   initialValues?: IObjectWithIndex
@@ -117,6 +117,7 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
     const errors = hasErrors(form.getFieldsError());
     const table = (
       <BaseCard
+        forceRenderTabs={true}
         {...rest}
       />
     );

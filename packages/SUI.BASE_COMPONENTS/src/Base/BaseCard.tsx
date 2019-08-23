@@ -7,6 +7,7 @@ import * as React from 'react';
 
 import { IBaseCardRowLayout, renderIBaseCardRowLayout } from './BaseCardRowLayout';
 import { renderIBaseCardTabLayout } from './BaseCardTabLayout';
+import { BaseCardContext } from './BaseCardContext';
 
 const renderTabBar = () => <React.Fragment/>;
 
@@ -14,6 +15,7 @@ export interface IBaseCardProps<T> {
   cardStyle?: React.CSSProperties;
   cardTitle?: JSX.Element | string; // only for noCard: false
   extra?: string | JSX.Element;
+  forceRenderTabs?: boolean;
   item?: T;
   noCard?: boolean; // Paradox mode
   rows: OneOrArrayWithNulls<IBaseCardRowLayout<T>>;
@@ -52,25 +54,27 @@ export class BaseCard<T> extends React.Component<IBaseCardProps<T>, {
     }
 
     return (
-      this.props.noCard
-        ? <>{body}</>
-        : (
-          <Card
-            title={this.props.cardTitle}
-            tabList={tabList}
-            defaultActiveTabKey="0"
-            onTabChange={this.onTabChange}
-            extra={this.props.extra}
-            style={this.props.cardStyle}
-            bodyStyle={firstChildrenIsTab ? { padding: 0 } : {}}
-          >
-            {firstChildrenIsTab
-              ? <Tabs style={{ padding: 24 }} renderTabBar={renderTabBar} activeKey={this.state.tab}>
-                {body}
-              </Tabs>
-              : body}
-          </Card>
-        )
+      <BaseCardContext.Provider value={{forceRenderTabs: this.props.forceRenderTabs as boolean}}>
+        {this.props.noCard
+          ? <>{body}</>
+          : (
+            <Card
+              title={this.props.cardTitle}
+              tabList={tabList}
+              defaultActiveTabKey="0"
+              onTabChange={this.onTabChange}
+              extra={this.props.extra}
+              style={this.props.cardStyle}
+              bodyStyle={firstChildrenIsTab ? { padding: 0 } : {}}
+            >
+              {firstChildrenIsTab
+                ? <Tabs style={{ padding: 24 }} renderTabBar={renderTabBar} activeKey={this.state.tab}>
+                  {body}
+                </Tabs>
+                : body}
+            </Card>
+          )}
+      </BaseCardContext.Provider>
     );
   }
 
