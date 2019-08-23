@@ -19,7 +19,7 @@ export type IBaseFormTabLayout<T> = Omit<IBaseCardTabLayout<T>, 'rows'> & {
 // tslint:disable-next-line:no-any
 export function renderIBaseCardTabLayout<T>(sourceItem: any, tab: IBaseCardTabLayout<T> | IBaseFormTabLayout<T>, tabIndex: number): JSX.Element {
   return (
-    <BaseCardContext.Consumer>
+    <BaseCardContext.Consumer key={tabIndex.toString()}>
       {({forceRenderTabs}) => (
         <Tabs.TabPane key={tabIndex.toString()} tab={<span>{tab.icon && <Icon type={tab.icon}/>}{tab.title}</span>} forceRender={forceRenderTabs}>
           {wrapInArrayWithoutNulls(tab.rows).map((row, index, arr) => renderIBaseCardRowLayout(sourceItem, row, index, 'tab', arr.length))}
