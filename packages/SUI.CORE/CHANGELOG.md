@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.5.0...v2.8.0) (2019-08-23)
+
+
+### Features
+
+* new formatter for JSON ([dbc4daf](https://github.com/mbuyakov/SUI.CORE/commit/dbc4daf))
+
+
+
+
+
 ## [2.7.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.7.0...v2.7.1) (2019-08-22)
 
 **Note:** Version bump only for package @smsoft/sui-core

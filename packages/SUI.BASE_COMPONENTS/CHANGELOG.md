@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.5.0...v2.8.0) (2019-08-23)
+
+
+### Bug Fixes
+
+* **dnf:** fix dnf onChange bug ([516cb94](https://github.com/mbuyakov/SUI.CORE/commit/516cb94))
+* **dnf:** props cardStyle required => optional ([9d40ca3](https://github.com/mbuyakov/SUI.CORE/commit/9d40ca3))
+* make BaseCard lazy, no lazy for BaseForm ([17a1a2c](https://github.com/mbuyakov/SUI.CORE/commit/17a1a2c))
+
+
+### Features
+
+* **dnf:** and andCardStyle props to Dnf ([15e3213](https://github.com/mbuyakov/SUI.CORE/commit/15e3213))
+* **separatedrow:** add customDivider property to SeparatedRow ([c4404bb](https://github.com/mbuyakov/SUI.CORE/commit/c4404bb))
+
+
+
+
+
 ## [2.7.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.7.0...v2.7.1) (2019-08-22)
 
 **Note:** Version bump only for package @smsoft/sui-base-components
