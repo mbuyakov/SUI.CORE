@@ -5,9 +5,9 @@ import Tabs from 'antd/lib/tabs';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
+import { BaseCardContext } from './BaseCardContext';
 import { IBaseCardRowLayout, renderIBaseCardRowLayout } from './BaseCardRowLayout';
 import { renderIBaseCardTabLayout } from './BaseCardTabLayout';
-import { BaseCardContext } from './BaseCardContext';
 
 const renderTabBar = () => <React.Fragment/>;
 
