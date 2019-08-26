@@ -1,9 +1,10 @@
 import { Omit, OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '@smsoft/sui-core';
 import Icon from 'antd/lib/icon';
-import Tabs from 'antd/lib/tabs';
+import Tabs, { TabsProps } from 'antd/lib/tabs';
 import * as React from 'react';
 
 import { IBaseCardRowLayout, IBaseFormRowLayout, renderIBaseCardRowLayout } from './BaseCardRowLayout';
+import { BaseCardTabContext } from './BaseCardTabContext';
 
 export interface IBaseCardTabLayout<T> {
   icon?: string;
@@ -23,3 +24,23 @@ export function renderIBaseCardTabLayout<T>(sourceItem: any, tab: IBaseCardTabLa
     </Tabs.TabPane>
   );
 }
+
+type ManagedTabsProps = Omit<TabsProps, 'onChange' | 'activeKey'>;
+
+// tslint:disable-next-line:variable-name
+const ManagedTabsInner: React.FC<ManagedTabsProps> = (props): JSX.Element => {
+  const [activeTab, setTab] = React.useState(props.defaultActiveKey);
+
+  return (
+    <BaseCardTabContext.Provider value={setTab}>
+      <Tabs
+        {...props}
+        activeKey={activeTab}
+        onChange={setTab}
+      />
+    </BaseCardTabContext.Provider>
+  );
+};
+
+// tslint:disable-next-line:variable-name
+export const ManagedTabs = ManagedTabsInner;

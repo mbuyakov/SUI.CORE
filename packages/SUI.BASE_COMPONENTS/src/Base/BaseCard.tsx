@@ -7,6 +7,7 @@ import * as React from 'react';
 
 import { BaseCardContext } from './BaseCardContext';
 import { IBaseCardRowLayout, renderIBaseCardRowLayout } from './BaseCardRowLayout';
+import { BaseCardTabContext } from './BaseCardTabContext';
 import { renderIBaseCardTabLayout } from './BaseCardTabLayout';
 
 const renderTabBar = () => <React.Fragment/>;
@@ -54,7 +55,7 @@ export class BaseCard<T> extends React.Component<IBaseCardProps<T>, {
     }
 
     return (
-      <BaseCardContext.Provider value={{forceRenderTabs: this.props.forceRenderTabs as boolean}}>
+      <BaseCardContext.Provider value={{ forceRenderTabs: this.props.forceRenderTabs as boolean }}>
         {this.props.noCard
           ? <>{body}</>
           : (
@@ -68,9 +69,11 @@ export class BaseCard<T> extends React.Component<IBaseCardProps<T>, {
               bodyStyle={firstChildrenIsTab ? { padding: 0 } : {}}
             >
               {firstChildrenIsTab
-                ? <Tabs style={{ padding: 24 }} renderTabBar={renderTabBar} activeKey={this.state.tab}>
-                  {body}
-                </Tabs>
+                ? <BaseCardTabContext.Provider value={this.onTabChange}>
+                  <Tabs style={{ padding: 24 }} renderTabBar={renderTabBar} activeKey={this.state.tab}>
+                    {body}
+                  </Tabs>
+                </BaseCardTabContext.Provider>
                 : body}
             </Card>
           )}

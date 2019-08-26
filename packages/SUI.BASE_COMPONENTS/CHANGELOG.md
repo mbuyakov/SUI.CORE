@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.8.4...v2.9.0) (2019-08-26)
+
+
+### Features
+
+* custom tabs state control ([04a0abb](https://github.com/mbuyakov/SUI.CORE/commit/04a0abb))
+
+
+
+
+
 ## [2.8.4](https://github.com/mbuyakov/SUI.CORE/compare/v2.8.3...v2.8.4) (2019-08-23)
 
 
