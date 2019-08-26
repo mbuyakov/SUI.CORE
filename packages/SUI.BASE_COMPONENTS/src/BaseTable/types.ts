@@ -46,6 +46,7 @@ export interface IBaseTableColLayout {
   defaultGrouping?: boolean;
   defaultSorting?: SortingDirection;
   defaultVisible?: boolean;
+  exportable?: boolean;
   groupingEnabled?: boolean;
   id: string;
   render?: TableCellRender;
