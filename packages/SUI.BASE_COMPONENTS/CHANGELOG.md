@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.11.0...v2.11.1) (2019-08-26)
+
+
+### Bug Fixes
+
+* fix ([caeb567](https://github.com/mbuyakov/SUI.CORE/commit/caeb567))
+
+
+
+
+
 # [2.11.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.10.0...v2.11.0) (2019-08-26)
 
 
