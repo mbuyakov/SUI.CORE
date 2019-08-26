@@ -17,7 +17,7 @@ import { HIDE_BUTTONS } from '../styles';
 import { EmptyMessageComponent, ExportPlugin, TableNoDataCell, WarningPlugin } from './extends';
 import { BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, StringColumnFilter } from './filters';
 import { defaultSelection, ISelectionTable } from './ISelectionTable';
-import { IBaseTableProps, TableCellRender } from './types';
+import { IBaseTableColLayout, IBaseTableProps, TableCellRender } from './types';
 
 const Cell = Table.Cell;
 const ToggleCell = TableRowDetail.ToggleCell;
@@ -95,6 +95,16 @@ export class BaseTable<TSelection = defaultSelection>
     return this.state && this.state.selection || [];
   }
 
+  @autobind
+  public mapCols(): Array<IBaseTableColLayout & { name: string, title: string, getCellValue(row: any): any }> {
+    return this.props.cols.map(col => ({
+      ...col,
+      getCellValue: (row: any): any => (col.dataKey && getDataByKey(row, col.dataKey)) || (col.defaultData !== undefined ? col.defaultData : row[col.id]),
+      name: col.id,
+      title: col.title || translate(col.id, true) || translate(col.id.replace(/Id$/, '')) as string,
+    }));
+  }
+
   // TODO cyclomatic-complexity
   // tslint:disable-next-line:cyclomatic-complexity
   public render(): JSX.Element {
@@ -108,12 +118,7 @@ export class BaseTable<TSelection = defaultSelection>
     const selection = defaultIfNotBoolean(this.props.selection, false);
     const allowExport = defaultIfNotBoolean(this.props.allowExport, true);
 
-    const cols = this.props.cols.map(col => ({
-      ...col,
-      getCellValue: (row: any): any => (col.dataKey && getDataByKey(row, col.dataKey)) || (col.defaultData !== undefined ? col.defaultData : row[col.id]),
-      name: col.id,
-      title: col.title || translate(col.id, true) || translate(col.id.replace(/Id$/, '')) as string,
-    }));
+    const cols = this.mapCols();
 
     const defaultSorting = this.props.defaultSortings || this.props.cols
       .filter(col => col.defaultSorting)
@@ -382,49 +387,23 @@ export class BaseTable<TSelection = defaultSelection>
 
   @autobind
   private onExport(): void {
+    const cols = this.mapCols().filter(col => defaultIfNotBoolean(col.exportable, true));
     // tslint:disable-next-line:ban-ts-ignore
     // @ts-ignore
-    this.exportData = this.exportData.map(row => {
-      // tslint:disable-next-line:forin
-      for (const oldKey in row) {
-        const colByKey = this.props.cols.find(col => col.id === oldKey);
-        const isExportable = defaultIfNotBoolean(colByKey && colByKey.exportable, true);
-        if(isExportable) {
-          // noinspection JSUnfilteredForInLoop
-          let newKey = oldKey;
-          if (colByKey != null && colByKey.title) {
-            // tslint:disable-next-line:ban-ts-ignore
-            // @ts-ignore
-            newKey = colByKey.title;
-          }
-          if (oldKey === newKey) {
-            // tslint:disable-next-line:ban-ts-ignore
-            // @ts-ignore
-            // noinspection JSUnfilteredForInLoop,TypeScriptValidateTypes
-            newKey = translate(oldKey);
-          }
-          // tslint:disable-next-line:triple-equals
-          if (oldKey != newKey) {
-            // tslint:disable-next-line:ban-ts-ignore
-            // @ts-ignore
-            // noinspection JSUnfilteredForInLoop
-            Object.defineProperty(row, newKey, Object.getOwnPropertyDescriptor(row, oldKey));
-            // tslint:disable-next-line:no-dynamic-delete
-            delete row[oldKey];
-          }
-        } else {
-          // tslint:disable-next-line:no-dynamic-delete
-          delete row[oldKey];
-        }
-      }
-
-      delete row.__typename;
-
-      return row;
+    const formattedData = this.exportData.map(row => {
+      const ret = {};
+      cols.forEach(col => {
+        // tslint:disable-next-line:ban-ts-ignore
+        // @ts-ignore
+        ret[col.title] = col.getCellValue(row);
+      });
     });
-    console.log(this.exportData);
-    // delete this.exportData[0]['Тип имени'];
-    const ws = XLSX.utils.json_to_sheet(this.exportData);
+    // tslint:disable-next-line:ban-ts-ignore
+    // @ts-ignore
+    console.log(formattedData);
+    const ws = XLSX.utils.json_to_sheet(formattedData, {
+        header: cols.map(col => col.title)
+    });
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, '1');
     XLSX.writeFile(wb, 'table.xlsx');
