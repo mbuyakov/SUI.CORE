@@ -387,33 +387,38 @@ export class BaseTable<TSelection = defaultSelection>
     this.exportData = this.exportData.map(row => {
       // tslint:disable-next-line:forin
       for (const oldKey in row) {
-        // noinspection JSUnfilteredForInLoop
-        let newKey = oldKey;
-        // noinspection JSUnfilteredForInLoop
-        const colWithTitle = this.props.cols.find(col => col.id === oldKey && col.title != null);
-        if (colWithTitle != null) {
-          // tslint:disable-next-line:ban-ts-ignore
-          // @ts-ignore
-          newKey = colWithTitle.title;
-        }
-        if (oldKey === newKey) {
-          // tslint:disable-next-line:ban-ts-ignore
-          // @ts-ignore
-          // noinspection JSUnfilteredForInLoop,TypeScriptValidateTypes
-          newKey = translate(oldKey);
-        }
-        // tslint:disable-next-line:triple-equals
-        if (oldKey != newKey) {
-          // tslint:disable-next-line:ban-ts-ignore
-          // @ts-ignore
+        const colByKey = this.props.cols.find(col => col.id === oldKey);
+        const isExportable = defaultIfNotBoolean(colByKey && colByKey.exportable, true);
+        if(isExportable) {
           // noinspection JSUnfilteredForInLoop
-          Object.defineProperty(row, newKey, Object.getOwnPropertyDescriptor(row, oldKey));
+          let newKey = oldKey;
+          if (colByKey != null && colByKey.title) {
+            // tslint:disable-next-line:ban-ts-ignore
+            // @ts-ignore
+            newKey = colByKey.title;
+          }
+          if (oldKey === newKey) {
+            // tslint:disable-next-line:ban-ts-ignore
+            // @ts-ignore
+            // noinspection JSUnfilteredForInLoop,TypeScriptValidateTypes
+            newKey = translate(oldKey);
+          }
+          // tslint:disable-next-line:triple-equals
+          if (oldKey != newKey) {
+            // tslint:disable-next-line:ban-ts-ignore
+            // @ts-ignore
+            // noinspection JSUnfilteredForInLoop
+            Object.defineProperty(row, newKey, Object.getOwnPropertyDescriptor(row, oldKey));
+            // tslint:disable-next-line:no-dynamic-delete
+            delete row[oldKey];
+          }
+        } else {
           // tslint:disable-next-line:no-dynamic-delete
           delete row[oldKey];
         }
       }
 
-      row.__typename = undefined;
+      delete row.__typename;
 
       return row;
     });
