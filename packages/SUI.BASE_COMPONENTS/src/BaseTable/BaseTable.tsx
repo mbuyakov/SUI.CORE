@@ -397,6 +397,8 @@ export class BaseTable<TSelection = defaultSelection>
         // @ts-ignore
         ret[col.title] = col.getCellValue(row);
       });
+
+      return ret;
     });
     // tslint:disable-next-line:ban-ts-ignore
     // @ts-ignore
