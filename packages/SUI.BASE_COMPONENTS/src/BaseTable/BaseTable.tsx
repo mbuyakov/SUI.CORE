@@ -418,7 +418,7 @@ export class BaseTable<TSelection = defaultSelection>
       return row;
     });
     console.log(this.exportData);
-    delete this.exportData[0]['Тип имени'];
+    // delete this.exportData[0]['Тип имени'];
     const ws = XLSX.utils.json_to_sheet(this.exportData);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, '1');
