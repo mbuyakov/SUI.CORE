@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.10.0...v2.11.0) (2019-08-26)
+
+
+### Features
+
+* new export from table ([649865b](https://github.com/mbuyakov/SUI.CORE/commit/649865b))
+
+
+
+
+
 # [2.10.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.9.2...v2.10.0) (2019-08-26)
 
 
