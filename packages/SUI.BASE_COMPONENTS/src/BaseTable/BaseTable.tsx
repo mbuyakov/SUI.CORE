@@ -1,23 +1,23 @@
 /* tslint:disable:no-magic-numbers no-any */
 /* tslint:disable:variable-name */
 import { Getter, Getters } from '@devexpress/dx-react-core';
-import {Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSelection, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
-import {ColumnChooser, DragDropProvider, Grid, GroupingPanel, PagingPanel, Table, TableColumnReordering, TableColumnResizing, TableColumnVisibility, TableFilterRow, TableGroupRow, TableHeaderRow, TableRowDetail, TableSelection, Toolbar, VirtualTable} from '@devexpress/dx-react-grid-material-ui';
-import {TableRow} from '@material-ui/core';
-import {defaultIfNotBoolean, getDataByKey, translate} from '@smsoft/sui-core';
+import { Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSelection, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo } from '@devexpress/dx-react-grid';
+import { ColumnChooser, DragDropProvider, Grid, GroupingPanel, PagingPanel, Table, TableColumnReordering, TableColumnResizing, TableColumnVisibility, TableFilterRow, TableGroupRow, TableHeaderRow, TableRowDetail, TableSelection, Toolbar, VirtualTable } from '@devexpress/dx-react-grid-material-ui';
+import { TableRow } from '@material-ui/core';
+import { defaultIfNotBoolean, getDataByKey, translate } from '@smsoft/sui-core';
 import Result from 'ant-design-pro/lib/Result';
-import {Card, Icon} from 'antd';
+import { Card, Icon } from 'antd';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import * as React from 'react';
 import * as XLSX from 'xlsx';
 
-import {HIDE_BUTTONS} from "../styles";
+import { HIDE_BUTTONS } from '../styles';
 
-import {EmptyMessageComponent, ExportPlugin, TableNoDataCell, WarningPlugin} from './extends';
-import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, StringColumnFilter} from "./filters";
-import {defaultSelection, ISelectionTable} from './ISelectionTable';
-import {IBaseTableProps, TableCellRender} from './types';
+import { EmptyMessageComponent, ExportPlugin, TableNoDataCell, WarningPlugin } from './extends';
+import { BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, StringColumnFilter } from './filters';
+import { defaultSelection, ISelectionTable } from './ISelectionTable';
+import { IBaseTableProps, TableCellRender } from './types';
 
 const Cell = Table.Cell;
 const ToggleCell = TableRowDetail.ToggleCell;
@@ -28,11 +28,11 @@ const ToolbarRoot = Toolbar.Root;
 // Не нашел куда добавить
 export function booleanRender(value: boolean): JSX.Element {
   // noinspection SuspiciousTypeOfGuard
-  return (typeof (value) === "boolean")
+  return (typeof (value) === 'boolean')
     ? value
       ? <Icon type="check" theme="outlined"/>
       : <Icon type="close" theme="outlined"/>
-    : <Icon type="question" theme="outlined"/>
+    : <Icon type="question" theme="outlined"/>;
 }
 
 export class BaseTable<TSelection = defaultSelection>
@@ -50,31 +50,31 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   private static getSearchComponent(props: any): React.ReactNode {
-    const searchProps = {...props, ...props.column.search};
+    const searchProps = { ...props, ...props.column.search };
 
     switch (props.column.search && props.column.search.type) {
       /*case "catalog":
         return (<CatalogColumnFilter {...searchProps} />);*/
-      case "customSelect":
+      case 'customSelect':
         return (<CustomSelectFilter {...searchProps} />);
-      case "datetime":
+      case 'datetime':
         return (<DatetimeColumnFilter {...searchProps} />);
-      case "date":
+      case 'date':
         return (<DateColumnFilter {...searchProps} />);
-      case "boolean":
+      case 'boolean':
         return (<BooleanColumnFilter {...searchProps} />);
-      case "none":
+      case 'none':
         return null;
       default:
         return (<StringColumnFilter {...props}/>);
     }
   }
 
-  private static pageInfo({from, to, count}: { count: number, from: number, to: number }): string {
+  private static pageInfo({ from, to, count }: { count: number, from: number, to: number }): string {
     return `${from}-${to} из ${count}`;
   }
 
-  private static virtualPageInfo({count}: { count: number }): string {
+  private static virtualPageInfo({ count }: { count: number }): string {
     return `Количество записей: ${count}`;
   }
 
@@ -88,7 +88,7 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   public clearSelection(): void {
-    this.setState({selection: []});
+    this.setState({ selection: [] });
   }
 
   public getSelection(): TSelection[] {
@@ -139,10 +139,10 @@ export class BaseTable<TSelection = defaultSelection>
 
     const defaultGrouping = this.props.cols
       .filter(col => col.defaultGrouping)
-      .map(value => ({columnName: value.id}));
+      .map(value => ({ columnName: value.id }));
 
     const enableGrouping = this.props.cols
-      .map(value => ({columnName: value.id, groupingEnabled: defaultIfNotBoolean(value.groupingEnabled, true)}));
+      .map(value => ({ columnName: value.id, groupingEnabled: defaultIfNotBoolean(value.groupingEnabled, true) }));
 
     const sortingExtension = this.props.cols
       .filter(col => col.comparator)
@@ -246,20 +246,20 @@ export class BaseTable<TSelection = defaultSelection>
       predicate: (value: any, filter: Filter, row: any) => {
         let filters = [filter];
 
-        if (filter.operation === "interval") {
+        if (filter.operation === 'interval') {
           const filterValue = filter.value as any as [string, string];
 
           filters = [
             {
               columnName: filter.columnName,
-              operation: "greaterThanOrEqual",
-              value: filterValue && filterValue[0]
+              operation: 'greaterThanOrEqual',
+              value: filterValue && filterValue[0],
             },
             {
               columnName: filter.columnName,
-              operation: "lessThanOrEqual",
-              value: filterValue && filterValue[1]
-            }
+              operation: 'lessThanOrEqual',
+              value: filterValue && filterValue[1],
+            },
           ];
         }
 
@@ -269,19 +269,19 @@ export class BaseTable<TSelection = defaultSelection>
           innerFilter.value === null || innerFilter.value === undefined
             ? true
             : defaultPredicate(value, innerFilter, row));
-      }
+      },
     }));
 
     return (
       <Card
         style={{
-          ...(borderless ? {} : {margin: 10}),
-          ...(this.props.fitToCardBody ? {margin: -24, marginTop: -23} : {}),
-          ...(this.props.fitToCollapseBody ? {margin: -2} : {}),
-          ...(this.props.fitToRowDetailContainer ? {margin: "-3px -24px"} : {}),
+          ...(borderless ? {} : { margin: 10 }),
+          ...(this.props.fitToCardBody ? { margin: -24, marginTop: -23 } : {}),
+          ...(this.props.fitToCollapseBody ? { margin: -2 } : {}),
+          ...(this.props.fitToRowDetailContainer ? { margin: '-3px -24px' } : {}),
           ...(this.props.paperStyle || {}),
         }}
-        bodyStyle={{padding: 0}}
+        bodyStyle={{ padding: 0 }}
         title={this.props.title}
         type={this.props.cardType}
         extra={this.props.extra}
@@ -290,7 +290,7 @@ export class BaseTable<TSelection = defaultSelection>
         {cols.length === 0 && <>
           {this.props.noColsContent}
           <Result
-            style={{paddingTop: 42}}
+            style={{ paddingTop: 42 }}
             type="error"
             title="Нет доступных колонок"
           />
@@ -361,10 +361,10 @@ export class BaseTable<TSelection = defaultSelection>
               rootComponent={this.toolbarRootComponent}
             />
           )}
-          {visibility && <ColumnChooser messages={{showColumnChooser: 'Отобразить выбор колонок'}}/>}
+          {visibility && <ColumnChooser messages={{ showColumnChooser: 'Отобразить выбор колонок' }}/>}
           {allowExport && <ExportPlugin onClick={this.onExport}/>}
           {grouping && <GroupingPanel
-            messages={{groupByColumn: 'Перетащите заголовок колонки сюда для группировки'}}
+            messages={{ groupByColumn: 'Перетащите заголовок колонки сюда для группировки' }}
             showGroupingControls={true}
             showSortingControls={true}
           />}
@@ -374,8 +374,8 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private getterComputed({rows}: Getters): any[] {
-    this.exportData = rows.map((row: any) => ({...row}));
+  private getterComputed({ rows }: Getters): any[] {
+    this.exportData = rows.map((row: any) => ({ ...row }));
 
     return rows;
   }
@@ -387,21 +387,38 @@ export class BaseTable<TSelection = defaultSelection>
     this.exportData = this.exportData.map(row => {
       // tslint:disable-next-line:forin
       for (const oldKey in row) {
-        const newKey = translate(oldKey);
+        // noinspection JSUnfilteredForInLoop
+        let newKey = oldKey;
+        // noinspection JSUnfilteredForInLoop
+        const colWithTitle = this.props.cols.find(col => col.id === oldKey && col.title != null);
+        if (colWithTitle != null) {
+          // tslint:disable-next-line:ban-ts-ignore
+          // @ts-ignore
+          newKey = colWithTitle.title;
+        }
+        if (oldKey === newKey) {
+          // tslint:disable-next-line:ban-ts-ignore
+          // @ts-ignore
+          // noinspection JSUnfilteredForInLoop,TypeScriptValidateTypes
+          newKey = translate(oldKey);
+        }
         // tslint:disable-next-line:triple-equals
         if (oldKey != newKey) {
           // tslint:disable-next-line:ban-ts-ignore
           // @ts-ignore
+          // noinspection JSUnfilteredForInLoop
           Object.defineProperty(row, newKey, Object.getOwnPropertyDescriptor(row, oldKey));
           // tslint:disable-next-line:no-dynamic-delete
           delete row[oldKey];
         }
       }
 
+      row.__typename = undefined;
+
       return row;
     });
     console.log(this.exportData);
-    delete this.exportData[0]["Тип имени"];
+    delete this.exportData[0]['Тип имени'];
     const ws = XLSX.utils.json_to_sheet(this.exportData);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, '1');
@@ -411,7 +428,7 @@ export class BaseTable<TSelection = defaultSelection>
   @autobind
   private onSelectionChange(selection: TSelection[]): void {
     console.log(selection);
-    this.setState({selection});
+    this.setState({ selection });
   }
 
   @autobind

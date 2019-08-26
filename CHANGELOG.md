@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.9.0...v2.9.1) (2019-08-26)
+
+
+### Bug Fixes
+
+* extended translate ([b4dc997](https://github.com/mbuyakov/SUI.CORE/commit/b4dc997))
+
+
+
+
+
 # [2.9.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.8.4...v2.9.0) (2019-08-26)
 
 
