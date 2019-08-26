@@ -3,7 +3,6 @@ import { Omit, OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '@smsoft/sui-
 import { Descriptions } from 'antd';
 import Collapse from 'antd/lib/collapse';
 import Divider from 'antd/lib/divider';
-import Tabs from 'antd/lib/tabs';
 import * as React from 'react';
 
 import { BASE_CARD_ITEM, BASE_CARD_ROW, BASE_CARD_ROWS, BASE_FORM_ITEM } from '../styles';
@@ -13,7 +12,7 @@ import { IBaseCardCollapseLayout, renderIBaseCardCollapseLayout } from './BaseCa
 import { IBaseCardColLayout, IBaseFormColLayout } from './BaseCardColLayout';
 import { BaseCardContext } from './BaseCardContext';
 import { IBaseCardDescItemLayout, IBaseCardItemLayout, renderIBaseCardItem } from './BaseCardItemLayout';
-import { IBaseCardTabLayout, IBaseFormTabLayout, renderIBaseCardTabLayout } from './BaseCardTabLayout';
+import { IBaseCardTabLayout, IBaseFormTabLayout, ManagedTabs, renderIBaseCardTabLayout } from './BaseCardTabLayout';
 import { IBaseFormDescItemLayout, IBaseFormItemLayout, renderIBaseFormItemLayout } from './BaseFormItemLayout';
 
 export interface IBaseCardRowLayout<T> {
@@ -65,9 +64,9 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
         : (
           <BaseCardContext.Consumer>
             {({ forceRenderTabs }) => (
-              <Tabs defaultActiveKey="0">
+              <ManagedTabs defaultActiveKey="0">
                 {(row.tabs as Array<IBaseCardTabLayout<T>>).map((tab, index) => renderIBaseCardTabLayout(sourceItem, tab, index, forceRenderTabs))}
-              </Tabs>
+              </ManagedTabs>
             )}
           </BaseCardContext.Consumer>
         )
