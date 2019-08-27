@@ -1,5 +1,7 @@
 .idea
+.gradle
 .DS_Store
+build
 node_modules
 *.log*
 yarn.lock
