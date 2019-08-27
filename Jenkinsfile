@@ -18,7 +18,7 @@ pipeline {
                         rtGradleDeployer (
                             id: "GRADLE_DEPLOYER",
                             serverId: "artifactory1",
-                            repo: "sui",
+                            repo: "lib-release-local",
                         )
 
                         rtGradleResolver (
