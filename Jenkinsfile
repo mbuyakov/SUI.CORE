@@ -13,7 +13,20 @@ pipeline {
                 """
             }
         }
-        stage("Build") {
+        stage("Build JVM") {
+//           when {
+//               branch "master"
+//           }
+            steps {
+              rtGradleRun (
+                  tool: GRADLE_TOOL, // Tool name from Jenkins configuration
+                  rootDir: "java/",
+                  buildFile: 'build.gradle',
+                  tasks: 'clean artifactoryPublish',
+              )
+            }
+        }
+        stage("Build JS") {
             when {
                 branch "master"
             }
@@ -35,7 +48,7 @@ pipeline {
 //                 """
 //             }
 //         }
-        stage("Deploy master") {
+        stage("Deploy JS master") {
             when {
                 branch "master"
             }
