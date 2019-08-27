@@ -35,6 +35,10 @@ pipeline {
                   "target": "sui/${BUILD_NUMBER}/ru/smsoft/sui-entity/1.0-SHAPSHOT/sui-entity-1.0-SHAPSHOT.jar"
                 },
                 {
+                    "pattern": "**/sui-meta-schema-service/build/libs/*.jar",
+                    "target": "sui/${BUILD_NUMBER}/ru/smsoft/sui-meta-schema-service/1.0-SHAPSHOT/sui-meta-schema-service-1.0-SHAPSHOT.jar"
+                  },
+                {
                   "pattern": "**/sui-security/build/libs/*.jar",
                   "target": "sui/${BUILD_NUMBER}/ru/smsoft/sui-security/1.0-SHAPSHOT/sui-security-1.0-SHAPSHOT.jar"
                 }
