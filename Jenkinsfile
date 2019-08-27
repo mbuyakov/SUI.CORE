@@ -13,6 +13,21 @@ pipeline {
                 """
             }
         }
+        stage ('Artifactory configuration') {
+                    steps {
+                        rtGradleDeployer (
+                            id: "GRADLE_DEPLOYER",
+                            serverId: "artifactory1",
+                            repo: "sui",
+                        )
+
+                        rtGradleResolver (
+                            id: "GRADLE_RESOLVER",
+                            serverId: "artifactory1",
+                            repo: "jcenter"
+                        )
+                    }
+                }
         stage("Build JVM") {
 //           when {
 //               branch "master"
@@ -23,6 +38,8 @@ pipeline {
                   rootDir: "java/",
                   buildFile: 'build.gradle',
                   tasks: 'clean artifactoryPublish',
+                  deployerId: "GRADLE_DEPLOYER",
+                  resolverId: "GRADLE_RESOLVER"
               )
             }
         }
