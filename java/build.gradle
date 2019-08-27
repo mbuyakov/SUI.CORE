@@ -88,20 +88,5 @@ subprojects {
                 details.because 'Hardcoded replace from 1.2.71(spring dependency-management)'
             }
         }
-
-        task sourcesJar(type: Jar, dependsOn: classes) {
-          classifier = 'sources'
-          from sourceSets.main.allSource
-        }
-
-        task javadocJar(type: Jar, dependsOn: javadoc) {
-          classifier = 'javadoc'
-          from javadoc.destinationDir
-        }
-
-        artifacts {
-          archives sourcesJar
-          archives javadocJar
-        }
     }
 }
