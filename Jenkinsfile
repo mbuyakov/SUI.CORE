@@ -19,6 +19,7 @@ pipeline {
 //           }
             steps {
               rtGradleRun (
+                  tool: "gradle",
                   rootDir: "java/",
                   buildFile: 'build.gradle',
                   tasks: 'clean artifactoryPublish',
