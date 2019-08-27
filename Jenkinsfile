@@ -19,7 +19,7 @@ pipeline {
             tool: "gradle",
             rootDir: "java/",
             buildFile: 'build.gradle',
-            tasks: 'build'
+            tasks: '--rerun-tasks build'
         )
       }
     }
