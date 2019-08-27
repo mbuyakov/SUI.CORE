@@ -20,12 +20,6 @@ pipeline {
                             serverId: "artifactory1",
                             repo: "lib-release-local",
                         )
-
-                        rtGradleResolver (
-                            id: "GRADLE_RESOLVER",
-                            serverId: "artifactory1",
-                            repo: "jcenter"
-                        )
                     }
                 }
         stage("Build JVM") {
@@ -38,8 +32,7 @@ pipeline {
                   rootDir: "java/",
                   buildFile: 'build.gradle',
                   tasks: 'clean artifactoryPublish',
-                  deployerId: "GRADLE_DEPLOYER",
-                  resolverId: "GRADLE_RESOLVER"
+                  deployerId: "GRADLE_DEPLOYER"
               )
             }
         }
