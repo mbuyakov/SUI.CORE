@@ -35,23 +35,23 @@ pipeline {
                   "target": "sui/ru/smsoft/sui/sui-entity/${BUILD_NUMBER}/sui-entity-${BUILD_NUMBER}.jar"
                 },
                 {
-                  "pattern": "**/sui-entity/build/libs/${BUILD_NUMBER}/sui-entity-${BUILD_NUMBER}.pom",
+                  "pattern": "**/sui-entity/build/libs/sui-entity-${BUILD_NUMBER}.pom",
                   "target": "sui/ru/smsoft/sui/sui-entity/${BUILD_NUMBER}/sui-entity-${BUILD_NUMBER}.pom"
                 },
                 {
-                  "pattern": "**/sui-security/build/libs/${BUILD_NUMBER}/sui-security-${BUILD_NUMBER}.jar",
+                  "pattern": "**/sui-security/build/libs/sui-security-${BUILD_NUMBER}.jar",
                   "target": "sui/ru/smsoft/sui/sui-security/${BUILD_NUMBER}/sui-security-${BUILD_NUMBER}.jar"
                 },
                 {
-                  "pattern": "**/sui-security/build/libs/${BUILD_NUMBER}/sui-security-${BUILD_NUMBER}.pom",
+                  "pattern": "**/sui-security/build/libs/sui-security-${BUILD_NUMBER}.pom",
                   "target": "sui/ru/smsoft/sui/sui-security/${BUILD_NUMBER}/sui-security-${BUILD_NUMBER}.pom"
                 },
                 {
-                  "pattern": "**/sui-meta-schema-service/build/libs/${BUILD_NUMBER}/sui-meta-schema-service-${BUILD_NUMBER}.jar",
+                  "pattern": "**/sui-meta-schema-service/build/libs/sui-meta-schema-service-${BUILD_NUMBER}.jar",
                   "target": "sui/ru/smsoft/sui/sui-meta-schema-service/${BUILD_NUMBER}/sui-meta-schema-service-${BUILD_NUMBER}.jar"
                 },
                 {
-                  "pattern": "**/sui-meta-schema-service/build/libs/${BUILD_NUMBER}/sui-meta-schema-service-${BUILD_NUMBER}.pom",
+                  "pattern": "**/sui-meta-schema-service/build/libs/sui-meta-schema-service-${BUILD_NUMBER}.pom",
                   "target": "sui/ru/smsoft/sui/sui-meta-schema-service/${BUILD_NUMBER}/sui-meta-schema-service-${BUILD_NUMBER}.pom"
                 }
               ]
