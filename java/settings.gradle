@@ -1,4 +1,4 @@
 rootProject.name = 'sui'
 
-include(':entity')
-include(':security')
+include(':sui-entity')
+include(':sui-security')
