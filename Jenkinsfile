@@ -32,15 +32,27 @@ pipeline {
               "files": [
                 {
                   "pattern": "**/sui-entity/build/libs/*.jar",
-                  "target": "sui/${BUILD_NUMBER}/ru/smsoft/sui-entity/1.0-SHAPSHOT/sui-entity-1.0-SHAPSHOT.jar"
+                  "target": "sui/ru/smsoft/sui/sui-entity/${BUILD_NUMBER}/sui-entity-${BUILD_NUMBER}.jar"
                 },
                 {
-                    "pattern": "**/sui-meta-schema-service/build/libs/*.jar",
-                    "target": "sui/${BUILD_NUMBER}/ru/smsoft/sui-meta-schema-service/1.0-SHAPSHOT/sui-meta-schema-service-1.0-SHAPSHOT.jar"
-                  },
+                  "pattern": "**/sui-entity/build/libs/*.pom",
+                  "target": "sui/ru/smsoft/sui/sui-entity/${BUILD_NUMBER}/sui-entity-${BUILD_NUMBER}.pom"
+                },
                 {
                   "pattern": "**/sui-security/build/libs/*.jar",
-                  "target": "sui/${BUILD_NUMBER}/ru/smsoft/sui-security/1.0-SHAPSHOT/sui-security-1.0-SHAPSHOT.jar"
+                  "target": "sui/ru/smsoft/sui/sui-security/${BUILD_NUMBER}/sui-security-${BUILD_NUMBER}.jar"
+                },
+                {
+                  "pattern": "**/sui-security/build/libs/*.pom",
+                  "target": "sui/ru/smsoft/sui/sui-security/${BUILD_NUMBER}/sui-security-${BUILD_NUMBER}.pom"
+                },
+                {
+                  "pattern": "**/sui-meta-schema-service/build/libs/*.jar",
+                  "target": "sui/ru/smsoft/sui/sui-meta-schema-service/${BUILD_NUMBER}/sui-meta-schema-service-${BUILD_NUMBER}.jar"
+                },
+                {
+                  "pattern": "**/sui-meta-schema-service/build/libs/*.pom",
+                  "target": "sui/ru/smsoft/sui/sui-meta-schema-service/${BUILD_NUMBER}/sui-meta-schema-service-${BUILD_NUMBER}.pom"
                 }
               ]
             }
