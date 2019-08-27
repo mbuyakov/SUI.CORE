@@ -31,7 +31,7 @@ pipeline {
                   tool: "gradle",
                   rootDir: "java/",
                   buildFile: 'build.gradle',
-                  tasks: 'clean artifactoryPublish',
+                  tasks: 'clean artifactoryPublish --stacktrace',
                   deployerId: "GRADLE_DEPLOYER"
               )
             }
