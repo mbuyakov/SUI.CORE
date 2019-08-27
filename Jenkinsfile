@@ -15,9 +15,12 @@ pipeline {
     }
     stage("Build JVM") {
       steps {
-        sh """
-          cd java && gradle build
-        """
+        rtGradleRun (
+            tool: "gradle",
+            rootDir: "java/",
+            buildFile: 'build.gradle',
+            tasks: 'build'
+        )
       }
     }
     stage("Deploy JVM") {
@@ -25,14 +28,14 @@ pipeline {
         script {
           def server = Artifactory.server 'artifactory1'
           def uploadSpec = """
-          {
-            "files": [
-              {
-                "pattern": "**/build/libs/*.jar",
-                "target": "test-repo/${JOB_NAME}/${BUILD_NUMBER}/"
-              }
-            ]
-           }
+            {
+              "files": [
+                {
+                  "pattern": "**/build/libs/*.jar",
+                  "target": "test-repo/${JOB_NAME}/${BUILD_NUMBER}/"
+                }
+              ]
+            }
           """
         }
       }
