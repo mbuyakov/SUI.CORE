@@ -1,10 +1,10 @@
 /* tslint:disable:no-any */
-import {Filter, FilterOperation, Sorting, TableRowDetail} from '@devexpress/dx-react-grid';
-import {DataKey} from '@smsoft/sui-core';
+import {Filter, FilterOperation, Grouping, GroupKey, Sorting, TableRowDetail} from '@devexpress/dx-react-grid';
+import {DataKey} from "@smsoft/sui-core";
 import {CardType} from 'antd/lib/card';
 import * as React from 'react';
 
-export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode | string;
+export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode;
 export type TableSearchType = 'select' | 'date' | 'boolean' | 'string' | 'none';
 export type RowDetail = React.ComponentType<TableRowDetail.ContentProps>;
 export type SortingDirection = 'asc' | 'desc';
@@ -30,12 +30,13 @@ export interface ICommonColumnSearchProps {
   placeholder?: string | [string, string];
 }
 
+export type SelectData = Array<{title?: string | JSX.Element, value: string | number}>;
+
 // tslint:disable-next-line:interface-over-type-literal
 export type INewSearchProps = ICommonColumnSearchProps & {
-  catalog?: string;
-  customSelectData?: Array<{title: string | JSX.Element, value: string | number}>; // for customSelect
   format?: string; // for datetime and date
-  type?: /*"catalog" |*/ "customSelect" | "datetime" | "date" | "boolean" | "none" | "default";
+  selectData?: SelectData | Promise<SelectData>; // for customSelect
+  type?: "customSelect" | "datetime" | "date" | "boolean" | "none" | "default" | string;
   optionFilter?(option: any): boolean; // for selects
 }
 
@@ -57,6 +58,8 @@ export interface IBaseTableColLayout {
   searchRef?: string;
   searchType?: TableSearchType;
 
+  subtotal?: {expression: string, name: string};
+
   title?: string;
   width?: number;
 
@@ -65,7 +68,35 @@ export interface IBaseTableColLayout {
   groupingCriteria?(value: any): any;
 }
 
-export interface IBaseTableProps {
+export interface IGroupSubtotalData {
+  data?: object;
+  elements: number;
+}
+
+export interface IRemoteBaseTableFields {
+  currentPage?: number; // Remote paging
+  customExpandedGroups?: GroupKey[]; // Remote grouping
+  customGrouping?: Grouping[]; // Remote grouping
+  expandedGroups?: GroupKey[]; // Remote grouping
+  filters?: Filter[]; // Remote filtering
+  grouping?: Grouping[]; // Remote grouping
+  groupSubtotalData?: Map<GroupKey, IGroupSubtotalData>; // Remote grouping
+  pageSize?: number; // Remote paging
+  sorting?: Sorting[]; // Remote sorting
+  totalCount?: number; // Remote paging
+}
+
+export interface IRemoteBaseTableFunctions {
+  getChildGroups?(currentRows: any[], grouping: Grouping, rootRows: any[]): Array<{ childRows?: any[], key: number | string, value?: any }>; // Remote grouping
+  onCurrentPageChange?(currentPage: number): void; // Remote paging
+  onExpandedGroupsChange?(expandedGroups: GroupKey[]): void; // Remote grouping
+  onFiltersChange?(filters: Filter[]): void; // Remote filtering
+  onGroupingChange?(grouping: Grouping[]): void; // Remote grouping
+  onPageSizeChange?(pageSize: number): void; // Remote paging
+  onSortingChange?(sorting: Sorting[]): void; // Remote sorting
+}
+
+export interface IBaseTableProps<TSelection = any> {
   allowExport?: boolean;
   borderless?: boolean;
   cardType?: CardType;
@@ -74,33 +105,35 @@ export interface IBaseTableProps {
   defaultSortings?: Sorting[];
   defaultWidth?: number;
   extra?: string | JSX.Element;
-  filtering?: boolean;
+  filteringEnabled?: boolean;
   fitToCardBody?: boolean;
   fitToCollapseBody?: boolean;
   fitToRowDetailContainer?: boolean;
-  grouping?: boolean;
+  fitToTabPanelBody?: boolean;
+  groupingEnabled?: boolean;
   hideRows?: boolean;
+  initialSelection?: TSelection[];
+  loading?: boolean;
   minColumnWidth?: number;
   noColsContent?: React.ReactNode;
-  pagination?: boolean;
+  pageSizes?: number[];
+  paginationEnabled?: boolean;
   paperStyle?: React.CSSProperties;
   rowDetailComponent?: RowDetail;
   rows: any[];
-  selection?: boolean;
-  sorting?: boolean;
+  selectionEnabled?: boolean;
+  sortingEnabled?: boolean;
   title?: string | JSX.Element;
   toolbarButtons?: JSX.Element[];
   virtual?: boolean;
-  visibility?: boolean;
+  visibilityEnabled?: boolean;
   warnings?: Array<JSX.Element | string>;
 
-  cellStyler?(row: any, value: any): React.CSSProperties;
-
+  cellStyler?(row: any, value: any, column: IBaseTableColLayout): React.CSSProperties;
   expandableFilter?(row: any): boolean;
-
   getRowId?(row: any): any;
 
+  onSelectionChange?(selection: TSelection[]): void;
   rowStyler?(row: any): React.CSSProperties;
-
   selectionFilter?(row: any): boolean;
 }

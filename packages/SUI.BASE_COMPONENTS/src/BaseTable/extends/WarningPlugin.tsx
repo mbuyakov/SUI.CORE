@@ -15,6 +15,7 @@ export interface IWarningPluginProps {
 export class WarningPlugin extends React.Component<IWarningPluginProps, {
   popoverOpened?: boolean;
 }> {
+
   public constructor(props: IWarningPluginProps) {
     super(props);
     this.state = {};
@@ -79,4 +80,5 @@ export class WarningPlugin extends React.Component<IWarningPluginProps, {
   private openPopover(): void {
     this.setState({popoverOpened: true});
   }
+
 }

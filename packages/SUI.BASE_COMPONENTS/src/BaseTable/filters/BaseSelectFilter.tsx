@@ -2,9 +2,7 @@
 import {TableFilterRow} from '@devexpress/dx-react-grid';
 import {Select} from 'antd';
 import autobind from 'autobind-decorator';
-// tslint:disable-next-line:ban-ts-ignore
-// @ts-ignore
-// import isEqual from 'lodash/isEqual';
+import isEqual from 'lodash/isEqual';
 import * as React from 'react';
 
 import {ICommonColumnSearchProps} from "../types";
@@ -15,7 +13,7 @@ export interface ISelectColumnFilterData {
 }
 
 interface ISelectColumnFilterProps {
-  data: ISelectColumnFilterData[];
+  data?: ISelectColumnFilterData[];
   disableSearch?: boolean;
   style?: React.CSSProperties;
 
@@ -31,12 +29,11 @@ export class BaseSelectFilter extends React.Component<TableFilterRow.CellProps &
     this.updateStateData();
   }
 
-  // tslint:disable-next-line:prefer-function-over-method
-  // public componentDidUpdate(nextProps: ISelectColumnFilterProps): void {
-    // if (!isEqual(this.props.data, nextProps.data)) {
-    //   this.updateStateData();
-    // }
-  // }
+  public componentDidUpdate(nextProps: ISelectColumnFilterProps): void {
+    if (!isEqual(this.props.data, nextProps.data)) {
+      this.updateStateData();
+    }
+  }
 
   public render(): JSX.Element {
     return (
@@ -80,7 +77,6 @@ export class BaseSelectFilter extends React.Component<TableFilterRow.CellProps &
       this.props.onFilter({
         columnName: this.props.column.name,
         operation: "equal",
-        // tslint:disable-next-line:no-any
         value: value as any
       });
     }
@@ -89,8 +85,7 @@ export class BaseSelectFilter extends React.Component<TableFilterRow.CellProps &
   @autobind
   private updateStateData(): void {
     const dataElementByValue = new Map<string | null, ISelectColumnFilterData>();
-    // tslint:disable-next-line:no-any
-    this.props.data.forEach((element: any) => {
+    (this.props.data || []).forEach((element: any) => {
       if (!dataElementByValue.has(element.value && element.value.toString())) {
         dataElementByValue.set(element.value && element.value.toString(), element);
       }

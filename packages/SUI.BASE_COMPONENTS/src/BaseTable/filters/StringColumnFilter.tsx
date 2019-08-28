@@ -14,19 +14,20 @@ export class StringColumnFilter extends React.Component<TableFilterRow.CellProps
       <Input
         {...clearProps}
         placeholder={this.props.placeholder as string || 'Фильтр...'}
-        value={this.props.filter ? this.props.filter.value : undefined}
-        onChange={this.onChange}
+        defaultValue={this.props.filter ? this.props.filter.value : undefined}
+        onPressEnter={this.onChange}
       />
     );
   }
 
   @autobind
-  // tslint:disable-next-line:no-any
-  private onChange(event: any): void {
+  private onChange(event: React.KeyboardEvent<HTMLInputElement>): void {
     this.props.onFilter({
       columnName: this.props.column.name,
-      operation: this.props.operation,
-      value: event.target.value,
+      operation: this.props.operation || "contains",
+      // tslint:disable-next-line:ban-ts-ignore
+      // @ts-ignore
+      value: event.target.value
     });
   }
 
