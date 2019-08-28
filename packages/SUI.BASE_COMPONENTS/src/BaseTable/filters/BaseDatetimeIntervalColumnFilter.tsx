@@ -13,12 +13,21 @@ type DatetimeFilterType = "date" | "datetime";
 interface IBaseDatetimeIntervalColumnFilterProps {
   format?: string;
   pickerMode: DatetimeFilterType;
+
   onFilter(filter: Filter | Filter[] | null): void;
 }
 
-export class BaseDatetimeIntervalColumnFilter extends React.Component<
-  TableFilterRow.CellProps & IBaseDatetimeIntervalColumnFilterProps & ICommonColumnSearchProps
-> {
+interface IBaseDatetimeIntervalColumnFilterState {
+  filterValue?: RangePickerValue | null;
+  open?: boolean;
+}
+
+type FullBaseDatetimeIntervalColumnFilterProps = TableFilterRow.CellProps
+  & IBaseDatetimeIntervalColumnFilterProps
+  & ICommonColumnSearchProps;
+
+export class BaseDatetimeIntervalColumnFilter
+  extends React.Component<FullBaseDatetimeIntervalColumnFilterProps, IBaseDatetimeIntervalColumnFilterState> {
 
   private static getFormat(type: DatetimeFilterType): string {
     switch (type) {
@@ -29,9 +38,15 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<
     }
   }
 
-  public render(): JSX.Element {
-    const filterValue = this.props.filter && this.props.filter.value;
+  public constructor(props: FullBaseDatetimeIntervalColumnFilterProps) {
+    super(props);
+    const filterValue = this.props.filter && (this.props.filter.value as unknown as string[]);
+    this.state = {
+      filterValue: filterValue && filterValue.map(value => value && moment(value)) as RangePickerValue
+    };
+  }
 
+  public render(): JSX.Element {
     return (
       <DatePicker.RangePicker
         {...this.props}
@@ -40,29 +55,37 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<
         showTime={BaseDatetimeIntervalColumnFilter.getFormat(this.props.pickerMode).includes("HH")}
         ranges={GET_DEFAULT_CALENDAR_RANGES()}
         allowClear={true}
-        value={filterValue ? [
-          moment(filterValue[0]),
-          moment(filterValue[1]),
-        ] : undefined}
+        value={this.state.filterValue as RangePickerValue}
         onChange={this.onChange}
+        onOpenChange={this.onOpenChange}
+        open={this.state.open}
       />
     );
   }
 
   @autobind
-  private onChange(value: RangePickerValue): void {
+  private onChange(filterValue: RangePickerValue): void {
+    if (!filterValue || !filterValue.length) {
+      // clear filter
+      this.triggerFilter(filterValue);
+    } else {
+      this.setState({filterValue});
+    }
+  }
+  @autobind
+  private onOpenChange(status: boolean): void {
+    this.setState({open: status}, () => !status && this.triggerFilter(this.state.filterValue));
+  }
+
+  @autobind
+  private triggerFilter(value: RangePickerValue | null | undefined): void {
     const format = BaseDatetimeIntervalColumnFilter.getFormat(this.props.pickerMode);
-    console.log(value);
 
     this.props.onFilter({
       columnName: this.props.column.name,
       operation: "interval",
       value: [
-        // tslint:disable-next-line:ban-ts-ignore
-        // @ts-ignore
         value && value[0] && value[0].format(format),
-        // tslint:disable-next-line:ban-ts-ignore
-        // @ts-ignore
         value && value[1] && value[1].format(format)
         // tslint:disable-next-line:no-any
       ] as any

@@ -1,34 +1,76 @@
-/* tslint:disable:no-magic-numbers no-any */
+/* tslint:disable:no-magic-numbers */
 /* tslint:disable:variable-name */
-import { Getter, Getters } from '@devexpress/dx-react-core';
-import { Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSelection, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo } from '@devexpress/dx-react-grid';
-import { ColumnChooser, DragDropProvider, Grid, GroupingPanel, PagingPanel, Table, TableColumnReordering, TableColumnResizing, TableColumnVisibility, TableFilterRow, TableGroupRow, TableHeaderRow, TableRowDetail, TableSelection, Toolbar, VirtualTable } from '@devexpress/dx-react-grid-material-ui';
-import { TableRow } from '@material-ui/core';
-import { defaultIfNotBoolean, getDataByKey, translate } from '@smsoft/sui-core';
+/* tslint:disable:no-any */
+import {Getter, Getters} from '@devexpress/dx-react-core';
+import {
+  CustomGrouping,
+  CustomPaging,
+  Filter,
+  FilteringState,
+  GroupingState,
+  IntegratedFiltering,
+  IntegratedGrouping,
+  IntegratedPaging,
+  IntegratedSelection,
+  IntegratedSorting,
+  PagingState,
+  RowDetailState,
+  SelectionState,
+  Sorting,
+  SortingState,
+  TableColumnWidthInfo
+} from '@devexpress/dx-react-grid';
+import {
+  ColumnChooser,
+  DragDropProvider,
+  Grid,
+  GroupingPanel,
+  PagingPanel,
+  Table,
+  TableColumnReordering,
+  TableColumnResizing,
+  TableColumnVisibility,
+  TableFilterRow,
+  TableGroupRow,
+  TableHeaderRow,
+  TableRowDetail,
+  TableSelection,
+  Toolbar,
+  VirtualTable
+} from '@devexpress/dx-react-grid-material-ui';
+import {TableRow} from '@material-ui/core';
+import {defaultIfNotBoolean, getDataByKey, translate} from "@smsoft/sui-core";
 import Result from 'ant-design-pro/lib/Result';
-import { Card, Icon } from 'antd';
+import {Card, Icon, Spin} from 'antd';
 import autobind from 'autobind-decorator';
-import classnames from 'classnames';
+import classnames from 'classnames'
 import * as React from 'react';
 import * as XLSX from 'xlsx';
 
-import { HIDE_BUTTONS } from '../styles';
+import {HIDE_BUTTONS, LOADING_SPIN, LOADING_SPIN_WRAPPER} from "../styles";
 
 import { EmptyMessageComponent, ExportPlugin, TableNoDataCell, WarningPlugin } from './extends';
+import {GroupSummaryRow} from "./extends/GroupSummaryRow";
 import { BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, StringColumnFilter } from './filters';
 import { defaultSelection, ISelectionTable } from './ISelectionTable';
-import { IBaseTableColLayout, IBaseTableProps, TableCellRender } from './types';
+import {
+  IBaseTableColLayout,
+  IBaseTableProps,
+  IRemoteBaseTableFields,
+  IRemoteBaseTableFunctions, SortingDirection,
+  TableCellRender
+} from './types';
 
 const Cell = Table.Cell;
 const ToggleCell = TableRowDetail.ToggleCell;
 const SelectionCell = TableSelection.Cell;
 const PagingPanelContainer = PagingPanel.Container;
 const ToolbarRoot = Toolbar.Root;
+const TableGroupRowContent = TableGroupRow.Content;
 
 // Не нашел куда добавить
-export function booleanRender(value: boolean): JSX.Element {
-  // noinspection SuspiciousTypeOfGuard
-  return (typeof (value) === 'boolean')
+export function booleanRender(value: boolean | null | undefined): JSX.Element {
+  return (typeof(value)=== "boolean")
     ? value
       ? <Icon type="check" theme="outlined"/>
       : <Icon type="close" theme="outlined"/>
@@ -36,12 +78,15 @@ export function booleanRender(value: boolean): JSX.Element {
 }
 
 export class BaseTable<TSelection = defaultSelection>
-  extends React.Component<IBaseTableProps,
+  extends React.Component<IBaseTableProps<TSelection> & IRemoteBaseTableFields & IRemoteBaseTableFunctions,
     { selection?: TSelection[]; }>
   implements ISelectionTable<TSelection> {
 
+  // tslint:disable-next-line:no-any
   private static getRowId(row: any): any {
-    const id = row.id;
+    // tslint:disable-next-line:triple-equals
+    const id = (row.id != null) ? row.id : row.compoundKey;
+
     if (id === null || id === undefined) {
       console.error('ROW DOESN\'T HAVE ID!');
     }
@@ -50,31 +95,29 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   private static getSearchComponent(props: any): React.ReactNode {
-    const searchProps = { ...props, ...props.column.search };
+    const searchProps = {...props, ...props.column.search};
 
     switch (props.column.search && props.column.search.type) {
-      /*case "catalog":
-        return (<CatalogColumnFilter {...searchProps} />);*/
-      case 'customSelect':
+      case "customSelect":
         return (<CustomSelectFilter {...searchProps} />);
-      case 'datetime':
+      case "datetime":
         return (<DatetimeColumnFilter {...searchProps} />);
-      case 'date':
+      case "date":
         return (<DateColumnFilter {...searchProps} />);
-      case 'boolean':
+      case "boolean":
         return (<BooleanColumnFilter {...searchProps} />);
-      case 'none':
+      case "none":
         return null;
       default:
         return (<StringColumnFilter {...props}/>);
     }
   }
 
-  private static pageInfo({ from, to, count }: { count: number, from: number, to: number }): string {
+  private static pageInfo({from, to, count}: { count: number, from: number, to: number }): string {
     return `${from}-${to} из ${count}`;
   }
 
-  private static virtualPageInfo({ count }: { count: number }): string {
+  private static virtualPageInfo({count}: { count: number }): string {
     return `Количество записей: ${count}`;
   }
 
@@ -83,12 +126,12 @@ export class BaseTable<TSelection = defaultSelection>
   public constructor(props: any) {
     super(props);
     this.state = {
-      selection: [],
+      selection: this.props.initialSelection || [],
     };
   }
 
   public clearSelection(): void {
-    this.setState({ selection: [] });
+    return this.setState({selection: []});
   }
 
   public getSelection(): TSelection[] {
@@ -109,13 +152,13 @@ export class BaseTable<TSelection = defaultSelection>
   // tslint:disable-next-line:cyclomatic-complexity
   public render(): JSX.Element {
     const rowDetail = this.props.rowDetailComponent;
-    const pagination = defaultIfNotBoolean(this.props.pagination, true);
-    const grouping = defaultIfNotBoolean(this.props.grouping, true);
-    const sorting = defaultIfNotBoolean(this.props.sorting, true);
-    const filtering = defaultIfNotBoolean(this.props.filtering, true);
+    const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
+    const groupingEnabled = defaultIfNotBoolean(this.props.groupingEnabled, true);
+    const sortingEnabled = defaultIfNotBoolean(this.props.sortingEnabled, true);
+    const filteringEnabled = defaultIfNotBoolean(this.props.filteringEnabled, true);
     const virtual = defaultIfNotBoolean(this.props.virtual, false);
-    const visibility = defaultIfNotBoolean(this.props.visibility, true);
-    const selection = defaultIfNotBoolean(this.props.selection, false);
+    const visibilityEnabled = defaultIfNotBoolean(this.props.visibilityEnabled, true);
+    const selectionEnabled = defaultIfNotBoolean(this.props.selectionEnabled, false);
     const allowExport = defaultIfNotBoolean(this.props.allowExport, true);
 
     const cols = this.mapCols();
@@ -124,7 +167,7 @@ export class BaseTable<TSelection = defaultSelection>
       .filter(col => col.defaultSorting)
       .map<Sorting>(col => ({
         columnName: col.id,
-        direction: col.defaultSorting as any,
+        direction: col.defaultSorting as SortingDirection,
       }));
 
     if (defaultSorting.length === 0) {
@@ -144,10 +187,10 @@ export class BaseTable<TSelection = defaultSelection>
 
     const defaultGrouping = this.props.cols
       .filter(col => col.defaultGrouping)
-      .map(value => ({ columnName: value.id }));
+      .map(value => ({columnName: value.id}));
 
     const enableGrouping = this.props.cols
-      .map(value => ({ columnName: value.id, groupingEnabled: defaultIfNotBoolean(value.groupingEnabled, true) }));
+      .map(value => ({columnName: value.id, groupingEnabled: defaultIfNotBoolean(value.groupingEnabled, true)}));
 
     const sortingExtension = this.props.cols
       .filter(col => col.comparator)
@@ -177,13 +220,16 @@ export class BaseTable<TSelection = defaultSelection>
 
     const cellComponent = (props: any): JSX.Element => {
       const render: TableCellRender = props.column.render;
+      const value = Array.isArray(props.value) && (props.value[0] ? typeof props.value[0] !== "object" : true)
+        ? props.value.toString()
+        : props.value;
 
       return (
         <Table.Cell
           {...props}
-          style={this.props.cellStyler ? this.props.cellStyler(props.row, props.value) : undefined}
+          style={this.props.cellStyler ? this.props.cellStyler(props.row, props.value, props.column) : undefined}
         >
-          {render && render(props.value, props.row, props.tableColumn)}
+          {render ? render(value, props.row, props.tableColumn) : value}
         </Table.Cell>
       );
     };
@@ -251,42 +297,55 @@ export class BaseTable<TSelection = defaultSelection>
       predicate: (value: any, filter: Filter, row: any) => {
         let filters = [filter];
 
-        if (filter.operation === 'interval') {
-          const filterValue = filter.value as any as [string, string];
+        if (filter.operation === "interval") {
+          const filterValue = filter.value as unknown as [string, string];
 
           filters = [
             {
               columnName: filter.columnName,
-              operation: 'greaterThanOrEqual',
-              value: filterValue && filterValue[0],
+              operation: "greaterThanOrEqual",
+              value: filterValue && filterValue[0]
             },
             {
               columnName: filter.columnName,
-              operation: 'lessThanOrEqual',
-              value: filterValue && filterValue[1],
-            },
+              operation: "lessThanOrEqual",
+              value: filterValue && filterValue[1]
+            }
           ];
         }
-
-        console.log(filters);
 
         return filters.every(innerFilter =>
           innerFilter.value === null || innerFilter.value === undefined
             ? true
             : defaultPredicate(value, innerFilter, row));
-      },
+      }
     }));
+
+    const hasSubtotals = (this.props.cols || []).some(col => !!col.subtotal);
+    const groupSubtotalData = this.props.groupSubtotalData;
+
+    const tableGroupRowContentComponent = (props: any) => {
+      const subtotalData = groupSubtotalData && groupSubtotalData.get(props.row.compoundKey);
+
+      return (
+        <span>
+          <TableGroupRowContent {...props} />
+          {subtotalData && <span>  (<em>Записей: {subtotalData.elements}</em>)</span>}
+        </span>
+      );
+    };
 
     return (
       <Card
         style={{
-          ...(borderless ? {} : { margin: 10 }),
-          ...(this.props.fitToCardBody ? { margin: -24, marginTop: -23 } : {}),
-          ...(this.props.fitToCollapseBody ? { margin: -2 } : {}),
-          ...(this.props.fitToRowDetailContainer ? { margin: '-3px -24px' } : {}),
+          ...(borderless ? {} : {margin: 10}),
+          ...(this.props.fitToCardBody ? {margin: -24, marginTop: -23} : {}),
+          ...(this.props.fitToCollapseBody ? { margin: -16 } : {}),
+          ...(this.props.fitToRowDetailContainer ? {margin: "-3px -24px"} : {}),
+          ...(this.props.fitToTabPanelBody ? {margin: 0, marginTop: -17} : {}),
           ...(this.props.paperStyle || {}),
         }}
-        bodyStyle={{ padding: 0 }}
+        bodyStyle={{padding: 0}}
         title={this.props.title}
         type={this.props.cardType}
         extra={this.props.extra}
@@ -295,7 +354,7 @@ export class BaseTable<TSelection = defaultSelection>
         {cols.length === 0 && <>
           {this.props.noColsContent}
           <Result
-            style={{ paddingTop: 42 }}
+            style={{paddingTop: 42}}
             type="error"
             title="Нет доступных колонок"
           />
@@ -305,24 +364,64 @@ export class BaseTable<TSelection = defaultSelection>
           columns={cols}
           getRowId={this.props.getRowId || (BaseTable.getRowId)}
         >
-          {filtering && <FilteringState defaultFilters={this.props.defaultFilters || []}/>}
+          {filteringEnabled && (
+            <FilteringState
+              filters={this.props.filters}
+              onFiltersChange={this.props.onFiltersChange}
+              defaultFilters={this.props.defaultFilters || []}
+            />
+          )}
           {rowDetail && <RowDetailState defaultExpandedRowIds={[]}/>}
-          {sorting && <SortingState defaultSorting={defaultSorting}/>}
-          {grouping && <GroupingState defaultGrouping={defaultGrouping} defaultExpandedGroups={defaultExpanded as any[]} columnExtensions={enableGrouping}/>}
-          {pagination && <PagingState defaultCurrentPage={0} defaultPageSize={virtual ? 0 : 10}/>}
-          {selection && <SelectionState
+          {sortingEnabled && (
+            <SortingState
+              sorting={this.props.sorting}
+              defaultSorting={defaultSorting}
+              onSortingChange={this.props.onSortingChange}
+            />
+          )}
+          {groupingEnabled && (
+            <GroupingState
+              grouping={this.props.grouping}
+              expandedGroups={this.props.expandedGroups}
+              onGroupingChange={this.props.onGroupingChange}
+              onExpandedGroupsChange={this.props.onExpandedGroupsChange}
+              defaultGrouping={defaultGrouping}
+              defaultExpandedGroups={defaultExpanded}
+              columnExtensions={enableGrouping}
+            />
+          )}
+          {paginationEnabled && (
+            <PagingState
+              defaultCurrentPage={0}
+              defaultPageSize={virtual ? 0 : 10}
+              currentPage={this.props.currentPage}
+              pageSize={this.props.pageSize}
+              onCurrentPageChange={this.props.onCurrentPageChange}
+              onPageSizeChange={this.props.onPageSizeChange}
+            />
+          )}
+          {selectionEnabled && <SelectionState
             selection={(this.state && this.state.selection) as any}
             onSelectionChange={this.onSelectionChange as any}
           />}
-          {grouping && <IntegratedGrouping columnExtensions={groupingExtension}/>}
-          {filtering && <IntegratedFiltering columnExtensions={filterExtension}/>}
-          {sorting && <IntegratedSorting columnExtensions={sortingExtension}/>}
+          {groupingEnabled && (this.props.getChildGroups
+            ? <CustomGrouping
+              getChildGroups={this.props.getChildGroups}
+              grouping={this.props.customGrouping}
+              expandedGroups={this.props.customExpandedGroups}
+            />
+            : <IntegratedGrouping columnExtensions={groupingExtension}/>)}
+          {filteringEnabled && !this.props.onFiltersChange && <IntegratedFiltering columnExtensions={filterExtension}/>}
+          {sortingEnabled && !this.props.onSortingChange && <IntegratedSorting columnExtensions={sortingExtension}/>}
           {allowExport && <Getter
             name="rows"
             computed={this.getterComputed}
           />}
-          {pagination && <IntegratedPaging/>}
-          {selection && <IntegratedSelection/>}
+          {paginationEnabled && (typeof (this.props.totalCount) === "number"
+              ? <CustomPaging totalCount={this.props.totalCount}/>
+              : <IntegratedPaging/>
+          )}
+          {selectionEnabled && <IntegratedSelection/>}
           <DragDropProvider/>
           {virtual
             ? <VirtualTable
@@ -343,38 +442,50 @@ export class BaseTable<TSelection = defaultSelection>
             minColumnWidth={this.props.minColumnWidth || 30}
             defaultColumnWidths={defaultWidth}
           />
-          <TableHeaderRow showSortingControls={sorting}/>
-          {filtering && <TableFilterRow cellComponent={filterCell}/>}
-          {pagination && <PagingPanel
+          <TableHeaderRow showSortingControls={sortingEnabled}/>
+          {filteringEnabled && <TableFilterRow cellComponent={filterCell}/>}
+          {paginationEnabled && <PagingPanel
             containerComponent={pagingContainerComponent}
-            pageSizes={virtual ? undefined : [10, 25, 50, 0]}
+            pageSizes={this.props.pageSizes || (virtual ? undefined : [10, 25, 50, 0])}
             messages={{
               info: virtual ? BaseTable.virtualPageInfo : BaseTable.pageInfo,
               rowsPerPage: 'Записей на страницу',
               showAll: 'Все',
             }}
           />}
-          {selection && <TableSelection
+          {selectionEnabled && <TableSelection
             cellComponent={selectionCellComponent}
             showSelectAll={!this.props.selectionFilter}
           />}
-          {grouping && <TableGroupRow/>}
+          {groupingEnabled && <TableGroupRow contentComponent={tableGroupRowContentComponent}/>}
+          {groupingEnabled && this.props.groupSubtotalData && hasSubtotals && <GroupSummaryRow subtotalData={this.props.groupSubtotalData}/>}
           <TableColumnReordering defaultOrder={this.props.cols.map(value => value.id)}/>
-          {visibility && <TableColumnVisibility defaultHiddenColumnNames={defaultHidden} emptyMessageComponent={EmptyMessageComponent}/>}
-          {(visibility || grouping || allowExport || this.props.toolbarButtons) && (
+          {visibilityEnabled && <TableColumnVisibility
+            defaultHiddenColumnNames={defaultHidden}
+            emptyMessageComponent={EmptyMessageComponent}
+          />}
+          {(visibilityEnabled || groupingEnabled || allowExport || this.props.toolbarButtons) && (
             <Toolbar
               rootComponent={this.toolbarRootComponent}
             />
           )}
-          {visibility && <ColumnChooser messages={{ showColumnChooser: 'Отобразить выбор колонок' }}/>}
+          {visibilityEnabled && <ColumnChooser messages={{showColumnChooser: 'Отобразить выбор колонок'}}/>}
           {allowExport && <ExportPlugin onClick={this.onExport}/>}
-          {grouping && <GroupingPanel
-            messages={{ groupByColumn: 'Перетащите заголовок колонки сюда для группировки' }}
+          {groupingEnabled && <GroupingPanel
+            messages={{groupByColumn: 'Перетащите заголовок колонки сюда для группировки'}}
             showGroupingControls={true}
             showSortingControls={true}
           />}
           {this.props.toolbarButtons}
         </Grid>}
+        {this.props.loading && (
+          <div className={LOADING_SPIN_WRAPPER}>
+            <Spin
+              tip="Подождите..."
+              className={LOADING_SPIN}
+            />
+          </div>
+        )}
       </Card>);
   }
 
@@ -413,18 +524,21 @@ export class BaseTable<TSelection = defaultSelection>
 
   @autobind
   private onSelectionChange(selection: TSelection[]): void {
-    console.log(selection);
-    this.setState({ selection });
+    this.setState(
+      {selection},
+      () => {
+        if (this.props.onSelectionChange) {
+          this.props.onSelectionChange(selection);
+        }
+      }
+    );
   }
 
   @autobind
   private toolbarRootComponent(props: any): JSX.Element {
-    console.log(props);
-
     return (
       <ToolbarRoot {...props}>
-        <WarningPlugin messages={this.props.warnings} key={-1}/>
-        {props.children}
+        {(this.props.warnings && this.props.warnings.length ? [<WarningPlugin messages={this.props.warnings} key={-1}/>] : []).concat([props.children])}
       </ToolbarRoot>);
   }
 

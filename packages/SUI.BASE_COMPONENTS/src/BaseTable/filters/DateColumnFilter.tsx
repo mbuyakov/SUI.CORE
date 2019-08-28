@@ -3,7 +3,7 @@ import * as React from "react";
 
 import {INewSearchProps} from "../types";
 
-import { BaseDatetimeIntervalColumnFilter } from './BaseDatetimeIntervalColumnFilter';
+import {BaseDatetimeIntervalColumnFilter} from "./BaseDatetimeIntervalColumnFilter";
 
 export class DateColumnFilter extends React.Component<TableFilterRow.CellProps & INewSearchProps> {
 
