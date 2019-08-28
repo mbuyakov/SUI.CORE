@@ -24,8 +24,7 @@ async function rejectOnError<T>(promise: Promise<ApolloQueryResult<T> | FetchRes
             });
             reject(value.errors[0].message);
           } else {
-            // tslint:disable-next-line:no-any
-            resolve(value.data as any);
+            resolve(value.data);
           }
         })
         .catch(reject);
