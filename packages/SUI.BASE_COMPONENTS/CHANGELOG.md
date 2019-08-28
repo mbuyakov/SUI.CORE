@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.12.0...v2.12.1) (2019-08-28)
+
+
+### Bug Fixes
+
+* **package.json:** add @types/amcharts ([4f47030](https://github.com/mbuyakov/SUI.CORE/commit/4f47030))
+
+
+
+
+
+
 # [2.12.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.11.2...v2.12.0) (2019-08-28)
 
 
