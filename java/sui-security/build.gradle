@@ -2,7 +2,7 @@ apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
 
 dependencies {
-    compile project(":entity")
+    compile project(":sui-entity")
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile "org.jetbrains.kotlin:kotlin-reflect"
     compile "io.github.microutils:kotlin-logging:${kotlinLoggingVersion}"

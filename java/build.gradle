@@ -1,91 +1,77 @@
 plugins {
-    id 'io.franzbecker.gradle-lombok' version '2.0' apply false
-    id 'io.spring.dependency-management' version '1.0.6.RELEASE' apply false
-//    id 'com.github.jk1.dependency-license-report' version '1.7'
-    id 'org.jetbrains.kotlin.jvm' version '1.3.41' apply false
-    id 'org.jetbrains.kotlin.plugin.spring' version '1.3.41' apply false
+  id 'io.franzbecker.gradle-lombok' version '2.0' apply false
+  id 'io.spring.dependency-management' version '1.0.6.RELEASE' apply false
+  id 'org.jetbrains.kotlin.jvm' version '1.3.41' apply false
+  id 'org.jetbrains.kotlin.plugin.spring' version '1.3.41' apply false
 }
 
+apply plugin: 'maven'
 apply plugin: 'idea'
 
 allprojects {
-    group = 'ru.smsoft.sui'
-    version = '1.0-SNAPSHOT'
+  group = 'ru.smsoft.sui'
+  version = "$System.env.BUILD_NUMBER"
 }
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'io.spring.dependency-management'
-    apply plugin: 'io.franzbecker.gradle-lombok'
+  apply plugin: 'maven'
+  apply plugin: 'java'
+  apply plugin: 'io.spring.dependency-management'
+  apply plugin: 'io.franzbecker.gradle-lombok'
 
-    compileJava.options.encoding = 'UTF-8'
-    sourceCompatibility = '1.8'
+  compileJava.options.encoding = 'UTF-8'
+  sourceCompatibility = '1.8'
 
-    ext {
-        springVersion = '5.2.0.M2'
-        springBootVersion = '2.2.0.M3'
-        springKafkaVersion = '2.2.7.RELEASE'
-        springBootGradlePluginVersion = '2.1.6.RELEASE'
-        springRabbitVersion = '2.1.2.RELEASE'
-        springJpaVerison = '2.1.2.RELEASE'
-        springfoxVersion = '2.5.0' // https://github.com/springfox/springfox/issues/1622
-        jacksonVersion = '2.6.5' // Spark SQL. Don't update
-        javaxPersistenceApiVersion = '2.2'
-        influxVersion = '2.14'
-        scalaVersion = '2.11'
-        fullScalaVersion = '2.11.7'
-        sparkVersion = '2.2.0'
-        hdpVersion = '2.6.4.0-91'
-        hdpClientVersion = "2.7.3.${hdpVersion}"
-        postgresqlVersion = '42.2.5'
-        hibernateVersion = '5.4.1.Final'
-        javaxValidationVersion = '2.0.1.Final'
-        hibernateTypesVersion = '2.3.2'
-        camelVersion = '2.23.0'
-        parquetHadoopVersion = '1.10.1'
-        kotlinVersion = '1.3.41'
-        kotlinLoggingVersion = '1.6.24'
+  ext {
+    springVersion = '5.2.0.M2'
+    springBootVersion = '2.2.0.M3'
+    springBootGradlePluginVersion = '2.1.6.RELEASE'
+    springJpaVerison = '2.1.2.RELEASE'
+    jacksonVersion = '2.6.5' // Spark SQL. Don't update
+    javaxPersistenceApiVersion = '2.2'
+    hibernateVersion = '5.4.1.Final'
+    javaxValidationVersion = '2.0.1.Final'
+    hibernateTypesVersion = '2.3.2'
+    kotlinVersion = '1.3.41'
+    kotlinLoggingVersion = '1.6.24'
+  }
+
+  repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+      url = 'https://repo.spring.io/milestone/'
     }
+  }
 
+  buildscript {
     repositories {
-        mavenCentral()
-        jcenter()
-        maven {
-            url 'http://repo.hortonworks.com/content/repositories/releases/'
-        }
-        maven {
-            url = 'http://repo.hortonworks.com/content/groups/public'
-        }
-        maven {
-            url = 'https://dl.bintray.com/cakesolutions/maven/'
-        }
-        maven {
-            url = 'https://repo.spring.io/milestone/'
-        }
+      mavenCentral()
+      jcenter()
     }
+    dependencies {
+      classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootGradlePluginVersion}")
+      classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+    }
+  }
 
-    buildscript {
-        repositories {
-            mavenCentral()
-            jcenter()
-        }
-        dependencies {
-            classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootGradlePluginVersion}")
-            classpath("com.github.jengelman.gradle.plugins:shadow:4.0.4")
-            classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
-        }
+  configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+      if (details.requested.group == 'org.jetbrains.kotlin') {
+        details.useVersion '1.3.41'
+        details.because 'Hardcoded replace from 1.2.71(spring dependency-management)'
+      }
     }
+  }
 
-    configurations.all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            if (details.requested.group == 'io.netty' && details.requested.name == 'netty-all') {
-                details.useVersion '4.0.52.Final'
-                details.because 'SparkSQL need 4.0, not 4.1'
-            }
-            if (details.requested.group == 'org.jetbrains.kotlin') {
-                details.useVersion '1.3.41'
-                details.because 'Hardcoded replace from 1.2.71(spring dependency-management)'
-            }
+  task writeNewPom {
+    doLast {
+      pom {
+        project {
         }
+      }.writeTo("$buildDir/libs/${project.name}-${project.version}.pom")
     }
+  }
+
+  build.finalizedBy(writeNewPom)
 }

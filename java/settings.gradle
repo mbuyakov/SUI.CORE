@@ -1,4 +1,6 @@
 rootProject.name = 'sui'
 
-include(':entity')
-include(':security')
+include(':sui-entity')
+include(':sui-meta-schema-service')
+include(':sui-security')
+include(':sui-user-transaction')
