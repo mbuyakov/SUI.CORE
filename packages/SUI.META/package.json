@@ -1,8 +1,8 @@
 {
-  "name": "@smsoft/sui-core",
+  "name": "@smsoft/sui-meta",
   "version": "2.15.0",
   "main": "dist/index.js",
-  "module": "dist/sui-core.esm.js",
+  "module": "dist/sui-meta.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -11,8 +11,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test --env=jsdom",
-    "lint": "tslint -t verbose -p tsconfig.json -c ../../tslint.json 'src/**/*.ts?(x)'"
+    "lint": "tslint -t verbose -p tsconfig.json -c ./tslint.json 'src/**/*.ts?(x)'"
   },
   "peerDependencies": {
     "react": ">=16",
@@ -50,13 +49,6 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@types/history": "^4.7.2",
-    "antd": "^3.21.2",
-    "apollo-client": "^2.6.3",
-    "graphql": "^14.4.2",
-    "graphql-tag": "^2.10.1",
-    "history": "^4.9.0",
-    "lodash": "^4.17.15",
-    "lodash-es": "^4.17.15"
+    "@smsoft/sui-base-components": "^2.15.0"
   }
 }

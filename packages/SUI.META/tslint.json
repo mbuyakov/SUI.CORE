@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "../../tslint.json"
+  ],
+  "rules": {
+    "completed-docs": false,
+    "comment-format": false,
+    "no-unnecessary-type-assertion": false,
+    "no-non-null-assertion": false
+  }
+}

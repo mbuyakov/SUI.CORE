@@ -67,14 +67,14 @@ export abstract class CacheManager<T, ID = string> {
    * Return entry by id
    * If entity not in cache - load
    */
-  public async getById(id: ID): Promise<T | undefined> {
+  public async getById(id: ID): Promise<T> {
     while (!this.ready) {
       await sleep(WAIT_TIME);
     }
 
     await this.loadById(id);
 
-    return this.store.get(id);
+    return this.store.get(id) as T;
   }
 
   /**

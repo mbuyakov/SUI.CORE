@@ -26,6 +26,7 @@
     "increment-decrement": false,
     "no-void-expression": false,
     "no-object-literal-type-assertion": false,
+    "no-non-null-assertion": false,
     "typedef": [
       true,
       "call-signature",

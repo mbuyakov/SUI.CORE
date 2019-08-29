@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.15.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.13.0...v2.15.0) (2019-08-29)
+
+**Note:** Version bump only for package @smsoft/sui-base-components
+
+
+
+
+
+
 # [2.14.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.11.1...v2.14.0) (2019-08-29)
 
 
