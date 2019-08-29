@@ -13,6 +13,7 @@ export type PromisedTextAreaProps = {
   defaultValue?: string;
   disabled?: boolean;
   icon?: string;
+  rowClassName?: string;
   rowStyle?: React.CSSProperties;
   validator?(value: string): string | void;
 } & IPromisedBaseProps<string> & Omit<TextAreaProps, "onChange" | "value">
@@ -44,7 +45,7 @@ export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromi
 
     return (
       <div
-        className={SUI_ROW_GROW_LEFT}
+        className={this.props.rowClassName || SUI_ROW_GROW_LEFT}
         style={this.props.rowStyle}
       >
         <Popover
