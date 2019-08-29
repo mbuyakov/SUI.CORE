@@ -5,4 +5,5 @@ export * from "./PromisedErrorPopover";
 export * from "./PromisedInput";
 export * from "./PromisedSelect";
 export * from "./PromisedSwitch";
+export * from "./PromisedTextArea";
 export * from "./EditablePromisedComponent";

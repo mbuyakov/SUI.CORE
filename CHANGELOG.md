@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.12.1...v2.13.0) (2019-08-29)
+
+
+### Features
+
+* **sui.promised:** add PromisedTextArea ([d930ca9](https://github.com/mbuyakov/SUI.CORE/commit/d930ca9))
+
+
+
+
+
+
 ## [2.12.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.12.0...v2.12.1) (2019-08-28)
 
 
