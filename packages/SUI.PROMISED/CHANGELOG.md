@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.11.1...v2.14.0) (2019-08-29)
+
+
+### Bug Fixes
+
+* add rowClassName ([1cb2060](https://github.com/mbuyakov/SUI.CORE/commit/1cb2060))
+
+
+### Features
+
+* **sui.promised:** add PromisedTextArea ([d930ca9](https://github.com/mbuyakov/SUI.CORE/commit/d930ca9))
+
+
+
+
+
+
 # [2.13.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.12.1...v2.13.0) (2019-08-29)
 
 

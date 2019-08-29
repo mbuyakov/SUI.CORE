@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.11.1...v2.14.0) (2019-08-29)
+
+
+### Bug Fixes
+
+* **basetable:** fix after move from RN.PILOT ([d96f5f3](https://github.com/mbuyakov/SUI.CORE/commit/d96f5f3))
+* **gql/wrapper:** tslint error fix ([34bd30c](https://github.com/mbuyakov/SUI.CORE/commit/34bd30c))
+
+
+
+
+
+
 # [2.12.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.11.2...v2.12.0) (2019-08-28)
 
 

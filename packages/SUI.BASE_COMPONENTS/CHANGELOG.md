@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.11.1...v2.14.0) (2019-08-29)
+
+
+### Bug Fixes
+
+* **basetable:** fix after move from RN.PILOT ([d96f5f3](https://github.com/mbuyakov/SUI.CORE/commit/d96f5f3))
+* **package.json:** add @types/amcharts ([4f47030](https://github.com/mbuyakov/SUI.CORE/commit/4f47030))
+
+
+### Features
+
+* **package.json:** add amcharts ([256ace8](https://github.com/mbuyakov/SUI.CORE/commit/256ace8))
+
+
+
+
+
+
 ## [2.12.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.12.0...v2.12.1) (2019-08-28)
 
 
