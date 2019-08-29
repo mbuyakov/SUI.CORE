@@ -1,0 +1,11 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [2.15.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.13.0...v2.15.0) (2019-08-29)
+
+
+### Features
+
+* **sui.meta:** add some meta schema <3 ([7cad426](https://github.com/mbuyakov/SUI.CORE/commit/7cad426))
