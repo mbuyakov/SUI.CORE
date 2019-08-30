@@ -122,12 +122,3 @@ class _ColumnInfoManager extends GqlCacheManager<IColumnInfo, ColumnInfo> {
 
 // tslint:disable-next-line:variable-name
 export const ColumnInfoManager = new _ColumnInfoManager();
-
-async function load(): Promise<void> {
-  const timeLabel = "ColumnInfoManager load";
-  console.time(timeLabel);
-  await ColumnInfoManager.loadAll();
-  console.timeEnd(timeLabel);
-}
-// tslint:disable-next-line:no-floating-promises
-load();

@@ -40,12 +40,3 @@ class _NameManager extends GqlCacheManager<IName, Name> {
 
 // tslint:disable-next-line:variable-name
 export const NameManager = new _NameManager();
-
-async function load(): Promise<void> {
-  const timeLabel = "NameManager load";
-  console.time(timeLabel);
-  await NameManager.loadAll();
-  console.timeEnd(timeLabel);
-}
-// tslint:disable-next-line:no-floating-promises
-load();
