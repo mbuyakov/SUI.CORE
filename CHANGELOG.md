@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.4](https://github.com/mbuyakov/SUI.CORE/compare/v2.15.3...v2.15.4) (2019-08-30)
+
+
+### Bug Fixes
+
+* **sui.base_components:** update antd version 3.21.2 --> 3.22.2 ([5177ab8](https://github.com/mbuyakov/SUI.CORE/commit/5177ab8))
+
+
+
+
+
+
 ## [2.15.3](https://github.com/mbuyakov/SUI.CORE/compare/v2.15.2...v2.15.3) (2019-08-30)
 
 
