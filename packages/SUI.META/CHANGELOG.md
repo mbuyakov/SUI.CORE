@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.2](https://github.com/mbuyakov/SUI.CORE/compare/v2.15.1...v2.15.2) (2019-08-30)
+
+
+### Bug Fixes
+
+* **sui.meta:** tslint fixes ([66b4c56](https://github.com/mbuyakov/SUI.CORE/commit/66b4c56))
+
+
+
+
+
+
 ## [2.15.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.15.0...v2.15.1) (2019-08-30)
 
 
