@@ -107,6 +107,11 @@ class _TableInfoManager extends GqlCacheManager<ITableInfo, TableInfo> {
       cardRenderParams
       nameId
       type
+      columnInfosByTableInfoId {
+        nodes {
+          id
+        }
+      }
     `;
   }
 
