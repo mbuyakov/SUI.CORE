@@ -49,6 +49,7 @@ export function initMetaInfo(props: IMetaInitProps): void {
   // Костыль !! Требуется вызывать после init ApolloClient
   const timeLabel = "MetaInfoManagers load";
   console.time(timeLabel);
+  // tslint:disable-next-line:no-floating-promises
   Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));
 }
 
