@@ -172,7 +172,7 @@ export class MetaInfo {
   }
 
   // private static data: ITableInfo[] = [];
-  private static tabSyncer: TabSyncer<ITableInfo> = new TabSyncer('tableInfo');
+  private static readonly tabSyncer: TabSyncer<ITableInfo> = new TabSyncer('tableInfo');
 
   private static async init(): Promise<void> {
     MetaInfo.addListener((key, value) => {
@@ -191,4 +191,5 @@ export class MetaInfo {
 // Workaround. Init are private, all ok
 // tslint:disable-next-line:ban-ts-ignore
 // @ts-ignore
+// tslint:disable-next-line:no-floating-promises
 MetaInfo.init();

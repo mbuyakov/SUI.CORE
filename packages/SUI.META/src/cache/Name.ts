@@ -47,5 +47,5 @@ async function load(): Promise<void> {
   await NameManager.loadAll();
   console.timeEnd(timeLabel);
 }
-// noinspection JSIgnoredPromiseFromCall
+// tslint:disable-next-line:no-floating-promises
 load();

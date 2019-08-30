@@ -9,7 +9,7 @@ export type ITabSyncerHandlerCb<T> = (key: string, value?: T | null) => any;
 
 export class TabSyncer<T> {
 
-  private handlers: Array<ITabSyncerHandler<T>> = [];
+  private readonly handlers: Array<ITabSyncerHandler<T>> = [];
   // tslint:disable-next-line:no-inferrable-types
   private idCounter: number = 1;
   private readonly keyPrefix: string;

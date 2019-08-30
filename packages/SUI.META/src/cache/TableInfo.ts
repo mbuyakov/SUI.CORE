@@ -132,5 +132,5 @@ async function load(): Promise<void> {
   console.timeEnd(timeLabel);
 }
 
-// noinspection JSIgnoredPromiseFromCall
+// tslint:disable-next-line:no-floating-promises
 load();

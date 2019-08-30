@@ -129,5 +129,5 @@ async function load(): Promise<void> {
   await ColumnInfoManager.loadAll();
   console.timeEnd(timeLabel);
 }
-// noinspection JSIgnoredPromiseFromCall
+// tslint:disable-next-line:no-floating-promises
 load();
