@@ -1,8 +1,9 @@
 import {IBaseTableColLayout} from "@smsoft/sui-base-components";
+import {IUser} from "@smsoft/sui-core";
 
 import {ColumnInfo, ColumnInfoManager, NameManager, TableInfo, TableInfoManager} from "../cache";
 
-import {parseRoutes} from "./metaUtils";
+import {parseRoutes, RouteType} from "./metaUtils";
 import {MetaInfo} from "./OldMetaInfo";
 
 export interface IColumnInfoToBaseTableColProps {
@@ -37,7 +38,9 @@ export interface IRawRoute {
 
 export interface IMetaInitProps {
   routes?: IRawRoute[];
+  user?: IUser,
   baseTableColLayoutGenerateHelper?(result: IBaseTableColLayout, renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps): Promise<void>;
+  defaultGetLinkForTable?(tableName: string, type: RouteType, id?: string | number): string | null;
 }
 
 declare let window: Window & {

@@ -2,7 +2,6 @@ import {ApolloQueryResult} from "apollo-client";
 import {FetchResult} from "apollo-link";
 import gql from "graphql-tag";
 
-import {getDataByKey} from "../dataKey";
 import {loadingErrorNotification} from "../drawUtils";
 import {IObjectWithIndex} from "../other";
 
@@ -43,20 +42,11 @@ export async function query<T>(queryBody: string | any, extractFirstKey: boolean
     queryBody = gql(queryBody);
   }
 
-  const accessToken = getUserAccessToken();
-
   let ret = rejectOnError<T>(
     getClient().query({
       errorPolicy: "all",
       fetchPolicy: "no-cache",
-      query: queryBody,
-      ...(accessToken && {
-        context: {
-          headers: {
-            authorization: `Bearer ${accessToken}`
-          }
-        }
-      })
+      query: queryBody
     }),
   );
   if (extractFirstKey) {
@@ -73,16 +63,6 @@ export async function query<T>(queryBody: string | any, extractFirstKey: boolean
   return ret;
 }
 
-// TODO перебросить интерфейсы из RN.PILOT
-/**
- * Extract user accessToken from window
- */
-function getUserAccessToken(): string | null {
-  const storeGetState = getDataByKey(window, 'g_app', '_store', 'getState');
-
-  return storeGetState && getDataByKey(storeGetState(), 'user', 'user', 'accessToken') || null;
-}
-
 /**
  * Gql mutate
  * any - mutate after gql tag
@@ -94,20 +74,11 @@ export async function mutate<T>(mutationBody: string | any, extractFirstKey: boo
     mutationBody = gql(mutationBody);
   }
 
-  const accessToken = getUserAccessToken();
-
   let ret = rejectOnError<T>(
     getClient().mutate({
       errorPolicy: "all",
       fetchPolicy: "no-cache",
       mutation: mutationBody,
-      ...(accessToken && {
-        context: {
-          headers: {
-            authorization: `Bearer ${accessToken}`
-          }
-        }
-      })
     }),
   );
   if (extractFirstKey) {

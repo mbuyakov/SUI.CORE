@@ -3,7 +3,7 @@ import {addPluralEnding, camelCase, capitalize, DataKey, dataKeysToDataTree, get
 
 import {ColumnInfo, ColumnInfoManager, TableInfo, TableInfoManager} from "../cache";
 
-import {IRawRoute} from "./init";
+import {getMetaInitProps, IRawRoute} from "./init";
 
 export type RouteType = 'card' | 'table';
 
@@ -56,7 +56,11 @@ export function getLinkForTable(
     return id ? link.path.replace(':id', id.toString()) : link.path;
   }
 
-  return null;
+  const metaInitProps = getMetaInitProps();
+
+  return (metaInitProps && metaInitProps.defaultGetLinkForTable)
+    ? metaInitProps.defaultGetLinkForTable(tableName, type, id)
+    : null;
 }
 
 export async function generateCatalogDataPromise(tableName: string, valueColumnName?: string): Promise<SelectData> {
