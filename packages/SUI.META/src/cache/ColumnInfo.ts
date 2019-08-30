@@ -51,7 +51,9 @@ export class ColumnInfo {
 
   public async getNameOrColumnName(): Promise<string | undefined> {
     if (this.nameId) {
-      return getDataByKey(await NameManager.getById(this.nameId), name);
+      const name = await NameManager.getById(this.nameId);
+
+      return getDataByKey(name, "name");
     }
 
     return this.columnName;

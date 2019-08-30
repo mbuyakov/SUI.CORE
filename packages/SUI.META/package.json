@@ -1,12 +1,11 @@
 {
   "name": "@smsoft/sui-meta",
-  "version": "2.15.0",
+  "version": "2.15.1",
   "main": "dist/index.js",
   "module": "dist/sui-meta.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist",
-    "styles"
+    "dist"
   ],
   "scripts": {
     "start": "tsdx watch",
@@ -49,6 +48,7 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@smsoft/sui-base-components": "^2.15.0"
+    "@smsoft/sui-base-components": "^2.15.1",
+    "autobind-decorator": "^2.4.0"
   }
 }

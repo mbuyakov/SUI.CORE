@@ -4,8 +4,11 @@ import {
   getDataByKey
 } from '@smsoft/sui-core';
 import camelCase from 'lodash/camelCase';
+// tslint:disable-next-line:ban-ts-ignore
+// @ts-ignore
+import * as React from "react";
 
-import {ColumnInfoManager, TableInfoManager} from "../cache";
+import {ColumnInfo, ColumnInfoManager, TableInfoManager} from "../cache";
 
 import {getMetaInitProps, IColumnInfoToBaseTableColProps} from "./init";
 import {generateCatalogDataPromise, getReferenceRenderColumnInfo} from "./metaUtils";
@@ -31,9 +34,10 @@ export async function colToBaseTableCol(
     ? await ColumnInfoManager.getById(columnInfo!.foreignColumnInfo![0])
     : null;
   const foreignTableInfo = ref && await TableInfoManager.getById(ref.tableInfoId);
+  let renderColumnInfo: ColumnInfo | null = null;
 
-  if (foreignTableInfo) {
-    const renderColumnInfo = !rawMode && await getReferenceRenderColumnInfo(foreignTableInfo, roles);
+  if (!rawMode && foreignTableInfo) {
+    renderColumnInfo = await getReferenceRenderColumnInfo(foreignTableInfo, roles);
 
     if (renderColumnInfo) {
       const renderTableInfo = await TableInfoManager.getById(renderColumnInfo.tableInfoId);
@@ -63,7 +67,7 @@ export async function colToBaseTableCol(
   const metaInitProps = getMetaInitProps();
 
   if (metaInitProps && metaInitProps.baseTableColLayoutGenerateHelper) {
-    await metaInitProps.baseTableColLayoutGenerateHelper(result, props);
+    await metaInitProps.baseTableColLayoutGenerateHelper(result, renderColumnInfo, props);
   }
 
   if (!result.search && columnInfo.filterTypeByFilterTypeId) {

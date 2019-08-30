@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-core",
-  "version": "2.15.0",
+  "version": "2.15.1",
   "main": "dist/index.js",
   "module": "dist/sui-core.esm.js",
   "typings": "dist/index.d.ts",
@@ -53,6 +53,7 @@
     "@types/history": "^4.7.2",
     "antd": "^3.21.2",
     "apollo-client": "^2.6.3",
+    "autobind-decorator": "^2.4.0",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
     "history": "^4.9.0",
