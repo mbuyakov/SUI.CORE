@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.3](https://github.com/mbuyakov/SUI.CORE/compare/v2.15.2...v2.15.3) (2019-08-30)
+
+
+### Bug Fixes
+
+* **oldmetainfo.ts:** additional kostyl ([52d5e6f](https://github.com/mbuyakov/SUI.CORE/commit/52d5e6f))
+* **tableinfo.ts:** add missed query part ([00e8001](https://github.com/mbuyakov/SUI.CORE/commit/00e8001))
+
+
+
+
+
+
 ## [2.15.2](https://github.com/mbuyakov/SUI.CORE/compare/v2.15.1...v2.15.2) (2019-08-30)
 
 
