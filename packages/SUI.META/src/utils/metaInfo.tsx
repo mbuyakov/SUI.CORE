@@ -17,6 +17,7 @@ export async function colToBaseTableCol(
   props: IColumnInfoToBaseTableColProps
 ): Promise<IBaseTableColLayout> {
   const {columnInfo, rawMode, roles} = props;
+  const columnName = await columnInfo.getNameOrColumnName();
 
   const result: IBaseTableColLayout = {
     defaultGrouping: columnInfo.defaultGrouping,
@@ -26,7 +27,7 @@ export async function colToBaseTableCol(
     groupingCriteria: (value: any) => value,
     id: camelCase(columnInfo.columnName),
     subtotal: columnInfo.subtotalTypeBySubtotalTypeId,
-    title:  (await columnInfo.getNameOrColumnName()) + (rawMode ? ` (${columnInfo.columnName})` : ""),
+    title:  `${columnName}${rawMode ? ` (${columnInfo.columnName})` : ""}`,
     width: columnInfo.width,
   };
 
