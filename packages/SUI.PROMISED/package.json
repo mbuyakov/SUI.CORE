@@ -40,7 +40,6 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@smsoft/sui-core": "^2.15.0",
-    "autobind-decorator": "^2.4.0"
+    "@smsoft/sui-core": "^2.15.0"
   }
 }

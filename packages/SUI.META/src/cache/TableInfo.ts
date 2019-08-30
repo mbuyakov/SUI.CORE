@@ -1,5 +1,6 @@
 // tslint:disable:prefer-function-over-method
 import {asyncMap, getDataByKey, GqlCacheManager, ICacheEntry, query} from '@smsoft/sui-core';
+import autobind from "autobind-decorator";
 
 import {IColumnInfo, IGraphQLConnection, ITableInfo} from "../types";
 
@@ -44,9 +45,11 @@ export class TableInfo {
     return (await asyncMap(this.colIds, id => ColumnInfoManager.getById(id))) as ColumnInfo[];
   }
 
-  public async getNameOrTableName(): Promise<string> {
+  public async getNameOrTableName(): Promise<string | undefined> {
     if (this.nameId) {
-      return (await NameManager.getById(this.nameId)).name;
+      const name = await NameManager.getById(this.nameId);
+
+      return getDataByKey(name, "name");
     }
 
     return this.tableName;
@@ -67,6 +70,7 @@ export class TableInfo {
 // tslint:disable-next-line:max-classes-per-file class-name
 class _TableInfoManager extends GqlCacheManager<ITableInfo, TableInfo> {
 
+  @autobind
   protected async __loadById(id: string): Promise<TableInfo> {
     let tableInfoId = id;
 
@@ -85,12 +89,11 @@ class _TableInfoManager extends GqlCacheManager<ITableInfo, TableInfo> {
 
       // tslint:disable-next-line:triple-equals
       if (id == null) {
-        throw new Error(`TableInfoManager: couldn't find TableInfo with name = ${id}`);
+        throw new Error(`TableInfoManager: couldn't find TableInfo with tableName = ${id}`);
       }
     }
 
-    // Magic. return super.loadById(id);
-    return super.__loadById.apply(this, [tableInfoId]);
+    return super.__loadById(tableInfoId);
   }
 
   protected getFields(): string {

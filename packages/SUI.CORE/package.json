@@ -53,6 +53,7 @@
     "@types/history": "^4.7.2",
     "antd": "^3.21.2",
     "apollo-client": "^2.6.3",
+    "autobind-decorator": "^2.4.0",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
     "history": "^4.9.0",

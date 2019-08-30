@@ -36,7 +36,7 @@ export interface IRawRoute {
 
 export interface IMetaInitProps {
   routes?: IRawRoute[];
-  baseTableColLayoutGenerateHelper?(result: IBaseTableColLayout, props: IColumnInfoToBaseTableColProps): Promise<void>;
+  baseTableColLayoutGenerateHelper?(result: IBaseTableColLayout, renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps): Promise<void>;
 }
 
 declare let window: Window & {
