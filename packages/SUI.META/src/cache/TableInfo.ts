@@ -124,13 +124,3 @@ class _TableInfoManager extends GqlCacheManager<ITableInfo, TableInfo> {
 
 // tslint:disable-next-line:variable-name
 export const TableInfoManager = new _TableInfoManager();
-
-async function load(): Promise<void> {
-  const timeLabel = 'TableInfoManager load';
-  console.time(timeLabel);
-  await TableInfoManager.loadAll();
-  console.timeEnd(timeLabel);
-}
-
-// tslint:disable-next-line:no-floating-promises
-load();

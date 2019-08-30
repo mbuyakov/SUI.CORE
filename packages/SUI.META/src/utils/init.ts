@@ -1,6 +1,6 @@
 import {IBaseTableColLayout} from "@smsoft/sui-base-components";
 
-import {ColumnInfo, TableInfo} from "../cache";
+import {ColumnInfo, ColumnInfoManager, NameManager, TableInfo, TableInfoManager} from "../cache";
 
 import {parseRoutes} from "./metaUtils";
 
@@ -46,6 +46,10 @@ declare let window: Window & {
 export function initMetaInfo(props: IMetaInitProps): void {
   window.META_INIT_PROPS = props;
   parseRoutes(props.routes || []);
+  // Костыль !! Требуется вызывать после init ApolloClient
+  const timeLabel = "MetaInfoManagers load";
+  console.time(timeLabel);
+  Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));
 }
 
 export function getMetaInitProps(): IMetaInitProps | undefined {
