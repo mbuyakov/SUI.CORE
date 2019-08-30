@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-base-components",
-  "version": "2.15.1",
+  "version": "2.15.4",
   "main": "dist/index.js",
   "module": "dist/sui-base-components.esm.js",
   "typings": "dist/index.d.ts",
@@ -62,7 +62,7 @@
     "@types/history": "^4.7.2",
     "@types/react-router-dom": "^4.3.4",
     "ant-design-pro": "^2.3.2",
-    "antd": "^3.21.2",
+    "antd": "^3.22.2",
     "apollo-client": "^2.6.3",
     "classnames": "^2.2.6",
     "graphql": "^14.4.2",
