@@ -128,6 +128,19 @@ export class MetaInfo {
     return MetaInfo.tabSyncer.addHandler(cb);
   }
 
+  public static async init(): Promise<void> {
+    MetaInfo.addListener((key, value) => {
+      // // console.log("ITableInfo updated", key, value);
+      if (value && data) {
+        data[data.findIndex(tableInfo => tableInfo.id === key)] = value;
+      }
+    });
+    console.time('MetaInfo init');
+    await MetaInfo.loadAllData();
+    console.timeEnd('MetaInfo init');
+    // console.log('[META]Init complete', loadedData);
+  }
+
   public static async loadAllData(): Promise<ITableInfo[]> {
     try {
       const dataString = localStorage.getItem(DATA_KEY_IN_LOCALSTORAGE);
@@ -174,22 +187,4 @@ export class MetaInfo {
   // private static data: ITableInfo[] = [];
   private static readonly tabSyncer: TabSyncer<ITableInfo> = new TabSyncer('tableInfo');
 
-  private static async init(): Promise<void> {
-    MetaInfo.addListener((key, value) => {
-      // // console.log("ITableInfo updated", key, value);
-      if (value && data) {
-        data[data.findIndex(tableInfo => tableInfo.id === key)] = value;
-      }
-    });
-    console.time('MetaInfo init');
-    await MetaInfo.loadAllData();
-    console.timeEnd('MetaInfo init');
-    // console.log('[META]Init complete', loadedData);
-  }
 }
-
-// Workaround. Init are private, all ok
-// tslint:disable-next-line:ban-ts-ignore
-// @ts-ignore
-// tslint:disable-next-line:no-floating-promises
-MetaInfo.init();
