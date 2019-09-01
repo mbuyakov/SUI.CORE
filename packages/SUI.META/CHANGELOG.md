@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.6](https://github.com/mbuyakov/SUI.CORE/compare/v2.15.5...v2.15.6) (2019-09-01)
+
+
+### Bug Fixes
+
+* **sui.meta/link:** add missed export ([678c106](https://github.com/mbuyakov/SUI.CORE/commit/678c106))
+
+
+
+
+
+
 ## [2.15.5](https://github.com/mbuyakov/SUI.CORE/compare/v2.15.4...v2.15.5) (2019-08-30)
 
 
