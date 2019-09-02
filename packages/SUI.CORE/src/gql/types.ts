@@ -19,7 +19,7 @@ export type ISimpleGqlFilter<TTable> = {
 }
 
 export type IGqlFilter<TTable> = ISimpleGqlFilter<TTable> & {
-  and: Array<IGqlFilter<TTable>>;
-  or: Array<IGqlFilter<TTable>>;
-  not: IGqlFilter<TTable>
+  and?: Array<IGqlFilter<TTable>>;
+  or?: Array<IGqlFilter<TTable>>;
+  not?: IGqlFilter<TTable>
 }
