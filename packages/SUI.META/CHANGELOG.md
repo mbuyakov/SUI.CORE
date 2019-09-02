@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.16.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.16.0...v2.16.1) (2019-09-02)
+
+
+### Bug Fixes
+
+* **rendermetalinkarray:** fix styles ([0bf5f0b](https://github.com/mbuyakov/SUI.CORE/commit/0bf5f0b))
+
+
+
+
+
+
 # [2.16.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.15.6...v2.16.0) (2019-09-02)
 
 **Note:** Version bump only for package @smsoft/sui-meta
