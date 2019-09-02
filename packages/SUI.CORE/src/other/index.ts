@@ -7,9 +7,10 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export type Rendered<T extends React.Component> = React.ReactElement<T["props"]>;
 
+export type ExtractProps<T> = T extends React.Component<infer TProps, any> ? TProps : T;
+
 // tslint:disable-next-line:completed-docs
-export type FormCreateKostyl<T extends React.Component<{form?: WrappedFormUtils}>> =
-  Omit<T extends React.Component<infer U> ? U : T, 'form'>;
+export type FormCreateKostyl<T extends React.Component<{form?: WrappedFormUtils}>> = Omit<ExtractProps<T>, 'form'>;
 
 /**
  * Return promise, that resolve after given ms
