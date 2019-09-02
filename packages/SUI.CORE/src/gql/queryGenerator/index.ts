@@ -1,5 +1,6 @@
 import {IObjectWithIndex} from "../../other";
 import {addQuotesIfString, camelCase, capitalize} from "../../stringFormatters";
+import {IGqlFilter} from "../types";
 import {mutate} from "../wrapper";
 
 export type PossibleId = string | number;
@@ -92,4 +93,12 @@ export async function generateDelete(entity: string, id: PossibleId): Promise<vo
  */
 export function generateDeleteFn(entity: string): (id: PossibleId) => Promise<void> {
   return (id: PossibleId) => generateDelete(entity, id);
+}
+
+/**
+ * Stringify GraphQL filter for query
+ */
+// tslint:disable-next-line:completed-docs
+export function stringifyGqlFilter<T = {}>(filter: {filter: IGqlFilter<T>}): string {
+  return JSON.stringify(filter).replace(/"([^"]+)":/g, "$1:");
 }

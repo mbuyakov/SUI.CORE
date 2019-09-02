@@ -1,5 +1,5 @@
 import {SelectData} from "@smsoft/sui-base-components";
-import {addPluralEnding, camelCase, capitalize, DataKey, dataKeysToDataTree, getDataByKey, query, removePluralEnding, wrapInArray} from "@smsoft/sui-core";
+import {addPluralEnding, camelCase, capitalize, DataKey, dataKeysToDataTree, getDataByKey, IGqlFilter, query, removePluralEnding, stringifyGqlFilter, wrapInArray} from "@smsoft/sui-core";
 
 import {ColumnInfo, ColumnInfoManager, TableInfo, TableInfoManager} from "../cache";
 
@@ -155,10 +155,18 @@ export function getDataSetRender(dataSet: IDataSet): string {
     : dataSet.id;
 }
 
-export async function getDataSet(
+function __queryFilterString<T>(filter?: IGqlFilter<T>): string {
+  return filter
+    ? `(${stringifyGqlFilter({filter})})`
+    : "";
+}
+
+export async function getDataSet<TValueType = {}, TGroupType = {}>(
   roles: string[],
   valueTableInfo: TableInfo,
   groupTableInfo?: TableInfo,
+  valueTableInfoFilter?: IGqlFilter<TValueType>,
+  groupTableInfoFilter?: IGqlFilter<TGroupType>
 ): Promise<IDataSet[]> {
   const queryDataKeys: DataKey[] = [];
   let groupRenderDataKey = null;
@@ -166,7 +174,7 @@ export async function getDataSet(
   const groupPrefixDataKey: DataKey = [];
 
   if (groupTableInfo) {
-    groupPrefixDataKey.push(toConnectionName(groupTableInfo), "nodes");
+    groupPrefixDataKey.push(`${toConnectionName(groupTableInfo)}${__queryFilterString(groupTableInfoFilter)}`, "nodes");
     queryDataKeys.push(groupPrefixDataKey.concat(["id"]));
 
     groupRenderDataKey = await generateRenderDataKey(groupTableInfo, roles);
@@ -180,6 +188,10 @@ export async function getDataSet(
     );
   } else {
     valuePrefixDataKey.push(toConnectionName(valueTableInfo));
+  }
+
+  if (valueTableInfoFilter) {
+    valuePrefixDataKey.push(`${valuePrefixDataKey.pop()}${__queryFilterString(valueTableInfoFilter)}`);
   }
 
   valuePrefixDataKey.push("nodes");
