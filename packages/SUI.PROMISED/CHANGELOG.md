@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.17.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.16.1...v2.17.0) (2019-09-02)
+
+**Note:** Version bump only for package @smsoft/sui-promised
+
+
+
+
+
+
 # [2.16.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.15.6...v2.16.0) (2019-09-02)
 
 **Note:** Version bump only for package @smsoft/sui-promised
