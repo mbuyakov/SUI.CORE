@@ -33,8 +33,7 @@ export function renderMetaLinkArray(table: string, ids: Array<string | number>, 
     ? (
       <div
         style={{
-          display: "flex",
-          flexWrap: "wrap"
+          display: "contents"
         }}
         className="fit-content-width"
       >
