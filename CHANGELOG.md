@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.17.2](https://github.com/mbuyakov/SUI.CORE/compare/v2.17.1...v2.17.2) (2019-09-02)
+
+
+### Bug Fixes
+
+* **gqlfilter type:** fix[#2](https://github.com/mbuyakov/SUI.CORE/issues/2) ([efda657](https://github.com/mbuyakov/SUI.CORE/commit/efda657))
+
+
+
+
+
+
 ## [2.17.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.17.0...v2.17.1) (2019-09-02)
 
 
