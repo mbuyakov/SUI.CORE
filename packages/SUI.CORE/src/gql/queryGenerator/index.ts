@@ -100,5 +100,5 @@ export function generateDeleteFn(entity: string): (id: PossibleId) => Promise<vo
  */
 // tslint:disable-next-line:completed-docs
 export function stringifyGqlFilter<T = {}>(filter: {filter: IGqlFilter<T>}): string {
-  return JSON.stringify(filter).replace(/"([^"]+)":/g, "$1:");
+  return `filter: ${JSON.stringify(filter.filter).replace(/"([^"]+)":/g, "$1:")}`;
 }
