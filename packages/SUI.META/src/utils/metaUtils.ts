@@ -170,11 +170,12 @@ export async function getDataSet<TValueType = {}, TGroupType = {}>(
 ): Promise<IDataSet[]> {
   const queryDataKeys: DataKey[] = [];
   let groupRenderDataKey = null;
-  const valuePrefixDataKey = [];
+  const valuePrefixDataKey: DataKey = [];
   const groupPrefixDataKey: DataKey = [];
 
   if (groupTableInfo) {
-    groupPrefixDataKey.push(`${toConnectionName(groupTableInfo)}${__queryFilterString(groupTableInfoFilter)}`, "nodes");
+    // ${__queryFilterString(groupTableInfoFilter)}
+    groupPrefixDataKey.push(toConnectionName(groupTableInfo), "nodes");
     queryDataKeys.push(groupPrefixDataKey.concat(["id"]));
 
     groupRenderDataKey = await generateRenderDataKey(groupTableInfo, roles);
@@ -190,10 +191,6 @@ export async function getDataSet<TValueType = {}, TGroupType = {}>(
     valuePrefixDataKey.push(toConnectionName(valueTableInfo));
   }
 
-  if (valueTableInfoFilter) {
-    valuePrefixDataKey.push(`${valuePrefixDataKey.pop()}${__queryFilterString(valueTableInfoFilter)}`);
-  }
-
   valuePrefixDataKey.push("nodes");
   const valueRenderDataKey = await generateRenderDataKey(valueTableInfo, roles);
 
@@ -201,6 +198,22 @@ export async function getDataSet<TValueType = {}, TGroupType = {}>(
   if (valueRenderDataKey) {
     queryDataKeys.push(valuePrefixDataKey.concat(valueRenderDataKey));
   }
+
+  // TODO: Костыль для фильтров, переписать
+  const groupFilterString = groupTableInfoFilter && __queryFilterString(groupTableInfoFilter);
+  const valueFilterString = valueTableInfoFilter && __queryFilterString(valueTableInfoFilter);
+
+  (queryDataKeys as Array<Array<string | number>>).forEach((queryDataKey) => {
+    if (groupFilterString) {
+      queryDataKey[0] = `${queryDataKey[0]}${groupFilterString}`;
+    }
+    // tslint:disable-next-line:triple-equals
+    if (valueFilterString && valuePrefixDataKey.every((value, index) => value != null && value === queryDataKey[index])) {
+      const connectionIndex = valuePrefixDataKey.length - 2;
+      queryDataKey[connectionIndex] = `${queryDataKey[connectionIndex]}${valueFilterString}`;
+    }
+  });
+  // Конец костыля
 
   const queryData = await query(dataKeysToDataTree(queryDataKeys).toString());
 
