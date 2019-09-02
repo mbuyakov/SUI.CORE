@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.17.4](https://github.com/mbuyakov/SUI.CORE/compare/v2.17.3...v2.17.4) (2019-09-02)
+
+
+### Bug Fixes
+
+* **metautils:** fix getDataSet (Kostyl) ([0cb59c9](https://github.com/mbuyakov/SUI.CORE/commit/0cb59c9))
+
+
+
+
+
+
 ## [2.17.3](https://github.com/mbuyakov/SUI.CORE/compare/v2.17.2...v2.17.3) (2019-09-02)
 
 
