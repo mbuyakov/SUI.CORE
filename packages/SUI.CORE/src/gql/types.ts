@@ -15,11 +15,11 @@ export interface ISimpleGqlFilterValue<TType> {
 }
 
 export type ISimpleGqlFilter<TTable> = {
-  [P in keyof TTable]: ISimpleGqlFilterValue<TTable[P] extends number | boolean ? TTable[P] : string>;
+  [P in keyof TTable]?: ISimpleGqlFilterValue<TTable[P] extends number | boolean ? TTable[P] : string>;
 }
 
 export type IGqlFilter<TTable> = ISimpleGqlFilter<TTable> & {
-  and: Array<ISimpleGqlFilter<TTable>>;
-  or: Array<ISimpleGqlFilter<TTable>>;
-  not: ISimpleGqlFilter<TTable>
+  and: Array<IGqlFilter<TTable>>;
+  or: Array<IGqlFilter<TTable>>;
+  not: IGqlFilter<TTable>
 }
