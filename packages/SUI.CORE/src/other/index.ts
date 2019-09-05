@@ -32,6 +32,27 @@ export async function asyncMap<T, U>(array: T[], fn: (item: T, index: number, or
   return Promise.all(array.map(fn));
 }
 
+/**
+ * Async replace
+ */
+export async function asyncReplace(
+  str: string,
+  regExp: string | RegExp,
+  replacer: (substring: string, ...args: any[]) => Promise<string>
+): Promise<string> {
+  const promises: Array<Promise<string>> = [];
+
+  str.replace(regExp, (substring, ...args) => {
+    promises.push(replacer(substring, ...args));
+
+    return substring;
+  });
+
+  const replacements = await Promise.all(promises);
+
+  return str.replace(regExp, () => replacements.shift() as string);
+}
+
 export type Unpacked<T> =
   T extends Array<infer U> ? U :
     T extends (...args: any[]) => infer U ? U :
