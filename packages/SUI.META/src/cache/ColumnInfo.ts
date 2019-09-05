@@ -3,7 +3,7 @@ import {getDataByKey, GqlCacheManager, ICacheEntry} from "@smsoft/sui-core";
 
 import {IColumnInfo, IColumnInfoReference, IColumnInfoRole, IColumnInfoTag, IFilterType, ISubtotalType} from "../types";
 
-import {NameManager} from "./Name";
+import {Name} from "./Name";
 
 export class ColumnInfo {
   public columnName: string;
@@ -25,7 +25,10 @@ export class ColumnInfo {
   public visible: boolean;
   public width?: number;
 
+  private readonly name?: Name;
+
   public constructor(item: IColumnInfo) {
+    // public
     this.id = item.id;
     this.tableInfoId = item.tableInfoId;
     this.columnName = item.columnName;
@@ -47,16 +50,15 @@ export class ColumnInfo {
       .filter(Boolean)
       .map(roleName => roleName.replace("ROLE_", ""));
     this.foreignColumnInfo = (getDataByKey<IColumnInfoReference[]>(item, "columnInfoReferencesByColumnInfoId", "nodes") || []).map(value => value.foreignColumnInfoId);
+
+    // private
+    this.name = item.nameByNameId;
   }
 
-  public async getNameOrColumnName(): Promise<string | undefined> {
-    if (this.nameId) {
-      const name = await NameManager.getById(this.nameId);
-
-      return getDataByKey(name, "name");
-    }
-
-    return this.columnName;
+  public getNameOrColumnName(): string | undefined {
+    return this.nameId
+      ? getDataByKey(this.name, "name")
+      : this.columnName;
   }
 }
 
@@ -77,6 +79,10 @@ class _ColumnInfoManager extends GqlCacheManager<IColumnInfo, ColumnInfo> {
       width
       order
       tableRenderParams
+      nameByNameId {
+        id
+        name
+      }
       filterTypeByFilterTypeId {
         id
         type

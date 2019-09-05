@@ -1,11 +1,11 @@
-// tslint:disable:prefer-function-over-method
+// tslint:disable:prefer-function-over-method variable-name
 import {asyncMap, getDataByKey, GqlCacheManager, ICacheEntry, query} from '@smsoft/sui-core';
 import autobind from "autobind-decorator";
 
 import {IColumnInfo, IGraphQLConnection, ITableInfo} from "../types";
 
 import {ColumnInfo, ColumnInfoManager} from "./ColumnInfo";
-import {NameManager} from "./Name";
+import {Name} from "./Name";
 
 export class TableInfo {
   public cardRenderParams?: string;
@@ -17,10 +17,13 @@ export class TableInfo {
   public schemaName: string | undefined;
   public tableName: string;
   public type: string | undefined;
+
   private colIds: string[];
+  private readonly name?: Name;
 
 
   public constructor(item: ITableInfo) {
+    // public
     this.id = item.id;
     this.schemaName = item.schemaName;
     this.tableName = item.tableName;
@@ -30,7 +33,10 @@ export class TableInfo {
     this.cardRenderParams = item.cardRenderParams;
     this.nameId = item.nameId;
     this.type = item.type;
+
+    // private
     this.colIds = (getDataByKey<IColumnInfo[]>(item, "columnInfosByTableInfoId", "nodes") || []).map(columnInfo => columnInfo.id);
+    this.name = item.nameByNameId;
   }
 
   public directGetColumns(): ColumnInfo[] {
@@ -45,14 +51,10 @@ export class TableInfo {
     return asyncMap(this.colIds, id => ColumnInfoManager.getById(id));
   }
 
-  public async getNameOrTableName(): Promise<string | undefined> {
-    if (this.nameId) {
-      const name = await NameManager.getById(this.nameId);
-
-      return getDataByKey(name, "name");
-    }
-
-    return this.tableName;
+  public getNameOrTableName(): string | undefined {
+    return this.nameId
+      ? getDataByKey(this.name, "name")
+      : this.tableName;
   }
 
   public async loadColumns(): Promise<void> {
@@ -105,7 +107,10 @@ class _TableInfoManager extends GqlCacheManager<ITableInfo, TableInfo> {
       foreignLinkColumnInfoId
       isCatalog
       cardRenderParams
-      nameId
+      nameByNameId {
+        id
+        name
+      }
       type
       columnInfosByTableInfoId(orderBy: ORDER_ASC) {
         nodes {
