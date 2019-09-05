@@ -31,7 +31,7 @@ export class TableInfo {
     this.foreignLinkColumnInfoId = item.foreignLinkColumnInfoId;
     this.isCatalog = item.isCatalog;
     this.cardRenderParams = item.cardRenderParams;
-    this.nameId = item.nameId;
+    this.nameId = getDataByKey(item, "nameByNameId", "id");
     this.type = item.type;
 
     // private

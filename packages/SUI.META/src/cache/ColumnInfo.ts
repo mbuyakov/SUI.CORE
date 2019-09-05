@@ -43,7 +43,7 @@ export class ColumnInfo {
     this.tableRenderParams = item.tableRenderParams;
     this.subtotalTypeBySubtotalTypeId = item.subtotalTypeBySubtotalTypeId;
     this.filterTypeByFilterTypeId = item.filterTypeByFilterTypeId;
-    this.nameId = item.nameId;
+    this.nameId = getDataByKey(item, "nameByNameId", "id");
     this.tags = (getDataByKey<IColumnInfoTag[]>(item, "columnInfoTagsByColumnInfoId", "nodes") || []).map(value => value.tagId);
     this.roles = (getDataByKey<IColumnInfoRole[]>(item, "columnInfoRolesByColumnInfoId", "nodes") || [])
       .map(value => getDataByKey(value, "roleByRoleId", "name"))

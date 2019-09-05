@@ -17,7 +17,7 @@ export async function colToBaseTableCol(
   props: IColumnInfoToBaseTableColProps
 ): Promise<IBaseTableColLayout> {
   const {columnInfo, rawMode, roles} = props;
-  const columnName = await columnInfo.getNameOrColumnName();
+  const columnName = columnInfo.getNameOrColumnName();
 
   const result: IBaseTableColLayout = {
     defaultGrouping: columnInfo.defaultGrouping,
