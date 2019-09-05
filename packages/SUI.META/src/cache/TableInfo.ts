@@ -42,7 +42,7 @@ export class TableInfo {
       await this.loadColumns();
     }
 
-    return (await asyncMap(this.colIds, id => ColumnInfoManager.getById(id))) as ColumnInfo[];
+    return asyncMap(this.colIds, id => ColumnInfoManager.getById(id));
   }
 
   public async getNameOrTableName(): Promise<string | undefined> {
@@ -107,7 +107,7 @@ class _TableInfoManager extends GqlCacheManager<ITableInfo, TableInfo> {
       cardRenderParams
       nameId
       type
-      columnInfosByTableInfoId {
+      columnInfosByTableInfoId(orderBy: ORDER_ASC) {
         nodes {
           id
         }

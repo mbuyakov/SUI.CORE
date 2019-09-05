@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.1](https://github.com/mbuyakov/SUI.CORE/compare/v2.18.0...v2.18.1) (2019-09-05)
+
+
+### Bug Fixes
+
+* **cache/tableinfo:** fix colIds order ([42dec9f](https://github.com/mbuyakov/SUI.CORE/commit/42dec9f))
+
+
+
+
+
+
 # [2.18.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.17.4...v2.18.0) (2019-09-05)
 
 
