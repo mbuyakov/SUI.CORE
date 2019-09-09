@@ -1,13 +1,12 @@
 {
-  "name": "@smsoft/sui-base-components",
+  "name": "@smsoft/sui-charts",
   "version": "2.18.0",
   "main": "dist/index.js",
-  "module": "dist/sui-base-components.esm.js",
+  "module": "dist/sui-charts.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
-    "styles",
-    "umi-config.js"
+    "styles"
   ],
   "scripts": {
     "start": "tsdx watch",
@@ -50,26 +49,6 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@devexpress/dx-react-core": "^2.0.2",
-    "@devexpress/dx-react-grid": "^2.0.2",
-    "@devexpress/dx-react-grid-material-ui": "^2.0.2",
-    "@material-ui/core": "^4.3.1",
-    "@material-ui/icons": "^4.2.1",
-    "@smsoft/sui-core": "^2.18.0",
-    "@types/classnames": "^2.2.9",
-    "@types/history": "^4.7.2",
-    "@types/react-router-dom": "^4.3.4",
-    "ant-design-pro": "^2.3.2",
-    "antd": "^3.22.2",
-    "apollo-client": "^2.6.3",
-    "classnames": "^2.2.6",
-    "graphql": "^14.4.2",
-    "graphql-tag": "^2.10.1",
-    "history": "^4.9.0",
-    "lodash": "^4.17.15",
-    "lodash-es": "^4.17.15",
-    "react-odometerjs": "^2.1.1",
-    "react-router-dom": "^5.0.1",
-    "xlsx": "^0.15.0"
+    "@amcharts/amcharts4": "^4.5.16"
   }
 }
