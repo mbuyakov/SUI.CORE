@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.11.1...v3.0.0) (2019-09-09)
+
+
+### Bug Fixes
+
+* **all:** refactoring, fixes, links ([c0b001d](https://github.com/mbuyakov/SUI.CORE/commit/c0b001d))
+* **cache:** remove useless async for name getters ([a3bb9b5](https://github.com/mbuyakov/SUI.CORE/commit/a3bb9b5))
+* **cache/tableinfo:** fix colIds order ([42dec9f](https://github.com/mbuyakov/SUI.CORE/commit/42dec9f))
+* **metautils:** fix getDataSet (Kostyl) ([0cb59c9](https://github.com/mbuyakov/SUI.CORE/commit/0cb59c9))
+* **oldmetainfo.ts:** additional kostyl ([52d5e6f](https://github.com/mbuyakov/SUI.CORE/commit/52d5e6f))
+* **rendermetalinkarray:** fix styles ([0bf5f0b](https://github.com/mbuyakov/SUI.CORE/commit/0bf5f0b))
+* **sui.core + sui.meta:** fix ([6d72469](https://github.com/mbuyakov/SUI.CORE/commit/6d72469))
+* **sui.meta:** tslint fixes ([66b4c56](https://github.com/mbuyakov/SUI.CORE/commit/66b4c56))
+* **sui.meta/link:** add missed export ([678c106](https://github.com/mbuyakov/SUI.CORE/commit/678c106))
+* **tableinfo.ts:** add missed query part ([00e8001](https://github.com/mbuyakov/SUI.CORE/commit/00e8001))
+
+
+### Features
+
+* **gqlfilters:** add GqlFilter type + filter params for getDataSet function ([e3ceafc](https://github.com/mbuyakov/SUI.CORE/commit/e3ceafc))
+* **sui.meta:** add some meta schema <3 ([7cad426](https://github.com/mbuyakov/SUI.CORE/commit/7cad426))
+
+
+
+
+
 ## [2.18.2](https://github.com/mbuyakov/SUI.CORE/compare/v2.18.1...v2.18.2) (2019-09-05)
 
 
