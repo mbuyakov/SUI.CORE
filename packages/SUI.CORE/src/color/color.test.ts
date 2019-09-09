@@ -1,6 +1,6 @@
 /* tslint:disable:typedef */
 
-import * as color from "./index";
+import * as color from "./color";
 
 test("From hex without alpha", () => {
   const colorFromHex = color.Color.fromHex("#FF00FF");

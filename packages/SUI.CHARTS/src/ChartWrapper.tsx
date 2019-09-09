@@ -20,7 +20,7 @@ export abstract class ChartWrapper<T> extends React.Component<{
   // Convert it to base 36 (numbers + letters), and grab the first 9 characters
   // after the decimal.
   // tslint:disable-next-line:no-magic-numbers
-  private id: string = Math.random().toString(36).substr(2, 9);
+  private readonly id: string = Math.random().toString(36).substr(2, 9);
 
   // tslint:disable-next-line:no-any
   public componentDidMount(data?: any): void {
