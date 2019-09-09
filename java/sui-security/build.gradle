@@ -3,9 +3,6 @@ apply plugin: 'kotlin-spring'
 
 dependencies {
     compile project(":sui-entity")
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    compile "org.jetbrains.kotlin:kotlin-reflect"
-    compile "io.github.microutils:kotlin-logging:${kotlinLoggingVersion}"
     compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     compile "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
     compile "org.springframework.boot:spring-boot-starter-data-jdbc:${springBootVersion}"

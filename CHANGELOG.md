@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.11.1...v3.0.0) (2019-09-09)
+
+
+### Bug Fixes
+
+* **all:** refactoring, fixes, links ([c0b001d](https://github.com/mbuyakov/SUI.CORE/commit/c0b001d))
+* **basetable:** fix after move from RN.PILOT ([d96f5f3](https://github.com/mbuyakov/SUI.CORE/commit/d96f5f3))
+* **cache:** remove useless async for name getters ([a3bb9b5](https://github.com/mbuyakov/SUI.CORE/commit/a3bb9b5))
+* **cache/tableinfo:** fix colIds order ([42dec9f](https://github.com/mbuyakov/SUI.CORE/commit/42dec9f))
+* **gql/wrapper:** tslint error fix ([34bd30c](https://github.com/mbuyakov/SUI.CORE/commit/34bd30c))
+* **gqlfilter type:** fix ([4978d4c](https://github.com/mbuyakov/SUI.CORE/commit/4978d4c))
+* **gqlfilter type:** fix[#2](https://github.com/mbuyakov/SUI.CORE/issues/2) ([efda657](https://github.com/mbuyakov/SUI.CORE/commit/efda657))
+* **metautils:** fix getDataSet (Kostyl) ([0cb59c9](https://github.com/mbuyakov/SUI.CORE/commit/0cb59c9))
+* **oldmetainfo.ts:** additional kostyl ([52d5e6f](https://github.com/mbuyakov/SUI.CORE/commit/52d5e6f))
+* **package.json:** add @types/amcharts ([4f47030](https://github.com/mbuyakov/SUI.CORE/commit/4f47030))
+* **rendermetalinkarray:** fix styles ([0bf5f0b](https://github.com/mbuyakov/SUI.CORE/commit/0bf5f0b))
+* **sui.base_components:** update antd version 3.21.2 --> 3.22.2 ([5177ab8](https://github.com/mbuyakov/SUI.CORE/commit/5177ab8))
+* **sui.core + sui.meta:** fix ([6d72469](https://github.com/mbuyakov/SUI.CORE/commit/6d72469))
+* **sui.core/src/gql/index.ts:** fix stringifyGqlFilter ([12fffaa](https://github.com/mbuyakov/SUI.CORE/commit/12fffaa))
+* **sui.meta:** tslint fixes ([66b4c56](https://github.com/mbuyakov/SUI.CORE/commit/66b4c56))
+* **sui.meta/link:** add missed export ([678c106](https://github.com/mbuyakov/SUI.CORE/commit/678c106))
+* **tableinfo.ts:** add missed query part ([00e8001](https://github.com/mbuyakov/SUI.CORE/commit/00e8001))
+* add rowClassName ([1cb2060](https://github.com/mbuyakov/SUI.CORE/commit/1cb2060))
+
+
+### Features
+
+* **gqlfilters:** add GqlFilter type + filter params for getDataSet function ([e3ceafc](https://github.com/mbuyakov/SUI.CORE/commit/e3ceafc))
+* **package.json:** add amcharts ([256ace8](https://github.com/mbuyakov/SUI.CORE/commit/256ace8))
+* **src/other/index.ts:** add ExtractProps type ([dbeafce](https://github.com/mbuyakov/SUI.CORE/commit/dbeafce))
+* **sui.core/other/index.ts:** add asyncReplace function ([33f5753](https://github.com/mbuyakov/SUI.CORE/commit/33f5753))
+* **sui.meta:** add some meta schema <3 ([7cad426](https://github.com/mbuyakov/SUI.CORE/commit/7cad426))
+* **sui.promised:** add PromisedTextArea ([d930ca9](https://github.com/mbuyakov/SUI.CORE/commit/d930ca9))
+* add CHARTS module, levelToColor func ([43d8e7f](https://github.com/mbuyakov/SUI.CORE/commit/43d8e7f))
+* add sui-entity(without migrations) ([4d6437e](https://github.com/mbuyakov/SUI.CORE/commit/4d6437e))
+
+
+
+
+
 ## [2.18.2](https://github.com/mbuyakov/SUI.CORE/compare/v2.18.1...v2.18.2) (2019-09-05)
 
 

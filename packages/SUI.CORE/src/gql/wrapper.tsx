@@ -5,7 +5,7 @@ import gql from "graphql-tag";
 import {loadingErrorNotification} from "../drawUtils";
 import {IObjectWithIndex} from "../other";
 
-import {getClient} from "./client";
+import {getGqlClient} from "./client";
 
 /**
  * Stub for PostGraphile error format
@@ -43,7 +43,7 @@ export async function query<T>(queryBody: string | any, extractFirstKey: boolean
   }
 
   let ret = rejectOnError<T>(
-    getClient().query({
+    getGqlClient().query({
       errorPolicy: "all",
       fetchPolicy: "no-cache",
       query: queryBody
@@ -75,7 +75,7 @@ export async function mutate<T>(mutationBody: string | any, extractFirstKey: boo
   }
 
   let ret = rejectOnError<T>(
-    getClient().mutate({
+    getGqlClient().mutate({
       errorPolicy: "all",
       fetchPolicy: "no-cache",
       mutation: mutationBody,

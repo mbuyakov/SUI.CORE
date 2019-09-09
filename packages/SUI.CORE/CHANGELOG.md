@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.11.1...v3.0.0) (2019-09-09)
+
+
+### Bug Fixes
+
+* **all:** refactoring, fixes, links ([c0b001d](https://github.com/mbuyakov/SUI.CORE/commit/c0b001d))
+* **basetable:** fix after move from RN.PILOT ([d96f5f3](https://github.com/mbuyakov/SUI.CORE/commit/d96f5f3))
+* **gql/wrapper:** tslint error fix ([34bd30c](https://github.com/mbuyakov/SUI.CORE/commit/34bd30c))
+* **gqlfilter type:** fix ([4978d4c](https://github.com/mbuyakov/SUI.CORE/commit/4978d4c))
+* **gqlfilter type:** fix[#2](https://github.com/mbuyakov/SUI.CORE/issues/2) ([efda657](https://github.com/mbuyakov/SUI.CORE/commit/efda657))
+* **sui.core + sui.meta:** fix ([6d72469](https://github.com/mbuyakov/SUI.CORE/commit/6d72469))
+* **sui.core/src/gql/index.ts:** fix stringifyGqlFilter ([12fffaa](https://github.com/mbuyakov/SUI.CORE/commit/12fffaa))
+
+
+### Features
+
+* **gqlfilters:** add GqlFilter type + filter params for getDataSet function ([e3ceafc](https://github.com/mbuyakov/SUI.CORE/commit/e3ceafc))
+* **src/other/index.ts:** add ExtractProps type ([dbeafce](https://github.com/mbuyakov/SUI.CORE/commit/dbeafce))
+* **sui.core/other/index.ts:** add asyncReplace function ([33f5753](https://github.com/mbuyakov/SUI.CORE/commit/33f5753))
+* **sui.meta:** add some meta schema <3 ([7cad426](https://github.com/mbuyakov/SUI.CORE/commit/7cad426))
+* add CHARTS module, levelToColor func ([43d8e7f](https://github.com/mbuyakov/SUI.CORE/commit/43d8e7f))
+* add sui-entity(without migrations) ([4d6437e](https://github.com/mbuyakov/SUI.CORE/commit/4d6437e))
+
+
+
+
+
 # [2.18.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.17.4...v2.18.0) (2019-09-05)
 
 

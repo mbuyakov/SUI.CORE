@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.11.1...v3.0.0) (2019-09-09)
+
+
+### Bug Fixes
+
+* add rowClassName ([1cb2060](https://github.com/mbuyakov/SUI.CORE/commit/1cb2060))
+* **sui.core + sui.meta:** fix ([6d72469](https://github.com/mbuyakov/SUI.CORE/commit/6d72469))
+
+
+### Features
+
+* **sui.promised:** add PromisedTextArea ([d930ca9](https://github.com/mbuyakov/SUI.CORE/commit/d930ca9))
+
+
+
+
+
 # [2.18.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.17.4...v2.18.0) (2019-09-05)
 
 **Note:** Version bump only for package @smsoft/sui-promised

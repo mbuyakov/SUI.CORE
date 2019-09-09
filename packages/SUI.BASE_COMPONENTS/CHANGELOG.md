@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.11.1...v3.0.0) (2019-09-09)
+
+
+### Bug Fixes
+
+* **all:** refactoring, fixes, links ([c0b001d](https://github.com/mbuyakov/SUI.CORE/commit/c0b001d))
+* **basetable:** fix after move from RN.PILOT ([d96f5f3](https://github.com/mbuyakov/SUI.CORE/commit/d96f5f3))
+* **package.json:** add @types/amcharts ([4f47030](https://github.com/mbuyakov/SUI.CORE/commit/4f47030))
+* **sui.base_components:** update antd version 3.21.2 --> 3.22.2 ([5177ab8](https://github.com/mbuyakov/SUI.CORE/commit/5177ab8))
+
+
+### Features
+
+* **package.json:** add amcharts ([256ace8](https://github.com/mbuyakov/SUI.CORE/commit/256ace8))
+* add CHARTS module, levelToColor func ([43d8e7f](https://github.com/mbuyakov/SUI.CORE/commit/43d8e7f))
+
+
+
+
+
 # [2.18.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.17.4...v2.18.0) (2019-09-05)
 
 **Note:** Version bump only for package @smsoft/sui-base-components
