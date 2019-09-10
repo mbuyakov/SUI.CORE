@@ -358,8 +358,8 @@ ALTER TABLE ONLY sui_security.users ALTER COLUMN id SET DEFAULT nextval('sui_sec
 
 
 COPY sui_meta.engine (id, name) FROM stdin;
-1	PostgreSQL
-2	Заглушка
+ 1	PostgreSQL
+ 2	Заглушка
 \.
 
 
