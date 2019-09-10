@@ -357,54 +357,48 @@ ALTER TABLE ONLY sui_security.roles ALTER COLUMN id SET DEFAULT nextval('sui_sec
 ALTER TABLE ONLY sui_security.users ALTER COLUMN id SET DEFAULT nextval('sui_security.users_id_seq'::regclass)
 
 
-COPY sui_meta.engine (id, name) FROM stdin;
- 1	PostgreSQL
- 2	Заглушка
-\.
+INSERT INTO sui_meta.engine (id, name)
+VALUES (1, 'PostgreSQL'),
+       (2, 'Заглушка');
 
 
 SELECT pg_catalog.setval('sui_meta.engine_id_seq', 2, true);
 
 
-COPY sui_meta.filter_type (id, type, name) FROM stdin;
- 1	boolean	Логический
- 2	date	Дата
- 3	datetime	Дата и время
-\.
+INSERT INTO sui_meta.filter_type (id, type, name)
+VALUES (1, 'boolean', 'Логический'),
+       (2, 'date', 'Дата'),
+       (3, 'datetime', 'Дата и время');
 
 
 SELECT pg_catalog.setval('sui_meta.filter_type_id_seq', 3, true);
 
 
-COPY sui_meta.subtotal_type (id, name, expression) FROM stdin;
-1	Максимум	MAX
-2	Минимум	MIN
-3	Среднее	AVG
-4	Всего	SUM
-\.
+INSERT INTO sui_meta.subtotal_type (id, name, expression)
+VALUES (1, 'Максимум', 'MAX'),
+       (2, 'Минимум', 'MIN'),
+       (3, 'Среднее', 'AVG'),
+       (4, 'Всего', 'SUM');
 
 
 SELECT pg_catalog.setval('sui_meta.subtotal_type_id_seq', 4, true);
 
 
-COPY sui_security.roles (id, name) FROM stdin;
-1	ROLE_USER
-2	ROLE_ADMIN
-\.
+INSERT INTO sui_security.roles (id, name)
+VALUES (1, 'ROLE_USER'),
+       (2, 'ROLE_ADMIN');
 
 
 SELECT pg_catalog.setval('sui_security.roles_id_seq', 2, true);
 
 
-COPY sui_security.user_roles (user_id, role_id) FROM stdin;
-1	1
-1	2
-\.
+INSERT INTO sui_security.user_roles (user_id, role_id)
+VALUES (1, 1),
+       (1, 2);
 
 
-COPY sui_security.users (id, name, username, email, password, created, updated, deleted) FROM stdin;
-1	Администратор	admin	test@woyd.ru	$2a$10$6imcIcpsQcjgJvhBTHUNEutkB.cnEHCedAIgxtJK5ZU.B0Pp3ijP.	2019-09-08 11:24:35.216719	2019-09-08 11:24:35.216719	f
-\.
+INSERT INTO sui_security.users (id, name, username, email, password, created, updated, deleted)
+VALUES (1, 'Администратор',	'admin'	, 'test@woyd.ru'	, '$2a$10$6imcIcpsQcjgJvhBTHUNEutkB.cnEHCedAIgxtJK5ZU.B0Pp3ijP.', NOW(), NOW(), FALSE);
 
 
 SELECT pg_catalog.setval('sui_security.users_id_seq', 1, true);
