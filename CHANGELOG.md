@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.2](https://github.com/mbuyakov/SUI.CORE/compare/v3.1.1...v3.1.2) (2019-09-10)
+
+
+### Bug Fixes
+
+* fix chart color ([5ad1cfb](https://github.com/mbuyakov/SUI.CORE/commit/5ad1cfb))
+* fix migration ([fdaade0](https://github.com/mbuyakov/SUI.CORE/commit/fdaade0))
+* fix migration ([1af7135](https://github.com/mbuyakov/SUI.CORE/commit/1af7135))
+* fix mogration ([07c6884](https://github.com/mbuyakov/SUI.CORE/commit/07c6884))
+
+
+### Features
+
+* init meta migration ([21f835c](https://github.com/mbuyakov/SUI.CORE/commit/21f835c))
+
+
+
+
+
 ## [3.1.1](https://github.com/mbuyakov/SUI.CORE/compare/v3.1.0...v3.1.1) (2019-09-10)
 
 

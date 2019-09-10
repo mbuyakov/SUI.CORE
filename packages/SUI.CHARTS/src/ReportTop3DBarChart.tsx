@@ -115,7 +115,7 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
 
       return {
         ...element,
-        color: getLevelColor(value).toRgba(),
+        color: am4core.color(getLevelColor(value).toRgba()),
         dx: value > 25 ? -10 : 30,
         horizontalCenter: value > 25 ? "right" : "left",
       }
