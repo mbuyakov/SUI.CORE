@@ -354,7 +354,7 @@ ALTER TABLE ONLY sui_meta.tag ALTER COLUMN id SET DEFAULT nextval('sui_meta.tag_
 ALTER TABLE ONLY sui_security.roles ALTER COLUMN id SET DEFAULT nextval('sui_security.roles_id_seq'::regclass);
 
 
-ALTER TABLE ONLY sui_security.users ALTER COLUMN id SET DEFAULT nextval('sui_security.users_id_seq'::regclass)
+ALTER TABLE ONLY sui_security.users ALTER COLUMN id SET DEFAULT nextval('sui_security.users_id_seq'::regclass);
 
 
 INSERT INTO sui_meta.engine (id, name)
