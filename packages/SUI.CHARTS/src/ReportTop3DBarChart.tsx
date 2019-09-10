@@ -16,8 +16,6 @@ interface ITop3DBarChartProps {
   // tslint:disable-next-line:no-any
   data?: any[];
   decimalValues?: boolean;
-  // If data is empty and defaultHeight set - draw a blank div with defaultHeight rows
-  defaultHeight?: number
   labelPanelWidth?: number;
   maxValue?: number;
   // Relative - 0 to 100
@@ -49,12 +47,12 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
   }
 
   public render(): JSX.Element {
-    const data = this.props.data ||  Array(this.props.defaultHeight).fill({});
+    const data = this.props.data || [];
     const length = data.length;
 
     return (
       <div style={{display: 'flex'}}>
-        <div style={{width: this.props.labelPanelWidth || defaultLabelPanelWidth, marginTop: 30}}>
+        <div style={{width: this.props.labelPanelWidth || defaultLabelPanelWidth, marginTop: 30, height: 270}}>
           {data.map((element: IObjectWithIndex, index) => (<div
             key={index.toString()}
             style={{height: 216 / (length || 1), display: 'flex', alignItems: 'center', ...labelStyle}}
@@ -64,7 +62,7 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
             </div>
           </div>))}
         </div>
-        {(this.props.defaultHeight ? this.props.data : true) && (
+        {this.props.data && (
           <XYChart3DWrapper
             style={{flexGrow: 1, height: 300}}
             type={am4charts.XYChart3D}

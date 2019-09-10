@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/mbuyakov/SUI.CORE/compare/v3.1.0...v3.1.1) (2019-09-10)
+
+
+### Bug Fixes
+
+* simplify ReportTop3DBarChart height ([285e983](https://github.com/mbuyakov/SUI.CORE/commit/285e983))
+
+
+
+
+
 ## [3.0.1](https://github.com/mbuyakov/SUI.CORE/compare/v3.0.0...v3.0.1) (2019-09-09)
 
 
