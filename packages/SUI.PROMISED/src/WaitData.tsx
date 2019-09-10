@@ -19,7 +19,9 @@ export interface IWaitDataProps<T> {
   delay?: number;
   error?: boolean;
   errorTip?: string;
+  // Deprecated. Analog - extractKeysLevel={1}
   extractFirstKey?: boolean;
+  extractKeysLevel?: number;
   hideChildren?: boolean;
   // tslint:disable-next-line:no-any
   mutation?: string | any;
@@ -105,7 +107,7 @@ export class WaitData<T = {}> extends React.Component<IWaitDataProps<T>, {
 
         return;
       }
-      promise = queryWrapper(query(this.props.query, this.props.extractFirstKey));
+      promise = queryWrapper(query(this.props.query, this.props.extractFirstKey || this.props.extractKeysLevel));
     }
     if (this.props.mutation) {
       if (promise) {
@@ -114,7 +116,7 @@ export class WaitData<T = {}> extends React.Component<IWaitDataProps<T>, {
 
         return;
       }
-      promise = queryWrapper(mutate(this.props.mutation, this.props.extractFirstKey));
+      promise = queryWrapper(mutate(this.props.mutation, this.props.extractFirstKey || this.props.extractKeysLevel));
     }
     if (promise) {
       return promise
