@@ -5,8 +5,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
@@ -30,7 +32,7 @@ public class PropertySourceConfig {
     @Value("${sql.query.pattern:" + DEFAULT_QUERIES_LOCATION_PATTERN + "}")
     private String queriesLocationPattern;
     @NonNull
-    private AnnotationConfigApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
     @NonNull
     private ConfigurableEnvironment environment;
 
