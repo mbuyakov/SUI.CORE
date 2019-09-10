@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/mbuyakov/SUI.CORE/compare/v3.0.1...v3.1.0) (2019-09-10)
+
+
+### Features
+
+* add extractKeysLevel to WaitData, query and mutate ([868e4db](https://github.com/mbuyakov/SUI.CORE/commit/868e4db))
+
+
+
+
+
 # [3.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v2.11.1...v3.0.0) (2019-09-09)
 
 
