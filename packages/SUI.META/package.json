@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-meta",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "main": "dist/index.js",
   "module": "dist/sui-meta.esm.js",
   "typings": "dist/index.d.ts",
@@ -48,7 +48,7 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@smsoft/sui-base-components": "^3.1.0",
+    "@smsoft/sui-base-components": "^3.2.0",
     "autobind-decorator": "^2.4.0"
   }
 }
