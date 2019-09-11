@@ -1,8 +1,8 @@
 {
-  "name": "@smsoft/sui-charts",
+  "name": "@smsoft/sui-backend",
   "version": "3.4.0",
   "main": "dist/index.js",
-  "module": "dist/sui-charts.esm.js",
+  "module": "dist/sui-backend.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -49,6 +49,7 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@amcharts/amcharts4": "^4.5.16"
+    "@amcharts/amcharts4": "^4.5.16",
+    "@stomp/stompjs": "^5.4.2"
   }
 }
