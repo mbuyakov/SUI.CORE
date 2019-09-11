@@ -13,7 +13,7 @@ interface ISocket {
 
 export class Socket {
 
-  private props: ISocket;
+  private readonly props: ISocket;
   private stompClient: CompatClient | undefined;
 
   public constructor(props: ISocket) {
