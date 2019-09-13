@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.7.0](https://github.com/mbuyakov/SUI.CORE/compare/v3.6.2...v3.7.0) (2019-09-13)
+
+**Note:** Version bump only for package @smsoft/sui-meta
+
+
+
+
+
 ## [3.6.1](https://github.com/mbuyakov/SUI.CORE/compare/v3.6.0...v3.6.1) (2019-09-13)
 
 **Note:** Version bump only for package @smsoft/sui-meta

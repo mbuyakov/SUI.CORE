@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.7.0](https://github.com/mbuyakov/SUI.CORE/compare/v3.6.2...v3.7.0) (2019-09-13)
+
+
+### Features
+
+* add EditableEntityField ([f29eac7](https://github.com/mbuyakov/SUI.CORE/commit/f29eac7))
+
+
+
+
+
 ## [3.6.2](https://github.com/mbuyakov/SUI.CORE/compare/v3.6.1...v3.6.2) (2019-09-13)
 
 
