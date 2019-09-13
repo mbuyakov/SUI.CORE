@@ -91,7 +91,7 @@ class FullScreenDialogImpl extends React.Component<IFullScreenModalProps, {
   @autobind
   private handleClose(): void {
     this.setState({open: false});
-    // tslint:disable-next-line:no-magic-numbers
+    // tslint:disable-next-line:no-magic-numbers no-floating-promises
     sleep(500).then(() => {
       if (this.props.onClose) {
         this.props.onClose();
@@ -107,7 +107,7 @@ const FullScreenDialogImplWithStyles = withStyles({})(FullScreenDialogImpl);
 // tslint:disable-next-line:max-classes-per-file
 export class FullScreenModal extends React.Component<IFullScreenModalProps> {
 
-  private innerRef: React.RefObject<FullScreenDialogImpl> = React.createRef<FullScreenDialogImpl>();
+  private readonly innerRef: React.RefObject<FullScreenDialogImpl> = React.createRef<FullScreenDialogImpl>();
 
   public open(): void {
     if (this.innerRef.current) {
