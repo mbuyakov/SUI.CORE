@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.1](https://github.com/mbuyakov/SUI.CORE/compare/v3.5.0...v3.5.1) (2019-09-13)
+
+
+### Bug Fixes
+
+* change default WaitData generic to any ([c2a861e](https://github.com/mbuyakov/SUI.CORE/commit/c2a861e))
+
+
+
+
+
 # [3.5.0](https://github.com/mbuyakov/SUI.CORE/compare/v3.4.1...v3.5.0) (2019-09-13)
 
 

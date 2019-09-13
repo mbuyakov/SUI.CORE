@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-promised",
-  "version": "3.4.0",
+  "version": "3.5.1",
   "main": "dist/index.js",
   "module": "dist/sui-promised.esm.js",
   "typings": "dist/index.d.ts",
