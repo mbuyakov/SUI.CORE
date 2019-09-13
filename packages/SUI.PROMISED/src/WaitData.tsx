@@ -32,7 +32,8 @@ export interface IWaitDataProps<T> {
 
 const errorIcon = (<Icon type="close-circle" theme="twoTone" twoToneColor="#d6083f" style={{fontSize: 24}}/>);
 
-export class WaitData<T = {}> extends React.Component<IWaitDataProps<T>, {
+// tslint:disable-next-line:no-any
+export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
   data?: T | null | undefined | "__NULL__";
   error?: boolean;
 }> {
