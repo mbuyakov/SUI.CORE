@@ -5,6 +5,7 @@ export * from "./Link";
 export * from "./Report";
 export * from "./utils";
 export * from "./DescriptionItem";
+export * from "./EditableEntityField";
 export * from "./FullScreenModal";
 export * from "./SparkLine";
 export * from "./styles";
