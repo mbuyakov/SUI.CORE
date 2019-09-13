@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0](https://github.com/mbuyakov/SUI.CORE/compare/v3.5.1...v3.6.0) (2019-09-13)
+
+
+### Features
+
+* add FullScreenModal ([42cb2f7](https://github.com/mbuyakov/SUI.CORE/commit/42cb2f7))
+
+
+
+
+
 ## [3.5.1](https://github.com/mbuyakov/SUI.CORE/compare/v3.5.0...v3.5.1) (2019-09-13)
 
 
