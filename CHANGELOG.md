@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0](https://github.com/mbuyakov/SUI.CORE/compare/v3.4.1...v3.5.0) (2019-09-13)
+
+
+### Features
+
+* add SparkLine ([bc7701a](https://github.com/mbuyakov/SUI.CORE/commit/bc7701a))
+
+
+
+
+
 ## [3.4.1](https://github.com/mbuyakov/SUI.CORE/compare/v3.4.0...v3.4.1) (2019-09-11)
 
 
