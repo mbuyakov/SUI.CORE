@@ -5,5 +5,6 @@ export * from "./Link";
 export * from "./Report";
 export * from "./utils";
 export * from "./DescriptionItem";
+export * from "./SparkLine";
 export * from "./styles";
 export * from "./TooltipIcon";
