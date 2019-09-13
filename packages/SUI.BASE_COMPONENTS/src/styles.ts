@@ -15,4 +15,5 @@ export const MINUS_ODOMETER = "minus-odometer";
 export const ZERO_ODOMETER = "zero-odometer";
 export const MAIN_ODOMETER = "main-odometer";
 export const DIFFERENCE_ODOMETER = "difference-odometer";
+export const Z_999 = "z-999";
 
