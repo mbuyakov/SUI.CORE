@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import { ColumnInfo } from '../../cache';
 import { getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps } from '../../utils';
+import { TableRenderSettingsPluginManager } from '../TableRenderSettingsPluginManager';
 import { ITableRenderParams } from '../TableRenderSettingsPopover';
 
 import { TableRenderParamsPlugin } from './TableRenderParamsPlugin';
@@ -43,6 +44,8 @@ export class LinkPlugin extends TableRenderParamsPlugin<{}> {
 
   // tslint:disable-next-line:prefer-function-over-method variable-name
   public extraActivationKostyl(_result: IBaseTableColLayout, renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): boolean {
-    return renderColumnInfo && (tableRenderParams && tableRenderParams.renderType ? tableRenderParams.renderType === "link" : true) || props.columnInfo.id === props.tableInfo.linkColumnInfoId;
+    return renderColumnInfo && (tableRenderParams && tableRenderParams.renderType ? tableRenderParams.renderType === 'link' : true) || props.columnInfo.id === props.tableInfo.linkColumnInfoId;
   }
 }
+
+TableRenderSettingsPluginManager.register(new LinkPlugin());

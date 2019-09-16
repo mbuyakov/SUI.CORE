@@ -2,6 +2,7 @@ import { IBaseTableColLayout } from '@smsoft/sui-base-components';
 
 import { ColumnInfo } from '../../cache';
 import { IColumnInfoToBaseTableColProps } from '../../utils';
+import { TableRenderSettingsPluginManager } from '../TableRenderSettingsPluginManager';
 import { ITableRenderParams } from '../TableRenderSettingsPopover';
 
 import { TableRenderParamsPlugin } from './TableRenderParamsPlugin';
@@ -21,3 +22,5 @@ export class RawPlugin extends TableRenderParamsPlugin<{}> {
     return /*!props.columnInfo.id === props.tableInfo.linkColumnInfoId &&*/ !renderColumnInfo && (!tableRenderParams || !tableRenderParams.renderType || tableRenderParams.renderType === 'raw');
   }
 }
+
+TableRenderSettingsPluginManager.register(new RawPlugin());
