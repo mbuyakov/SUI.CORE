@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.8](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.7...v4.0.8) (2019-09-16)
+
+
+### Bug Fixes
+
+* fix unknownPlugin + charts package.json ([aac12a1](https://github.com/mbuyakov/SUI.CORE/commit/aac12a1))
+
+
+
+
+
 ## [4.0.7](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.6...v4.0.7) (2019-09-16)
 
 
