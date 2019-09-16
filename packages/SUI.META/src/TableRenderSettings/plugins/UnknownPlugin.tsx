@@ -35,3 +35,5 @@ export class UnknownPlugin extends TableRenderParamsPlugin<{}> {
     return tableRenderParams && !!tableRenderParams.renderType && !TableRenderSettingsPluginManager.plugins.has(tableRenderParams.renderType);
   }
 }
+
+TableRenderSettingsPluginManager.register(new UnknownPlugin());
