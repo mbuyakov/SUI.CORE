@@ -1,7 +1,7 @@
 /* tslint:disable:jsx-no-lambda */
 import { chain, sleep, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT } from '@smsoft/sui-core';
 import { PromisedButton } from '@smsoft/sui-promised';
-import { Popover } from 'antd';
+import { Icon, Popover, Tooltip } from 'antd';
 import Button from 'antd/lib/button';
 import Select from 'antd/lib/select';
 import autobind from 'autobind-decorator';
@@ -153,14 +153,25 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
 
     return (
       <div style={popoverContentStyle}>
-        {plugin.getSettingsPopoverContent(this)}
+        {plugin ? plugin.getSettingsPopoverContent(this) : (
+          <Tooltip
+            title="Неизвестный плагин"
+          >
+            <Icon
+              style={{ transform: 'scale(1.5)' }}
+              type="warning"
+              theme="twoTone"
+              twoToneColor="#ad4e00"
+            />
+          </Tooltip>
+        )}
       </div>
     );
   }
 
   @autobind
   // tslint:disable-next-line:no-any
-  private updateField(field: string, save: boolean = false): (value: any) => Promise<any> {
+  public updateField(field: string, save: boolean = false): (value: any) => Promise<any> {
     return (async value => {
       // console.log(field, value);
       const tableRenderParams = this.state.tableRenderParams;
