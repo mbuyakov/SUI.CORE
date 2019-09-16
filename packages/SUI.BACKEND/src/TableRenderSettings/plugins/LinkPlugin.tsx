@@ -1,4 +1,4 @@
-import { IBaseTableColLayout, RouterLink } from '@smsoft/sui-base-components/src';
+import { IBaseTableColLayout, RouterLink } from '@smsoft/sui-base-components';
 import { ColumnInfo, getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps } from '@smsoft/sui-meta';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
@@ -41,7 +41,7 @@ export class LinkPlugin extends TableRenderParamsPlugin<{}> {
   }
 
   // tslint:disable-next-line:prefer-function-over-method variable-name
-  public extraActivationKostyl(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps): boolean {
-    return props.columnInfo.id === props.tableInfo.linkColumnInfoId;
+  public extraActivationKostyl(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): boolean {
+    return (tableRenderParams ? (tableRenderParams.renderType === "link" || !tableRenderParams.renderType): true) && props.columnInfo.id === props.tableInfo.linkColumnInfoId;
   }
 }

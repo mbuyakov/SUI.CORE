@@ -1,6 +1,4 @@
-import { TableRenderSettingsPopover } from '@smsoft/sui-backend/src';
-import { UnknownPlugin } from '@smsoft/sui-backend/src/TableRenderSettings/plugins/UnknownPlugin';
-import { TableRenderSettingsPluginManager } from '@smsoft/sui-backend/src/TableRenderSettings/TableRenderSettingsPluginManager';
+import { TableRenderSettingsPluginManager, TableRenderSettingsPopover, UnknownPlugin} from '@smsoft/sui-backend';
 import { booleanRender, IBaseTableColLayout, SortingDirection } from '@smsoft/sui-base-components';
 import { capitalize, getDataByKey } from '@smsoft/sui-core';
 import camelCase from 'lodash/camelCase';
