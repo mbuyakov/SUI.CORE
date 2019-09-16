@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-base-components",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "main": "dist/index.js",
   "module": "dist/sui-base-components.esm.js",
   "typings": "dist/index.d.ts",
@@ -56,7 +56,7 @@
     "@devexpress/dx-react-grid-material-ui": "^2.0.2",
     "@material-ui/core": "^4.3.1",
     "@material-ui/icons": "^4.2.1",
-    "@smsoft/sui-backend": "^4.0.0",
+    "@smsoft/sui-backend": "^4.0.1",
     "@smsoft/sui-core": "^4.0.0",
     "@types/classnames": "^2.2.9",
     "@types/history": "^4.7.2",
