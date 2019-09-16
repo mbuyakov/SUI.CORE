@@ -4,10 +4,10 @@ import * as React from 'react';
 
 import { ColumnInfo } from '../../cache';
 import { IColumnInfoToBaseTableColProps } from '../../utils';
+import { TableRenderSettingsPluginManager } from '../TableRenderSettingsPluginManager';
 import { ITableRenderParams } from '../TableRenderSettingsPopover';
 
 import { TableRenderParamsPlugin } from './TableRenderParamsPlugin';
-import { TableRenderSettingsPluginManager } from '../TableRenderSettingsPluginManager';
 
 export class UnknownPlugin extends TableRenderParamsPlugin<{}> {
   public constructor() {
