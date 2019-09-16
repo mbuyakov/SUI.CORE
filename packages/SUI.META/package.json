@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "@smsoft/sui-base-components": "^4.0.0",
+    "@smsoft/sui-backend": "^4.0.0",
     "autobind-decorator": "^2.4.0"
   }
 }

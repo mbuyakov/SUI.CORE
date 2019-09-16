@@ -1,4 +1,4 @@
-import { IBaseTableColLayout } from '@smsoft/sui-base-components/src';
+import { IBaseTableColLayout } from '@smsoft/sui-base-components';
 import { ColumnInfo, IColumnInfoToBaseTableColProps } from '@smsoft/sui-meta';
 import { Icon, Tooltip } from 'antd';
 import * as React from 'react';
