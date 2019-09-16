@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v3.7.2...v4.0.0) (2019-09-16)
+
+**Note:** Version bump only for package @smsoft/sui-charts
+
+
+
+
+
 ## [3.6.2](https://github.com/mbuyakov/SUI.CORE/compare/v3.6.1...v3.6.2) (2019-09-13)
 
 
