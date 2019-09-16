@@ -6,7 +6,7 @@ import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
 import { ColumnInfo, ColumnInfoManager, TableInfoManager } from '../cache';
-import { TableRenderSettingsPluginManager, TableRenderSettingsPopover, UnknownPlugin } from '../TableRenderSettings';
+import { TableRenderSettingsPluginManager, TableRenderSettingsPopover } from '../TableRenderSettings';
 
 import { IColumnInfoToBaseTableColProps } from './init';
 import { generateCatalogDataPromise, getReferenceRenderColumnInfo } from './metaUtils';
@@ -73,13 +73,12 @@ export async function colToBaseTableCol(
     let selectedPlugin = Array.from(TableRenderSettingsPluginManager.plugins.values()).find(plugin => plugin.extraActivationKostyl(result, renderColumnInfo, props, trp));
 
     if (!selectedPlugin && trp && trp.renderType) {
-      selectedPlugin = TableRenderSettingsPluginManager.plugins.get(trp.renderType) || new UnknownPlugin();
+      selectedPlugin = TableRenderSettingsPluginManager.plugins.get(trp.renderType); // || new UnknownPlugin();
     }
 
     // tslint:disable-next-line:ban-ts-ignore
     // @ts-ignore
     await selectedPlugin.baseTableColGenerator(result, renderColumnInfo, props, trp);
-
 
     // tslint:disable-next-line:ban-ts-ignore
     // @ts-ignore

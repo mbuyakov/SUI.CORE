@@ -7,6 +7,7 @@ import { IColumnInfoToBaseTableColProps } from '../../utils';
 import { ITableRenderParams } from '../TableRenderSettingsPopover';
 
 import { TableRenderParamsPlugin } from './TableRenderParamsPlugin';
+import { TableRenderSettingsPluginManager } from '../TableRenderSettingsPluginManager';
 
 export class UnknownPlugin extends TableRenderParamsPlugin<{}> {
   public constructor() {
@@ -27,5 +28,10 @@ export class UnknownPlugin extends TableRenderParamsPlugin<{}> {
         />
       </Tooltip>
     );
+  }
+
+  // tslint:disable-next-line:prefer-function-over-method variable-name
+  public extraActivationKostyl(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): boolean {
+    return tableRenderParams && !tableRenderParams.renderType && !TableRenderSettingsPluginManager.plugins.has(tableRenderParams.renderType);
   }
 }
