@@ -1,4 +1,3 @@
-import {IBaseTableColLayout} from "@smsoft/sui-base-components";
 import {IUser} from "@smsoft/sui-core";
 
 import {ColumnInfo, ColumnInfoManager, NameManager, TableInfo, TableInfoManager} from "../cache";
@@ -39,7 +38,6 @@ export interface IRawRoute {
 export interface IMetaInitProps {
   routes?: IRawRoute[];
   user?: IUser,
-  baseTableColLayoutGenerateHelper?(result: IBaseTableColLayout, renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps): Promise<void>;
   defaultGetLinkForTable?(tableName: string, type: RouteType, id?: string | number): string | null;
 }
 

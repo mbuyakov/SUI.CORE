@@ -27,6 +27,7 @@
     "no-void-expression": false,
     "no-object-literal-type-assertion": false,
     "no-non-null-assertion": false,
+    "no-unnecessary-class": false,
     "typedef": [
       true,
       "call-signature",

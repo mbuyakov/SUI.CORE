@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-promised",
-  "version": "3.7.1",
+  "version": "4.0.0",
   "main": "dist/index.js",
   "module": "dist/sui-promised.esm.js",
   "typings": "dist/index.d.ts",
@@ -40,6 +40,6 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@smsoft/sui-core": "^3.7.1"
+    "@smsoft/sui-core": "^4.0.0"
   }
 }

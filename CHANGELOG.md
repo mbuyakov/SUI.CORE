@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v3.7.2...v4.0.0) (2019-09-16)
+
+
+### Features
+
+* plugins for meta and backend backage ([a8d87a9](https://github.com/mbuyakov/SUI.CORE/commit/a8d87a9))
+
+
+### BREAKING CHANGES
+
+* PLUGINS
+
+
+
+
+
 ## [3.7.2](https://github.com/mbuyakov/SUI.CORE/compare/v3.7.1...v3.7.2) (2019-09-16)
 
 
