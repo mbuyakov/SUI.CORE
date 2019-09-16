@@ -139,3 +139,10 @@ export function chain<OUT, IN = OUT>(src: IN, firstMapper: (src: IN) => OUT, ...
 export function stringSymbolEquals(str?: string, symbol?: symbol): boolean {
   return symbol ? (symbol.toString() === Symbol(str).toString()) : (symbol as unknown as string) === str;
 }
+
+/**
+ * XOR
+ */
+export function xor(x: boolean, y: boolean): boolean {
+  return x ? !y : y;
+}

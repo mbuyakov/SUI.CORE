@@ -73,30 +73,26 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
     );
   }
 
-  // if (row.metaTableProps) {
-  //   let filter = row.metaTableProps.filter;
-  //   if (typeof filter === 'string') {
-  //     filter = filter.replace(DATA_KEY_REGEXP, (_, key) => {
-  //       const dataKey = key.split('|');
-  //       let data = getDataByKey(sourceItem, dataKey);
-  //       // // console.log(data);
-  //       if (Array.isArray(data)) {
-  //         data = data.map(addQuotesIfString);
-  //       }
-  //       return addQuotesIfString(data);
-  //     });
-  //   }
-  //   return (
-  //     <MetaTable
-  //       cardType="inner"
-  //       {...row.metaTableProps}
-  //       paperStyle={rowIndex !== 0 || rowsLength !== 1 ? { marginLeft: 0, marginRight: 0 } : {}}
-  //       fitToCardBody={(parent === 'card' || (parent === 'tab' && firstChildrenIsTab)) && rowIndex === 0 && rowsLength === 1}
-  //       fitToCollapseBody={parent === 'collapse' && rowIndex === 0 && rowsLength === 1}
-  //       filter={filter}
-  //     />
-  //   );
-  // }
+   // if (row.metaTableProps) {
+   //    // console.log(
+   //    //   row.metaTableProps.filter as string, `|${mapFilters(row.metaTableProps.filter as string, sourceItem)}|`,
+   //    //   row.metaTableProps.globalFilter, `|${mapFilters(row.metaTableProps.globalFilter as string, sourceItem)}|`
+   //    // );
+   //    //
+   //    // console.log(sourceItem);
+   //
+   //    return (
+   //      <BackendTable
+   //        cardType="inner"
+   //        {...row.metaTableProps}
+   //        paperStyle={rowIndex !== 0 || rowsLength !== 1 ? { marginLeft: 0, marginRight: 0 } : {}}
+   //        fitToCardBody={(parent === 'card' || (parent === 'tab' && firstChildrenIsTab)) && rowIndex === 0 && rowsLength === 1}
+   //        fitToCollapseBody={parent === 'collapse' && rowIndex === 0 && rowsLength === 1}
+   //        filter={JSON.parse(mapFilters(row.metaTableProps.globalFilter as string, sourceItem))}
+   //        defaultFilters={JSON.parse(mapFilters(row.metaTableProps.filter as string, sourceItem))}
+   //      />
+   //    );
+   //  }
 
   if (row.collapsePanels) {
     return (

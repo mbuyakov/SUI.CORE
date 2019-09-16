@@ -51,7 +51,7 @@ export class TableInfo {
     return asyncMap(this.colIds, id => ColumnInfoManager.getById(id));
   }
 
-  public getNameOrTableName(): string | undefined {
+  public getNameOrTableName(): string {
     return this.nameId
       ? getDataByKey(this.name, "name")
       : this.tableName;
