@@ -5,7 +5,8 @@
   "module": "dist/sui-meta.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "styles"
   ],
   "scripts": {
     "start": "tsdx watch",
@@ -48,8 +49,6 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@smsoft/sui-backend": "^4.0.2",
-    "@smsoft/sui-base-components": "^4.0.1",
-    "autobind-decorator": "^2.4.0"
+    "@smsoft/sui-base-components": "^4.0.1"
   }
 }

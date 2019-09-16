@@ -1,8 +1,9 @@
 import { IBaseTableColLayout, RouterLink } from '@smsoft/sui-base-components';
-import { ColumnInfo, getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps } from '@smsoft/sui-meta';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
+import { ColumnInfo } from '../../cache';
+import { getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps } from '../../utils';
 import { ITableRenderParams } from '../TableRenderSettingsPopover';
 
 import { TableRenderParamsPlugin } from './TableRenderParamsPlugin';

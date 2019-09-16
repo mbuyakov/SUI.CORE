@@ -1,8 +1,9 @@
 import { IBaseTableColLayout } from '@smsoft/sui-base-components';
-import { ColumnInfo, IColumnInfoToBaseTableColProps } from '@smsoft/sui-meta';
 import { Icon, Tooltip } from 'antd';
 import * as React from 'react';
 
+import { ColumnInfo } from '../../cache';
+import { IColumnInfoToBaseTableColProps } from '../../utils';
 import { ITableRenderParams, TableRenderSettingsPopover } from '../TableRenderSettingsPopover';
 
 export abstract class TableRenderParamsPlugin<T> {
