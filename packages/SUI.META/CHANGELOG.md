@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.10](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.9...v4.0.10) (2019-09-16)
+
+
+### Bug Fixes
+
+* fix webpack module order ([d90deb7](https://github.com/mbuyakov/SUI.CORE/commit/d90deb7))
+
+
+
+
+
 ## [4.0.9](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.8...v4.0.9) (2019-09-16)
 
 
