@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.5](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.4...v4.0.5) (2019-09-16)
+
+
+### Bug Fixes
+
+* fix NPE ([6a45d44](https://github.com/mbuyakov/SUI.CORE/commit/6a45d44))
+
+
+
+
+
 ## [4.0.4](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.3...v4.0.4) (2019-09-16)
 
 
