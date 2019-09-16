@@ -105,6 +105,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
 
   public render(): JSX.Element {
     // console.log(this.props.tableRenderParams, this.state.tableRenderParams, typeof this.state.tableRenderParams.color === "boolean");
+    const plugin = this.state.tableRenderParams.renderType && TableRenderSettingsPluginManager.plugins.get(this.state.tableRenderParams.renderType);
     return (
       <div className={SUI_ROW_GROW_LEFT}>
         <Select
@@ -114,7 +115,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
         >
           {Array.from(TableRenderSettingsPluginManager.plugins.values()).map(plugin => (<Select.Option key={plugin.id}>{plugin.title}</Select.Option>))}
         </Select>
-        {this.state.tableRenderParams.renderType && TableRenderSettingsPluginManager.plugins.get(this.state.tableRenderParams.renderType).hasSettings && (
+        {plugin && plugin.hasSettings && (
           <Popover
             title="Настройка отображения"
             trigger="click"
