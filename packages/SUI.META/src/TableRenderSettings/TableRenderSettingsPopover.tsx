@@ -58,8 +58,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
       // tslint:disable-next-line:no-any
       tableRenderParams = chain<ITableRenderParams<any>, string>(
         params,
-        // TODO: Replace - WTF??
-        trp => JSON.parse(trp.replace(/\\"/g, '"') || '{}'),
+        trp => JSON.parse(trp ? trp.replace(/\\"/g, '"') : '{}'),
         ...Array.from(TableRenderSettingsPluginManager.plugins.values()).map(plugin => plugin.parseParams),
       );
       // if (tableRenderParams.drillDownParamsData) {
