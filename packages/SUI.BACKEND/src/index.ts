@@ -1,9 +1,6 @@
 import { getDataByKey, IUser } from '@smsoft/sui-core';
 
-export * from "./Popover";
-export * from "./TableRenderSettings";
 export * from "./Socket";
-export * from "./styles";
 
 declare let window: Window & {
   /**

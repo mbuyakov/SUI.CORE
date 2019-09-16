@@ -1,4 +1,3 @@
-import { TableRenderSettingsPluginManager, TableRenderSettingsPopover, UnknownPlugin} from '@smsoft/sui-backend';
 import { booleanRender, IBaseTableColLayout, SortingDirection } from '@smsoft/sui-base-components';
 import { capitalize, getDataByKey } from '@smsoft/sui-core';
 import camelCase from 'lodash/camelCase';
@@ -7,6 +6,7 @@ import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
 import { ColumnInfo, ColumnInfoManager, TableInfoManager } from '../cache';
+import { TableRenderSettingsPluginManager, TableRenderSettingsPopover, UnknownPlugin } from '../TableRenderSettings';
 
 import { IColumnInfoToBaseTableColProps } from './init';
 import { generateCatalogDataPromise, getReferenceRenderColumnInfo } from './metaUtils';

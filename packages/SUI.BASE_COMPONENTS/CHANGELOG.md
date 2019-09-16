@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.4](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.3...v4.0.4) (2019-09-16)
+
+
+### Bug Fixes
+
+* fix dep ([2b284bb](https://github.com/mbuyakov/SUI.CORE/commit/2b284bb))
+
+
+
+
+
+## [4.0.3](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.2...v4.0.3) (2019-09-16)
+
+**Note:** Version bump only for package @smsoft/sui-base-components
+
+
+
+
+
 ## [4.0.1](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.0...v4.0.1) (2019-09-16)
 
 **Note:** Version bump only for package @smsoft/sui-base-components

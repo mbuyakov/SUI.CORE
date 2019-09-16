@@ -1,5 +1,4 @@
 import { mutate, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT } from '@smsoft/sui-core';
-import { IColumnInfo, IColumnInfoRole, IRole } from '@smsoft/sui-meta';
 import { PromisedButton, PromisedSwitch } from '@smsoft/sui-promised';
 import { Popover } from 'antd';
 import Button from 'antd/lib/button';
@@ -7,6 +6,8 @@ import Divider from 'antd/lib/divider';
 import Select from 'antd/lib/select';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
+
+import { IColumnInfo, IColumnInfoRole, IRole } from '../types';
 
 export interface IVisibleByRolesPopoverProps {
   columnInfo?: IColumnInfo;

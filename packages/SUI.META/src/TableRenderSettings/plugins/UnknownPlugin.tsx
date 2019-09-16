@@ -1,12 +1,12 @@
 import { IBaseTableColLayout } from '@smsoft/sui-base-components';
-import { ColumnInfo, IColumnInfoToBaseTableColProps } from '@smsoft/sui-meta';
 import { Icon, Tooltip } from 'antd';
 import * as React from 'react';
 
+import { ColumnInfo } from '../../cache';
+import { IColumnInfoToBaseTableColProps } from '../../utils';
 import { ITableRenderParams } from '../TableRenderSettingsPopover';
 
 import { TableRenderParamsPlugin } from './TableRenderParamsPlugin';
-
 
 export class UnknownPlugin extends TableRenderParamsPlugin<{}> {
   public constructor() {
