@@ -25,7 +25,7 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
   selectedRoles?: string[];
   selectOpened?: boolean;
 }> {
-  private saveButtonRef: React.RefObject<PromisedButton> = React.createRef<PromisedButton>();
+  private readonly saveButtonRef: React.RefObject<PromisedButton> = React.createRef<PromisedButton>();
 
   public constructor(props: IVisibleByRolesPopoverProps) {
     super(props);
@@ -33,7 +33,7 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
   }
 
   @autobind
-  public generateSavePromise(): Promise<void> {
+  public async generateSavePromise(): Promise<void> {
     this.setState({ savingInProcess: true });
 
     return Promise.all(this.props.columnInfo.columnInfoRolesByColumnInfoId.nodes.map((columnInfoRole: IColumnInfoRole) => mutate(`mutation {
@@ -50,7 +50,7 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
             }
           }
         }`, true))))
-      .then(columnInfoRoles => {
+      .then(async columnInfoRoles => {
         this.setState({ savingInProcess: false, popoverVisible: false, selectedRoles: null });
 
         return this.props.afterRolesPromise(columnInfoRoles.map(val => val.columnInfoRole));
