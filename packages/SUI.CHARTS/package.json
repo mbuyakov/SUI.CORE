@@ -49,6 +49,7 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
+    "@smsoft/sui-core": "^4.0.0",
     "@amcharts/amcharts4": "^4.5.16"
   }
 }

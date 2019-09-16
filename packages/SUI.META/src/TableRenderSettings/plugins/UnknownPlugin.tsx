@@ -32,6 +32,6 @@ export class UnknownPlugin extends TableRenderParamsPlugin<{}> {
 
   // tslint:disable-next-line:prefer-function-over-method variable-name
   public extraActivationKostyl(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): boolean {
-    return tableRenderParams && !tableRenderParams.renderType && !TableRenderSettingsPluginManager.plugins.has(tableRenderParams.renderType);
+    return tableRenderParams && !!tableRenderParams.renderType && !TableRenderSettingsPluginManager.plugins.has(tableRenderParams.renderType);
   }
 }
