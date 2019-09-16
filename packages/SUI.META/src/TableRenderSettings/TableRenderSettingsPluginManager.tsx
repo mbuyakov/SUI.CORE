@@ -1,4 +1,4 @@
-import { LinkPlugin, RawPlugin, TableRenderParamsPlugin } from './plugins';
+import { LinkPlugin, RawPlugin, TableRenderParamsPlugin, UnknownPlugin } from './plugins';
 
 export class TableRenderSettingsPluginManager {
   // tslint:disable-next-line:no-any
@@ -15,3 +15,4 @@ export class TableRenderSettingsPluginManager {
 
 TableRenderSettingsPluginManager.register(new RawPlugin());
 TableRenderSettingsPluginManager.register(new LinkPlugin());
+TableRenderSettingsPluginManager.register(new UnknownPlugin());
