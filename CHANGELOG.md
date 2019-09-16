@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.7](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.6...v4.0.7) (2019-09-16)
+
+
+### Bug Fixes
+
+* lint ([6fefb65](https://github.com/mbuyakov/SUI.CORE/commit/6fefb65))
+
+
+
+
+
 ## [4.0.6](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.5...v4.0.6) (2019-09-16)
 
 
