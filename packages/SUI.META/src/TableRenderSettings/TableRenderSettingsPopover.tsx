@@ -148,6 +148,21 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
   }
 
   @autobind
+  // tslint:disable-next-line:no-any
+  public updateField(field: string, save: boolean = false): (value: any) => Promise<any> {
+    return (async value => {
+      // console.log(field, value);
+      const tableRenderParams = this.state.tableRenderParams;
+      // tslint:disable-next-line:ban-ts-ignore
+      // @ts-ignore
+      tableRenderParams[field] = value;
+      this.setState({ tableRenderParams: { ...tableRenderParams }, changed: true });
+
+      return save ? this.props.promise(JSON.stringify(tableRenderParams).replace(/"/g, '\\"')) : sleep(Number.MAX_VALUE);
+    });
+  }
+
+  @autobind
   private getPopoverContent(type: string): React.ReactNode {
     const plugin = TableRenderSettingsPluginManager.plugins.get(type);
 
@@ -167,21 +182,6 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
         )}
       </div>
     );
-  }
-
-  @autobind
-  // tslint:disable-next-line:no-any
-  public updateField(field: string, save: boolean = false): (value: any) => Promise<any> {
-    return (async value => {
-      // console.log(field, value);
-      const tableRenderParams = this.state.tableRenderParams;
-      // tslint:disable-next-line:ban-ts-ignore
-      // @ts-ignore
-      tableRenderParams[field] = value;
-      this.setState({ tableRenderParams: { ...tableRenderParams }, changed: true });
-
-      return save ? this.props.promise(JSON.stringify(tableRenderParams).replace(/"/g, '\\"')) : sleep(Number.MAX_VALUE);
-    });
   }
 
 }
