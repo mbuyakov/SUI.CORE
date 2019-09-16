@@ -317,6 +317,7 @@ export async function getReferencedTableInfo(columnInfo: ColumnInfo): Promise<Ta
   const referencedColumnInfoId = getDataByKey(columnInfo, 'foreignColumnInfo', 0);
   const referencedColumnInfo = referencedColumnInfoId && await ColumnInfoManager.getById(referencedColumnInfoId);
 
+  // noinspection ES6MissingAwait
   return referencedColumnInfo
     ? TableInfoManager.getById(referencedColumnInfo.tableInfoId)
     : null;

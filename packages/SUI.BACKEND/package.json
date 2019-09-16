@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "@amcharts/amcharts4": "^4.5.16",
-    "@stomp/stompjs": "^5.4.2"
+    "@stomp/stompjs": "^5.4.2",
+    "@smsoft/sui-meta": "^3.7.2"
   }
 }
