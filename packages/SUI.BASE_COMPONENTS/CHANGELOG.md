@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v3.0.1...v5.0.0) (2019-09-17)
+
+
+### Bug Fixes
+
+* add popovers + some trash ([534c1db](https://github.com/mbuyakov/SUI.CORE/commit/534c1db))
+* fix dep ([2b284bb](https://github.com/mbuyakov/SUI.CORE/commit/2b284bb))
+* lint ([f448c94](https://github.com/mbuyakov/SUI.CORE/commit/f448c94))
+
+
+### Features
+
+* add draw, ModalLink ([96b19a0](https://github.com/mbuyakov/SUI.CORE/commit/96b19a0))
+* add EditableEntityField ([f29eac7](https://github.com/mbuyakov/SUI.CORE/commit/f29eac7))
+* add FullScreenModal ([42cb2f7](https://github.com/mbuyakov/SUI.CORE/commit/42cb2f7))
+* add SparkLine ([bc7701a](https://github.com/mbuyakov/SUI.CORE/commit/bc7701a))
+* add SUI.BACKEND ([48d8e4a](https://github.com/mbuyakov/SUI.CORE/commit/48d8e4a))
+* add TooltipIcon ([383ec12](https://github.com/mbuyakov/SUI.CORE/commit/383ec12))
+
+
+
+
+
+
 # [4.1.0](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.12...v4.1.0) (2019-09-17)
 
 **Note:** Version bump only for package @smsoft/sui-base-components
