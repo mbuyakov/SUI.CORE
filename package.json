@@ -19,7 +19,7 @@
     "update-version": "lerna version --no-push",
     "merge-master": "git push && git checkout master && git pull && git merge develop -m \"Merge develop -> master\" --no-ff && git push && git checkout develop",
     "publish-all": "lerna publish from-package --yes --registry http://verdaccio.smp.sm-soft.ru/",
-    "canary": "yarn ci && lerna publish --canary --yes --registry http://verdaccio.smp.sm-soft.ru/",
+    "canary": "lerna run ci --stream --parallel --since master && lerna publish --canary --yes --registry http://verdaccio.smp.sm-soft.ru/",
     "commit": "git add . && git-cz"
   },
   "config": {
