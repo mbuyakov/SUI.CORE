@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/mbuyakov/SUI.CORE/compare/v4.1.0...v5.1.0) (2019-09-17)
+
+
+### Bug Fixes
+
+* typings for SparklinePlugin ([25b3a25](https://github.com/mbuyakov/SUI.CORE/commit/25b3a25))
+
+
+### Features
+
+* add fullReloadTableInfo func ([0193391](https://github.com/mbuyakov/SUI.CORE/commit/0193391))
+* add hidden plugin ([f940f53](https://github.com/mbuyakov/SUI.CORE/commit/f940f53))
+* sparkLinePlugin ([dfb3824](https://github.com/mbuyakov/SUI.CORE/commit/dfb3824))
+
+
+
+
+
 # [5.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v3.0.1...v5.0.0) (2019-09-17)
 
 
