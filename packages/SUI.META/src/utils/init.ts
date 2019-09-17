@@ -1,8 +1,9 @@
-import {IUser} from "@smsoft/sui-core";
+import { IBaseCardTabLayout } from '@smsoft/sui-base-components/src/Base/BaseCardTabLayout';
+import { IUser } from '@smsoft/sui-core';
 
-import {ColumnInfo, ColumnInfoManager, NameManager, TableInfo, TableInfoManager} from "../cache";
+import { ColumnInfo, ColumnInfoManager, NameManager, TableInfo, TableInfoManager } from '../cache';
 
-import {parseRoutes, RouteType} from "./metaUtils";
+import { parseRoutes, RouteType } from './metaUtils';
 
 export interface IColumnInfoToBaseTableColProps {
   columnInfo: ColumnInfo;
@@ -35,8 +36,12 @@ export interface IRawRoute {
 }
 
 export interface IMetaInitProps {
+  // Tmp
+  // tslint:disable-next-line:no-any
+  extraOmniTableSettingsTab?: IBaseCardTabLayout<any>;
   routes?: IRawRoute[];
   user?: IUser,
+
   defaultGetLinkForTable?(tableName: string, type: RouteType, id?: string | number): string | null;
 }
 
@@ -48,7 +53,7 @@ export function initMetaInfo(props: IMetaInitProps): void {
   window.META_INIT_PROPS = props;
   parseRoutes(props.routes || []);
   // Костыль !! Требуется вызывать после init ApolloClient
-  const timeLabel = "MetaInfoManagers load";
+  const timeLabel = 'MetaInfoManagers load';
   console.time(timeLabel);
   // tslint:disable-next-line:no-floating-promises
   Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));
