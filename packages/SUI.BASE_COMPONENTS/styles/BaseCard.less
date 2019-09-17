@@ -1,72 +1,73 @@
 @import "~antd/lib/style/themes/default";
-
-.hideButtons button {
-  visibility: hidden;
-}
-
-.loading-spin-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  cursor: not-allowed;
-}
-
-.loading-spin {
-  position: absolute;
-  font-size: 20px;
-  top: calc(45% - 10px);
-  left: calc(50% - 10px);
-}
-
-.baseCardRows {
-  & > *:not(:last-child) {
-    margin-bottom: @padding-sm;
+:global {
+  .hideButtons button {
+    visibility: hidden;
   }
-}
 
-.baseCardRow {
-  display: flex;
-
-  & > *:not(:last-child) {
-    margin-right: @padding-sm;
+  .loading-spin-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: not-allowed;
   }
-}
 
-.baseCardCol {
+  .loading-spin {
+    position: absolute;
+    font-size: 20px;
+    top: calc(45% - 10px);
+    left: calc(50% - 10px);
+  }
 
-}
+  .baseCardRows {
+    & > *:not(:last-child) {
+      margin-bottom: @padding-sm;
+    }
+  }
 
-.baseCardItem {
-  flex-grow: 1;
-  flex-basis: 0;
-  align-items: baseline;
-  min-width: 0;
+  .baseCardRow {
+    display: flex;
 
-  & > *:not(.baseCardItemLabelHorizontal) {
+    & > *:not(:last-child) {
+      margin-right: @padding-sm;
+    }
+  }
+
+  .baseCardCol {
+
+  }
+
+  .baseCardItem {
     flex-grow: 1;
+    flex-basis: 0;
+    align-items: baseline;
+    min-width: 0;
+
+    & > *:not(.baseCardItemLabelHorizontal) {
+      flex-grow: 1;
+    }
   }
-}
 
-.baseFormItem {
-  .baseCardItem();
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: -@padding-sm;
-}
+  .baseFormItem {
+    .baseCardItem();
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: -@padding-sm;
+  }
 
-.baseCardItemLabelHorizontal {
-  line-height: 40px;
-}
+  .baseCardItemLabelHorizontal {
+    line-height: 40px;
+  }
 
-.baseCardItemLabelHorizontal::after {
-  white-space: pre;
-  content: " ";
-}
+  .baseCardItemLabelHorizontal::after {
+    white-space: pre;
+    content: " ";
+  }
 
-.baseFormItemVertical {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  .baseFormItemVertical {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
