@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.2.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.1.0...v5.2.0) (2019-09-17)
+
+
+### Features
+
+* round plugin ([1ff4588](https://github.com/mbuyakov/SUI.CORE/commit/1ff4588))
+
+
+
+
+
 # [5.1.0](https://github.com/mbuyakov/SUI.CORE/compare/v4.1.0...v5.1.0) (2019-09-17)
 
 
