@@ -11,7 +11,7 @@ import { TableRenderParamsPlugin } from './TableRenderParamsPlugin';
 
 export class UnknownPlugin extends TableRenderParamsPlugin<{}> {
   public constructor() {
-    super('unk', '-- Неизвестно --', false);
+    super('unk', '-- Неизвестно --', false, true);
   }
 
   // tslint:disable-next-line:prefer-function-over-method variable-name

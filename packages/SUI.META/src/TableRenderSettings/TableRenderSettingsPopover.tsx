@@ -114,7 +114,11 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
           onChange={this.updateField('renderType', true)}
           getPopupContainer={this.props.getPopupContainer}
         >
-          {Array.from(TableRenderSettingsPluginManager.plugins.values()).map(curPlugin => (<Select.Option key={curPlugin.id}>{curPlugin.title}</Select.Option>))}
+          {
+            Array.from(TableRenderSettingsPluginManager.plugins.values())
+              .filter(curPlugin => !curPlugin.hidden)
+              .map(curPlugin => (<Select.Option key={curPlugin.id}>{curPlugin.title}</Select.Option>))
+          }
         </Select>
         {plugin && plugin.hasSettings && (
           <Popover

@@ -9,13 +9,15 @@ import { ITableRenderParams, TableRenderSettingsPopover } from '../TableRenderSe
 export abstract class TableRenderParamsPlugin<T> {
 
   public readonly hasSettings: boolean;
+  public readonly hidden: boolean;
   public readonly id: string;
   public readonly title: string;
 
-  protected constructor(id: string, title: string, hasSettings: boolean) {
+  protected constructor(id: string, title: string, hasSettings: boolean, hidden: boolean = false) {
     this.id = id;
     this.title = title;
     this.hasSettings = hasSettings;
+    this.hidden = hidden;
   }
 
   public abstract async baseTableColGenerator(
