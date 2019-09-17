@@ -43,6 +43,8 @@ export interface IMetaInitProps {
   user?: IUser,
 
   defaultGetLinkForTable?(tableName: string, type: RouteType, id?: string | number): string | null;
+  // tslint:disable-next-line:no-any
+  routerPushFn(link: any): void;
 }
 
 declare let window: Window & {
