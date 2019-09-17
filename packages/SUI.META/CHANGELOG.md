@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.4.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.2.0...v5.4.0) (2019-09-17)
+
+
+### Bug Fixes
+
+* linkPlugin NPE ([42d1ca6](https://github.com/mbuyakov/SUI.CORE/commit/42d1ca6))
+* styles + remove commented code ([1d2e7da](https://github.com/mbuyakov/SUI.CORE/commit/1d2e7da))
+
+
+### Features
+
+* add DraggableRowTable ([851e8fe](https://github.com/mbuyakov/SUI.CORE/commit/851e8fe))
+* nullable tabs, fix roundPlugin, add kostyl for MainSetting(MetaCard) ([dd085ba](https://github.com/mbuyakov/SUI.CORE/commit/dd085ba))
+
+
+
+
+
 # [5.3.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.0.0...v5.3.0) (2019-09-17)
 
 
