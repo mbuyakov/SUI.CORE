@@ -15,7 +15,7 @@ interface ITableSettingsDialogProps {
 
 export class TableSettingsDialog extends React.Component<ITableSettingsDialogProps> {
 
-  private dialogRef: React.RefObject<FullScreenModal> = React.createRef<FullScreenModal>();
+  private readonly dialogRef: React.RefObject<FullScreenModal> = React.createRef<FullScreenModal>();
 
   public render(): JSX.Element {
     return (
