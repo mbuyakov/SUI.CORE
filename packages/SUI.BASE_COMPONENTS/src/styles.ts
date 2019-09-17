@@ -1,7 +1,6 @@
 export const YELLOW_BLINK = "yellowBlink";
 export const HIDE_BUTTONS = "hideButtons";
 export const LOADING_SPIN_WRAPPER = "loading-spin-wrapper";
-export const LOADING_SPIN = "loading-spin";
 export const COLLAPSE_PANEL_NO_PADDING = "collapsePanelNoPadding";
 export const BASE_CARD_ROWS = "baseCardRows";
 export const BASE_CARD_ROW = "baseCardRow";

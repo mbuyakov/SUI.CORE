@@ -61,16 +61,6 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
         trp => JSON.parse(trp ? trp.replace(/\\"/g, '"') : '{}'),
         ...Array.from(TableRenderSettingsPluginManager.plugins.values()).map(plugin => plugin.parseParams),
       );
-      // if (tableRenderParams.drillDownParamsData) {
-      //   tableRenderParams.drillDownParamsData
-      //     .filter(drillDownParam =>
-      //       drillDownParam.actualityDate && drillDownParam.actualityDate[1] // [Moment, Moment]
-      //     ).forEach(drillDownParam =>
-      //     drillDownParam.actualityDate = drillDownParam
-      //     // tslint:disable-next-line:no-unnecessary-callback-wrapper
-      //       .actualityDate.map(date => moment(date)) as [Moment, Moment]
-      //   );
-      // }
     } catch (e) {
       // Ignore
       console.error(e);
