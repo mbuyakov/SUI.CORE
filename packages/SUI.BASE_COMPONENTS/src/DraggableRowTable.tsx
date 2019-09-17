@@ -152,7 +152,7 @@ class DraggableRowTableClass<T> extends React.Component<Omit<TableProps<T>, 'onR
   }
 
   @autobind
-  private onRow(record: any, index: any): any {
+  private onRow(_: any, index: any): any {
     return {
       index,
       moveRow: this.moveRow,
