@@ -322,3 +322,9 @@ export async function getReferencedTableInfo(columnInfo: ColumnInfo): Promise<Ta
     ? TableInfoManager.getById(referencedColumnInfo.tableInfoId)
     : null;
 }
+
+export async function fullReloadTableInfo(tableInfoId: string): Promise<void> {
+  await TableInfoManager.reloadById(tableInfoId);
+  const tableInfo = await TableInfoManager.getById(tableInfoId);
+  await tableInfo.getColumns(true);
+}
