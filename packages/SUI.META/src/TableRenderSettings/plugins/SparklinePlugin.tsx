@@ -13,13 +13,20 @@ import { ITableRenderParams, TableRenderSettingsPopover } from '../TableRenderSe
 
 import { TableRenderParamsPlugin } from './TableRenderParamsPlugin';
 
-export class SparklinePlugin extends TableRenderParamsPlugin<{}> {
+export interface ISparklinePluginTRP {
+  color?: boolean | string;
+  sparklineMax?: number;
+  sparklineMin?: number;
+}
+
+
+export class SparklinePlugin extends TableRenderParamsPlugin<ISparklinePluginTRP> {
   public constructor() {
     super('sparkline', 'Спарклайн', true);
   }
 
   // tslint:disable-next-line:prefer-function-over-method variable-name no-async-without-await
-  public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams): Promise<void> {
+  public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams<ISparklinePluginTRP>): Promise<void> {
     // tslint:disable-next-line:no-any
     result.render = (value: any, _: any, col: any): JSX.Element => (
       <SparkLine
@@ -34,7 +41,7 @@ export class SparklinePlugin extends TableRenderParamsPlugin<{}> {
   }
 
   // tslint:disable-next-line:prefer-function-over-method
-  public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<{}>): React.ReactNode {
+  public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<ISparklinePluginTRP>): React.ReactNode {
     return (
       <>
         <span>Минимум:</span>
