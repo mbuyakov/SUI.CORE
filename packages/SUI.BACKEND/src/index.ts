@@ -1,5 +1,6 @@
 import { getDataByKey, ICoreUser } from '@smsoft/sui-core';
 
+export * from "./plugins";
 export * from "./Socket";
 
 declare let window: Window & {
