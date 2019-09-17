@@ -1,16 +1,16 @@
 {
   "name": "@smsoft/sui-all",
-  "version": "5.4.0",
+  "version": "5.5.0",
   "peerDependencies": {
     "react": ">=16",
     "react-dom": ">=16"
   },
   "dependencies": {
-    "@smsoft/sui-backend": "^5.4.0",
+    "@smsoft/sui-backend": "^5.5.0",
     "@smsoft/sui-base-components": "^5.4.0",
     "@smsoft/sui-charts": "^5.4.0",
     "@smsoft/sui-core": "^5.4.0",
-    "@smsoft/sui-meta": "^5.4.0",
+    "@smsoft/sui-meta": "^5.5.0",
     "@smsoft/sui-promised": "^5.4.0"
   }
 }

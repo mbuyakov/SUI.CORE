@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.5.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.4.0...v5.5.0) (2019-09-17)
+
+
+### Features
+
+* tableSettings ([3251f25](https://github.com/mbuyakov/SUI.CORE/commit/3251f25))
+
+
+
+
+
 # [5.4.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.2.0...v5.4.0) (2019-09-17)
 
 
