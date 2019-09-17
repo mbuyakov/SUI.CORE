@@ -12,7 +12,8 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --env=jsdom",
-    "lint": "tslint -t verbose -p tsconfig.json -c ../../tslint.json 'src/**/*.ts?(x)'"
+    "lint": "tslint -t verbose -p tsconfig.json -c ../../tslint.json 'src/**/*.ts?(x)'",
+    "ci": "yarn lint && yarn test && yarn build"
   },
   "peerDependencies": {
     "react": ">=16",

@@ -12,10 +12,10 @@
     "packages/*"
   ],
   "scripts": {
-    "lint": "lerna run lint --stream",
-    "test": "lerna run test --stream",
-    "build": "lerna run build --stream",
-    "ci": "yarn lint && yarn test && yarn build",
+    "lint": "lerna run lint --stream --parallel",
+    "test": "lerna run test --stream --parallel",
+    "build": "lerna run build --stream --parallel",
+    "ci": "lerna run ci --stream --parallel",
     "update-version": "lerna version --no-push",
     "merge-master": "git push && git checkout master && git pull && git merge develop -m \"Merge develop -> master\" --no-ff && git push && git checkout develop",
     "publish-all": "lerna publish from-package --yes --registry http://verdaccio.smp.sm-soft.ru/",
