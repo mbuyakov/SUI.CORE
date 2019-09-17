@@ -47,7 +47,7 @@ import classnames from 'classnames'
 import * as React from 'react';
 import * as XLSX from 'xlsx';
 
-import {HIDE_BUTTONS, LOADING_SPIN, LOADING_SPIN_WRAPPER} from "../styles";
+import {HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from "../styles";
 
 import { EmptyMessageComponent, ExportPlugin, TableNoDataCell, WarningPlugin } from './extends';
 import {GroupSummaryRow} from "./extends/GroupSummaryRow";
@@ -482,7 +482,6 @@ export class BaseTable<TSelection = defaultSelection>
           <div className={LOADING_SPIN_WRAPPER}>
             <Spin
               tip="Подождите..."
-              className={LOADING_SPIN}
             />
           </div>
         )}

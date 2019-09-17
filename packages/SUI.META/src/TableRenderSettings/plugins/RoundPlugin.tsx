@@ -22,7 +22,7 @@ export class RoundPlugin extends TableRenderParamsPlugin<IRoundPluginTRP> {
   }
 
   // tslint:disable-next-line:prefer-function-over-method variable-name no-async-without-await
-  public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams<IRoundPluginTRP>): Promise<void> {
+  public async baseTableColGenerator(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, _trp: ITableRenderParams<IRoundPluginTRP>): Promise<void> {
     return;
   }
 

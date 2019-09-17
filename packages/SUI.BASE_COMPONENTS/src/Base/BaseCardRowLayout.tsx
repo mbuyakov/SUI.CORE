@@ -25,14 +25,14 @@ export interface IBaseCardRowLayout<T> {
   isDivider?: boolean;
   // metaTableProps?: IMetaTableProps;
   style?: React.CSSProperties;
-  tabs?: Array<IBaseCardTabLayout<T>>;
+  tabs?: OneOrArrayWithNulls<IBaseCardTabLayout<T>>;
   tabsInCard?: boolean;
 }
 
 export type IBaseFormRowLayout<T> = Omit<IBaseCardRowLayout<T>, 'cols' | 'descriptionItems' | 'tabs'> & {
   cols?: OneOrArrayWithNulls<IBaseFormColLayout<T>>
   descriptionItems?: OneOrArrayWithNulls<IBaseFormDescItemLayout<T>>
-  tabs?: Array<IBaseFormTabLayout<T>>
+  tabs?: OneOrArrayWithNulls<IBaseFormTabLayout<T>>
 }
 
 // tslint:disable-next-line:ban-ts-ignore
@@ -65,7 +65,7 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
           <BaseCardContext.Consumer>
             {({ forceRenderTabs }) => (
               <ManagedTabs defaultActiveKey="0">
-                {(row.tabs as Array<IBaseCardTabLayout<T>>).map((tab, index) => renderIBaseCardTabLayout(sourceItem, tab, index, forceRenderTabs))}
+                {wrapInArrayWithoutNulls(row.tabs as OneOrArrayWithNulls<IBaseCardTabLayout<T>>).map((tab, index) => renderIBaseCardTabLayout(sourceItem, tab, index, forceRenderTabs))}
               </ManagedTabs>
             )}
           </BaseCardContext.Consumer>
