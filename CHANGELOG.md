@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v3.0.1...v5.0.0) (2019-09-17)
+
+
+### Bug Fixes
+
+* add chart styles ([651ca0f](https://github.com/mbuyakov/SUI.CORE/commit/651ca0f))
+* add popovers + some trash ([534c1db](https://github.com/mbuyakov/SUI.CORE/commit/534c1db))
+* change default WaitData generic to any ([c2a861e](https://github.com/mbuyakov/SUI.CORE/commit/c2a861e))
+* fix chart color ([5ad1cfb](https://github.com/mbuyakov/SUI.CORE/commit/5ad1cfb))
+* fix dep ([2b284bb](https://github.com/mbuyakov/SUI.CORE/commit/2b284bb))
+* fix migration ([fdaade0](https://github.com/mbuyakov/SUI.CORE/commit/fdaade0))
+* fix migration ([1af7135](https://github.com/mbuyakov/SUI.CORE/commit/1af7135))
+* fix mogration ([07c6884](https://github.com/mbuyakov/SUI.CORE/commit/07c6884))
+* fix NPE ([168adf6](https://github.com/mbuyakov/SUI.CORE/commit/168adf6))
+* fix NPE ([ac233d8](https://github.com/mbuyakov/SUI.CORE/commit/ac233d8))
+* fix NPE ([6a45d44](https://github.com/mbuyakov/SUI.CORE/commit/6a45d44))
+* fix pack ([0c6fc2e](https://github.com/mbuyakov/SUI.CORE/commit/0c6fc2e))
+* fix plugins ([2e24913](https://github.com/mbuyakov/SUI.CORE/commit/2e24913))
+* fix unknownPlugin + charts package.json ([aac12a1](https://github.com/mbuyakov/SUI.CORE/commit/aac12a1))
+* fix webpack module order ([d90deb7](https://github.com/mbuyakov/SUI.CORE/commit/d90deb7))
+* lint ([9da5e78](https://github.com/mbuyakov/SUI.CORE/commit/9da5e78))
+* lint ([8105500](https://github.com/mbuyakov/SUI.CORE/commit/8105500))
+* lint ([6fefb65](https://github.com/mbuyakov/SUI.CORE/commit/6fefb65))
+* lint ([1954957](https://github.com/mbuyakov/SUI.CORE/commit/1954957))
+* lint ([e51363f](https://github.com/mbuyakov/SUI.CORE/commit/e51363f))
+* lint ([f448c94](https://github.com/mbuyakov/SUI.CORE/commit/f448c94))
+* move files to META ([5a320c3](https://github.com/mbuyakov/SUI.CORE/commit/5a320c3))
+* simplify ReportTop3DBarChart height ([285e983](https://github.com/mbuyakov/SUI.CORE/commit/285e983))
+* tslint ([8b6b14d](https://github.com/mbuyakov/SUI.CORE/commit/8b6b14d))
+* upd plugins ([6e0a10d](https://github.com/mbuyakov/SUI.CORE/commit/6e0a10d))
+
+
+### Features
+
+* add draw, ModalLink ([96b19a0](https://github.com/mbuyakov/SUI.CORE/commit/96b19a0))
+* add EditableEntityField ([f29eac7](https://github.com/mbuyakov/SUI.CORE/commit/f29eac7))
+* add extractKeysLevel to WaitData, query and mutate ([868e4db](https://github.com/mbuyakov/SUI.CORE/commit/868e4db))
+* add fullReloadTableInfo func ([0193391](https://github.com/mbuyakov/SUI.CORE/commit/0193391))
+* add FullScreenModal ([42cb2f7](https://github.com/mbuyakov/SUI.CORE/commit/42cb2f7))
+* add SparkLine ([bc7701a](https://github.com/mbuyakov/SUI.CORE/commit/bc7701a))
+* add SUI.BACKEND ([48d8e4a](https://github.com/mbuyakov/SUI.CORE/commit/48d8e4a))
+* add TooltipIcon ([383ec12](https://github.com/mbuyakov/SUI.CORE/commit/383ec12))
+* all sui-all meta-package ([3f6b231](https://github.com/mbuyakov/SUI.CORE/commit/3f6b231))
+* init meta migration ([21f835c](https://github.com/mbuyakov/SUI.CORE/commit/21f835c))
+* plugins for meta and backend backage ([a8d87a9](https://github.com/mbuyakov/SUI.CORE/commit/a8d87a9))
+
+
+### BREAKING CHANGES
+
+* PLUGINS
+
+
+
+
+
+
 # [4.1.0](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.12...v4.1.0) (2019-09-17)
 
 

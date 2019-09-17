@@ -3,7 +3,6 @@ import {IUser} from "@smsoft/sui-core";
 import {ColumnInfo, ColumnInfoManager, NameManager, TableInfo, TableInfoManager} from "../cache";
 
 import {parseRoutes, RouteType} from "./metaUtils";
-import {MetaInfo} from "./OldMetaInfo";
 
 export interface IColumnInfoToBaseTableColProps {
   columnInfo: ColumnInfo;
@@ -52,7 +51,7 @@ export function initMetaInfo(props: IMetaInitProps): void {
   const timeLabel = "MetaInfoManagers load";
   console.time(timeLabel);
   // tslint:disable-next-line:no-floating-promises
-  Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll(), MetaInfo.init()]).then(() => console.timeEnd(timeLabel));
+  Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));
 }
 
 export function getMetaInitProps(): IMetaInitProps | undefined {

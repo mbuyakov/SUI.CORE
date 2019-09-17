@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v3.0.1...v5.0.0) (2019-09-17)
+
+
+### Bug Fixes
+
+* change default WaitData generic to any ([c2a861e](https://github.com/mbuyakov/SUI.CORE/commit/c2a861e))
+
+
+### Features
+
+* add extractKeysLevel to WaitData, query and mutate ([868e4db](https://github.com/mbuyakov/SUI.CORE/commit/868e4db))
+* add SUI.BACKEND ([48d8e4a](https://github.com/mbuyakov/SUI.CORE/commit/48d8e4a))
+
+
+
+
+
+
 # [4.1.0](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.12...v4.1.0) (2019-09-17)
 
 **Note:** Version bump only for package @smsoft/sui-promised

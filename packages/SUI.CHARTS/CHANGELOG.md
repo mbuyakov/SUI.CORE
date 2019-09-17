@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v3.0.1...v5.0.0) (2019-09-17)
+
+
+### Bug Fixes
+
+* add chart styles ([651ca0f](https://github.com/mbuyakov/SUI.CORE/commit/651ca0f))
+* fix chart color ([5ad1cfb](https://github.com/mbuyakov/SUI.CORE/commit/5ad1cfb))
+* fix unknownPlugin + charts package.json ([aac12a1](https://github.com/mbuyakov/SUI.CORE/commit/aac12a1))
+* simplify ReportTop3DBarChart height ([285e983](https://github.com/mbuyakov/SUI.CORE/commit/285e983))
+
+
+### Features
+
+* add SUI.BACKEND ([48d8e4a](https://github.com/mbuyakov/SUI.CORE/commit/48d8e4a))
+
+
+
+
+
+
 # [4.1.0](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.12...v4.1.0) (2019-09-17)
 
 **Note:** Version bump only for package @smsoft/sui-charts
