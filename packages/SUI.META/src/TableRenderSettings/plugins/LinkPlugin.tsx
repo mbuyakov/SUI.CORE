@@ -1,13 +1,14 @@
-import { IBaseTableColLayout, RouterLink } from '@smsoft/sui-base-components';
+import {IBaseTableColLayout, RouterLink} from '@smsoft/sui-base-components';
+import {getDataByKey} from "@smsoft/sui-core";
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
-import { ColumnInfo } from '../../cache';
-import { getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps } from '../../utils';
-import { TableRenderSettingsPluginManager } from '../TableRenderSettingsPluginManager';
-import { ITableRenderParams } from '../TableRenderSettingsPopover';
+import {ColumnInfo} from '../../cache';
+import {getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps} from '../../utils';
+import {TableRenderSettingsPluginManager} from '../TableRenderSettingsPluginManager';
+import {ITableRenderParams} from '../TableRenderSettingsPopover';
 
-import { TableRenderParamsPlugin } from './TableRenderParamsPlugin';
+import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 
 
 export class LinkPlugin extends TableRenderParamsPlugin<{}> {
@@ -17,11 +18,16 @@ export class LinkPlugin extends TableRenderParamsPlugin<{}> {
 
   // tslint:disable-next-line:prefer-function-over-method variable-name
   public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, _tableRenderParams: ITableRenderParams): Promise<void> {
-    const link = getLinkForTable(
-      props.isLinkCol
-        ? props.tableInfo.tableName
-        : (await getReferencedTableInfo(props.columnInfo)).tableName, 'card', ':id',
-    );
+
+    const referencedTableInfo = props.isLinkCol
+      ? props.tableInfo
+      : await getReferencedTableInfo(props.columnInfo);
+
+    if (!referencedTableInfo) {
+      return;
+    }
+
+    const link = getLinkForTable(referencedTableInfo.tableName, 'card', ':id');
     if (link) {
       // tslint:disable-next-line:no-any
       result.render = (value: any, row: any): JSX.Element => value && (
@@ -43,8 +49,14 @@ export class LinkPlugin extends TableRenderParamsPlugin<{}> {
   }
 
   // tslint:disable-next-line:prefer-function-over-method variable-name
-  public extraActivationKostyl(_result: IBaseTableColLayout, renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): boolean {
-    return renderColumnInfo && (tableRenderParams && tableRenderParams.renderType ? tableRenderParams.renderType === 'link' : true) || props.columnInfo.id === props.tableInfo.linkColumnInfoId;
+  public extraActivationKostyl(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): boolean {
+    if (tableRenderParams && tableRenderParams.renderType && tableRenderParams.renderType !== 'link') {
+      return false;
+    }
+
+    return getDataByKey(props.columnInfo, "foreignColumnInfo", "length")
+      ? tableRenderParams.renderType === 'link'
+      : props.columnInfo.id === props.tableInfo.linkColumnInfoId;
   }
 }
 
