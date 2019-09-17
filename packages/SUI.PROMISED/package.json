@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-promised",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "main": "dist/index.js",
   "module": "dist/sui-promised.esm.js",
   "typings": "dist/index.d.ts",
@@ -11,8 +11,8 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "#test": "tsdx test --env=jsdom",
-    "lint": "tslint -t verbose -p tsconfig.json -c ./tslint.json 'src/**/*.ts?(x)'"
+    "lint": "tslint -t verbose -p tsconfig.json -c ./tslint.json 'src/**/*.ts?(x)'",
+    "ci": "yarn lint && yarn build"
   },
   "peerDependencies": {
     "react": ">=16",
@@ -40,6 +40,6 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@smsoft/sui-core": "^4.0.0"
+    "@smsoft/sui-core": "^4.1.0"
   }
 }

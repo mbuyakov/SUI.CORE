@@ -1,0 +1,16 @@
+{
+  "name": "@smsoft/sui-all",
+  "version": "4.1.0",
+  "peerDependencies": {
+    "react": ">=16",
+    "react-dom": ">=16"
+  },
+  "dependencies": {
+    "@smsoft/sui-backend": "^4.1.0",
+    "@smsoft/sui-base-components": "^4.1.0",
+    "@smsoft/sui-charts": "^4.1.0",
+    "@smsoft/sui-core": "^4.1.0",
+    "@smsoft/sui-meta": "^4.1.0",
+    "@smsoft/sui-promised": "^4.1.0"
+  }
+}

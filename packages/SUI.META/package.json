@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-meta",
-  "version": "4.0.12",
+  "version": "4.1.0",
   "main": "dist/index.js",
   "module": "dist/sui-meta.esm.js",
   "typings": "dist/index.d.ts",
@@ -11,7 +11,8 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "lint": "tslint -t verbose -p tsconfig.json -c ./tslint.json 'src/**/*.ts?(x)'"
+    "lint": "tslint -t verbose -p tsconfig.json -c ./tslint.json 'src/**/*.ts?(x)'",
+    "ci": "yarn lint && yarn build"
   },
   "peerDependencies": {
     "react": ">=16",
@@ -49,6 +50,6 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@smsoft/sui-base-components": "^4.0.4"
+    "@smsoft/sui-base-components": "^4.1.0"
   }
 }

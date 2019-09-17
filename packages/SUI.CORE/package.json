@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-core",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "main": "dist/index.js",
   "module": "dist/sui-core.esm.js",
   "typings": "dist/index.d.ts",
@@ -12,7 +12,8 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --env=jsdom",
-    "lint": "tslint -t verbose -p tsconfig.json -c ../../tslint.json 'src/**/*.ts?(x)'"
+    "lint": "tslint -t verbose -p tsconfig.json -c ../../tslint.json 'src/**/*.ts?(x)'",
+    "ci": "yarn lint && yarn test && yarn build"
   },
   "peerDependencies": {
     "react": ">=16",

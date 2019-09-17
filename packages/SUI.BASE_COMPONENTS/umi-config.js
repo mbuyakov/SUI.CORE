@@ -19,10 +19,10 @@ module.exports =  {
       loadingComponent: './components/PageLoading/index',
       webpackChunkName: true,
     },
-    /*dll: {
+    dll: {
       //TODO: Umi bug, check update
-      exclude: ['@amcharts/amcharts4', '@types/uuid'],
-    },*/
+      exclude: ['@smsoft/sui-all'],
+    },
   },
 
   umiConfig: {

@@ -1,0 +1,11 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [4.1.0](https://github.com/mbuyakov/SUI.CORE/compare/v4.0.12...v4.1.0) (2019-09-17)
+
+
+### Features
+
+* all sui-all meta-package ([3f6b231](https://github.com/mbuyakov/SUI.CORE/commit/3f6b231))

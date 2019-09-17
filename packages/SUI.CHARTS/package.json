@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-charts",
-  "version": "4.0.8",
+  "version": "4.1.0",
   "main": "dist/index.js",
   "module": "dist/sui-charts.esm.js",
   "typings": "dist/index.d.ts",
@@ -11,7 +11,8 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "lint": "tslint -t verbose -p tsconfig.json -c ./tslint.json 'src/**/*.ts?(x)'"
+    "lint": "tslint -t verbose -p tsconfig.json -c ./tslint.json 'src/**/*.ts?(x)'",
+    "ci": "yarn lint && yarn build"
   },
   "peerDependencies": {
     "react": ">=16",
@@ -50,6 +51,6 @@
   },
   "dependencies": {
     "@amcharts/amcharts4": "^4.5.16",
-    "@smsoft/sui-core": "^4.0.0"
+    "@smsoft/sui-core": "^4.1.0"
   }
 }
