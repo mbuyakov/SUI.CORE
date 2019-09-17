@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.0.0...v5.3.0) (2019-09-17)
+
+
+### Bug Fixes
+
+* fix sui-all package ([d6cf619](https://github.com/mbuyakov/SUI.CORE/commit/d6cf619))
+* linkPlugin NPE ([42d1ca6](https://github.com/mbuyakov/SUI.CORE/commit/42d1ca6))
+* typings for SparklinePlugin ([25b3a25](https://github.com/mbuyakov/SUI.CORE/commit/25b3a25))
+
+
+### Features
+
+* add hidden plugin ([f940f53](https://github.com/mbuyakov/SUI.CORE/commit/f940f53))
+* round plugin ([1ff4588](https://github.com/mbuyakov/SUI.CORE/commit/1ff4588))
+* sparkLinePlugin ([dfb3824](https://github.com/mbuyakov/SUI.CORE/commit/dfb3824))
+
+
+
+
+
+
 # [5.2.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.1.0...v5.2.0) (2019-09-17)
 
 
