@@ -1,6 +1,8 @@
 {
   "name": "@smsoft/sui-all",
   "version": "5.5.0",
+  "main": "index.js",
+  "typings": "index.d.ts",
   "peerDependencies": {
     "react": ">=16",
     "react-dom": ">=16"

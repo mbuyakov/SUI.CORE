@@ -1,5 +1,5 @@
 import { IBaseCardTabLayout } from '@smsoft/sui-base-components/src/Base/BaseCardTabLayout';
-import { IUser } from '@smsoft/sui-core';
+import { ICoreUser } from '@smsoft/sui-core';
 
 import { ColumnInfo, ColumnInfoManager, NameManager, TableInfo, TableInfoManager } from '../cache';
 import { TableSettings } from '../TableSettings';
@@ -38,7 +38,7 @@ export interface IRawRoute {
 
 export interface IMetaInitProps {
   routes?: IRawRoute[];
-  user?: IUser,
+  user?: ICoreUser,
 
   defaultGetLinkForTable?(tableName: string, type: RouteType, id?: string | number): string | null;
   // Tmp

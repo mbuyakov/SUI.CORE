@@ -1,4 +1,4 @@
-import { getDataByKey, IUser } from '@smsoft/sui-core';
+import { getDataByKey, ICoreUser } from '@smsoft/sui-core';
 
 export * from "./Socket";
 
@@ -31,7 +31,7 @@ export function isAdmin(): boolean {
   return (getDataByKey(getUser, "roles") || []).includes("ADMIN");
 }
 
-export function getUser(): IUser {
+export function getUser(): ICoreUser {
   // tslint:disable-next-line:ban-ts-ignore
   // @ts-ignore
   return getDataByKey(window.g_app._store.getState(), ["user", "user"]);
