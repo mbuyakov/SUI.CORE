@@ -18,7 +18,7 @@ export class RawPlugin extends TableRenderParamsPlugin<{}> {
   }
 
   // tslint:disable-next-line:prefer-function-over-method variable-name
-  public extraActivationKostyl(_result: IBaseTableColLayout, renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): boolean {
+  public extraActivationKostyl(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): boolean {
     return /*!props.columnInfo.id === props.tableInfo.linkColumnInfoId &&*/  !tableRenderParams || !tableRenderParams.renderType || tableRenderParams.renderType === 'raw';
   }
 }
