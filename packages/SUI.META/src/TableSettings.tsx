@@ -45,11 +45,18 @@ export function FullScreenTableSettings(props: {
           startTimeout={200}
           popupMode={true}
           getPopupContainer={getPopupContainer}
-          match={{ params: { id } }}
+          id={id}
         />
       )}
     </FullScreenModal>
   );
+}
+
+interface ITableSettingsProps {
+  id: string;
+  popupMode?: boolean;
+  startTimeout?: number;
+  getPopupContainer(): HTMLElement;
 }
 
 interface ITableSettingsState {
@@ -59,16 +66,7 @@ interface ITableSettingsState {
   tableInfoById?: ITableInfo;
 }
 
-export class TableSettings extends React.Component<{
-  match: {
-    params: {
-      id: string;
-    }
-  }
-  popupMode?: boolean;
-  startTimeout?: number;
-  getPopupContainer(): HTMLElement;
-}, ITableSettingsState> {
+export class TableSettings extends React.Component<ITableSettingsProps, ITableSettingsState> {
 
   private static getElementBySortType<T>(sorting: SortingDirection, ascElement: T, descElement: T, emptyElement: T): T {
     return (sorting === 'asc')
@@ -107,7 +105,7 @@ export class TableSettings extends React.Component<{
             name
           }
         }
-        tableInfoById(id: "${this.props.match.params.id}") {
+        tableInfoById(id: "${this.props.id}") {
           id
           engineByEngineId {
             id
@@ -187,8 +185,8 @@ export class TableSettings extends React.Component<{
   }
 
 
-  public componentDidUpdate(prevProps: { match: { params: { id: string } } }): void {
-    if (this.props.match.params.id !== prevProps.match.params.id) {
+  public componentDidUpdate(prevProps: ITableSettingsProps): void {
+    if (this.props.id !== prevProps.id) {
       this.setState({ tableInfoById: null }, this.componentDidMount);
     }
   }
@@ -219,7 +217,7 @@ export class TableSettings extends React.Component<{
                   cols: {
                     items: [
                       {
-                        render: (_, item): JSX.Element =>
+                        render: (): JSX.Element =>
                           (
                             this.props.popupMode
                               ? <></>
@@ -267,7 +265,7 @@ export class TableSettings extends React.Component<{
                                   {/*  icon="sync"*/}
                                   {/*  type="primary"*/}
                                   {/*  style={{ marginBottom: 8, marginLeft: 8 }}*/}
-                                  {/*  onClick={() => fullReloadTableInfo(this.props.match.params.id)}*/}
+                                  {/*  onClick={() => fullReloadTableInfo(this.props.id)}*/}
                                   {/*>*/}
                                   {/*  Синхронизировать вкладки*/}
                                   {/*</Button>*/}
@@ -359,7 +357,7 @@ export class TableSettings extends React.Component<{
                             <div style={{ width: 500 }}>
                               <PromisedSelect
                                 defaultValue={value}
-                                promise={generateUpdateFn('tableInfo', this.props.match.params.id, 'linkColumnInfoId')}
+                                promise={generateUpdateFn('tableInfo', this.props.id, 'linkColumnInfoId')}
                               >
                                 <Select.Option value={null}>
                                   --Не задано--
@@ -380,7 +378,7 @@ export class TableSettings extends React.Component<{
                             <div style={{ width: 500 }}>
                               <PromisedSelect
                                 defaultValue={value}
-                                promise={generateUpdateFn('tableInfo', this.props.match.params.id, 'foreignLinkColumnInfoId')}
+                                promise={generateUpdateFn('tableInfo', this.props.id, 'foreignLinkColumnInfoId')}
                               >
                                 <Select.Option value={null}>
                                   --Не задано--
@@ -400,7 +398,7 @@ export class TableSettings extends React.Component<{
                           render: (value: boolean): JSX.Element => (
                             <PromisedSwitch
                               defaultChecked={value}
-                              promise={generateUpdateFn('tableInfo', this.props.match.params.id, 'isCatalog')}
+                              promise={generateUpdateFn('tableInfo', this.props.id, 'isCatalog')}
                             />
                           ),
                         },
@@ -665,7 +663,7 @@ export class TableSettings extends React.Component<{
                               items: [
                                 {
                                   dataKey: ['columnInfosByTableInfoId', 'nodes'],
-                                  render: (value, item): JSX.Element => (
+                                  render: (value: IColumnInfo[], item): JSX.Element => (
                                     <Table
                                       components={{
                                         body: {
@@ -849,7 +847,7 @@ export class TableSettings extends React.Component<{
   private onNameChanged(newId: string): Promise<any> {
     return new Promise((resolve, reject): void => {
       mutate(`mutation {
-        updateTableInfoById(input: {id: "${this.props.match.params.id}", tableInfoPatch: {nameId: "${newId}"}}) {
+        updateTableInfoById(input: {id: "${this.props.id}", tableInfoPatch: {nameId: "${newId}"}}) {
           clientMutationId
         }
       }`)
@@ -862,7 +860,7 @@ export class TableSettings extends React.Component<{
   }
 
   @autobind
-  private updateColField(id: string, field: string, value: any, sleepAtEnd: boolean = true, onlyState: boolean = false, needUpdateState: boolean = true): Promise<any> {
+  private updateColField(id: string, field: keyof IColumnInfo, value: any, sleepAtEnd: boolean = true, onlyState: boolean = false, needUpdateState: boolean = true): Promise<any> {
     const updateState = new Promise((resolve): void => {
       const tableInfoById = this.state.tableInfoById;
       const colIndex = tableInfoById.columnInfosByTableInfoId.nodes.findIndex(col => col.id === id);
@@ -876,6 +874,7 @@ export class TableSettings extends React.Component<{
 
       return resolve();
     });
+
     if (onlyState) {
       return updateState;
     }
@@ -884,12 +883,12 @@ export class TableSettings extends React.Component<{
   }
 
   @autobind
-  private updateColFieldFn(id: string, field: string, sleepAtEnd?: boolean, onlyState?: boolean): (value: any) => Promise<any> {
+  private updateColFieldFn(id: string, field: keyof IColumnInfo, sleepAtEnd?: boolean, onlyState?: boolean): (value: any) => Promise<any> {
     return (value: any): Promise<any> => this.updateColField(id, field, value, sleepAtEnd, onlyState);
   }
 
   @autobind
   private async updateData(): Promise<any> {
-    await fullReloadTableInfo(this.props.match.params.id);
+    await fullReloadTableInfo(this.props.id);
   }
 }

@@ -1,24 +1,18 @@
-import { getDataByKey, IUser } from '@smsoft/sui-core';
+import { getDataByKey, ICoreUser } from '@smsoft/sui-core';
 
+export * from "./plugins";
+export * from "./BackendTable";
 export * from "./Socket";
 
 declare let window: Window & {
-  /**
-   * Variable for global client instance
-   */
   SUI_BACKEND_URL: string | undefined;
 };
 
-/**
- * Must be call before use Gql wrappers
- */
-export function initBackend(clientInstance: string): void {
-  window.SUI_BACKEND_URL = clientInstance;
+
+export function initBackend(backendUrl: string): void {
+  window.SUI_BACKEND_URL = backendUrl;
 }
 
-/**
- * Get client instance
- */
 export function getBackendUrl(): string {
   if (!window.SUI_BACKEND_URL) {
     throw new Error("Backend not initialized");
@@ -31,7 +25,7 @@ export function isAdmin(): boolean {
   return (getDataByKey(getUser, "roles") || []).includes("ADMIN");
 }
 
-export function getUser(): IUser {
+export function getUser(): ICoreUser {
   // tslint:disable-next-line:ban-ts-ignore
   // @ts-ignore
   return getDataByKey(window.g_app._store.getState(), ["user", "user"]);

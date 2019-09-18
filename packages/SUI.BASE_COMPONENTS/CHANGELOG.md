@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.7.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.6.0...v5.7.0) (2019-09-18)
+
+
+### Bug Fixes
+
+* lint ([21f34e5](https://github.com/mbuyakov/SUI.CORE/commit/21f34e5))
+
+
+
+
+
+# [5.6.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.5.0...v5.6.0) (2019-09-17)
+
+**Note:** Version bump only for package @smsoft/sui-base-components
+
+
+
+
+
 # [5.4.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.2.0...v5.4.0) (2019-09-17)
 
 

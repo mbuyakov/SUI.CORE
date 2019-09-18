@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.7.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.6.0...v5.7.0) (2019-09-18)
+
+
+### Bug Fixes
+
+* lint ([43446f9](https://github.com/mbuyakov/SUI.CORE/commit/43446f9))
+* lint ([21f34e5](https://github.com/mbuyakov/SUI.CORE/commit/21f34e5))
+* nPE ([3a8e494](https://github.com/mbuyakov/SUI.CORE/commit/3a8e494))
+
+
+
+
+
+# [5.6.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.5.0...v5.6.0) (2019-09-17)
+
+
+### Bug Fixes
+
+* add export ([2a908d1](https://github.com/mbuyakov/SUI.CORE/commit/2a908d1))
+* lint ([7c1f694](https://github.com/mbuyakov/SUI.CORE/commit/7c1f694))
+
+
+### Features
+
+* add index for sui-all ([50aec59](https://github.com/mbuyakov/SUI.CORE/commit/50aec59))
+
+
+
+
+
 # [5.5.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.4.0...v5.5.0) (2019-09-17)
 
 
