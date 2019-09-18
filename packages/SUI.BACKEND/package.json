@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-backend",
-  "version": "5.7.2",
+  "version": "5.7.3",
   "main": "dist/index.js",
   "module": "dist/sui-backend.esm.js",
   "typings": "dist/index.d.ts",
@@ -44,13 +44,13 @@
     "pretty-quick": "^1.11.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "tsdx": "^0.7.2",
+    "tsdx": "^0.9.2",
     "tslib": "^1.10.0",
     "typescript": "^3.5.3"
   },
   "dependencies": {
     "@amcharts/amcharts4": "^4.5.16",
-    "@smsoft/sui-meta": "^5.7.1",
+    "@smsoft/sui-meta": "^5.7.3",
     "@stomp/stompjs": "^5.4.2"
   }
 }

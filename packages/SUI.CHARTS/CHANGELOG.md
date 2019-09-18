@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.7.2...v5.7.3) (2019-09-18)
+
+
+### Bug Fixes
+
+* update tsdx, imports ([8717fe0](https://github.com/mbuyakov/SUI.CORE/commit/8717fe0))
+
+
+
+
+
 # [5.6.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.5.0...v5.6.0) (2019-09-17)
 
 **Note:** Version bump only for package @smsoft/sui-charts
