@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.4](https://github.com/mbuyakov/SUI.CORE/compare/v5.7.3...v5.7.4) (2019-09-18)
+
+
+### Bug Fixes
+
+* typo ([fb30229](https://github.com/mbuyakov/SUI.CORE/commit/fb30229))
+
+
+
+
+
 ## [5.7.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.7.2...v5.7.3) (2019-09-18)
 
 
