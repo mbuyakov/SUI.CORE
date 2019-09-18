@@ -22,7 +22,7 @@ export function getBackendUrl(): string {
 }
 
 export function isAdmin(): boolean {
-  return (getDataByKey(getUser, "roles") || []).includes("ADMIN");
+  return (getDataByKey(getUser(), "roles") || []).includes("ADMIN");
 }
 
 export function getUser(): ICoreUser {
