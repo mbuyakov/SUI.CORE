@@ -1,6 +1,5 @@
 /* tslint:disable:object-literal-sort-keys no-any unnecessary-else newline-before-return prefer-function-over-method no-floating-promises prefer-readonly promise-function-async*/
 import { Filter, Grouping, GroupKey, Sorting } from '@devexpress/dx-react-grid';
-import { getBackendUrl, getUser, isAdmin, RawModePlugin, RefreshMetaTablePlugin, Socket, TableSettingsDialog, TableSettingsPlugin } from '@smsoft/sui-backend';
 import { BaseTable, defaultSelection, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IRemoteBaseTableFields, ISelectionTable } from '@smsoft/sui-base-components';
 import { asyncMap, camelCase, defaultIfNotBoolean, Omit, wrapInArray, xor } from '@smsoft/sui-core';
 import { colToBaseTableCol, ColumnInfo, ColumnInfoManager, getAllowedColumnInfos, isAllowedColumnInfo, TableInfo, TableInfoManager } from '@smsoft/sui-meta';
@@ -9,6 +8,8 @@ import { IFrame, IMessage } from '@stomp/stompjs';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import uuid from 'uuid';
+
+import { getBackendUrl, getUser, isAdmin, RawModePlugin, RefreshMetaTablePlugin, Socket, TableSettingsDialog, TableSettingsPlugin } from './index';
 
 const SUBSCRIBE_DESTINATION_PREFIX = '/user/queue/response/';
 const SEND_DESTINATION = '/data';
@@ -37,7 +38,7 @@ export type SimpleBackendFilter = Omit<Filter, 'value'> & {
   value?: string | string[]
 }
 
-export type PredicateType = 'AND' | 'OR' | 'NOT' | string;
+export type PredicateType2 = 'AND' | 'OR' | 'NOT' | string;
 
 export type BackendFilter = {
   filters: BackendFilter[];
