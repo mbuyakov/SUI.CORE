@@ -1,4 +1,4 @@
-import { IBaseCardTabLayout } from '@smsoft/sui-base-components/src/Base/BaseCardTabLayout';
+import { IBaseCardTabLayout } from '@smsoft/sui-base-components';
 import { ICoreUser } from '@smsoft/sui-core';
 
 import { ColumnInfo, ColumnInfoManager, NameManager, TableInfo, TableInfoManager } from '../cache';
