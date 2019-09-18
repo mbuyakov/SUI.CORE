@@ -8,7 +8,6 @@ export class RawModePlugin extends React.Component<{
   enabled: boolean;
   onClick(): void;
 }> {
-
   public render(): JSX.Element {
     return (
       <Plugin>
@@ -28,5 +27,4 @@ export class RawModePlugin extends React.Component<{
       </Plugin>
     );
   }
-
 }

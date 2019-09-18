@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.2](https://github.com/mbuyakov/SUI.CORE/compare/v5.7.1...v5.7.2) (2019-09-18)
+
+
+### Bug Fixes
+
+* fix ([2790229](https://github.com/mbuyakov/SUI.CORE/commit/2790229))
+
+
+
+
+
 ## [5.7.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.7.0...v5.7.1) (2019-09-18)
 
 **Note:** Version bump only for package @smsoft/sui-backend
