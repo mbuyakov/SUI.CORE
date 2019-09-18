@@ -38,7 +38,7 @@ export type SimpleBackendFilter = Omit<Filter, 'value'> & {
   value?: string | string[]
 }
 
-export type PredicateType2 = 'AND' | 'OR' | 'NOT' | string;
+export type PredicateType = 'AND' | 'OR' | 'NOT' | string;
 
 export type BackendFilter = {
   filters: BackendFilter[];
