@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.7.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.6.0...v5.7.0) (2019-09-18)
+
+
+### Bug Fixes
+
+* lint ([43446f9](https://github.com/mbuyakov/SUI.CORE/commit/43446f9))
+* lint ([21f34e5](https://github.com/mbuyakov/SUI.CORE/commit/21f34e5))
+* nPE ([3a8e494](https://github.com/mbuyakov/SUI.CORE/commit/3a8e494))
+
+
+### Features
+
+* add RawModePlugin ([7149138](https://github.com/mbuyakov/SUI.CORE/commit/7149138))
+* yay! BackendTable ([9a515f5](https://github.com/mbuyakov/SUI.CORE/commit/9a515f5))
+
+
+
+
+
 # [5.6.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.5.0...v5.6.0) (2019-09-17)
 
 
