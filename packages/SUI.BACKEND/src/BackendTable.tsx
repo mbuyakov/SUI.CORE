@@ -298,7 +298,7 @@ export class BackendTable<TSelection = defaultSelection>
             filters: this.mapFilters(filter.filters || []),
           };
         } else {
-          return (filter.elements || (filter.value !== null && filter.value !== undefined && filter.value !== ''))
+          return (filter.elements || (filter.value !== undefined && filter.value !== ''))
             ? {
               ...filter,
               operation: filter.operation,
