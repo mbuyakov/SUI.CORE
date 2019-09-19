@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.5](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.4...v5.8.5) (2019-09-19)
+
+
+### Bug Fixes
+
+* remove unneeded props ([97af7fb](https://github.com/mbuyakov/SUI.CORE/commit/97af7fb))
+
+
+
+
+
+## [5.8.4](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.3...v5.8.4) (2019-09-19)
+
+
+### Bug Fixes
+
+* fix import ([b8396a5](https://github.com/mbuyakov/SUI.CORE/commit/b8396a5))
+
+
+
+
+
 ## [5.8.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.1...v5.8.3) (2019-09-19)
 
 

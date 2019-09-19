@@ -1,25 +1,22 @@
 // tslint:disable:no-any
-import {generateUpdate, sleep} from '@smsoft/sui-core';
-import {ColumnInfoManager, IColumnInfo, TableInfoManager} from "@smsoft/sui-meta";
-import {PromisedButton, WaitData} from '@smsoft/sui-promised';
-import {Switch} from "antd";
-import Tooltip from "antd/lib/tooltip";
+import { ColumnInfoManager, TableInfoManager } from '@smsoft/sui-meta';
+import { PromisedButton, WaitData } from '@smsoft/sui-promised';
+import { Switch } from 'antd';
+import Tooltip from 'antd/lib/tooltip';
 import Tree from 'antd/lib/tree';
-import autobind from "autobind-decorator";
-import * as React from "react";
+import autobind from 'autobind-decorator';
+import * as React from 'react';
 
-import {DeletableSmallCard} from "../DeletableSmallCard";
-import {DnDList} from "../Draggable";
-import {ISerializableComponent} from "../Draggable/Serializable";
-import {MAIN_SETTINGS__CONTAINER, MAIN_SETTINGS__ITEM_TREE} from "../styles";
+import { DeletableSmallCard } from '../DeletableSmallCard';
+import { DnDList } from '../Draggable';
+import { ISerializableComponent } from '../Draggable/Serializable';
+import { MAIN_SETTINGS__CONTAINER, MAIN_SETTINGS__ITEM_TREE } from '../styles';
 
-import {CardSettings, SerializedCardSettings} from "./CardSettings";
-import {DebugModeContext} from "./DebugModeContext";
-import {FieldsContext} from "./FieldsContext";
-import {GetPopupContainerContext} from "./GetPopupContainerContext";
-import {ItemSettings} from "./ItemSettings";
-
-const SAVE_SLEEP_DELAY = 1000;
+import { CardSettings, SerializedCardSettings } from './CardSettings';
+import { DebugModeContext } from './DebugModeContext';
+import { FieldsContext } from './FieldsContext';
+import { GetPopupContainerContext } from './GetPopupContainerContext';
+import { ItemSettings } from './ItemSettings';
 
 async function getFieldsForCol(colId: string, includeChildren: boolean = true): Promise<IFieldNode> {
   const colInfo = await ColumnInfoManager.getById(colId);
@@ -36,45 +33,9 @@ async function getFieldsForCol(colId: string, includeChildren: boolean = true): 
     child: colsInForeignTable,
     colInfoIds: colInfo.id,
     isLeaf: !foreignTable,
-    title: colInfo.columnName
-  }
+    title: colInfo.columnName,
+  };
 }
-
-// tslint:disable-next-line:variable-name
-export const extraTab = (_this: { props: { getPopupContainer(): HTMLElement } }) => ({
-  icon: 'card',
-  rows: {
-    cols: {
-      items: {
-        render: (_: any, item: any): JSX.Element => {
-          let plain;
-          try {
-            plain = JSON.parse(item.cardRenderParams);
-          } catch (e) {
-            // Ignore
-            // console.log(e);
-          }
-
-          // console.log(plain);
-          return (
-            <MainSettings
-              getPopupContainer={_this.props.getPopupContainer}
-              tableId={item.id}
-              // tslint:disable-next-line:jsx-no-lambda
-              onSave={settings => Promise.all([
-                generateUpdate('tableInfo', item.id, 'cardRenderParams', JSON.stringify(JSON.stringify(settings)).slice(1, -1)),
-                sleep(SAVE_SLEEP_DELAY)
-              ])}
-              plain={plain}
-              fields={item.columnInfosByTableInfoId.nodes.map((node: IColumnInfo) => node.id)}
-            />
-          );
-        },
-      },
-    },
-  },
-  title: 'Карточка объекта',
-});
 
 
 interface IMainSettingsProps {
@@ -99,7 +60,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
   fields?: IFieldNode[]
 }> implements ISerializableComponent<SerializedCardSettings> {
 
-  private static mapFields(fields: IFieldNode[], parentKey: string = ""): JSX.Element[] {
+  private static mapFields(fields: IFieldNode[], parentKey: string = ''): JSX.Element[] {
     return fields.map(field => {
       const key = `${parentKey}${field.colInfoIds}`;
       let child = null;
@@ -116,7 +77,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
             initialItems={[
               (<ItemSettings
                 id={key}
-              />)
+              />),
             ]}
             noCard={true}
           />
@@ -132,7 +93,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
         >
           {child}
         </Tree.TreeNode>
-      )
+      );
     });
   }
 
@@ -147,7 +108,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
   public async componentDidMount(): Promise<void> {
     // tslint:disable:no-unnecessary-callback-wrapper
     const fields = await Promise.all(this.props.fields.map(field => getFieldsForCol(field)));
-    this.setState({fields});
+    this.setState({ fields });
   }
 
   public getCurrentVersion(): number {
@@ -220,13 +181,13 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
     field.child = (await getFieldsForCol(field.colInfoIds)).child;
     console.log(field);
     this.setState({
-      fields: [...this.state.fields]
+      fields: [...this.state.fields],
     });
   }
 
   @autobind
   private onDebugModeChange(debugMode: boolean): void {
-    this.setState({debugMode});
+    this.setState({ debugMode });
   }
 
   @autobind
