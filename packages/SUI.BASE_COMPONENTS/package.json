@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-base-components",
-  "version": "5.7.7-alpha.1+10c4d9b",
+  "version": "5.8.0",
   "main": "dist/index.js",
   "module": "dist/sui-base-components.esm.js",
   "typings": "dist/index.d.ts",
@@ -57,7 +57,7 @@
     "@devexpress/dx-react-grid-material-ui": "^2.0.2",
     "@material-ui/core": "^4.3.1",
     "@material-ui/icons": "^4.2.1",
-    "@smsoft/sui-core": "^5.7.7-alpha.1+10c4d9b",
+    "@smsoft/sui-core": "^5.8.0",
     "@types/classnames": "^2.2.9",
     "@types/history": "^4.7.2",
     "@types/react-router-dom": "^4.3.4",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.8.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.7.6...v5.8.0) (2019-09-19)
+
+
+### Bug Fixes
+
+* remove console.log ([f98c25b](https://github.com/mbuyakov/SUI.CORE/commit/f98c25b))
+
+
+
+
+
 ## [5.7.6](https://github.com/mbuyakov/SUI.CORE/compare/v5.7.5...v5.7.6) (2019-09-18)
 
 **Note:** Version bump only for package @smsoft/sui-all

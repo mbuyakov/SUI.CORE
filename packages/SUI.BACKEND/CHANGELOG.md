@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.8.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.7.6...v5.8.0) (2019-09-19)
+
+
+### Bug Fixes
+
+* remove console.log ([f98c25b](https://github.com/mbuyakov/SUI.CORE/commit/f98c25b))
+
+
+### Features
+
+* add MetaCard ([08d689f](https://github.com/mbuyakov/SUI.CORE/commit/08d689f))
+* add MetaCard pt.2 ([10c4d9b](https://github.com/mbuyakov/SUI.CORE/commit/10c4d9b))
+
+
+
+
+
 ## [5.7.6](https://github.com/mbuyakov/SUI.CORE/compare/v5.7.5...v5.7.6) (2019-09-18)
 
 
