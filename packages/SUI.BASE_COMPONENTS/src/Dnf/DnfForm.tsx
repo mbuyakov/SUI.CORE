@@ -169,130 +169,136 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
     const forms: number[][] = getFieldValue("forms") || [];
     const initialStateForms = this.props.initialState && this.props.initialState.forms;
 
-    const dnfFormItems = forms.map((form, formIndex: number) => (
-      <div key={form.join("_")} style={this.props.wrapperStyle}>
-        {formIndex !== 0 && orDivider}
-        <div
-          style={{display: "flex"}}
-        >
-          <Form.Item
-            style={{
-              flexGrow: 1,
-              marginBottom: 0,
-              maxWidth: "100%"
-            }}
-          >
-            {getFieldDecorator(`formValidator[${formIndex}]`, { // Wrapper for field validating
-              rules: [{
-                // tslint:disable-next-line:no-any
-                validator: (_: any, __: any, callback: any): void => {
-                  const values = this.getDnfFormValues();
+    const disableDisjunctionSwap = this.props.disableRowSwap || forms.length === 1;
 
-                  this.props.orElementValidator
-                    ? this.props.orElementValidator(
-                    (values.forms && values.forms[formIndex])
-                      ? values.forms[formIndex].map(i => values.elements && values.elements[i])
-                      : undefined, callback)
-                    : callback();
-                },
-              }],
-            })(
-              <Card
-                style={{flexGrow: 1, margin: "5px 0px", padding: "5px 10px", ...this.props.andCardStyle}}
-                bodyStyle={{padding: 0}}
-                bordered={!this.props.disableAndFormBorder}
-              >
-                {form.map((elementIndex, index) => (
-                  <div
-                    key={elementIndex}
-                  >
-                    <AndFormRowElement
-                      isFirst={index === 0}
-                      isLast={form.length > 0 && (index === form.length - 1)}
-                      addButtons={form.length > 1}
-                      onUpClick={(): void => this.swapElement(formIndex, index, index - 1)}
-                      onDownClick={(): void => this.swapElement(formIndex, index, index + 1)}
-                      onDeleteClick={(): void => this.updateFormProps(dnfForms => {
-                        if (!dnfForms[formIndex] || dnfForms[formIndex].length <= 1) {
-                          return;
-                        }
-                        dnfForms[formIndex].splice(index, 1);
-                      })}
-                      disableRowSwap={this.props.disableRowSwap}
-                      rowComponent={this.props.rowComponent({
-                        form: this.props.form,
-                        id: elementIndex,
-                        initialValues: initialStateForms
-                          && initialStateForms[formIndex]
-                          && initialStateForms[formIndex][index]
-                      })}
-                      buttonAlignment={this.props.buttonAlignment}
-                    />
-                    {this.props.withDivider && divider}
-                  </div>
-                ))}
-                <Form.Item {...formItemLayoutWithOutLabel}>
-                  <Button
-                    htmlType="button"
-                    type="dashed"
-                    onClick={(): void => this.updateFormProps(dnfForms => dnfForms[formIndex] && dnfForms[formIndex].push(this.id++))}
-                    style={{width: "100%"}}
-                  >
-                    <Icon type="plus"/> {this.props.addConjunctionButtonTitle || "Добавить Конъюнкцию"}
-                  </Button>
-                </Form.Item>
-              </Card>
-            )}
-          </Form.Item>
-          {forms.length > 1 ? (
-            <div
+    const dnfFormItems = forms.map((form, formIndex: number) => {
+      const disableConjunctionSwap = this.props.disableRowSwap || form.length === 1;
+
+      return (
+        <div key={form.join("_")} style={this.props.wrapperStyle}>
+          {formIndex !== 0 && orDivider}
+          <div
+            style={{display: "flex"}}
+          >
+            <Form.Item
               style={{
-                alignItems: "center",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                // tslint:disable-next-line:no-magic-numbers
-                marginLeft: this.props.disableRowSwap ? 5 : -57,
-                marginRight: 5
+                flexGrow: 1,
+                marginBottom: 0,
+                maxWidth: "100%"
               }}
             >
-              <Button.Group style={{transform: "translate(50%) rotate(90deg) translateY(50%)", display: "flex"}}>
-                {!this.props.disableRowSwap && <Button
-                  size="small"
-                  htmlType="button"
-                  icon="arrow-left"
-                  style={{height: 32}}
-                  disabled={formIndex === 0}
-                  onClick={(): void => this.updateFormProps(dnfForms => InnerDnfForm.swapElements(dnfForms, formIndex, formIndex - 1))}
-                />}
-                <Button
-                  size="small"
-                  htmlType="button"
-                  icon="minus-circle"
-                  style={{height: 32, transform: "rotate(90deg)"}}
-                  onClick={(): void => this.updateFormProps(dnfForms => {
-                    if (dnfForms.length <= 1) {
-                      return;
-                    }
-                    dnfForms.splice(formIndex, 1);
-                  })}
-                />
-                {!this.props.disableRowSwap && (
+              {getFieldDecorator(`formValidator[${formIndex}]`, { // Wrapper for field validating
+                rules: [{
+                  // tslint:disable-next-line:no-any
+                  validator: (_: any, __: any, callback: any): void => {
+                    const values = this.getDnfFormValues();
+
+                    this.props.orElementValidator
+                      ? this.props.orElementValidator(
+                      (values.forms && values.forms[formIndex])
+                        ? values.forms[formIndex].map(i => values.elements && values.elements[i])
+                        : undefined, callback)
+                      : callback();
+                  },
+                }],
+              })(
+                <Card
+                  style={{flexGrow: 1, margin: "5px 0px", padding: "5px 10px", ...this.props.andCardStyle}}
+                  bodyStyle={{padding: 0}}
+                  bordered={!this.props.disableAndFormBorder}
+                >
+                  {form.map((elementIndex, index) => (
+                    <div
+                      key={elementIndex}
+                    >
+                      <AndFormRowElement
+                        isFirst={index === 0}
+                        isLast={form.length > 0 && (index === form.length - 1)}
+                        addButtons={this.props.allowClear || (form.length > 1)}
+                        onUpClick={(): void => this.swapElement(formIndex, index, index - 1)}
+                        onDownClick={(): void => this.swapElement(formIndex, index, index + 1)}
+                        onDeleteClick={(): void => this.updateFormProps(dnfForms => {
+                          if (!dnfForms[formIndex] || dnfForms[formIndex].length <= 1) {
+                            return;
+                          }
+                          dnfForms[formIndex].splice(index, 1);
+                        })}
+                        disableRowSwap={disableConjunctionSwap}
+                        rowComponent={this.props.rowComponent({
+                          form: this.props.form,
+                          id: elementIndex,
+                          initialValues: initialStateForms
+                            && initialStateForms[formIndex]
+                            && initialStateForms[formIndex][index]
+                        })}
+                        buttonAlignment={this.props.buttonAlignment}
+                      />
+                      {this.props.withDivider && divider}
+                    </div>
+                  ))}
+                  <Form.Item {...formItemLayoutWithOutLabel}>
+                    <Button
+                      htmlType="button"
+                      type="dashed"
+                      onClick={(): void => this.updateFormProps(dnfForms => dnfForms[formIndex] && dnfForms[formIndex].push(this.id++))}
+                      style={{width: "100%"}}
+                    >
+                      <Icon type="plus"/> {this.props.addConjunctionButtonTitle || "Добавить Конъюнкцию"}
+                    </Button>
+                  </Form.Item>
+                </Card>
+              )}
+            </Form.Item>
+            {(this.props.allowClear || (forms.length > 1)) ? (
+              <div
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  // tslint:disable-next-line:no-magic-numbers
+                  marginLeft: disableDisjunctionSwap ? 5 : -57,
+                  marginRight: 5
+                }}
+              >
+                <Button.Group style={{transform: "translate(50%) rotate(90deg) translateY(50%)", display: "flex"}}>
+                  {!disableDisjunctionSwap && <Button
+                      size="small"
+                      htmlType="button"
+                      icon="arrow-left"
+                      style={{height: 32}}
+                      disabled={formIndex === 0}
+                      onClick={(): void => this.updateFormProps(dnfForms => InnerDnfForm.swapElements(dnfForms, formIndex, formIndex - 1))}
+                  />}
                   <Button
                     size="small"
                     htmlType="button"
-                    icon="arrow-right"
-                    style={{height: 32}}
-                    disabled={formIndex === forms.length - 1}
-                    onClick={(): void => this.updateFormProps(dnfForms => InnerDnfForm.swapElements(dnfForms, formIndex, formIndex + 1))}
+                    icon="minus-circle"
+                    style={{height: 32, transform: "rotate(90deg)"}}
+                    onClick={(): void => this.updateFormProps(dnfForms => {
+                      if (dnfForms.length <= 1) {
+                        return;
+                      }
+                      dnfForms.splice(formIndex, 1);
+                    })}
                   />
-                )}
-              </Button.Group>
-            </div>
-          ) : null}
+                  {!disableDisjunctionSwap && (
+                    <Button
+                      size="small"
+                      htmlType="button"
+                      icon="arrow-right"
+                      style={{height: 32}}
+                      disabled={formIndex === forms.length - 1}
+                      onClick={(): void => this.updateFormProps(dnfForms => InnerDnfForm.swapElements(dnfForms, formIndex, formIndex + 1))}
+                    />
+                  )}
+                </Button.Group>
+              </div>
+            ) : null}
+          </div>
         </div>
-      </div>
-    ));
+      );
+    });
 
     const hasErrors = InnerDnfForm.hasErrors(this.props.form.getFieldsError());
 

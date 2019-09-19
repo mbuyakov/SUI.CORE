@@ -23,6 +23,7 @@ export interface ISupportingWrapperFormProps {
 
 export interface ICommonDnfProps<V> extends ISupportingWrapperFormProps {
   addConjunctionButtonTitle?: string;
+  allowClear?: boolean;
   buttonAlignment?: ButtonAlignment;
   defaultSubmitButtonTitle?: string;
   disableAndFormBorder?: boolean;
