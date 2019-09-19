@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.11](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.2...v5.8.11) (2019-09-19)
+
+
+### Bug Fixes
+
+* import ([3a72e17](https://github.com/mbuyakov/SUI.CORE/commit/3a72e17))
+* lint ([0a60330](https://github.com/mbuyakov/SUI.CORE/commit/0a60330))
+* remove unneeded props ([97af7fb](https://github.com/mbuyakov/SUI.CORE/commit/97af7fb))
+* try fix autobind ([3418b85](https://github.com/mbuyakov/SUI.CORE/commit/3418b85))
+
+
+
+
+
+
 ## [5.8.10](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.9...v5.8.10) (2019-09-19)
 
 **Note:** Version bump only for package @smsoft/sui-backend

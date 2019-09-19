@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.11](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.2...v5.8.11) (2019-09-19)
+
+
+### Bug Fixes
+
+* -- ([10bc342](https://github.com/mbuyakov/SUI.CORE/commit/10bc342))
+
+
+
+
+
+
 ## [5.8.7](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.6...v5.8.7) (2019-09-19)
 
 
