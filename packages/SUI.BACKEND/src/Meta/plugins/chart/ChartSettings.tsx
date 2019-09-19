@@ -28,7 +28,7 @@ export class ChartSettings extends SerializableDnDChild<SerializedChartSettings,
 
   public constructor(props: IChartSettingsProps) {
     super(props);
-    console.log(props);
+    // console.log(props);
     if (this.isNew) {
       this.state = {
         ...this.state,

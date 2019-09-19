@@ -62,7 +62,7 @@ export class MetaCard extends React.Component<IMetaCardProps, {
   }
 
   public render(): JSX.Element {
-    console.log(this);
+    //console.log(this);
 
     return (
       <Card

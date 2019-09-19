@@ -226,7 +226,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
 
   @autobind
   private async onSave(): Promise<any> {
-    console.log(this.toPlainObject());
+    // console.log(this.toPlainObject());
 
     return this.props.onSave(this.toPlainObject());
   }
