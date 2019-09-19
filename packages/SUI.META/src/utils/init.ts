@@ -1,8 +1,6 @@
-import { IBaseCardTabLayout } from '@smsoft/sui-base-components';
 import { ICoreUser } from '@smsoft/sui-core';
 
 import { ColumnInfo, ColumnInfoManager, NameManager, TableInfo, TableInfoManager } from '../cache';
-import { TableSettings } from '../TableSettings';
 
 import { parseRoutes, RouteType } from './metaUtils';
 
@@ -41,9 +39,7 @@ export interface IMetaInitProps {
   user?: ICoreUser,
 
   defaultGetLinkForTable?(tableName: string, type: RouteType, id?: string | number): string | null;
-  // Tmp
-  // tslint:disable-next-line:no-any variable-name
-  extraOmniTableSettingsTab?(_this: TableSettings): IBaseCardTabLayout<any>;
+
   // tslint:disable-next-line:no-any
   routerPushFn(link: any): void;
 }

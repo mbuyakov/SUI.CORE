@@ -1,4 +1,5 @@
 /* tslint:disable:jsx-no-lambda no-magic-numbers no-any object-literal-sort-keys no-floating-promises promise-function-async */
+import { MainSettings } from '@smsoft/sui-backend';
 import { BaseCard, DescriptionItem, DraggableRowTable, draw, FullScreenModal, SortingDirection, TooltipIcon } from '@smsoft/sui-base-components';
 import { generateUpdate, generateUpdateFn, getDataByKey, IObjectWithIndex, mutate, query, sleep, SUI_ROW, SUI_ROW_GROW_LEFT } from '@smsoft/sui-core';
 import { PromisedInput, PromisedSelect, PromisedSwitch, WaitData } from '@smsoft/sui-promised';
@@ -21,6 +22,7 @@ import { IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IR
 import { fullReloadTableInfo, getLinkForTable, getMetaInitProps } from './utils';
 
 const SPIN_DELAY = 500;
+const SAVE_SLEEP_DELAY = 1000;
 
 export function FullScreenTableSettings(props: {
   defaultOpen?: boolean
@@ -56,6 +58,7 @@ interface ITableSettingsProps {
   id: string;
   popupMode?: boolean;
   startTimeout?: number;
+
   getPopupContainer(): HTMLElement;
 }
 
@@ -812,7 +815,40 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                         },
                       ],
                     },
-                    getMetaInitProps().extraOmniTableSettingsTab && getMetaInitProps().extraOmniTableSettingsTab(this),
+                    {
+                      icon: 'card',
+                      rows: {
+                        cols: {
+                          items: {
+                            render: (_: any, item: any): JSX.Element => {
+                              let plain;
+                              try {
+                                plain = JSON.parse(item.cardRenderParams);
+                              } catch (e) {
+                                // Ignore
+                                // console.log(e);
+                              }
+
+                              // console.log(plain);
+                              return (
+                                <MainSettings
+                                  getPopupContainer={this.props.getPopupContainer}
+                                  tableId={item.id}
+                                  // tslint:disable-next-line:jsx-no-lambda
+                                  onSave={settings => Promise.all([
+                                    generateUpdate('tableInfo', item.id, 'cardRenderParams', JSON.stringify(JSON.stringify(settings)).slice(1, -1)),
+                                    sleep(SAVE_SLEEP_DELAY),
+                                  ])}
+                                  plain={plain}
+                                  fields={item.columnInfosByTableInfoId.nodes.map((node: IColumnInfo) => node.id)}
+                                />
+                              );
+                            },
+                          },
+                        },
+                      },
+                      title: 'Карточка объекта',
+                    },
                   ],
                 },
               ]}
