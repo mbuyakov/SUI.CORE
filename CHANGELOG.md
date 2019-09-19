@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.10](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.9...v5.8.10) (2019-09-19)
+
+
+### Bug Fixes
+
+* change styles ([dfea309](https://github.com/mbuyakov/SUI.CORE/commit/dfea309))
+
+
+
+
+
+## [5.8.9](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.8...v5.8.9) (2019-09-19)
+
+
+### Bug Fixes
+
+* lint ([0a60330](https://github.com/mbuyakov/SUI.CORE/commit/0a60330))
+
+
+
+
+
+## [5.8.8](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.7...v5.8.8) (2019-09-19)
+
+
+### Bug Fixes
+
+* try fix autobind ([3418b85](https://github.com/mbuyakov/SUI.CORE/commit/3418b85))
+
+
+
+
+
+## [5.8.7](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.6...v5.8.7) (2019-09-19)
+
+
+### Bug Fixes
+
+* -- ([10bc342](https://github.com/mbuyakov/SUI.CORE/commit/10bc342))
+* -- ([e257762](https://github.com/mbuyakov/SUI.CORE/commit/e257762))
+
+
+
+
+
+## [5.8.6](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.5...v5.8.6) (2019-09-19)
+
+
+### Bug Fixes
+
+* -- ([a3a9b84](https://github.com/mbuyakov/SUI.CORE/commit/a3a9b84))
+* -- ([ed81e98](https://github.com/mbuyakov/SUI.CORE/commit/ed81e98))
+
+
+
+
+
 ## [5.8.5](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.4...v5.8.5) (2019-09-19)
 
 

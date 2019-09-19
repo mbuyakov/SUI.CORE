@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.10](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.9...v5.8.10) (2019-09-19)
+
+**Note:** Version bump only for package @smsoft/sui-all
+
+
+
+
+
+## [5.8.9](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.8...v5.8.9) (2019-09-19)
+
+**Note:** Version bump only for package @smsoft/sui-all
+
+
+
+
+
+## [5.8.8](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.7...v5.8.8) (2019-09-19)
+
+**Note:** Version bump only for package @smsoft/sui-all
+
+
+
+
+
+## [5.8.7](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.6...v5.8.7) (2019-09-19)
+
+
+### Bug Fixes
+
+* -- ([10bc342](https://github.com/mbuyakov/SUI.CORE/commit/10bc342))
+* -- ([e257762](https://github.com/mbuyakov/SUI.CORE/commit/e257762))
+
+
+
+
+
+## [5.8.6](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.5...v5.8.6) (2019-09-19)
+
+
+### Bug Fixes
+
+* -- ([a3a9b84](https://github.com/mbuyakov/SUI.CORE/commit/a3a9b84))
+
+
+
+
+
 ## [5.8.5](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.4...v5.8.5) (2019-09-19)
 
 **Note:** Version bump only for package @smsoft/sui-all
