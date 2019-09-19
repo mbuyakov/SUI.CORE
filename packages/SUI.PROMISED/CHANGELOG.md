@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.2](https://github.com/mbuyakov/SUI.CORE/compare/v4.1.0...v5.8.2) (2019-09-19)
+
+
+### Bug Fixes
+
+* remove console.log ([f98c25b](https://github.com/mbuyakov/SUI.CORE/commit/f98c25b))
+* update tsdx, imports ([8717fe0](https://github.com/mbuyakov/SUI.CORE/commit/8717fe0))
+
+
+
+
+
+
 # [5.8.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.7.6...v5.8.0) (2019-09-19)
 
 

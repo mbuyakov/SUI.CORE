@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.2](https://github.com/mbuyakov/SUI.CORE/compare/v4.1.0...v5.8.2) (2019-09-19)
+
+
+### Bug Fixes
+
+* **sui.backend import fixes:** fixes ([83c8361](https://github.com/mbuyakov/SUI.CORE/commit/83c8361))
+* add export ([2a908d1](https://github.com/mbuyakov/SUI.CORE/commit/2a908d1))
+* add global to styles ([7f76426](https://github.com/mbuyakov/SUI.CORE/commit/7f76426))
+* export ([728e9d1](https://github.com/mbuyakov/SUI.CORE/commit/728e9d1))
+* fix ([2790229](https://github.com/mbuyakov/SUI.CORE/commit/2790229))
+* fix BackendTable filter for null ([a445fb0](https://github.com/mbuyakov/SUI.CORE/commit/a445fb0))
+* fix import ([ed957ea](https://github.com/mbuyakov/SUI.CORE/commit/ed957ea))
+* fix isAdmin ([6dd1706](https://github.com/mbuyakov/SUI.CORE/commit/6dd1706))
+* fix sui-all package ([d6cf619](https://github.com/mbuyakov/SUI.CORE/commit/d6cf619))
+* linkPlugin fix ([3107932](https://github.com/mbuyakov/SUI.CORE/commit/3107932))
+* linkPlugin NPE ([42d1ca6](https://github.com/mbuyakov/SUI.CORE/commit/42d1ca6))
+* lint ([43446f9](https://github.com/mbuyakov/SUI.CORE/commit/43446f9))
+* lint ([21f34e5](https://github.com/mbuyakov/SUI.CORE/commit/21f34e5))
+* lint ([e726712](https://github.com/mbuyakov/SUI.CORE/commit/e726712))
+* lint ([7c1f694](https://github.com/mbuyakov/SUI.CORE/commit/7c1f694))
+* lint ([5002cb4](https://github.com/mbuyakov/SUI.CORE/commit/5002cb4))
+* nPE ([3a8e494](https://github.com/mbuyakov/SUI.CORE/commit/3a8e494))
+* remove console.log ([f98c25b](https://github.com/mbuyakov/SUI.CORE/commit/f98c25b))
+* styles + remove commented code ([1d2e7da](https://github.com/mbuyakov/SUI.CORE/commit/1d2e7da))
+* typings for SparklinePlugin ([25b3a25](https://github.com/mbuyakov/SUI.CORE/commit/25b3a25))
+* typo ([fb30229](https://github.com/mbuyakov/SUI.CORE/commit/fb30229))
+* update tsdx, imports ([8717fe0](https://github.com/mbuyakov/SUI.CORE/commit/8717fe0))
+
+
+### Features
+
+* add DraggableRowTable ([851e8fe](https://github.com/mbuyakov/SUI.CORE/commit/851e8fe))
+* add fullReloadTableInfo func ([0193391](https://github.com/mbuyakov/SUI.CORE/commit/0193391))
+* add hidden plugin ([f940f53](https://github.com/mbuyakov/SUI.CORE/commit/f940f53))
+* add index for sui-all ([50aec59](https://github.com/mbuyakov/SUI.CORE/commit/50aec59))
+* add MetaCard ([08d689f](https://github.com/mbuyakov/SUI.CORE/commit/08d689f))
+* add MetaCard pt.2 ([10c4d9b](https://github.com/mbuyakov/SUI.CORE/commit/10c4d9b))
+* add RawModePlugin ([7149138](https://github.com/mbuyakov/SUI.CORE/commit/7149138))
+* move BackendTable plugins ([501b59d](https://github.com/mbuyakov/SUI.CORE/commit/501b59d))
+* nullable tabs, fix roundPlugin, add kostyl for MainSetting(MetaCard) ([dd085ba](https://github.com/mbuyakov/SUI.CORE/commit/dd085ba))
+* round plugin ([1ff4588](https://github.com/mbuyakov/SUI.CORE/commit/1ff4588))
+* sparkLinePlugin ([dfb3824](https://github.com/mbuyakov/SUI.CORE/commit/dfb3824))
+* tableSettings ([3251f25](https://github.com/mbuyakov/SUI.CORE/commit/3251f25))
+* yay! BackendTable ([9a515f5](https://github.com/mbuyakov/SUI.CORE/commit/9a515f5))
+
+
+
+
+
+
 ## [5.8.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.0...v5.8.1) (2019-09-19)
 
 

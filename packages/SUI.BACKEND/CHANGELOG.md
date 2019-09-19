@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.2](https://github.com/mbuyakov/SUI.CORE/compare/v4.1.0...v5.8.2) (2019-09-19)
+
+
+### Bug Fixes
+
+* **sui.backend import fixes:** fixes ([83c8361](https://github.com/mbuyakov/SUI.CORE/commit/83c8361))
+* export ([728e9d1](https://github.com/mbuyakov/SUI.CORE/commit/728e9d1))
+* fix ([2790229](https://github.com/mbuyakov/SUI.CORE/commit/2790229))
+* fix BackendTable filter for null ([a445fb0](https://github.com/mbuyakov/SUI.CORE/commit/a445fb0))
+* fix isAdmin ([6dd1706](https://github.com/mbuyakov/SUI.CORE/commit/6dd1706))
+* lint ([e726712](https://github.com/mbuyakov/SUI.CORE/commit/e726712))
+* remove console.log ([f98c25b](https://github.com/mbuyakov/SUI.CORE/commit/f98c25b))
+* typo ([fb30229](https://github.com/mbuyakov/SUI.CORE/commit/fb30229))
+* update tsdx, imports ([8717fe0](https://github.com/mbuyakov/SUI.CORE/commit/8717fe0))
+
+
+### Features
+
+* add index for sui-all ([50aec59](https://github.com/mbuyakov/SUI.CORE/commit/50aec59))
+* add MetaCard ([08d689f](https://github.com/mbuyakov/SUI.CORE/commit/08d689f))
+* add MetaCard pt.2 ([10c4d9b](https://github.com/mbuyakov/SUI.CORE/commit/10c4d9b))
+* add RawModePlugin ([7149138](https://github.com/mbuyakov/SUI.CORE/commit/7149138))
+* move BackendTable plugins ([501b59d](https://github.com/mbuyakov/SUI.CORE/commit/501b59d))
+* yay! BackendTable ([9a515f5](https://github.com/mbuyakov/SUI.CORE/commit/9a515f5))
+
+
+
+
+
+
 ## [5.8.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.0...v5.8.1) (2019-09-19)
 
 **Note:** Version bump only for package @smsoft/sui-backend
