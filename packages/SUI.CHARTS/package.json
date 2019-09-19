@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-charts",
-  "version": "5.8.11",
+  "version": "5.8.12",
   "main": "dist/index.js",
   "module": "dist/sui-charts.esm.js",
   "typings": "dist/index.d.ts",
@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "@amcharts/amcharts4": "^4.5.16",
-    "@smsoft/sui-core": "^5.8.11"
+    "@smsoft/sui-core": "^5.8.12"
   },
   "gitHead": "10c4d9ba04c3d76112173f8f0e3cacac0570ea7d"
 }
