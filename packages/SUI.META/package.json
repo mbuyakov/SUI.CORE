@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-meta",
-  "version": "5.8.4",
+  "version": "5.8.5",
   "main": "dist/index.js",
   "module": "dist/sui-meta.esm.js",
   "typings": "dist/index.d.ts",
