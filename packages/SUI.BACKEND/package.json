@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-backend",
-  "version": "5.8.8",
+  "version": "5.8.9",
   "main": "dist/index.js",
   "module": "dist/sui-backend.esm.js",
   "typings": "dist/index.d.ts",
