@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.2](https://github.com/mbuyakov/SUI.CORE/compare/v4.1.0...v5.8.2) (2019-09-19)
+
+
+### Bug Fixes
+
+* add export ([2a908d1](https://github.com/mbuyakov/SUI.CORE/commit/2a908d1))
+* linkPlugin fix ([3107932](https://github.com/mbuyakov/SUI.CORE/commit/3107932))
+* linkPlugin NPE ([42d1ca6](https://github.com/mbuyakov/SUI.CORE/commit/42d1ca6))
+* lint ([43446f9](https://github.com/mbuyakov/SUI.CORE/commit/43446f9))
+* lint ([21f34e5](https://github.com/mbuyakov/SUI.CORE/commit/21f34e5))
+* lint ([7c1f694](https://github.com/mbuyakov/SUI.CORE/commit/7c1f694))
+* nPE ([3a8e494](https://github.com/mbuyakov/SUI.CORE/commit/3a8e494))
+* remove console.log ([f98c25b](https://github.com/mbuyakov/SUI.CORE/commit/f98c25b))
+* styles + remove commented code ([1d2e7da](https://github.com/mbuyakov/SUI.CORE/commit/1d2e7da))
+* typings for SparklinePlugin ([25b3a25](https://github.com/mbuyakov/SUI.CORE/commit/25b3a25))
+* update tsdx, imports ([8717fe0](https://github.com/mbuyakov/SUI.CORE/commit/8717fe0))
+
+
+### Features
+
+* add DraggableRowTable ([851e8fe](https://github.com/mbuyakov/SUI.CORE/commit/851e8fe))
+* add fullReloadTableInfo func ([0193391](https://github.com/mbuyakov/SUI.CORE/commit/0193391))
+* add hidden plugin ([f940f53](https://github.com/mbuyakov/SUI.CORE/commit/f940f53))
+* add index for sui-all ([50aec59](https://github.com/mbuyakov/SUI.CORE/commit/50aec59))
+* add MetaCard ([08d689f](https://github.com/mbuyakov/SUI.CORE/commit/08d689f))
+* nullable tabs, fix roundPlugin, add kostyl for MainSetting(MetaCard) ([dd085ba](https://github.com/mbuyakov/SUI.CORE/commit/dd085ba))
+* round plugin ([1ff4588](https://github.com/mbuyakov/SUI.CORE/commit/1ff4588))
+* sparkLinePlugin ([dfb3824](https://github.com/mbuyakov/SUI.CORE/commit/dfb3824))
+* tableSettings ([3251f25](https://github.com/mbuyakov/SUI.CORE/commit/3251f25))
+
+
+
+
+
+
 ## [5.8.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.0...v5.8.1) (2019-09-19)
 
 

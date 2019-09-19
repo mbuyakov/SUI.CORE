@@ -1,11 +1,11 @@
-.sui-textOverflow() {
+.sui-backend-textOverflow() {
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
   white-space: nowrap;
 }
 
-.sui-textOverflowMulti(@line: 3, @bg: #fff) {
+.sui-backend-textOverflowMulti(@line: 3, @bg: #fff) {
   overflow: hidden;
   position: relative;
   line-height: 1.5em;
@@ -34,7 +34,7 @@
 
 // mixins for clearfix
 // ------------------------
-.sui-clearfix() {
+.sui-backend-clearfix() {
   zoom: 1;
   &:before,
   &:after {
@@ -50,7 +50,7 @@
 }
 
 
-.sui-noBeforeAfter() {
+.sui-backend-noBeforeAfter() {
   &:before, &:after {
     content: none;
   }

@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.2](https://github.com/mbuyakov/SUI.CORE/compare/v4.1.0...v5.8.2) (2019-09-19)
+
+
+### Bug Fixes
+
+* add global to styles ([7f76426](https://github.com/mbuyakov/SUI.CORE/commit/7f76426))
+* fix import ([ed957ea](https://github.com/mbuyakov/SUI.CORE/commit/ed957ea))
+* lint ([21f34e5](https://github.com/mbuyakov/SUI.CORE/commit/21f34e5))
+* lint ([5002cb4](https://github.com/mbuyakov/SUI.CORE/commit/5002cb4))
+* remove console.log ([f98c25b](https://github.com/mbuyakov/SUI.CORE/commit/f98c25b))
+* styles + remove commented code ([1d2e7da](https://github.com/mbuyakov/SUI.CORE/commit/1d2e7da))
+* update tsdx, imports ([8717fe0](https://github.com/mbuyakov/SUI.CORE/commit/8717fe0))
+
+
+### Features
+
+* add DraggableRowTable ([851e8fe](https://github.com/mbuyakov/SUI.CORE/commit/851e8fe))
+* add MetaCard ([08d689f](https://github.com/mbuyakov/SUI.CORE/commit/08d689f))
+* add MetaCard pt.2 ([10c4d9b](https://github.com/mbuyakov/SUI.CORE/commit/10c4d9b))
+* nullable tabs, fix roundPlugin, add kostyl for MainSetting(MetaCard) ([dd085ba](https://github.com/mbuyakov/SUI.CORE/commit/dd085ba))
+
+
+
+
+
+
 # [5.8.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.7.6...v5.8.0) (2019-09-19)
 
 

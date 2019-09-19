@@ -1,6 +1,6 @@
 /* tslint:disable:no-any */
 import {MetaCardPlugin} from "./MetaCardPlugin";
-import {ChartPlugin} from "./plugins/chart/ChartPlugin";
+import {ChartPlugin} from "./plugins/chart";
 
 // tslint:disable-next-line:no-unnecessary-class
 export class MetaCardConfigurator {

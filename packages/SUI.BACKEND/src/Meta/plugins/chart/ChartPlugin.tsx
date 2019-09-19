@@ -5,7 +5,7 @@ import { XYChartWrapper } from '@smsoft/sui-charts';
 import { Rendered } from '@smsoft/sui-core';
 import * as React from 'react';
 
-import {SerializableDnDChild} from "../../../Draggable/Serializable/SerializableDnDChild";
+import {SerializableDnDChild} from "../../../Draggable/Serializable";
 import {DEFAULT_ROOT_TYPES, IMetaCardRenderParams, MetaCardPlugin} from "../../MetaCardPlugin";
 
 import {ChartSettings, SerializedChartSettings} from "./ChartSettings";

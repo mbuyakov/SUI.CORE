@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.2](https://github.com/mbuyakov/SUI.CORE/compare/v4.1.0...v5.8.2) (2019-09-19)
+
+
+### Bug Fixes
+
+* remove console.log ([f98c25b](https://github.com/mbuyakov/SUI.CORE/commit/f98c25b))
+
+
+### Features
+
+* add index for sui-all ([50aec59](https://github.com/mbuyakov/SUI.CORE/commit/50aec59))
+* move BackendTable plugins ([501b59d](https://github.com/mbuyakov/SUI.CORE/commit/501b59d))
+* nullable tabs, fix roundPlugin, add kostyl for MainSetting(MetaCard) ([dd085ba](https://github.com/mbuyakov/SUI.CORE/commit/dd085ba))
+
+
+
+
+
+
 ## [5.8.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.0...v5.8.1) (2019-09-19)
 
 **Note:** Version bump only for package @smsoft/sui-all
