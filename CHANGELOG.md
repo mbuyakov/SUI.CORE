@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.8](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.7...v5.8.8) (2019-09-19)
+
+
+### Bug Fixes
+
+* try fix autobind ([3418b85](https://github.com/mbuyakov/SUI.CORE/commit/3418b85))
+
+
+
+
+
 ## [5.8.7](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.6...v5.8.7) (2019-09-19)
 
 
