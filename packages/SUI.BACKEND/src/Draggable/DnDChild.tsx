@@ -25,6 +25,8 @@ export abstract class DnDChild<P extends IBaseDnDChildProps = IBaseDnDChildProps
 
   protected constructor(props: P) {
     super(props);
+    // DON'T USE AUTOBIND DECORATOR!!
+    this.saveState = this.saveState.bind(this);
 
     if(props.id) {
       const savedState = getDataByKey<S>(window, 'DnDChildData', props.id);
@@ -38,7 +40,6 @@ export abstract class DnDChild<P extends IBaseDnDChildProps = IBaseDnDChildProps
     }
   }
 
-  @autobind
   public saveState(): void {
     // tslint:disable-next-line:triple-equals
     if(this.props.id == null) {
