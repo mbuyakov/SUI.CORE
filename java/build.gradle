@@ -35,6 +35,7 @@ subprojects {
     kotlinVersion = '1.3.41'
     kotlinLoggingVersion = '1.6.24'
     flywayVersion = '5.2.4'
+    postgresVersion = '42.2.5'
   }
 
   repositories {
