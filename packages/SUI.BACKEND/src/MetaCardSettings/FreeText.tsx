@@ -3,10 +3,8 @@ import Input from 'antd/lib/input';
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import {IBaseDnDChildProps} from "../Draggable/DnDChild";
-import {DnDDragHandler} from "../Draggable/DnDDragHandler";
-import {ISerializable} from "../Draggable/Serializable/ISerializable";
-import {SerializableDnDChild} from "../Draggable/Serializable/SerializableDnDChild";
+import {DnDDragHandler, IBaseDnDChildProps} from "../Draggable";
+import {ISerializable, SerializableDnDChild} from "../Draggable/Serializable";
 
 interface IFreeTextState {
   text: string

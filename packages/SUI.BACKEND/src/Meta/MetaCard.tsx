@@ -12,10 +12,7 @@ import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
-import {SerializedCardSettings} from "../MetaCardSettings/CardSettings";
-import {SerializedFreeText} from "../MetaCardSettings/FreeText";
-import { SerializedItemSettings } from '../MetaCardSettings/ItemSettings';
-import {SerializedRowSettings} from "../MetaCardSettings/RowSettings";
+import {SerializedCardSettings, SerializedFreeText, SerializedItemSettings, SerializedRowSettings} from "../MetaCardSettings";
 
 import { MetaCardConfigurator } from './MetaCardConfigurator';
 

@@ -2,7 +2,7 @@
 @import "utils";
 
 :global {
-  .sui-rows {
+  .sui-backend-rows {
     > *:last-child > * {
       &:nth-child(1) > *:not(:last-child) {
         margin-bottom: @padding-sm;
@@ -14,9 +14,9 @@
     }
   }
 
-  .sui-cols {
+  .sui-backend-cols {
     > *:last-child {
-      .sui-noBeforeAfter();
+      .sui-backend-noBeforeAfter();
       display: grid;
       grid-template-columns: auto min-content;
       grid-gap: @padding-sm;
@@ -38,13 +38,13 @@
     }
   }
 
-  .sui-plusBtn {
+  .sui-backend-plusBtn {
     display: flex !important;
     align-items: center;
     justify-content: center;
   }
 
-  .sui-scrollSemiPadding {
+  .sui-backend-scrollSemiPadding {
     padding-bottom: @padding-sm / 2;
     margin-bottom: -(@padding-sm / 2);
     overflow-x: auto;

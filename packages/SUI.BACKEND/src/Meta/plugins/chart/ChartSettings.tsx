@@ -5,9 +5,8 @@ import autobind from 'autobind-decorator';
 import * as React from 'react';
 
 import {DeletableSmallCard} from "../../../DeletableSmallCard";
-import {IBaseDnDChildProps} from "../../../Draggable/DnDChild";
-import {ISerializable} from "../../../Draggable/Serializable/ISerializable";
-import {SerializableDnDChild} from "../../../Draggable/Serializable/SerializableDnDChild";
+import {IBaseDnDChildProps} from "../../../Draggable";
+import {ISerializable, SerializableDnDChild} from "../../../Draggable/Serializable";
 import {COMMON__GRID} from "../../../styles";
 
 interface IChartSettingsState {

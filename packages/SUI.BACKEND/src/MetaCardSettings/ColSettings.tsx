@@ -4,9 +4,8 @@ import autobind from 'autobind-decorator';
 import * as React from 'react';
 import { ContainerOptions } from 'react-smooth-dnd';
 
-import {DnDList} from "../Draggable/DnDList";
-import {ISerializable} from "../Draggable/Serializable/ISerializable";
-import {SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable/SerializableDnDChild";
+import {DnDList} from "../Draggable";
+import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
 
 import {ItemSettings, SerializedItemSettings} from "./ItemSettings";
 

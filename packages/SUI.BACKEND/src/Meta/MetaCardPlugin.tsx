@@ -3,8 +3,7 @@ import { Rendered } from '@smsoft/sui-core';
 // @ts-ignore
 import * as React from 'react';
 
-import {ISerializable} from "../Draggable/Serializable/ISerializable";
-import {SerializableDnDChild} from "../Draggable/Serializable/SerializableDnDChild";
+import {ISerializable, SerializableDnDChild} from "../Draggable/Serializable";
 
 export type DEFAULT_ROOT_TYPES = 'root' | 'row' | string;
 

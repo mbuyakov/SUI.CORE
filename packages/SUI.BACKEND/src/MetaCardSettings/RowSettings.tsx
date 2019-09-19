@@ -8,10 +8,8 @@ import autobind from 'autobind-decorator';
 import * as React from 'react';
 
 import { DeletableSmallCard } from '../DeletableSmallCard';
-import { IBaseDnDChildProps } from '../Draggable/DnDChild';
-import { DnDList } from '../Draggable/DnDList';
-import { ISerializable } from '../Draggable/Serializable/ISerializable';
-import { SerializableDnDChild } from '../Draggable/Serializable/SerializableDnDChild';
+import { DnDList, IBaseDnDChildProps } from '../Draggable';
+import { ISerializable, SerializableDnDChild } from '../Draggable/Serializable';
 import { COMMON__GRID } from '../styles';
 
 import { CollapseSettings, SerializedCollapseSettings } from './CollapseSettings';

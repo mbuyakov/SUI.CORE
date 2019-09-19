@@ -1,7 +1,12 @@
 import { getDataByKey, ICoreUser } from '@smsoft/sui-core';
 
+export * from "./Draggable";
+export * from "./Meta";
+export * from "./MetaCardSettings";
 export * from "./plugins";
+export * from "./utils";
 export * from "./BackendTable";
+export * from "./DeletableSmallCard";
 export * from "./Socket";
 
 declare let window: Window & {

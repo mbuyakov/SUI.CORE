@@ -16,9 +16,8 @@ import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
-import {DnDDragHandler} from "../Draggable/DnDDragHandler";
-import {ISerializable} from "../Draggable/Serializable/ISerializable";
-import {SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable/SerializableDnDChild";
+import {DnDDragHandler} from "../Draggable";
+import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
 import {COMMON__GRID, ITEM_SETTINGS__DELETE_ICON, ITEM_SETTINGS__SETTINGS_ICON} from "../styles";
 
 import {DebugModeContext} from "./DebugModeContext";

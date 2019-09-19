@@ -9,7 +9,7 @@ import uuidv4 from "uuid/v4";
 
 import {DeletableSmallCard} from "../DeletableSmallCard";
 import {DND_LIST__COLS, DND_LIST__PLUS_BTN, DND_LIST__ROWS, DND_LIST__SCROLL_SEMI_PADDING} from "../styles";
-import {applyDrag} from "../utils/draggable";
+import {applyDrag} from "../utils";
 
 import {DnDChild, IBaseDnDChildProps} from "./DnDChild";
 

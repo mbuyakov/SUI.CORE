@@ -3,9 +3,9 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import {ContainerOptions} from 'react-smooth-dnd';
 
-import {DnDList} from "../Draggable/DnDList";
-import {ISerializable, ISerializableComponent} from "../Draggable/Serializable/ISerializable";
-import {MetaCardConfigurator} from "../Meta/MetaCardConfigurator";
+import {DnDList} from "../Draggable";
+import {ISerializable, ISerializableComponent} from "../Draggable/Serializable";
+import {MetaCardConfigurator} from "../Meta";
 
 import {FreeText, SerializedFreeText} from "./FreeText";
 import {ItemSettings, SerializedItemSettings} from "./ItemSettings";
