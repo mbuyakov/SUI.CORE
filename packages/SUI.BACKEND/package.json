@@ -51,6 +51,7 @@
   "dependencies": {
     "@amcharts/amcharts4": "^4.5.16",
     "@smsoft/sui-meta": "^5.7.3",
+    "@smsoft/sui-base-components": "^5.7.3",
     "@stomp/stompjs": "^5.4.2",
     "react-smooth-dnd": "^0.10.0"
   }

@@ -1,8 +1,9 @@
+/* tslint:disable:no-floating-promises */
 import { Chip } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 import SettingsIcon from '@material-ui/icons/Settings';
 import {IBaseCardItemLayout} from "@smsoft/sui-base-components";
-import { capitalize } from '@smsoft/sui-core';
+import { capitalize, Merge } from '@smsoft/sui-core';
 import { ColumnInfo, ColumnInfoManager, IName, NameManager, NamePopover, TableInfoManager } from '@smsoft/sui-meta';
 import { WaitData } from '@smsoft/sui-promised';
 import { Spin, Tooltip } from 'antd';
@@ -27,7 +28,7 @@ import {OldVersionWarning} from "./OldVersionWarning";
 export type ItemSettingsFormatType = null | 'ts' | 'date' | 'time';
 
 // tslint:disable-next-line:no-any
-type ItemSettingsState = IBaseCardItemLayout<any> & {
+type ItemSettingsState = Merge<IBaseCardItemLayout<any>, {
   colId?: string
   formatType: ItemSettingsFormatType
   freeTitleEnabled?: boolean
@@ -37,13 +38,13 @@ type ItemSettingsState = IBaseCardItemLayout<any> & {
   nameId?: string
   originalTitle?: string
   version?: number
-};
+}>;
 
 export type SerializedItemSettings = ISerializable<ItemSettingsState>;
 
 export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
 
-  private LAST_ITEM_VERSION: number = 1;
+  private readonly LAST_ITEM_VERSION: number = 1;
 
   public constructor(props: SerializableDnDChildProps<SerializedItemSettings>) {
     super(props);

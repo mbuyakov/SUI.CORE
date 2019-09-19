@@ -24,7 +24,7 @@ interface IChartSettingsProps extends IBaseDnDChildProps {
 
 export class ChartSettings extends SerializableDnDChild<SerializedChartSettings, IChartSettingsProps> {
 
-  private LAST_CHART_VERSION: number = 1;
+  private readonly LAST_CHART_VERSION: number = 1;
 
   public constructor(props: IChartSettingsProps) {
     super(props);

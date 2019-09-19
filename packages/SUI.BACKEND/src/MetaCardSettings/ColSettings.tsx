@@ -1,5 +1,5 @@
 import {IBaseCardColLayout} from "@smsoft/sui-base-components";
-import { getDataByKey } from '@smsoft/sui-core';
+import { getDataByKey, Merge } from '@smsoft/sui-core';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import { ContainerOptions } from 'react-smooth-dnd';
@@ -11,16 +11,16 @@ import {SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Seri
 import {ItemSettings, SerializedItemSettings} from "./ItemSettings";
 
 // tslint:disable-next-line:no-any
-type ColSettingsState = IBaseCardColLayout<any> & {
+type ColSettingsState = Merge<IBaseCardColLayout<any>, {
   items: SerializedItemSettings[];
-};
+}>;
 
 export type SerializedColSettings = ISerializable<ColSettingsState>;
 
 export class ColSettings extends SerializableDnDChild<SerializedColSettings> {
 
   private readonly itemsRef: React.RefObject<DnDList<ItemSettings>> = React.createRef();
-  private LAST_COL_VERSION: number = 1;
+  private readonly LAST_COL_VERSION: number = 1;
 
   public constructor(props: SerializableDnDChildProps<SerializedColSettings>) {
     super(props);

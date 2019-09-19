@@ -28,7 +28,7 @@ export class CardSettings extends React.Component<ICardSettingsProps> implements
     return e.groupName === "ItemSettings" || e.groupName === "TITLE";
   }
 
-  private CARD_SETTINGS_VERSION: number = -1;
+  private readonly CARD_SETTINGS_VERSION: number = -1;
 
   private readonly rowsRef: React.RefObject<DnDList<RowSettings>> = React.createRef();
   private readonly titleListRef: React.RefObject<DnDList<ItemSettings | FreeText>> = React.createRef();

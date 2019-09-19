@@ -1,25 +1,27 @@
+/* tslint:disable:no-any object-literal-sort-keys prefer-function-over-method no-floating-promises*/
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Cached } from '@material-ui/icons';
 import { isAdmin, TableSettingsDialog } from '@smsoft/sui-backend';
-import { RouterLink } from '@smsoft/sui-base-components';
-import { addPluralEnding, addQuotesIfString, capitalize, DataKey, dataKeysToDataTree, getDataByKey, NO_DATA_TEXT, normalizeDataKey, query, wrapInArray } from '@smsoft/sui-core';
-import {isValidUuid} from "@smsoft/sui-core";
-import { ColumnInfo, ColumnInfoManager, getLinkForTable, getReferencedTableInfo, NameManager, TableInfoManager } from '@smsoft/sui-meta';
+import { BaseCard, DATA_KEY_REGEXP, IBaseCardRowLayout, RouterLink } from '@smsoft/sui-base-components';
+import { addPluralEnding, addQuotesIfString, capitalize, DataKey, dataKeysToDataTree, getDataByKey, isValidUuid, NO_DATA_TEXT, normalizeDataKey, query, wrapInArray, wrapInArrayWithoutNulls } from '@smsoft/sui-core';
+import { ColumnInfoManager, getLinkForTable, getReferencedTableInfo, NameManager, TableInfoManager } from '@smsoft/sui-meta';
 import { WaitData } from '@smsoft/sui-promised';
 import Card from 'antd/lib/card';
 import autobind from 'autobind-decorator';
-import { connect } from 'dva';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
+
 import {SerializedCardSettings} from "../MetaCardSettings/CardSettings";
 import {SerializedFreeText} from "../MetaCardSettings/FreeText";
+import { SerializedItemSettings } from '../MetaCardSettings/ItemSettings';
 import {SerializedRowSettings} from "../MetaCardSettings/RowSettings";
+
+import { MetaCardConfigurator } from './MetaCardConfigurator';
 
 export interface IMetaCardProps {
   itemId: string;
   tableId: string;
-  user?: IUserState;
 }
 
 function getIdDataKey(dataKey: DataKey): DataKey {
@@ -30,28 +32,19 @@ function getIdDataKey(dataKey: DataKey): DataKey {
   return ndk;
 }
 
-@connect(
-  ({ user }: IAllModelsState, props: IMetaCardProps) => ({
-    user,
-    tableId: props.tableId || getDataByKey(props, ['match', 'params', 'tableId']),
-    itemId: props.itemId || getDataByKey(props, ['match', 'params', 'itemId']),
-  }),
-  null,
-  null,
-  { withRef: true },
-)
-export default class MetaCard extends React.Component<IMetaCardProps, {
+export class MetaCard extends React.Component<IMetaCardProps, {
   error?: string;
+  // tslint:disable-next-line:no-any
   item?: any;
   ready?: boolean;
   schema?: SerializedCardSettings;
   tableInfoId?: string;
 }> {
-  private listenedTableInfoId: string;
 
-  private listenerId: number;
+  // private listenedTableInfoId: string;
+  // private listenerId: number;
 
-  public constructor(props: any) {
+  public constructor(props: IMetaCardProps) {
     super(props);
     this.state = {};
   }
@@ -78,6 +71,7 @@ export default class MetaCard extends React.Component<IMetaCardProps, {
           this.state.schema &&
           this.state.schema.title &&
           this.state.schema.title.map(title => {
+            // noinspection SuspiciousTypeOfGuard
             if (typeof (title as SerializedFreeText).text === 'string') {
               return (title as SerializedFreeText).text;
             }
@@ -147,7 +141,7 @@ export default class MetaCard extends React.Component<IMetaCardProps, {
   }
 
   @autobind
-  public async updateData(clearState: boolean = true): Promise<any> {
+  public async updateData(clearState: boolean = true): Promise<void> {
     // tslint:disable-next-line:no-unused-expression
     clearState && this.setState({ ready: false, item: null, schema: null });
     const object = await TableInfoManager.getById(this.props.tableId);
@@ -158,6 +152,7 @@ export default class MetaCard extends React.Component<IMetaCardProps, {
     // tslint:disable-next-line:triple-equals
     if (schema == null || !((schema.rows && schema.rows.length) || (schema.title && schema.title.length))) {
       this.setState({ error: 'Схема не настроена' });
+
       return;
     }
 
@@ -249,11 +244,6 @@ export default class MetaCard extends React.Component<IMetaCardProps, {
 
   @autobind
   private async generateQuery(table: string, itemId: string | number, schema: SerializedCardSettings): Promise<string> {
-    interface ITreeNode {
-      child?: ITreeNode[]
-      key: string
-    }
-
     const dataKeys = await this.getAllDataKeys(schema);
 
     return `{
@@ -265,10 +255,10 @@ export default class MetaCard extends React.Component<IMetaCardProps, {
 
   @autobind
   private async getAllDataKeys(schema: SerializedCardSettings): Promise<DataKey[]> {
-    const ret = [];
+    const ret: DataKey[] = [];
 
     const rowParser = (row: SerializedRowSettings): DataKey[] => {
-      const retRow = [];
+      const retRow: DataKey[] = [];
       if (row.metaTableProps) {
         [row.metaTableProps.filter, row.metaTableProps.globalFilter]
           .filter(Boolean)
@@ -299,29 +289,32 @@ export default class MetaCard extends React.Component<IMetaCardProps, {
       }
 
       if (row.tabs) {
-        row.tabs.forEach(tab => {
-          wrapInArray(tab.rows).forEach(rowParser);
+        wrapInArrayWithoutNulls(row.tabs).forEach(tab => {
+          wrapInArrayWithoutNulls(tab.rows).forEach(rowParser);
         });
       }
 
       if (row.collapsePanels) {
         row.collapsePanels.forEach(collapse => {
-          wrapInArray(collapse.rows).forEach(rowParser);
+          wrapInArrayWithoutNulls(collapse.rows).forEach(rowParser);
         });
       }
+
       return retRow;
     };
 
     await Promise.all(schema.title.map(async t => {
-      const cols = await Promise.all<ColumnInfo>(t.id
+      const cols = await Promise.all<string>(t.id
         .split('|')
         .filter(id => !isNaN(id as unknown as number) || !isValidUuid(id))
         .map(async (id, index, array) => {
           const columnInfo = await ColumnInfoManager.getById(id);
           if (array.length !== index + 1) {
             const tableInfo = await getReferencedTableInfo(columnInfo);
+
             return `${camelCase(tableInfo.tableName)}By${capitalize(camelCase(columnInfo.columnName))}`;
           }
+
           return camelCase(columnInfo.columnName);
         }),
       );
@@ -329,6 +322,7 @@ export default class MetaCard extends React.Component<IMetaCardProps, {
     }));
 
     schema.rows.forEach(rowParser);
+
     return ret;
   }
 

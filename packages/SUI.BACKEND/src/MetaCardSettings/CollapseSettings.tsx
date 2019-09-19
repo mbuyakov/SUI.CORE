@@ -1,4 +1,5 @@
 import {IBaseCardCollapseLayout} from "@smsoft/sui-base-components";
+import { Merge } from '@smsoft/sui-core';
 import {Input} from "antd";
 import Checkbox, {CheckboxChangeEvent} from "antd/lib/checkbox";
 import autobind from "autobind-decorator";
@@ -14,9 +15,9 @@ import {RowSettings, SerializedRowSettings} from "./RowSettings";
 import {RowsList} from "./RowsList";
 
 // tslint:disable-next-line:no-any
-type CollapseSettingsState = IBaseCardCollapseLayout<any> & {
+type CollapseSettingsState = Merge<IBaseCardCollapseLayout<any>, {
   rows: SerializedRowSettings[];
-};
+}>;
 
 export type SerializedCollapseSettings = ISerializable<CollapseSettingsState>;
 

@@ -3,6 +3,13 @@ import {getDataByKey} from "@smsoft/sui-core";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
+declare let window: Window & {
+  DnDChildData: {
+    // tslint:disable-next-line:no-any
+    [id: string]: any;
+  };
+};
+
 // Id mark as not required because DnDList add in automatically
 export interface IBaseDnDChildProps {
   draggable?: boolean
@@ -12,7 +19,6 @@ export interface IBaseDnDChildProps {
 }
 
 export abstract class DnDChild<P extends IBaseDnDChildProps = IBaseDnDChildProps, S = {}> extends React.Component<P, S> {
-
   /**************************************************************************************************************
   * ANY PRIVATE VARS IN CLASS MAY BE RESETED WHEN DnD CONTAINER CHANGED. STATE SAVED AND RESTORE IN CONSTRUCTOR *
   ***************************************************************************************************************/
@@ -38,12 +44,9 @@ export abstract class DnDChild<P extends IBaseDnDChildProps = IBaseDnDChildProps
     if(this.props.id == null) {
       throw new Error("No ID");
     }
-    // @ts-ignore
     if (!window.DnDChildData) {
-      // @ts-ignore
       window.DnDChildData = {};
     }
-    // @ts-ignore
     window.DnDChildData[this.props.id] = this.state;
   }
 

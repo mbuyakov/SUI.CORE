@@ -16,7 +16,7 @@ import {RowSettings, SerializedRowSettings} from "./RowSettings";
 import {RowsList} from "./RowsList";
 
 // tslint:disable-next-line:no-any
-type TabSettingsState = IBaseCardTabLayout<any> & {
+type TabSettingsState = Omit<IBaseCardTabLayout<any>, 'rows'> & {
   rows: SerializedRowSettings[];
 };
 

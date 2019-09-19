@@ -1,29 +1,31 @@
+/* tslint:disable:no-any */
 import { IBaseCardRowLayout } from '@smsoft/sui-base-components';
-import {camelCase} from "@smsoft/sui-core";
-import {Button, Mentions, Menu} from 'antd';
-import Checkbox, {CheckboxChangeEvent} from 'antd/lib/checkbox';
+import { camelCase, Merge } from '@smsoft/sui-core';
+import { Button, Mentions, Menu } from 'antd';
+import Checkbox, { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import Input from 'antd/lib/input';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import {DeletableSmallCard} from "../DeletableSmallCard";
-import {IBaseDnDChildProps} from "../Draggable/DnDChild";
-import {DnDList} from "../Draggable/DnDList";
-import {ISerializable} from "../Draggable/Serializable/ISerializable";
-import {SerializableDnDChild} from "../Draggable/Serializable/SerializableDnDChild";
-import {COMMON__GRID} from "../styles";
+import { DeletableSmallCard } from '../DeletableSmallCard';
+import { IBaseDnDChildProps } from '../Draggable/DnDChild';
+import { DnDList } from '../Draggable/DnDList';
+import { ISerializable } from '../Draggable/Serializable/ISerializable';
+import { SerializableDnDChild } from '../Draggable/Serializable/SerializableDnDChild';
+import { COMMON__GRID } from '../styles';
 
-import {CollapseSettings, SerializedCollapseSettings} from "./CollapseSettings";
-import {ColSettings, SerializedColSettings} from "./ColSettings";
-import {FieldsContext} from "./FieldsContext";
-import {OldVersionWarning} from "./OldVersionWarning";
-import {SerializedTabSettings, TabSettings} from "./TabSettings";
+import { CollapseSettings, SerializedCollapseSettings } from './CollapseSettings';
+import { ColSettings, SerializedColSettings } from './ColSettings';
+import { FieldsContext } from './FieldsContext';
+import { OldVersionWarning } from './OldVersionWarning';
+import { SerializedTabSettings, TabSettings } from './TabSettings';
 
 // tslint:disable-next-line:no-any
-type RowSettingsState = IBaseCardRowLayout<any> & {
+type RowSettingsState = Merge<IBaseCardRowLayout<any>, {
+  collapsePanels?: SerializedCollapseSettings[]
   cols?: SerializedColSettings[]
   tabs?: SerializedTabSettings[]
-};
+}>;
 
 export type SerializedRowSettings = ISerializable<RowSettingsState>;
 export type RowType = 'row' | 'tabs' | 'divider' | 'metatable' | 'collapse' | 'UNKNOWN';
@@ -34,10 +36,10 @@ interface IRowSettingsProps extends IBaseDnDChildProps {
 }
 
 export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRowSettingsProps> {
-  private collapseSettingsRef: React.RefObject<DnDList<CollapseSettings>> = React.createRef();
-  private colSettingsRef: React.RefObject<DnDList<ColSettings>> = React.createRef();
+  private readonly collapseSettingsRef: React.RefObject<DnDList<CollapseSettings>> = React.createRef();
+  private readonly colSettingsRef: React.RefObject<DnDList<ColSettings>> = React.createRef();
   private readonly LAST_ROW_VERSION: number = 1;
-  private tabSettingsRef: React.RefObject<DnDList<TabSettings>> = React.createRef();
+  private readonly tabSettingsRef: React.RefObject<DnDList<TabSettings>> = React.createRef();
 
   public constructor(props: IRowSettingsProps) {
     super(props);
@@ -139,19 +141,21 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
               <Input value={this.state.metaTableProps.table} onChange={this.onTableChanged}/>
               {[
                 {
-                  field: "globalFilter",
-                  title: "Глобальный фильтр"
+                  field: 'globalFilter',
+                  title: 'Глобальный фильтр',
                 },
                 {
-                  field: "filter",
-                  title: "Фильтр по умолчанию"
-                }
+                  field: 'filter',
+                  title: 'Фильтр по умолчанию',
+                },
               ].map(setting => [
                 (<span>{setting.title}</span>),
                 (<FieldsContext.Consumer>
                   {fields => (
                     <Mentions
                       // defaultSuggestions={fields}
+                      // tslint:disable-next-line:ban-ts-ignore
+                      // @ts-ignore
                       defaultValue={this.state.metaTableProps[setting.field]}
                       onChange={this.onFilterChanged(setting.field)}
                     >
@@ -159,7 +163,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
                         <Mentions.Option value={field}>{field}</Mentions.Option>))}
                     </Mentions>
                   )}
-                </FieldsContext.Consumer>)
+                </FieldsContext.Consumer>),
               ])}
               <span>Показывать заголовок</span>
               <Checkbox checked={this.state.metaTableProps.titleEnabled} onChange={this.onTitleEnabledChanged}/>
@@ -177,7 +181,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
                 <span>Во вложенной карточке</span>
                 <Checkbox checked={this.state.tabsInCard} onChange={this.onTabsInCardChanged}/>
               </div>}
-            bodyStyle={{padding: 0, paddingTop: 1}}
+            bodyStyle={{ padding: 0, paddingTop: 1 }}
             isVersionNotLast={isVersionNotLast}
           >
             <DnDList<TabSettings>
@@ -192,7 +196,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
                   id={tab.id}
                 />
               ))}
-              style={{border: 0}}
+              style={{ border: 0 }}
               addButtons={[
                 (<Menu.Item
                   onClick={this.onTabAddClicked}
@@ -209,7 +213,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
             title="Коллапс панели"
             draggable={this.props.draggable}
             onDelete={this.props.onDelete}
-            bodyStyle={{padding: 0, paddingTop: 1}}
+            bodyStyle={{ padding: 0, paddingTop: 1 }}
             isVersionNotLast={isVersionNotLast}
             settingsPopover={
               <div className={COMMON__GRID}>
@@ -222,7 +226,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
               id={`${this.props.id}-collapses`}
               type="CollapseSettings"
               deletableChildren={true}
-              style={{border: 0}}
+              style={{ border: 0 }}
               initialItems={this.state.collapsePanels.map((collapse: SerializedCollapseSettings) => (
                 <CollapseSettings
                   plain={collapse}
@@ -305,23 +309,23 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
 
   @autobind
   private onDividerDashedChanged(e: CheckboxChangeEvent): void {
-    this.setState({dividerDashed: e.target.checked});
+    this.setState({ dividerDashed: e.target.checked });
   }
 
   @autobind
   private onDividerTextChanged(e: React.ChangeEvent<HTMLInputElement>): void {
-    this.setState({dividerText: e.target.value});
+    this.setState({ dividerText: e.target.value });
   }
 
   @autobind
   private onFilterChanged(fieldName: string): (contentState: any) => void {
     return (contentState: any) =>
-      this.setState({metaTableProps: {...this.state.metaTableProps, [fieldName]: contentState}});
+      this.setState({ metaTableProps: { ...this.state.metaTableProps, [fieldName]: contentState } });
   }
 
   @autobind
   private onFitCollapsePanelChanged(e: CheckboxChangeEvent): void {
-    this.setState({fitCollapsePanel: e.target.checked});
+    this.setState({ fitCollapsePanel: e.target.checked });
   }
 
   @autobind
@@ -331,16 +335,16 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
 
   @autobind
   private onTableChanged(e: React.ChangeEvent<HTMLInputElement>): void {
-    this.setState({metaTableProps: {...this.state.metaTableProps, table: e.target.value}});
+    this.setState({ metaTableProps: { ...this.state.metaTableProps, table: e.target.value } });
   }
 
   @autobind
   private onTabsInCardChanged(e: CheckboxChangeEvent): void {
-    this.setState({tabsInCard: e.target.checked});
+    this.setState({ tabsInCard: e.target.checked });
   }
 
   @autobind
   private onTitleEnabledChanged(e: CheckboxChangeEvent): void {
-    this.setState({metaTableProps: {...this.state.metaTableProps, titleEnabled: e.target.checked}});
+    this.setState({ metaTableProps: { ...this.state.metaTableProps, titleEnabled: e.target.checked } });
   }
 }

@@ -11,9 +11,7 @@ export type SerializableDnDChildProps<T> = IBaseDnDChildProps & {
 
 export abstract class SerializableDnDChild<S extends ISerializable, P extends SerializableDnDChildProps<S> = SerializableDnDChildProps<S>> extends DnDChild<P, S> implements ISerializableComponent<S> {
 
-  // tslint:disable-next-line:no-inferrable-types
   public isFromPlain: boolean = false;
-  // tslint:disable-next-line:no-inferrable-types
   public isNew: boolean = false;
 
   protected constructor(props: P) {
