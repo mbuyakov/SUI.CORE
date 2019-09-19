@@ -162,7 +162,6 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
   }
 
   public render(): JSX.Element {
-    console.log(this);
     const {getFieldDecorator, getFieldValue} = this.props.form;
 
     getFieldDecorator("forms", {initialValue: this.state && this.state.initialForms || [[0]]});
@@ -249,7 +248,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
                 </Card>
               )}
             </Form.Item>
-            {(this.props.allowClear || (forms.length > 1)) ? (
+            {(forms.length > 1) ? (
               <div
                 style={{
                   alignItems: "center",
