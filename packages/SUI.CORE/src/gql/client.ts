@@ -1,5 +1,6 @@
 import ApolloClient from "apollo-client";
 
+
 declare let window: Window & {
   /**
    * Variable for global client instance
