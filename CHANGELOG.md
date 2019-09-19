@@ -3,13 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.8.12](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.11...v5.8.12) (2019-09-19)
+## [5.8.12](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.10...v5.8.12) (2019-09-19)
 
 
 ### Bug Fixes
 
-* **dnf fix:** fix DNF ([af38ee5](https://github.com/mbuyakov/SUI.CORE/commit/af38ee5))
+* fix DNF ([b501496](https://github.com/mbuyakov/SUI.CORE/commit/b501496))
 
+
+### Features
+
+* **dnf:** add allowClear prop to DnfForm ([2e585a4](https://github.com/mbuyakov/SUI.CORE/commit/2e585a4))
 
 
 

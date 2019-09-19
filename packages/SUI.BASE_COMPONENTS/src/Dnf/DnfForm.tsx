@@ -217,7 +217,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
                         onUpClick={(): void => this.swapElement(formIndex, index, index - 1)}
                         onDownClick={(): void => this.swapElement(formIndex, index, index + 1)}
                         onDeleteClick={(): void => this.updateFormProps(dnfForms => {
-                          if (!dnfForms[formIndex] || dnfForms[formIndex].length <= 1) {
+                          if (!dnfForms[formIndex] || dnfForms[formIndex].length === 0) {
                             return;
                           }
                           dnfForms[formIndex].splice(index, 1);
@@ -275,7 +275,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
                     icon="minus-circle"
                     style={{height: 32, transform: "rotate(90deg)"}}
                     onClick={(): void => this.updateFormProps(dnfForms => {
-                      if (dnfForms.length <= 1) {
+                      if (dnfForms.length === 0) {
                         return;
                       }
                       dnfForms.splice(formIndex, 1);

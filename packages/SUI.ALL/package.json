@@ -8,10 +8,10 @@
   "dependencies": {
     "@smsoft/sui-backend": "^5.8.12",
     "@smsoft/sui-base-components": "^5.8.12",
-    "@smsoft/sui-charts": "^5.8.11",
-    "@smsoft/sui-core": "^5.8.11",
+    "@smsoft/sui-charts": "^5.8.12",
+    "@smsoft/sui-core": "^5.8.12",
     "@smsoft/sui-meta": "^5.8.12",
-    "@smsoft/sui-promised": "^5.8.11"
+    "@smsoft/sui-promised": "^5.8.12"
   },
   "gitHead": "10c4d9ba04c3d76112173f8f0e3cacac0570ea7d"
 }
