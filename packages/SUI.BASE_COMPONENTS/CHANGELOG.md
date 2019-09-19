@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.10](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.9...v5.8.10) (2019-09-19)
+
+
+### Bug Fixes
+
+* change styles ([dfea309](https://github.com/mbuyakov/SUI.CORE/commit/dfea309))
+
+
+
+
+
+## [5.8.7](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.6...v5.8.7) (2019-09-19)
+
+**Note:** Version bump only for package @smsoft/sui-base-components
+
+
+
+
+
+## [5.8.4](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.3...v5.8.4) (2019-09-19)
+
+
+### Bug Fixes
+
+* fix import ([b8396a5](https://github.com/mbuyakov/SUI.CORE/commit/b8396a5))
+
+
+
+
+
+## [5.8.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.1...v5.8.3) (2019-09-19)
+
+**Note:** Version bump only for package @smsoft/sui-base-components
+
+
+
+
+
 ## [5.8.2](https://github.com/mbuyakov/SUI.CORE/compare/v4.1.0...v5.8.2) (2019-09-19)
 
 

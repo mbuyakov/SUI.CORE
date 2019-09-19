@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.10](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.9...v5.8.10) (2019-09-19)
+
+**Note:** Version bump only for package @smsoft/sui-meta
+
+
+
+
+
+## [5.8.7](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.6...v5.8.7) (2019-09-19)
+
+**Note:** Version bump only for package @smsoft/sui-meta
+
+
+
+
+
+## [5.8.5](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.4...v5.8.5) (2019-09-19)
+
+
+### Bug Fixes
+
+* remove unneeded props ([97af7fb](https://github.com/mbuyakov/SUI.CORE/commit/97af7fb))
+
+
+
+
+
+## [5.8.4](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.3...v5.8.4) (2019-09-19)
+
+**Note:** Version bump only for package @smsoft/sui-meta
+
+
+
+
+
+## [5.8.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.1...v5.8.3) (2019-09-19)
+
+**Note:** Version bump only for package @smsoft/sui-meta
+
+
+
+
+
 ## [5.8.2](https://github.com/mbuyakov/SUI.CORE/compare/v4.1.0...v5.8.2) (2019-09-19)
 
 

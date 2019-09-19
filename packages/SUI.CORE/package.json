@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-core",
-  "version": "5.8.2",
+  "version": "5.8.7",
   "main": "dist/index.js",
   "module": "dist/sui-core.esm.js",
   "typings": "dist/index.d.ts",

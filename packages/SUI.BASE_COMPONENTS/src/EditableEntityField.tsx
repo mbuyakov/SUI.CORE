@@ -23,7 +23,7 @@ export class EditableEntityField<T = any> extends React.Component<{
 
   public render(): JSX.Element {
     return (
-      <div style={{ display: 'inline-block' }}>
+      <div style={{ display: 'inline-block', marginTop: 4, marginBottom: 6 }}>
         <WaitData<IObjectWithIndex>
           ref={this.waitDataRef}
           alwaysUpdate={true}
@@ -68,7 +68,7 @@ export class EditableEntityField<T = any> extends React.Component<{
                   }
 
                   return update;
-                }
+                },
               })}
             </EditablePromisedComponent>
           )}
