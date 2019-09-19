@@ -50,6 +50,11 @@ export class LinkPlugin extends TableRenderParamsPlugin<{}> {
 
   // tslint:disable-next-line:prefer-function-over-method variable-name
   public extraActivationKostyl(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): boolean {
+    const isLinkCol = props.columnInfo.id === props.tableInfo.linkColumnInfoId;
+    if (isLinkCol && tableRenderParams && (!tableRenderParams.renderType || tableRenderParams.renderType === 'link' || tableRenderParams.renderType === 'raw')) {
+      return true;
+    }
+
     if (tableRenderParams && tableRenderParams.renderType && tableRenderParams.renderType !== 'link') {
       return false;
     }
