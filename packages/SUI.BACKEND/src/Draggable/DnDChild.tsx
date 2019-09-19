@@ -1,6 +1,5 @@
 /* tslint:disable:ban-ts-ignore */
 import {getDataByKey} from "@smsoft/sui-core";
-import autobind from "autobind-decorator";
 import * as React from "react";
 
 declare let window: Window & {
