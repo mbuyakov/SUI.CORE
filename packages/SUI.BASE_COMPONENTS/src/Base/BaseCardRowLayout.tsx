@@ -1,5 +1,5 @@
-// import MetaTable, { IMetaTableProps } from '@/Meta/MetaTable';
-import { Omit, OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '@smsoft/sui-core';
+import { BackendTable } from '@smsoft/sui-backend/src';
+import { addQuotesIfString, getDataByKey, Omit, OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '@smsoft/sui-core';
 import { Descriptions } from 'antd';
 import Collapse from 'antd/lib/collapse';
 import Divider from 'antd/lib/divider';
@@ -15,6 +15,14 @@ import { IBaseCardDescItemLayout, IBaseCardItemLayout, renderIBaseCardItem } fro
 import { IBaseCardTabLayout, IBaseFormTabLayout, ManagedTabs, renderIBaseCardTabLayout } from './BaseCardTabLayout';
 import { IBaseFormDescItemLayout, IBaseFormItemLayout, renderIBaseFormItemLayout } from './BaseFormItemLayout';
 
+// It's BACKEND props. Mark as MetaTableProps for backward computability in RN
+export interface IMetaTableProps {
+  filter?: object | string;
+  globalFilter?: object | string;
+  table: string;
+  titleEnabled?: boolean;
+}
+
 export interface IBaseCardRowLayout<T> {
   collapsePanels?: Array<IBaseCardCollapseLayout<T>>;
   cols?: OneOrArrayWithNulls<IBaseCardColLayout<T>>;
@@ -23,7 +31,7 @@ export interface IBaseCardRowLayout<T> {
   dividerText?: string;
   fitCollapsePanel?: boolean;
   isDivider?: boolean;
-  // metaTableProps?: IMetaTableProps;
+  metaTableProps?: IMetaTableProps;
   style?: React.CSSProperties;
   tabs?: OneOrArrayWithNulls<IBaseCardTabLayout<T>>;
   tabsInCard?: boolean;
@@ -33,6 +41,30 @@ export type IBaseFormRowLayout<T> = Omit<IBaseCardRowLayout<T>, 'cols' | 'descri
   cols?: OneOrArrayWithNulls<IBaseFormColLayout<T>>
   descriptionItems?: OneOrArrayWithNulls<IBaseFormDescItemLayout<T>>
   tabs?: OneOrArrayWithNulls<IBaseFormTabLayout<T>>
+}
+
+export const DATA_KEY_REGEXP = /@([a-zA-z0-9\|]+)/g;
+
+// tslint:disable-next-line:no-any
+export function mapFilters(filters: string, sourceItem: any): string | null {
+  let result = filters;
+
+  // noinspection SuspiciousTypeOfGuard
+  if (typeof result === 'string') {
+    result = result.replace(DATA_KEY_REGEXP, (_, key) => {
+      const dataKey = key.split('|');
+      let data = getDataByKey(sourceItem, dataKey);
+      if (Array.isArray(data)) {
+        data = data.map(addQuotesIfString);
+      }
+
+      return addQuotesIfString(data);
+    });
+
+    result = result.replace(/([A-Za-z0-9]+)\s*:/g, (_, key) => `"${key.trim()}":`);
+  }
+
+  return result || null;
 }
 
 // tslint:disable-next-line:ban-ts-ignore
@@ -73,26 +105,26 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
     );
   }
 
-   // if (row.metaTableProps) {
-   //    // console.log(
-   //    //   row.metaTableProps.filter as string, `|${mapFilters(row.metaTableProps.filter as string, sourceItem)}|`,
-   //    //   row.metaTableProps.globalFilter, `|${mapFilters(row.metaTableProps.globalFilter as string, sourceItem)}|`
-   //    // );
-   //    //
-   //    // console.log(sourceItem);
-   //
-   //    return (
-   //      <BackendTable
-   //        cardType="inner"
-   //        {...row.metaTableProps}
-   //        paperStyle={rowIndex !== 0 || rowsLength !== 1 ? { marginLeft: 0, marginRight: 0 } : {}}
-   //        fitToCardBody={(parent === 'card' || (parent === 'tab' && firstChildrenIsTab)) && rowIndex === 0 && rowsLength === 1}
-   //        fitToCollapseBody={parent === 'collapse' && rowIndex === 0 && rowsLength === 1}
-   //        filter={JSON.parse(mapFilters(row.metaTableProps.globalFilter as string, sourceItem))}
-   //        defaultFilters={JSON.parse(mapFilters(row.metaTableProps.filter as string, sourceItem))}
-   //      />
-   //    );
-   //  }
+  if (row.metaTableProps) {
+    // console.log(
+    //   row.metaTableProps.filter as string, `|${mapFilters(row.metaTableProps.filter as string, sourceItem)}|`,
+    //   row.metaTableProps.globalFilter, `|${mapFilters(row.metaTableProps.globalFilter as string, sourceItem)}|`
+    // );
+
+    console.log(sourceItem);
+
+    return (
+      <BackendTable
+        cardType="inner"
+        {...row.metaTableProps}
+        paperStyle={rowIndex !== 0 || rowsLength !== 1 ? { marginLeft: 0, marginRight: 0 } : {}}
+        fitToCardBody={(parent === 'card' || (parent === 'tab' && firstChildrenIsTab)) && rowIndex === 0 && rowsLength === 1}
+        fitToCollapseBody={parent === 'collapse' && rowIndex === 0 && rowsLength === 1}
+        filter={JSON.parse(mapFilters(row.metaTableProps.globalFilter as string, sourceItem)as string)}
+        defaultFilters={JSON.parse(mapFilters(row.metaTableProps.filter as string, sourceItem)as string)}
+      />
+    );
+  }
 
   if (row.collapsePanels) {
     return (

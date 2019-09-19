@@ -1,6 +1,6 @@
 /* tslint:disable:jsx-no-lambda no-magic-numbers no-any object-literal-sort-keys no-floating-promises promise-function-async */
 import { BaseCard, DescriptionItem, DraggableRowTable, draw, FullScreenModal, SortingDirection, TooltipIcon } from '@smsoft/sui-base-components';
-import { generateUpdate, generateUpdateFn, getDataByKey, mutate, query, sleep, SUI_ROW, SUI_ROW_GROW_LEFT } from '@smsoft/sui-core';
+import { generateUpdate, generateUpdateFn, getDataByKey, IObjectWithIndex, mutate, query, sleep, SUI_ROW, SUI_ROW_GROW_LEFT } from '@smsoft/sui-core';
 import { PromisedInput, PromisedSelect, PromisedSwitch, WaitData } from '@smsoft/sui-promised';
 import { Table } from 'antd';
 import Button from 'antd/lib/button';
@@ -864,7 +864,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
     const updateState = new Promise((resolve): void => {
       const tableInfoById = this.state.tableInfoById;
       const colIndex = tableInfoById.columnInfosByTableInfoId.nodes.findIndex(col => col.id === id);
-      tableInfoById.columnInfosByTableInfoId.nodes[colIndex][field] = value;
+      (tableInfoById.columnInfosByTableInfoId.nodes[colIndex] as IObjectWithIndex)[field] = value;
       if (needUpdateState) {
         this.setState({ tableInfoById });
       }

@@ -23,7 +23,7 @@ async function rejectOnError<T>(promise: Promise<ApolloQueryResult<T> | FetchRes
             });
             reject(value.errors[0].message);
           } else {
-            resolve(value.data);
+            resolve(value.data === null ? undefined : value.data);
           }
         })
         .catch(reject);

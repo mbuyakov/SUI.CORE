@@ -1,6 +1,6 @@
-import {Omit, OneOrArrayWithNulls} from '@smsoft/sui-core';
+import { Omit, OneOrArrayWithNulls } from '@smsoft/sui-core';
 
-import {IBaseCardItemLayout} from './BaseCardItemLayout';
+import { IBaseCardItemLayout } from './BaseCardItemLayout';
 import { IBaseFormItemLayout } from './BaseFormItemLayout';
 
 export interface IBaseCardColLayout<T> {

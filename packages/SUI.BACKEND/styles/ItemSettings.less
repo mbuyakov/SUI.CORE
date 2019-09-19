@@ -1,0 +1,23 @@
+@import "~antd/lib/style/themes/default";
+
+.icon() {
+  -webkit-tap-highlight-color: transparent;
+  color: rgba(0, 0, 0, 0.26);
+  cursor: pointer;
+  height: auto;
+  &:hover {
+    color: rgba(0, 0, 0, 0.4);
+  }
+}
+
+:global {
+  .sui-settingsIcon {
+    .icon();
+    margin: 0 0 0 @padding-xs / 2;
+  }
+
+  .sui-deleteIcon {
+    .icon();
+    margin: 0 -@padding-xs 0 0;
+  }
+}

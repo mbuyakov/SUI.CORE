@@ -1,0 +1,10 @@
+export const COMMON__GRID = "sui-grid";
+export const DND_LIST__ROWS = "sui-rows";
+export const DND_LIST__COLS = "sui-cols";
+export const DND_LIST__PLUS_BTN = "sui-plusBtn";
+export const DND_LIST__SCROLL_SEMI_PADDING = "sui-scrollSemiPadding";
+export const ITEM_SETTINGS__SETTINGS_ICON = "sui-settingsIcon";
+export const ITEM_SETTINGS__DELETE_ICON = "sui-deleteIcon";
+export const MAIN_SETTINGS__CONTAINER = "sui-container";
+export const MAIN_SETTINGS__ITEM_TREE = "sui-ITEM_TREE";
+export const TAB_SETTINGS__UNACTIVE_BUTTON = "sui-unactiveButton";
