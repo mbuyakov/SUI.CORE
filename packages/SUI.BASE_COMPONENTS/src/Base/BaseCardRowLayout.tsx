@@ -1,4 +1,4 @@
-import { BackendTable } from '@smsoft/sui-backend/src';
+import { BackendTable } from '@smsoft/sui-backend';
 import { addQuotesIfString, getDataByKey, Omit, OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '@smsoft/sui-core';
 import { Descriptions } from 'antd';
 import Collapse from 'antd/lib/collapse';
