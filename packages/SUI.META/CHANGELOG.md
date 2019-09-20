@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.9.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.2...v5.9.3) (2019-09-20)
+
+
+### Bug Fixes
+
+* styles ([7998104](https://github.com/mbuyakov/SUI.CORE/commit/7998104))
+
+
+
+
+
 ## [5.9.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.0...v5.9.1) (2019-09-20)
 
 **Note:** Version bump only for package @smsoft/sui-meta
