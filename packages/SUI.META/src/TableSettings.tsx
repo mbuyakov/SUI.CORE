@@ -1,8 +1,9 @@
 /* tslint:disable:jsx-no-lambda no-magic-numbers no-any object-literal-sort-keys no-floating-promises promise-function-async */
+import { Cached } from '@material-ui/icons';
 import { MainSettings } from '@smsoft/sui-backend';
 import { BaseCard, DescriptionItem, DraggableRowTable, draw, FullScreenModal, SortingDirection, TooltipIcon } from '@smsoft/sui-base-components';
 import { generateUpdate, generateUpdateFn, getDataByKey, IObjectWithIndex, mutate, query, sleep, SUI_ROW, SUI_ROW_GROW_LEFT } from '@smsoft/sui-core';
-import { PromisedInput, PromisedSelect, PromisedSwitch, WaitData } from '@smsoft/sui-promised';
+import { PromisedInput, PromisedMaterialIconButton, PromisedSelect, PromisedSwitch, WaitData } from '@smsoft/sui-promised';
 import { Table } from 'antd';
 import Button from 'antd/lib/button';
 import Card from 'antd/lib/card';
@@ -21,6 +22,7 @@ import { TableRenderSettingsPopover } from './TableRenderSettings';
 import { IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IRole, ISubtotalType, ITableInfo } from './types';
 import { fullReloadTableInfo, getLinkForTable, getMetaInitProps } from './utils';
 
+
 const SPIN_DELAY = 500;
 const SAVE_SLEEP_DELAY = 1000;
 
@@ -34,10 +36,21 @@ export function FullScreenTableSettings(props: {
   return (
     <FullScreenModal
       ref={dialogRef}
-      title={<div style={{ display: 'grid', gridTemplateColumns: 'max-content max-content' }}>
+      title={<div style={{ display: 'grid', gridTemplateColumns: 'max-content max-content auto' }}>
         <span>Настройки таблицы&nbsp;</span>
-        <WaitData<string> promise={TableInfoManager.getById(id).then(table => table.getNameOrTableName())}>{(name) => (
-          <span>{name}</span>)}</WaitData>
+        <WaitData<string>
+          promise={TableInfoManager.getById(id).then(table => table.getNameOrTableName())}
+        >
+          {name => (<span>{name}</span>)}
+        </WaitData>
+        <div style={{ display: 'flex', justifyContent: 'end' }}>
+          <PromisedMaterialIconButton
+            promise={getMetaInitProps().metaschemaRefreshPromise}
+            tooltipText="Обновить метасхему"
+          >
+            <Cached/>
+          </PromisedMaterialIconButton>
+        </div>
       </div>}
       defaultOpen={defaultOpen || false}
     >
