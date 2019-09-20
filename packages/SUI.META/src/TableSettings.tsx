@@ -36,7 +36,7 @@ export function FullScreenTableSettings(props: {
   return (
     <FullScreenModal
       ref={dialogRef}
-      title={<div style={{ display: 'grid', gridTemplateColumns: 'max-content max-content auto' }}>
+      title={<div style={{ display: 'grid', gridTemplateColumns: 'max-content max-content auto', alignItems: 'center'}}>
         <span>Настройки таблицы&nbsp;</span>
         <WaitData<string>
           promise={TableInfoManager.getById(id).then(table => table.getNameOrTableName())}
@@ -48,7 +48,7 @@ export function FullScreenTableSettings(props: {
             promise={getMetaInitProps().metaschemaRefreshPromise}
             tooltipText="Обновить метасхему"
           >
-            <Cached/>
+            <Cached style={{color: 'white'}}/>
           </PromisedMaterialIconButton>
         </div>
       </div>}
