@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.9.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.12...v5.9.0) (2019-09-20)
+
+
+### Features
+
+* add PromisedMaterialIconButton ([6be1e82](https://github.com/mbuyakov/SUI.CORE/commit/6be1e82))
+
+
+
+
+
 ## [5.8.13](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.12...v5.8.13) (2019-09-19)
 
 **Note:** Version bump only for package @smsoft/sui-promised

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.9.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.12...v5.9.0) (2019-09-20)
+
+
+### Bug Fixes
+
+* **dnf fix:** fix DNF ([af38ee5](https://github.com/mbuyakov/SUI.CORE/commit/af38ee5))
+* **dnfform:** fix action button styles ([61b061b](https://github.com/mbuyakov/SUI.CORE/commit/61b061b))
+
+
+
+
+
 ## [5.8.14](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.13...v5.8.14) (2019-09-19)
 
 
