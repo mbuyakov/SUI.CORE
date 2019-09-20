@@ -47,6 +47,7 @@ export function FullScreenTableSettings(props: {
           <PromisedMaterialIconButton
             promise={getMetaInitProps().metaschemaRefreshPromise}
             tooltipText="Обновить метасхему"
+            progressColor="secondary"
           >
             <Cached style={{color: 'white'}}/>
           </PromisedMaterialIconButton>
