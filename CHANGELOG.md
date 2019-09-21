@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.9.5](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.4...v5.9.5) (2019-09-21)
+
+
+### Bug Fixes
+
+* autobind, styles ([1195435](https://github.com/mbuyakov/SUI.CORE/commit/1195435))
+
+
+
+
+
 ## [5.9.4](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.3...v5.9.4) (2019-09-20)
 
 
