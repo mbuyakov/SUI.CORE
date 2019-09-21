@@ -3,6 +3,80 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.9.4](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.3...v5.9.4) (2019-09-20)
+
+
+### Bug Fixes
+
+* style ([ecf9cba](https://github.com/mbuyakov/SUI.CORE/commit/ecf9cba))
+
+
+
+
+
+## [5.9.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.2...v5.9.3) (2019-09-20)
+
+
+### Bug Fixes
+
+* styles ([7998104](https://github.com/mbuyakov/SUI.CORE/commit/7998104))
+
+
+
+
+
+## [5.9.2](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.1...v5.9.2) (2019-09-20)
+
+
+### Bug Fixes
+
+* import ([45c8c16](https://github.com/mbuyakov/SUI.CORE/commit/45c8c16))
+
+
+
+
+
+## [5.9.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.0...v5.9.1) (2019-09-20)
+
+
+### Bug Fixes
+
+* lint ([ff6f817](https://github.com/mbuyakov/SUI.CORE/commit/ff6f817))
+
+
+
+
+
+# [5.9.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.12...v5.9.0) (2019-09-20)
+
+
+### Bug Fixes
+
+* **dnf fix:** fix DNF ([af38ee5](https://github.com/mbuyakov/SUI.CORE/commit/af38ee5))
+* **dnfform:** fix action button styles ([61b061b](https://github.com/mbuyakov/SUI.CORE/commit/61b061b))
+* **version:** version update ([fc29d3e](https://github.com/mbuyakov/SUI.CORE/commit/fc29d3e))
+
+
+### Features
+
+* add PromisedMaterialIconButton ([6be1e82](https://github.com/mbuyakov/SUI.CORE/commit/6be1e82))
+
+
+
+
+
+## [5.8.14](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.13...v5.8.14) (2019-09-19)
+
+
+### Bug Fixes
+
+* **dnfform:** fix action button styles ([61b061b](https://github.com/mbuyakov/SUI.CORE/commit/61b061b))
+
+
+
+
+
+
 ## [5.8.13](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.12...v5.8.13) (2019-09-19)
 
 

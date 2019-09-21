@@ -1,6 +1,8 @@
 import {Button} from "antd";
 import * as React from "react";
 
+import {DNF_BUTTON} from "../styles";
+
 export const formItemLayoutWithOutLabel = {
   style: {marginBottom: 0},
   wrapperCol: {
@@ -38,6 +40,7 @@ export class AndFormRowElement extends React.Component<IAndFormRowElementProps> 
               <Button
                 htmlType="button"
                 icon="arrow-up"
+                className={DNF_BUTTON}
                 disabled={this.props.isFirst}
                 onClick={this.props.onUpClick}
               />
@@ -45,12 +48,14 @@ export class AndFormRowElement extends React.Component<IAndFormRowElementProps> 
             <Button
               htmlType="button"
               icon="minus-circle-o"
+              className={DNF_BUTTON}
               onClick={this.props.onDeleteClick}
             />
             {!this.props.disableRowSwap && (
               <Button
                 htmlType="button"
                 icon="arrow-down"
+                className={DNF_BUTTON}
                 disabled={this.props.isLast}
                 onClick={this.props.onDownClick}
               />

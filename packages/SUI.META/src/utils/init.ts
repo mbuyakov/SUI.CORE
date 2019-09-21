@@ -39,6 +39,7 @@ export interface IMetaInitProps {
   user?: ICoreUser,
 
   defaultGetLinkForTable?(tableName: string, type: RouteType, id?: string | number): string | null;
+  metaschemaRefreshPromise(): Promise<void>;
 
   // tslint:disable-next-line:no-any
   routerPushFn(link: any): void;

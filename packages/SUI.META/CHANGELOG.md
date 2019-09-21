@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.9.4](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.3...v5.9.4) (2019-09-20)
+
+
+### Bug Fixes
+
+* style ([ecf9cba](https://github.com/mbuyakov/SUI.CORE/commit/ecf9cba))
+
+
+
+
+
+## [5.9.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.2...v5.9.3) (2019-09-20)
+
+
+### Bug Fixes
+
+* styles ([7998104](https://github.com/mbuyakov/SUI.CORE/commit/7998104))
+
+
+
+
+
+## [5.9.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.0...v5.9.1) (2019-09-20)
+
+**Note:** Version bump only for package @smsoft/sui-meta
+
+
+
+
+
+# [5.9.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.12...v5.9.0) (2019-09-20)
+
+
+### Features
+
+* add PromisedMaterialIconButton ([6be1e82](https://github.com/mbuyakov/SUI.CORE/commit/6be1e82))
+
+
+
+
+
+## [5.8.14](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.13...v5.8.14) (2019-09-19)
+
+**Note:** Version bump only for package @smsoft/sui-meta
+
+
+
+
+
+
 ## [5.8.13](https://github.com/mbuyakov/SUI.CORE/compare/v5.8.12...v5.8.13) (2019-09-19)
 
 **Note:** Version bump only for package @smsoft/sui-meta

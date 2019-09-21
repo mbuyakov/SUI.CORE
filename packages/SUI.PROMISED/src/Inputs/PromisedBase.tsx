@@ -1,13 +1,14 @@
-import { Omit } from "@smsoft/sui-core";
-import { Popconfirm } from "antd";
-import { PopconfirmProps } from "antd/lib/popconfirm";
-import autobind from "autobind-decorator";
-import * as React from "react";
+import { Omit } from '@smsoft/sui-core';
+import { Popconfirm } from 'antd';
+import { PopconfirmProps } from 'antd/lib/popconfirm';
+import autobind from 'autobind-decorator';
+import * as React from 'react';
 
-import { PromisedErrorPopover } from "./PromisedErrorPopover";
+import { PromisedErrorPopover } from './PromisedErrorPopover';
 
 export interface IPromisedBaseProps<V> {
   popconfirmSettings?: PopconfirmSettings | boolean;
+
   // Must be function to generate new promise on each change
   promise(value: V): Promise<void>;
 }
@@ -20,7 +21,7 @@ export interface IPromisedBaseState<V> {
   value?: V;
 }
 
-type PopconfirmSettings = Omit<PopconfirmProps, "onConfirm" | "onCancel">;
+type PopconfirmSettings = Omit<PopconfirmProps, 'onConfirm' | 'onCancel'>;
 
 export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extends React.Component<IPromisedBaseProps<V> & P, S> {
   public constructor(props: IPromisedBaseProps<V> & P) {
@@ -32,6 +33,10 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
 
   @autobind
   public save(value?: V): void {
+    if (this.state.loading) {
+      return;
+    }
+
     if (this.props.popconfirmSettings) {
       // tslint:disable-next-line:strict-type-predicates
       this.setState({ popconfirmVisible: true, value: (value == null ? this.state.value : value) as V });
@@ -61,7 +66,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
 
     return this.props.popconfirmSettings ? (
       <Popconfirm
-        {...(typeof this.props.popconfirmSettings === "boolean" ? { title: "Вы уверены?" } : (this.props.popconfirmSettings as PopconfirmSettings))}
+        {...(typeof this.props.popconfirmSettings === 'boolean' ? { title: 'Вы уверены?' } : (this.props.popconfirmSettings as PopconfirmSettings))}
         visible={this.state.popconfirmVisible}
         onConfirm={this.onConfirmWithoutValue}
         onCancel={this.onCancel}

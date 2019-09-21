@@ -1,10 +1,11 @@
-
 import {FormCreateKostyl, IObjectWithIndex} from "@smsoft/sui-core";
 import {Button, Card, Divider, Form, Icon} from "antd";
 import {FormComponentProps} from "antd/lib/form";
 import autobind from "autobind-decorator";
 import isEqual from "lodash/isEqual";
 import * as React from "react";
+
+import {DNF_BUTTON} from "../styles";
 
 import {AndFormRowElement, formItemLayoutWithOutLabel} from "./AndFormRowElement";
 import {IClearDnfFromValues, ICommonDnfProps, IResultDnfFormValues} from "./ICommonDnfProps";
@@ -262,18 +263,19 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
               >
                 <Button.Group style={{transform: "translate(50%) rotate(90deg) translateY(50%)", display: "flex"}}>
                   {!disableDisjunctionSwap && <Button
-                      size="small"
-                      htmlType="button"
-                      icon="arrow-left"
-                      style={{height: 32}}
-                      disabled={formIndex === 0}
-                      onClick={(): void => this.updateFormProps(dnfForms => InnerDnfForm.swapElements(dnfForms, formIndex, formIndex - 1))}
+                    size="small"
+                    htmlType="button"
+                    icon="arrow-left"
+                    className={DNF_BUTTON}
+                    disabled={formIndex === 0}
+                    onClick={(): void => this.updateFormProps(dnfForms => InnerDnfForm.swapElements(dnfForms, formIndex, formIndex - 1))}
                   />}
                   <Button
                     size="small"
                     htmlType="button"
                     icon="minus-circle"
-                    style={{height: 32, transform: "rotate(90deg)"}}
+                    className={DNF_BUTTON}
+                    style={{transform: "rotate(90deg)"}}
                     onClick={(): void => this.updateFormProps(dnfForms => {
                       if (dnfForms.length === 0) {
                         return;
@@ -284,9 +286,9 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
                   {!disableDisjunctionSwap && (
                     <Button
                       size="small"
+                      className={DNF_BUTTON}
                       htmlType="button"
                       icon="arrow-right"
-                      style={{height: 32}}
                       disabled={formIndex === forms.length - 1}
                       onClick={(): void => this.updateFormProps(dnfForms => InnerDnfForm.swapElements(dnfForms, formIndex, formIndex + 1))}
                     />
