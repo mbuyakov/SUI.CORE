@@ -5,7 +5,8 @@
   "module": "dist/sui-backend.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "styles"
   ],
   "scripts": {
     "start": "tsdx watch",

@@ -24,7 +24,7 @@ export abstract class SerializableDnDChild<S extends ISerializable, P extends Se
         version = defaultIfNotNumber(props.plain && props.plain.version, 0);
       } else {
         this.isNew = true;
-        version = this.getCurrentVersion();
+        version = this.getCurrentVersion.bind(this)();
       }
       this.state = {
         __type: props.__type,
@@ -37,7 +37,6 @@ export abstract class SerializableDnDChild<S extends ISerializable, P extends Se
 
   public abstract getCurrentVersion(): number;
 
-  @autobind
   // Get saved and latest version
   public isVersionNotLast(): false | [number, number] {
     const current = this.state.version;
