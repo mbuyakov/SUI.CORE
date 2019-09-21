@@ -1,9 +1,9 @@
 import { defaultIfNotNumber } from '@smsoft/sui-core';
+import autobind from 'autobind-decorator';
 
 import {DnDChild, IBaseDnDChildProps} from "../DnDChild";
 
 import {ISerializable, ISerializableComponent} from "./ISerializable";
-import autobind from 'autobind-decorator';
 
 export type SerializableDnDChildProps<T> = IBaseDnDChildProps & {
   __type?: string
