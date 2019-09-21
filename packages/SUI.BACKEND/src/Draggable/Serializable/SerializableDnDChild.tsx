@@ -3,6 +3,7 @@ import { defaultIfNotNumber } from '@smsoft/sui-core';
 import {DnDChild, IBaseDnDChildProps} from "../DnDChild";
 
 import {ISerializable, ISerializableComponent} from "./ISerializable";
+import autobind from 'autobind-decorator';
 
 export type SerializableDnDChildProps<T> = IBaseDnDChildProps & {
   __type?: string
@@ -36,6 +37,7 @@ export abstract class SerializableDnDChild<S extends ISerializable, P extends Se
 
   public abstract getCurrentVersion(): number;
 
+  @autobind
   // Get saved and latest version
   public isVersionNotLast(): false | [number, number] {
     const current = this.state.version;
