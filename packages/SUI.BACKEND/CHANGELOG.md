@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.9.6](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.5...v5.9.6) (2019-09-21)
+
+
+### Bug Fixes
+
+* export + test bind fix ([bf7b7f3](https://github.com/mbuyakov/SUI.CORE/commit/bf7b7f3))
+* lint ([deec66c](https://github.com/mbuyakov/SUI.CORE/commit/deec66c))
+* lint ([e866a1b](https://github.com/mbuyakov/SUI.CORE/commit/e866a1b))
+
+
+
+
+
 ## [5.9.5](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.4...v5.9.5) (2019-09-21)
 
 
