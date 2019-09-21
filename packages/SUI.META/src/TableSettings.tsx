@@ -43,7 +43,7 @@ export function FullScreenTableSettings(props: {
         >
           {name => (<span>{name}</span>)}
         </WaitData>
-        <div style={{ display: 'flex', justifyContent: 'end' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <PromisedMaterialIconButton
             promise={getMetaInitProps().metaschemaRefreshPromise}
             tooltipText="Обновить метасхему"
