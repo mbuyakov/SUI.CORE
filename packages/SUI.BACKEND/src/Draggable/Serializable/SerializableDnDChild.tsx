@@ -1,5 +1,4 @@
 import { defaultIfNotNumber } from '@smsoft/sui-core';
-import autobind from 'autobind-decorator';
 
 import {DnDChild, IBaseDnDChildProps} from "../DnDChild";
 
