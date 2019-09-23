@@ -5,5 +5,5 @@ SELECT table_schema,
        (udt_name::REGTYPE)::TEXT AS column_type,
        (is_nullable = 'YES') AS is_nullable
 FROM information_schema.columns
-WHERE table_schema != 'pg_catalog' AND table_schema != 'information_schema'
+WHERE table_schema IN (%s)
 ORDER BY ordinal_position;
