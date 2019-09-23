@@ -19,7 +19,7 @@ interface ITop3DBarChartProps {
   labelPanelWidth?: number;
   maxValue?: number;
   // Relative - 0 to 100
-  type: "relative" | "absolute";
+  type: "relative" | "absolute" | string;
   valueDataField: string;
 
   // tslint:disable-next-line:no-any
@@ -52,16 +52,18 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
 
     return (
       <div style={{display: 'flex'}}>
-        <div style={{width: this.props.labelPanelWidth || defaultLabelPanelWidth, marginTop: 30, height: 270}}>
-          {data.map((element: IObjectWithIndex, index) => (<div
-            key={index.toString()}
-            style={{height: 216 / (length || 1), display: 'flex', alignItems: 'center', ...labelStyle}}
-          >
-            <div style={{width: '100%'}}>
-              {this.props.categoryAxisLabelGenerator(element)}
-            </div>
-          </div>))}
-        </div>
+        {!!length && (
+          <div style={{width: this.props.labelPanelWidth || defaultLabelPanelWidth, marginTop: 30, height: 270}}>
+            {data.map((element: IObjectWithIndex, index) => (<div
+              key={index.toString()}
+              style={{height: 216 / (length || 1), display: 'flex', alignItems: 'center', ...labelStyle}}
+            >
+              <div style={{width: '100%'}}>
+                {this.props.categoryAxisLabelGenerator(element)}
+              </div>
+            </div>))}
+          </div>
+        )}
         {this.props.data && (
           <XYChart3DWrapper
             style={{flexGrow: 1, height: 300}}
@@ -78,6 +80,7 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
               const valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
               valueAxis.renderer.minGridDistance = 40;
               valueAxis.min = 0;
+              valueAxis.maxPrecision = 0;
 
               if (this.props.type === "relative") {
                 valueAxis.max = 99.99999999;
@@ -124,12 +127,13 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
 
   private updateState(): void {
     const data = this.props.data || [];
+    const valueDataField = this.props.valueDataField;
+
     let maxValue: number | undefined;
     if (this.props.type === "absolute") {
-      const valueDataField = this.props.valueDataField;
-      maxValue = data
-        .reduce((previousValue, currentValue) => (previousValue[valueDataField] || 0) < currentValue[valueDataField] ? currentValue : previousValue, {});
+      maxValue = Math.max(...data.map(element => element[valueDataField]), 0);
     }
+
     this.setState({mappedData: this.mapData(data).reverse(), maxValue});
   }
 

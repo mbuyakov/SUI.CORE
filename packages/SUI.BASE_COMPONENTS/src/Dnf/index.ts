@@ -3,4 +3,5 @@ export * from "./AndForm";
 export * from "./AndFormRowElement";
 export * from "./DnfForm";
 export * from "./ICommonDnfProps";
+export * from "./row-component";
 export * from "./utils";

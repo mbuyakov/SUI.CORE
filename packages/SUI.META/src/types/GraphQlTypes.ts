@@ -27,6 +27,8 @@ export interface ITableInfo {
   // noinspection SpellCheckingInspection
   cardRenderParams?: any /*JSON*/;
   // noinspection SpellCheckingInspection
+  colorSettings?: any /*JSON*/;
+  // noinspection SpellCheckingInspection
   isCatalog: boolean;
   // noinspection SpellCheckingInspection
   isAudited: boolean;
