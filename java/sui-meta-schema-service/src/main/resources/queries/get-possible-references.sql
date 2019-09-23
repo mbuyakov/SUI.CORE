@@ -35,7 +35,7 @@ FROM (
                                AND class.relname=cols.table_name
                            )
                        WHERE classoid = 'pg_catalog.pg_class'::pg_catalog.regclass
-                         AND descr.description ILIKE '%@references%' -- ILIKE - case-insensitive
+                         AND descr.description ILIKE '%%@references%%' -- ILIKE - case-insensitive
                    ) t1
           ) t2
               INNER JOIN information_schema.columns c -- Exclude nonexistent
