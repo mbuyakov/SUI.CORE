@@ -39,6 +39,8 @@ public class MetaSchemaRefresher {
     private String informationSchemaColumnsQuery;
     @Value("${sql.query.get-possible-references}")
     private String possibleReferencesQuery;
+    @Value("${sui.mss.schemas:}")
+    private String schemasProperty;
 
     @NonNull
     private JdbcTemplate jdbcTemplate;
@@ -55,9 +57,20 @@ public class MetaSchemaRefresher {
     }
 
     private MetaState getMetaState() {
+        val schemas = Arrays
+            .stream(schemasProperty.split(","))
+            .map(String::trim)
+            .filter(schema -> !schema.isEmpty())
+            .map(schema -> String.format("'%s'", schema))
+            .collect(Collectors.joining(","));
+
+        if (schemas.isEmpty()) {
+          throw new IllegalArgumentException("Property sui.mss.schemas cannot be empty");
+        }
+
         // Select possible meta schema
         List<InformationSchemaTable> possibleTables = jdbcTemplate.query(
-                informationSchemaTablesQuery,
+                String.format(informationSchemaTablesQuery, schemas),
                 (row, rowNum) -> InformationSchemaTable.builder()
                         .tableSchema(row.getString("table_schema"))
                         .tableName(row.getString("table_name"))
@@ -65,7 +78,8 @@ public class MetaSchemaRefresher {
                         .build());
 
         List<InformationSchemaColumn> possibleColumns = jdbcTemplate.query(
-                informationSchemaColumnsQuery, (row, rowNum) -> InformationSchemaColumn.builder()
+                String.format(informationSchemaColumnsQuery, schemas),
+                (row, rowNum) -> InformationSchemaColumn.builder()
                         .tableSchema(row.getString("table_schema"))
                         .tableName(row.getString("table_name"))
                         .columnName(row.getString("column_name"))
@@ -75,7 +89,8 @@ public class MetaSchemaRefresher {
                         .build());
 
         List<PossibleReference> possibleReferences = jdbcTemplate.query(
-                possibleReferencesQuery, (row, rowNum) -> PossibleReference.builder()
+                String.format(possibleReferencesQuery, schemas),
+                (row, rowNum) -> PossibleReference.builder()
                         .columnTableSchema(row.getString("column_table_schema"))
                         .columnTableName(row.getString("column_table_name"))
                         .columnName(row.getString("column_name"))
