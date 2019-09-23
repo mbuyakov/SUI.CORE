@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.10.0...v5.10.1) (2019-09-23)
+
+
+### Bug Fixes
+
+* **parameterrowcomponent:** add missed autobind ([d79c46f](https://github.com/mbuyakov/SUI.CORE/commit/d79c46f))
+* fix __typename ([37b5d86](https://github.com/mbuyakov/SUI.CORE/commit/37b5d86))
+
+
+
+
+
+
 # [5.10.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.4...v5.10.0) (2019-09-23)
 
 
