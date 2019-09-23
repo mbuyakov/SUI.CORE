@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.10.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.4...v5.10.0) (2019-09-23)
+
+
+### Features
+
+* **all:** fixes + colorSettings tab ([63d763c](https://github.com/mbuyakov/SUI.CORE/commit/63d763c))
+
+
+
+
+
+
 ## [5.9.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.0...v5.9.1) (2019-09-20)
 
 
