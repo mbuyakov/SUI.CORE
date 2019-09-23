@@ -9,6 +9,7 @@ import * as React from "react";
 import {ActionType, emptyFilter, FilterType, isListAction} from "../../utils";
 import {AbstractDnfFormRowElement} from "../AbstractDnfFormRowElement";
 import {generateActionSelectFormItem, getInputElement, getValuePropName} from "../utils";
+import {ExtractProps} from "@smsoft/sui-core";
 
 export interface IFilterProps {
   actions: ActionType[];
@@ -34,8 +35,12 @@ export interface IParameterRowElementBase {
   simpleFilter?: any;
 }
 
-export abstract class ParameterRowComponent<TElement extends IParameterRowElementBase, TProps = {}, TState = {}>
+export class ParameterRowComponent<TElement extends IParameterRowElementBase, TProps = {}, TState = {}>
   extends AbstractDnfFormRowElement<TElement, TProps, TState> {
+
+  protected constructor(props: ExtractProps<ParameterRowComponent<TElement, TProps, TState>>) {
+    super(props);
+  }
 
   @autobind
   protected createParameterRow(props: IParameterRowComponentProps<TElement>): JSX.Element {
