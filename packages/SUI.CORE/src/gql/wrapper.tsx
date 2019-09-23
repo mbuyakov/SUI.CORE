@@ -41,7 +41,7 @@ function extractKeys(obj: IObjectWithIndex, extractKeysLevel: number | boolean):
 
   let ret = obj;
   for (let i = 1; i <= extractKeysLevel; i++) {
-    const keys = Object.keys(ret);
+    const keys = Object.keys(ret).filter(key => key !== "__typename");
     if (keys.length > 1) {
       throw new Error(`Multiple key in query answer at level ${i}`);
     }
