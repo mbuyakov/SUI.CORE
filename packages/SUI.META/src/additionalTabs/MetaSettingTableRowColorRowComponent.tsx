@@ -1,9 +1,10 @@
-import {getActions, IFilterProps, IParameterRowElementBase, ParameterRowComponent} from "@smsoft/sui-base-components";
+import {getActions} from "@smsoft/sui-base-components";
 import {Form, Select} from "antd";
 import autobind from 'autobind-decorator';
 import * as React from "react";
 
 import {ColumnInfo} from "../cache";
+import {IFilterProps, IParameterRowElementBase, ParameterRowComponent} from "../row-component";
 import {getFilterType} from "../utils";
 
 const offset = 4;

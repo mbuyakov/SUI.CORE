@@ -1,15 +1,11 @@
 // tslint:disable:no-any
+import {AbstractDnfFormRowElement, ActionType, emptyFilter, FilterType, generateActionSelectFormItem, getInputElement, getValuePropName, isListAction} from "@smsoft/sui-base-components";
 import {Form, Switch, Tooltip} from "antd";
 import {GetFieldDecoratorOptions} from "antd/lib/form/Form";
 import {SelectProps} from "antd/lib/select";
 import {SwitchProps} from "antd/lib/switch";
 import autobind from 'autobind-decorator';
 import * as React from "react";
-
-import {ActionType, emptyFilter, FilterType, isListAction} from "../../utils";
-import {AbstractDnfFormRowElement} from "../AbstractDnfFormRowElement";
-import {generateActionSelectFormItem, getInputElement, getValuePropName} from "../utils";
-import {ExtractProps} from "@smsoft/sui-core";
 
 export interface IFilterProps {
   actions: ActionType[];
@@ -35,12 +31,8 @@ export interface IParameterRowElementBase {
   simpleFilter?: any;
 }
 
-export class ParameterRowComponent<TElement extends IParameterRowElementBase, TProps = {}, TState = {}>
+export abstract class ParameterRowComponent<TElement extends IParameterRowElementBase, TProps = {}, TState = {}>
   extends AbstractDnfFormRowElement<TElement, TProps, TState> {
-
-  protected constructor(props: ExtractProps<ParameterRowComponent<TElement, TProps, TState>>) {
-    super(props);
-  }
 
   @autobind
   protected createParameterRow(props: IParameterRowComponentProps<TElement>): JSX.Element {
