@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.10.2...v5.10.3) (2019-09-23)
+
+
+### Bug Fixes
+
+* **parameterrowcomponent:** build fix ([2b1c0eb](https://github.com/mbuyakov/SUI.CORE/commit/2b1c0eb))
+
+
+
+
+
 ## [5.10.2](https://github.com/mbuyakov/SUI.CORE/compare/v5.10.1...v5.10.2) (2019-09-23)
 
 
