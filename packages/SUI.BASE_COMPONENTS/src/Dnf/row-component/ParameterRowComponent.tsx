@@ -37,6 +37,7 @@ export interface IParameterRowElementBase {
 export abstract class ParameterRowComponent<TElement extends IParameterRowElementBase, TProps = {}, TState = {}>
   extends AbstractDnfFormRowElement<TElement, TProps, TState> {
 
+  @autobind
   protected createParameterRow(props: IParameterRowComponentProps<TElement>): JSX.Element {
     const {getFieldDecorator, getFieldValue} = this.props.form;
     const values: TElement = getFieldValue(this.getElementName()) || this.props.initialValues || {};
