@@ -54,7 +54,7 @@ export class ReportElement extends React.Component<IReportElement, {
         extra={this.props.print ? (
           <ReactToPrint
             trigger={() => (
-              <Button type="primary" icon="printer"/>
+              <Button icon="printer"/>
             )}
             content={() => this.printContentRef.current}
             onBeforeGetContent={async () => new Promise(resolve => this.setState({printMode: true}, resolve))}
@@ -72,6 +72,7 @@ export class ReportElement extends React.Component<IReportElement, {
               flexGrow: 1,
             }}
           >
+            {this.state.printMode ? (<h2>{this.props.header}</h2>) : undefined}
             {this.props.children}
           </div>
         </PrintModeContext.Provider>
