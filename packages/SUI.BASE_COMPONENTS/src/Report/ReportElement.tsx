@@ -18,7 +18,7 @@ interface IReportElement {
 export class ReportElement extends React.Component<IReportElement> {
 
   // tslint:disable-next-line:no-any
-  private printContentRef: React.RefObject<any> = React.createRef();
+  private readonly printContentRef: React.RefObject<any> = React.createRef();
 
   public render(): JSX.Element {
     return (
