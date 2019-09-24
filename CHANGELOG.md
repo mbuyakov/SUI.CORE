@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.11.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.8...v5.11.0) (2019-09-24)
+
+
+### Bug Fixes
+
+* **parameterrowcomponent:** add missed autobind ([d79c46f](https://github.com/mbuyakov/SUI.CORE/commit/d79c46f))
+* **parameterrowcomponent:** build fix ([2b1c0eb](https://github.com/mbuyakov/SUI.CORE/commit/2b1c0eb))
+* **parameterrowcomponent:** build fix ([9dc0c27](https://github.com/mbuyakov/SUI.CORE/commit/9dc0c27))
+* add labelTemplate for 3DBarChart ([20df06a](https://github.com/mbuyakov/SUI.CORE/commit/20df06a))
+
+
+### Features
+
+* **all:** fixes + colorSettings tab ([63d763c](https://github.com/mbuyakov/SUI.CORE/commit/63d763c))
+
+
+
+
+
 ## [5.10.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.10.2...v5.10.3) (2019-09-23)
 
 

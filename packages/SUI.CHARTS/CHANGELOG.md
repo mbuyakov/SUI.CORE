@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.11.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.8...v5.11.0) (2019-09-24)
+
+
+### Bug Fixes
+
+* add labelTemplate for 3DBarChart ([20df06a](https://github.com/mbuyakov/SUI.CORE/commit/20df06a))
+
+
+### Features
+
+* **all:** fixes + colorSettings tab ([63d763c](https://github.com/mbuyakov/SUI.CORE/commit/63d763c))
+
+
+
+
+
 ## [5.10.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.10.0...v5.10.1) (2019-09-23)
 
 **Note:** Version bump only for package @smsoft/sui-charts
