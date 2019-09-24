@@ -143,7 +143,7 @@ export abstract class ParameterRowComponent<TElement extends IParameterRowElemen
   }
 
   @autobind
-  private onActionSelectChangeFunc(props: IParameterRowComponentProps<TElement>): (action: ActionType, option: React.ReactElement<any> | Array<React.ReactElement<any>>) => void {
+  private onActionSelectChangeFunc(props: IParameterRowComponentProps<TElement>): (action: ActionType, option: React.ReactElement | React.ReactElement[]) => void {
     return (action, option) => {
       if (emptyFilter(action)) {
         this.setField("simpleFilter", undefined);
