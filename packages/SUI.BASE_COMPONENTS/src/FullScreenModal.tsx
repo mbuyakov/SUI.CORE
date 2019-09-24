@@ -1,6 +1,6 @@
 import { Collapse } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar/AppBar';
-import Dialog from '@material-ui/core/Dialog/Dialog';
+import Dialog, {DialogProps} from '@material-ui/core/Dialog/Dialog';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
@@ -23,6 +23,7 @@ function Transition(props: any): JSX.Element {
 interface IFullScreenModalProps {
   children: JSX.Element | ChildrenWithPopupContainer,
   defaultOpen?: boolean;
+  dialogProps: Omit<DialogProps, "children" | "fullScreen" | "open" | "onClose">;
   title: string | JSX.Element;
   withoutTransition?: boolean;
 
@@ -53,6 +54,7 @@ class FullScreenDialogImpl extends React.Component<IFullScreenModalProps, {
         open={this.state.open || false}
         onClose={this.handleClose}
         TransitionComponent={this.props.withoutTransition ? undefined : Transition}
+        {...this.props.dialogProps}
       >
         <div id={this.id} style={{maxHeight: '100%'}}>
           <AppBar className="appBar" style={{zIndex: 1000, position: "relative"}}>
