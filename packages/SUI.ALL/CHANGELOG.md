@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.13.5](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.4...v5.13.5) (2019-09-24)
+
+**Note:** Version bump only for package @smsoft/sui-all
+
+
+
+
+
+
 ## [5.13.4](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.3...v5.13.4) (2019-09-24)
 
 **Note:** Version bump only for package @smsoft/sui-all

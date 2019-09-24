@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.13.5](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.4...v5.13.5) (2019-09-24)
+
+
+### Bug Fixes
+
+* **fullscreenmodal:** add dialogProps ([acd9a6a](https://github.com/mbuyakov/SUI.CORE/commit/acd9a6a))
+
+
+
+
+
+
 ## [5.13.4](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.3...v5.13.4) (2019-09-24)
 
 
