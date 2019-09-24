@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.13.4](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.3...v5.13.4) (2019-09-24)
+
+
+### Bug Fixes
+
+* add Unprintable, change print button style, add header to printed doc ([3cbf2d3](https://github.com/mbuyakov/SUI.CORE/commit/3cbf2d3))
+* lint ([7731b2b](https://github.com/mbuyakov/SUI.CORE/commit/7731b2b))
+
+
+
+
+
 ## [5.13.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.2...v5.13.3) (2019-09-24)
 
 
