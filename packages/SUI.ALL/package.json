@@ -1,17 +1,17 @@
 {
   "name": "@smsoft/sui-all",
-  "version": "5.11.1",
+  "version": "5.11.2",
   "peerDependencies": {
     "react": ">=16",
     "react-dom": ">=16"
   },
   "dependencies": {
-    "@smsoft/sui-backend": "^5.11.1",
-    "@smsoft/sui-base-components": "^5.11.1",
+    "@smsoft/sui-backend": "^5.11.2",
+    "@smsoft/sui-base-components": "^5.11.2",
     "@smsoft/sui-charts": "^5.11.0",
     "@smsoft/sui-core": "^5.11.0",
-    "@smsoft/sui-meta": "^5.11.1",
-    "@smsoft/sui-promised": "^5.11.1"
+    "@smsoft/sui-meta": "^5.11.2",
+    "@smsoft/sui-promised": "^5.11.2"
   },
   "gitHead": "10c4d9ba04c3d76112173f8f0e3cacac0570ea7d"
 }
