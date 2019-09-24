@@ -11,12 +11,13 @@ interface IReportElement {
   cardStyle?: React.CSSProperties;
   header: JSX.Element | string;
   minHeight?: number;
-  type?: CardType;
   print?: boolean
+  type?: CardType;
 }
 
 export class ReportElement extends React.Component<IReportElement> {
 
+  // tslint:disable-next-line:no-any
   private printContentRef: React.RefObject<any> = React.createRef();
 
   public render(): JSX.Element {
