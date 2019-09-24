@@ -18,6 +18,7 @@ interface ITop3DBarChartProps {
   decimalValues?: boolean;
   labelPanelWidth?: number;
   labelTemplate?: string;
+  maxPrecision?: number;
   maxValue?: number;
   // Relative - 0 to 100
   type: "relative" | "absolute" | string;
@@ -81,7 +82,7 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
               const valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
               valueAxis.renderer.minGridDistance = 40;
               valueAxis.min = 0;
-              valueAxis.maxPrecision = 0;
+              valueAxis.maxPrecision = this.props.maxPrecision;
 
               if (this.props.type === "relative") {
                 valueAxis.max = 99.99999999;
@@ -121,8 +122,8 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
       return {
         ...element,
         color: am4core.color(getLevelColor(value).toRgba()),
-        dx: value > 25 ? -10 : 30,
-        horizontalCenter: value > 25 ? "right" : "left",
+        dx: value > 50 ? -10 : 30,
+        horizontalCenter: value > 50 ? "right" : "left",
       }
     });
   }
