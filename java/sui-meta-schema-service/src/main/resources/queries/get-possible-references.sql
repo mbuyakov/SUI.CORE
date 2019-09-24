@@ -42,6 +42,6 @@ FROM (
                          ON t2.foreign_column_table_schema = c.table_schema
                              AND t2.foreign_column_table_name = c.table_name
                              AND t2.foreign_column_name = c.column_name
-)
+) t3
 WHERE column_table_schema IN (%s)
   AND foreign_column_table_schema IN (%1$s);
