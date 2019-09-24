@@ -21,6 +21,13 @@ export class ReportElement extends React.Component<IReportElement, {
   printMode: boolean
 }> {
 
+  public constructor(props: IReportElement) {
+    super(props);
+    this.state = {
+      printMode: false
+    };
+  }
+
   // tslint:disable-next-line:no-any
   private readonly printContentRef: React.RefObject<any> = React.createRef();
 
