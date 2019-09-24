@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.13.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.12.2...v5.13.0) (2019-09-24)
+
+
+### Bug Fixes
+
+* fix ([a51a5c2](https://github.com/mbuyakov/SUI.CORE/commit/a51a5c2))
+
+
+### Features
+
+* add print mode to ReportElement ([3b22588](https://github.com/mbuyakov/SUI.CORE/commit/3b22588))
+
+
+
+
+
 ## [5.12.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.11.0...v5.12.1) (2019-09-24)
 
 
