@@ -17,6 +17,7 @@ interface ITop3DBarChartProps {
   data?: any[];
   decimalValues?: boolean;
   labelPanelWidth?: number;
+  labelTemplate?: string;
   maxValue?: number;
   // Relative - 0 to 100
   type: "relative" | "absolute" | string;
@@ -98,6 +99,7 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
 
               const valueLabel = series.bullets.push(new am4charts.LabelBullet());
               valueLabel.label.text = `{valueX${this.props.decimalValues ? '.formatNumber("#.##")' : ''}}`;
+              valueLabel.label.text = this.props.labelTemplate || `{valueX${this.props.decimalValues ? '.formatNumber("#.##")' : ''}}`;
               valueLabel.label.fontSize = 16;
               valueLabel.label.truncate = false;
               valueLabel.label.hideOversized = false;
