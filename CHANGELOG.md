@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.13.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.2...v5.13.3) (2019-09-24)
+
+
+### Bug Fixes
+
+* fix NPE on empty state ([ca4ff8a](https://github.com/mbuyakov/SUI.CORE/commit/ca4ff8a))
+
+
+
+
+
 ## [5.13.2](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.1...v5.13.2) (2019-09-24)
 
 
