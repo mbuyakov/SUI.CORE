@@ -2,7 +2,6 @@ export * from "./additionalTabs";
 export * from "./cache";
 export * from "./Link";
 export * from "./Popover";
-export * from "./row-component";
 export * from "./TableRenderSettings";
 export * from "./types";
 export * from "./utils";

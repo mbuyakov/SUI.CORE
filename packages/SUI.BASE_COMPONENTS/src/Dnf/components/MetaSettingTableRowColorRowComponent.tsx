@@ -1,11 +1,10 @@
 import {getActions} from "@smsoft/sui-base-components";
+import {ColumnInfo, getFilterType} from "@smsoft/sui-meta";
 import {Form, Select} from "antd";
 import autobind from 'autobind-decorator';
 import * as React from "react";
 
-import {ColumnInfo} from "../cache";
-import {IFilterProps, IParameterRowElementBase, ParameterRowComponent} from "../row-component";
-import {getFilterType} from "../utils";
+import {IFilterProps, IParameterRowElementBase, ParameterRowComponent} from "./ParameterRowComponent";
 
 const offset = 4;
 
@@ -39,7 +38,7 @@ export class MetaSettingTableRowColorRowComponent
   @autobind
   private filterPropsGenerator(values: IMetaSettingTableRowColorRowElement): IFilterProps {
     const firstColumnInfo = values.firstColumnInfoId && this.props.columnInfos.find(columnInfo => columnInfo.id === values.firstColumnInfoId);
-    const filterType = firstColumnInfo && getFilterType(firstColumnInfo, values.action);
+    const filterType = firstColumnInfo && getFilterType(firstColumnInfo, values.action) || undefined;
 
     return {
       actions: getActions(filterType, values.constant),

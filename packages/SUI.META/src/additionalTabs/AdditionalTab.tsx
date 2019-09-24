@@ -1,5 +1,5 @@
-/* tslint:disable:jsx-no-lambda */
-import {DnfForm, FilterType, IDnfFormRowElementProps, IResultDnfFormValues} from "@smsoft/sui-base-components";
+/* tslint:disable:jsx-no-lambda no-any */
+import {DnfForm, FilterType, IDnfFormRowElementProps, IMetaSettingTableRowColorRowElement, IResultDnfFormValues, MetaSettingTableRowColorRowComponent} from "@smsoft/sui-base-components";
 import {formatRawForGraphQL, generateUpdate} from "@smsoft/sui-core";
 import {WaitData} from "@smsoft/sui-promised";
 import {Card, Form, Input} from "antd";
@@ -10,8 +10,6 @@ import * as React from "react";
 
 import {ColumnInfo, ColumnInfoManager, TableInfo} from "../cache";
 import {getFilterType} from "../utils";
-
-import {IMetaSettingTableRowColorRowElement, MetaSettingTableRowColorRowComponent} from "./MetaSettingTableRowColorRowComponent";
 
 interface IAdditionalTabProps {
   columnInfos: ColumnInfo[];
@@ -101,9 +99,10 @@ export class AdditionalTab extends React.Component<IAdditionalTabProps, IAdditio
   @autobind
   private rowComponent(props: IDnfFormRowElementProps<IMetaSettingTableRowColorRowElement>): JSX.Element {
     return (
+      // TODO: as any костыль до объединения проектов
       <MetaSettingTableRowColorRowComponent
         key={props.id.toString()}
-        columnInfos={this.props.columnInfos}
+        columnInfos={this.props.columnInfos as any}
         {...props}
       />
     );

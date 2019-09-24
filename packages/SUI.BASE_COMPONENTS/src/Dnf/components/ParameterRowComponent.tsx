@@ -1,11 +1,14 @@
 // tslint:disable:no-any
-import {AbstractDnfFormRowElement, ActionType, emptyFilter, FilterType, generateActionSelectFormItem, getInputElement, getValuePropName, isListAction} from "@smsoft/sui-base-components";
 import {Form, Switch, Tooltip} from "antd";
 import {GetFieldDecoratorOptions} from "antd/lib/form/Form";
 import {SelectProps} from "antd/lib/select";
 import {SwitchProps} from "antd/lib/switch";
 import autobind from 'autobind-decorator';
 import * as React from "react";
+
+import {ActionType, emptyFilter, FilterType, isListAction} from "../../utils";
+import {AbstractDnfFormRowElement} from "../AbstractDnfFormRowElement";
+import {generateActionSelectFormItem, getInputElement, getValuePropName} from "../utils";
 
 export interface IFilterProps {
   actions: ActionType[];
