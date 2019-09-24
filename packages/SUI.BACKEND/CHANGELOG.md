@@ -3,9 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.9.8](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.7...v5.9.8) (2019-09-23)
+## [5.11.2](https://github.com/mbuyakov/SUI.CORE/compare/v5.11.1...v5.11.2) (2019-09-24)
 
 **Note:** Version bump only for package @smsoft/sui-backend
+
+
+
+
+
+## [5.11.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.11.0...v5.11.1) (2019-09-24)
+
+**Note:** Version bump only for package @smsoft/sui-backend
+
+
+
+
+
+
+# [5.11.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.8...v5.11.0) (2019-09-24)
+
+**Note:** Version bump only for package @smsoft/sui-backend
+
+
+
+
+
+## [5.10.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.10.2...v5.10.3) (2019-09-23)
+
+**Note:** Version bump only for package @smsoft/sui-backend
+
+
+
+
+
+## [5.10.2](https://github.com/mbuyakov/SUI.CORE/compare/v5.10.1...v5.10.2) (2019-09-23)
+
+**Note:** Version bump only for package @smsoft/sui-backend
+
+
+
+
+
+## [5.10.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.10.0...v5.10.1) (2019-09-23)
+
+**Note:** Version bump only for package @smsoft/sui-backend
+
+
+
+
+
+
+# [5.10.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.4...v5.10.0) (2019-09-23)
+
+
+### Bug Fixes
+
+* autobind, styles ([1195435](https://github.com/mbuyakov/SUI.CORE/commit/1195435))
+* export + test bind fix ([bf7b7f3](https://github.com/mbuyakov/SUI.CORE/commit/bf7b7f3))
+* lint ([deec66c](https://github.com/mbuyakov/SUI.CORE/commit/deec66c))
+* lint ([e866a1b](https://github.com/mbuyakov/SUI.CORE/commit/e866a1b))
+
 
 
 

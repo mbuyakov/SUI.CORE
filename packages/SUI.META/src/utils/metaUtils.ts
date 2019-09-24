@@ -1,4 +1,4 @@
-import {SelectData} from "@smsoft/sui-base-components";
+import {ActionType, FilterType, isNumberAction, SelectData} from "@smsoft/sui-base-components";
 import {addPluralEnding, camelCase, capitalize, DataKey, dataKeysToDataTree, getDataByKey, IGqlFilter, query, removePluralEnding, stringifyGqlFilter, wrapInArray} from "@smsoft/sui-core";
 
 import {ColumnInfo, ColumnInfoManager, TableInfo, TableInfoManager} from "../cache";
@@ -327,4 +327,30 @@ export async function fullReloadTableInfo(tableInfoId: string): Promise<void> {
   await TableInfoManager.reloadById(tableInfoId);
   const tableInfo = await TableInfoManager.getById(tableInfoId);
   await tableInfo.getColumns(true);
+}
+
+export function getFilterType(columnInfo: ColumnInfo, action?: ActionType): FilterType {
+  let filterType: FilterType | null = null;
+
+  // tslint:disable-next-line:switch-default
+  switch (columnInfo && columnInfo.columnType && columnInfo.columnType.toLowerCase()) {
+    case "date":
+      filterType = FilterType.DATE;
+      break;
+    case "timestamp without time zone":
+      filterType = FilterType.TIMESTAMP;
+      break;
+    case "boolean":
+      filterType = FilterType.BOOLEAN;
+      break;
+    case "character varying":
+    case "text":
+      filterType = FilterType.STRING;
+  }
+
+  if (!filterType && isNumberAction(action)) {
+    filterType = FilterType.NUMBER;
+  }
+
+  return filterType;
 }

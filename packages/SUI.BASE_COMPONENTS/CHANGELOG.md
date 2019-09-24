@@ -3,9 +3,88 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.9.8](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.7...v5.9.8) (2019-09-23)
+## [5.11.2](https://github.com/mbuyakov/SUI.CORE/compare/v5.11.1...v5.11.2) (2019-09-24)
 
-**Note:** Version bump only for package @smsoft/sui-base-components
+
+### Bug Fixes
+
+* **exports:** add missed export ([0012ab7](https://github.com/mbuyakov/SUI.CORE/commit/0012ab7))
+
+
+
+
+
+## [5.11.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.11.0...v5.11.1) (2019-09-24)
+
+
+### Bug Fixes
+
+* **asd:** asdsdadssdaasd ([f2204a9](https://github.com/mbuyakov/SUI.CORE/commit/f2204a9))
+
+
+
+
+
+
+# [5.11.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.8...v5.11.0) (2019-09-24)
+
+
+### Bug Fixes
+
+* **parameterrowcomponent:** add missed autobind ([d79c46f](https://github.com/mbuyakov/SUI.CORE/commit/d79c46f))
+* **parameterrowcomponent:** build fix ([2b1c0eb](https://github.com/mbuyakov/SUI.CORE/commit/2b1c0eb))
+* **parameterrowcomponent:** build fix ([9dc0c27](https://github.com/mbuyakov/SUI.CORE/commit/9dc0c27))
+
+
+### Features
+
+* **all:** fixes + colorSettings tab ([63d763c](https://github.com/mbuyakov/SUI.CORE/commit/63d763c))
+
+
+
+
+
+## [5.10.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.10.2...v5.10.3) (2019-09-23)
+
+
+### Bug Fixes
+
+* **parameterrowcomponent:** build fix ([2b1c0eb](https://github.com/mbuyakov/SUI.CORE/commit/2b1c0eb))
+
+
+
+
+
+## [5.10.2](https://github.com/mbuyakov/SUI.CORE/compare/v5.10.1...v5.10.2) (2019-09-23)
+
+
+### Bug Fixes
+
+* **parameterrowcomponent:** build fix ([9dc0c27](https://github.com/mbuyakov/SUI.CORE/commit/9dc0c27))
+
+
+
+
+
+## [5.10.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.10.0...v5.10.1) (2019-09-23)
+
+
+### Bug Fixes
+
+* **parameterrowcomponent:** add missed autobind ([d79c46f](https://github.com/mbuyakov/SUI.CORE/commit/d79c46f))
+
+
+
+
+
+
+# [5.10.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.9.4...v5.10.0) (2019-09-23)
+
+
+### Features
+
+* **all:** fixes + colorSettings tab ([63d763c](https://github.com/mbuyakov/SUI.CORE/commit/63d763c))
+
 
 
 

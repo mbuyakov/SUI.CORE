@@ -75,7 +75,7 @@ export function getRussianName(action?: ActionType): string | undefined {
   return sign && sign.toString();
 }
 
-// Возвращает sql фильтер
+// Возвращает sql фильтр
 // tslint:disable-next-line:no-any
 export function getSqlFilter(field?: string, action?: ActionType, filter?: any): string | undefined {
   switch (action) {

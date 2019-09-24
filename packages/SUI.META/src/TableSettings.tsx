@@ -16,7 +16,8 @@ import autobind from 'autobind-decorator';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import { TableInfoManager } from './cache';
+import {AdditionalTab} from "./additionalTabs/AdditionalTab";
+import {ColumnInfo, TableInfo, TableInfoManager} from './cache';
 import { NamePopover, TagsPopover, VisibleByRolesPopover } from './Popover';
 import { TableRenderSettingsPopover } from './TableRenderSettings';
 import { IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IRole, ISubtotalType, ITableInfo } from './types';
@@ -862,6 +863,23 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                         },
                       },
                       title: 'Карточка объекта',
+                    },
+                    {
+                      icon: 'build',
+                      rows: {
+                        cols: {
+                          items: {
+                            render: (_: any, item: ITableInfo): JSX.Element =>
+                              (
+                                <AdditionalTab
+                                  columnInfos={item.columnInfosByTableInfoId.nodes.map(iColumnInfo => new ColumnInfo(iColumnInfo))}
+                                  tableInfo={new TableInfo(item)}
+                                />
+                              ),
+                          },
+                        },
+                      },
+                      title: 'Дополнительно',
                     },
                   ],
                 },

@@ -9,6 +9,7 @@ import {Name} from "./Name";
 
 export class TableInfo {
   public cardRenderParams?: string;
+  public colorSettings?: string;
   public foreignLinkColumnInfoId?: string;
   public id: string;
   public isCatalog: boolean;
@@ -31,6 +32,7 @@ export class TableInfo {
     this.foreignLinkColumnInfoId = item.foreignLinkColumnInfoId;
     this.isCatalog = item.isCatalog;
     this.cardRenderParams = item.cardRenderParams;
+    this.colorSettings = item.colorSettings;
     this.nameId = getDataByKey(item, "nameByNameId", "id");
     this.type = item.type;
 

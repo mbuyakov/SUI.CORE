@@ -1,3 +1,4 @@
+export * from "./additionalTabs";
 export * from "./cache";
 export * from "./Link";
 export * from "./Popover";
