@@ -1,4 +1,4 @@
-import { Button, Card, Tooltip } from 'antd';
+import { Button, Card } from 'antd';
 import { CardType } from 'antd/lib/card';
 import * as React from 'react';
 import ReactToPrint from 'react-to-print';
@@ -41,17 +41,12 @@ export class ReportElement extends React.Component<IReportElement> {
         }}
         title={<span>{this.props.header}</span>}
         extra={this.props.print ? (
-          <Tooltip
-            title="Распечатать"
-          >
-            <ReactToPrint
-              trigger={() => (
-
-                <Button style={{ margin: 12 }} type="primary" icon="printer"/>
-              )}
-              content={() => this.printContentRef.current}
-            />
-          </Tooltip>
+          <ReactToPrint
+            trigger={() => (
+              <Button type="primary" icon="printer"/>
+            )}
+            content={() => this.printContentRef.current}
+          />
         ) : undefined}
         type={this.props.type}
       >
