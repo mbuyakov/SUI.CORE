@@ -23,7 +23,7 @@ function Transition(props: any): JSX.Element {
 interface IFullScreenModalProps {
   children: JSX.Element | ChildrenWithPopupContainer,
   defaultOpen?: boolean;
-  dialogProps: Omit<DialogProps, "children" | "fullScreen" | "open" | "onClose">;
+  dialogProps?: Omit<DialogProps, "children" | "fullScreen" | "open" | "onClose">;
   title: string | JSX.Element;
   withoutTransition?: boolean;
 
