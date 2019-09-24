@@ -82,7 +82,10 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
               const valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
               valueAxis.renderer.minGridDistance = 40;
               valueAxis.min = 0;
-              valueAxis.maxPrecision = this.props.maxPrecision;
+
+              if (typeof this.props.maxPrecision === 'number') {
+                valueAxis.maxPrecision = this.props.maxPrecision;
+              }
 
               if (this.props.type === "relative") {
                 valueAxis.max = 99.99999999;
