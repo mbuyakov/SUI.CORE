@@ -111,11 +111,11 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
       </div>);
   }
 
-  private mapData(data: IObjectWithIndex[]): IObjectWithIndex[] {
+  private mapData(data: IObjectWithIndex[], maxValue: number): IObjectWithIndex[] {
     return data.map((element) => {
       let value = element[this.props.valueDataField];
       if (this.props.type === "absolute") {
-        value = value / (this.state && this.state.maxValue || 1) * 100;
+        value = value / (maxValue || 1) * 100;
       }
 
       return {
@@ -136,7 +136,7 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
       maxValue = Math.max(...data.map(element => element[valueDataField]), 0);
     }
 
-    this.setState({mappedData: this.mapData(data).reverse(), maxValue});
+    this.setState({mappedData: this.mapData(data, maxValue as number).reverse(), maxValue});
   }
 
 }
