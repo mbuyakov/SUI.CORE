@@ -5,6 +5,8 @@ import ReactToPrint from 'react-to-print';
 
 import { SMALL_HEADER_PADDING } from '../styles';
 
+import { PrintModeContext } from './PrintModeContext';
+
 
 interface IReportElement {
   cardBodyStyle?: React.CSSProperties;
@@ -15,7 +17,9 @@ interface IReportElement {
   type?: CardType;
 }
 
-export class ReportElement extends React.Component<IReportElement> {
+export class ReportElement extends React.Component<IReportElement, {
+  printMode: boolean
+}> {
 
   // tslint:disable-next-line:no-any
   private readonly printContentRef: React.RefObject<any> = React.createRef();
@@ -46,21 +50,26 @@ export class ReportElement extends React.Component<IReportElement> {
               <Button type="primary" icon="printer"/>
             )}
             content={() => this.printContentRef.current}
+            onBeforeGetContent={async () => new Promise(resolve => this.setState({printMode: true}, resolve))}
+            onAfterPrint={() => this.setState({printMode: false})}
           />
         ) : undefined}
         type={this.props.type}
       >
-        <div
-          ref={this.printContentRef}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            flexGrow: 1,
-          }}
-        >
-          {this.props.children}
-        </div>
+        <PrintModeContext.Provider value={this.state.printMode}>
+          <div
+            ref={this.printContentRef}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              flexGrow: 1,
+            }}
+          >
+            {this.props.children}
+          </div>
+        </PrintModeContext.Provider>
       </Card>
     );
   }
 }
+
