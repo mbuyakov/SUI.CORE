@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.12.2](https://github.com/mbuyakov/SUI.CORE/compare/v5.12.1...v5.12.2) (2019-09-24)
+
+
+### Bug Fixes
+
+* **charts:** move maxPrecision to props, change horizontal label position logic ([3d9fe34](https://github.com/mbuyakov/SUI.CORE/commit/3d9fe34))
+
+
+
+
+
 ## [5.12.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.11.0...v5.12.1) (2019-09-24)
 
 
