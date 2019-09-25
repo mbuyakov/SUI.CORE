@@ -23,7 +23,7 @@ export class EditableEntityField<T = any> extends React.Component<{
 
   public render(): JSX.Element {
     return (
-      <div style={{ display: 'inline-block', marginTop: 4, marginBottom: 6 }}>
+      <div style={{ display: 'inline-block' }}>
         <WaitData<IObjectWithIndex>
           ref={this.waitDataRef}
           alwaysUpdate={true}
