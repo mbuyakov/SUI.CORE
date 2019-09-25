@@ -20,12 +20,15 @@ interface ITop3DBarChartProps {
   labelTemplate?: string;
   maxPrecision?: number;
   maxValue?: number;
+  tooltipTemplate: string;
   // Relative - 0 to 100
   type: "relative" | "absolute" | string;
   valueDataField: string;
 
   // tslint:disable-next-line:no-any
   categoryAxisLabelGenerator(element: IObjectWithIndex): string | JSX.Element;
+  // tslint:disable-next-line:no-any
+  onSeriesClick?(event: any): void;
 }
 
 export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
@@ -100,6 +103,13 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
               series.columns.template.propertyFields.fill = "color";
               series.columns.template.column3D.stroke = am4core.color("#fff");
               series.columns.template.column3D.strokeOpacity = 0.2;
+
+              if(this.props.tooltipTemplate) {
+                series.tooltipText = this.props.tooltipTemplate;
+                // tslint:disable-next-line:ban-ts-ignore
+                // @ts-ignore
+                series.tooltip.pointerOrientation = "vertical";
+              }
 
               const valueLabel = series.bullets.push(new am4charts.LabelBullet());
               valueLabel.label.text = `{valueX${this.props.decimalValues ? '.formatNumber("#.##")' : ''}}`;
