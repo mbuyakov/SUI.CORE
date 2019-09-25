@@ -3,6 +3,134 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.14.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.4...v5.14.0) (2019-09-25)
+
+
+### Bug Fixes
+
+* **fullscreenmodal:** add dialogProps ([acd9a6a](https://github.com/mbuyakov/SUI.CORE/commit/acd9a6a))
+* **fullscreenmodal:** fix ([ec9f4fd](https://github.com/mbuyakov/SUI.CORE/commit/ec9f4fd))
+
+
+### Features
+
+* add tooltipTemplate ([01e5f47](https://github.com/mbuyakov/SUI.CORE/commit/01e5f47))
+
+
+
+
+
+## [5.13.6](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.5...v5.13.6) (2019-09-24)
+
+
+### Bug Fixes
+
+* **fullscreenmodal:** fix ([ec9f4fd](https://github.com/mbuyakov/SUI.CORE/commit/ec9f4fd))
+
+
+
+
+
+## [5.13.5](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.4...v5.13.5) (2019-09-24)
+
+
+### Bug Fixes
+
+* **fullscreenmodal:** add dialogProps ([acd9a6a](https://github.com/mbuyakov/SUI.CORE/commit/acd9a6a))
+
+
+
+
+
+
+## [5.13.4](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.3...v5.13.4) (2019-09-24)
+
+
+### Bug Fixes
+
+* add Unprintable, change print button style, add header to printed doc ([3cbf2d3](https://github.com/mbuyakov/SUI.CORE/commit/3cbf2d3))
+* lint ([7731b2b](https://github.com/mbuyakov/SUI.CORE/commit/7731b2b))
+
+
+
+
+
+## [5.13.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.2...v5.13.3) (2019-09-24)
+
+
+### Bug Fixes
+
+* fix NPE on empty state ([ca4ff8a](https://github.com/mbuyakov/SUI.CORE/commit/ca4ff8a))
+
+
+
+
+
+## [5.13.2](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.1...v5.13.2) (2019-09-24)
+
+
+### Bug Fixes
+
+* add PrintModeContext ([9b6253c](https://github.com/mbuyakov/SUI.CORE/commit/9b6253c))
+
+
+
+
+
+## [5.13.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.0...v5.13.1) (2019-09-24)
+
+
+### Bug Fixes
+
+* lint ([cb4dc78](https://github.com/mbuyakov/SUI.CORE/commit/cb4dc78))
+* styles ([73d8483](https://github.com/mbuyakov/SUI.CORE/commit/73d8483))
+
+
+
+
+
+# [5.13.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.12.2...v5.13.0) (2019-09-24)
+
+
+### Bug Fixes
+
+* fix ([a51a5c2](https://github.com/mbuyakov/SUI.CORE/commit/a51a5c2))
+* fix ([49a5015](https://github.com/mbuyakov/SUI.CORE/commit/49a5015))
+
+
+### Features
+
+* add print mode to ReportElement ([3b22588](https://github.com/mbuyakov/SUI.CORE/commit/3b22588))
+
+
+
+
+
+## [5.12.2](https://github.com/mbuyakov/SUI.CORE/compare/v5.12.1...v5.12.2) (2019-09-24)
+
+
+### Bug Fixes
+
+* **charts:** move maxPrecision to props, change horizontal label position logic ([3d9fe34](https://github.com/mbuyakov/SUI.CORE/commit/3d9fe34))
+
+
+
+
+
+## [5.12.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.11.0...v5.12.1) (2019-09-24)
+
+
+### Bug Fixes
+
+* **asd:** asdsdadssdaasd ([f2204a9](https://github.com/mbuyakov/SUI.CORE/commit/f2204a9))
+* **exports:** add missed export ([0012ab7](https://github.com/mbuyakov/SUI.CORE/commit/0012ab7))
+* chart absolute color fix ([59beb34](https://github.com/mbuyakov/SUI.CORE/commit/59beb34))
+* lint ([aa1eddd](https://github.com/mbuyakov/SUI.CORE/commit/aa1eddd))
+
+
+
+
+
 ## [5.11.2](https://github.com/mbuyakov/SUI.CORE/compare/v5.11.1...v5.11.2) (2019-09-24)
 
 

@@ -18,13 +18,17 @@ interface ITop3DBarChartProps {
   decimalValues?: boolean;
   labelPanelWidth?: number;
   labelTemplate?: string;
+  maxPrecision?: number;
   maxValue?: number;
+  tooltipTemplate: string;
   // Relative - 0 to 100
   type: "relative" | "absolute" | string;
   valueDataField: string;
 
   // tslint:disable-next-line:no-any
   categoryAxisLabelGenerator(element: IObjectWithIndex): string | JSX.Element;
+  // tslint:disable-next-line:no-any
+  onSeriesClick?(event: any): void;
 }
 
 export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
@@ -81,7 +85,10 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
               const valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
               valueAxis.renderer.minGridDistance = 40;
               valueAxis.min = 0;
-              valueAxis.maxPrecision = 0;
+
+              if (typeof this.props.maxPrecision === 'number') {
+                valueAxis.maxPrecision = this.props.maxPrecision;
+              }
 
               if (this.props.type === "relative") {
                 valueAxis.max = 99.99999999;
@@ -96,6 +103,13 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
               series.columns.template.propertyFields.fill = "color";
               series.columns.template.column3D.stroke = am4core.color("#fff");
               series.columns.template.column3D.strokeOpacity = 0.2;
+
+              if(this.props.tooltipTemplate) {
+                series.tooltipText = this.props.tooltipTemplate;
+                // tslint:disable-next-line:ban-ts-ignore
+                // @ts-ignore
+                series.tooltip.pointerOrientation = "vertical";
+              }
 
               const valueLabel = series.bullets.push(new am4charts.LabelBullet());
               valueLabel.label.text = `{valueX${this.props.decimalValues ? '.formatNumber("#.##")' : ''}}`;
@@ -121,8 +135,8 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
       return {
         ...element,
         color: am4core.color(getLevelColor(value).toRgba()),
-        dx: value > 25 ? -10 : 30,
-        horizontalCenter: value > 25 ? "right" : "left",
+        dx: value > 50 ? -10 : 30,
+        horizontalCenter: value > 50 ? "right" : "left",
       }
     });
   }

@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.14.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.4...v5.14.0) (2019-09-25)
+
+
+### Features
+
+* add tooltipTemplate ([01e5f47](https://github.com/mbuyakov/SUI.CORE/commit/01e5f47))
+
+
+
+
+
+# [5.13.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.12.2...v5.13.0) (2019-09-24)
+
+
+### Bug Fixes
+
+* fix ([49a5015](https://github.com/mbuyakov/SUI.CORE/commit/49a5015))
+
+
+
+
+
+## [5.12.2](https://github.com/mbuyakov/SUI.CORE/compare/v5.12.1...v5.12.2) (2019-09-24)
+
+
+### Bug Fixes
+
+* **charts:** move maxPrecision to props, change horizontal label position logic ([3d9fe34](https://github.com/mbuyakov/SUI.CORE/commit/3d9fe34))
+
+
+
+
+
+## [5.12.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.11.0...v5.12.1) (2019-09-24)
+
+
+### Bug Fixes
+
+* chart absolute color fix ([59beb34](https://github.com/mbuyakov/SUI.CORE/commit/59beb34))
+
+
+
+
+
 # [5.12.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.11.0...v5.12.0) (2019-09-24)
 
 
