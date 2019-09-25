@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.0...v5.14.1) (2019-09-25)
+
+
+### Bug Fixes
+
+* make tooltipTemplate not required ([853a918](https://github.com/mbuyakov/SUI.CORE/commit/853a918))
+
+
+
+
+
+# [5.14.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.4...v5.14.0) (2019-09-25)
+
+
+### Bug Fixes
+
+* **fullscreenmodal:** add dialogProps ([acd9a6a](https://github.com/mbuyakov/SUI.CORE/commit/acd9a6a))
+* **fullscreenmodal:** fix ([ec9f4fd](https://github.com/mbuyakov/SUI.CORE/commit/ec9f4fd))
+
+
+### Features
+
+* add tooltipTemplate ([01e5f47](https://github.com/mbuyakov/SUI.CORE/commit/01e5f47))
+
+
+
+
+
 ## [5.13.6](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.5...v5.13.6) (2019-09-24)
 
 
