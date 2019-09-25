@@ -196,7 +196,7 @@ public class QueryUtils {
             switch (predicateFiltering.getPredicate()) {
                 case OR:
                 case AND:
-                    return joinFilters(" " + predicate.toString() + " ", filters);
+                    return joinFilters(" " + predicate.toString() + " ", filters, resultColumnNameGetter);
                 case NOT:
                     if (filters.size() == 1) {
                         return String.format("NOT (%s)", mapFilteringToQueryFilter(filters.get(0), resultColumnNameGetter));
