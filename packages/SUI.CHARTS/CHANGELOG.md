@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.4](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.3...v5.14.4) (2019-09-25)
+
+
+### Bug Fixes
+
+* onseriesClick ([2602cc2](https://github.com/mbuyakov/SUI.CORE/commit/2602cc2))
+
+
+
+
+
 ## [5.14.3](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.2...v5.14.3) (2019-09-25)
 
 
