@@ -105,10 +105,10 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
               series.columns.template.column3D.strokeOpacity = 0.2;
 
               if(this.props.tooltipTemplate) {
-                series.tooltipText = this.props.tooltipTemplate;
+                series.columns.template.tooltipText = this.props.tooltipTemplate;
                 // tslint:disable-next-line:ban-ts-ignore
                 // @ts-ignore
-                series.tooltip.pointerOrientation = "vertical";
+                series.columns.template.pointerOrientation = "vertical";
               }
 
               const valueLabel = series.bullets.push(new am4charts.LabelBullet());
