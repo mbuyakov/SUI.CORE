@@ -33,7 +33,7 @@ public class PostgresSettingAspect implements Ordered {
     @NonNull
     private EntityManager entityManager;
 
-    @Before("execution(public * *(..)) && bean(*Controller)")
+    @Before("execution(public * *(..)) && (bean(*Controller) || @annotation(WithUser))")
     public void appendCurrentUserSetting() {
         try {
             // check has transaction
