@@ -20,7 +20,7 @@ interface ITop3DBarChartProps {
   labelTemplate?: string;
   maxPrecision?: number;
   maxValue?: number;
-  tooltipTemplate: string;
+  tooltipTemplate?: string;
   // Relative - 0 to 100
   type: "relative" | "absolute" | string;
   valueDataField: string;
