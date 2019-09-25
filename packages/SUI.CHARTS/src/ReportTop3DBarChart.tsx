@@ -111,6 +111,10 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
                 series.tooltip.pointerOrientation = "vertical";
               }
 
+              if (this.props.onSeriesClick) {
+                series.columns.template.events.on("hit", this.props.onSeriesClick);
+              }
+
               const valueLabel = series.bullets.push(new am4charts.LabelBullet());
               valueLabel.label.text = `{valueX${this.props.decimalValues ? '.formatNumber("#.##")' : ''}}`;
               valueLabel.label.text = this.props.labelTemplate || `{valueX${this.props.decimalValues ? '.formatNumber("#.##")' : ''}}`;
