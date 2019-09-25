@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.14.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.13.4...v5.14.0) (2019-09-25)
+
+
+### Features
+
+* add tooltipTemplate ([01e5f47](https://github.com/mbuyakov/SUI.CORE/commit/01e5f47))
+
+
+
+
+
 # [5.13.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.12.2...v5.13.0) (2019-09-24)
 
 
