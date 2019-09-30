@@ -49,8 +49,7 @@ import * as XLSX from 'xlsx';
 
 import {HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from "../styles";
 
-import { EmptyMessageComponent, ExportPlugin, TableNoDataCell, WarningPlugin } from './extends';
-import {GroupSummaryRow} from "./extends/GroupSummaryRow";
+import { EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, WarningPlugin } from './extends';
 import { BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, StringColumnFilter } from './filters';
 import { defaultSelection, ISelectionTable } from './ISelectionTable';
 import {

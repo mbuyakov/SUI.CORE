@@ -1,15 +1,15 @@
 /* tslint:disable:object-literal-sort-keys no-any unnecessary-else newline-before-return prefer-function-over-method no-floating-promises prefer-readonly promise-function-async*/
-import { Filter, Grouping, GroupKey, Sorting } from '@devexpress/dx-react-grid';
-import { BaseTable, defaultSelection, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IRemoteBaseTableFields, ISelectionTable } from '@smsoft/sui-base-components';
-import { asyncMap, camelCase, defaultIfNotBoolean, Omit, wrapInArray, xor } from '@smsoft/sui-core';
-import { colToBaseTableCol, ColumnInfo, ColumnInfoManager, getAllowedColumnInfos, isAllowedColumnInfo, TableInfo, TableInfoManager } from '@smsoft/sui-meta';
-import { WaitData } from '@smsoft/sui-promised';
-import { IFrame, IMessage } from '@stomp/stompjs';
+import {Filter, Grouping, GroupKey, Sorting} from '@devexpress/dx-react-grid';
+import {BaseTable, checkCondition, defaultSelection, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IRemoteBaseTableFields, ISelectionTable} from '@smsoft/sui-base-components';
+import {asyncMap, camelCase, defaultIfNotBoolean, getDataByKey, Omit, wrapInArray, xor} from '@smsoft/sui-core';
+import {colToBaseTableCol, ColumnInfo, ColumnInfoManager, getAllowedColumnInfos, getFilterType, IMetaSettingTableRowColorFormValues, isAllowedColumnInfo, TableInfo, TableInfoManager} from '@smsoft/sui-meta';
+import {WaitData} from '@smsoft/sui-promised';
+import {IFrame, IMessage} from '@stomp/stompjs';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import uuid from 'uuid';
 
-import { getBackendUrl, getUser, isAdmin, RawModePlugin, RefreshMetaTablePlugin, Socket, TableSettingsDialog, TableSettingsPlugin } from './index';
+import {getBackendUrl, getUser, isAdmin, RawModePlugin, RefreshMetaTablePlugin, Socket, TableSettingsDialog, TableSettingsPlugin} from './index';
 
 const SUBSCRIBE_DESTINATION_PREFIX = '/user/queue/response/';
 const SEND_DESTINATION = '/data';
@@ -64,7 +64,12 @@ type IBackendTableState<T> = {
   tableInfo?: TableInfo;
   title?: string;
   warnings?: Array<string | JSX.Element>;
+  colorSettingsRowStyler?(row: any): React.CSSProperties;
 } & IRemoteBaseTableFields;
+
+function getRowValue(row: any, column: IBaseTableColLayout): any {
+  return getDataByKey(row, column.dataKey || column.id);
+}
 
 
 export class BackendTable<TSelection = defaultSelection>
@@ -78,7 +83,7 @@ export class BackendTable<TSelection = defaultSelection>
 
   public constructor(props: any) {
     super(props);
-    this.state = { lastSendSelection: [] };
+    this.state = {lastSendSelection: []};
   }
 
   @autobind
@@ -154,7 +159,7 @@ export class BackendTable<TSelection = defaultSelection>
           {...this.props}
           defaultFilters={this.props.defaultFilters ? wrapInArray(this.props.defaultFilters) : undefined}
           {...this.state}
-          filters={this.state.filters ? this.state.filters.map(filter => ({ ...filter, columnName: camelCase(filter.columnName) })) : undefined}
+          filters={this.state.filters ? this.state.filters.map(filter => ({...filter, columnName: camelCase(filter.columnName)})) : undefined}
           rows={this.state.data}
           cols={this.state.cols}
           ref={this.baseTableRef}
@@ -182,6 +187,7 @@ export class BackendTable<TSelection = defaultSelection>
               (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
             ] : null
           }
+          rowStyler={this.generateRowStyler()}
           warnings={admin ? this.state.warnings : undefined}
           // tslint:disable-next-line:no-magic-numbers
           pageSizes={[10, 25, 50]}
@@ -200,7 +206,7 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private changeRaw(): void {
-    this.setState({ rawMode: !this.state.rawMode }); // , this.updateData);
+    this.setState({rawMode: !this.state.rawMode}); // , this.updateData);
   }
 
   @autobind
@@ -235,7 +241,7 @@ export class BackendTable<TSelection = defaultSelection>
     this.socket = new Socket({
       uri: getBackendUrl(),
       connect: client => [
-        { 'Authorization': `Bearer ${getUser().accessToken}` },
+        {'Authorization': `Bearer ${getUser().accessToken}`},
         (frame: IFrame): void => {
           client.subscribe(`${SUBSCRIBE_DESTINATION_PREFIX}${frame.body}`, this.onMessage);
           this.onOpen();
@@ -256,6 +262,17 @@ export class BackendTable<TSelection = defaultSelection>
   private findPascalCaseColumnName(camelCaseColumnName: string): string {
     const resultColumnInfo = this.findColumnInfoByCamelCaseName(camelCaseColumnName);
     return resultColumnInfo && resultColumnInfo.columnName;
+  }
+
+  @autobind
+  private generateRowStyler(): (row: any) => React.CSSProperties {
+    const stylers = [this.state.colorSettingsRowStyler, this.props.rowStyler].filter(Boolean);
+
+    if (stylers.length) {
+      return row => stylers.reduce((result, styler) => ({...result, ...styler(row)}), {});
+    }
+
+    return undefined;
   }
 
   @autobind
@@ -311,7 +328,7 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private onCurrentPageChange(currentPage: number): void {
-    const content = { currentPage };
+    const content = {currentPage};
     // noinspection JSIgnoredPromiseFromCall
     this.sendMessage('PAGE_CHANGE', content, content);
   }
@@ -320,7 +337,7 @@ export class BackendTable<TSelection = defaultSelection>
   private onError(message: IMessage): void {
     const parsedBody = JSON.parse(message.body || '{}');
     console.error(parsedBody);
-    this.setState({ error: parsedBody.message, loading: false });
+    this.setState({error: parsedBody.message, loading: false});
   }
 
   @autobind
@@ -356,10 +373,10 @@ export class BackendTable<TSelection = defaultSelection>
       {
         expandedGroups: Array.from(groupMap.keys())
           .filter(key => !keysToDelete.has(key))
-          .map(key => ({ group: groupMap.get(key) })),
+          .map(key => ({group: groupMap.get(key)})),
       },
-      { expandedGroups, customGrouping: this.state.grouping, customExpandedGroups: this.state.customExpandedGroups },
-      { customExpandedGroups: null, customGrouping: null },
+      {expandedGroups, customGrouping: this.state.grouping, customExpandedGroups: this.state.customExpandedGroups},
+      {customExpandedGroups: null, customGrouping: null},
     );
 
   }
@@ -372,7 +389,7 @@ export class BackendTable<TSelection = defaultSelection>
       {
         filters: this.mapFilters(filters),
       },
-      { filters },
+      {filters},
     );
   }
 
@@ -381,9 +398,9 @@ export class BackendTable<TSelection = defaultSelection>
     // noinspection JSIgnoredPromiseFromCall
     this.sendMessage(
       'GROUPING_CHANGE',
-      { groupings: groupings.map(grouping => ({ columnName: this.findPascalCaseColumnName(grouping.columnName) })) },
-      { grouping: groupings, customGrouping: this.state.grouping, customExpandedGroups: this.state.customExpandedGroups },
-      { customGrouping: null, customExpandedGroups: null },
+      {groupings: groupings.map(grouping => ({columnName: this.findPascalCaseColumnName(grouping.columnName)}))},
+      {grouping: groupings, customGrouping: this.state.grouping, customExpandedGroups: this.state.customExpandedGroups},
+      {customGrouping: null, customExpandedGroups: null},
     );
   }
 
@@ -435,12 +452,12 @@ export class BackendTable<TSelection = defaultSelection>
   @autobind
   private onPageSizeChange(pageSize: number): void {
     // noinspection JSIgnoredPromiseFromCall
-    this.sendMessage('PAGE_SIZE_CHANGE', { pageSize }, { pageSize });
+    this.sendMessage('PAGE_SIZE_CHANGE', {pageSize}, {pageSize});
   }
 
   @autobind
   private onSortingChange(sorting: Sorting[]): void {
-    const newState = { sorting };
+    const newState = {sorting};
     const prevSorting = this.state.sorting || [];
     const shouldNotUpdate = (sorting.length > prevSorting.length) && sorting.every(sort => {
       const prevSort = prevSorting.find(prev => prev.columnName === sort.columnName);
@@ -478,7 +495,7 @@ export class BackendTable<TSelection = defaultSelection>
     if (tableInfo) {
       // TODO: Сейчас надо как-то дождатьзя загрузки инфы колонок что бы получить возможность тыкаться в directGetById. Куда ещё положить - не придумал
       await ColumnInfoManager.getAllValues();
-      const content = { pageSize: 10, currentPage: 0 };
+      const content = {pageSize: 10, currentPage: 0};
       const sortedColumns = await getAllowedColumnInfos(tableInfo, getUser().roles);
       const defaultFilters = this.mapFilters(
         this.props.defaultFilters && wrapInArray(this.props.defaultFilters) || [],
@@ -531,7 +548,7 @@ export class BackendTable<TSelection = defaultSelection>
     let selection = null;
 
     if (this.socket) {
-      const messageContent: any = { content, type };
+      const messageContent: any = {content, type};
 
       if (this.props.selectionEnabled) {
         selection = this.getSelection() || [];
@@ -546,12 +563,12 @@ export class BackendTable<TSelection = defaultSelection>
 
       await this.socket.send(
         SEND_DESTINATION,
-        { [messageIdKey]: messageId },
+        {[messageIdKey]: messageId},
         JSON.stringify(messageContent),
       );
     }
 
-    this.setState({ loading: true, ...newState, ...(selection ? { lastSendSelection: selection } : null) });
+    this.setState({loading: true, ...newState, ...(selection ? {lastSendSelection: selection} : null)});
   }
 
   @autobind
@@ -574,10 +591,10 @@ export class BackendTable<TSelection = defaultSelection>
         if (this.state.rawMode) {
           title += ` (${tableInfo.schemaName}.${tableInfo.tableName})`;
         }
-        this.setState({ title });
+        this.setState({title});
       }
       if (this.state.title && !(this.state.rawMode || this.props.titleEnabled)) {
-        this.setState({ title: null });
+        this.setState({title: null});
       }
 
       const cols = await tableInfo.getColumns();
@@ -607,7 +624,44 @@ export class BackendTable<TSelection = defaultSelection>
         }
       });
 
-      this.setState({ cols: allowedCols, tableInfo, warnings });
+      let colorSettingsRowStyler = null;
+
+      if (tableInfo.colorSettings) {
+        const colorSettings: IMetaSettingTableRowColorFormValues = JSON.parse(tableInfo.colorSettings);
+
+        if (colorSettings.color) {
+          const checkDnf = colorSettings.forms.map(andSettingBlock => andSettingBlock.map(setting => {
+            const firstTableInfo = cols.find(column => column.id === setting.firstColumnInfoId);
+            const firstBaseTableColLayout = allowedCols.find(column => column.id === setting.firstColumnInfoId);
+            const secondBaseTableColLayout = setting.secondColumnInfoId && allowedCols.find(column => column.id === setting.secondColumnInfoId);
+
+
+            if (firstBaseTableColLayout && (setting.constant || secondBaseTableColLayout)) {
+              return (row: any) => checkCondition(
+                setting.action,
+                setting.constant ? getFilterType(firstTableInfo, setting.action) : null,
+                getRowValue(row, firstBaseTableColLayout),
+                setting.constant ? setting.simpleFilter : getRowValue(row, secondBaseTableColLayout)
+              );
+            }
+
+            return () => false;
+          }));
+
+          colorSettingsRowStyler = (row: any): React.CSSProperties => {
+            const isValid = checkDnf.some(andChecks => andChecks.every(check => check(row)));
+
+            return isValid ? {backgroundColor: colorSettings.color} : undefined;
+          };
+        }
+      }
+
+      this.setState({
+        cols: allowedCols,
+        tableInfo,
+        colorSettingsRowStyler,
+        warnings
+      });
     }
   }
 
