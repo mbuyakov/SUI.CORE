@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-backend",
-  "version": "5.14.7",
+  "version": "5.14.8",
   "main": "dist/index.js",
   "module": "dist/sui-backend.esm.js",
   "typings": "dist/index.d.ts",
@@ -53,7 +53,7 @@
     "@amcharts/amcharts4": "^4.5.16",
     "@smsoft/sui-base-components": "^5.14.7",
     "@smsoft/sui-charts": "^5.14.5",
-    "@smsoft/sui-meta": "^5.14.7",
+    "@smsoft/sui-meta": "^5.14.8",
     "@stomp/stompjs": "^5.4.2",
     "react-smooth-dnd": "^0.10.0"
   },
