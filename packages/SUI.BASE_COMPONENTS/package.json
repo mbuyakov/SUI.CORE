@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-base-components",
-  "version": "5.14.6",
+  "version": "5.14.7",
   "main": "dist/index.js",
   "module": "dist/sui-base-components.esm.js",
   "typings": "dist/index.d.ts",
