@@ -109,6 +109,7 @@ class _TableInfoManager extends GqlCacheManager<ITableInfo, TableInfo> {
       foreignLinkColumnInfoId
       isCatalog
       cardRenderParams
+      colorSettings
       nameByNameId {
         id
         name
