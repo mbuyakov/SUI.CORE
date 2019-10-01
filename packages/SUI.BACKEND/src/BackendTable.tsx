@@ -1,6 +1,6 @@
 /* tslint:disable:object-literal-sort-keys no-any unnecessary-else newline-before-return prefer-function-over-method no-floating-promises prefer-readonly promise-function-async*/
 import {Filter, Grouping, GroupKey, Sorting} from '@devexpress/dx-react-grid';
-import {BaseTable, checkCondition, defaultSelection, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IRemoteBaseTableFields, ISelectionTable} from '@smsoft/sui-base-components';
+import {BaseTable, checkCondition, defaultSelection, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorRowElement, IRemoteBaseTableFields, ISelectionTable} from '@smsoft/sui-base-components';
 import {asyncMap, camelCase, defaultIfNotBoolean, getDataByKey, Omit, wrapInArray, xor} from '@smsoft/sui-core';
 import {colToBaseTableCol, ColumnInfo, ColumnInfoManager, getAllowedColumnInfos, getFilterType, IMetaSettingTableRowColorFormValues, isAllowedColumnInfo, TableInfo, TableInfoManager} from '@smsoft/sui-meta';
 import {WaitData} from '@smsoft/sui-promised';
@@ -631,17 +631,30 @@ export class BackendTable<TSelection = defaultSelection>
 
         if (colorSettings.color) {
           const checkDnf = colorSettings.forms.map(andSettingBlock => andSettingBlock.map(setting => {
-            const firstTableInfo = cols.find(column => column.id === setting.firstColumnInfoId);
-            const firstBaseTableColLayout = allowedCols.find(column => column.id === setting.firstColumnInfoId);
-            const secondBaseTableColLayout = setting.secondColumnInfoId && allowedCols.find(column => column.id === setting.secondColumnInfoId);
+            const [firstColumnInfoSetting, secondColumnInfoSetting] =
+              (["firstColumnInfoId", "secondColumnInfoId"] as Array<keyof IMetaSettingTableRowColorRowElement>)
+                .map(name => {
+                  const column = setting[name] && cols.find(col => col.id === setting[name]);
+                  let columnCamelCaseName: string;
+                  let baseTableColLayout;
 
+                  if (column) {
+                    columnCamelCaseName = camelCase(column.columnName);
+                    baseTableColLayout = allowedCols.find(col => col.id === columnCamelCaseName);
+                  }
 
-            if (firstBaseTableColLayout && (setting.constant || secondBaseTableColLayout)) {
+                  return {
+                    column,
+                    baseTableColLayout
+                  }
+                });
+
+            if (firstColumnInfoSetting.baseTableColLayout && (setting.constant || secondColumnInfoSetting.baseTableColLayout)) {
               return (row: any) => checkCondition(
                 setting.action,
-                setting.constant ? getFilterType(firstTableInfo, setting.action) : null,
-                getRowValue(row, firstBaseTableColLayout),
-                setting.constant ? setting.simpleFilter : getRowValue(row, secondBaseTableColLayout)
+                setting.constant ? getFilterType(firstColumnInfoSetting.column, setting.action) : null,
+                getRowValue(row, firstColumnInfoSetting.baseTableColLayout),
+                setting.constant ? setting.simpleFilter : getRowValue(row, secondColumnInfoSetting.baseTableColLayout)
               );
             }
 
