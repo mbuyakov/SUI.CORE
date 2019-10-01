@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.9](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.8...v5.14.9) (2019-10-01)
+
+
+### Bug Fixes
+
+* **backendtable:** fix ([9018819](https://github.com/mbuyakov/SUI.CORE/commit/9018819))
+
+
+
+
+
 ## [5.14.8](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.7...v5.14.8) (2019-09-30)
 
 
