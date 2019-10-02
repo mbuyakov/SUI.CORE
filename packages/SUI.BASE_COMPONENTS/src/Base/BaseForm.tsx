@@ -150,13 +150,13 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
   @autobind
   // tslint:disable-next-line:no-any
   private setFieldsValues(values: IObjectWithIndex): void {
-    // tslint:disable-next-line:forin
+    // tslint:disable-next-line:no-for-in forin
     for (const field in values) {
       // noinspection JSUnfilteredForInLoop
       const fieldValue = values[field];
 
       // Magic
-      if (typeof fieldValue === "string" && (fieldValue.includes("-") || fieldValue.includes("."))) {
+      if (typeof fieldValue === "string" && ((fieldValue.match(/-/g) || []).length >= 2 || fieldValue.includes("."))) {
         const momentValue = moment(fieldValue);
         if (momentValue.isValid()) {
           // noinspection JSUnfilteredForInLoop
