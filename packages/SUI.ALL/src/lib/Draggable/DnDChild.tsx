@@ -1,6 +1,7 @@
 /* tslint:disable:ban-ts-ignore */
-import {getDataByKey} from "@smsoft/sui-core";
 import * as React from "react";
+
+import { getDataByKey } from '../dataKey';
 
 declare let window: Window & {
   DnDChildData: {

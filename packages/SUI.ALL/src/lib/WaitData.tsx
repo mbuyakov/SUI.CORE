@@ -1,10 +1,12 @@
 /* tslint:disable:ban-ts-ignore */
-import {defaultIfNotBoolean, loadingErrorNotification, mutate, query, queryWrapper} from '@smsoft/sui-core';
 import {Icon, Spin} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import {SPIN_WRAPPER} from "./styles";
+import { loadingErrorNotification } from './drawUtils';
+import { mutate, query, queryWrapper } from './gql';
+import { SPIN_WRAPPER } from './styles';
+import { defaultIfNotBoolean } from './typeWrappers';
 
 const SPIN_DELAY = 300;
 

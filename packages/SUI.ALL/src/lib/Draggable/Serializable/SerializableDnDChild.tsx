@@ -1,5 +1,4 @@
-import { defaultIfNotNumber } from '@smsoft/sui-core';
-
+import { defaultIfNotNumber } from '../../typeWrappers';
 import {DnDChild, IBaseDnDChildProps} from "../DnDChild";
 
 import {ISerializable, ISerializableComponent} from "./ISerializable";

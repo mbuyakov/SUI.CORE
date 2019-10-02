@@ -1,6 +1,7 @@
-import { IObjectWithIndex } from '@smsoft/sui-core';
 import autobind from "autobind-decorator";
 import * as React from "react";
+
+import { IObjectWithIndex } from '../other';
 
 import {IDnfFormRowElementProps} from "./ICommonDnfProps";
 

@@ -1,8 +1,8 @@
 /* tslint:disable:jsx-no-lambda */
-import { IBaseTableColLayout } from '@smsoft/sui-base-components';
 import { InputNumber } from 'antd';
 import * as React from 'react';
 
+import { IBaseTableColLayout } from '../../BaseTable';
 import { ColumnInfo } from '../../cache';
 import { IColumnInfoToBaseTableColProps } from '../../utils';
 import { TableRenderSettingsPluginManager } from '../TableRenderSettingsPluginManager';

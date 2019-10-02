@@ -1,4 +1,3 @@
-import { Omit } from '@smsoft/sui-core';
 import { Popconfirm } from 'antd';
 import { PopconfirmProps } from 'antd/lib/popconfirm';
 import autobind from 'autobind-decorator';

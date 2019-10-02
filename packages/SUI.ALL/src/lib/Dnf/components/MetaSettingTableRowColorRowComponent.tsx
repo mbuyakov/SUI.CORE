@@ -1,8 +1,10 @@
-import {getActions} from "@smsoft/sui-base-components";
-import {ColumnInfo, getFilterType} from "@smsoft/sui-meta";
 import {Form, Select} from "antd";
 import autobind from 'autobind-decorator';
 import * as React from "react";
+
+import { ColumnInfo } from '../../cache';
+import { getFilterType } from '../../utils';
+import { getActions } from '../utils';
 
 import {IFilterProps, IParameterRowElementBase, ParameterRowComponent} from "./ParameterRowComponent";
 

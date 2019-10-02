@@ -1,12 +1,10 @@
-import { Omit } from '@smsoft/sui-core';
 import { Button } from 'antd';
 import Card, { CardProps } from 'antd/lib/card';
 import Popover from 'antd/lib/popover';
 import * as React from 'react';
 
-import {DnDDragHandler} from "./Draggable/DnDDragHandler";
-import {GetPopupContainerContext} from "./MetaCardSettings/GetPopupContainerContext";
-import {OldVersionWarning} from "./MetaCardSettings/OldVersionWarning";
+import { DnDDragHandler } from './Draggable';
+import { GetPopupContainerContext, OldVersionWarning } from './MetaCardSettings';
 
 
 // tslint:disable-next-line:variable-name

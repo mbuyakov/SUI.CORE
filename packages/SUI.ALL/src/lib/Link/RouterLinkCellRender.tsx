@@ -1,5 +1,6 @@
-import {concatDataKey, DataKey, getDataByKey} from "@smsoft/sui-core";
 import * as React from 'react';
+
+import { concatDataKey, DataKey, getDataByKey } from '../dataKey';
 
 import { RouterLink, RouterLinkType } from './RouterLink';
 

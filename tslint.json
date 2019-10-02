@@ -30,6 +30,7 @@
     "no-non-null-assertion": false,
     "no-unnecessary-class": false,
     "comment-format": false,
+    "prefer-function-over-method": false,
     "typedef": [
       true,
       "call-signature",

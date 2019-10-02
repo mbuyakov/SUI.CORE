@@ -1,15 +1,13 @@
-import {IBaseCardTabLayout} from "@smsoft/sui-base-components";
 import { Input } from 'antd';
 import Button from 'antd/lib/button';
 import Tooltip from 'antd/lib/tooltip';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
+import { IBaseCardTabLayout } from '../Base';
 import {DeletableSmallCard} from "../DeletableSmallCard";
-import {IBaseDnDChildProps} from "../Draggable/DnDChild";
-import {DnDList} from "../Draggable/DnDList";
-import {ISerializable} from "../Draggable/Serializable/ISerializable";
-import {SerializableDnDChild} from "../Draggable/Serializable/SerializableDnDChild";
+import { DnDList, IBaseDnDChildProps } from '../Draggable';
+import { ISerializable, SerializableDnDChild } from '../Draggable/Serializable';
 import {COMMON__GRID, TAB_SETTINGS__UNACTIVE_BUTTON} from "../styles";
 
 import {RowSettings, SerializedRowSettings} from "./RowSettings";

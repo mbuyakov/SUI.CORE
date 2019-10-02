@@ -1,8 +1,9 @@
 /* tslint:disable:no-any */
 import {Filter, FilterOperation, Grouping, GroupKey, Sorting, TableRowDetail} from '@devexpress/dx-react-grid';
-import {DataKey} from "@smsoft/sui-core";
 import {CardType} from 'antd/lib/card';
 import * as React from 'react';
+
+import { DataKey } from '../dataKey';
 
 export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode;
 export type TableSearchType = 'select' | 'date' | 'boolean' | 'string' | 'none';

@@ -1,5 +1,3 @@
-import { mutate, query, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT } from '@smsoft/sui-core';
-import { WaitData } from '@smsoft/sui-promised';
 import { Button } from 'antd';
 import Input from 'antd/es/input';
 import Alert from 'antd/lib/alert';
@@ -8,7 +6,10 @@ import Select, { OptionProps } from 'antd/lib/select';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
+import { mutate, query } from '../gql';
+import { SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT } from '../styles';
 import { IColumnInfoTag, IGraphQLConnection, ITag } from '../types';
+import { WaitData } from '../WaitData';
 
 export interface ITagsPopoverProps {
   colTagsConnection?: IGraphQLConnection<IColumnInfoTag>;

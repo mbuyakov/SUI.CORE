@@ -1,11 +1,11 @@
 import {Filter, TableFilterRow} from "@devexpress/dx-react-grid";
-import {GET_DEFAULT_CALENDAR_RANGES} from "@smsoft/sui-core";
 import {DatePicker} from "antd";
 import {RangePickerValue} from "antd/lib/date-picker/interface";
 import autobind from "autobind-decorator";
 import moment from "moment";
 import React from 'react';
 
+import { GET_DEFAULT_CALENDAR_RANGES } from '../../const';
 import {ICommonColumnSearchProps} from "../types";
 
 type DatetimeFilterType = "date" | "datetime";

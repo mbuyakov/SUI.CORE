@@ -1,10 +1,11 @@
-import {defaultIfNotBoolean, Rendered} from '@smsoft/sui-core';
 import {Menu} from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import {DnDList} from "../Draggable/DnDList";
-import {MetaCardConfigurator} from "../Meta/MetaCardConfigurator";
+import { DnDList } from '../Draggable';
+import { MetaCardConfigurator } from '../Meta';
+import { Rendered } from '../other';
+import { defaultIfNotBoolean } from '../typeWrappers';
 
 import {RowSettings} from "./RowSettings";
 

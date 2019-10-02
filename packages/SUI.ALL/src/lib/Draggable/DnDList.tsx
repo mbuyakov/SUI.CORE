@@ -1,4 +1,3 @@
-import {Rendered, unCapitalize} from "@smsoft/sui-core";
 import {Dropdown, Menu} from "antd";
 import Button from "antd/lib/button";
 import {MenuItemProps} from "antd/lib/menu/MenuItem";
@@ -8,6 +7,8 @@ import {Container, ContainerOptions, Draggable, DropResult} from "react-smooth-d
 import uuidv4 from "uuid/v4";
 
 import {DeletableSmallCard} from "../DeletableSmallCard";
+import { Rendered } from '../other';
+import { unCapitalize } from '../stringFormatters';
 import {DND_LIST__COLS, DND_LIST__PLUS_BTN, DND_LIST__ROWS, DND_LIST__SCROLL_SEMI_PADDING} from "../styles";
 import {applyDrag} from "../utils";
 

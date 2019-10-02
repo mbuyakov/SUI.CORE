@@ -1,9 +1,10 @@
-import {IBaseTableColLayout, RouterLink} from '@smsoft/sui-base-components';
-import {getDataByKey} from "@smsoft/sui-core";
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
+import { IBaseTableColLayout } from '../../BaseTable';
 import {ColumnInfo} from '../../cache';
+import { getDataByKey } from '../../dataKey';
+import { RouterLink } from '../../Link';
 import {getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps} from '../../utils';
 import {TableRenderSettingsPluginManager} from '../TableRenderSettingsPluginManager';
 import {ITableRenderParams} from '../TableRenderSettingsPopover';

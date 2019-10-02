@@ -1,13 +1,13 @@
-import {IBaseCardCollapseLayout} from "@smsoft/sui-base-components";
-import { Merge } from '@smsoft/sui-core';
 import {Input} from "antd";
 import Checkbox, {CheckboxChangeEvent} from "antd/lib/checkbox";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
+import { IBaseCardCollapseLayout } from '../Base';
 import {DeletableSmallCard} from "../DeletableSmallCard";
 import {DnDList} from "../Draggable";
 import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
+import { Merge } from '../other';
 import {COMMON__GRID} from "../styles";
 
 import {RowSettings, SerializedRowSettings} from "./RowSettings";

@@ -1,7 +1,4 @@
 /* tslint:disable:jsx-no-lambda no-any */
-import {DnfForm, FilterType, IDnfFormRowElementProps, IMetaSettingTableRowColorRowElement, IResultDnfFormValues, MetaSettingTableRowColorRowComponent} from "@smsoft/sui-base-components";
-import {formatRawForGraphQL, generateUpdate} from "@smsoft/sui-core";
-import {WaitData} from "@smsoft/sui-promised";
 import {Card, Form, Input} from "antd";
 import {WrappedFormUtils} from "antd/lib/form/Form";
 import autobind from 'autobind-decorator';
@@ -9,7 +6,11 @@ import moment from "moment";
 import * as React from "react";
 
 import {ColumnInfo, ColumnInfoManager, TableInfo} from "../cache";
-import {getFilterType} from "../utils";
+import { DnfForm, IDnfFormRowElementProps, IMetaSettingTableRowColorRowElement, IResultDnfFormValues, MetaSettingTableRowColorRowComponent } from '../Dnf';
+import { generateUpdate } from '../gql/queryGenerator';
+import { formatRawForGraphQL } from '../stringFormatters';
+import { FilterType, getFilterType } from '../utils';
+import { WaitData } from '../WaitData';
 
 interface IAdditionalTabProps {
   columnInfos: ColumnInfo[];

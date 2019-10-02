@@ -1,11 +1,12 @@
-import { booleanRender, IBaseTableColLayout, SortingDirection } from '@smsoft/sui-base-components';
-import { capitalize, getDataByKey } from '@smsoft/sui-core';
 import camelCase from 'lodash/camelCase';
 // tslint:disable-next-line:ban-ts-ignore
 // @ts-ignore
 import * as React from 'react';
 
+import { booleanRender, IBaseTableColLayout, SortingDirection } from '../BaseTable';
 import { ColumnInfo, ColumnInfoManager, TableInfoManager } from '../cache';
+import { getDataByKey } from '../dataKey';
+import { capitalize } from '../stringFormatters';
 import { TableRenderSettingsPluginManager, TableRenderSettingsPopover } from '../TableRenderSettings';
 
 import { IColumnInfoToBaseTableColProps } from './init';

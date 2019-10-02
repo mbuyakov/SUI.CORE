@@ -1,6 +1,5 @@
-import { ICoreUser } from '@smsoft/sui-core';
-
 import { ColumnInfo, ColumnInfoManager, NameManager, TableInfo, TableInfoManager } from '../cache';
+import { ICoreUser } from '../user';
 
 import { parseRoutes, RouteType } from './metaUtils';
 

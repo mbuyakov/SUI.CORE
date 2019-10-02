@@ -2,10 +2,12 @@
 import {Getter, Plugin, Template} from "@devexpress/dx-react-core";
 import {GroupKey, TableRow as TableRowProps} from "@devexpress/dx-react-grid";
 import {Table} from "@devexpress/dx-react-grid-material-ui";
-import {getDataByKey, NO_DATA_TEXT, stringSymbolEquals} from "@smsoft/sui-core";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
+import { NO_DATA_TEXT } from '../../const';
+import { getDataByKey } from '../../dataKey';
+import { stringSymbolEquals } from '../../other';
 import {IBaseTableColLayout, IGroupSubtotalData} from "../types";
 
 const SUMMARY_KEY_PREFIX = "summary__";

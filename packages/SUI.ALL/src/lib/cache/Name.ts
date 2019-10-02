@@ -1,7 +1,6 @@
-// tslint:disable:prefer-function-over-method
-import {GqlCacheManager, ICacheEntry} from "@smsoft/sui-core";
-
-import {IName} from "../types";
+import { ICacheEntry } from '../cacheManager';
+import { GqlCacheManager } from '../gql';
+import { IName } from '../types';
 
 export class Name {
   public description?: string;

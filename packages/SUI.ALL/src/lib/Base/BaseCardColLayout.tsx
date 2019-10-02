@@ -1,4 +1,4 @@
-import { Omit, OneOrArrayWithNulls } from '@smsoft/sui-core';
+import { OneOrArrayWithNulls } from '../typeWrappers';
 
 import { IBaseCardItemLayout } from './BaseCardItemLayout';
 import { IBaseFormItemLayout } from './BaseFormItemLayout';

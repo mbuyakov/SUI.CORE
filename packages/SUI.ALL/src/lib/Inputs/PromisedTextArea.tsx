@@ -1,10 +1,12 @@
-import {Omit, SUI_ROW_GROW_LEFT, trimIfString} from "@smsoft/sui-core";
 import {Popover} from "antd";
 import Button from "antd/lib/button";
 import Input, {TextAreaProps} from "antd/lib/input";
 import Tooltip from "antd/lib/tooltip";
 import autobind from "autobind-decorator";
 import * as React from "react";
+
+import { trimIfString } from '../stringFormatters';
+import { SUI_ROW_GROW_LEFT } from '../styles';
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 

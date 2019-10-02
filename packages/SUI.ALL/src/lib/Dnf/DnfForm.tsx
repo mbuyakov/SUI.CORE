@@ -1,10 +1,10 @@
-import {FormCreateKostyl, IObjectWithIndex} from "@smsoft/sui-core";
 import {Button, Card, Divider, Form, Icon} from "antd";
 import {FormComponentProps} from "antd/lib/form";
 import autobind from "autobind-decorator";
 import isEqual from "lodash/isEqual";
 import * as React from "react";
 
+import { FormCreateKostyl, IObjectWithIndex } from '../other';
 import {DNF_BUTTON} from "../styles";
 
 import {AndFormRowElement, formItemLayoutWithOutLabel} from "./AndFormRowElement";

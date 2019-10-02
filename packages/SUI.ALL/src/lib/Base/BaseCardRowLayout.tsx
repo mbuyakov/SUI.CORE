@@ -15,6 +15,7 @@ import { BaseCardContext } from './BaseCardContext';
 import { IBaseCardDescItemLayout, IBaseCardItemLayout, renderIBaseCardItem } from './BaseCardItemLayout';
 import { IBaseCardTabLayout, IBaseFormTabLayout, ManagedTabs, renderIBaseCardTabLayout } from './BaseCardTabLayout';
 import { IBaseFormDescItemLayout, IBaseFormItemLayout, renderIBaseFormItemLayout } from './BaseFormItemLayout';
+import { BackendTable } from '../BackendTable';
 
 // It's BACKEND props. Mark as MetaTableProps for backward computability in RN
 export interface IMetaTableProps {

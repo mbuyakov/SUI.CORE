@@ -1,9 +1,7 @@
-import { Rendered } from '@smsoft/sui-core';
-// tslint:disable-next-line:ban-ts-ignore
-// @ts-ignore
 import * as React from 'react';
 
 import {ISerializable, SerializableDnDChild} from "../Draggable/Serializable";
+import { Rendered } from '../other';
 
 export type DEFAULT_ROOT_TYPES = 'root' | 'row' | string;
 

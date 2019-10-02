@@ -1,13 +1,13 @@
 /* tslint:disable:jsx-no-lambda */
-import { chain, sleep, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT } from '@smsoft/sui-core';
-import { PromisedButton } from '@smsoft/sui-promised';
 import { Icon, Popover, Tooltip } from 'antd';
 import Button from 'antd/lib/button';
 import Select from 'antd/lib/select';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import { SUI_AUTO_WIDTH } from '../styles';
+import { PromisedButton } from '../Inputs';
+import { chain, sleep } from '../other';
+import { SUI_AUTO_WIDTH, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT } from '../styles';
 import { ITableInfo } from '../types';
 
 import { TableRenderSettingsPluginManager } from './TableRenderSettingsPluginManager';

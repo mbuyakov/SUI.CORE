@@ -1,8 +1,9 @@
-import {Omit, SUI_ROW_GROW_LEFT} from "@smsoft/sui-core";
 import {Button, DatePicker} from "antd";
 import {DatePickerProps} from "antd/lib/date-picker/interface";
 import moment from 'moment';
 import * as React from "react";
+
+import { SUI_ROW_GROW_LEFT } from '../styles';
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 

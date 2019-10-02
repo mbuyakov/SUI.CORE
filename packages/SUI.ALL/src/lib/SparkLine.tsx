@@ -1,6 +1,8 @@
 /* tslint:disable:no-magic-numbers */
-import {Color, defaultIfNotNumber} from "@smsoft/sui-core";
 import * as React from "react";
+
+import { Color } from './color';
+import { defaultIfNotNumber } from './typeWrappers';
 
 export class SparkLine extends React.Component<{
   color: Color | string;

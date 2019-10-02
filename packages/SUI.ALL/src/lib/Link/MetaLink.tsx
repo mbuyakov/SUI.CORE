@@ -1,11 +1,13 @@
-import {RouterLink} from "@smsoft/sui-base-components";
-import {getDataByKey, NO_DATA_TEXT} from "@smsoft/sui-core";
-import {WaitData} from "@smsoft/sui-promised";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
 import {TableInfoManager} from "../cache";
+import { NO_DATA_TEXT } from '../const';
+import { getDataByKey } from '../dataKey';
 import {getLinkForTable, getMetaInitProps, getRenderValue, RenderValue} from "../utils";
+import { WaitData } from '../WaitData';
+
+import { RouterLink } from './RouterLink';
 
 interface IMetaLinkProps {
   id: string | number;
@@ -37,7 +39,8 @@ export function renderMetaLinkArray(table: string, ids: Array<string | number>, 
         }}
         className="fit-content-width"
       >
-        {...ids.map(render)}
+        {/*TODO: Check. Old version: {...ids.map(render)}*/}
+        {ids.map(render)}
       </div>
     ) : NO_DATA_TEXT
 }

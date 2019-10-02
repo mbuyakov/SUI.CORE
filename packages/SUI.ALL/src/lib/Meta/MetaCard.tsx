@@ -2,17 +2,24 @@
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Cached } from '@material-ui/icons';
-import { isAdmin, TableSettingsDialog } from '@smsoft/sui-backend';
-import { BaseCard, DATA_KEY_REGEXP, IBaseCardRowLayout, RouterLink } from '@smsoft/sui-base-components';
-import { addPluralEnding, addQuotesIfString, capitalize, DataKey, dataKeysToDataTree, getDataByKey, isValidUuid, NO_DATA_TEXT, normalizeDataKey, query, wrapInArray, wrapInArrayWithoutNulls } from '@smsoft/sui-core';
-import { ColumnInfoManager, getLinkForTable, getReferencedTableInfo, NameManager, TableInfoManager } from '@smsoft/sui-meta';
-import { WaitData } from '@smsoft/sui-promised';
 import Card from 'antd/lib/card';
 import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
+import { BaseCard, DATA_KEY_REGEXP, IBaseCardRowLayout } from '../Base';
+import { ColumnInfoManager, NameManager, TableInfoManager } from '../cache';
+import { NO_DATA_TEXT } from '../const';
+import { DataKey, dataKeysToDataTree, getDataByKey, normalizeDataKey } from '../dataKey';
+import { query } from '../gql';
+import { RouterLink } from '../Link';
 import {SerializedCardSettings, SerializedFreeText, SerializedItemSettings, SerializedRowSettings} from "../MetaCardSettings";
+import { isValidUuid } from '../other';
+import { TableSettingsDialog } from '../plugins';
+import { addPluralEnding, addQuotesIfString, capitalize } from '../stringFormatters';
+import { wrapInArray, wrapInArrayWithoutNulls } from '../typeWrappers';
+import { getLinkForTable, getReferencedTableInfo, isAdmin } from '../utils';
+import { WaitData } from '../WaitData';
 
 import { MetaCardConfigurator } from './MetaCardConfigurator';
 
@@ -167,7 +174,7 @@ export class MetaCard extends React.Component<IMetaCardProps, {
             // tslint:disable-next-line:ban-ts-ignore
             // @ts-ignore
             dataKey: row.field,
-            render: (item) => plugin.render({
+            render: (item: any) => plugin.render({
               props: row,
               item,
             }),

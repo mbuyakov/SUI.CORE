@@ -1,8 +1,11 @@
 // tslint:disable:prefer-function-over-method variable-name
-import {asyncMap, getDataByKey, GqlCacheManager, ICacheEntry, query} from '@smsoft/sui-core';
 import autobind from "autobind-decorator";
 
-import {IColumnInfo, IGraphQLConnection, ITableInfo} from "../types";
+import { ICacheEntry } from '../cacheManager';
+import { getDataByKey } from '../dataKey';
+import { GqlCacheManager, query } from '../gql';
+import { asyncMap } from '../other';
+import { IColumnInfo, IGraphQLConnection, ITableInfo } from '../types';
 
 import {ColumnInfo, ColumnInfoManager} from "./ColumnInfo";
 import {Name} from "./Name";

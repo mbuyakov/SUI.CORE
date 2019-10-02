@@ -1,9 +1,5 @@
 /* tslint:disable:jsx-no-lambda no-magic-numbers no-any object-literal-sort-keys no-floating-promises promise-function-async */
 import { Cached } from '@material-ui/icons';
-import { MainSettings } from '@smsoft/sui-backend';
-import { BaseCard, DescriptionItem, DraggableRowTable, draw, FullScreenModal, SortingDirection, TooltipIcon } from '@smsoft/sui-base-components';
-import { generateUpdate, generateUpdateFn, getDataByKey, IObjectWithIndex, mutate, query, sleep, SUI_ROW, SUI_ROW_GROW_LEFT } from '@smsoft/sui-core';
-import { PromisedInput, PromisedMaterialIconButton, PromisedSelect, PromisedSwitch, WaitData } from '@smsoft/sui-promised';
 import { Table } from 'antd';
 import Button from 'antd/lib/button';
 import Card from 'antd/lib/card';
@@ -16,12 +12,25 @@ import autobind from 'autobind-decorator';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import {AdditionalTab} from "./additionalTabs/AdditionalTab";
+import {AdditionalTab} from './additionalTabs';
+import { BaseCard } from './Base';
+import { SortingDirection } from './BaseTable';
 import {ColumnInfo, TableInfo, TableInfoManager} from './cache';
+import { getDataByKey } from './dataKey';
+import { DescriptionItem } from './DescriptionItem';
+import { DraggableRowTable } from './DraggableRowTable';
+import { FullScreenModal } from './FullScreenModal';
+import { generateUpdate, generateUpdateFn, mutate, query } from './gql';
+import { PromisedInput, PromisedMaterialIconButton, PromisedSelect, PromisedSwitch } from './Inputs';
+import { MainSettings } from './MetaCardSettings';
+import { IObjectWithIndex, sleep } from './other';
 import { NamePopover, TagsPopover, VisibleByRolesPopover } from './Popover';
+import { SUI_ROW, SUI_ROW_GROW_LEFT } from './styles';
 import { TableRenderSettingsPopover } from './TableRenderSettings';
+import { TooltipIcon } from './TooltipIcon';
 import { IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IRole, ISubtotalType, ITableInfo } from './types';
-import { fullReloadTableInfo, getLinkForTable, getMetaInitProps } from './utils';
+import { draw, fullReloadTableInfo, getLinkForTable, getMetaInitProps } from './utils';
+import { WaitData } from './WaitData';
 
 
 const SPIN_DELAY = 500;
@@ -260,7 +269,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                                         rowStyle={{ width: 200 - 32 }}
                                         icon="right"
                                         type="number"
-                                        promise={(value): any => {
+                                        promise={(value: any): any => {
                                           getMetaInitProps().routerPushFn(getLinkForTable(data.tableInfoById.tableName, 'card', value));
 
                                           // Stub
@@ -337,7 +346,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                         },
                         {
                           dataKey: ['nameByNameId'],
-                          render: (value): JSX.Element => (
+                          render: (value: any): JSX.Element => (
                             <Card
                               size="small"
                               type="inner"
@@ -485,7 +494,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                                         pagination={false}
                                         dataSource={value.sort((a, b): number => a.order - b.order)}
                                         bordered={true}
-                                        onOrderChanged={(sortedDataSource): Promise<any> => Promise.all(sortedDataSource.map((line, index): Promise<any> => this.updateColField(line.id, 'order', index, false, false, (sortedDataSource.length - 1) === index)))}
+                                        onOrderChanged={(sortedDataSource: any): Promise<any> => Promise.all(sortedDataSource.map((line: any, index: any): Promise<any> => this.updateColField(line.id, 'order', index, false, false, (sortedDataSource.length - 1) === index)))}
                                       >
                                         <Column<IColumnInfo>
                                           title="Имя в БД"
@@ -681,7 +690,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                               items: [
                                 {
                                   dataKey: ['columnInfosByTableInfoId', 'nodes'],
-                                  render: (value: IColumnInfo[], item): JSX.Element => (
+                                  render: (value: IColumnInfo[], item: any): JSX.Element => (
                                     <Table
                                       components={{
                                         body: {

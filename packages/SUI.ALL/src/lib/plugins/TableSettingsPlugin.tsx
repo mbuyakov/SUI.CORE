@@ -2,10 +2,11 @@ import {Plugin, Template, TemplateConnector, TemplatePlaceholder} from '@devexpr
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Build from '@material-ui/icons/Build';
-import { FullScreenModal } from '@smsoft/sui-base-components';
-import { FullScreenTableSettings } from '@smsoft/sui-meta';
 import autobind from "autobind-decorator";
 import React from 'react';
+
+import { FullScreenModal } from '../FullScreenModal';
+import { FullScreenTableSettings } from '../TableSettings';
 
 interface ITableSettingsDialogProps {
   buttonStyle?: React.CSSProperties

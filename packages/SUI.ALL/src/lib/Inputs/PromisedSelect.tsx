@@ -1,9 +1,9 @@
-import {Omit, SUI_ROW_GROW_LEFT} from "@smsoft/sui-core";
 import {Button} from "antd";
 import Select, {SelectProps} from "antd/lib/select";
 import * as React from "react";
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
+import { SUI_ROW_GROW_LEFT } from '../styles';
 
 export type PromisedSelectProps<T> = IPromisedBaseProps<T> & Omit<SelectProps<T>, "onChange" | "value">
 

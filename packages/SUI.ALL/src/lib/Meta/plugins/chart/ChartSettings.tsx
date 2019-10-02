@@ -1,4 +1,3 @@
-import { lineFeedScreening } from '@smsoft/sui-core';
 import Input from 'antd/lib/input';
 import TextArea from 'antd/lib/input/TextArea';
 import autobind from 'autobind-decorator';
@@ -7,6 +6,7 @@ import * as React from 'react';
 import {DeletableSmallCard} from "../../../DeletableSmallCard";
 import {IBaseDnDChildProps} from "../../../Draggable";
 import {ISerializable, SerializableDnDChild} from "../../../Draggable/Serializable";
+import { lineFeedScreening } from '../../../stringFormatters';
 import {COMMON__GRID} from "../../../styles";
 
 interface IChartSettingsState {

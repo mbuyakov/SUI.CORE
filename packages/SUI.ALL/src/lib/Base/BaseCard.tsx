@@ -1,9 +1,10 @@
-import { OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '@smsoft/sui-core';
 import { Card } from 'antd';
 import Icon from 'antd/lib/icon';
 import Tabs from 'antd/lib/tabs';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
+
+import { OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '../typeWrappers';
 
 import { BaseCardContext } from './BaseCardContext';
 import { IBaseCardRowLayout, renderIBaseCardRowLayout } from './BaseCardRowLayout';

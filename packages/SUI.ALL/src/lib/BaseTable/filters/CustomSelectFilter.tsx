@@ -1,8 +1,8 @@
 // tslint:disable:no-any
 import {TableFilterRow} from "@devexpress/dx-react-grid";
-import {WaitData} from "@smsoft/sui-promised";
 import * as React from "react";
 
+import { WaitData } from '../../WaitData';
 import {INewSearchProps, SelectData} from "../types";
 
 import {BaseSelectFilter} from "./BaseSelectFilter";

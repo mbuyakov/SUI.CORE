@@ -1,7 +1,7 @@
-// tslint:disable:prefer-function-over-method
-import {getDataByKey, GqlCacheManager, ICacheEntry} from "@smsoft/sui-core";
-
-import {IColumnInfo, IColumnInfoReference, IColumnInfoRole, IColumnInfoTag, IFilterType, ISubtotalType} from "../types";
+import { ICacheEntry } from '../cacheManager';
+import { getDataByKey } from '../dataKey';
+import { GqlCacheManager } from '../gql';
+import { IColumnInfo, IColumnInfoReference, IColumnInfoRole, IColumnInfoTag, IFilterType, ISubtotalType } from '../types';
 
 import {Name} from "./Name";
 

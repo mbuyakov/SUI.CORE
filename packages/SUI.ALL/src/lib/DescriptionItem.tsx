@@ -1,5 +1,6 @@
-import {defaultIfNotBoolean} from "@smsoft/sui-core";
 import * as React from 'react';
+
+import { defaultIfNotBoolean } from './typeWrappers';
 
 declare interface IDescriptionItemProps {
   containerStyle?: React.CSSProperties;

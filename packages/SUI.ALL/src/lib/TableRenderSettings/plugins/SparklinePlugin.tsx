@@ -1,12 +1,13 @@
 /* tslint:disable:jsx-no-lambda */
-import { IBaseTableColLayout, SparkLine } from '@smsoft/sui-base-components';
-import { getLevelColor } from '@smsoft/sui-core';
 import { InputNumber } from 'antd';
 import Checkbox from 'antd/lib/checkbox';
 import Input from 'antd/lib/input';
 import * as React from 'react';
 
+import { IBaseTableColLayout } from '../../BaseTable';
 import { ColumnInfo } from '../../cache';
+import { getLevelColor } from '../../color';
+import { SparkLine } from '../../SparkLine';
 import { IColumnInfoToBaseTableColProps } from '../../utils';
 import { TableRenderSettingsPluginManager } from '../TableRenderSettingsPluginManager';
 import { ITableRenderParams, TableRenderSettingsPopover } from '../TableRenderSettingsPopover';

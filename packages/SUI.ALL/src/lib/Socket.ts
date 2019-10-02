@@ -1,6 +1,6 @@
-import {sleep} from "@smsoft/sui-core";
 import {CompatClient, Stomp, StompHeaders} from "@stomp/stompjs";
 import autobind from "autobind-decorator";
+import { sleep } from './other';
 
 const CONNECTED_AWAIT_TIMEOUT = 100;
 

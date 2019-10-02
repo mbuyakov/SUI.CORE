@@ -1,15 +1,16 @@
 /* tslint:disable:no-any */
-import { IBaseCardRowLayout } from '@smsoft/sui-base-components';
-import { camelCase, Merge } from '@smsoft/sui-core';
 import { Button, Mentions, Menu } from 'antd';
 import Checkbox, { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import Input from 'antd/lib/input';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
+import { IBaseCardRowLayout } from '../Base';
 import { DeletableSmallCard } from '../DeletableSmallCard';
 import { DnDList, IBaseDnDChildProps } from '../Draggable';
 import { ISerializable, SerializableDnDChild } from '../Draggable/Serializable';
+import { Merge } from '../other';
+import { camelCase } from '../stringFormatters';
 import { COMMON__GRID } from '../styles';
 
 import { CollapseSettings, SerializedCollapseSettings } from './CollapseSettings';

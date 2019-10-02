@@ -1,11 +1,12 @@
-import {IBaseCardColLayout} from "@smsoft/sui-base-components";
-import { getDataByKey, Merge } from '@smsoft/sui-core';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import { ContainerOptions } from 'react-smooth-dnd';
 
+import { IBaseCardColLayout } from '../Base';
+import { getDataByKey } from '../dataKey';
 import {DnDList} from "../Draggable";
 import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
+import { Merge } from '../other';
 
 import {ItemSettings, SerializedItemSettings} from "./ItemSettings";
 

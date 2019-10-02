@@ -1,9 +1,14 @@
-import {ActionType, FilterType, isNumberAction, SelectData} from "@smsoft/sui-base-components";
-import {addPluralEnding, camelCase, capitalize, DataKey, dataKeysToDataTree, getDataByKey, IGqlFilter, query, removePluralEnding, stringifyGqlFilter, wrapInArray} from "@smsoft/sui-core";
 
 import {ColumnInfo, ColumnInfoManager, TableInfo, TableInfoManager} from "../cache";
 
 import {getMetaInitProps, IRawRoute} from "./init";
+import { addPluralEnding, camelCase, capitalize, removePluralEnding } from '../stringFormatters';
+import { DataKey, dataKeysToDataTree, getDataByKey } from '../dataKey';
+import { IGqlFilter, query, stringifyGqlFilter } from '../gql';
+import { SelectData } from '../BaseTable';
+import { ActionType, isNumberAction } from './actionType';
+import { FilterType } from './filterType';
+import { wrapInArray } from '../typeWrappers';
 
 export type RouteType = 'card' | 'table';
 

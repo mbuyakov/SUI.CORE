@@ -6,12 +6,12 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
 import Typography from '@material-ui/core/Typography/Typography';
 import CloseIcon from '@material-ui/icons/Close';
-import { sleep } from '@smsoft/sui-core';
 import autobind from 'autobind-decorator';
 import React from 'react';
 import uuidv4 from 'uuid/v4';
 
 import { Z_999 } from './styles';
+import { sleep } from './other';
 
 type ChildrenWithPopupContainer = (getPopupContainer?: () => HTMLElement) => JSX.Element
 

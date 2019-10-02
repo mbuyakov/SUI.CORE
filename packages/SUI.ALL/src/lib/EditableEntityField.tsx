@@ -1,9 +1,14 @@
 /* tslint:disable:jsx-no-lambda typedef no-any */
-import { errorNotification, generateUpdate, IObjectWithIndex, NO_DATA_TEXT, Omit, PossibleId, PossibleValue } from '@smsoft/sui-core';
-import { EditablePromisedComponent, IPromisedBaseProps, WaitData } from '@smsoft/sui-promised';
 import { notification } from 'antd';
 import { OptionProps } from 'antd/lib/select';
 import * as React from 'react';
+
+import { NO_DATA_TEXT } from './const';
+import { errorNotification } from './drawUtils';
+import { generateUpdate, PossibleId, PossibleValue } from './gql/queryGenerator';
+import { EditablePromisedComponent, IPromisedBaseProps } from './Inputs';
+import { IObjectWithIndex } from './other';
+import { WaitData } from './WaitData';
 
 export class EditableEntityField<T = any> extends React.Component<{
   children: React.ReactElement<Omit<IPromisedBaseProps<T>, 'promise'>>

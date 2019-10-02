@@ -1,4 +1,3 @@
-import {Omit} from "@smsoft/sui-core";
 import Switch, {SwitchProps} from "antd/lib/switch";
 import autobind from "autobind-decorator";
 import * as React from "react";

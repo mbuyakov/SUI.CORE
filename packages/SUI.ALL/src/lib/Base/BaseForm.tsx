@@ -4,11 +4,13 @@ import isEqual from "lodash/isEqual";
 import moment from 'moment';
 import * as React from 'react';
 
+import { IObjectWithIndex } from '../other';
+import { OneOrArrayWithNulls } from '../typeWrappers';
+
 import {BaseCard, IBaseCardProps} from './BaseCard';
 import {IBaseFormRowLayout} from './BaseCardRowLayout';
 import {BaseFormContext} from './BaseFormContext';
-import { IObjectWithIndex } from '../other';
-import { OneOrArrayWithNulls } from '../typeWrappers';
+import { errorNotification } from '../drawUtils';
 
 export const SUBMITTED_FIELD = "___SUBMITTED___";
 export const FORM_LOCALSTORAGE_KEY = "__SUI_FORM_";

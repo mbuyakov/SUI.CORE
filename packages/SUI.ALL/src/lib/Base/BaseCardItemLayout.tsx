@@ -1,10 +1,12 @@
-import {DataKey, defaultIfNotBoolean, getDataByKey, NO_DATA_TEXT, Omit} from '@smsoft/sui-core';
 import {Tooltip} from 'antd';
 import Icon from 'antd/lib/icon';
 import * as React from 'react';
 
 import {BaseTable, IBaseTableProps} from "../BaseTable";
+import { NO_DATA_TEXT } from '../const';
+import { DataKey, getDataByKey } from '../dataKey';
 import {BASE_CARD_ITEM_LABEL_HORIZONTAL} from "../styles";
+import { defaultIfNotBoolean } from '../typeWrappers';
 
 // tslint:disable-next-line:no-any
 export type CardItemRender<T> = (value: any, item: T) => JSX.Element | string;

@@ -2,10 +2,6 @@
 import { Chip } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 import SettingsIcon from '@material-ui/icons/Settings';
-import {IBaseCardItemLayout} from "@smsoft/sui-base-components";
-import { capitalize, Merge } from '@smsoft/sui-core';
-import { ColumnInfo, ColumnInfoManager, IName, NameManager, NamePopover, TableInfoManager } from '@smsoft/sui-meta';
-import { WaitData } from '@smsoft/sui-promised';
 import { Spin, Tooltip } from 'antd';
 import Icon from 'antd/lib/icon';
 import Input from 'antd/lib/input';
@@ -16,9 +12,16 @@ import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
+import { IBaseCardItemLayout } from '../Base';
+import { ColumnInfo, ColumnInfoManager, NameManager, TableInfoManager } from '../cache';
 import {DnDDragHandler} from "../Draggable";
 import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
+import { Merge } from '../other';
+import { NamePopover } from '../Popover';
+import { capitalize } from '../stringFormatters';
 import {COMMON__GRID, ITEM_SETTINGS__DELETE_ICON, ITEM_SETTINGS__SETTINGS_ICON} from "../styles";
+import { IName } from '../types';
+import { WaitData } from '../WaitData';
 
 import {DebugModeContext} from "./DebugModeContext";
 import {GetPopupContainerContext} from "./GetPopupContainerContext";

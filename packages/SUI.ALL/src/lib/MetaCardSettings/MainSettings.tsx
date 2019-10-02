@@ -1,16 +1,17 @@
 // tslint:disable:no-any
-import { ColumnInfoManager, TableInfoManager } from '@smsoft/sui-meta';
-import { PromisedButton, WaitData } from '@smsoft/sui-promised';
 import { Switch } from 'antd';
 import Tooltip from 'antd/lib/tooltip';
 import Tree from 'antd/lib/tree';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
+import { ColumnInfoManager, TableInfoManager } from '../cache';
 import { DeletableSmallCard } from '../DeletableSmallCard';
 import { DnDList } from '../Draggable';
 import { ISerializableComponent } from '../Draggable/Serializable';
+import { PromisedButton } from '../Inputs';
 import { MAIN_SETTINGS__CONTAINER, MAIN_SETTINGS__ITEM_TREE } from '../styles';
+import { WaitData } from '../WaitData';
 
 import { CardSettings, SerializedCardSettings } from './CardSettings';
 import { DebugModeContext } from './DebugModeContext';
