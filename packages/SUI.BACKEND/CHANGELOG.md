@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.11](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.10...v5.14.11) (2019-10-02)
+
+
+### Bug Fixes
+
+* **backendtable:** onExpandedGroupChange fix ([9815746](https://github.com/mbuyakov/SUI.CORE/commit/9815746))
+
+
+
+
+
 ## [5.14.10](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.9...v5.14.10) (2019-10-02)
 
 **Note:** Version bump only for package @smsoft/sui-backend
