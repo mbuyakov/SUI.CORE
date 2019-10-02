@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.6...v6.0.0) (2019-10-02)
+
+**Note:** Version bump only for package root
+
+
+
+
+
 ## [5.14.6](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.5...v5.14.6) (2019-09-25)
 
 
