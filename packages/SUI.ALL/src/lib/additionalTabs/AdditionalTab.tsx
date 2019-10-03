@@ -17,7 +17,7 @@ interface IAdditionalTabProps {
   tableInfo: TableInfo;
 }
 
-interface IMetaSettingTableRowColorFormValues extends IResultDnfFormValues<IMetaSettingTableRowColorRowElement> {
+export interface IMetaSettingTableRowColorFormValues extends IResultDnfFormValues<IMetaSettingTableRowColorRowElement> {
   color: string;
 }
 

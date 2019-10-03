@@ -5,7 +5,7 @@ import autobind from 'autobind-decorator';
 import * as React from 'react';
 import uuid from 'uuid';
 
-import { asyncMap, BaseTable, camelCase, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getBackendUrl, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, RawModePlugin, RefreshMetaTablePlugin, Socket, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray, xor } from './index';
+import { asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getBackendUrl, getDataByKey, getFilterType, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, RawModePlugin, RefreshMetaTablePlugin, Socket, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray, xor } from './index';
 
 const SUBSCRIBE_DESTINATION_PREFIX = '/user/queue/response/';
 const SEND_DESTINATION = '/data';
@@ -60,8 +60,12 @@ type IBackendTableState<T> = {
   tableInfo?: TableInfo;
   title?: string;
   warnings?: Array<string | JSX.Element>;
+  colorSettingsRowStyler?(row: any): React.CSSProperties;
 } & IRemoteBaseTableFields;
 
+function getRowValue(row: any, column: IBaseTableColLayout): any {
+  return getDataByKey(row, column.dataKey || column.id);
+}
 
 export class BackendTable<TSelection = defaultSelection>
   extends React.Component<Omit<IBaseTableProps<TSelection>, 'rows' | 'cols' | 'defaultFilters'> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable> }, IBackendTableState<TSelection>>
@@ -178,6 +182,7 @@ export class BackendTable<TSelection = defaultSelection>
               (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
             ] : null
           }
+          rowStyler={this.generateRowStyler()}
           warnings={admin ? this.state.warnings : undefined}
           // tslint:disable-next-line:no-magic-numbers
           pageSizes={[10, 25, 50]}
@@ -252,6 +257,17 @@ export class BackendTable<TSelection = defaultSelection>
   private findPascalCaseColumnName(camelCaseColumnName: string): string {
     const resultColumnInfo = this.findColumnInfoByCamelCaseName(camelCaseColumnName);
     return resultColumnInfo && resultColumnInfo.columnName;
+  }
+
+  @autobind
+  private generateRowStyler(): (row: any) => React.CSSProperties {
+    const stylers = [this.state.colorSettingsRowStyler, this.props.rowStyler].filter(Boolean);
+
+    if (stylers.length) {
+      return row => stylers.reduce((result, styler) => ({...result, ...styler(row)}), {});
+    }
+
+    return undefined;
   }
 
   @autobind
@@ -603,7 +619,44 @@ export class BackendTable<TSelection = defaultSelection>
         }
       });
 
-      this.setState({ cols: allowedCols, tableInfo, warnings });
+      let colorSettingsRowStyler = null;
+
+      if (tableInfo.colorSettings) {
+        const colorSettings: IMetaSettingTableRowColorFormValues = JSON.parse(tableInfo.colorSettings);
+
+        if (colorSettings.color) {
+          const checkDnf = colorSettings.forms.map(andSettingBlock => andSettingBlock.map(setting => {
+            const firstTableInfo = cols.find(column => column.id === setting.firstColumnInfoId);
+            const firstBaseTableColLayout = allowedCols.find(column => column.id === setting.firstColumnInfoId);
+            const secondBaseTableColLayout = setting.secondColumnInfoId && allowedCols.find(column => column.id === setting.secondColumnInfoId);
+
+
+            if (firstBaseTableColLayout && (setting.constant || secondBaseTableColLayout)) {
+              return (row: any) => checkCondition(
+                setting.action,
+                setting.constant ? getFilterType(firstTableInfo, setting.action) : null,
+                getRowValue(row, firstBaseTableColLayout),
+                setting.constant ? setting.simpleFilter : getRowValue(row, secondBaseTableColLayout)
+              );
+            }
+
+            return () => false;
+          }));
+
+          colorSettingsRowStyler = (row: any): React.CSSProperties => {
+            const isValid = checkDnf.some(andChecks => andChecks.every(check => check(row)));
+
+            return isValid ? {backgroundColor: colorSettings.color} : undefined;
+          };
+        }
+      }
+
+      this.setState({
+        cols: allowedCols,
+        tableInfo,
+        colorSettingsRowStyler,
+        warnings
+      });
     }
   }
 
