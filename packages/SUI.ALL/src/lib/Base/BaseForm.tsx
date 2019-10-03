@@ -158,7 +158,7 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
       const fieldValue = values[field];
 
       // Magic
-      if (typeof fieldValue === "string" && (fieldValue.includes("-") || fieldValue.includes("."))) {
+      if (typeof fieldValue === "string" && ((fieldValue.match(/-/g) || []).length >= 2 || fieldValue.includes("."))) {
         const momentValue = moment(fieldValue);
         if (momentValue.isValid()) {
           // noinspection JSUnfilteredForInLoop
