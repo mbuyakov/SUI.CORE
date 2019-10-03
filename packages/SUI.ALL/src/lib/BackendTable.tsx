@@ -5,7 +5,7 @@ import autobind from 'autobind-decorator';
 import * as React from 'react';
 import uuid from 'uuid';
 
-import { asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getBackendUrl, getDataByKey, getFilterType, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, RawModePlugin, RefreshMetaTablePlugin, Socket, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray, xor } from './index';
+import { asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getBackendUrl, getDataByKey, getFilterType, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, RawModePlugin, RefreshMetaTablePlugin, Socket, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray, xor } from './index';
 
 const SUBSCRIBE_DESTINATION_PREFIX = '/user/queue/response/';
 const SEND_DESTINATION = '/data';
@@ -626,17 +626,30 @@ export class BackendTable<TSelection = defaultSelection>
 
         if (colorSettings.color) {
           const checkDnf = colorSettings.forms.map(andSettingBlock => andSettingBlock.map(setting => {
-            const firstTableInfo = cols.find(column => column.id === setting.firstColumnInfoId);
-            const firstBaseTableColLayout = allowedCols.find(column => column.id === setting.firstColumnInfoId);
-            const secondBaseTableColLayout = setting.secondColumnInfoId && allowedCols.find(column => column.id === setting.secondColumnInfoId);
+            const [firstColumnInfoSetting, secondColumnInfoSetting] =
+              (["firstColumnInfoId", "secondColumnInfoId"] as Array<keyof IMetaSettingTableRowColorRowElement>)
+                .map(name => {
+                  const column = setting[name] && cols.find(col => col.id === setting[name]);
+                  let columnCamelCaseName: string;
+                  let baseTableColLayout;
 
+                  if (column) {
+                    columnCamelCaseName = camelCase(column.columnName);
+                    baseTableColLayout = allowedCols.find(col => col.id === columnCamelCaseName);
+                  }
 
-            if (firstBaseTableColLayout && (setting.constant || secondBaseTableColLayout)) {
+                  return {
+                    column,
+                    baseTableColLayout
+                  }
+                });
+
+            if (firstColumnInfoSetting.baseTableColLayout && (setting.constant || secondColumnInfoSetting.baseTableColLayout)) {
               return (row: any) => checkCondition(
                 setting.action,
-                setting.constant ? getFilterType(firstTableInfo, setting.action) : null,
-                getRowValue(row, firstBaseTableColLayout),
-                setting.constant ? setting.simpleFilter : getRowValue(row, secondBaseTableColLayout)
+                setting.constant ? getFilterType(firstColumnInfoSetting.column, setting.action) : null,
+                getRowValue(row, firstColumnInfoSetting.baseTableColLayout),
+                setting.constant ? setting.simpleFilter : getRowValue(row, secondColumnInfoSetting.baseTableColLayout)
               );
             }
 
