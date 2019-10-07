@@ -2,6 +2,7 @@
 import { Filter, Grouping, GroupKey, Sorting } from '@devexpress/dx-react-grid';
 import { IFrame, IMessage } from '@stomp/stompjs';
 import autobind from 'autobind-decorator';
+import difference from "lodash/difference";
 import * as React from 'react';
 import uuid from 'uuid';
 
@@ -49,6 +50,11 @@ export interface IBackendTableProps {
   watchFilters?: boolean;
 }
 
+interface IExpandedGroup {
+  key: GroupKey;
+  path: string[];
+}
+
 type IBackendTableState<T> = {
   cols?: IBaseTableColLayout[];
   // tslint:disable-next-line:no-any
@@ -57,6 +63,7 @@ type IBackendTableState<T> = {
   lastSendSelection?: T[];
   loading?: boolean;
   rawMode?: boolean;
+  realExpandedGroups?: IExpandedGroup[];
   tableInfo?: TableInfo;
   title?: string;
   warnings?: Array<string | JSX.Element>;
@@ -65,6 +72,22 @@ type IBackendTableState<T> = {
 
 function getRowValue(row: any, column: IBaseTableColLayout): any {
   return getDataByKey(row, column.dataKey || column.id);
+}
+
+function calculateParentExpandedGroups(realExpandedGroupKeys: IExpandedGroup[], key: GroupKey): IExpandedGroup[] {
+  const splittedNewKey = key.split(DX_REACT_GROUP_SEPARATOR);
+  const parents: IExpandedGroup[] = [];
+
+  splittedNewKey.slice(0, -1).forEach((_, index) => {
+    const parentGroupKey = splittedNewKey.slice(0, index + 1).join(DX_REACT_GROUP_SEPARATOR);
+    const parentGroup = realExpandedGroupKeys.find(group => group.key === parentGroupKey);
+
+    if (parentGroup) {
+      parents.push(parentGroup);
+    }
+  });
+
+  return parents;
 }
 
 export class BackendTable<TSelection = defaultSelection>
@@ -337,43 +360,54 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private onExpandedGroupsChange(expandedGroups: GroupKey[]): void {
-    const groupMap = new Map<string, string[]>();
-    const keysToDelete = new Set<string>();
+    const stateExpandedGroups = this.state.expandedGroups || [];
+    const newKeys: GroupKey[] = difference(expandedGroups, stateExpandedGroups);
+    const deletedKeys: GroupKey[] = difference(stateExpandedGroups, expandedGroups);
+    const realExpandedGroups = (this.state.realExpandedGroups || []).filter(element => !deletedKeys.includes(element.key));
 
-    expandedGroups.forEach(expandedGroup => {
-      let position = expandedGroup.length;
-      let keys: string[] = [];
+    newKeys.forEach(newKey => {
+      const parents = calculateParentExpandedGroups(realExpandedGroups, newKey);
+      let path;
 
-      while (true) {
-        position = expandedGroup.lastIndexOf(DX_REACT_GROUP_SEPARATOR, position - 1);
-        if (position === -1) {
-          break;
-        }
-        const subKey = expandedGroup.substr(0, position);
-        if (groupMap.has(subKey)) {
-          keys = keys.concat(groupMap.get(subKey));
-          keysToDelete.add(subKey);
-          break;
-        }
+      if (parents.length) {
+        const lastParentPath = parents[parents.length - 1].path;
+        path = lastParentPath.concat(
+          newKey.substr(lastParentPath.join(DX_REACT_GROUP_SEPARATOR).length + DX_REACT_GROUP_SEPARATOR.length)
+        );
+      } else {
+        path = [newKey];
       }
-      const lastKey = (position === -1) ? expandedGroup : expandedGroup.substr(position + DX_REACT_GROUP_SEPARATOR.length);
 
-      keys.push(lastKey === 'null' ? null : lastKey);
-      groupMap.set(expandedGroup, keys);
+      realExpandedGroups.push({
+        key: newKey,
+        path
+      });
     });
 
     // noinspection JSIgnoredPromiseFromCall
     this.sendMessage(
       'EXPANDED_GROUP_CHANGE',
       {
-        expandedGroups: Array.from(groupMap.keys())
-          .filter(key => !keysToDelete.has(key))
-          .map(key => ({ group: groupMap.get(key) })),
+        expandedGroups: expandedGroups
+          .filter(groupKey => {
+            const groupKeyPrefix = `${groupKey}${DX_REACT_GROUP_SEPARATOR}`;
+            return expandedGroups.every(element => !element.startsWith(groupKeyPrefix))
+          })
+          .map(groupKey => realExpandedGroups.find(realGroup => realGroup.key === groupKey))
+          .filter(expandedGroup => {
+            const parents = calculateParentExpandedGroups(realExpandedGroups, expandedGroup.key);
+            return (parents.length + 1) === expandedGroup.path.length;
+          })
+          .map(expandedGroup => ({group: expandedGroup.path}))
       },
-      { expandedGroups, customGrouping: this.state.grouping, customExpandedGroups: this.state.customExpandedGroups },
-      { customExpandedGroups: null, customGrouping: null },
+      {
+        customGrouping: this.state.grouping,
+        customExpandedGroups: this.state.customExpandedGroups,
+        expandedGroups,
+        realExpandedGroups
+      },
+      {customExpandedGroups: null, customGrouping: null},
     );
-
   }
 
   @autobind
