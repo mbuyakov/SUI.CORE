@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.15.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.11...v5.15.0) (2019-10-08)
+
+**Note:** Version bump only for package @smsoft/sui-backend
+
+
+
+
+
 ## [5.14.11](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.10...v5.14.11) (2019-10-02)
 
 

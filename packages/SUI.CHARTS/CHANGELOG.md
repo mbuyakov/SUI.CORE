@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.15.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.11...v5.15.0) (2019-10-08)
+
+
+### Features
+
+* **charts:** categoryColumnChart ([d6d3a75](https://github.com/mbuyakov/SUI.CORE/commit/d6d3a75))
+
+
+
+
+
+
 ## [5.14.5](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.4...v5.14.5) (2019-09-25)
 
 **Note:** Version bump only for package @smsoft/sui-charts
