@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.15.0...v5.15.1) (2019-10-08)
+
+
+### Bug Fixes
+
+* **sui.charts index.ts:** add missed export ([bec42e5](https://github.com/mbuyakov/SUI.CORE/commit/bec42e5))
+
+
+
+
+
 # [5.15.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.11...v5.15.0) (2019-10-08)
 
 
