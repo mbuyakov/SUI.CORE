@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.17.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.17.0...v5.17.1) (2019-10-09)
+
+
+### Bug Fixes
+
+* **sui.charts:** missed export ([b40e0df](https://github.com/mbuyakov/SUI.CORE/commit/b40e0df))
+
+
+
+
+
 # [5.17.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.16.0...v5.17.0) (2019-10-09)
 
 
