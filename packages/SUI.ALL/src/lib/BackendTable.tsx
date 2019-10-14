@@ -2,7 +2,7 @@
 import { Filter, Grouping, GroupKey, Sorting } from '@devexpress/dx-react-grid';
 import { IFrame, IMessage } from '@stomp/stompjs';
 import autobind from 'autobind-decorator';
-import difference from "lodash/difference";
+import difference from 'lodash/difference';
 import * as React from 'react';
 import uuid from 'uuid';
 
@@ -42,9 +42,13 @@ export type BackendFilter = {
   predicate: PredicateType;
 } | SimpleBackendFilter;
 
+export type IServiceColumn = Pick<IBaseTableColLayout,
+  'id' | 'width' | 'title' | 'dataKey' | 'render' | 'defaultData'>;
+
 export interface IBackendTableProps {
   defaultFilters?: SimpleBackendFilter | SimpleBackendFilter[];
   filter?: BackendFilter | BackendFilter[];
+  serviceColumns?: IServiceColumn | IServiceColumn[];
   table: string;
   titleEnabled?: boolean;
   watchFilters?: boolean;
@@ -287,7 +291,7 @@ export class BackendTable<TSelection = defaultSelection>
     const stylers = [this.state.colorSettingsRowStyler, this.props.rowStyler].filter(Boolean);
 
     if (stylers.length) {
-      return row => stylers.reduce((result, styler) => ({...result, ...styler(row)}), {});
+      return row => stylers.reduce((result, styler) => ({ ...result, ...styler(row) }), {});
     }
 
     return undefined;
@@ -372,7 +376,7 @@ export class BackendTable<TSelection = defaultSelection>
       if (parents.length) {
         const lastParentPath = parents[parents.length - 1].path;
         path = lastParentPath.concat(
-          newKey.substr(lastParentPath.join(DX_REACT_GROUP_SEPARATOR).length + DX_REACT_GROUP_SEPARATOR.length)
+          newKey.substr(lastParentPath.join(DX_REACT_GROUP_SEPARATOR).length + DX_REACT_GROUP_SEPARATOR.length),
         );
       } else {
         path = [newKey];
@@ -380,7 +384,7 @@ export class BackendTable<TSelection = defaultSelection>
 
       realExpandedGroups.push({
         key: newKey,
-        path
+        path,
       });
     });
 
@@ -391,22 +395,22 @@ export class BackendTable<TSelection = defaultSelection>
         expandedGroups: expandedGroups
           .filter(groupKey => {
             const groupKeyPrefix = `${groupKey}${DX_REACT_GROUP_SEPARATOR}`;
-            return expandedGroups.every(element => !element.startsWith(groupKeyPrefix))
+            return expandedGroups.every(element => !element.startsWith(groupKeyPrefix));
           })
           .map(groupKey => realExpandedGroups.find(realGroup => realGroup.key === groupKey))
           .filter(expandedGroup => {
             const parents = calculateParentExpandedGroups(realExpandedGroups, expandedGroup.key);
             return (parents.length + 1) === expandedGroup.path.length;
           })
-          .map(expandedGroup => ({group: expandedGroup.path}))
+          .map(expandedGroup => ({ group: expandedGroup.path })),
       },
       {
         customGrouping: this.state.grouping,
         customExpandedGroups: this.state.customExpandedGroups,
         expandedGroups,
-        realExpandedGroups
+        realExpandedGroups,
       },
-      {customExpandedGroups: null, customGrouping: null},
+      { customExpandedGroups: null, customGrouping: null },
     );
   }
 
@@ -661,7 +665,7 @@ export class BackendTable<TSelection = defaultSelection>
         if (colorSettings.color) {
           const checkDnf = colorSettings.forms.map(andSettingBlock => andSettingBlock.map(setting => {
             const [firstColumnInfoSetting, secondColumnInfoSetting] =
-              (["firstColumnInfoId", "secondColumnInfoId"] as Array<keyof IMetaSettingTableRowColorRowElement>)
+              (['firstColumnInfoId', 'secondColumnInfoId'] as Array<keyof IMetaSettingTableRowColorRowElement>)
                 .map(name => {
                   const column = setting[name] && cols.find(col => col.id === setting[name]);
                   let columnCamelCaseName: string;
@@ -674,8 +678,8 @@ export class BackendTable<TSelection = defaultSelection>
 
                   return {
                     column,
-                    baseTableColLayout
-                  }
+                    baseTableColLayout,
+                  };
                 });
 
             if (firstColumnInfoSetting.baseTableColLayout && (setting.constant || secondColumnInfoSetting.baseTableColLayout)) {
@@ -683,7 +687,7 @@ export class BackendTable<TSelection = defaultSelection>
                 setting.action,
                 setting.constant ? getFilterType(firstColumnInfoSetting.column, setting.action) : null,
                 getRowValue(row, firstColumnInfoSetting.baseTableColLayout),
-                setting.constant ? setting.simpleFilter : getRowValue(row, secondColumnInfoSetting.baseTableColLayout)
+                setting.constant ? setting.simpleFilter : getRowValue(row, secondColumnInfoSetting.baseTableColLayout),
               );
             }
 
@@ -693,16 +697,25 @@ export class BackendTable<TSelection = defaultSelection>
           colorSettingsRowStyler = (row: any): React.CSSProperties => {
             const isValid = checkDnf.some(andChecks => andChecks.every(check => check(row)));
 
-            return isValid ? {backgroundColor: colorSettings.color} : undefined;
+            return isValid ? { backgroundColor: colorSettings.color } : undefined;
           };
         }
       }
 
+      const serviceColumns = (this.props.serviceColumns ? wrapInArray(this.props.serviceColumns) : [])
+        .map(serviceColumn => ({
+          ...serviceColumn,
+          exportable: false,
+          groupingEnabled: false,
+          sortingEnabled: false,
+          search: { type: 'none' },
+        } as IBaseTableColLayout));
+
       this.setState({
-        cols: allowedCols,
+        cols: serviceColumns.concat(allowedCols),
         tableInfo,
         colorSettingsRowStyler,
-        warnings
+        warnings,
       });
     }
   }
