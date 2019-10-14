@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-promised",
-  "version": "5.14.10",
+  "version": "5.18.0",
   "main": "dist/index.js",
   "module": "dist/sui-promised.esm.js",
   "typings": "dist/index.d.ts",
@@ -40,7 +40,7 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@smsoft/sui-base-components": "^5.14.10"
+    "@smsoft/sui-base-components": "^5.18.0"
   },
   "gitHead": "10c4d9ba04c3d76112173f8f0e3cacac0570ea7d"
 }
