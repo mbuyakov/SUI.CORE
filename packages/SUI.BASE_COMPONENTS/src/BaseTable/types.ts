@@ -58,6 +58,7 @@ export interface IBaseTableColLayout {
   searchRef?: string;
   searchType?: TableSearchType;
 
+  sortingEnabled?: boolean;
   subtotal?: {expression: string, name: string};
 
   title?: string;
