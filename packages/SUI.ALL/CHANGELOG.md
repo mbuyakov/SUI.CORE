@@ -3,98 +3,9 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.19.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.18.0...v5.19.0) (2019-10-14)
+# [6.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.6...v6.0.0) (2019-10-02)
 
 **Note:** Version bump only for package @smsoft/sui-all
-
-
-
-
-
-# [5.18.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.17.1...v5.18.0) (2019-10-14)
-
-**Note:** Version bump only for package @smsoft/sui-all
-
-
-
-
-
-## [5.17.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.17.0...v5.17.1) (2019-10-09)
-
-**Note:** Version bump only for package @smsoft/sui-all
-
-
-
-
-
-# [5.17.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.16.0...v5.17.0) (2019-10-09)
-
-**Note:** Version bump only for package @smsoft/sui-all
-
-
-
-
-
-# [5.16.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.15.1...v5.16.0) (2019-10-08)
-
-**Note:** Version bump only for package @smsoft/sui-all
-
-
-
-
-
-## [5.15.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.15.0...v5.15.1) (2019-10-08)
-
-**Note:** Version bump only for package @smsoft/sui-all
-
-
-
-
-
-# [5.15.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.11...v5.15.0) (2019-10-08)
-
-**Note:** Version bump only for package @smsoft/sui-all
-
-
-
-
-
-## [5.14.11](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.10...v5.14.11) (2019-10-02)
-
-**Note:** Version bump only for package @smsoft/sui-all
-
-
-
-
-
-## [5.14.10](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.9...v5.14.10) (2019-10-02)
-
-**Note:** Version bump only for package @smsoft/sui-all
-
-
-
-
-
-## [5.14.9](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.8...v5.14.9) (2019-10-01)
-
-**Note:** Version bump only for package @smsoft/sui-all
-
-
-
-
-
-## [5.14.8](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.7...v5.14.8) (2019-09-30)
-
-**Note:** Version bump only for package @smsoft/sui-all
-
-
-
-
-
-## [5.14.7](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.6...v5.14.7) (2019-09-30)
-
-**Note:** Version bump only for package @smsoft/sui-all
-
 
 
 

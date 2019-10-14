@@ -5,6 +5,7 @@
   ],
   "rules": {
     "only-arrow-functions": false,
+    "completed-docs": false,
     "no-magic-numbers": false,
     "strict-boolean-expressions": false,
     "no-implicit-dependencies": false,
@@ -28,6 +29,8 @@
     "no-object-literal-type-assertion": false,
     "no-non-null-assertion": false,
     "no-unnecessary-class": false,
+    "comment-format": false,
+    "prefer-function-over-method": false,
     "typedef": [
       true,
       "call-signature",
