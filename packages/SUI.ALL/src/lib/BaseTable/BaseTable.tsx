@@ -27,6 +27,7 @@ import {
   GroupingPanel,
   PagingPanel,
   Table,
+  TableBandHeader,
   TableColumnReordering,
   TableColumnResizing,
   TableColumnVisibility,
@@ -485,6 +486,7 @@ export class BaseTable<TSelection = defaultSelection>
             showGroupingControls={true}
             showSortingControls={true}
           />}
+          {this.props.columnBands && (<TableBandHeader columnBands={this.props.columnBands}/>)}
           {this.props.toolbarButtons}
         </Grid>}
         {this.props.loading && (
