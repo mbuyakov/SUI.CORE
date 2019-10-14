@@ -2,6 +2,7 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4core from '@amcharts/amcharts4/core';
 import am4lang_ru_RU from '@amcharts/amcharts4/lang/ru_RU';
 import * as am4maps from "@amcharts/amcharts4/maps";
+import * as am4forceDirected from "@amcharts/amcharts4/plugins/forceDirected";
 import * as am4wordCloud from "@amcharts/amcharts4/plugins/wordCloud";
 import * as React from 'react';
 
@@ -78,5 +79,4 @@ export abstract class ChordDiagramWrapper extends ChartWrapper<am4charts.ChordDi
 export abstract class TreeMapWrapper extends ChartWrapper<am4charts.TreeMap> {}
 export abstract class WordCloudWrapper extends ChartWrapper<am4wordCloud.WordCloud> {}
 export abstract class MapWrapper extends ChartWrapper<am4maps.MapChart> {}
-
-
+export abstract class ForceDirectedTreeWrapper extends ChartWrapper<am4forceDirected.ForceDirectedTree> {}
