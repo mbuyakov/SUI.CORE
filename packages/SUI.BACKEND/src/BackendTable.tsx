@@ -46,9 +46,15 @@ export type BackendFilter = {
   predicate: PredicateType;
 } | SimpleBackendFilter;
 
+export type IServiceColumn = Pick<
+  IBaseTableColLayout,
+  "id" | "width" | "title" | "dataKey" | "render" | "defaultData"
+>;
+
 export interface IBackendTableProps {
   defaultFilters?: SimpleBackendFilter | SimpleBackendFilter[];
   filter?: BackendFilter | BackendFilter[];
+  serviceColumns?: IServiceColumn | IServiceColumn[];
   table: string;
   titleEnabled?: boolean;
   watchFilters?: boolean;
@@ -702,8 +708,16 @@ export class BackendTable<TSelection = defaultSelection>
         }
       }
 
+      const serviceColumns= (wrapInArray(this.props.serviceColumns) || []).map(serviceColumn => ({
+        ...serviceColumn,
+        exportable: false,
+        groupingEnabled: false,
+        sortingEnabled: false,
+        search: { type: "none" }
+      } as IBaseTableColLayout));
+
       this.setState({
-        cols: allowedCols,
+        cols: serviceColumns.concat(allowedCols),
         tableInfo,
         colorSettingsRowStyler,
         warnings

@@ -1,5 +1,5 @@
 /* tslint:disable:no-any */
-import {Filter, FilterOperation, Grouping, GroupKey, Sorting, TableRowDetail} from '@devexpress/dx-react-grid';
+import {Filter, FilterOperation, Grouping, GroupKey, Sorting, TableBandHeader as TableBandHeaderBase, TableRowDetail} from '@devexpress/dx-react-grid';
 import {DataKey} from "@smsoft/sui-core";
 import {CardType} from 'antd/lib/card';
 import * as React from 'react';
@@ -58,6 +58,7 @@ export interface IBaseTableColLayout {
   searchRef?: string;
   searchType?: TableSearchType;
 
+  sortingEnabled?: boolean;
   subtotal?: {expression: string, name: string};
 
   title?: string;
@@ -101,6 +102,7 @@ export interface IBaseTableProps<TSelection = any> {
   borderless?: boolean;
   cardType?: CardType;
   cols: IBaseTableColLayout[];
+  columnBands?: TableBandHeaderBase.ColumnBands[];
   defaultFilters?: Filter[];
   defaultSortings?: Sorting[];
   defaultWidth?: number;

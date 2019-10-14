@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.19.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.18.0...v5.19.0) (2019-10-14)
+
+
+### Features
+
+* **column bands:** add column bands to BaseTable ([f04ce31](https://github.com/mbuyakov/SUI.CORE/commit/f04ce31))
+
+
+
+
+
+# [5.18.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.17.1...v5.18.0) (2019-10-14)
+
+
+### Features
+
+* **backendtable:** sortingEnabled && Service columns ([1e5ee75](https://github.com/mbuyakov/SUI.CORE/commit/1e5ee75))
+
+
+
+
+
 ## [5.17.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.17.0...v5.17.1) (2019-10-09)
 
 

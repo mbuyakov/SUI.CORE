@@ -27,6 +27,7 @@ import {
   GroupingPanel,
   PagingPanel,
   Table,
+  TableBandHeader,
   TableColumnReordering,
   TableColumnResizing,
   TableColumnVisibility,
@@ -188,8 +189,14 @@ export class BaseTable<TSelection = defaultSelection>
       .filter(col => col.defaultGrouping)
       .map(value => ({columnName: value.id}));
 
-    const enableGrouping = this.props.cols
-      .map(value => ({columnName: value.id, groupingEnabled: defaultIfNotBoolean(value.groupingEnabled, true)}));
+    const enableGrouping = this.props.cols.map(column => ({
+      columnName: column.id,
+      groupingEnabled: defaultIfNotBoolean(column.groupingEnabled, true)
+    }));
+    const enableSorting = this.props.cols.map(column => ({
+      columnName: column.id,
+      sortingEnabled: defaultIfNotBoolean(column.sortingEnabled, true)
+    }));
 
     const sortingExtension = this.props.cols
       .filter(col => col.comparator)
@@ -373,6 +380,7 @@ export class BaseTable<TSelection = defaultSelection>
           {rowDetail && <RowDetailState defaultExpandedRowIds={[]}/>}
           {sortingEnabled && (
             <SortingState
+              columnExtensions={enableSorting}
               sorting={this.props.sorting}
               defaultSorting={defaultSorting}
               onSortingChange={this.props.onSortingChange}
@@ -475,6 +483,7 @@ export class BaseTable<TSelection = defaultSelection>
             showGroupingControls={true}
             showSortingControls={true}
           />}
+          {this.props.columnBands && (<TableBandHeader columnBands={this.props.columnBands}/>)}
           {this.props.toolbarButtons}
         </Grid>}
         {this.props.loading && (
