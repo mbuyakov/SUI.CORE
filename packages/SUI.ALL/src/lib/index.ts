@@ -7,6 +7,7 @@ export * from "./comparators";
 export * from "./dataKey";
 export * from "./Dnf";
 export * from "./Draggable";
+export * from "./ForceDirectedTree";
 export * from "./gql";
 export * from "./Inputs";
 export * from "./Link";
