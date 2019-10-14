@@ -1,8 +1,9 @@
 // tslint:disable:no-any
 import * as am4forceDirected from "@amcharts/amcharts4/plugins/forceDirected";
-import {ForceDirectedTreeWrapper} from "@smsoft/sui-charts";
 import autobind from 'autobind-decorator';
 import React from "react";
+
+import { ForceDirectedTreeWrapper } from './ChartWrapper';
 
 export type IForceDirectedTreeDataElement<T extends {} = {}> = T & {
   children?: Array<IForceDirectedTreeDataElement<T>>;
