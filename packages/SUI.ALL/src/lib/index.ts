@@ -24,6 +24,7 @@ export * from "./typeWrappers";
 export * from "./utils";
 export * from "./BackendTable";
 export * from "./cacheManager";
+export * from "./CategoryColumnChart";
 export * from "./ChartWrapper";
 export * from "./const";
 export * from "./DeletableSmallCard";
