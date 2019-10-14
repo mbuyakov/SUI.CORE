@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.20.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.6...v5.20.0) (2019-10-14)
+
+
+### Bug Fixes
+
+* **backendtable:** fix ([9018819](https://github.com/mbuyakov/SUI.CORE/commit/9018819))
+* **backendtable:** onExpandedGroupChange fix ([9815746](https://github.com/mbuyakov/SUI.CORE/commit/9815746))
+* **baseform:** sad ([17c4546](https://github.com/mbuyakov/SUI.CORE/commit/17c4546))
+* **sui.charts:** missed export ([b40e0df](https://github.com/mbuyakov/SUI.CORE/commit/b40e0df))
+* **sui.charts index.ts:** add missed export ([bec42e5](https://github.com/mbuyakov/SUI.CORE/commit/bec42e5))
+* **tableinfo queries:** add missed colorSettings in queries ([24be28e](https://github.com/mbuyakov/SUI.CORE/commit/24be28e))
+* build ([432ceb2](https://github.com/mbuyakov/SUI.CORE/commit/432ceb2))
+
+
+### Features
+
+* **backendtable:** sortingEnabled && Service columns ([1e5ee75](https://github.com/mbuyakov/SUI.CORE/commit/1e5ee75))
+* **backendtable:** use colorSetting in BackendTable ([1d76824](https://github.com/mbuyakov/SUI.CORE/commit/1d76824))
+* **charts:** categoryColumnChart ([d6d3a75](https://github.com/mbuyakov/SUI.CORE/commit/d6d3a75))
+* **column bands:** add column bands to BaseTable ([f04ce31](https://github.com/mbuyakov/SUI.CORE/commit/f04ce31))
+* **forceddirectedtree:** add ForcedDirectedTree ([067fd7b](https://github.com/mbuyakov/SUI.CORE/commit/067fd7b))
+* **forcedirectedtreewrapper:** forceDirectedTreeWrapper ([c54f616](https://github.com/mbuyakov/SUI.CORE/commit/c54f616))
+
+
+
+
+
 # [5.19.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.18.0...v5.19.0) (2019-10-14)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-charts",
-  "version": "5.17.1",
+  "version": "5.20.0",
   "main": "dist/index.js",
   "module": "dist/sui-charts.esm.js",
   "typings": "dist/index.d.ts",

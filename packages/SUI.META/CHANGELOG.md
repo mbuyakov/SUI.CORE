@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.20.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.6...v5.20.0) (2019-10-14)
+
+
+### Bug Fixes
+
+* **tableinfo queries:** add missed colorSettings in queries ([24be28e](https://github.com/mbuyakov/SUI.CORE/commit/24be28e))
+
+
+### Features
+
+* **backendtable:** use colorSetting in BackendTable ([1d76824](https://github.com/mbuyakov/SUI.CORE/commit/1d76824))
+
+
+
+
+
 # [5.19.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.18.0...v5.19.0) (2019-10-14)
 
 **Note:** Version bump only for package @smsoft/sui-meta

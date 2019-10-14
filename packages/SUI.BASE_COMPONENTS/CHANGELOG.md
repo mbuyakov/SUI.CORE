@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.20.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.6...v5.20.0) (2019-10-14)
+
+
+### Bug Fixes
+
+* **baseform:** sad ([17c4546](https://github.com/mbuyakov/SUI.CORE/commit/17c4546))
+* build ([432ceb2](https://github.com/mbuyakov/SUI.CORE/commit/432ceb2))
+
+
+### Features
+
+* **backendtable:** sortingEnabled && Service columns ([1e5ee75](https://github.com/mbuyakov/SUI.CORE/commit/1e5ee75))
+* **backendtable:** use colorSetting in BackendTable ([1d76824](https://github.com/mbuyakov/SUI.CORE/commit/1d76824))
+* **column bands:** add column bands to BaseTable ([f04ce31](https://github.com/mbuyakov/SUI.CORE/commit/f04ce31))
+
+
+
+
+
 # [5.19.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.18.0...v5.19.0) (2019-10-14)
 
 

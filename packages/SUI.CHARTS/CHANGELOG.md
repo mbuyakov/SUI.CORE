@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.20.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.6...v5.20.0) (2019-10-14)
+
+
+### Bug Fixes
+
+* **sui.charts:** missed export ([b40e0df](https://github.com/mbuyakov/SUI.CORE/commit/b40e0df))
+* **sui.charts index.ts:** add missed export ([bec42e5](https://github.com/mbuyakov/SUI.CORE/commit/bec42e5))
+
+
+### Features
+
+* **charts:** categoryColumnChart ([d6d3a75](https://github.com/mbuyakov/SUI.CORE/commit/d6d3a75))
+* **forceddirectedtree:** add ForcedDirectedTree ([067fd7b](https://github.com/mbuyakov/SUI.CORE/commit/067fd7b))
+* **forcedirectedtreewrapper:** forceDirectedTreeWrapper ([c54f616](https://github.com/mbuyakov/SUI.CORE/commit/c54f616))
+
+
+
+
+
 ## [5.17.1](https://github.com/mbuyakov/SUI.CORE/compare/v5.17.0...v5.17.1) (2019-10-09)
 
 
