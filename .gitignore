@@ -4,11 +4,10 @@
 build
 node_modules
 *.log*
-yarn.lock
+#yarn.lock
 *.log
 .rts2_cache_cjs
 .rts2_cache_esm
 .rts2_cache_umd
 dist
 out
-yarn commit
