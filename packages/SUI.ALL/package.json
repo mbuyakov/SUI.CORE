@@ -91,6 +91,7 @@
     "react-dnd": "^9.4.0",
     "react-dnd-html5-backend": "^9.4.0",
     "react-dom": "^16.10.2",
+    "react-odometerjs": "^2.1.1",
     "react-router-dom": "^5.1.2",
     "react-smooth-dnd": "^0.11.0",
     "react-to-print": "^2.4.0"
