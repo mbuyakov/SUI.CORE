@@ -1,0 +1,15 @@
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+    compile project(":sui-security")
+    compile project(":sui-meta-schema-service")
+    compile project(":sui-backend")
+    compile "org.springframework:spring-messaging:${springVersion}"
+    compile "org.springframework.boot:spring-boot-starter-websocket:${springBootVersion}"
+    compile "org.springframework.security:spring-security-messaging:${springVersion}"
+    compile 'org.postgresql:postgresql'
+    compile "org.json:json:20180130"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:${jacksonVersion}"
+}

@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.2](https://github.com/mbuyakov/SUI.CORE/compare/v6.0.1...v6.0.2) (2019-10-15)
+
+
+### Bug Fixes
+
+* tslint ([bd70f3a](https://github.com/mbuyakov/SUI.CORE/commit/bd70f3a))
+
+
+
+
+
+## [6.0.1](https://github.com/mbuyakov/SUI.CORE/compare/v6.0.0...v6.0.1) (2019-10-15)
+
+
+### Bug Fixes
+
+* **backendtable:** fix ([9018819](https://github.com/mbuyakov/SUI.CORE/commit/9018819))
+* **backendtable:** onExpandedGroupChange fix ([9815746](https://github.com/mbuyakov/SUI.CORE/commit/9815746))
+* **baseform:** sad ([17c4546](https://github.com/mbuyakov/SUI.CORE/commit/17c4546))
+* **sui.charts:** missed export ([b40e0df](https://github.com/mbuyakov/SUI.CORE/commit/b40e0df))
+* **sui.charts index.ts:** add missed export ([bec42e5](https://github.com/mbuyakov/SUI.CORE/commit/bec42e5))
+* **tableinfo queries:** add missed colorSettings in queries ([24be28e](https://github.com/mbuyakov/SUI.CORE/commit/24be28e))
+
+
+### Features
+
+* **backendtable:** sortingEnabled && Service columns ([1e5ee75](https://github.com/mbuyakov/SUI.CORE/commit/1e5ee75))
+* **backendtable:** use colorSetting in BackendTable ([1d76824](https://github.com/mbuyakov/SUI.CORE/commit/1d76824))
+* **charts:** categoryColumnChart ([d6d3a75](https://github.com/mbuyakov/SUI.CORE/commit/d6d3a75))
+* **column bands:** add column bands to BaseTable ([f04ce31](https://github.com/mbuyakov/SUI.CORE/commit/f04ce31))
+* **forceddirectedtree:** add ForcedDirectedTree ([067fd7b](https://github.com/mbuyakov/SUI.CORE/commit/067fd7b))
+* **forcedirectedtreewrapper:** forceDirectedTreeWrapper ([c54f616](https://github.com/mbuyakov/SUI.CORE/commit/c54f616))
+
+
+
+
+
+# [6.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.6...v6.0.0) (2019-10-02)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+## [5.14.6](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.5...v5.14.6) (2019-09-25)
+
+
+### Bug Fixes
+
+* styles ([666c296](https://github.com/mbuyakov/SUI.CORE/commit/666c296))
+
+
+
+
+
 ## [5.14.5](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.4...v5.14.5) (2019-09-25)
 
 

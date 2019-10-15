@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.2](https://github.com/mbuyakov/SUI.CORE/compare/v6.0.1...v6.0.2) (2019-10-15)
+
+
+### Bug Fixes
+
+* tslint ([bd70f3a](https://github.com/mbuyakov/SUI.CORE/commit/bd70f3a))
+
+
+
+
+
+## [6.0.1](https://github.com/mbuyakov/SUI.CORE/compare/v6.0.0...v6.0.1) (2019-10-15)
+
+**Note:** Version bump only for package @smsoft/sui-all
+
+
+
+
+
+# [6.0.0](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.6...v6.0.0) (2019-10-02)
+
+**Note:** Version bump only for package @smsoft/sui-all
+
+
+
+
+
+## [5.14.6](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.5...v5.14.6) (2019-09-25)
+
+**Note:** Version bump only for package @smsoft/sui-all
+
+
+
+
+
 ## [5.14.5](https://github.com/mbuyakov/SUI.CORE/compare/v5.14.4...v5.14.5) (2019-09-25)
 
 **Note:** Version bump only for package @smsoft/sui-all
