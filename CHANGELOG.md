@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.2](https://github.com/mbuyakov/SUI.CORE/compare/v6.0.1...v6.0.2) (2019-10-15)
+
+
+### Bug Fixes
+
+* tslint ([bd70f3a](https://github.com/mbuyakov/SUI.CORE/commit/bd70f3a))
+
+
+
+
+
 ## [6.0.1](https://github.com/mbuyakov/SUI.CORE/compare/v6.0.0...v6.0.1) (2019-10-15)
 
 
