@@ -1,10 +1,11 @@
 // tslint:disable:no-magic-numbers
 import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4core from "@amcharts/amcharts4/core";
-import {XYChartWrapper} from "@smsoft/sui-charts";
-import {Color} from "@smsoft/sui-core";
 import autobind from "autobind-decorator";
 import React from "react";
+
+import { XYChartWrapper } from './ChartWrapper';
+import { Color } from './color';
 
 export interface ICategoryColumnChartSeries {
   color?: Color;
