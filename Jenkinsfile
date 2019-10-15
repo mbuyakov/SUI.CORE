@@ -82,6 +82,7 @@ pipeline {
           steps {
             sh """
               git fetch --tags --force
+              yarn cache clean
               yarn install
               yarn ci
               yarn publish-all
