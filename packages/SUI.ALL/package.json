@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-all",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -91,6 +91,7 @@
     "react-dnd": "^9.4.0",
     "react-dnd-html5-backend": "^9.4.0",
     "react-dom": "^16.10.2",
+    "react-odometerjs": "^2.1.1",
     "react-router-dom": "^5.1.2",
     "react-smooth-dnd": "^0.11.0",
     "react-to-print": "^2.4.0"
