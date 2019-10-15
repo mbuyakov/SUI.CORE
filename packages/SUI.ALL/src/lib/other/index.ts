@@ -52,7 +52,7 @@ export async function asyncReplace(
 
   const replacements = await Promise.all(promises);
 
-  return str.replace(regExp, () => replacements.shift() as string);
+  return str.replace(regExp, () => replacements.shift());
 }
 
 export type Unpacked<T> =

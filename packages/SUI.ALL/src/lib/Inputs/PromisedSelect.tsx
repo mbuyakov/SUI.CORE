@@ -2,8 +2,9 @@ import {Button} from "antd";
 import Select, {SelectProps} from "antd/lib/select";
 import * as React from "react";
 
-import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 import { SUI_ROW_GROW_LEFT } from '../styles';
+
+import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
 export type PromisedSelectProps<T> = IPromisedBaseProps<T> & Omit<SelectProps<T>, "onChange" | "value">
 
@@ -28,7 +29,7 @@ export class PromisedSelect<T> extends PromisedBase<PromisedSelectProps<T>, IPro
           {...selectProps as SelectProps<T> as any}
           disabled={this.props.disabled || this.props.loading || this.state.loading || false}
           onChange={this.onChange}
-          value={this.state.value as T}
+          value={this.state.value}
         />
         {this.state.savedValue !== this.state.value && saveButton}
       </div>

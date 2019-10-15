@@ -1,14 +1,14 @@
 
+import { SelectData } from '../BaseTable';
 import {ColumnInfo, ColumnInfoManager, TableInfo, TableInfoManager} from "../cache";
-
-import {getMetaInitProps, IRawRoute} from "./init";
-import { addPluralEnding, camelCase, capitalize, removePluralEnding } from '../stringFormatters';
 import { DataKey, dataKeysToDataTree, getDataByKey } from '../dataKey';
 import { IGqlFilter, query, stringifyGqlFilter } from '../gql';
-import { SelectData } from '../BaseTable';
+import { addPluralEnding, camelCase, capitalize, removePluralEnding } from '../stringFormatters';
+import { wrapInArray } from '../typeWrappers';
+
 import { ActionType, isNumberAction } from './actionType';
 import { FilterType } from './filterType';
-import { wrapInArray } from '../typeWrappers';
+import {getMetaInitProps, IRawRoute} from "./init";
 
 export type RouteType = 'card' | 'table';
 

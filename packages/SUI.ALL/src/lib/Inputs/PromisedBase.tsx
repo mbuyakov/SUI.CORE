@@ -38,7 +38,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
 
     if (this.props.popconfirmSettings) {
       // tslint:disable-next-line:strict-type-predicates
-      this.setState({ popconfirmVisible: true, value: (value == null ? this.state.value : value) as V });
+      this.setState({ popconfirmVisible: true, value: (value == null ? this.state.value : value) });
     } else {
       this.onConfirm(value);
     }
@@ -81,10 +81,10 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   private onConfirm(value?: V): void {
     // tslint:disable-next-line:triple-equals
     const promise = this.props
-      .promise((value == null ? this.state.value : value) as V)
+      .promise(value == null ? this.state.value : value)
       .then(_ => {
         // tslint:disable-next-line:triple-equals
-        this.setState({ loading: false, savedValue: (value == null ? this.state.value : value) as V });
+        this.setState({ loading: false, savedValue: (value == null ? this.state.value : value) });
       })
       .catch(reason => {
         this.setState({ loading: false });

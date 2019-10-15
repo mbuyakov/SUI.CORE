@@ -67,7 +67,7 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
     if (formParsedValue || formValue) {
       try {
         if (!formParsedValue) {
-          formParsedValue = JSON.parse(formValue as string);
+          formParsedValue = JSON.parse(formValue);
         }
         this.setFieldsValues(formParsedValue);
       } catch (e) {
@@ -126,7 +126,7 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
 
     return (
       <BaseFormContext.Provider value={{form, formValues, verticalLabel: !!this.props.verticalLabel}}>
-        {this.props.children(table, this.clearForm, this.onClick, errors, formValues, this.state.saving as boolean)}
+        {this.props.children(table, this.clearForm, this.onClick, errors, formValues, this.state.saving)}
         {this.props.form.getFieldDecorator(SUBMITTED_FIELD)(<div style={{display: "none"}}/>)}
       </BaseFormContext.Provider>
     );

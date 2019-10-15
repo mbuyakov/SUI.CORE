@@ -28,7 +28,7 @@ export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps, IP
           {...selectProps as DatePickerProps}
           disabled={this.props.disabled || this.state.loading}
           onChange={this.onChange}
-          value={this.state.value as moment.Moment}
+          value={this.state.value}
         />
         {this.state.savedValue !== this.state.value && saveButton}
       </div>

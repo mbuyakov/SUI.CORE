@@ -56,7 +56,7 @@ export class CategoryColumnChart extends React.Component<ICategoryColumnChartPro
 
     series.dataFields.valueY = seriesProps.valueY;
     series.dataFields.categoryX = this.props.categoryX;
-    series.name = name;
+    series.name = seriesProps.name;
     series.columns.template.width = am4core.percent(95);
     if (seriesProps.tooltipText) {
       series.columns.template.tooltipText = seriesProps.tooltipText;

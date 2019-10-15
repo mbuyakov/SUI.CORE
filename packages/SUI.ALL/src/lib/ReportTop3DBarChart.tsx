@@ -155,7 +155,7 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
       maxValue = Math.max(...data.map(element => element[valueDataField]), 0);
     }
 
-    this.setState({mappedData: this.mapData(data, maxValue as number).reverse(), maxValue});
+    this.setState({mappedData: this.mapData(data, maxValue).reverse(), maxValue});
   }
 
 }

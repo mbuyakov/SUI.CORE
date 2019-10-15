@@ -44,5 +44,5 @@ export function getLevelColor(level: number): Color {
     throw new Error("PercentToColor not initialized");
   }
 
-  return window.SUI_CORE_PTC_CACHE.get(Math.min(99, Math.max(0, Math.floor(level)))) as Color;
+  return window.SUI_CORE_PTC_CACHE.get(Math.min(99, Math.max(0, Math.floor(level))));
 }

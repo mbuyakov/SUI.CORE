@@ -139,7 +139,7 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
                 loadingErrorNotification("Данные не найдены");
                 this.setState({error: true});
 
-                return;
+                return undefined;
               }
             }
           }

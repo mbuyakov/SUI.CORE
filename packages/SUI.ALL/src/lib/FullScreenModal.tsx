@@ -10,8 +10,8 @@ import autobind from 'autobind-decorator';
 import React from 'react';
 import uuidv4 from 'uuid/v4';
 
-import { Z_999 } from './styles';
 import { sleep } from './other';
+import { Z_999 } from './styles';
 
 type ChildrenWithPopupContainer = (getPopupContainer?: () => HTMLElement) => JSX.Element
 
@@ -87,7 +87,7 @@ class FullScreenDialogImpl extends React.Component<IFullScreenModalProps, {
 
   @autobind
   private getPopupContainer(): HTMLElement {
-    return document.getElementById(this.id) as HTMLElement;
+    return document.getElementById(this.id);
   }
 
   @autobind

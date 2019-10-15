@@ -146,7 +146,7 @@ export class BaseTable<TSelection = defaultSelection>
       ...col,
       getCellValue: (row: any): any => (col.dataKey && getDataByKey(row, col.dataKey)) || (col.defaultData !== undefined ? col.defaultData : row[col.id]),
       name: col.id,
-      title: col.title || translate(col.id, true) || translate(col.id.replace(/Id$/, '')) as string,
+      title: col.title || translate(col.id, true) || translate(col.id.replace(/Id$/, '')),
     }));
   }
 
@@ -169,7 +169,7 @@ export class BaseTable<TSelection = defaultSelection>
       .filter(col => col.defaultSorting)
       .map<Sorting>(col => ({
         columnName: col.id,
-        direction: col.defaultSorting as SortingDirection,
+        direction: col.defaultSorting,
       }));
 
     if (defaultSorting.length === 0) {

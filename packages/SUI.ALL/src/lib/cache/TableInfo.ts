@@ -45,7 +45,7 @@ export class TableInfo {
   }
 
   public directGetColumns(): ColumnInfo[] {
-    return (this.colIds || []).map(id => ColumnInfoManager.directGetById(id)).filter(Boolean) as ColumnInfo[];
+    return (this.colIds || []).map(id => ColumnInfoManager.directGetById(id)).filter(Boolean);
   }
 
   public async getColumns(refresh: boolean = false): Promise<ColumnInfo[]> {

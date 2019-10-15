@@ -3,6 +3,7 @@ import Collapse from 'antd/lib/collapse';
 import Divider from 'antd/lib/divider';
 import * as React from 'react';
 
+import { BackendTable } from '../BackendTable';
 import { getDataByKey } from '../dataKey';
 import { addQuotesIfString } from '../stringFormatters';
 import { BASE_CARD_ITEM, BASE_CARD_ROW, BASE_CARD_ROWS, BASE_FORM_ITEM } from '../styles';
@@ -15,7 +16,6 @@ import { BaseCardContext } from './BaseCardContext';
 import { IBaseCardDescItemLayout, IBaseCardItemLayout, renderIBaseCardItem } from './BaseCardItemLayout';
 import { IBaseCardTabLayout, IBaseFormTabLayout, ManagedTabs, renderIBaseCardTabLayout } from './BaseCardTabLayout';
 import { IBaseFormDescItemLayout, IBaseFormItemLayout, renderIBaseFormItemLayout } from './BaseFormItemLayout';
-import { BackendTable } from '../BackendTable';
 
 // It's BACKEND props. Mark as MetaTableProps for backward computability in RN
 export interface IMetaTableProps {
@@ -122,8 +122,8 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
         paperStyle={rowIndex !== 0 || rowsLength !== 1 ? { marginLeft: 0, marginRight: 0 } : {}}
         fitToCardBody={(parent === 'card' || (parent === 'tab' && firstChildrenIsTab)) && rowIndex === 0 && rowsLength === 1}
         fitToCollapseBody={parent === 'collapse' && rowIndex === 0 && rowsLength === 1}
-        filter={JSON.parse(mapFilters(row.metaTableProps.globalFilter as string, sourceItem)as string)}
-        defaultFilters={JSON.parse(mapFilters(row.metaTableProps.filter as string, sourceItem)as string)}
+        filter={JSON.parse(mapFilters(row.metaTableProps.globalFilter as string, sourceItem))}
+        defaultFilters={JSON.parse(mapFilters(row.metaTableProps.filter as string, sourceItem))}
       />
     );
   }

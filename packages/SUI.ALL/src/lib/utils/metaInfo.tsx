@@ -66,7 +66,7 @@ export async function colToBaseTableCol(
 
   // const metaInitProps = getMetaInitProps();
 
-  const trp = TableRenderSettingsPopover.parseTableRenderParams(props.columnInfo.tableRenderParams as string);
+  const trp = TableRenderSettingsPopover.parseTableRenderParams(props.columnInfo.tableRenderParams);
 
   if (!props.rawMode) {
     // tslint:disable-next-line:ban-ts-ignore

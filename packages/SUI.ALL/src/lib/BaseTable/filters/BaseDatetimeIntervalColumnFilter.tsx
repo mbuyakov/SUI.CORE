@@ -55,7 +55,7 @@ export class BaseDatetimeIntervalColumnFilter
         showTime={BaseDatetimeIntervalColumnFilter.getFormat(this.props.pickerMode).includes("HH")}
         ranges={GET_DEFAULT_CALENDAR_RANGES()}
         allowClear={true}
-        value={this.state.filterValue as RangePickerValue}
+        value={this.state.filterValue}
         onChange={this.onChange}
         onOpenChange={this.onOpenChange}
         open={this.state.open}

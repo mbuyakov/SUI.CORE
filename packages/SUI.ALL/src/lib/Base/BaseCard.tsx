@@ -56,7 +56,7 @@ export class BaseCard<T> extends React.Component<IBaseCardProps<T>, {
     }
 
     return (
-      <BaseCardContext.Provider value={{ forceRenderTabs: this.props.forceRenderTabs as boolean }}>
+      <BaseCardContext.Provider value={{ forceRenderTabs: this.props.forceRenderTabs }}>
         {this.props.noCard
           ? <>{body}</>
           : (

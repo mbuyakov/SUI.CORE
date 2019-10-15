@@ -74,7 +74,7 @@ export abstract class CacheManager<T, ID = string> {
 
     await this.loadById(id);
 
-    return this.store.get(id) as T;
+    return this.store.get(id);
   }
 
   /**
