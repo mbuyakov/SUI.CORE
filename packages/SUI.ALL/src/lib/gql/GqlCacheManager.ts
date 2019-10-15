@@ -33,7 +33,7 @@ export abstract class GqlCacheManager<GQL_T, T = GQL_T, ID = string> extends Cac
   protected async __loadById(id: ID): Promise<T> {
     const node: GQL_T = await query<GQL_T>(
       `{
-      ${camelCase(this.getTableName())}ById(id: ${addQuotesIfString(id)}) {
+      ${camelCase(this.getTableName())}ById(id: ${addQuotesIfString(id) as string}) {
           ${this.getFields()}
       }
     }`,

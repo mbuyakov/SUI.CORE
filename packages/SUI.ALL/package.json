@@ -19,11 +19,6 @@
     "ci": "yarn lint && yarn build",
     "build-storybook": "build-storybook"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
   "jest": {
     "testMatch": [
       "**/*.(spec|test).{ts,tsx}"
@@ -60,8 +55,7 @@
     "@types/lodash": "^4.14.141",
     "@types/node": "^12.7.8",
     "@types/react": "^16.9.6",
-    "@types/react-dom": "^16.9.1",
-    "@types/react-router": "^5.1.2",
+    "@types/react-dom": "^16.9.2",
     "@types/react-router-dom": "^5.1.0",
     "@types/uuid": "^3.4.5",
     "@types/webpack-env": "^1.14.0",
@@ -93,10 +87,10 @@
     "graphql-tag": "^2.10.1",
     "immutability-helper": "^3.0.1",
     "lodash": "^4.17.15",
-    "react": "^16.10.1",
+    "react": "^16.10.2",
     "react-dnd": "^9.4.0",
     "react-dnd-html5-backend": "^9.4.0",
-    "react-dom": "^16.10.1",
+    "react-dom": "^16.10.2",
     "react-router-dom": "^5.1.2",
     "react-smooth-dnd": "^0.11.0",
     "react-to-print": "^2.4.0"

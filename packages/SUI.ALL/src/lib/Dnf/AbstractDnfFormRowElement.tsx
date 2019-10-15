@@ -16,7 +16,7 @@ export abstract class AbstractDnfFormRowElement<T = any, TProps = {}, TState = {
 
   @autobind
   protected getElementName(): string {
-    return `elements[${this.props.id}]`;
+    return `elements[${this.props.id as unknown as string}]`;
   }
 
   @autobind
