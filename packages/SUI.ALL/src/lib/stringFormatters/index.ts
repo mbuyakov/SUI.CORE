@@ -230,7 +230,7 @@ export function formatMultistringForGraphQL(str: string | null | undefined): str
  * In other case return original input
  */
 export function addQuotesIfString<T>(payload: T): string | T {
-  return typeof payload === "string" ? `"${payload}"` : payload;
+  return typeof payload === "string" ? `"${payload as string}"` : payload;
 }
 
 /**

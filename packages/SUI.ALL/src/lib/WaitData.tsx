@@ -104,6 +104,7 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
     }
     let promise = this.props.promise;
     if (this.props.query) {
+      // tslint:disable-next-line:no-promise-as-boolean
       if (promise) {
         console.error('[WaitData]Props conflict! Defined promise and query. Props:', this.props);
         this.setState({error: true});
@@ -113,6 +114,7 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
       promise = queryWrapper(query(this.props.query, this.props.extractFirstKey || this.props.extractKeysLevel));
     }
     if (this.props.mutation) {
+      // tslint:disable-next-line:no-promise-as-boolean
       if (promise) {
         console.error('[WaitData]Props conflict! Defined promise and mutation. Props:', this.props);
         this.setState({error: true});
@@ -121,6 +123,7 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
       }
       promise = queryWrapper(mutate(this.props.mutation, this.props.extractFirstKey || this.props.extractKeysLevel));
     }
+    // tslint:disable-next-line:no-promise-as-boolean
     if (promise) {
       return promise
         .then(data => {

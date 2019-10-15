@@ -40,6 +40,7 @@ export class PromisedErrorPopover extends React.Component<
 
   @autobind
   private onUpdate(): void {
+    // tslint:disable-next-line:no-promise-as-boolean
     if (this.props.promise && this.props.promise !== this.state.currentPromise) {
       this.setState({ currentPromise: this.props.promise });
       this.props.promise.catch(reason => {
