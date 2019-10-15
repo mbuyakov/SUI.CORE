@@ -76,11 +76,6 @@ pipeline {
               """
               server.upload(uploadSpec)
             }
-            shell {
-              """
-
-              """
-            }
           }
         }
         stage("JS") {
