@@ -32,7 +32,7 @@ interface ITop3DBarChartProps {
   onSeriesClick?(event: any): void;
 }
 
-interface IAdditionalSettingProps {
+export interface IAdditionalSettingProps {
   chart: am4charts.XYChart3D;
   series: am4charts.ColumnSeries3D;
 }
