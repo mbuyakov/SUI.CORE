@@ -26,10 +26,15 @@ interface ITop3DBarChartProps {
   type: "relative" | "absolute" | string;
   valueDataField: string;
 
-  // tslint:disable-next-line:no-any
+  additionalSetting?(props: IAdditionalSettingProps): void;
   categoryAxisLabelGenerator(element: IObjectWithIndex): string | JSX.Element;
   // tslint:disable-next-line:no-any
   onSeriesClick?(event: any): void;
+}
+
+interface IAdditionalSettingProps {
+  chart: am4charts.XYChart3D;
+  series: am4charts.ColumnSeries3D;
 }
 
 export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
@@ -124,6 +129,13 @@ export class ReportTop3DBarChart extends React.Component<ITop3DBarChartProps, {
               valueLabel.label.hideOversized = false;
               valueLabel.label.propertyFields.horizontalCenter = "horizontalCenter";
               valueLabel.label.propertyFields.dx = "dx";
+
+              if (this.props.additionalSetting) {
+                this.props.additionalSetting({
+                  chart,
+                  series
+                });
+              }
             }}
           />)
         }
