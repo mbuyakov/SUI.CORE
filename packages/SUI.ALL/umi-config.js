@@ -15,10 +15,10 @@ module.exports =  {
         importWorkboxFrom: 'local',
       },
     },
-    dynamicImport: {
-      loadingComponent: './components/PageLoading/index',
-      webpackChunkName: true,
-    },
+    // dynamicImport: {
+    //   loadingComponent: './components/PageLoading/index',
+    //   webpackChunkName: true,
+    // },
     dll: {
       //TODO: Umi bug, check update
       exclude: ['@smsoft/sui-all'],
