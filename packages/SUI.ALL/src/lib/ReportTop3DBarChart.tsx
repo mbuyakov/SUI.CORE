@@ -26,13 +26,13 @@ interface ITop3DBarChartProps {
   type: "relative" | "absolute" | string;
   valueDataField: string;
 
-  additionalSetting?(props: IAdditionalSettingProps): void;
+  additionalSetting?(props: IReportTop3DBarChartSettingProps): void;
   categoryAxisLabelGenerator(element: IObjectWithIndex): string | JSX.Element;
   // tslint:disable-next-line:no-any
   onSeriesClick?(event: any): void;
 }
 
-export interface IAdditionalSettingProps {
+export interface IReportTop3DBarChartSettingProps {
   chart: am4charts.XYChart3D;
   series: am4charts.ColumnSeries3D;
 }
