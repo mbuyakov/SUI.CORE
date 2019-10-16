@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.4](https://github.com/mbuyakov/SUI.CORE/compare/v6.0.3...v6.0.4) (2019-10-16)
+
+
+### Bug Fixes
+
+* disable dynamicImport ([12d6604](https://github.com/mbuyakov/SUI.CORE/commit/12d6604f2c49ad0937615dbd81bf5d46f3242f44))
+
+
+
+
+
 ## [6.0.3](https://github.com/mbuyakov/SUI.CORE/compare/v6.0.2...v6.0.3) (2019-10-15)
 
 **Note:** Version bump only for package @smsoft/sui-all
