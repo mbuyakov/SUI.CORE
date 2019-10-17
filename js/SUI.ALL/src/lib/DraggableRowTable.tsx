@@ -7,6 +7,7 @@ import * as React from 'react';
 import { DndProvider, DragSource, DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
+import { Omit } from './other';
 import { WaitData } from './WaitData';
 
 let dragingIndex = -1;
@@ -122,7 +123,7 @@ class DraggableRowTableClass<T> extends React.Component<Omit<TableProps<T>, 'onR
         alwaysUpdate={true}
         hideChildren={false}
       >
-        <Table<T>
+        <Table
           {...this.props}
           dataSource={this.state.data}
           components={{
@@ -161,13 +162,13 @@ class DraggableRowTableClass<T> extends React.Component<Omit<TableProps<T>, 'onR
 }
 
 // tslint:disable-next-line:max-classes-per-file
-export class DraggableRowTable<T> extends React.Component<Omit<TableProps<T>, 'onRow'> & {
+export class DraggableRowTable<T> extends React.Component<Pick<TableProps<any>, "loading" | "footer" | "style" | "title" | "scroll" | "size" | "children" | "className" | "prefixCls" | "locale" | "getPopupContainer" | "onChange" | "dataSource" | "expandIcon" | "tableLayout" | "columns" | "bordered" | "bodyStyle" | "pagination" | "rowKey" | "dropdownPrefixCls" | "rowSelection" | "components" | "rowClassName" | "expandedRowRender" | "defaultExpandAllRows" | "defaultExpandedRowKeys" | "expandedRowKeys" | "expandIconAsCell" | "expandIconColumnIndex" | "expandRowByClick" | "onExpandedRowsChange" | "onExpand" | "indentSize" | "onRowClick" /*| "onRow" */| "onHeaderRow" | "useFixedHeader" | "showHeader" | "childrenColumnName" | "sortDirections"> & {
   onOrderChanged(sortedDataSource: T[]): Promise<any>
 }> {
   public render(): JSX.Element {
     return (
       <DndProvider backend={HTML5Backend}>
-        <DraggableRowTableClass<T> {...this.props} />
+        <DraggableRowTableClass<T> {...this.props as any} />
       </DndProvider>
     );
   }

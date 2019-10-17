@@ -81,10 +81,10 @@ pipeline {
         stage("JS") {
           steps {
             sh """
-              git fetch --tags --force
+              cd js/SUI.ALL
               yarn install
               yarn ci
-              yarn publish-all
+              yarn publish --registry http://verdaccio.smp.sm-soft.ru/ --non-interactive --new-version 6.0.${BUILD_NUMBER}-${BRANCH_NAME}
             """
           }
         }
