@@ -490,7 +490,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                                   dataKey: ['columnInfosByTableInfoId', 'nodes'],
                                   render: (value: IColumnInfo[]): JSX.Element => (
                                     <>
-                                      <DraggableRowTable<IColumnInfo>
+                                      <DraggableRowTable
                                         scroll={{ x: true }}
                                         pagination={false}
                                         dataSource={value.sort((a, b): number => a.order - b.order)}
