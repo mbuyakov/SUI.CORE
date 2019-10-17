@@ -20,9 +20,10 @@ type CollapseSettingsState = Merge<IBaseCardCollapseLayout<any>, {
 
 export type SerializedCollapseSettings = ISerializable<CollapseSettingsState>;
 
+const LAST_COLLAPSE_VERSION: number = 1;
+
 export class CollapseSettings extends SerializableDnDChild<SerializedCollapseSettings> {
 
-  private readonly LAST_COLLAPSE_VERSION: number = 1;
   private readonly rowsRef: React.RefObject<DnDList<RowSettings>> = React.createRef();
 
   public constructor(props: SerializableDnDChildProps<SerializedCollapseSettings>) {
@@ -36,7 +37,7 @@ export class CollapseSettings extends SerializableDnDChild<SerializedCollapseSet
   }
 
   public getCurrentVersion(): number {
-    return this.LAST_COLLAPSE_VERSION;
+    return LAST_COLLAPSE_VERSION;
   }
 
   public render(): JSX.Element {

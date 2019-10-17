@@ -56,6 +56,8 @@ interface IFieldNode {
   title: string;
 }
 
+const LAST_MAIN_SETTINGS_VERSION: number = 1;
+
 export class MainSettings extends React.Component<IMainSettingsProps, {
   debugMode?: boolean
   fields?: IFieldNode[]
@@ -99,7 +101,6 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
   }
 
   private readonly cardSettingsRef: React.RefObject<CardSettings> = React.createRef();
-  private readonly LAST_MAIN_SETTINGS_VERSION: number = 1;
 
   public constructor(props: Readonly<IMainSettingsProps>) {
     super(props);
@@ -113,7 +114,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
   }
 
   public getCurrentVersion(): number {
-    return this.LAST_MAIN_SETTINGS_VERSION;
+    return LAST_MAIN_SETTINGS_VERSION;
   }
 
   public render(): JSX.Element {
