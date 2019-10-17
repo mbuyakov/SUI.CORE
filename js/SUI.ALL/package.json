@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-all",
-  "version": "6.0.9999999",
+  "version": "6.0.1-DEVELOP",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -95,6 +95,5 @@
     "react-router-dom": "^5.1.2",
     "react-smooth-dnd": "^0.11.0",
     "react-to-print": "^2.4.0"
-  },
-  "gitHead": "10c4d9ba04c3d76112173f8f0e3cacac0570ea7d"
+  }
 }
