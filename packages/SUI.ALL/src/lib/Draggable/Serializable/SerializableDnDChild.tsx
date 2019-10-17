@@ -22,7 +22,7 @@ export abstract class SerializableDnDChild<S extends ISerializable, P extends Se
         version = defaultIfNotNumber(props.plain && props.plain.version, 0);
       } else {
         this.isNew = true;
-        version = this.getCurrentVersion.bind(this)();
+        version = this.getCurrentVersion();
       }
       this.state = {
         __type: props.__type,

@@ -44,9 +44,10 @@ type ItemSettingsState = Merge<IBaseCardItemLayout<any>, {
 
 export type SerializedItemSettings = ISerializable<ItemSettingsState>;
 
+const LAST_ITEM_VERSION: number = 1;
+
 export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
 
-  private readonly LAST_ITEM_VERSION: number = 1;
 
   public constructor(props: SerializableDnDChildProps<SerializedItemSettings>) {
     super(props);
@@ -56,7 +57,7 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
   }
 
   public getCurrentVersion(): number {
-    return this.LAST_ITEM_VERSION;
+    return LAST_ITEM_VERSION;
   }
 
   public render(): JSX.Element {

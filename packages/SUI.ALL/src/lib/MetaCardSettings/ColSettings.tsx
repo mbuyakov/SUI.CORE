@@ -17,10 +17,11 @@ type ColSettingsState = Merge<IBaseCardColLayout<any>, {
 
 export type SerializedColSettings = ISerializable<ColSettingsState>;
 
+const LAST_COL_VERSION: number = 1;
+
 export class ColSettings extends SerializableDnDChild<SerializedColSettings> {
 
   private readonly itemsRef: React.RefObject<DnDList<ItemSettings>> = React.createRef();
-  private readonly LAST_COL_VERSION: number = 1;
 
   public constructor(props: SerializableDnDChildProps<SerializedColSettings>) {
     super(props);
@@ -33,7 +34,7 @@ export class ColSettings extends SerializableDnDChild<SerializedColSettings> {
   }
 
   public getCurrentVersion(): number {
-    return this.LAST_COL_VERSION;
+    return LAST_COL_VERSION;
   }
 
   public render(): JSX.Element {

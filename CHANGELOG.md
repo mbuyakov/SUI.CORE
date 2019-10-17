@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.8](https://github.com/mbuyakov/SUI.CORE/compare/v6.0.7...v6.0.8) (2019-10-17)
+
+
+### Bug Fixes
+
+* try fix last version warning ([df4a1d6](https://github.com/mbuyakov/SUI.CORE/commit/df4a1d6e0f0a9d200257e0d541a51c4c71c0a41d))
+
+
+
+
+
 ## [6.0.7](https://github.com/mbuyakov/SUI.CORE/compare/v6.0.4...v6.0.7) (2019-10-17)
 
 

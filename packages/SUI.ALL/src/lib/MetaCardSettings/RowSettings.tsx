@@ -34,10 +34,11 @@ interface IRowSettingsProps extends IBaseDnDChildProps {
   startType?: RowType
 }
 
+const LAST_ROW_VERSION: number = 1;
+
 export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRowSettingsProps> {
   private readonly collapseSettingsRef: React.RefObject<DnDList<CollapseSettings>> = React.createRef();
   private readonly colSettingsRef: React.RefObject<DnDList<ColSettings>> = React.createRef();
-  private readonly LAST_ROW_VERSION: number = 1;
   private readonly tabSettingsRef: React.RefObject<DnDList<TabSettings>> = React.createRef();
 
   public constructor(props: IRowSettingsProps) {
@@ -77,7 +78,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
   }
 
   public getCurrentVersion(): number {
-    return this.LAST_ROW_VERSION;
+    return LAST_ROW_VERSION;
   }
 
   public render(): JSX.Element {

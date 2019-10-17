@@ -25,10 +25,11 @@ interface ITabSettingsProps extends IBaseDnDChildProps {
   plain?: SerializedTabSettings
 }
 
+const TAB_LAST_VERSION: number = 1;
+
 export class TabSettings extends SerializableDnDChild<SerializedTabSettings> {
 
   private readonly rowsRef: React.RefObject<DnDList<RowSettings>> = React.createRef();
-  private readonly TAB_LAST_VERSION: number = 1;
 
   public constructor(props: ITabSettingsProps) {
     super(props);
@@ -42,7 +43,7 @@ export class TabSettings extends SerializableDnDChild<SerializedTabSettings> {
   }
 
   public getCurrentVersion(): number {
-    return this.TAB_LAST_VERSION;
+    return TAB_LAST_VERSION;
   }
 
   public render(): JSX.Element {

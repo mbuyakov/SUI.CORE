@@ -16,6 +16,8 @@ interface IFreeTextProps extends IBaseDnDChildProps {
   plain?: SerializedFreeText
 }
 
+const LAST_FREE_TEXT_VERSION = -1;
+
 export class FreeText extends SerializableDnDChild<SerializedFreeText> {
 
   public constructor(props: IFreeTextProps) {
@@ -31,7 +33,7 @@ export class FreeText extends SerializableDnDChild<SerializedFreeText> {
 
   // tslint:disable-next-line:prefer-function-over-method
   public getCurrentVersion(): number {
-    return -1;
+    return LAST_FREE_TEXT_VERSION;
   }
 
   public render(): JSX.Element {
