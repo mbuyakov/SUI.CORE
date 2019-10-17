@@ -10,7 +10,7 @@ apply plugin: 'idea'
 
 allprojects {
   group = 'ru.smsoft.sui'
-  version = "$System.env.BUILD_NUMBER"
+  version = "$System.env.BUILD_NUMBER -$System.env.BRANCH_NAME"
 }
 
 subprojects {
