@@ -14,9 +14,9 @@ pipeline {
       }
     }
     stage("Parralel"){
-      when {
-        branch "master"
-      }
+//       when {
+//         branch "master"
+//       }
       parallel {
         stage("JVM") {
           steps {
