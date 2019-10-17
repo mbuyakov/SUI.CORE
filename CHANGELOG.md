@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.7](https://github.com/mbuyakov/SUI.CORE/compare/v6.0.4...v6.0.7) (2019-10-17)
+
+
+### Bug Fixes
+
+* generateCreate with null keys ([dc940c4](https://github.com/mbuyakov/SUI.CORE/commit/dc940c4b4ff36e92cecaedbc9d04acbec7cb50d5))
+* missed Export ([3eaf453](https://github.com/mbuyakov/SUI.CORE/commit/3eaf453a84ec8dcadd20a038ba108e8418282f5a))
+
+
+
+
+
 ## [6.0.6](https://github.com/mbuyakov/SUI.CORE/compare/v6.0.5...v6.0.6) (2019-10-16)
 
 
