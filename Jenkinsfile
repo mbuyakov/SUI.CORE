@@ -84,7 +84,7 @@ pipeline {
               cd js/SUI.ALL
               yarn install
               yarn ci
-              yarn publish --registry http://verdaccio.smp.sm-soft.ru/ --non-interactive --new-version 6.0.${BUILD_NUMBER}-${BRANCH_NAME}-${BRANCH_NAME}
+              yarn publish --registry http://verdaccio.smp.sm-soft.ru/ --non-interactive --new-version 6.0.${BUILD_NUMBER}-${BRANCH_NAME}
             """
           }
         }
