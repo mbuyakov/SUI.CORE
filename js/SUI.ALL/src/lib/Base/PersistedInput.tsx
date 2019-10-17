@@ -5,6 +5,8 @@ import { debounce } from 'lodash';
 import isEqual from "lodash/isEqual";
 import * as React from 'react';
 
+import { IObjectWithIndex } from '../other';
+
 function getValueFromEvent(e: any): any {
   // To support custom element
   if (!e || !e.target) {
@@ -23,6 +25,7 @@ function getValueFromEvent(e: any): any {
 export interface IPersistedInputProps {
   alwaysUpdate?: boolean;
   children: JSX.Element;
+  customInputNodesTags?: IObjectWithIndex;
   fieldNameKostyl: string;
   formKostyl: WrappedFormUtils;
   initialValue?: any;
@@ -63,9 +66,9 @@ export class PersistedInput extends React.Component<IPersistedInputProps, IPersi
   }
 
   public render(): React.ReactNode {
-    const {children, ...restProps} = this.props;
+    const {children, customInputNodesTags, ...restProps} = this.props;
 
-    return React.cloneElement(children, {...restProps, value: this.state.value, onChange: this.onChangeInternal });
+    return React.cloneElement(children, {...customInputNodesTags, ...restProps, value: this.state.value, onChange: this.onChangeInternal });
   }
 
   public shouldComponentUpdate(nextProps: Readonly<IPersistedInputProps>, nextState: Readonly<IPersistedInputState>): boolean {
@@ -73,6 +76,7 @@ export class PersistedInput extends React.Component<IPersistedInputProps, IPersi
       || nextProps.alwaysUpdate
       || !isEqual(this.state, nextState)
       || !isEqual(this.props.value, nextProps.value)
+      || !isEqual(this.props.customInputNodesTags, nextProps.customInputNodesTags)
       || !isEqual(this.props.initialValue, nextProps.initialValue)
       || !isEqual(this.props.requiredKostyl, nextProps.requiredKostyl);
   }

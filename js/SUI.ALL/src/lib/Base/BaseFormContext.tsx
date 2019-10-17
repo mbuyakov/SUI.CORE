@@ -8,6 +8,7 @@ import { IObjectWithIndex } from '../other';
 // tslint:disable-next-line:no-any use-default-type-parameter
 
 export interface IBaseFormContext {
+  customInputNodesTags?: IObjectWithIndex
   form: WrappedFormUtils
   formValues: IObjectWithIndex
   verticalLabel: boolean

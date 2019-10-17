@@ -1,6 +1,6 @@
-import Form, {WrappedFormInternalProps} from 'antd/lib/form/Form';
+import Form, { WrappedFormInternalProps } from 'antd/lib/form/Form';
 import autobind from 'autobind-decorator';
-import isEqual from "lodash/isEqual";
+import isEqual from 'lodash/isEqual';
 import moment from 'moment';
 import * as React from 'react';
 
@@ -8,12 +8,12 @@ import { errorNotification } from '../drawUtils';
 import { IObjectWithIndex } from '../other';
 import { OneOrArrayWithNulls } from '../typeWrappers';
 
-import {BaseCard, IBaseCardProps} from './BaseCard';
-import {IBaseFormRowLayout} from './BaseCardRowLayout';
-import {BaseFormContext} from './BaseFormContext';
+import { BaseCard, IBaseCardProps } from './BaseCard';
+import { IBaseFormRowLayout } from './BaseCardRowLayout';
+import { BaseFormContext } from './BaseFormContext';
 
-export const SUBMITTED_FIELD = "___SUBMITTED___";
-export const FORM_LOCALSTORAGE_KEY = "__SUI_FORM_";
+export const SUBMITTED_FIELD = '___SUBMITTED___';
+export const FORM_LOCALSTORAGE_KEY = '__SUI_FORM_';
 
 export type BaseFormChildrenFn = (table: JSX.Element, onClear: () => void, onSubmit: () => void, hasErrors: boolean, formValues: IObjectWithIndex, isSaveInProgress: boolean) => JSX.Element;
 // tslint:disable-next-line:no-any
@@ -21,6 +21,7 @@ export type SaveFormFn = (values: IObjectWithIndex) => any;
 
 export type IBaseFormProps<T> = Omit<IBaseCardProps<T>, 'item' | 'rows' | 'forceRenderTabs'> & {
   children: BaseFormChildrenFn
+  customInputNodesTags?: IObjectWithIndex
   // tslint:disable-next-line:no-any
   initialValues?: IObjectWithIndex
   periodFormSave?: number
@@ -43,6 +44,7 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
 }> {
   // tslint:disable-next-line:no-any
   private intervalHandler: any;
+  private lastFormErrors: IObjectWithIndex = {};
   private lastFormValues: IObjectWithIndex = {};
 
   public constructor(props: IBaseFormProps<T> & WrappedFormInternalProps) {
@@ -71,17 +73,23 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
         }
         this.setFieldsValues(formParsedValue);
       } catch (e) {
-        errorNotification("Ошибка при попытке загрузки заполненной формы", e.stack ? e.stack.toString() : e.toString());
+        errorNotification('Ошибка при попытке загрузки заполненной формы', e.stack ? e.stack.toString() : e.toString());
         console.error(e);
         console.log(formValue);
         localStorage.removeItem(`${FORM_LOCALSTORAGE_KEY}${this.props.uuid}`);
-        console.log("Saved value cleared");
+        console.log('Saved value cleared');
       }
     }
     // To disabled submit button at the beginning
     this.props.form.validateFields();
-    this.intervalHandler = setInterval(() => !!this.props.periodFormSave && !!this.props.saveActivityFunction && this.props.saveActivityFunction(this.lastFormValues)
-    , this.props.periodFormSave);
+
+    if (this.props.periodFormSave) {
+      this.intervalHandler = setInterval(() => {
+        if (this.props.saveActivityFunction) {
+          this.props.saveActivityFunction(this.lastFormValues);
+        }
+      }, this.props.periodFormSave);
+    }
   }
 
   // tslint:disable-next-line:no-any
@@ -92,20 +100,39 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
   }
 
   public componentWillUnmount(): void {
-    clearInterval(this.intervalHandler);
+    if (this.intervalHandler) {
+      clearInterval(this.intervalHandler);
+    }
+  }
+
+  @autobind
+  public getHasErrors(): boolean {
+    return hasErrors(this.lastFormErrors);
+  }
+
+  @autobind
+  public getLastErrors(): IObjectWithIndex {
+    return this.lastFormErrors;
+  }
+
+  @autobind
+  public getLastValues(): IObjectWithIndex {
+    return this.lastFormValues;
   }
 
 
   public render(): React.ReactNode {
-    const {form, onSubmit, ...rest} = this.props;
+    const { form, onSubmit, ...rest } = this.props;
 
-    const formValues = this.props.form.getFieldsValue();
+    const formValues = form.getFieldsValue();
+    const formErrors = form.getFieldsError();
     this.lastFormValues = formValues;
+    this.lastFormErrors = formErrors;
 
     if (this.props.customFieldValues) {
       const oldValue = formValues;
       const newValue = this.props.customFieldValues(oldValue);
-      const changedValue:IObjectWithIndex = {};
+      const changedValue: IObjectWithIndex = {};
       Object.keys(newValue).forEach(key => {
         if (!isEqual(oldValue[key], newValue[key])) {
           changedValue[key] = newValue[key];
@@ -116,7 +143,7 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
       }
     }
 
-    const errors = hasErrors(form.getFieldsError());
+    const errors = hasErrors(formErrors);
     const table = (
       <BaseCard
         forceRenderTabs={true}
@@ -125,11 +152,16 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
     );
 
     return (
-      <BaseFormContext.Provider value={{form, formValues, verticalLabel: !!this.props.verticalLabel}}>
+      <BaseFormContext.Provider value={{ form, formValues, verticalLabel: !!this.props.verticalLabel, customInputNodesTags: this.props.customInputNodesTags }}>
         {this.props.children(table, this.clearForm, this.onClick, errors, formValues, this.state.saving)}
-        {this.props.form.getFieldDecorator(SUBMITTED_FIELD)(<div style={{display: "none"}}/>)}
+        {this.props.form.getFieldDecorator(SUBMITTED_FIELD)(<div style={{ display: 'none' }}/>)}
       </BaseFormContext.Provider>
     );
+  }
+
+  @autobind
+  public validateAll(): void {
+    this.props.form.setFields({[SUBMITTED_FIELD]: true});
   }
 
 
@@ -140,12 +172,12 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
     this.props.form.setFieldsValue(fields);
 
     if (!hasErrors(this.props.form.getFieldsError())) {
-      this.setState({saving: true});
+      this.setState({ saving: true });
       const answer = await this.props.onSubmit(this.props.form.getFieldsValue());
       if (answer) {
         this.clearForm();
       }
-      this.setState({saving: false});
+      this.setState({ saving: false });
     }
   }
 
@@ -158,7 +190,7 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
       const fieldValue = values[field];
 
       // Magic
-      if (typeof fieldValue === "string" && ((fieldValue.match(/-/g) || []).length >= 2 || fieldValue.includes("."))) {
+      if (typeof fieldValue === 'string' && ((fieldValue.match(/-/g) || []).length >= 2 || fieldValue.includes('.'))) {
         const momentValue = moment(fieldValue);
         if (momentValue.isValid()) {
           // noinspection JSUnfilteredForInLoop
