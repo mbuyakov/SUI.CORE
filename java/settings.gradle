@@ -1,7 +1,6 @@
 rootProject.name = 'sui'
 
 include(':sui-backend')
-include(':sui-backend-app')
 include(':sui-entity')
 include(':sui-meta-schema-service')
 include(':sui-security')
