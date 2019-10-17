@@ -79,6 +79,10 @@ public class TableInfo implements Persistable<Long> {
     @JsonIgnore
     private ColumnInfo foreignLinkColumnInfo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private ColumnInfo followColumnInfo;
+
     // Don't change to list
     @OneToMany(mappedBy = "tableInfo", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @Singular
