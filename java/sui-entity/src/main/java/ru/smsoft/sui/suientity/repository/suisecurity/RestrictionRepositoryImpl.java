@@ -2,10 +2,12 @@ package ru.smsoft.sui.suientity.repository.suisecurity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import ru.smsoft.sui.suientity.entity.suisecurity.User;
 
 import java.util.List;
 
+@Repository
 public class RestrictionRepositoryImpl implements RestrictionRepository {
 
   @Autowired
