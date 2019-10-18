@@ -14,18 +14,18 @@ import java.util.Optional;
 @Repository
 public interface TableInfoRepository extends JpaRepository<TableInfo, Long>, CustomTableInfoRepository {
 
-    @EntityGraph(
-            value = TableInfo.WITH_COLUMN_INFOS_AND_REFERENCES,
-            type = EntityGraph.EntityGraphType.FETCH)
-    @Query("SELECT tableInfo FROM TableInfo tableInfo")
-    List<TableInfo> findAllWithColumnInfoAndReferences();
+  @EntityGraph(
+    value = TableInfo.WITH_COLUMN_INFOS_AND_REFERENCES,
+    type = EntityGraph.EntityGraphType.FETCH)
+  @Query("SELECT tableInfo FROM TableInfo tableInfo")
+  List<TableInfo> findAllWithColumnInfoAndReferences();
 
-    @EntityGraph(
-            value = TableInfo.FULL_SCHEMA,
-            type = EntityGraph.EntityGraphType.FETCH)
-    @Query("SELECT tableInfo FROM TableInfo tableInfo WHERE tableInfo.id = :id")
-    Optional<TableInfo> findByIdWithColumnInfoAndRolesAndReferencesAndSubtotalTypesAndFilterTypes(@Param("id") Long id);
+  @EntityGraph(
+    value = TableInfo.FULL_SCHEMA,
+    type = EntityGraph.EntityGraphType.FETCH)
+  @Query("SELECT tableInfo FROM TableInfo tableInfo WHERE tableInfo.id = :id")
+  Optional<TableInfo> findByIdWithColumnInfoAndRolesAndReferencesAndSubtotalTypesAndFilterTypes(@Param("id") Long id);
 
-    Optional<TableInfo> findBySchemaNameAndTableName(String schemaName, String tableName);
+  Optional<TableInfo> findBySchemaNameAndTableName(String schemaName, String tableName);
 
 }

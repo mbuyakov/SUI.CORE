@@ -24,13 +24,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
   Optional<User> findByUsernameOrEmail(String username, String email);
 
   Boolean existsByUsername(String username);
-  Boolean existsByEmail(String email);
-  Boolean existsByUsernameAndIdNot(String username, Long id);
-  Boolean existsByEmailAndIdNot(String email, Long id);
 
-  @Query(
-    value = "SELECT restriction_id FROM sui_security.user_restriction WHERE user_id = :id",
-    nativeQuery = true)
-  <T> List<T> findRestrictions(@Param("id") Long id, Class<T> tClass);
+  Boolean existsByEmail(String email);
+
+  Boolean existsByUsernameAndIdNot(String username, Long id);
+
+  Boolean existsByEmailAndIdNot(String email, Long id);
 
 }
