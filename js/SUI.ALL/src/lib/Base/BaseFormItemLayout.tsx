@@ -36,7 +36,7 @@ export type IBaseFormDescItemLayout<T> = IBaseFormItemLayout<T>// Omit<IBaseCard
 export function renderIBaseFormItemLayout<T>(item: IBaseFormItemLayout<T>): JSX.Element {
   return (
     <BaseFormContext.Consumer>
-      {({form, formValues, verticalLabel}) => {
+      {({form, formValues, verticalLabel, customInputNodesTags}) => {
         const required = item.required || (item.mapFormValuesToRequired && item.mapFormValuesToRequired(formValues));
 
         const title = item.title && (
@@ -87,7 +87,7 @@ export function renderIBaseFormItemLayout<T>(item: IBaseFormItemLayout<T>): JSX.
             {title}
             <Form.Item {...formItemProps}>
               {form.getFieldDecorator(item.fieldName, decoratorOptions)(
-                <PersistedInput alwaysUpdate={!!item.mapFormValuesToInputNodeProps} formKostyl={form} fieldNameKostyl={item.fieldName} requiredKostyl={!!required}>
+                <PersistedInput alwaysUpdate={!!(item.mapFormValuesToInputNodeProps)} customInputNodesTags={customInputNodesTags} formKostyl={form} fieldNameKostyl={item.fieldName} requiredKostyl={!!required}>
                   {React.cloneElement(item.inputNode, {...additionalProps, style: {width: '100%', ...item.inputNode.props.style, ...additionalProps.style}})}
                 </PersistedInput>
               )}

@@ -22,7 +22,7 @@ interface ICardSettingsProps {
   plain?: SerializedCardSettings
 }
 
-const CARD_SETTINGS_VERSION: number = -1;
+const LAST_CARD_SETTINGS_VERSION: number = -1;
 
 export class CardSettings extends React.Component<ICardSettingsProps> implements ISerializableComponent<SerializedCardSettings> {
 
@@ -34,7 +34,7 @@ export class CardSettings extends React.Component<ICardSettingsProps> implements
   private readonly titleListRef: React.RefObject<DnDList<ItemSettings | FreeText>> = React.createRef();
 
   public getCurrentVersion(): number {
-    return CARD_SETTINGS_VERSION;
+    return LAST_CARD_SETTINGS_VERSION;
   }
 
   public render(): JSX.Element {
