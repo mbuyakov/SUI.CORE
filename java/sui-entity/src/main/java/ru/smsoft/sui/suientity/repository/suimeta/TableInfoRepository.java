@@ -26,4 +26,6 @@ public interface TableInfoRepository extends JpaRepository<TableInfo, Long>, Cus
     @Query("SELECT tableInfo FROM TableInfo tableInfo WHERE tableInfo.id = :id")
     Optional<TableInfo> findByIdWithColumnInfoAndRolesAndReferencesAndSubtotalTypesAndFilterTypes(@Param("id") Long id);
 
+    Optional<TableInfo> findBySchemaNameAndTableName(String schemaName, String tableName);
+
 }

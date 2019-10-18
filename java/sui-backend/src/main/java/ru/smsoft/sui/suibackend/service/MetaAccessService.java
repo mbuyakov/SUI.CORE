@@ -37,7 +37,9 @@ public class MetaAccessService {
             throw new IllegalArgumentException("TableInfo with id " + tableInfoId + " not found");
         }
 
-        return new MetaData(tableInfo, columnService.getColumns(tableInfo, roles));
+        return new MetaData(
+          tableInfo,
+          columnService.getColumns(tableInfo, roles));
     }
 
 }
