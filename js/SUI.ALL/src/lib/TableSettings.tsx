@@ -378,14 +378,26 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                     },
                     {
                       items: [
-                        {
-                          title: 'Поле ссылки на форме списка',
-                          dataKey: 'linkColumnInfoId',
+                        ...[
+                          {
+                            title: "Поле ссылки на форме списка",
+                            dataKey: 'linkColumnInfoId',
+                          },
+                          {
+                            title: "Поле ссылки из другого объекта",
+                            dataKey: 'foreignLinkColumnInfoId',
+                          },
+                          {
+                            title: "Поле следования",
+                            dataKey: 'followColumnInfoId',
+                          }
+                        ].map(setting => ({
+                          ...setting,
                           render: (value: string): JSX.Element => (
                             <div style={{ width: 500 }}>
                               <PromisedSelect
                                 defaultValue={value}
-                                promise={generateUpdateFn('tableInfo', this.props.id, 'linkColumnInfoId')}
+                                promise={generateUpdateFn('tableInfo', this.props.id, setting.dataKey)}
                               >
                                 <Select.Option value={null}>
                                   --Не задано--
@@ -398,28 +410,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                               </PromisedSelect>
                             </div>
                           ),
-                        },
-                        {
-                          title: 'Поле ссылки из другого объекта',
-                          dataKey: 'foreignLinkColumnInfoId',
-                          render: (value: string): JSX.Element => (
-                            <div style={{ width: 500 }}>
-                              <PromisedSelect
-                                defaultValue={value}
-                                promise={generateUpdateFn('tableInfo', this.props.id, 'foreignLinkColumnInfoId')}
-                              >
-                                <Select.Option value={null}>
-                                  --Не задано--
-                                </Select.Option>
-                                {data.tableInfoById.columnInfosByTableInfoId.nodes.map(col => (
-                                  <Select.Option value={col.id}>
-                                    {(col.nameByNameId && col.nameByNameId.name) || col.columnName}
-                                  </Select.Option>
-                                ))}
-                              </PromisedSelect>
-                            </div>
-                          ),
-                        },
+                        })),
                         {
                           title: 'Справочник',
                           dataKey: 'isCatalog',
