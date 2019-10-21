@@ -22,7 +22,7 @@ public class RestrictionRepositoryImpl implements RestrictionRepository {
 
   @Override
   public <T> List<T> findRestrictions(User user, Class<T> tClass) {
-      val restrictionTableKey = SettingKeys.RESTRICTION_TABLE.getValue();
+      val restrictionTableKey = SettingKeys.USER_RESTRICTION_TABLE.getValue();
       val restrictionColumnKey = SettingKeys.RESTRICTION_COLUMN.getValue();
       val settings = settingRepository.get(Arrays.asList(restrictionTableKey, restrictionColumnKey));
 
