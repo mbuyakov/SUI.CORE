@@ -3,6 +3,7 @@ export * from "./Base";
 export * from "./BaseTable";
 export * from "./cache";
 export * from "./color";
+export * from "./CommonForm";
 export * from "./comparators";
 export * from "./dataKey";
 export * from "./Dnf";
