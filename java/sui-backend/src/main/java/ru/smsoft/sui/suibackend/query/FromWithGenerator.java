@@ -10,10 +10,10 @@ import org.springframework.util.CollectionUtils;
 import ru.smsoft.sui.suibackend.message.model.Sorting;
 import ru.smsoft.sui.suibackend.message.model.SortingDirection;
 import ru.smsoft.sui.suibackend.message.model.filtering.Filtering;
-import ru.smsoft.sui.suibackend.model.Column;
-import ru.smsoft.sui.suibackend.model.OrderNullBehavior;
+import ru.smsoft.sui.suibackend.model.query.Column;
+import ru.smsoft.sui.suibackend.model.query.FromGraph;
+import ru.smsoft.sui.suibackend.model.query.OrderNullBehavior;
 import ru.smsoft.sui.suibackend.utils.QueryUtils;
-import ru.smsoft.sui.suibackend.utils.Constants;
 import ru.smsoft.sui.suientity.entity.suimeta.ColumnInfo;
 import ru.smsoft.sui.suisecurity.utils.MetaSchemaUtils;
 
@@ -21,9 +21,12 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static ru.smsoft.sui.suibackend.utils.Constants.*;
+
 
 @Service
 @Slf4j
+// TODO: Набор костылей, переписать
 public class FromWithGenerator {
 
     private static final String RENDER_TYPE_KEY = "renderType";
@@ -31,82 +34,43 @@ public class FromWithGenerator {
     private static final String ROUND_RENDER_TYPE = "round";
 
     public String generateMainWith(
-            String fullRequestTableInfoName,
+            FromGraph fromGraph,
             Collection<Column> columns,
             Collection<Filtering> filters,
             Collection<Sorting> sortings,
             Collection<String> selections) {
-        val columnMap = columns
-                .stream()
-                .collect(Collectors.toMap(
-                        column -> column.getColumnInfo().getColumnName(),
-                        Function.identity()));
         val visibleColumns = columns
                 .stream()
                 .filter(Column::isVisible)
                 .collect(Collectors.toList());
         val referenceRenderColumns = visibleColumns
                 .stream()
-                .filter(column -> column.getRenderColumnAlias() != null)
+                .filter(column -> column.getRenderColumn() != null)
                 .collect(Collectors.toList());
-
-        val referencedNameColumnInfoByReferenceColumnName = new HashMap<String, ColumnInfo>();
-        val joins = new ArrayList<String>();
-        val joinAliases = new HashMap<String, String>();
-
-        referenceRenderColumns.forEach(referenceRenderColumn -> {
-            val referenceRenderColumnInfoName = referenceRenderColumn.getColumnInfo().getColumnName();
-            var columnInfo = referenceRenderColumn.getColumnInfo();
-            val renderColumnInfo = referenceRenderColumn.getRenderColumnInfo();
-
-            referencedNameColumnInfoByReferenceColumnName.put(referenceRenderColumnInfoName, renderColumnInfo);
-
-            var lastJoinTableAlias = MetaSchemaUtils.getFullTableInfoName(columnInfo.getTableInfo());
-
-            while (true) {
-                val referencedColumnInfo = MetaSchemaUtils.getReferencedColumnInfo(columnInfo);
-                val joinTableAlias = "t" + joins.size();
-
-                joins.add(
-                        String.format(
-                                "LEFT JOIN %s AS %s ON %2$s.%s = %s.%s",
-                                MetaSchemaUtils.getFullTableInfoName(
-                                        Objects.requireNonNull(referencedColumnInfo).getTableInfo()),
-                                joinTableAlias,
-                                referencedColumnInfo.getColumnName(),
-                                lastJoinTableAlias,
-                                columnInfo.getColumnName()));
-
-                columnInfo = referencedColumnInfo.getTableInfo().getForeignLinkColumnInfo();
-
-                if (renderColumnInfo.equals(columnInfo)) {
-                    joinAliases.put(referenceRenderColumnInfoName, joinTableAlias);
-                    break;
-                } else {
-                    lastJoinTableAlias = joinTableAlias;
-                }
-            }
-        });
+        val renderColumns = referenceRenderColumns
+                .stream()
+                .map(Column::getRenderColumn)
+                .collect(Collectors.toList());
+        val columnMap = columns
+                .stream()
+                .filter(column -> !renderColumns.contains(column))
+                .collect(Collectors.toMap(
+                        column -> column.getColumnInfo().getColumnName(),
+                        Function.identity()));
 
         String additionalColumns = referenceRenderColumns
                 .stream()
-                .map(referenceRenderColumn -> {
-                    val referenceColumnName = referenceRenderColumn.getColumnInfo().getColumnName();
-                    val renderColumnInfo = referencedNameColumnInfoByReferenceColumnName.get(referenceColumnName);
-                    val joinAlias = joinAliases.get(referenceColumnName);
+                .map(column -> {
+                    val renderColumn = column.getRenderColumn();
 
                     return String.format(
                             "COALESCE(%s.%s::TEXT, %s::TEXT) AS %s",
-                            joinAlias,
-                            renderColumnInfo.getColumnName(),
-                            MetaSchemaUtils.getFullColumnInfoName(referenceRenderColumn.getColumnInfo()),
-                            referenceRenderColumn.getRenderColumnAlias());
+                            renderColumn.getFrom().getAlias(),
+                            renderColumn.getColumnName(),
+                            column,
+                            renderColumn.getAlias());
                 })
-                .collect(Collectors.joining(Constants.COLUMN_SEPARATOR));
-
-        val requestColumnInfoByName =
-                MetaSchemaUtils.getColumnInfoByNameMap(
-                        columns.stream().map(Column::getColumnInfo).collect(Collectors.toList()));
+                .collect(Collectors.joining(COLUMN_SEPARATOR));
 
         LinkedList<Sorting> sorts = Optional
                 .ofNullable(sortings)
@@ -117,8 +81,8 @@ public class FromWithGenerator {
 
                     return sorting
                             .toBuilder()
-                            .columnName((column.getRenderColumnAlias() != null)
-                                ? column.getRenderColumnAlias()
+                            .columnName((column.getRenderColumn() != null)
+                                ? column.getRenderColumn().getName()
                                 : sorting.getColumnName())
                             .build();
                 })
@@ -127,41 +91,43 @@ public class FromWithGenerator {
         sorts.add(Sorting.builder().columnName("id").direction(SortingDirection.DESC).build());
 
         if (!CollectionUtils.isEmpty(selections)) {
-            sorts.addFirst(new Sorting(Constants.SELECTED_COLUMN_NAME, SortingDirection.DESC));
+            sorts.addFirst(new Sorting(SELECTED_COLUMN_NAME, SortingDirection.DESC));
         }
 
         val resultQuerySB = new StringBuilder();
 
         resultQuerySB.append(
                 String.format(
-                        "SELECT %s %s %s FROM %s\n",
+                        "SELECT %s %s %s",
                         visibleColumns.stream()
+                                .filter(column -> !renderColumns.contains(column))
                                 .map(Column::getColumnInfo)
                                 .map(columnInfo -> String.format(
                                         "%s AS %s",
                                         getSelectExpression(columnInfo),
                                         columnInfo.getColumnName()))
-                                .collect(Collectors.joining(Constants.COLUMN_SEPARATOR)),
-                        referencedNameColumnInfoByReferenceColumnName.isEmpty()
+                                .collect(Collectors.joining(COLUMN_SEPARATOR)),
+                        additionalColumns.isEmpty()
                                 ? ""
-                                : Constants.COLUMN_SEPARATOR + additionalColumns,
+                                : COLUMN_SEPARATOR + additionalColumns,
                         CollectionUtils.isEmpty(selections)
                                 ? ""
-                                : Constants.COLUMN_SEPARATOR + generateSelectionColumn(fullRequestTableInfoName, selections),
-                        fullRequestTableInfoName));
-        resultQuerySB.append(String.join("\n", joins));
+                                : COLUMN_SEPARATOR + generateSelectionColumn(
+                                        fromGraph.getFromTable().toString(),
+                                        selections)));
+
+        resultQuerySB.append('\n');
+        resultQuerySB.append(fromGraph);
 
         // Add WHERE statement
         if (filters != null && !filters.isEmpty()) {
             resultQuerySB.append("\nWHERE ");
             resultQuerySB.append(
                     QueryUtils.joinFilters(
-                            Constants.AND_FILTER_JOINER,
+                            AND_FILTER_JOINER,
                             filters,
                             columnFiltering -> getStatementColumn(
-                                    requestColumnInfoByName,
-                                    referencedNameColumnInfoByReferenceColumnName,
-                                    joinAliases,
+                                    columnMap,
                                     columnFiltering.getColumnName(),
                                     columnFiltering.isRaw())));
         }
@@ -169,31 +135,25 @@ public class FromWithGenerator {
         return String.format(
                 "SELECT tmp.*, row_number() OVER(ORDER BY %s) AS %s FROM (%s) tmp ORDER BY %2$s",
                 QueryUtils.generateOrderByInnerStatement(sorts, (OrderNullBehavior) null),
-                Constants.ROW_NUMBER_COLUMN_NAME,
+                ROW_NUMBER_COLUMN_NAME,
                 resultQuerySB.toString());
     }
 
     private String getStatementColumn(
-            Map<String, ColumnInfo> columnInfoByName,
-            Map<String, ColumnInfo> nameColumnByReferenceColumn,
-            Map<String, String> joinAliases,
+            Map<String, Column> columnMap,
             String name,
             boolean raw) {
-        ColumnInfo columnInfo;
         String result;
+        Column column = columnMap.get(name);
 
-        if (!raw && nameColumnByReferenceColumn.containsKey(name)) {
-            columnInfo = nameColumnByReferenceColumn.get(name);
-            result = String.format("%s.%s", joinAliases.get(name), columnInfo.getColumnName());
+        if (!raw && column.getRenderColumn() != null) {
+            column = column.getRenderColumn();
+            result = String.format("%s.%s", column.getFrom(), column.getColumnName());
         } else {
-            columnInfo = columnInfoByName.get(name);
-            result = Optional
-                    .ofNullable(columnInfo)
-                    .map(MetaSchemaUtils::getFullColumnInfoName)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid column name " + name));
+            result = column.toString();
         }
 
-        return result + getCastType(columnInfo);
+        return result + getCastType(column.getColumnInfo());
     }
 
     private String getSelectExpression(ColumnInfo columnInfo) {
@@ -241,7 +201,7 @@ public class FromWithGenerator {
                 "%s.id::TEXT = ANY(%s) AS %s",
                 fullRequestTableInfoName,
                 generateSelectionSQLArray(selections),
-                Constants.SELECTED_COLUMN_NAME);
+                SELECTED_COLUMN_NAME);
     }
 
     private String generateSelectionSQLArray(@NonNull Collection<String> selections) {
@@ -250,7 +210,7 @@ public class FromWithGenerator {
                 selections
                         .stream()
                         .map(selection -> String.format("'%s'", selection))
-                        .collect(Collectors.joining(Constants.COLUMN_SEPARATOR)));
+                        .collect(Collectors.joining(COLUMN_SEPARATOR)));
     }
 
 }

@@ -26,7 +26,6 @@ import ru.smsoft.sui.suibackend.model.UserState;
 import ru.smsoft.sui.suibackend.service.BackendService;
 import ru.smsoft.sui.suibackend.service.MetaAccessService;
 import ru.smsoft.sui.suibackend.message.request.*;
-import ru.smsoft.sui.suibackend.utils.Constants;
 import ru.smsoft.sui.suientity.entity.suimeta.ColumnInfo;
 import ru.smsoft.sui.suisecurity.security.UserPrincipal;
 import ru.smsoft.sui.suisecurity.utils.MetaSchemaUtils;
@@ -40,6 +39,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
+
+import static ru.smsoft.sui.suibackend.utils.Constants.SEND_TO_DESTINATION;
 
 @Controller
 @Slf4j
@@ -75,8 +76,8 @@ public class SocketController {
             switch (MessageType.valueOf(parsedPayload.get(MESSAGE_TYPE_KEY).asText())) {
                 case INIT:
                     val initMessage = parsedTreeToMessage(parsedPayload, InitMessage.class);
-                    val metaData = metaAccessService.getMetaData(initMessage.getTableInfoId(), user.getRoles());
-                    val tableInfo = metaData.getTableInfo();
+                    val metaData = metaAccessService.getMetaData(initMessage.getTableInfoId(), user);
+                    val tableInfo = metaData.getTable().getTableInfo();
 
                     if (tableInfo == null) {
                         throw new IllegalArgumentException("TableInfo with id " + initMessage.getTableInfoId() + " not found");
@@ -106,8 +107,7 @@ public class SocketController {
                     headerAccessor.getSessionAttributes().put(
                             USER_STATE_KEY,
                             UserState.builder()
-                                    .tableInfo(tableInfo)
-                                    .columns(metaData.getColumns())
+                                    .metaData(metaData)
                                     .offset(0L)
                                     .pageSize(initMessage.getPageSize())
                                     .filters(initMessage.getDefaultFilters())
@@ -294,7 +294,7 @@ public class SocketController {
 
         messagingTemplate.convertAndSendToUser(
                 principal.getName(),
-                Constants.SEND_TO_DESTINATION + "/" + headerAccessor.getSessionId(),
+                SEND_TO_DESTINATION + "/" + headerAccessor.getSessionId(),
                 content.set(MESSAGE_ID, new TextNode(messageId)));
     }
 

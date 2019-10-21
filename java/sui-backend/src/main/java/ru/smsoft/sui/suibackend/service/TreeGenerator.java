@@ -5,9 +5,11 @@ import lombok.val;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-import ru.smsoft.sui.suibackend.utils.Constants;
 
 import java.util.List;
+
+import static ru.smsoft.sui.suibackend.utils.Constants.CHILDREN_FIELD_NAME;
+import static ru.smsoft.sui.suibackend.utils.Constants.LEVEL_COLUMN_NAME;
 
 @Service
 @Slf4j
@@ -19,12 +21,12 @@ public class TreeGenerator {
             return 0;
         }
         JSONObject currentGroup = groups.get(currentIndex);
-        int currentGroupLevel = currentGroup.getInt(Constants.LEVEL_COLUMN_NAME);
+        int currentGroupLevel = currentGroup.getInt(LEVEL_COLUMN_NAME);
         int index = currentIndex + 1;
 
         while (index < groups.size()) {
             val indexGroup = groups.get(index);
-            val indexGroupLevel = indexGroup.getInt(Constants.LEVEL_COLUMN_NAME);
+            val indexGroupLevel = indexGroup.getInt(LEVEL_COLUMN_NAME);
 
             if (indexGroupLevel < currentGroupLevel) {
                 index--;
@@ -48,12 +50,12 @@ public class TreeGenerator {
     @SuppressWarnings("unchecked")
     private void addChild(JSONObject parent, JSONObject child) {
         if (parent != null) {
-            if (parent.has(Constants.CHILDREN_FIELD_NAME)) {
-                ((JSONArray) parent.get(Constants.CHILDREN_FIELD_NAME)).put(child);
+            if (parent.has(CHILDREN_FIELD_NAME)) {
+                ((JSONArray) parent.get(CHILDREN_FIELD_NAME)).put(child);
             } else {
                 val children = new JSONArray();
                 children.put(child);
-                parent.put(Constants.CHILDREN_FIELD_NAME, children);
+                parent.put(CHILDREN_FIELD_NAME, children);
             }
         }
     }

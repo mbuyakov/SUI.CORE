@@ -7,7 +7,7 @@ import ru.smsoft.sui.suibackend.message.model.SortingDirection;
 import ru.smsoft.sui.suibackend.message.model.filtering.*;
 import ru.smsoft.sui.suibackend.message.model.filtering.enumeration.FilteringOperation;
 import ru.smsoft.sui.suibackend.message.model.filtering.enumeration.FilteringType;
-import ru.smsoft.sui.suibackend.model.OrderNullBehavior;
+import ru.smsoft.sui.suibackend.model.query.OrderNullBehavior;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -16,8 +16,10 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static ru.smsoft.sui.suibackend.message.model.filtering.enumeration.FilteringOperation.EQUAL;
-import static ru.smsoft.sui.suibackend.message.model.filtering.enumeration.FilteringOperation.IN;
+import static ru.smsoft.sui.suibackend.utils.Constants.AND_FILTER_JOINER;
+import static ru.smsoft.sui.suibackend.utils.Constants.COLUMN_SEPARATOR;
+import static ru.smsoft.sui.suibackend.utils.Constants.INFINITY;
+import static ru.smsoft.sui.suibackend.utils.Constants.NEGATIVE_INFINITY;
 
 
 public class QueryUtils {
@@ -26,12 +28,12 @@ public class QueryUtils {
         return withStatements.keySet()
                 .stream()
                 .map(withName -> String.format("%s AS (%s)", withName, withStatements.get(withName)))
-                .collect(Collectors.joining(Constants.COLUMN_SEPARATOR, "WITH ", "\n")) +
+                .collect(Collectors.joining(COLUMN_SEPARATOR, "WITH ", "\n")) +
                 String.join(" UNION ", selectStatements);
     }
 
     private static String mapColumnFilteringToQueryFilter(
-            @NonNull ColumnFiltering columnFiltering, Function<ColumnFiltering, String> columnNameGetter) {
+      @NonNull ColumnFiltering columnFiltering, Function<ColumnFiltering, String> columnNameGetter) {
         val filteringOperationOptional = Optional.ofNullable(columnFiltering.getOperation());
         val columnName = columnNameGetter.apply(columnFiltering);
 
@@ -45,7 +47,7 @@ public class QueryUtils {
 
             String operation;
 
-            switch (filteringOperationOptional.orElse(IN)) {
+            switch (filteringOperationOptional.orElse(FilteringOperation.IN)) {
                 case IN:
                     operation = "IN";
                     break;
@@ -63,7 +65,7 @@ public class QueryUtils {
                     operation,
                     elements.stream()
                             .map(element -> '\'' + formatSimpleFilteringValue(element) + '\'')
-                            .collect(Collectors.joining(Constants.COLUMN_SEPARATOR)));
+                            .collect(Collectors.joining(COLUMN_SEPARATOR)));
         } else if (columnFiltering instanceof IntervalColumnFiltering) {
             val intervalColumnFiltering = (IntervalColumnFiltering) columnFiltering;
             val interval = intervalColumnFiltering.getValue();
@@ -84,11 +86,11 @@ public class QueryUtils {
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
 
-            return filters.isEmpty() ? "TRUE" : joinFilters(Constants.AND_FILTER_JOINER, filters);
+            return filters.isEmpty() ? "TRUE" : joinFilters(AND_FILTER_JOINER, filters);
         } else if (columnFiltering instanceof SimpleColumnFiltering) {
             val simpleColumnFiltering = (SimpleColumnFiltering) columnFiltering;
             String filterFormat;
-            val filteringOperation = filteringOperationOptional.orElse(EQUAL);
+            val filteringOperation = filteringOperationOptional.orElse(FilteringOperation.EQUAL);
 
             if (simpleColumnFiltering.getValue() == null
                     || "null".equalsIgnoreCase(simpleColumnFiltering.getValue())) {
@@ -178,7 +180,7 @@ public class QueryUtils {
     }
 
     private static String mapFilteringToQueryFilter(
-            Filtering filtering, Function<ColumnFiltering, String> columnNameGetter) {
+      Filtering filtering, Function<ColumnFiltering, String> columnNameGetter) {
         val type = filtering.getType();
         val resultColumnNameGetter = columnNameGetter != null
                 ? columnNameGetter
@@ -296,16 +298,16 @@ public class QueryUtils {
                                 .map(behavior -> "NULLS " + behavior.name())
                                 .orElse("")))
                 .map(String::trim)
-                .collect(Collectors.joining(Constants.COLUMN_SEPARATOR));
+                .collect(Collectors.joining(COLUMN_SEPARATOR));
     }
 
     private static String formatSimpleFilteringValue(Object value) {
         val valueStr = Objects.toString(value);
 
         switch (valueStr) {
-            case Constants.INFINITY:
-            case Constants.NEGATIVE_INFINITY:
-                return valueStr.replaceFirst(Constants.INFINITY, "infinity");
+            case INFINITY:
+            case NEGATIVE_INFINITY:
+                return valueStr.replaceFirst(INFINITY, "infinity");
             default:
                 return valueStr;
         }

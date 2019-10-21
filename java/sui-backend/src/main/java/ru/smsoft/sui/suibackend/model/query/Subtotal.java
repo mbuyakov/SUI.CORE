@@ -1,4 +1,4 @@
-package ru.smsoft.sui.suibackend.model;
+package ru.smsoft.sui.suibackend.model.query;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

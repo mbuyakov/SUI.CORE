@@ -13,16 +13,14 @@ import ru.smsoft.sui.suibackend.message.model.ExpandedGroup;
 import ru.smsoft.sui.suibackend.message.model.Grouping;
 import ru.smsoft.sui.suibackend.message.model.Sorting;
 import ru.smsoft.sui.suibackend.message.model.filtering.Filtering;
-import ru.smsoft.sui.suibackend.model.Column;
 import ru.smsoft.sui.suibackend.model.PageData;
-import ru.smsoft.sui.suibackend.model.Subtotal;
 import ru.smsoft.sui.suibackend.model.UserState;
+import ru.smsoft.sui.suibackend.model.query.Column;
+import ru.smsoft.sui.suibackend.model.query.Subtotal;
 import ru.smsoft.sui.suibackend.query.DataQueryGenerator;
 import ru.smsoft.sui.suibackend.query.FromWithGenerator;
 import ru.smsoft.sui.suibackend.query.GroupQueryGenerator;
 import ru.smsoft.sui.suibackend.utils.JsonUtils;
-import ru.smsoft.sui.suibackend.utils.Constants;
-import ru.smsoft.sui.suisecurity.utils.MetaSchemaUtils;
 import ru.smsoft.sui.suisecurity.utils.TextUtils;
 
 import java.util.*;
@@ -33,13 +31,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import static ru.smsoft.sui.suibackend.utils.Constants.*;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class BackendService {
 
     private final static Set<String> groupResponseIncludedColumns =
-            Stream.of(Constants.RECORDS_COLUMN_NAME, Constants.CHILDREN_FIELD_NAME).collect(Collectors.toSet());
+            Stream.of(RECORDS_COLUMN_NAME, CHILDREN_FIELD_NAME).collect(Collectors.toSet());
 
     @NonNull
     private FromWithGenerator fromWithGenerator;
@@ -53,20 +53,22 @@ public class BackendService {
     private JdbcTemplate jdbcTemplate;
 
     public PageData getData(UserState userState) {
-        val fullTableInfoName = MetaSchemaUtils.getFullTableInfoName(userState.getTableInfo());
-        val columnMap = userState
+        val metaData = userState.getMetaData();
+
+        val columnMap = metaData
                 .getColumns()
                 .stream()
                 .collect(Collectors.toMap(
-                        column -> column.getColumnInfo().getColumnName(),
+                        // TODO: Костыль
+                        Column::getName,
                         Function.identity()));
 
-        if (columnMap.values().stream().noneMatch(Column::isVisible)) {
+        if (metaData.getFromGraph() == null || columnMap.values().stream().noneMatch(Column::isVisible)) {
             return new PageData();
         }
 
         val fromWith = fromWithGenerator.generateMainWith(
-                fullTableInfoName,
+                metaData.getFromGraph(),
                 columnMap.values(),
                 extractAllFilters(userState),
                 userState.getSorts(),
@@ -143,27 +145,27 @@ public class BackendService {
                         generateSubtotals(columnByColumnInfoName.values())));
 
         val visibleRows =
-                parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) groupQueryResult.get(Constants.ROWS_COLUMN_NAME)))
+                parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) groupQueryResult.get(ROWS_COLUMN_NAME)))
                         .stream()
                         .map(JsonUtils.CAMEL_CASE_JSON_OBJECT_KEY_MAPPER)
                         .collect(Collectors.toList());
         formatDataQueryResult(columnByColumnInfoName.values(), visibleRows);
-        val visibleGroups = parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) groupQueryResult.get(Constants.GROUPS_COLUMN_NAME)));
+        val visibleGroups = parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) groupQueryResult.get(GROUPS_COLUMN_NAME)));
         val expandedMaxLevelGroups = visibleGroups
                 .stream()
                 .filter(group ->
-                        group.getInt(Constants.LEVEL_COLUMN_NAME) == formattedGroupings.size() && group.optBoolean(Constants.EXPANDED_COLUMN_NAME))
+                        group.getInt(LEVEL_COLUMN_NAME) == formattedGroupings.size() && group.optBoolean(EXPANDED_COLUMN_NAME))
                 .collect(Collectors.toList());
-        val firstGroupOffset = (Long) groupQueryResult.get(Constants.OFFSET_COLUMN_NAME);
+        val firstGroupOffset = (Long) groupQueryResult.get(OFFSET_COLUMN_NAME);
         val expandedMaxLevelGroupIndex = new AtomicInteger(0);
 
         expandedMaxLevelGroups.forEach(group -> {
-            int elements = group.getInt(Constants.ELEMENTS_COLUMN_NAME);
+            int elements = group.getInt(ELEMENTS_COLUMN_NAME);
             if (expandedMaxLevelGroupIndex.getAndIncrement() == 0) {
                 elements -= firstGroupOffset;
             }
             val groupVisibleRows = visibleRows.subList(0, Math.min(elements, visibleRows.size()));
-            group.put(Constants.CHILDREN_FIELD_NAME, new ArrayList<>(groupVisibleRows));
+            group.put(CHILDREN_FIELD_NAME, new ArrayList<>(groupVisibleRows));
             visibleRows.removeAll(groupVisibleRows);
         });
 
@@ -171,13 +173,13 @@ public class BackendService {
                 .stream()
                 .map(jsonObject -> JsonUtils.PREDICATE_CAMEL_CASE_JSON_OBJECT_KEY_MAPPER.apply(
                         jsonObject,
-                        key -> !key.startsWith(Constants.COMMON_PREFIX)))
+                        key -> !key.startsWith(COMMON_PREFIX)))
                 .collect(Collectors.toList());
 
         treeGenerator.setChildren(formattedVisibleGroups, 0, null);
 
         val firstLevelGroups = formattedVisibleGroups.stream()
-                .filter(group -> group.getInt(Constants.LEVEL_COLUMN_NAME) == 1)
+                .filter(group -> group.getInt(LEVEL_COLUMN_NAME) == 1)
                 .collect(Collectors.toList());
         formatGroups(
                 formattedVisibleGroups,
@@ -189,22 +191,28 @@ public class BackendService {
         return PageData
                 .builder()
                 .totalCount((long) Optional
-                        .ofNullable(groupQueryResult.get(Constants.MAX_END_POSITION_COLUMN_NAME))
+                        .ofNullable(groupQueryResult.get(MAX_END_POSITION_COLUMN_NAME))
                         .orElse(0L))
                 .data(new JSONArray(firstLevelGroups))
                 .build();
     }
 
     private List<Subtotal> generateSubtotals(Collection<Column> columns) {
+        val renderColumns = columns
+                .stream()
+                .map(Column::getRenderColumn)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
         return columns
                 .stream()
+                .filter(column -> !renderColumns.contains(column))
                 .map(column -> {
                     val columnInfo = column.getColumnInfo();
-
                     String operation = null;
 
-                    if (column.getRenderColumnAlias() != null) {
-                        val renderColumnInfo = column.getRenderColumnInfo();
+                    if (column.getRenderColumn() != null) {
+                        val renderColumnInfo = column.getRenderColumn().getColumnInfo();
 
                         if (renderColumnInfo.getSubtotalType() != null) {
                             operation = renderColumnInfo.getSubtotalType().getExpression();
@@ -238,14 +246,14 @@ public class BackendService {
             val keySet = group.keySet();
             val subtotalKeys = keySet
                     .stream()
-                    .filter(key -> key.startsWith(Constants.SUBTOTAL_PREFIX))
+                    .filter(key -> key.startsWith(SUBTOTAL_PREFIX))
                     .collect(Collectors.toList());
 
             keySet.removeIf(key -> {
                 val groupingColumnIndex = groupingColumns.indexOf(key);
-                return (groupingColumnIndex != -1 && groupingColumnIndex != group.getInt(Constants.LEVEL_COLUMN_NAME) - 1);
+                return (groupingColumnIndex != -1 && groupingColumnIndex != group.getInt(LEVEL_COLUMN_NAME) - 1);
             });
-            keySet.removeIf(key -> key.startsWith(Constants.COMMON_PREFIX)
+            keySet.removeIf(key -> key.startsWith(COMMON_PREFIX)
                     && !subtotalKeys.contains(key)
                     && !groupResponseIncludedColumns.contains(key));
 
@@ -254,37 +262,37 @@ public class BackendService {
 
                 subtotalKeys.forEach(key ->
                         subtotalJsonObject.put(
-                                TextUtils.toCamelCase(key.substring(Constants.SUBTOTAL_PREFIX.length())),
+                                TextUtils.toCamelCase(key.substring(SUBTOTAL_PREFIX.length())),
                                 group.get(key)));
                 keySet.removeAll(subtotalKeys);
 
-                group.put(Constants.SUBTOTALS_FIELD_NAME, subtotalJsonObject);
+                group.put(SUBTOTALS_FIELD_NAME, subtotalJsonObject);
             }
         });
     }
 
     private void formatDataQueryResult(Collection<Column> columns, List<JSONObject> rows) {
-        val referenceRenderColumns = columns
+        val columnsWithRender = columns
                 .stream()
-                .filter(column -> column.getRenderColumnAlias() != null)
+                .filter(column -> column.getRenderColumn() != null)
                 .collect(Collectors.toList());
 
         rows.forEach(row ->
-                referenceRenderColumns.forEach(column -> {
-                    val columnInfo = column.getColumnInfo();
-                    val renderColumnInfo = column.getRenderColumnInfo();
-                    val rowNameColumnName = TextUtils.toCamelCase(column.getRenderColumnAlias());
+                columnsWithRender.forEach(column -> {
+                    val renderColumn = column.getRenderColumn();
+                    val rowNameColumnName = TextUtils.toCamelCase(renderColumn.getName());
 
                     row.put(
                             TextUtils.toCamelCase(
                                     String.format(
                                             "%s_by_%s",
-                                            renderColumnInfo.getTableInfo().getTableName(),
-                                            columnInfo.getColumnName())),
+                                            renderColumn.getFrom().getTableInfo().getTableName(),
+                                            column.getColumnName())),
                             new JSONObject(
                                     Collections.singletonMap(
-                                            TextUtils.toCamelCase(renderColumnInfo.getColumnName()),
+                                            TextUtils.toCamelCase(renderColumn.getColumnInfo().getColumnName()),
                                             row.opt(rowNameColumnName))));
+
                     row.remove(rowNameColumnName);
                 }));
     }
@@ -305,9 +313,9 @@ public class BackendService {
                     val column = columnByColumnInfoName.get(columnName);
                     return newElementCreator.apply(
                             element,
-                            column.getRenderColumnAlias() != null
-                                    ? column.getRenderColumnAlias()
-                                    : column.getColumnInfo().getColumnName());
+                            column.getRenderColumn() != null
+                                    ? column.getRenderColumn().getName()
+                                    : column.getColumnName());
                 }).collect(Collectors.toList());
     }
 

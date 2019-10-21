@@ -10,6 +10,9 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import static ru.smsoft.sui.suibackend.utils.Constants.INFINITY;
+import static ru.smsoft.sui.suibackend.utils.Constants.NEGATIVE_INFINITY;
+
 
 public class JsonUtils {
 
@@ -30,8 +33,8 @@ public class JsonUtils {
     private static Object formatValue(Object value) {
         return (value instanceof Double && Double.isInfinite((Double) value))
                 ? value.equals(Double.NEGATIVE_INFINITY)
-                ? Constants.NEGATIVE_INFINITY
-                : Constants.INFINITY
+                ? NEGATIVE_INFINITY
+                : INFINITY
                 : value;
     }
 

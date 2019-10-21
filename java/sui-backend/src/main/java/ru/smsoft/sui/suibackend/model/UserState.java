@@ -8,7 +8,7 @@ import ru.smsoft.sui.suibackend.message.model.ExpandedGroup;
 import ru.smsoft.sui.suibackend.message.model.Grouping;
 import ru.smsoft.sui.suibackend.message.model.Sorting;
 import ru.smsoft.sui.suibackend.message.model.filtering.Filtering;
-import ru.smsoft.sui.suientity.entity.suimeta.TableInfo;
+import ru.smsoft.sui.suibackend.service.MetaAccessService;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,9 +19,7 @@ import java.util.List;
 @Builder(toBuilder = true)
 public class UserState {
 
-    private TableInfo tableInfo;
-
-    private Collection<Column> columns;
+    private MetaAccessService.MetaData metaData;
 
     private Long offset;
 
