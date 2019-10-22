@@ -1,6 +1,6 @@
 {
   "name": "@smsoft/sui-all",
-  "version": "6.0.1-DEVELOP",
+  "version": "6.0.191023021626-canary",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
