@@ -8,6 +8,7 @@ import ru.smsoft.sui.suientity.entity.suimeta.ColumnInfo;
 import ru.smsoft.sui.suientity.entity.suimeta.TableInfo;
 import ru.smsoft.sui.suientity.entity.suisecurity.Role;
 import ru.smsoft.sui.suientity.entity.suisecurity.User;
+import ru.smsoft.sui.suientity.enums.RoleName;
 import ru.smsoft.sui.suientity.repository.suimeta.ColumnInfoRepository;
 import ru.smsoft.sui.suientity.repository.suimeta.SuiMetaSettingRepository;
 import ru.smsoft.sui.suientity.repository.suisecurity.RestrictionRepository;
@@ -57,26 +58,33 @@ public class MetaAccessService {
 
         val fromTable = new Table(tableInfo);
         val columns = getColumns(fromTable, user.getRoles());
-        val restrictions = restrictionRepository.findRestrictions(user, Long.class);
 
         return MetaData
                 .builder()
                 .table(fromTable)
                 .columns(columns)
-                .fromGraph(createFromGraph(fromTable, columns, restrictions))
+                .fromGraph(createFromGraph(fromTable, columns, user))
                 .build();
     }
 
     private FromGraph createFromGraph(
             Table fromTable,
             Collection<Column> tableColumns,
-            Collection<Long> restrictions) {
+            User user) {
+        val renderFromGraph = createRenderFromGraph(fromTable, tableColumns);
+
+        // ignore restrictions if user is Admin
+        if (user.getRoles().stream().anyMatch(role -> role.getRoleName() == RoleName.ROLE_ADMIN)) {
+            return renderFromGraph;
+        }
+
+        val restrictions = restrictionRepository.findRestrictions(user, Long.class);
+
         if (!restrictions.isEmpty()) {
             val joinedRestrictions = restrictions
                     .stream()
                     .map(Objects::toString)
                     .collect(Collectors.joining(","));
-            val renderFromGraph = createRenderFromGraph(fromTable, tableColumns);
 
             suiMetaSettingRepository
                     .getRestrictionTable()
