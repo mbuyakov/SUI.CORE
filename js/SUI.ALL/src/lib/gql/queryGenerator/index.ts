@@ -52,16 +52,17 @@ export function generateCreateText(entity: string, fields: object): string {
 /**
  * Generate promise for Gql create
  * Available fields types - string, number, boolean
+ * @return created entity id
  */
-export async function generateCreate(entity: string, fields: object): Promise<void> {
-  await mutate(generateCreateText(entity, fields));
+export async function generateCreate<T = void>(entity: string, fields: object): Promise<T> {
+  return mutate(generateCreateText(entity, fields), 2);
 }
 
 /**
  * Generate promise for Gql create
  * Available fields types - string, number, boolean
  */
-export function generateCreateFn(entity: string): (fields: object) => Promise<void> {
+export function generateCreateFn<T = void>(entity: string): (fields: object) => Promise<T> {
   return (fields: object) => generateCreate(entity, fields);
 }
 
