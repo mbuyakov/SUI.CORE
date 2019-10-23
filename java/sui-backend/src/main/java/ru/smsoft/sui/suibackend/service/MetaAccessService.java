@@ -74,117 +74,119 @@ public class MetaAccessService {
         val renderFromGraph = createRenderFromGraph(fromTable, tableColumns);
 
         // ignore restrictions if user is Admin
-        if (user.getRoles().stream().anyMatch(role -> role.getRoleName() == RoleName.ROLE_ADMIN)) {
-            return renderFromGraph;
-        }
+        if (user.getRoles().stream().noneMatch(role -> role.getRoleName() == RoleName.ROLE_ADMIN)) {
+            val restrictions = restrictionRepository.findRestrictions(user, Long.class);
 
-        val restrictions = restrictionRepository.findRestrictions(user, Long.class);
-
-        if (!restrictions.isEmpty()) {
             val joinedRestrictions = restrictions
                     .stream()
                     .map(Objects::toString)
                     .collect(Collectors.joining(","));
 
-            suiMetaSettingRepository
-                    .getRestrictionTable()
-                    .ifPresent(restrictionTableInfo -> {
-                        val fromTableInfo = fromTable.getTableInfo();
+            val restrictionTableInfo = suiMetaSettingRepository.getRestrictionTable().orElse(null);
 
-                        // Select from restriction table
-                        if (restrictionTableInfo.equals(fromTableInfo)) {
-                            val fromSubQuery = FromSubQuery
-                                    .builder()
-                                    .alias(FROM_SUB_QUERY_ALIAS)
-                                    .query(String.format("SELECT unnest(ARRAY[%s]) AS id", joinedRestrictions))
-                                    .build();
+            if (restrictionTableInfo != null) {
+                val fromTableInfo = fromTable.getTableInfo();
 
-                            renderFromGraph.addJoin(
-                                    JoinType.INNER_JOIN,
-                                    fromSubQuery,
-                                    ReferenceCondition
-                                            .builder()
-                                            .fromTable(fromTable)
-                                            .toTable(fromSubQuery)
-                                            .referencedColumnName("id")
-                                            .build());
+                // Select from restriction table
+                if (restrictionTableInfo.equals(fromTableInfo)) {
+                    if (!restrictions.isEmpty()) {
+                        val fromSubQuery = FromSubQuery
+                                .builder()
+                                .alias(FROM_SUB_QUERY_ALIAS)
+                                .query(String.format("SELECT unnest(ARRAY[%s]) AS id", joinedRestrictions))
+                                .build();
+
+                        renderFromGraph.addJoin(
+                                JoinType.INNER_JOIN,
+                                fromSubQuery,
+                                ReferenceCondition
+                                        .builder()
+                                        .fromTable(fromTable)
+                                        .toTable(fromSubQuery)
+                                        .referencedColumnName("id")
+                                        .build());
+                    } else{
+                       return null;
+                    }
+                } else {
+                    val tableSegmentMap = new HashMap<TableInfo, TableSegment>();
+
+                    renderFromGraph
+                            .tableSegments()
+                            .stream()
+                            .filter(tableSegment -> tableSegment instanceof Table)
+                            .map(tableSegment -> (Table) tableSegment)
+                            .forEach(table -> tableSegmentMap.putIfAbsent(table.getTableInfo(), table));
+
+                    TableInfo currentTableInfo = fromTableInfo;
+                    Join lastExistingJoin = null;
+
+                    while (!restrictionTableInfo.equals(currentTableInfo)) {
+                        //noinspection ConstantConditions
+                        val followColumnInfo = currentTableInfo.getFollowColumnInfo();
+
+                        if (followColumnInfo != null) {
+                            val followTableInfo = MetaSchemaUtils.getReferencedTableInfo(followColumnInfo);
+
+                            val currentTable = tableSegmentMap.get(currentTableInfo);
+                            val followTable = tableSegmentMap.get(followTableInfo);
+
+                            if (currentTable != null && followTable != null) {
+                                val join = renderFromGraph.getJoin(currentTable, followTable);
+
+                                if (join != null) {
+                                    lastExistingJoin = join;
+                                }
+                            }
+
+                            currentTableInfo = followTableInfo;
                         } else {
-                            val tableSegmentMap = new HashMap<TableInfo, TableSegment>();
-
-                            renderFromGraph
-                                    .tableSegments()
-                                    .stream()
-                                    .filter(tableSegment -> tableSegment instanceof Table)
-                                    .map(tableSegment -> (Table) tableSegment)
-                                    .forEach(table -> tableSegmentMap.putIfAbsent(table.getTableInfo(), table));
-
-                            TableInfo currentTableInfo = fromTableInfo;
-                            Join lastExistingJoin = null;
-
-                            while (!restrictionTableInfo.equals(currentTableInfo)) {
-                                //noinspection ConstantConditions
-                                val followColumnInfo = currentTableInfo.getFollowColumnInfo();
-
-                                if (followColumnInfo != null) {
-                                    val followTableInfo = MetaSchemaUtils.getReferencedTableInfo(followColumnInfo);
-
-                                    val currentTable = tableSegmentMap.get(currentTableInfo);
-                                    val followTable = tableSegmentMap.get(followTableInfo);
-
-                                    if (currentTable != null && followTable != null) {
-                                        val join = renderFromGraph.getJoin(currentTable, followTable);
-
-                                        if (join != null) {
-                                            lastExistingJoin = join;
-                                        }
-                                    }
-
-                                    currentTableInfo = followTableInfo;
-                                } else {
-                                    break;
-                                }
-                            }
-
-                            if (restrictionTableInfo.equals(currentTableInfo)) {
-                                if (lastExistingJoin != null) {
-                                    lastExistingJoin.setJoinType(JoinType.INNER_JOIN);
-                                    lastExistingJoin.setJoinSegment(FromSubQuery
-                                            .builder()
-                                            .alias(lastExistingJoin.getJoinSegment().getAlias())
-                                            .query(generateRestrictionSubSelect(
-                                                    ((Table) lastExistingJoin.getJoinSegment()).getTableInfo(),
-                                                    restrictionTableInfo,
-                                                    joinedRestrictions))
-                                            .build());
-                                } else {
-                                    val followColumnInfo = fromTableInfo.getFollowColumnInfo();
-                                    val subSelect = FromSubQuery
-                                            .builder()
-                                            .alias(FROM_SUB_QUERY_ALIAS)
-                                            .query(generateRestrictionSubSelect(
-                                                    MetaSchemaUtils.getReferencedTableInfo(followColumnInfo),
-                                                    restrictionTableInfo,
-                                                    joinedRestrictions))
-                                            .build();
-
-                                    renderFromGraph.addJoin(
-                                            JoinType.INNER_JOIN,
-                                            subSelect,
-                                            ReferenceCondition
-                                                    .builder()
-                                                    .fromTable(fromTable)
-                                                    .toTable(subSelect)
-                                                    .referencedColumnName(followColumnInfo.getColumnName())
-                                                    .build());
-                                }
-                            }
+                            break;
                         }
-                    });
+                    }
 
-            return renderFromGraph;
-        } else {
-            return null;
+                    if (restrictionTableInfo.equals(currentTableInfo)) {
+                        if (!restrictions.isEmpty()) {
+                            if (lastExistingJoin != null) {
+                                lastExistingJoin.setJoinType(JoinType.INNER_JOIN);
+                                lastExistingJoin.setJoinSegment(FromSubQuery
+                                        .builder()
+                                        .alias(lastExistingJoin.getJoinSegment().getAlias())
+                                        .query(generateRestrictionSubSelect(
+                                                ((Table) lastExistingJoin.getJoinSegment()).getTableInfo(),
+                                                restrictionTableInfo,
+                                                joinedRestrictions))
+                                        .build());
+                            } else {
+                                val followColumnInfo = fromTableInfo.getFollowColumnInfo();
+                                val subSelect = FromSubQuery
+                                        .builder()
+                                        .alias(FROM_SUB_QUERY_ALIAS)
+                                        .query(generateRestrictionSubSelect(
+                                                MetaSchemaUtils.getReferencedTableInfo(followColumnInfo),
+                                                restrictionTableInfo,
+                                                joinedRestrictions))
+                                        .build();
+
+                                renderFromGraph.addJoin(
+                                        JoinType.INNER_JOIN,
+                                        subSelect,
+                                        ReferenceCondition
+                                                .builder()
+                                                .fromTable(fromTable)
+                                                .toTable(subSelect)
+                                                .referencedColumnName(followColumnInfo.getColumnName())
+                                                .build());
+                            }
+                        } else {
+                            return null;
+                        }
+                    }
+                }
+            }
         }
+
+        return renderFromGraph;
     }
 
     private FromGraph createRenderFromGraph(Table fromTable, Collection<Column> tableColumns) {
