@@ -247,8 +247,9 @@ public class MetaAccessService {
         fromTable.getTableInfo().getColumnInfos().forEach(columnInfo -> {
             Column renderColumn = null;
             val renderColumnInfo = MetaSchemaUtils.getReferenceRenderColumnInfo(columnInfo, roles);
+            val isVisible = MetaSchemaUtils.isAllowedColumnInfo(columnInfo, roles);
 
-            if (renderColumnInfo != null) {
+            if (isVisible && renderColumnInfo != null) {
                 val renderTableInfo = renderColumnInfo.getTableInfo();
 
                 renderColumn = Column
@@ -267,7 +268,7 @@ public class MetaAccessService {
                     .from(fromTable)
                     .columnInfo(columnInfo)
                     .renderColumn(renderColumn)
-                    .visible(MetaSchemaUtils.isAllowedColumnInfo(columnInfo, roles))
+                    .visible(isVisible)
                     .build());
         });
 
