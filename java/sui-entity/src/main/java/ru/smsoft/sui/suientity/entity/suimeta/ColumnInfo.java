@@ -74,7 +74,8 @@ public class ColumnInfo implements Persistable<Long> {
     private FilterType filterType;
 
     // Don't change to list
-    @OneToMany(mappedBy = "columnInfo", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Don't add orphanRemoval = true (conflict with psql ON DELETE CASCADE)
+    @OneToMany(mappedBy = "columnInfo", cascade = CascadeType.ALL)
     @Singular
     @JsonBackReference("references")
     private Set<ColumnInfoReference> references;

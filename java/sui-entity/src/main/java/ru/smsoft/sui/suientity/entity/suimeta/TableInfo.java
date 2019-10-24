@@ -84,7 +84,8 @@ public class TableInfo implements Persistable<Long> {
     private ColumnInfo followColumnInfo;
 
     // Don't change to list
-    @OneToMany(mappedBy = "tableInfo", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    // Don't add orphanRemoval = true (conflict with psql ON DELETE CASCADE)
+    @OneToMany(mappedBy = "tableInfo", cascade = {CascadeType.ALL})
     @Singular
     @JsonBackReference("columnInfos")
     private Set<ColumnInfo> columnInfos;
