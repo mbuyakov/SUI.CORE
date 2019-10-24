@@ -47,7 +47,7 @@ export class ColSettings extends SerializableDnDChild<SerializedColSettings> {
         title="Колонка"
         onDelete={this.props.onDelete}
         deletableChildren={true}
-        shouldAcceptDrop={this.shouldAcceptDrop}
+        // shouldAcceptDrop={this.shouldAcceptDrop}
         initialItems={this.state.items.map(item => (
           <ItemSettings
             plain={item}
@@ -75,8 +75,11 @@ export class ColSettings extends SerializableDnDChild<SerializedColSettings> {
   @autobind
   // tslint:disable-next-line:no-any
   private shouldAcceptDrop(sourceContainerOptions: ContainerOptions, payload: any): boolean {
+    console.log(this, sourceContainerOptions, payload);
     const payloadId = getDataByKey(payload, 'props', 'id');
     // console.log(this.itemsRef.current.getChildRefs());
+
+    console.log(sourceContainerOptions.groupName === 'ItemSettings' && (sourceContainerOptions.behaviour === 'copy' ? !this.itemsRef.current.getChildRefs().map(ref => ref.props.id).includes(payloadId) : true));
 
     return sourceContainerOptions.groupName === 'ItemSettings' && (sourceContainerOptions.behaviour === 'copy' ? !this.itemsRef.current.getChildRefs().map(ref => ref.props.id).includes(payloadId) : true);
   }
