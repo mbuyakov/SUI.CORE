@@ -393,14 +393,14 @@ export class BackendTable<TSelection = defaultSelection>
       'EXPANDED_GROUP_CHANGE',
       {
         expandedGroups: expandedGroups
-          .filter(groupKey => {
-            const groupKeyPrefix = `${groupKey}${DX_REACT_GROUP_SEPARATOR}`;
-            return expandedGroups.every(element => !element.startsWith(groupKeyPrefix));
-          })
           .map(groupKey => realExpandedGroups.find(realGroup => realGroup.key === groupKey))
-          .filter(expandedGroup => {
-            const parents = calculateParentExpandedGroups(realExpandedGroups, expandedGroup.key);
-            return (parents.length + 1) === expandedGroup.path.length;
+          .filter(group => {
+            const parents = calculateParentExpandedGroups(realExpandedGroups, group.key);
+            return (parents.length + 1) === group.path.length;
+          })
+          .filter((group, _, groups) => {
+            const groupKeyPrefix = `${group.key}${DX_REACT_GROUP_SEPARATOR}`;
+            return groups.every(element => !element.key.startsWith(groupKeyPrefix));
           })
           .map(expandedGroup => ({ group: expandedGroup.path })),
       },
