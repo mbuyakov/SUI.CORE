@@ -43,11 +43,11 @@ export class CardSettings extends React.Component<ICardSettingsProps> implements
         <DnDList<ItemSettings | FreeText>
           id={`${this.props.id}-title`}
           ref={this.titleListRef}
-          type="TITLE"
+          type="ItemSettings"
           title="Заголовок"
           deletableChildren={true}
           style={{marginBottom: 12}}
-          shouldAcceptDrop={CardSettings.shouldAcceptDrop}
+          // shouldAcceptDrop={CardSettings.shouldAcceptDrop}
           initialItems={
             this.props.plain &&
             this.props.plain.title &&
