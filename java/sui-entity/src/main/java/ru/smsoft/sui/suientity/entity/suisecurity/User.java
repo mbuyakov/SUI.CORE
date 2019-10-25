@@ -34,6 +34,7 @@ import java.util.Set;
 @DynamicInsert
 public class User implements Serializable {
 
+    public static final long SYSTEM_USER_ID = -1;
     public static final String WITH_ROLES = "userWithRoles";
 
     @Id

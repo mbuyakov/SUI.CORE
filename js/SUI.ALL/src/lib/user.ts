@@ -1,3 +1,5 @@
+export const SYSTEM_USER_ID = -1;
+
 export interface ICoreUser {
   /**
    *   User Bearer access token
