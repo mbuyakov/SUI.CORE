@@ -1,12 +1,12 @@
 /* tslint:disable:object-literal-sort-keys no-any unnecessary-else newline-before-return prefer-function-over-method no-floating-promises prefer-readonly promise-function-async*/
-import { Filter, Grouping, GroupKey, Sorting } from '@devexpress/dx-react-grid';
-import { IFrame, IMessage } from '@stomp/stompjs';
+import {Filter, Grouping, GroupKey, Sorting} from '@devexpress/dx-react-grid';
+import {IFrame, IMessage} from '@stomp/stompjs';
 import autobind from 'autobind-decorator';
 import difference from 'lodash/difference';
 import * as React from 'react';
 import uuid from 'uuid';
 
-import { asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getBackendUrl, getDataByKey, getFilterType, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, RawModePlugin, RefreshMetaTablePlugin, Socket, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray, xor } from './index';
+import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getBackendUrl, getDataByKey, getFilterType, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, RawModePlugin, RefreshMetaTablePlugin, Socket, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray, xor} from './index';
 
 const SUBSCRIBE_DESTINATION_PREFIX = '/user/queue/response/';
 const SEND_DESTINATION = '/data';
@@ -105,7 +105,7 @@ export class BackendTable<TSelection = defaultSelection>
 
   public constructor(props: any) {
     super(props);
-    this.state = { lastSendSelection: [] };
+    this.state = {lastSendSelection: []};
   }
 
   @autobind
@@ -181,7 +181,7 @@ export class BackendTable<TSelection = defaultSelection>
           {...this.props}
           defaultFilters={this.props.defaultFilters ? wrapInArray(this.props.defaultFilters) : undefined}
           {...this.state}
-          filters={this.state.filters ? this.state.filters.map(filter => ({ ...filter, columnName: camelCase(filter.columnName) })) : undefined}
+          filters={this.state.filters ? this.state.filters.map(filter => ({...filter, columnName: camelCase(filter.columnName)})) : undefined}
           rows={this.state.data}
           cols={this.state.cols}
           ref={this.baseTableRef}
@@ -202,13 +202,11 @@ export class BackendTable<TSelection = defaultSelection>
               />
             )
           }
-          toolbarButtons={admin
-            ? [
-              (<RefreshMetaTablePlugin handleClick={this.reinit}/>),
-              (<RawModePlugin enabled={this.state.rawMode} onClick={this.changeRaw}/>),
-              (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
-            ] : null
-          }
+          toolbarButtons={[
+            (<RefreshMetaTablePlugin handleClick={this.reinit}/>),
+            admin && (<RawModePlugin enabled={this.state.rawMode} onClick={this.changeRaw}/>),
+            admin && (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
+          ].filter(Boolean)}
           rowStyler={this.generateRowStyler()}
           warnings={admin ? this.state.warnings : undefined}
           // tslint:disable-next-line:no-magic-numbers
@@ -228,7 +226,7 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private changeRaw(): void {
-    this.setState({ rawMode: !this.state.rawMode }); // , this.updateData);
+    this.setState({rawMode: !this.state.rawMode}); // , this.updateData);
   }
 
   @autobind
@@ -263,7 +261,7 @@ export class BackendTable<TSelection = defaultSelection>
     this.socket = new Socket({
       uri: getBackendUrl(),
       connect: client => [
-        { 'Authorization': `Bearer ${getUser().accessToken}` },
+        {'Authorization': `Bearer ${getUser().accessToken}`},
         (frame: IFrame): void => {
           client.subscribe(`${SUBSCRIBE_DESTINATION_PREFIX}${frame.body}`, this.onMessage);
           this.onOpen();
@@ -291,7 +289,7 @@ export class BackendTable<TSelection = defaultSelection>
     const stylers = [this.state.colorSettingsRowStyler, this.props.rowStyler].filter(Boolean);
 
     if (stylers.length) {
-      return row => stylers.reduce((result, styler) => ({ ...result, ...styler(row) }), {});
+      return row => stylers.reduce((result, styler) => ({...result, ...styler(row)}), {});
     }
 
     return undefined;
@@ -350,7 +348,7 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private onCurrentPageChange(currentPage: number): void {
-    const content = { currentPage };
+    const content = {currentPage};
     // noinspection JSIgnoredPromiseFromCall
     this.sendMessage('PAGE_CHANGE', content, content);
   }
@@ -359,7 +357,7 @@ export class BackendTable<TSelection = defaultSelection>
   private onError(message: IMessage): void {
     const parsedBody = JSON.parse(message.body || '{}');
     console.error(parsedBody);
-    this.setState({ error: parsedBody.message, loading: false });
+    this.setState({error: parsedBody.message, loading: false});
   }
 
   @autobind
@@ -402,7 +400,7 @@ export class BackendTable<TSelection = defaultSelection>
             const groupKeyPrefix = `${group.key}${DX_REACT_GROUP_SEPARATOR}`;
             return groups.every(element => !element.key.startsWith(groupKeyPrefix));
           })
-          .map(expandedGroup => ({ group: expandedGroup.path })),
+          .map(expandedGroup => ({group: expandedGroup.path})),
       },
       {
         customGrouping: this.state.grouping,
@@ -410,7 +408,7 @@ export class BackendTable<TSelection = defaultSelection>
         expandedGroups,
         realExpandedGroups,
       },
-      { customExpandedGroups: null, customGrouping: null },
+      {customExpandedGroups: null, customGrouping: null},
     );
   }
 
@@ -422,7 +420,7 @@ export class BackendTable<TSelection = defaultSelection>
       {
         filters: this.mapFilters(filters),
       },
-      { filters },
+      {filters},
     );
   }
 
@@ -431,9 +429,9 @@ export class BackendTable<TSelection = defaultSelection>
     // noinspection JSIgnoredPromiseFromCall
     this.sendMessage(
       'GROUPING_CHANGE',
-      { groupings: groupings.map(grouping => ({ columnName: this.findPascalCaseColumnName(grouping.columnName) })) },
-      { grouping: groupings, customGrouping: this.state.grouping, customExpandedGroups: this.state.customExpandedGroups },
-      { customGrouping: null, customExpandedGroups: null },
+      {groupings: groupings.map(grouping => ({columnName: this.findPascalCaseColumnName(grouping.columnName)}))},
+      {grouping: groupings, customGrouping: this.state.grouping, customExpandedGroups: this.state.customExpandedGroups},
+      {customGrouping: null, customExpandedGroups: null},
     );
   }
 
@@ -485,12 +483,12 @@ export class BackendTable<TSelection = defaultSelection>
   @autobind
   private onPageSizeChange(pageSize: number): void {
     // noinspection JSIgnoredPromiseFromCall
-    this.sendMessage('PAGE_SIZE_CHANGE', { pageSize }, { pageSize });
+    this.sendMessage('PAGE_SIZE_CHANGE', {pageSize}, {pageSize});
   }
 
   @autobind
   private onSortingChange(sorting: Sorting[]): void {
-    const newState = { sorting };
+    const newState = {sorting};
     const prevSorting = this.state.sorting || [];
     const shouldNotUpdate = (sorting.length > prevSorting.length) && sorting.every(sort => {
       const prevSort = prevSorting.find(prev => prev.columnName === sort.columnName);
@@ -528,7 +526,7 @@ export class BackendTable<TSelection = defaultSelection>
     if (tableInfo) {
       // TODO: Сейчас надо как-то дождатьзя загрузки инфы колонок что бы получить возможность тыкаться в directGetById. Куда ещё положить - не придумал
       await ColumnInfoManager.getAllValues();
-      const content = { pageSize: 10, currentPage: 0 };
+      const content = {pageSize: 10, currentPage: 0};
       const sortedColumns = await getAllowedColumnInfos(tableInfo, getUser().roles);
       const defaultFilters = this.mapFilters(
         this.props.defaultFilters && wrapInArray(this.props.defaultFilters) || [],
@@ -581,7 +579,7 @@ export class BackendTable<TSelection = defaultSelection>
     let selection = null;
 
     if (this.socket) {
-      const messageContent: any = { content, type };
+      const messageContent: any = {content, type};
 
       if (this.props.selectionEnabled) {
         selection = this.getSelection() || [];
@@ -596,12 +594,12 @@ export class BackendTable<TSelection = defaultSelection>
 
       await this.socket.send(
         SEND_DESTINATION,
-        { [messageIdKey]: messageId },
+        {[messageIdKey]: messageId},
         JSON.stringify(messageContent),
       );
     }
 
-    this.setState({ loading: true, ...newState, ...(selection ? { lastSendSelection: selection } : null) });
+    this.setState({loading: true, ...newState, ...(selection ? {lastSendSelection: selection} : null)});
   }
 
   @autobind
@@ -624,10 +622,10 @@ export class BackendTable<TSelection = defaultSelection>
         if (this.state.rawMode) {
           title += ` (${tableInfo.schemaName}.${tableInfo.tableName})`;
         }
-        this.setState({ title });
+        this.setState({title});
       }
       if (this.state.title && !(this.state.rawMode || this.props.titleEnabled)) {
-        this.setState({ title: null });
+        this.setState({title: null});
       }
 
       const cols = await tableInfo.getColumns();
@@ -697,7 +695,7 @@ export class BackendTable<TSelection = defaultSelection>
           colorSettingsRowStyler = (row: any): React.CSSProperties => {
             const isValid = checkDnf.some(andChecks => andChecks.every(check => check(row)));
 
-            return isValid ? { backgroundColor: colorSettings.color } : undefined;
+            return isValid ? {backgroundColor: colorSettings.color} : undefined;
           };
         }
       }
@@ -708,7 +706,7 @@ export class BackendTable<TSelection = defaultSelection>
           exportable: false,
           groupingEnabled: false,
           sortingEnabled: false,
-          search: { type: 'none' },
+          search: {type: 'none'},
         } as IBaseTableColLayout));
 
       this.setState({
