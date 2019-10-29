@@ -105,7 +105,11 @@ export class BackendTable<TSelection = defaultSelection>
 
   public constructor(props: any) {
     super(props);
-    this.state = {lastSendSelection: []};
+    this.state = {
+      lastSendSelection: [],
+      // tslint:disable-next-line:no-magic-numbers
+      pageSize: this.props.paginationEnabled ? undefined : 1000000000
+    };
   }
 
   @autobind
@@ -181,6 +185,10 @@ export class BackendTable<TSelection = defaultSelection>
           {...this.props}
           defaultFilters={this.props.defaultFilters ? wrapInArray(this.props.defaultFilters) : undefined}
           {...this.state}
+          paperStyle={{
+            borderBottom: this.props.paginationEnabled ? undefined : 0,
+            ...this.props.paperStyle
+          }}
           filters={this.state.filters ? this.state.filters.map(filter => ({...filter, columnName: camelCase(filter.columnName)})) : undefined}
           rows={this.state.data}
           cols={this.state.cols}
@@ -526,7 +534,11 @@ export class BackendTable<TSelection = defaultSelection>
     if (tableInfo) {
       // TODO: Сейчас надо как-то дождатьзя загрузки инфы колонок что бы получить возможность тыкаться в directGetById. Куда ещё положить - не придумал
       await ColumnInfoManager.getAllValues();
-      const content = {pageSize: 10, currentPage: 0};
+      const content = {
+        // tslint:disable-next-line:no-magic-numbers
+        pageSize: this.props.paginationEnabled ? 10 : this.state.pageSize,
+        currentPage: 0
+      };
       const sortedColumns = await getAllowedColumnInfos(tableInfo, getUser().roles);
       const defaultFilters = this.mapFilters(
         this.props.defaultFilters && wrapInArray(this.props.defaultFilters) || [],
@@ -701,6 +713,7 @@ export class BackendTable<TSelection = defaultSelection>
       }
 
       const serviceColumns = (this.props.serviceColumns ? wrapInArray(this.props.serviceColumns) : [])
+      // tslint:disable-next-line:no-object-literal-type-assertion
         .map(serviceColumn => ({
           ...serviceColumn,
           exportable: false,
