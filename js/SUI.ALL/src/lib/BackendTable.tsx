@@ -66,6 +66,7 @@ type IBackendTableState<T> = {
   error?: string;
   lastSendSelection?: T[];
   loading?: boolean;
+  paginationEnabled?: boolean;
   rawMode?: boolean;
   realExpandedGroups?: IExpandedGroup[];
   tableInfo?: TableInfo;
@@ -105,10 +106,14 @@ export class BackendTable<TSelection = defaultSelection>
 
   public constructor(props: any) {
     super(props);
+
+    const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
+
     this.state = {
       lastSendSelection: [],
       // tslint:disable-next-line:no-magic-numbers
-      pageSize: this.props.paginationEnabled ? undefined : 1000000000
+      paginationEnabled,
+      pageSize: paginationEnabled ? undefined : 1000000000
     };
   }
 
@@ -186,7 +191,7 @@ export class BackendTable<TSelection = defaultSelection>
           defaultFilters={this.props.defaultFilters ? wrapInArray(this.props.defaultFilters) : undefined}
           {...this.state}
           paperStyle={{
-            borderBottom: this.props.paginationEnabled ? undefined : 0,
+            borderBottom: this.state.paginationEnabled ? undefined : 0,
             ...this.props.paperStyle
           }}
           filters={this.state.filters ? this.state.filters.map(filter => ({...filter, columnName: camelCase(filter.columnName)})) : undefined}
@@ -536,7 +541,7 @@ export class BackendTable<TSelection = defaultSelection>
       await ColumnInfoManager.getAllValues();
       const content = {
         // tslint:disable-next-line:no-magic-numbers
-        pageSize: this.props.paginationEnabled ? 10 : this.state.pageSize,
+        pageSize: this.state.paginationEnabled ? 10 : this.state.pageSize,
         currentPage: 0
       };
       const sortedColumns = await getAllowedColumnInfos(tableInfo, getUser().roles);
