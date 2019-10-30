@@ -134,7 +134,7 @@ public class FromWithGenerator {
 
         return String.format(
                 "SELECT tmp.*, row_number() OVER(ORDER BY %s) AS %s FROM (%s) tmp ORDER BY %2$s",
-                QueryUtils.generateOrderByInnerStatement(sorts, (OrderNullBehavior) null),
+                QueryUtils.generateOrderByInnerStatement(sorts, OrderNullBehavior.LAST),
                 ROW_NUMBER_COLUMN_NAME,
                 resultQuerySB.toString());
     }
