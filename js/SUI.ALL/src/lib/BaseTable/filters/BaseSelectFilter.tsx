@@ -43,6 +43,7 @@ export class BaseSelectFilter<T extends string | number> extends React.Component
 
     return (
       <Select
+        showSearch={true}
         optionFilterProp="children"
         allowClear={true}
         disabled={this.props.disabled}
