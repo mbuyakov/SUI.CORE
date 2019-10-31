@@ -2,7 +2,6 @@ package ru.smsoft.sui.suibackend.query;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.smsoft.sui.suibackend.message.model.ExpandedGroup;
 import ru.smsoft.sui.suibackend.message.model.Grouping;
@@ -25,8 +24,7 @@ import static ru.smsoft.sui.suibackend.utils.Constants.*;
 @Slf4j
 public class GroupQueryGenerator {
 
-    @Value("${row-end-position.aggregate}")
-    private String rowEndPositionAggregate;
+    private static final String ROW_END_POSITION_AGGREGATE = "sui_meta.dx_react_grid_group_row_end_position";
 
     public String generateQuery(
             String fromWith,
@@ -231,7 +229,7 @@ public class GroupQueryGenerator {
                 START_POSITION_COLUMN_NAME) +
                 String.format(
                         "SELECT *, %s(%s, %d, %s, %s, %d)",
-                        rowEndPositionAggregate,
+                        ROW_END_POSITION_AGGREGATE,
                         EXPANDED_COLUMN_NAME,
                         pageSize,
                         ELEMENTS_COLUMN_NAME,
