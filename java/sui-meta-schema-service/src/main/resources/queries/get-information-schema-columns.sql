@@ -2,7 +2,7 @@ SELECT pg_namespace.nspname AS table_schema,
        pg_class.relname AS table_name,
        pg_attribute.attname AS column_name,
        pg_attrdef.adsrc AS column_default,
-       (pg_attribute.atttypid::REGTYPE)::TEXT,
+       (pg_attribute.atttypid::REGTYPE)::TEXT AS column_type,
        NOT pg_attribute.attnotnull AS is_nullable
 FROM pg_catalog.pg_class
          INNER JOIN pg_catalog.pg_namespace ON pg_class.relnamespace = pg_namespace.oid
