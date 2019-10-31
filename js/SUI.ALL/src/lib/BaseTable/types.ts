@@ -1,5 +1,5 @@
 /* tslint:disable:no-any */
-import {Filter, FilterOperation, Grouping, GroupKey, Sorting, TableBandHeader as TableBandHeaderBase, TableRowDetail} from '@devexpress/dx-react-grid';
+import {Filter, FilterOperation, Grouping, GroupKey, Sorting, Table, TableBandHeader as TableBandHeaderBase, TableRowDetail} from '@devexpress/dx-react-grid';
 import {CardType} from 'antd/lib/card';
 import * as React from 'react';
 
@@ -134,6 +134,7 @@ export interface IBaseTableProps<TSelection = any> {
   warnings?: Array<JSX.Element | string>;
 
   cellStyler?(row: any, value: any, column: IBaseTableColLayout): React.CSSProperties;
+  customFilterComponent?(props: Table.CellProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
   expandableFilter?(row: any): boolean;
   getRowId?(row: any): any;
 

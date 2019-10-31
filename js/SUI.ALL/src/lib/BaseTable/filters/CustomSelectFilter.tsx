@@ -1,13 +1,13 @@
 // tslint:disable:no-any
-import {TableFilterRow} from "@devexpress/dx-react-grid";
 import * as React from "react";
 
 import { WaitData } from '../../WaitData';
 import {INewSearchProps, SelectData} from "../types";
 
-import {BaseSelectFilter} from "./BaseSelectFilter";
+import {BaseSelectFilter, IBaseSelectFilterProps} from "./BaseSelectFilter";
 
-export class CustomSelectFilter extends React.Component<TableFilterRow.CellProps & INewSearchProps> {
+export class CustomSelectFilter<T extends string | number>
+  extends React.Component<Omit<IBaseSelectFilterProps<T>, "data"> & INewSearchProps> {
 
   public static isPromise(element: any): boolean {
     return !!element && (typeof(element) === 'object' || typeof(element) === 'function') && typeof(element.then) === 'function'
@@ -22,9 +22,9 @@ export class CustomSelectFilter extends React.Component<TableFilterRow.CellProps
         alwaysUpdate={true}
       >
         {(selectData) => (
-          <BaseSelectFilter
+          <BaseSelectFilter<T>
             {...this.props}
-            data={selectData}
+            data={selectData as any}
           />
         )}
       </WaitData>

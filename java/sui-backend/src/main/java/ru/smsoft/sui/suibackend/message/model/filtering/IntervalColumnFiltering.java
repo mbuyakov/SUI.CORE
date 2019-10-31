@@ -17,4 +17,5 @@ public class IntervalColumnFiltering extends ColumnFiltering {
         super(columnName, FilteringOperation.INTERVAL, raw);
         this.value = value;
     }
+
 }

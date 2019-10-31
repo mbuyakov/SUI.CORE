@@ -16,9 +16,9 @@ export class BooleanColumnFilter extends React.Component<BooleanColumnFilterProp
 
   public render(): JSX.Element {
     return (
-      <BaseSelectFilter
+      <BaseSelectFilter<string>
         {...this.props}
-        disableSearch={true}
+        showSearch={false}
         onChange={this.onChange}
         data={[
           {
@@ -46,13 +46,11 @@ export class BooleanColumnFilter extends React.Component<BooleanColumnFilterProp
     if (this.props.trueValue !== undefined || this.props.falseValue !== undefined) {
       value = value ? (this.props.trueValue !== undefined ? this.props.trueValue : true) : (this.props.falseValue !== undefined ? this.props.falseValue : false);
     }
-    // console.log(value, !!event);
+
     event
       // tslint:disable-next-line:no-any
       ? this.props.onFilter({columnName: this.props.column.name, value: value as any, operation: 'equal'})
       : this.props.onFilter(null);
   }
-
-
 
 }

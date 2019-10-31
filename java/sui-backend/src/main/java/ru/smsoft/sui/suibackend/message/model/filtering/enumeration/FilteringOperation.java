@@ -14,5 +14,9 @@ public enum FilteringOperation {
     LESS_THAN_OR_EQUAL,
     IN,
     NOT_IN,
+    CONTAINS_ANY,
+    NOT_CONTAINS_ANY,
+    CONTAINS_ALL,
+    NOT_CONTAINS_ALL,
     INTERVAL
 }

@@ -39,33 +39,42 @@ public class QueryUtils {
 
         if (columnFiltering instanceof InColumnFiltering) {
             val inColumnFiltering = (InColumnFiltering) columnFiltering;
-            val elements = inColumnFiltering.getElements();
+            val elements = Optional
+                      .ofNullable(inColumnFiltering.getElements())
+                      .orElseGet(Collections::emptyList)
+                      .stream()
+                      .map(QueryUtils::formatSimpleFilteringValue)
+                      .collect(Collectors.toList());
+            val hasNull = elements.stream().anyMatch(Objects::isNull);
+            val operation = filteringOperationOptional.orElse(FilteringOperation.IN);
+            val operationStr = operation.name().replace('_', ' ');
 
-            if (elements == null || elements.stream().noneMatch(Objects::nonNull)) {
-                return "FALSE";
+
+            if (!hasNull) {
+                if (operation == FilteringOperation.IN || operation == FilteringOperation.NOT_IN) {
+                    if (!elements.isEmpty()) {
+                        return String.format(
+                                "%s %s (%s)",
+                                columnName,
+                                operationStr,
+                                elements.stream()
+                                        .map(element -> '\'' + element + '\'')
+                                        .collect(Collectors.joining(COLUMN_SEPARATOR)));
+                    }
+                } else if (operation.name().contains("CONTAINS")) {
+                        return String.format(
+                                "%s::TEXT %s (ARRAY[%s])",
+                                columnName,
+                                operationStr.replace("CONTAINS", "LIKE"),
+                                elements.stream()
+                                        .map(element -> "'%" + element + "%'")
+                                        .collect(Collectors.joining(COLUMN_SEPARATOR)));
+                } else {
+                    throw new IllegalArgumentException("Operation \"" + operation + "\" isn't supported");
+                }
             }
 
-            String operation;
-
-            switch (filteringOperationOptional.orElse(FilteringOperation.IN)) {
-                case IN:
-                    operation = "IN";
-                    break;
-                case NOT_IN:
-                    operation = "NOT IN";
-                    break;
-                default:
-                    throw new IllegalArgumentException(
-                            "Unsupported column in filtering operation: " + filteringOperationOptional.get());
-            }
-
-            return String.format(
-                    "%s %s (%s)",
-                    columnName,
-                    operation,
-                    elements.stream()
-                            .map(element -> '\'' + formatSimpleFilteringValue(element) + '\'')
-                            .collect(Collectors.joining(COLUMN_SEPARATOR)));
+            return "FALSE";
         } else if (columnFiltering instanceof IntervalColumnFiltering) {
             val intervalColumnFiltering = (IntervalColumnFiltering) columnFiltering;
             val interval = intervalColumnFiltering.getValue();

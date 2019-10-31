@@ -18,6 +18,7 @@ import {
   SelectionState,
   Sorting,
   SortingState,
+  Table as CoreTable,
   TableColumnWidthInfo
 } from '@devexpress/dx-react-grid';
 import {
@@ -59,7 +60,7 @@ import {
   IBaseTableColLayout,
   IBaseTableProps,
   IRemoteBaseTableFields,
-  IRemoteBaseTableFunctions, SortingDirection,
+  IRemoteBaseTableFunctions,
   TableCellRender
 } from './types';
 
@@ -94,25 +95,6 @@ export class BaseTable<TSelection = defaultSelection>
     }
 
     return id;
-  }
-
-  private static getSearchComponent(props: any): React.ReactNode {
-    const searchProps = {...props, ...props.column.search};
-
-    switch (props.column.search && props.column.search.type) {
-      case "customSelect":
-        return (<CustomSelectFilter {...searchProps} />);
-      case "datetime":
-        return (<DatetimeColumnFilter {...searchProps} />);
-      case "date":
-        return (<DateColumnFilter {...searchProps} />);
-      case "boolean":
-        return (<BooleanColumnFilter {...searchProps} />);
-      case "none":
-        return null;
-      default:
-        return (<StringColumnFilter {...props}/>);
-    }
   }
 
   private static pageInfo({from, to, count}: { count: number, from: number, to: number }): string {
@@ -284,17 +266,17 @@ export class BaseTable<TSelection = defaultSelection>
       || this.props.fitToCardBody
       || this.props.fitToCollapseBody
       || this.props.fitToRowDetailContainer;
+    const getSearchComponent = this.getSearchComponent;
 
-    function filterCell(props: any): JSX.Element {
+    function filterCell(props: CoreTable.CellProps): JSX.Element {
       return (
         <Table.Cell
-          value={props.value}
-          row={props.row}
-          column={props.column}
+          {...props as any}
+          column={props.tableColumn.column}
           tableRow={props.tableRow}
           tableColumn={props.tableColumn}
         >
-          {BaseTable.getSearchComponent(props)}
+          {getSearchComponent(props)}
         </Table.Cell>
       );
     }
@@ -497,6 +479,39 @@ export class BaseTable<TSelection = defaultSelection>
           </div>
         )}
       </Card>);
+  }
+
+  @autobind
+  private getSearchComponent(props: CoreTable.CellProps): React.ReactNode {
+    const column: IBaseTableColLayout = getDataByKey(props, "tableColumn", "column");
+    const searchProps = {
+      ...props,
+      ...getDataByKey(column, "search")
+    };
+    const type = searchProps.type;
+
+    if (this.props.customFilterComponent) {
+      const customFilter = this.props.customFilterComponent(props, column, type);
+
+      if (customFilter) {
+         return customFilter;
+      }
+    }
+
+    switch (type) {
+      case "customSelect":
+        return (<CustomSelectFilter {...searchProps} />);
+      case "datetime":
+        return (<DatetimeColumnFilter {...searchProps} />);
+      case "date":
+        return (<DateColumnFilter {...searchProps} />);
+      case "boolean":
+        return (<BooleanColumnFilter {...searchProps} />);
+      case "none":
+        return null;
+      default:
+        return (<StringColumnFilter {...searchProps}/>);
+    }
   }
 
   @autobind

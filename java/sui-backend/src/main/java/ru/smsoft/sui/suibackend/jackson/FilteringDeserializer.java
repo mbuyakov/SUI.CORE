@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.node.TextNode;
 import lombok.val;
 import ru.smsoft.sui.suibackend.message.model.filtering.*;
 import ru.smsoft.sui.suibackend.message.model.filtering.enumeration.FilteringOperation;
+import ru.smsoft.sui.suibackend.utils.Constants;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -19,7 +20,6 @@ public class FilteringDeserializer extends JsonDeserializer<Filtering> {
 
     private static final String PREDICATE_KEY = "predicate";
     private static final String OPERATION_KEY = "operation";
-
     private static final Map<String, FilteringOperation> operationNameByIncomeName = Arrays
             .stream(FilteringOperation.values())
             .collect(Collectors.toMap(
@@ -48,7 +48,7 @@ public class FilteringDeserializer extends JsonDeserializer<Filtering> {
                         operation != null ? new TextNode(operation.toString()) : operationNode);
             }
 
-            if (operation == FilteringOperation.IN || operation == FilteringOperation.NOT_IN) {
+            if (Constants.IN_FILTERING_OPERATIONS.contains(operation)) {
                 filteringClass = InColumnFiltering.class;
             } else if (operation == FilteringOperation.INTERVAL) {
                 filteringClass = IntervalColumnFiltering.class;

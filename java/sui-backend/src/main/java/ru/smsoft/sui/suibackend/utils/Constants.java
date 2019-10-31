@@ -1,6 +1,20 @@
 package ru.smsoft.sui.suibackend.utils;
 
+import ru.smsoft.sui.suibackend.message.model.filtering.enumeration.FilteringOperation;
+
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static ru.smsoft.sui.suibackend.message.model.filtering.enumeration.FilteringOperation.*;
+
 public class Constants {
+
+    public static final Set<FilteringOperation> IN_FILTERING_OPERATIONS =
+            Collections.unmodifiableSet(Stream
+                    .of(IN, NOT_IN, CONTAINS_ANY, NOT_CONTAINS_ANY, CONTAINS_ALL, NOT_CONTAINS_ALL)
+                    .collect(Collectors.toSet()));
 
     public static final String SEND_TO_DESTINATION = "/queue/response";
     public static final String INFINITY = "∞";

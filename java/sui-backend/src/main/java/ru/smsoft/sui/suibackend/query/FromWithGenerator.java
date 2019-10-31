@@ -88,7 +88,9 @@ public class FromWithGenerator {
                 })
                 .collect(Collectors.toCollection(LinkedList::new));
 
-        sorts.add(Sorting.builder().columnName("id").direction(SortingDirection.DESC).build());
+        if (sorts.stream().noneMatch(sort -> "id".equals(sort.getColumnName()))) {
+          sorts.add(Sorting.builder().columnName("id").direction(SortingDirection.DESC).build());
+        }
 
         if (!CollectionUtils.isEmpty(selections)) {
             sorts.addFirst(new Sorting(SELECTED_COLUMN_NAME, SortingDirection.DESC));
