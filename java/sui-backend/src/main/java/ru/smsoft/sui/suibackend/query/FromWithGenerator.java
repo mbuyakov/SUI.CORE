@@ -144,10 +144,7 @@ public class FromWithGenerator {
                 resultQuerySB.toString());
     }
 
-    private String getStatementColumn(
-            Map<String, Column> columnMap,
-            String name,
-            boolean raw) {
+    private String getStatementColumn(Map<String, Column> columnMap, String name, boolean raw) {
         String result;
         Column column = columnMap.get(name);
 

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.smsoft.sui.suientity.entity.suimeta.ColumnInfo;
 import ru.smsoft.sui.suientity.entity.suimeta.ColumnInfoReference;
 import ru.smsoft.sui.suientity.entity.suimeta.TableInfo;
+import ru.smsoft.sui.suientity.repository.suimeta.ColumnInfoReferenceRepository;
 import ru.smsoft.sui.suientity.repository.suimeta.ColumnInfoRepository;
 import ru.smsoft.sui.suientity.repository.suimeta.TableInfoRepository;
 import ru.smsoft.sui.suimetaschemaservice.model.*;
@@ -48,6 +49,8 @@ public class MetaSchemaRefresher {
     private TableInfoRepository tableInfoRepository;
     @NonNull
     private ColumnInfoRepository columnInfoRepository;
+    @NonNull
+    private ColumnInfoReferenceRepository columnInfoReferenceRepository;
 
     @Transactional
     public MetaState refreshSchema() {
@@ -233,7 +236,8 @@ public class MetaSchemaRefresher {
         val tableInfoByInformationSchemaTable = tableInfoMetaInfo.getMetaElementMap();
         val columnInfoMetaInfo = metaState.getColumnInfoMetaInfo();
         val columnInfoByInformationSchemaColumn = metaState.getColumnInfoMetaInfo().getMetaElementMap();
-        val columnInfoReferenceByPossibleReference = metaState.getColumnInfoReferenceMetaInfo().getMetaElementMap();
+        val columnInfoReferenceMetaInfo = metaState.getColumnInfoReferenceMetaInfo();
+        val columnInfoReferenceByPossibleReference = columnInfoReferenceMetaInfo.getMetaElementMap();
 
         val groupedColumnInfos = groupBy(
                 columnInfoByInformationSchemaColumn.values(),
@@ -276,7 +280,13 @@ public class MetaSchemaRefresher {
         groupedColumnInfoReferences.forEach(
                 (columnInfo, columnInfoReferences) -> columnInfo.getReferences().addAll(columnInfoReferences));
 
-        if (tableInfoMetaInfo.getNonexistentElements().size() > 0) {
+        if (!columnInfoReferenceMetaInfo.getNonexistentElements().isEmpty()) {
+            columnInfoReferenceRepository.deleteInBatch(columnInfoReferenceMetaInfo.getNonexistentElements());
+        }
+        if (!columnInfoMetaInfo.getNonexistentElements().isEmpty()) {
+            columnInfoRepository.deleteInBatch(columnInfoMetaInfo.getNonexistentElements());
+        }
+        if (!tableInfoMetaInfo.getNonexistentElements().isEmpty()) {
             tableInfoRepository.deleteInBatch(tableInfoMetaInfo.getNonexistentElements());
         }
 
