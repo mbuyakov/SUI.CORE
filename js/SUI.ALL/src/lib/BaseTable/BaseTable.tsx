@@ -18,7 +18,6 @@ import {
   SelectionState,
   Sorting,
   SortingState,
-  Table as CoreTable,
   TableColumnWidthInfo
 } from '@devexpress/dx-react-grid';
 import {
@@ -268,13 +267,10 @@ export class BaseTable<TSelection = defaultSelection>
       || this.props.fitToRowDetailContainer;
     const getSearchComponent = this.getSearchComponent;
 
-    function filterCell(props: CoreTable.CellProps): JSX.Element {
+    function filterCell(props: TableFilterRow.CellProps): JSX.Element {
       return (
         <Table.Cell
           {...props as any}
-          column={props.tableColumn.column}
-          tableRow={props.tableRow}
-          tableColumn={props.tableColumn}
         >
           {getSearchComponent(props)}
         </Table.Cell>
@@ -482,7 +478,7 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private getSearchComponent(props: CoreTable.CellProps): React.ReactNode {
+  private getSearchComponent(props: TableFilterRow.CellProps): React.ReactNode {
     const column: IBaseTableColLayout = getDataByKey(props, "tableColumn", "column");
     const searchProps = {
       ...props,

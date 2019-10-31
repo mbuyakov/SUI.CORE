@@ -1,5 +1,5 @@
 /* tslint:disable:object-literal-sort-keys no-any unnecessary-else newline-before-return prefer-function-over-method no-floating-promises prefer-readonly promise-function-async*/
-import {Filter, Grouping, GroupKey, Sorting} from '@devexpress/dx-react-grid';
+import {Filter, Grouping, GroupKey, Sorting, TableFilterRow} from '@devexpress/dx-react-grid';
 import {IFrame, IMessage} from '@stomp/stompjs';
 import autobind from 'autobind-decorator';
 import difference from 'lodash/difference';
@@ -45,6 +45,11 @@ export type BackendFilter = {
 export type IServiceColumn = Pick<IBaseTableColLayout,
   'id' | 'width' | 'title' | 'dataKey' | 'render' | 'defaultData'>;
 
+export type ICustomFilterProps = Omit<TableFilterRow.CellProps, 'filter' | 'onFilter'> & {
+  filter: SimpleBackendFilter | null,
+  onFilter(filter: SimpleBackendFilter | null): void
+};
+
 export interface IBackendTableProps {
   defaultFilters?: SimpleBackendFilter | SimpleBackendFilter[];
   filter?: BackendFilter | BackendFilter[];
@@ -52,6 +57,8 @@ export interface IBackendTableProps {
   table: string;
   titleEnabled?: boolean;
   watchFilters?: boolean;
+  // Подмена типов для красиво интерфейса
+  customFilterComponent?(props: ICustomFilterProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
 }
 
 interface IExpandedGroup {
@@ -96,7 +103,7 @@ function calculateParentExpandedGroups(realExpandedGroupKeys: IExpandedGroup[], 
 }
 
 export class BackendTable<TSelection = defaultSelection>
-  extends React.Component<Omit<IBaseTableProps<TSelection>, 'rows' | 'cols' | 'defaultFilters'> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable> }, IBackendTableState<TSelection>>
+  extends React.Component<Omit<IBaseTableProps<TSelection>, 'rows' | 'cols' | 'defaultFilters' | 'customFilterComponent'> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable> }, IBackendTableState<TSelection>>
   implements ISelectionTable<TSelection> {
 
   private additionalStateMap: Map<string, IBackendTableState<TSelection>> = new Map<string, IBackendTableState<TSelection>>();
