@@ -19,7 +19,7 @@ export type IBaseSelectFilterProps<T> = TableFilterRow.CellProps
   & Omit<SelectProps, "disabled" | "value" | "onChange">
   & {
     data?: Array<ISelectColumnFilterData<T>>;
-    onChange?(value: T, option: React.ReactElement<any> | Array<React.ReactElement<any>>): void
+    onChange?(value: T, option: React.ReactElement | React.ReactElement[]): void
   };
 
 interface IBaseSelectFilterState<T> {
@@ -74,7 +74,7 @@ export class BaseSelectFilter<T extends string | number> extends React.Component
   }
 
   @autobind
-  private onChange(value: T, option: React.ReactElement<any> | Array<React.ReactElement<any>>): void {
+  private onChange(value: T, option: React.ReactElement | React.ReactElement[]): void {
     if (this.props.onChange) {
       this.props.onChange(value, option);
     } else {
