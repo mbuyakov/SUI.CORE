@@ -134,9 +134,12 @@ public class FromWithGenerator {
                                     columnFiltering.isRaw())));
         }
 
+        // Add ORDER BY statement
+        resultQuerySB.append("\nORDER BY ");
+        resultQuerySB.append(QueryUtils.generateOrderByInnerStatement(sorts, OrderNullBehavior.LAST));
+
         return String.format(
-                "SELECT tmp.*, row_number() OVER(ORDER BY %s) AS %s FROM (%s) tmp ORDER BY %2$s",
-                QueryUtils.generateOrderByInnerStatement(sorts, OrderNullBehavior.LAST),
+                "SELECT tmp.*, row_number() OVER() AS %s FROM (%s) tmp",
                 ROW_NUMBER_COLUMN_NAME,
                 resultQuerySB.toString());
     }
