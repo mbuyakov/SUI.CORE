@@ -6,6 +6,7 @@ import autobind from 'autobind-decorator';
 import isEqual from 'lodash/isEqual';
 import * as React from 'react';
 
+import {getDataByKey} from "../../dataKey";
 import {Omit} from "../../other";
 import {ICommonColumnSearchProps} from "../types";
 
@@ -19,7 +20,7 @@ export type IBaseSelectFilterProps<T> = TableFilterRow.CellProps
   & Omit<SelectProps, "disabled" | "value" | "onChange">
   & {
     data?: Array<ISelectColumnFilterData<T>>;
-    onChange?(value: T, option: React.ReactElement | React.ReactElement[]): void
+    onChange?(value: T | T[], option: React.ReactElement | React.ReactElement[]): void
   };
 
 interface IBaseSelectFilterState<T> {
@@ -40,6 +41,7 @@ export class BaseSelectFilter<T extends string | number> extends React.Component
 
   public render(): JSX.Element {
     const {defaultValue, ...restProps} = this.props;
+    const filterValue = getDataByKey(this.props.filter, "value");
 
     return (
       <Select
@@ -50,8 +52,9 @@ export class BaseSelectFilter<T extends string | number> extends React.Component
         placeholder={<span style={{fontWeight: 400}}>{this.props.placeholder || 'Фильтр...'}</span>}
         {...restProps}
         value={
-          this.props.filter && this.props.filter.value !== null && this.props.filter.value !== undefined
-            ? this.props.filter.value.toString()
+          // tslint:disable-next-line:triple-equals
+          filterValue != null
+            ? (Array.isArray(filterValue) ? filterValue : filterValue.toString())
             : undefined
         }
         style={{
@@ -75,7 +78,7 @@ export class BaseSelectFilter<T extends string | number> extends React.Component
   }
 
   @autobind
-  private onChange(value: T, option: React.ReactElement | React.ReactElement[]): void {
+  private onChange(value: T | T[], option: React.ReactElement | React.ReactElement[]): void {
     if (this.props.onChange) {
       this.props.onChange(value, option);
     } else {
