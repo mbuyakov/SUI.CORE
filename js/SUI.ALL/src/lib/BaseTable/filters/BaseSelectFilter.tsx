@@ -1,39 +1,40 @@
 /* tslint:disable:no-any */
 import {TableFilterRow} from '@devexpress/dx-react-grid';
 import {Select} from 'antd';
-import {SelectProps} from "antd/lib/select";
+import {SelectProps, SelectValue} from "antd/lib/select";
 import autobind from 'autobind-decorator';
 import isEqual from 'lodash/isEqual';
 import * as React from 'react';
 
 import {getDataByKey} from "../../dataKey";
 import {Omit} from "../../other";
+import {OneOrArray} from "../../typeWrappers";
 import {ICommonColumnSearchProps} from "../types";
 
-export interface ISelectColumnFilterData<T> {
+export interface ISelectColumnFilterData {
   title?: string | JSX.Element;
-  value: T;
+  value: string | number;
 }
 
 export type IBaseSelectFilterProps<T> = TableFilterRow.CellProps
   & ICommonColumnSearchProps
-  & Omit<SelectProps, "disabled" | "value" | "onChange">
+  & Omit<SelectProps<T>, "disabled" | "value" | "onChange">
   & {
-    data?: Array<ISelectColumnFilterData<T>>;
-    onChange?(value: T | T[], option: React.ReactElement | React.ReactElement[]): void
+    data?: ISelectColumnFilterData[];
+    onChange?(value: T, option: OneOrArray<React.ReactElement>): void
   };
 
-interface IBaseSelectFilterState<T> {
-  data?: Array<ISelectColumnFilterData<T>>;
+interface IBaseSelectFilterState {
+  data?: ISelectColumnFilterData[];
 }
 
-export class BaseSelectFilter<T extends string | number> extends React.Component<IBaseSelectFilterProps<T>, IBaseSelectFilterState<T>> {
+export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSelectFilterProps<T>, IBaseSelectFilterState> {
 
   public componentDidMount(): void {
     this.updateStateData();
   }
 
-  public componentDidUpdate(nextProps: IBaseSelectFilterProps<T>): void {
+  public componentDidUpdate(nextProps: IBaseSelectFilterProps<SelectValue>): void {
     if (!isEqual(this.props.data, nextProps.data)) {
       this.updateStateData();
     }
@@ -44,7 +45,7 @@ export class BaseSelectFilter<T extends string | number> extends React.Component
     const filterValue = getDataByKey(this.props.filter, "value");
 
     return (
-      <Select
+      <Select<any>
         showSearch={true}
         optionFilterProp="children"
         allowClear={true}
@@ -78,7 +79,7 @@ export class BaseSelectFilter<T extends string | number> extends React.Component
   }
 
   @autobind
-  private onChange(value: T | T[], option: React.ReactElement | React.ReactElement[]): void {
+  private onChange(value: T, option: React.ReactElement | React.ReactElement[]): void {
     if (this.props.onChange) {
       this.props.onChange(value, option);
     } else {
@@ -92,7 +93,7 @@ export class BaseSelectFilter<T extends string | number> extends React.Component
 
   @autobind
   private updateStateData(): void {
-    const dataElementByValue = new Map<string | null, ISelectColumnFilterData<T>>();
+    const dataElementByValue = new Map<string | null, ISelectColumnFilterData>();
     (this.props.data || []).forEach((element: any) => {
       if (!dataElementByValue.has(element.value && element.value.toString())) {
         dataElementByValue.set(element.value && element.value.toString(), element);

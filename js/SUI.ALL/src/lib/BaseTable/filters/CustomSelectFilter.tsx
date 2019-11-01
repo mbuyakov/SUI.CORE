@@ -24,7 +24,7 @@ export class CustomSelectFilter<T extends string | number>
         {(selectData) => (
           <BaseSelectFilter<T>
             {...this.props}
-            data={selectData as any}
+            data={selectData}
           />
         )}
       </WaitData>
