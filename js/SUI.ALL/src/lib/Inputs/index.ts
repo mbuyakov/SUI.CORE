@@ -8,3 +8,5 @@ export * from "./PromisedMaterialIconButton";
 export * from "./PromisedSelect";
 export * from "./PromisedSwitch";
 export * from "./PromisedTextArea";
+export * from "./SelectWithWaitData";
+export * from "./TreeSelectWithWaitData";
