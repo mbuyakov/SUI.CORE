@@ -1,12 +1,14 @@
 :global {
-  .sui-disable-group-selection .ant-select-tree > [role="treeitem"] {
-    & > .ant-select-tree-node-content-wrapper {
-      background-color: white;
-      cursor: default;
-    }
+  .sui-disable-group-selection {
+    & .ant-select-tree > [role="treeitem"] {
+      & > .ant-select-tree-node-content-wrapper {
+        background-color: white;
+        cursor: default;
+      }
 
-    & > * > .ant-select-tree-checkbox-inner {
-      display: none !important;
+      & > * > .ant-select-tree-checkbox-inner {
+        display: none !important;
+      }
     }
   }
 }
