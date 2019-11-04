@@ -34,7 +34,7 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
     this.updateStateData();
   }
 
-  public componentDidUpdate(nextProps: IBaseSelectFilterProps<SelectValue>): void {
+  public componentDidUpdate(nextProps: IBaseSelectFilterProps<T>): void {
     if (!isEqual(this.props.data, nextProps.data)) {
       this.updateStateData();
     }
