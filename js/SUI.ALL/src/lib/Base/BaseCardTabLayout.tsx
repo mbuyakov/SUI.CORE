@@ -21,7 +21,7 @@ export type IBaseFormTabLayout<T> = Omit<IBaseCardTabLayout<T>, 'rows'> & {
 export function renderIBaseCardTabLayout<T>(sourceItem: any, tab: IBaseCardTabLayout<T> | IBaseFormTabLayout<T>, tabIndex: number, forceRenderTabs: boolean): JSX.Element {
   return (
     <Tabs.TabPane key={tabIndex.toString()} tab={<span>{tab.icon && <Icon type={tab.icon}/>}{tab.title}</span>} forceRender={forceRenderTabs}>
-      {wrapInArrayWithoutNulls(tab.rows).map((row, index, arr) => renderIBaseCardRowLayout(sourceItem, row, index, 'tab', arr.length))}
+      {wrapInArrayWithoutNulls(tab.rows as OneOrArrayWithNulls<IBaseCardRowLayout<T> | IBaseFormRowLayout<T>>).map((row, index, arr) => renderIBaseCardRowLayout(sourceItem, row, index, 'tab', arr.length))}
     </Tabs.TabPane>
   );
 }

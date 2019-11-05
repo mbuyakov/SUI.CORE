@@ -8,5 +8,5 @@ export interface IBaseCardColLayout<T> {
 }
 
 export type IBaseFormColLayout<T> = Omit<IBaseCardColLayout<T>, 'items'> & {
-  items: OneOrArrayWithNulls<IBaseFormItemLayout<T>>
+  items: OneOrArrayWithNulls<IBaseFormItemLayout>
 }

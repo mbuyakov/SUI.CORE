@@ -30,7 +30,7 @@ export function renderIBaseCardCollapseLayout<T>(sourceItem: any, panel: IBaseCa
       header={panel.title}
       className={padding ? "" : COLLAPSE_PANEL_NO_PADDING}
     >
-      {wrapInArrayWithoutNulls(panel.rows).map((row, rowIndex, arr) => renderIBaseCardRowLayout(sourceItem, row, rowIndex, 'collapse', arr.length))}
+      {wrapInArrayWithoutNulls<IBaseCardRowLayout<T> | IBaseFormRowLayout<T>>(panel.rows).map((row, rowIndex, arr) => renderIBaseCardRowLayout(sourceItem, row, rowIndex, 'collapse', arr.length))}
     </Collapse.Panel>
   );
 }

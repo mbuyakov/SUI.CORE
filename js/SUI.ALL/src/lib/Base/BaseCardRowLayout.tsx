@@ -41,7 +41,7 @@ export interface IBaseCardRowLayout<T> {
 
 export type IBaseFormRowLayout<T> = Omit<IBaseCardRowLayout<T>, 'cols' | 'descriptionItems' | 'tabs'> & {
   cols?: OneOrArrayWithNulls<IBaseFormColLayout<T>>
-  descriptionItems?: OneOrArrayWithNulls<IBaseFormDescItemLayout<T>>
+  descriptionItems?: OneOrArrayWithNulls<IBaseFormDescItemLayout>
   tabs?: OneOrArrayWithNulls<IBaseFormTabLayout<T>>
 }
 
@@ -97,9 +97,9 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
         )
         : (
           <BaseCardContext.Consumer>
-            {({ forceRenderTabs }) => (
+            {({ forceRenderTabs }): JSX.Element => (
               <ManagedTabs defaultActiveKey="0">
-                {wrapInArrayWithoutNulls(row.tabs as OneOrArrayWithNulls<IBaseCardTabLayout<T>>).map((tab, index) => renderIBaseCardTabLayout(sourceItem, tab, index, forceRenderTabs))}
+                {wrapInArrayWithoutNulls(row.tabs as OneOrArrayWithNulls<IBaseCardTabLayout<T> | IBaseFormTabLayout<T>>).map((tab, index) => renderIBaseCardTabLayout(sourceItem, tab, index, forceRenderTabs))}
               </ManagedTabs>
             )}
           </BaseCardContext.Consumer>
@@ -169,11 +169,11 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
       // tslint:disable-next-line:prefer-for-of
       for (let colIndex = 0; colIndex < cols.length; colIndex++) {
         const col = cols[colIndex];
-        const item = wrapInArrayWithoutNulls(col.items)[curRowIndex];
+        const item = wrapInArrayWithoutNulls<IBaseCardItemLayout<T> | IBaseFormItemLayout>(col.items)[curRowIndex];
         // console.log(cols, item);
         itemsInRow.push(
-          <div className={(item && (item as IBaseFormItemLayout<T>).fieldName) ? BASE_FORM_ITEM : BASE_CARD_ITEM}>
-            {item && ((item as IBaseFormItemLayout<T>).fieldName ? renderIBaseFormItemLayout(item as IBaseFormItemLayout<T>) : renderIBaseCardItem(sourceItem, item))}
+          <div className={(item && (item as IBaseFormItemLayout).fieldName) ? BASE_FORM_ITEM : BASE_CARD_ITEM}>
+            {item && ((item as IBaseFormItemLayout).fieldName ? renderIBaseFormItemLayout(item as IBaseFormItemLayout) : renderIBaseCardItem(sourceItem, item))}
           </div>,
         );
       }
@@ -198,7 +198,7 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
       <Descriptions
         size="small"
       >
-        {wrapInArrayWithoutNulls<IBaseCardItemLayout<T> | IBaseFormItemLayout<T>>(row.descriptionItems).map(descItem => (descItem as IBaseFormItemLayout<T>).fieldName ? renderIBaseFormItemLayout(descItem as IBaseFormItemLayout<T>) : renderIBaseCardItem(sourceItem, descItem as IBaseCardItemLayout<T>))}
+        {wrapInArrayWithoutNulls<IBaseCardItemLayout<T> | IBaseFormItemLayout>(row.descriptionItems).map(descItem => (descItem as IBaseFormItemLayout).fieldName ? renderIBaseFormItemLayout(descItem as IBaseFormItemLayout) : renderIBaseCardItem(sourceItem, descItem as IBaseCardItemLayout<T>))}
       </Descriptions>
     );
   }

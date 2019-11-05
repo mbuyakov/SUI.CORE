@@ -1,110 +1,196 @@
-/* tslint:disable:cyclomatic-complexity */
+/* tslint:disable:cyclomatic-complexity no-any */
 import {Form} from 'antd';
 import {FormItemProps} from 'antd/lib/form';
-import {GetFieldDecoratorOptions, WrappedFormUtils} from 'antd/lib/form/Form';
+import {RuleItem} from "async-validator";
+import autobind from "autobind-decorator";
+import classNames from "classnames";
 import * as React from 'react';
 
 import { IObjectWithIndex } from '../other';
-import {BASE_CARD_ITEM_LABEL_HORIZONTAL, BASE_FORM_ITEM_VERTICAL} from "../styles";
+import { BASE_CARD_ITEM_LABEL_HORIZONTAL, BASE_FORM_ITEM_VERTICAL } from '../styles';
+import { SUIReactComponent } from '../SUIReactComponent';
 
-import {SUBMITTED_FIELD} from "./BaseForm";
+import { BaseForm, IFormField, SUBMITTED_FIELD, ValuesGetter } from './BaseForm';
 import {BaseFormContext} from './BaseFormContext';
-import {PersistedInput} from "./PersistedInput";
 
 const FILL_FIELD_TEXT = 'Заполните поле';
 
-// tslint:disable-next-line:ban-ts-ignore
-// @ts-ignore
-export interface IBaseFormItemLayout<T> {
-  decoratorOptions?: GetFieldDecoratorOptions;
-  fieldName: string;
-  inputNode: JSX.Element;
-  required?: boolean;
-  title?: string | React.ReactNode;
-
-  getFormItemProps?(form: WrappedFormUtils): FormItemProps;
-
-  // tslint:disable-next-line:no-any
-  mapFormValuesToInputNodeProps?(values: IObjectWithIndex): IObjectWithIndex
-  mapFormValuesToRequired?(values: IObjectWithIndex): boolean
+export type FixedRuleItem = Omit<RuleItem, 'pattern'> & {
+  pattern: string | RegExp
 }
 
-export type IBaseFormDescItemLayout<T> = IBaseFormItemLayout<T>// Omit<IBaseCardItemLayout<T>, 'tableProps' | 'containerStyle'>; {
-//
-// }
+// tslint:disable-next-line:ban-ts-ignore
+// @ts-ignore
+export interface IBaseFormItemLayout<T = string> {
+  fieldName: string;
+  initialValue?: any;
+  inputNode: JSX.Element;
+  required?: boolean;
+  rules?: FixedRuleItem[];
+  title?: string | React.ReactNode;
+  valuePropName?: string;
 
-export function renderIBaseFormItemLayout<T>(item: IBaseFormItemLayout<T>): JSX.Element {
-  return (
-    <BaseFormContext.Consumer>
-      {({form, formValues, verticalLabel, customInputNodesTags}) => {
-        const required = item.required || (item.mapFormValuesToRequired && item.mapFormValuesToRequired(formValues));
+  mapFormValuesToInputNodeProps?(get: ValuesGetter): IObjectWithIndex;
 
-        const title = item.title && (
-          <span className={verticalLabel ? "" : BASE_CARD_ITEM_LABEL_HORIZONTAL}>
-            {item.title}:
-          </span>
-        );
+  mapFormValuesToRequired?(get: ValuesGetter): boolean;
+}
 
-        const isSubmitted = form.getFieldValue(SUBMITTED_FIELD);
-        const fieldHasValue = form.getFieldValue(item.fieldName) != null;
-        const isTouched = fieldHasValue || form.isFieldTouched(item.fieldName);
-        const errors = form.getFieldError(item.fieldName);
+export type IBaseFormDescItemLayout = IBaseFormItemLayout;
 
-        let formItemProps: FormItemProps = {
-          help: (isTouched) ? errors : ((isSubmitted && required) ? FILL_FIELD_TEXT : ''),
-          validateStatus: (isTouched ? errors : (isSubmitted && required)) ? 'error' : '',
-        };
+export function renderIBaseFormItemLayout<T>(item: IBaseFormItemLayout): JSX.Element {
+  return (<BaseFormItem {...item}/>);
+}
 
-        if (item.getFormItemProps) {
-          formItemProps = {...formItemProps, ...item.getFormItemProps(form)};
-        }
+export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayout, {
+  error?: any
+  subscribedFormFieldValues: IObjectWithIndex
+  value?: any
+}> {
 
-        let decoratorOptions = item.decoratorOptions;
+  private baseForm: BaseForm;
+  private formField?: IFormField;
+  private readonly subscribedFields: string[] = [];
 
-        if (required) {
-          // tslint:disable-next-line:triple-equals
-          if (decoratorOptions == null || decoratorOptions.rules == null || decoratorOptions.rules.findIndex(rule => rule.required || false) < 0) {
+  public constructor(props: IBaseFormItemLayout) {
+    super(props);
+    this.state = {
+      subscribedFormFieldValues: {}
+    };
+  }
+
+  public render(): React.ReactNode {
+    return (
+      <BaseFormContext.Consumer>
+        {({baseForm, verticalLabel, customInputNodesTags}): React.ReactNode => {
+          this.baseForm = baseForm;
+          const item = this.props;
+          const valuePropName = item.valuePropName || "value";
+          const required = item.required || (item.mapFormValuesToRequired && item.mapFormValuesToRequired(this.valueGetter));
+
+          if (!this.formField) {
+            this.formField = baseForm.getOrCreateFormField(item.fieldName);
+            this.registerObservableHandler(this.formField.value.subscribe(value => this.setState({value})));
+            this.registerObservableHandler(this.formField.error.subscribe(error => this.setState({error})));
             // tslint:disable-next-line:triple-equals
-            if (decoratorOptions == null) {
-              decoratorOptions = {};
+            if (this.props.initialValue != null) {
+              this.formField.value.setValue(this.props.initialValue);
             }
-            // tslint:disable-next-line:triple-equals
-            if (decoratorOptions.rules == null) {
-              decoratorOptions.rules = [];
+            if(this.props.rules) {
+              this.formField.rules = this.props.rules;
             }
-            decoratorOptions.rules.push({required: true, message: FILL_FIELD_TEXT});
+            if (required) {
+              // tslint:disable-next-line:triple-equals
+              if (this.props.rules == null || this.props.rules.findIndex(rule => rule.required || false) < 0) {
+                this.formField.rules.push({required: true, message: FILL_FIELD_TEXT});
+              }
+            }
           }
-        }
 
-        // tslint:disable-next-line:no-any
-        let additionalProps: IObjectWithIndex = {};
+          if(item.rules) {
+            this.formField.rules = item.rules;
+          }
 
-        if (item.mapFormValuesToInputNodeProps) {
-          additionalProps = item.mapFormValuesToInputNodeProps(formValues);
-        }
-        let data = (
-          <>
-            {title}
-            <Form.Item {...formItemProps}>
-              {form.getFieldDecorator(item.fieldName, decoratorOptions)(
-                <PersistedInput alwaysUpdate={!!(item.mapFormValuesToInputNodeProps)} customInputNodesTags={customInputNodesTags} formKostyl={form} fieldNameKostyl={item.fieldName} requiredKostyl={!!required}>
-                  {React.cloneElement(item.inputNode, {...additionalProps, style: {width: '100%', ...item.inputNode.props.style, ...additionalProps.style}})}
-                </PersistedInput>
-              )}
-            </Form.Item>
-          </>
-        );
-
-        if (verticalLabel) {
-          data = (
-            <div className={BASE_FORM_ITEM_VERTICAL}>
-              {data}
-            </div>
+          const title = item.title && (
+            <span className={classNames({[BASE_CARD_ITEM_LABEL_HORIZONTAL]: !verticalLabel, "ant-form-item-required": !!required})}>
+             {item.title}:
+            </span>
           );
-        }
 
-        return data;
-      }}
-    </BaseFormContext.Consumer>
-  );
+          const isSubmitted = baseForm.getFieldValue(SUBMITTED_FIELD);
+          // tslint:disable-next-line:triple-equals
+          const fieldHasValue = baseForm.getFieldValue(item.fieldName) != null;
+          const isTouched = fieldHasValue || baseForm.isFieldTouched(item.fieldName);
+          const errors = this.state.error;
+
+          const formItemProps: FormItemProps = {
+            help: (isTouched) ? errors : ((isSubmitted && required) ? FILL_FIELD_TEXT : ''),
+            validateStatus: (isTouched ? errors : (isSubmitted && required)) ? 'error' : '',
+          };
+
+          let additionalProps: IObjectWithIndex = {};
+
+          if (item.mapFormValuesToInputNodeProps) {
+            additionalProps = item.mapFormValuesToInputNodeProps(this.valueGetter);
+          }
+
+          if (!customInputNodesTags) {
+            // tslint:disable-next-line:no-parameter-reassignment
+            customInputNodesTags = {};
+          }
+
+          let data = (
+            <>
+              {title}
+              <Form.Item {...formItemProps}>
+                {React.cloneElement(item.inputNode, {
+                  [valuePropName]: this.state.value,
+                  customInputNodesTags,
+                  onChange: this.onChange,
+                  ...additionalProps,
+                  style: {
+                    width: '100%',
+                    ...item.inputNode.props.style,
+                    ...customInputNodesTags.style,
+                    ...additionalProps.style
+                  }
+                })}
+              </Form.Item>
+            </>
+          );
+
+          if (verticalLabel) {
+            data = (
+              <div className={BASE_FORM_ITEM_VERTICAL}>
+                {data}
+              </div>
+            );
+          }
+
+          return data;
+        }}
+      </BaseFormContext.Consumer>
+    );
+  }
+
+  @autobind
+  private onChange(e: any): void {
+    this.formField.value.setValue(getValueFromEvent(e));
+  }
+
+  @autobind
+  private valueGetter(fields: string[]): IObjectWithIndex {
+    return fields.reduce((obj, field) => {
+      if (this.subscribedFields.includes(field)) {
+        obj[field] = this.state.subscribedFormFieldValues[field];
+      } else  {
+        const formField = this.baseForm.getOrCreateFormField(field);
+        this.registerObservableHandler(formField.value.subscribe(newValue => {
+          this.setState({subscribedFormFieldValues: {...this.state.subscribedFormFieldValues, [field]: newValue}});
+        }));
+        this.subscribedFields.push(field);
+        const value = formField.value.getValue();
+        this.state.subscribedFormFieldValues[field] = value;
+
+        obj[field] = value;
+      }
+
+      return obj;
+    }, {} as IObjectWithIndex);
+  }
+}
+
+
+function getValueFromEvent(e: any): any {
+  // To support custom element
+  if (!e || !e.target) {
+    return e;
+  }
+  if (typeof e === "object" && typeof e.persist === "function") {
+    e.persist();
+  } else {
+    console.warn("Unknown event type", e);
+  }
+  const {target} = e;
+
+  return target.type === 'checkbox' ? target.checked : target.value;
 }

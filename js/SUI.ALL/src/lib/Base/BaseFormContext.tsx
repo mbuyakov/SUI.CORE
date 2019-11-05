@@ -1,16 +1,12 @@
-import {WrappedFormUtils} from 'antd/lib/form/Form';
 import * as React from 'react';
 
 import { IObjectWithIndex } from '../other';
 
-// tslint:disable-next-line:ban-ts-ignore
-// @ts-ignore
-// tslint:disable-next-line:no-any use-default-type-parameter
+import { BaseForm } from './BaseForm';
 
 export interface IBaseFormContext {
+  baseForm: BaseForm
   customInputNodesTags?: IObjectWithIndex
-  form: WrappedFormUtils
-  formValues: IObjectWithIndex
   verticalLabel: boolean
 }
 

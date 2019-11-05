@@ -2602,6 +2602,11 @@ async-each@^1.0.1:
   resolved "https://registry.yarnpkg.com/async-each/-/async-each-1.0.3.tgz#b727dbf87d7651602f06f4d4ac387f47d91b0cbf"
   integrity sha512-z/WhQ5FPySLdvREByI2vZiTWwCnF0moMJ1hK9YQwDTHKh6I7/uSckMetoRGb5UBZPC1z0jlw+n/XCgjeH7y1AQ==
 
+async-validator@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/async-validator/-/async-validator-3.2.1.tgz#19ac8655c1296a5331b00c75f2492f0d33cae1f8"
+  integrity sha512-yc96RhAthww0n52m9osoI1uDQbbyd/N2xwPWS1gVvngSWOsKerpBFCulvmhp8GfNwUay41TWskNTd3swQM1XMA==
+
 async-validator@~1.11.3:
   version "1.11.5"
   resolved "https://registry.yarnpkg.com/async-validator/-/async-validator-1.11.5.tgz#9d43cf49ef6bb76be5442388d19fb9a6e47597ea"

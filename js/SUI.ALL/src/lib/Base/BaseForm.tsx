@@ -1,66 +1,95 @@
-import Form, { WrappedFormInternalProps } from 'antd/lib/form/Form';
+/* tslint:disable:no-any */
+import asyncValidator, { RuleItem } from 'async-validator';
 import autobind from 'autobind-decorator';
 import isEqual from 'lodash/isEqual';
 import moment from 'moment';
 import * as React from 'react';
 
 import { errorNotification } from '../drawUtils';
+import { Observable } from '../Observable';
 import { IObjectWithIndex } from '../other';
+import { SUIReactComponent } from '../SUIReactComponent';
 import { OneOrArrayWithNulls } from '../typeWrappers';
 
-import { BaseCard, IBaseCardProps } from './BaseCard';
-import { IBaseFormRowLayout } from './BaseCardRowLayout';
-import { BaseFormContext } from './BaseFormContext';
+import {BaseCard, IBaseCardProps} from './BaseCard';
+import {IBaseFormRowLayout} from './BaseCardRowLayout';
+import {BaseFormContext} from './BaseFormContext';
+
+export type ValuesGetter = (fields: string[]) => IObjectWithIndex;
+
 
 export const SUBMITTED_FIELD = '___SUBMITTED___';
 export const FORM_LOCALSTORAGE_KEY = '__SUI_FORM_';
 
-export type BaseFormChildrenFn = (table: JSX.Element, onClear: () => void, onSubmit: () => void, hasErrors: boolean, formValues: IObjectWithIndex, isSaveInProgress: boolean) => JSX.Element;
-// tslint:disable-next-line:no-any
-export type SaveFormFn = (values: IObjectWithIndex) => any;
+export interface IBaseFormChildrenProps {
+  get?: ValuesGetter,
+  hasErrors?: boolean,
+  isSaveInProgress?: boolean
 
-export type IBaseFormProps<T> = Omit<IBaseCardProps<T>, 'item' | 'rows' | 'forceRenderTabs'> & {
+  onClear?(): void;
+
+  onSubmit?(): void;
+}
+
+export type BaseFormChildrenFn = React.FunctionComponent<IBaseFormChildrenProps>;
+
+export type IBaseFormProps = Omit<IBaseCardProps<any>, 'item' | 'rows' | 'forceRenderTabs'> & {
   children: BaseFormChildrenFn
   customInputNodesTags?: IObjectWithIndex
   // tslint:disable-next-line:no-any
   initialValues?: IObjectWithIndex
-  periodFormSave?: number
-  rows: OneOrArrayWithNulls<IBaseFormRowLayout<T>>
-  saveActivityFunction?: SaveFormFn
+  rows: OneOrArrayWithNulls<IBaseFormRowLayout<any>>
   uuid: string
   verticalLabel?: boolean
   // tslint:disable-next-line:no-any
-  customFieldValues?(currentValues: IObjectWithIndex): IObjectWithIndex
+  customFieldValues?(get: ValuesGetter): IObjectWithIndex
   // tslint:disable-next-line:no-any
   onSubmit(fields: any): Promise<boolean>
 }
 
-function hasErrors(fieldsError: Record<string, string[] | undefined>): boolean {
-  return Object.keys(fieldsError).some(field => !!fieldsError[field]);
+export interface IFormField {
+  error: Observable<string | null>
+  rules: RuleItem[]
+  value: Observable<any>
 }
 
-class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormInternalProps, {
+export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   saving?: boolean
 }> {
-  // tslint:disable-next-line:no-any
-  private intervalHandler: any;
-  private lastFormErrors: IObjectWithIndex = {};
-  private lastFormValues: IObjectWithIndex = {};
+  private readonly customFieldValues: IObjectWithIndex = {};
+  private readonly formFields: Map<string, IFormField> = new Map();
+  private readonly headerFieldValues: IObjectWithIndex = {};
 
-  public constructor(props: IBaseFormProps<T> & WrappedFormInternalProps) {
+  private readonly subscribedCustomFieldValues: string[] = [];
+  private readonly subscribedHeaderFieldValues: string[] = [];
+
+  public constructor(props: IBaseFormProps) {
     super(props);
     this.state = {};
   }
 
+  // @autobind
+  // public addFieldValueObserver(field: string, cb: ObservableHandler<any>): ObservableHandlerStub {
+  //   return this.getOrCreateFormField(field).value.subscribe(cb);
+  // }
+
   @autobind
   public clearForm(): void {
     localStorage.removeItem(`${FORM_LOCALSTORAGE_KEY}${this.props.uuid}`);
-    this.props.form.resetFields();
+    Array.from(this.formFields.keys()).reduce((prev, cur) => {
+      prev[cur] = null;
+
+      return prev;
+    }, {} as IObjectWithIndex);
+
+    // I tak soidet
     this.componentWillUnmount();
     this.componentDidMount();
   }
 
   public componentDidMount(): void {
+    this.customFieldValuesUpdater();
+
     let formParsedValue;
     if (this.props.initialValues) {
       formParsedValue = this.props.initialValues;
@@ -71,7 +100,7 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
         if (!formParsedValue) {
           formParsedValue = JSON.parse(formValue);
         }
-        this.setFieldsValues(formParsedValue);
+        this.setFieldsValuesFromRaw(formParsedValue);
       } catch (e) {
         errorNotification('Ошибка при попытке загрузки заполненной формы', e.stack ? e.stack.toString() : e.toString());
         console.error(e);
@@ -80,58 +109,196 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
         console.log('Saved value cleared');
       }
     }
-    // To disabled submit button at the beginning
-    this.props.form.validateFields();
 
-    if (this.props.periodFormSave) {
-      this.intervalHandler = setInterval(() => {
-        if (this.props.saveActivityFunction) {
-          this.props.saveActivityFunction(this.lastFormValues);
-        }
-      }, this.props.periodFormSave);
-    }
+    // To disabled submit button at the beginning
+    // tslint:disable-next-line:no-floating-promises
+    this.validateFields();
   }
 
   // tslint:disable-next-line:no-any
-  public componentDidUpdate(prevProps: IBaseFormProps<any>): void {
+  public componentDidUpdate(prevProps: IBaseFormProps): void {
+    // Very strange use-case
     if (!isEqual(prevProps.initialValues, this.props.initialValues) && this.props.initialValues) {
       this.setFieldsValues(this.props.initialValues);
     }
   }
 
-  public componentWillUnmount(): void {
-    if (this.intervalHandler) {
-      clearInterval(this.intervalHandler);
+  @autobind
+  public getFieldError(field: string): string {
+    const formField = this.formFields.get(field);
+
+    return formField ? formField.error.getValue() : null;
+  }
+
+  @autobind
+  public getFieldsError(): IObjectWithIndex {
+    return Array.from(this.formFields.entries()).reduce((prev, cur) => {
+      prev[cur[0]] = cur[1].error;
+
+      return prev;
+    }, {} as IObjectWithIndex);
+  }
+
+  @autobind
+  public getFieldsValue(): IObjectWithIndex {
+    return Array.from(this.formFields.entries()).reduce((prev, cur) => {
+      prev[cur[0]] = cur[1].value.getValue();
+
+      return prev;
+    }, {} as IObjectWithIndex);
+  }
+
+  @autobind
+  public getFieldValue(field: string): any {
+    const formField = this.formFields.get(field);
+
+    return formField ? formField.value.getValue() : null;
+  }
+
+  @autobind
+  public getFormField(field: string): IFormField {
+    return this.formFields.get(field);
+  }
+
+  @autobind
+  public getFormFields(): IFormField[] {
+    return Array.from(this.formFields.values());
+  }
+
+  @autobind
+  public getOrCreateFormField(field: string): IFormField {
+    if (!this.formFields.has(field)) {
+      const newFormField: IFormField = {
+        error: new Observable<string | null | undefined>(),
+        rules: [],
+        value: new Observable<any>(),
+      };
+
+      newFormField.value.subscribe(() => this.validateField(field));
+      // newFormField.error.subscribe(() => this.forceUpdate());
+      this.formFields.set(field, newFormField);
     }
+
+    return this.formFields.get(field);
   }
 
   @autobind
-  public getHasErrors(): boolean {
-    return hasErrors(this.lastFormErrors);
+  public hasErrors(): boolean {
+    return Array.from(this.formFields.values()).some(formItem => !!formItem.error);
   }
 
   @autobind
-  public getLastErrors(): IObjectWithIndex {
-    return this.lastFormErrors;
+  public isFieldsTouched(fields?: string[]): boolean {
+    // tslint:disable-next-line:triple-equals
+    if (fields == null) {
+      // tslint:disable-next-line:no-parameter-reassignment
+      fields = Array.from(this.formFields.keys());
+    }
+
+    return fields.some(field => this.isFieldTouched(field));
   }
 
   @autobind
-  public getLastValues(): IObjectWithIndex {
-    return this.lastFormValues;
+  public isFieldTouched(field: string): boolean {
+    // Stub. Is it really needed?
+    return true;
   }
-
 
   public render(): React.ReactNode {
-    const { form, onSubmit, ...rest } = this.props;
+    const {onSubmit, ...rest} = this.props;
 
-    const formValues = form.getFieldsValue();
-    const formErrors = form.getFieldsError();
-    this.lastFormValues = formValues;
-    this.lastFormErrors = formErrors;
+    return (
+      <BaseFormContext.Provider
+        value={{
+          baseForm: this,
+          customInputNodesTags: this.props.customInputNodesTags,
+          verticalLabel: !!this.props.verticalLabel,
+        }}
+      >
+        {this.props.children({
+          get: this.headerWrapperValuesGetter,
+          hasErrors: this.hasErrors(),
+          isSaveInProgress: this.state.saving,
+          onClear: this.clearForm,
+          onSubmit: this.onSubmit
+        })}
+        <FormBodyWrapper>
+          <BaseCard
+            forceRenderTabs={true}
+            {...rest}
+          />
+        </FormBodyWrapper>
+      </BaseFormContext.Provider>
+    );
+  }
 
+  @autobind
+  public setFieldError(field: string, error: string): void {
+    this.formFields.get(field).error.setValue(error)
+  }
+
+  @autobind
+  public setFieldsValues(values: IObjectWithIndex): void {
+    Object.keys(values).forEach(key => this.setFieldValue(key, values[key]));
+  }
+
+  @autobind
+  public setFieldValue(field: string, value: any): void {
+    this.getOrCreateFormField(field).value.setValue(value);
+  }
+
+  @autobind
+  public async validateField(field: string): Promise<void> {
+    const formField = this.formFields.get(field);
+    const validator = new asyncValidator({
+      [field]: formField.rules
+    });
+
+    return validator.validate({
+      [field]: formField.value.getValue()
+    }, {}, errors => {
+      let error = null;
+
+      if (errors && errors.length > 0) {
+        error = errors[0].message;
+      }
+
+      formField.error.setValue(error);
+    });
+  }
+
+  @autobind
+  public async validateFields(): Promise<void[]> {
+    return Promise.all(Array.from(this.formFields.keys()).map(field => this.validateField(field)));
+  }
+
+  @autobind
+  private customFieldValuesGetter(fields: string[]): IObjectWithIndex {
+    return fields.reduce((obj, field) => {
+      if (this.subscribedCustomFieldValues.includes(field)) {
+        obj[field] = this.customFieldValues[field];
+      } else {
+        const formField = this.getOrCreateFormField(field);
+        this.registerObservableHandler(formField.value.subscribe(newValue => {
+          this.customFieldValues[field] = newValue;
+          this.customFieldValuesUpdater();
+        }));
+        this.subscribedCustomFieldValues.push(field);
+        const value = formField.value.getValue();
+        this.customFieldValues[field] = value;
+
+        obj[field] = value;
+      }
+
+      return obj;
+    }, {} as IObjectWithIndex);
+  }
+
+  @autobind
+  private customFieldValuesUpdater(): void {
     if (this.props.customFieldValues) {
-      const oldValue = formValues;
-      const newValue = this.props.customFieldValues(oldValue);
+      const oldValue = this.customFieldValues;
+      const newValue = this.props.customFieldValues(this.customFieldValuesGetter);
       const changedValue: IObjectWithIndex = {};
       Object.keys(newValue).forEach(key => {
         if (!isEqual(oldValue[key], newValue[key])) {
@@ -139,68 +306,79 @@ class BaseFormInner<T> extends React.Component<IBaseFormProps<T> & WrappedFormIn
         }
       });
       if (Object.keys(changedValue).length > 0) {
-        this.props.form.setFieldsValue(changedValue);
+        this.setFieldsValues(changedValue);
       }
     }
-
-    const errors = hasErrors(formErrors);
-    const table = (
-      <BaseCard
-        forceRenderTabs={true}
-        {...rest}
-      />
-    );
-
-    return (
-      <BaseFormContext.Provider value={{ form, formValues, verticalLabel: !!this.props.verticalLabel, customInputNodesTags: this.props.customInputNodesTags }}>
-        {this.props.children(table, this.clearForm, this.onClick, errors, formValues, this.state.saving)}
-        {this.props.form.getFieldDecorator(SUBMITTED_FIELD)(<div style={{ display: 'none' }}/>)}
-      </BaseFormContext.Provider>
-    );
   }
 
   @autobind
-  public validateAll(): void {
-    this.props.form.setFields({[SUBMITTED_FIELD]: true});
+  private headerWrapperValuesGetter(fields: string[]): IObjectWithIndex {
+    return fields.reduce((obj, field) => {
+      if (this.subscribedHeaderFieldValues.includes(field)) {
+        obj[field] = this.headerFieldValues[field];
+      } else {
+        const formField = this.getOrCreateFormField(field);
+        this.registerObservableHandler(formField.value.subscribe(newValue => {
+          this.headerFieldValues[field] = newValue;
+          this.forceUpdate();
+        }));
+        this.subscribedHeaderFieldValues.push(field);
+        const value = formField.value.getValue();
+        this.headerFieldValues[field] = value;
+
+        obj[field] = value;
+      }
+
+      return obj;
+    }, {} as IObjectWithIndex);
   }
 
-
   @autobind
-  private async onClick(): Promise<void> {
-    const fields: IObjectWithIndex = {};
-    fields[SUBMITTED_FIELD] = true;
-    this.props.form.setFieldsValue(fields);
+  private async onSubmit(): Promise<void> {
+    this.setFieldValue(SUBMITTED_FIELD, true);
 
-    if (!hasErrors(this.props.form.getFieldsError())) {
-      this.setState({ saving: true });
-      const answer = await this.props.onSubmit(this.props.form.getFieldsValue());
+    if (!this.hasErrors()) {
+      this.setState({saving: true});
+      const answer = await this.props.onSubmit(this.getFieldsValue());
       if (answer) {
         this.clearForm();
       }
-      this.setState({ saving: false });
+      this.setState({saving: false});
     }
   }
 
   @autobind
-  // tslint:disable-next-line:no-any
-  private setFieldsValues(values: IObjectWithIndex): void {
-    // tslint:disable-next-line:no-for-in forin
-    for (const field in values) {
-      // noinspection JSUnfilteredForInLoop
-      const fieldValue = values[field];
+  private setFieldsValuesFromRaw(values: IObjectWithIndex): void {
+    const parsedValues = Object.keys(values).reduce((prev, curKey) => {
+      let fieldValue = values[curKey];
 
       // Magic
+      // tslint:disable-next-line:no-magic-numbers
       if (typeof fieldValue === 'string' && ((fieldValue.match(/-/g) || []).length >= 2 || fieldValue.includes('.'))) {
         const momentValue = moment(fieldValue);
         if (momentValue.isValid()) {
           // noinspection JSUnfilteredForInLoop
-          values[field] = momentValue;
+          fieldValue = momentValue;
         }
       }
-    }
-    this.props.form.setFieldsValue(values);
+
+      prev[curKey] = fieldValue;
+
+      return prev;
+    }, {} as IObjectWithIndex);
+
+    this.setFieldsValues(parsedValues);
   }
 }
 
-// tslint:disable-next-line:no-any variable-name
-export let BaseForm = Form.create()(BaseFormInner) as any as React.ComponentClass<IBaseFormProps<any>>;
+// tslint:disable-next-line:max-classes-per-file
+class FormBodyWrapper extends React.Component {
+
+  public render(): React.ReactNode {
+    return this.props.children;
+  }
+
+  public shouldComponentUpdate(): boolean {
+    return false;
+  }
+}
