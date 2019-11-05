@@ -23,7 +23,7 @@ export const FORM_LOCALSTORAGE_KEY = '__SUI_FORM_';
 
 export interface IBaseFormChildrenProps {
   get?: ValuesGetter,
-  hasErrors?: boolean,
+  hasErrors?: Observable<boolean>,
   isSaveInProgress?: boolean
 
   onClear?(): void;
@@ -57,7 +57,9 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   saving?: boolean
 }> {
   private readonly customFieldValues: IObjectWithIndex = {};
+  private readonly fieldErrors: IObjectWithIndex = {};
   private readonly formFields: Map<string, IFormField> = new Map();
+  private readonly hasErrors: Observable<boolean> = new Observable<boolean>(false);
   private readonly headerFieldValues: IObjectWithIndex = {};
 
   private readonly subscribedCustomFieldValues: string[] = [];
@@ -67,11 +69,6 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
     super(props);
     this.state = {};
   }
-
-  // @autobind
-  // public addFieldValueObserver(field: string, cb: ObservableHandler<any>): ObservableHandlerStub {
-  //   return this.getOrCreateFormField(field).value.subscribe(cb);
-  // }
 
   @autobind
   public clearForm(): void {
@@ -175,16 +172,14 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
       };
 
       newFormField.value.subscribe(() => this.validateField(field));
-      // newFormField.error.subscribe(() => this.forceUpdate());
+      newFormField.error.subscribe(newError => {
+        this.fieldErrors[field] = newError;
+        this.__checkHasErrors();
+      });
       this.formFields.set(field, newFormField);
     }
 
     return this.formFields.get(field);
-  }
-
-  @autobind
-  public hasErrors(): boolean {
-    return Array.from(this.formFields.values()).some(formItem => !!formItem.error.getValue());
   }
 
   @autobind
@@ -217,7 +212,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
       >
         {this.props.children({
           get: this.headerWrapperValuesGetter,
-          hasErrors: this.hasErrors(),
+          hasErrors: this.hasErrors,
           isSaveInProgress: this.state.saving,
           onClear: this.clearForm,
           onSubmit: this.onSubmit
@@ -270,6 +265,20 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   @autobind
   public async validateFields(): Promise<void[]> {
     return Promise.all(Array.from(this.formFields.keys()).map(field => this.validateField(field)));
+  }
+
+  // @autobind
+  // public addFieldValueObserver(field: string, cb: ObservableHandler<any>): ObservableHandlerStub {
+  //   return this.getOrCreateFormField(field).value.subscribe(cb);
+  // }
+
+  @autobind
+  private __checkHasErrors(): void {
+    const prevHasErrors = this.hasErrors.getValue();
+    const hasErrors = Object.keys(this.fieldErrors).some(key => !!this.fieldErrors[key]);
+    if(prevHasErrors !== hasErrors) {
+      this.hasErrors.setValue(hasErrors);
+    }
   }
 
   @autobind
@@ -337,7 +346,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   private async onSubmit(): Promise<void> {
     this.setFieldValue(SUBMITTED_FIELD, true);
 
-    if (!this.hasErrors()) {
+    if (!this.hasErrors.getValue()) {
       this.setState({saving: true});
       const answer = await this.props.onSubmit(this.getFieldsValue());
       if (answer) {
