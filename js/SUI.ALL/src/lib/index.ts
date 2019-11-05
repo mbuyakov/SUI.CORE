@@ -1,6 +1,7 @@
 export * from "./additionalTabs";
 export * from "./Base";
 export * from "./BaseTable";
+export * from "./BackendTable";
 export * from "./cache";
 export * from "./color";
 export * from "./CommonForm";
