@@ -184,7 +184,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
 
   @autobind
   public hasErrors(): boolean {
-    return Array.from(this.formFields.values()).some(formItem => !!formItem.error);
+    return Array.from(this.formFields.values()).some(formItem => !!formItem.error.getValue());
   }
 
   @autobind
