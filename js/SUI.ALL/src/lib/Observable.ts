@@ -13,7 +13,7 @@ export class Observable<T> {
   private readonly handlers: Map<string, ObservableHandler<T>> = new Map();
   private value: T;
 
-  public constructor(initialValue: T) {
+  public constructor(initialValue?: T) {
     this.value = initialValue;
   }
 
