@@ -1,10 +1,30 @@
 import {IObjectWithIndex} from "../../other";
 import {addQuotesIfString, camelCase, capitalize} from "../../stringFormatters";
 import {IGqlFilter} from "../types";
-import {mutate} from "../wrapper";
+import { mutate, query } from '../wrapper';
 
 export type PossibleId = string | number;
 export type PossibleValue = string | number | boolean;
+
+/**
+ * Generate Gql query for select
+ */
+export function generateSelectText(entity: string, id: PossibleId, field: string): string {
+  const camelCaseEntity = camelCase(entity);
+
+  return `{
+  ${camelCaseEntity}ById(id: ${addQuotesIfString(id)}) {
+    ${field}
+  }
+}`;
+}
+
+/**
+ * Generate promise for Gql query
+ */
+export async function generateSelect<T extends PossibleValue>(entity: string, id: PossibleId, field: string): Promise<T> {
+  return query<T>(generateSelectText(entity, id, field), 2);
+}
 
 /**
  * Generate Gql mutation for update
