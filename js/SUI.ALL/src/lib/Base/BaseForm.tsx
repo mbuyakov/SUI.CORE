@@ -259,7 +259,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
       }
 
       formField.error.setValue(error);
-    });
+    }).catch(() => {/* Используем коллбек, так что пофиг (наверное). Catch нужен, так как без него браузер слегка подлагивает*/});
   }
 
   @autobind
