@@ -23,7 +23,7 @@ export type FixedRuleItem = Omit<RuleItem, 'pattern'> & {
 export interface IBaseFormItemLayoutBase {
   fieldName: string;
   initialValue?: any;
-  inputNode: JSX.Element;
+  inputNode?: JSX.Element; // Required. Mark as non-required because IBaseFormItemLayoutMask
   required?: boolean;
   rules?: FixedRuleItem[];
   title?: string | React.ReactNode;
@@ -57,6 +57,10 @@ export function mapMaskToBase(item: IBaseFormItemLayout): IBaseFormItemLayoutBas
       }
     ];
     (item as IBaseFormItemLayoutBase).inputNode = (<MyMaskedInput mask={(item as IBaseFormItemLayoutMask).mask}/>)
+  }
+
+  if(!(item as IBaseFormItemLayoutMask).mask && !(item as IBaseFormItemLayoutBase).inputNode) {
+    throw new Error("inputNode required");
   }
 
   return item as IBaseFormItemLayoutBase;
