@@ -7,7 +7,7 @@ export type MyMaskedInputProps = Omit<MaskedInputProps, 'onChange'> & {
   onChange?(value: string): void
 }
 
-export class MyMaskedInput extends React.Component<MyMaskedInputProps> {
+export class SUIMaskedInput extends React.Component<MyMaskedInputProps> {
   private readonly inputRef: React.RefObject<MaskedInput> = React.createRef<MaskedInput>();
 
   public componentDidMount(): void {

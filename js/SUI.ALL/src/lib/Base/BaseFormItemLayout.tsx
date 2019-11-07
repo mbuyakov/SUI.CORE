@@ -10,9 +10,9 @@ import { IObjectWithIndex } from '../other';
 import { BASE_CARD_ITEM_LABEL_HORIZONTAL, BASE_FORM_ITEM_VERTICAL } from '../styles';
 import { SUIReactComponent } from '../SUIReactComponent';
 
+import { SUIMaskedInput } from './../SUIMaskedInput';
 import { BaseForm, IFormField, SUBMITTED_FIELD, ValuesGetter } from './BaseForm';
 import { BaseFormContext } from './BaseFormContext';
-import { MyMaskedInput } from './MyMaskedInput';
 
 const FILL_FIELD_TEXT = 'Заполните поле';
 
@@ -56,7 +56,7 @@ export function mapMaskToBase(item: IBaseFormItemLayout): IBaseFormItemLayoutBas
       len: (item as IBaseFormItemLayoutMask).totalValueLength,
       message: `Заполните поле по маске ${(item as IBaseFormItemLayoutMask).mask}`,
     });
-    (item as IBaseFormItemLayoutBase).inputNode = (<MyMaskedInput mask={(item as IBaseFormItemLayoutMask).mask}/>);
+    (item as IBaseFormItemLayoutBase).inputNode = (<SUIMaskedInput mask={(item as IBaseFormItemLayoutMask).mask}/>);
   }
 
   if (!(item as IBaseFormItemLayoutMask).mask && !(item as IBaseFormItemLayoutBase).inputNode) {
