@@ -83,6 +83,7 @@
     "apollo-link": "^1.2.13",
     "async-validator": "^3.2.1",
     "autobind-decorator": "^2.4.0",
+    "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",

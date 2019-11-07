@@ -10,6 +10,7 @@ export * from "./init";
 export * from "./metaInfo";
 export * from "./metaUtils";
 export * from "./TabSyncer";
+export * from "./versionMismatch";
 
 declare let window: Window & {
   SUI_BACKEND_URL: string | undefined;
