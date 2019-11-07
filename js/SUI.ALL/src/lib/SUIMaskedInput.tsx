@@ -21,6 +21,7 @@ export class SUIMaskedInput extends React.Component<MyMaskedInputProps> {
   public render(): React.ReactNode {
     return (
       <MaskedInput
+        {...this.props}
         mask={this.props.mask}
         ref={this.inputRef}
         onChange={this.onChange}
