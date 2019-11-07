@@ -30,6 +30,6 @@ export class MyMaskedInput extends React.Component<MyMaskedInputProps> {
 
   @autobind
   private onChange(): void {
-    this.props.onChange(this.inputRef.current.mask.getValue());
+    this.props.onChange(this.inputRef.current.mask.getRawValue());
   }
 }
