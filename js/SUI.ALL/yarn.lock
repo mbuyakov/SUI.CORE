@@ -2322,6 +2322,11 @@ ant-design-pro@^2.3.2:
     prop-types "^15.6.2"
     react-fittext "^1.0.0"
 
+antd-mask-input@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/antd-mask-input/-/antd-mask-input-0.1.12.tgz#8b75b1cdd4edacf52f76e9d7bf4ae0efa4558ebf"
+  integrity sha512-pUR5Q5JSlQfwAGHiTdTUYUx3kHGH9F6sufPuSdi7UpUQhjLasOHZxyyKvGElrX/Li4EI40SpW5Ec9TPA9CQKzQ==
+
 antd@^3.23.5:
   version "3.24.0"
   resolved "https://registry.yarnpkg.com/antd/-/antd-3.24.0.tgz#a78d442c0640f7b4521d9a634a85da06e9169f39"

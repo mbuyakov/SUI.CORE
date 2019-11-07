@@ -12,16 +12,15 @@ import { SUIReactComponent } from '../SUIReactComponent';
 
 import { BaseForm, IFormField, SUBMITTED_FIELD, ValuesGetter } from './BaseForm';
 import {BaseFormContext} from './BaseFormContext';
+import { MyMaskedInput } from './MyMaskedInput';
 
 const FILL_FIELD_TEXT = 'Заполните поле';
 
 export type FixedRuleItem = Omit<RuleItem, 'pattern'> & {
-  pattern: string | RegExp
+  pattern?: string | RegExp
 }
 
-// tslint:disable-next-line:ban-ts-ignore
-// @ts-ignore
-export interface IBaseFormItemLayout<T = string> {
+export interface IBaseFormItemLayoutBase {
   fieldName: string;
   initialValue?: any;
   inputNode: JSX.Element;
@@ -35,13 +34,35 @@ export interface IBaseFormItemLayout<T = string> {
   mapFormValuesToRequired?(get: ValuesGetter): boolean;
 }
 
+export type IBaseFormItemLayoutMask = Omit<IBaseFormItemLayoutBase, 'inputNode' | 'rules' | 'valuePropName'> & {
+  mask: string
+  totalValueLength: number // Костыль
+}
+
+export type IBaseFormItemLayout = IBaseFormItemLayoutBase | IBaseFormItemLayoutMask;
+
 export type IBaseFormDescItemLayout = IBaseFormItemLayout;
 
 export function renderIBaseFormItemLayout<T>(item: IBaseFormItemLayout): JSX.Element {
-  return (<BaseFormItem {...item}/>);
+  return (<BaseFormItem {...mapMaskToBase(item)}/>);
 }
 
-export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayout, {
+export function mapMaskToBase(item: IBaseFormItemLayout): IBaseFormItemLayoutBase {
+  if ((item as IBaseFormItemLayoutMask).mask) {
+    (item as IBaseFormItemLayoutBase).rules = [
+      ...(item as IBaseFormItemLayoutBase).rules,
+      {
+        len: (item as IBaseFormItemLayoutMask).totalValueLength,
+        message: `Заполните поле по маске ${(item as IBaseFormItemLayoutMask).mask}`
+      }
+    ];
+    (item as IBaseFormItemLayoutBase).inputNode = (<MyMaskedInput mask={(item as IBaseFormItemLayoutMask).mask}/>)
+  }
+
+  return item as IBaseFormItemLayoutBase;
+}
+
+export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
   error?: any
   subscribedFormFieldValues: IObjectWithIndex
   value?: any
@@ -51,7 +72,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayout, {
   private formField?: IFormField;
   private readonly subscribedFields: string[] = [];
 
-  public constructor(props: IBaseFormItemLayout) {
+  public constructor(props: IBaseFormItemLayoutBase) {
     super(props);
     this.state = {
       subscribedFormFieldValues: {}

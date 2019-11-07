@@ -199,6 +199,20 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
     return true;
   }
 
+  @autobind
+  public async onSubmit(): Promise<void> {
+    this.setFieldValue(SUBMITTED_FIELD, true);
+
+    if (!this.hasErrors.getValue()) {
+      this.setState({saving: true});
+      const answer = await this.props.onSubmit(this.getFieldsValue());
+      if (answer) {
+        this.clearForm();
+      }
+      this.setState({saving: false});
+    }
+  }
+
   public render(): React.ReactNode {
     const {onSubmit, ...rest} = this.props;
 
@@ -340,20 +354,6 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
 
       return obj;
     }, {} as IObjectWithIndex);
-  }
-
-  @autobind
-  private async onSubmit(): Promise<void> {
-    this.setFieldValue(SUBMITTED_FIELD, true);
-
-    if (!this.hasErrors.getValue()) {
-      this.setState({saving: true});
-      const answer = await this.props.onSubmit(this.getFieldsValue());
-      if (answer) {
-        this.clearForm();
-      }
-      this.setState({saving: false});
-    }
   }
 
   @autobind

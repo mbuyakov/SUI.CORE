@@ -79,6 +79,7 @@
     "@stomp/stompjs": "^5.4.2",
     "ant-design-pro": "^2.3.2",
     "antd": "^3.23.5",
+    "antd-mask-input": "^0.1.12",
     "apollo-client": "^2.6.4",
     "apollo-link": "^1.2.13",
     "async-validator": "^3.2.1",
