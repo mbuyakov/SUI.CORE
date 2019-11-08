@@ -126,6 +126,7 @@ export interface IBaseTableProps<TSelection = any> {
   rowDetailComponent?: RowDetail;
   rows: any[];
   selectionEnabled?: boolean;
+  singleSelection?: boolean;
   sortingEnabled?: boolean;
   title?: string | JSX.Element;
   toolbarButtons?: JSX.Element[];

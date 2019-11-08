@@ -108,6 +108,11 @@ export class BaseTable<TSelection = defaultSelection>
 
   public constructor(props: any) {
     super(props);
+
+    if (this.props.singleSelection && this.props.initialSelection && this.props.initialSelection.length > 1) {
+      throw new Error(`InitialSelection size for singleSelection mode = ${this.props.initialSelection.length} (must be <= 1)`);
+    }
+
     this.state = {
       selection: this.props.initialSelection || [],
     };
@@ -545,11 +550,15 @@ export class BaseTable<TSelection = defaultSelection>
 
   @autobind
   private onSelectionChange(selection: TSelection[]): void {
+    const newSelection = this.props.singleSelection
+      ? selection.filter(element => !this.state.selection.includes(element))
+      : selection;
+
     this.setState(
-      {selection},
+      {selection: newSelection},
       () => {
         if (this.props.onSelectionChange) {
-          this.props.onSelectionChange(selection);
+          this.props.onSelectionChange(newSelection);
         }
       }
     );
