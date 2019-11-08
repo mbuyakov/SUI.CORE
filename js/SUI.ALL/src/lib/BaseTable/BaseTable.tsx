@@ -332,7 +332,7 @@ export class BaseTable<TSelection = defaultSelection>
         style={{
           ...(borderless ? {} : {margin: 10}),
           ...(this.props.fitToCardBody ? {margin: -24, marginTop: -23} : {}),
-          ...(this.props.fitToCollapseBody ? { margin: -16 } : {}),
+          ...(this.props.fitToCollapseBody ? { margin: -16, marginBottom: -29 } : {}),
           ...(this.props.fitToRowDetailContainer ? {margin: "-3px -24px"} : {}),
           ...(this.props.fitToTabPanelBody ? {margin: 0, marginTop: -17} : {}),
           ...(this.props.paperStyle || {}),

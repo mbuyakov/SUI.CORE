@@ -41,6 +41,7 @@ export * from "./ReportTop3DBarChart";
 export * from "./Socket";
 export * from "./SparkLine";
 export * from "./styles";
+export * from "./SUIMaskedInput";
 export * from "./SUIReactComponent";
 export * from "./TableSettings";
 export * from "./TooltipIcon";
