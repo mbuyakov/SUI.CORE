@@ -2,6 +2,8 @@ import { Button } from "antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
+import { EDITABLE_PROMISED_COMPONENT_CHILDREN } from '../styles';
+
 import { IPromisedBaseProps } from "./PromisedBase";
 
 export interface IEditablePromisedComponentProps<T> {
@@ -27,12 +29,13 @@ export class EditablePromisedComponent<T> extends React.Component<
           alignItems: "center",
           display: "flex",
         }}
+        className={EDITABLE_PROMISED_COMPONENT_CHILDREN}
       >
         {this.state.editMode ? React.cloneElement(this.props.children, { promise: this.getPromise }) : (this.props.nonEditRender || this.DEFAULT_RENDERER).apply(null, [this.props.children.props.defaultValue])}
         <Button
-          type="primary"
+          size="small"
           htmlType="button"
-          style={{ marginLeft: 8 }}
+          style={{ marginLeft: this.state.editMode ? 4 : 8, flexShrink: 0 }}
           onClick={this.switchEdit}
           icon={this.state && this.state.editMode ? "close" : "edit"}
         />
