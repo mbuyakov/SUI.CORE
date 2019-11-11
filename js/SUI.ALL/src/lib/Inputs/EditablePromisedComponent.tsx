@@ -35,7 +35,7 @@ export class EditablePromisedComponent<T> extends React.Component<
         <Button
           size="small"
           htmlType="button"
-          style={{ marginLeft: this.state.editMode ? 4 : 8, flexShrink: 0 }}
+          style={{ marginLeft: this.state.editMode ? 4 : 8, flexShrink: 0, padding: "0 4px" }}
           onClick={this.switchEdit}
           icon={this.state && this.state.editMode ? "close" : "edit"}
         />
