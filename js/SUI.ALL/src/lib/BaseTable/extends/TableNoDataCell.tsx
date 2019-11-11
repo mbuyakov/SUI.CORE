@@ -11,3 +11,18 @@ export const TableNoDataCell = ({colSpan}: { colSpan?: number | undefined }): JS
     <Empty style={{width: '100%', position: 'absolute', marginTop: -65}}/>
   </TableCell>
 );
+
+// tslint:disable-next-line:variable-name
+export const TableNoDataCellSmall = ({colSpan}: { colSpan?: number | undefined }): JSX.Element => (
+  <TableCell
+    style={{
+      backgroundColor: "#fafafa",
+      paddingLeft: 64
+    }}
+    colSpan={colSpan}
+  >
+    <div>
+      Нет данных
+    </div>
+  </TableCell>
+);

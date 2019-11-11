@@ -52,7 +52,7 @@ import {HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from "../styles";
 import { translate } from '../translate';
 import { defaultIfNotBoolean } from '../typeWrappers';
 
-import { EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, WarningPlugin } from './extends';
+import { EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, WarningPlugin } from './extends';
 import { BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, StringColumnFilter } from './filters';
 import { defaultSelection, ISelectionTable } from './ISelectionTable';
 import {
@@ -424,7 +424,7 @@ export class BaseTable<TSelection = defaultSelection>
             />
             : <Table
               cellComponent={cellComponent}
-              noDataCellComponent={TableNoDataCell}
+              noDataCellComponent={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? TableNoDataCell : TableNoDataCellSmall}
               rowComponent={rowComponent}
             />}
           {rowDetail && <TableRowDetail
