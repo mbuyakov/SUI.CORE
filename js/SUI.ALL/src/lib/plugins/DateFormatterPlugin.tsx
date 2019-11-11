@@ -23,7 +23,7 @@ export class DateFormatterPlugin extends TableRenderParamsPlugin<IDateFormatterP
 
   // tslint:disable-next-line:prefer-function-over-method variable-name no-async-without-await
   public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams<IDateFormatterPluginTRP>): Promise<void> {
-    result.render = (value: string) => moment(value, trp.sourceFormat).format(trp.targetFormat);
+    result.render = (value: string) => value && moment(value, trp.sourceFormat).format(trp.targetFormat);
 
     return;
   }
