@@ -567,9 +567,8 @@ export class BaseTable<TSelection = defaultSelection>
   @autobind
   private toolbarRootComponent(props: any): JSX.Element {
     return (
-      <ToolbarRoot {...props}>
+      <ToolbarRoot {...props} style={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? {} : {display: 'none'}}>
         {(this.props.warnings && this.props.warnings.length ? [<WarningPlugin messages={this.props.warnings} key={-1}/>] : []).concat([props.children])}
       </ToolbarRoot>);
   }
-
 }
