@@ -130,6 +130,7 @@ export interface IBaseTableProps<TSelection = any> {
   sortingEnabled?: boolean;
   title?: string | JSX.Element;
   toolbarButtons?: JSX.Element[];
+  toolbarEnabled?: boolean;
   virtual?: boolean;
   visibilityEnabled?: boolean;
   warnings?: Array<JSX.Element | string>;

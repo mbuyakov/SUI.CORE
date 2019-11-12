@@ -33,3 +33,4 @@ export const MAIN_SETTINGS__CONTAINER = "sui-backend-container";
 export const MAIN_SETTINGS__ITEM_TREE = "sui-backend-ITEM_TREE";
 export const TAB_SETTINGS__UNACTIVE_BUTTON = "sui-backend-unactiveButton";
 export const TREE_SELECT_DISABLE_GROUP_SELECTION = "sui-disable-group-selection";
+export const EDITABLE_PROMISED_COMPONENT_CHILDREN = "sui-editable-promised-component-children";
