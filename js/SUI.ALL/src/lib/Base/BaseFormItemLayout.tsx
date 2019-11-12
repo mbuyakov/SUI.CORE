@@ -29,12 +29,14 @@ export interface IBaseFormItemLayoutBase {
   title?: string | React.ReactNode;
   valuePropName?: string;
 
+  getValueFromEvent?(...args: any[]): any;
+
   mapFormValuesToInputNodeProps?(get: ValuesGetter): IObjectWithIndex;
 
   mapFormValuesToRequired?(get: ValuesGetter): boolean;
 }
 
-export type IBaseFormItemLayoutMask = Omit<IBaseFormItemLayoutBase, 'inputNode' | 'rules' | 'valuePropName'> & {
+export type IBaseFormItemLayoutMask = Omit<IBaseFormItemLayoutBase, 'inputNode' | 'rules' | 'valuePropName' | 'getValueFromEvent'> & {
   mask: string
   totalValueLength: number // Костыль
 }
@@ -179,7 +181,9 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
 
   @autobind
   private onChange(e: any): void {
-    this.formField.value.setValue(getValueFromEvent(e));
+    // tslint:disable-next-line:variable-name
+    const _getValueFromEvent = this.props.getValueFromEvent || getValueFromEvent;
+    this.formField.value.setValue(_getValueFromEvent(e));
   }
 
   @autobind
