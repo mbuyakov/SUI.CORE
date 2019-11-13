@@ -1,13 +1,13 @@
-/* tslint:disable:no-any */
+/* tslint:disable:no-any member-ordering */
 import asyncValidator, { RuleItem } from 'async-validator';
 import autobind from 'autobind-decorator';
 import isEqual from 'lodash/isEqual';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import * as React from 'react';
 
 import { errorNotification } from '../drawUtils';
 import { Observable } from '../Observable';
-import { IObjectWithIndex } from '../other';
+import { IObjectWithIndex, IPartialObjectWithIndex } from '../other';
 import { SUIReactComponent } from '../SUIReactComponent';
 import { OneOrArrayWithNulls } from '../typeWrappers';
 
@@ -15,75 +15,37 @@ import {BaseCard, IBaseCardProps} from './BaseCard';
 import {IBaseFormRowLayout} from './BaseCardRowLayout';
 import {BaseFormContext} from './BaseFormContext';
 
-export type ValuesGetter = (fields: string[]) => IObjectWithIndex;
+export type ValuesGetter<FIELDS extends string = string> = (fields: FIELDS[]) => IPartialObjectWithIndex<FIELDS>;
 
 
-export const SUBMITTED_FIELD = '___SUBMITTED___';
-export const FORM_LOCALSTORAGE_KEY = '__SUI_FORM_';
-
-export interface IBaseFormChildrenProps {
-  get?: ValuesGetter,
-  hasErrors?: Observable<boolean>,
-  isSaveInProgress?: boolean
-
-  onClear?(): void;
-
-  onSubmit?(): void;
-}
-
-export type BaseFormChildrenFn = React.FunctionComponent<IBaseFormChildrenProps>;
-
-export type IBaseFormProps = Omit<IBaseCardProps<any>, 'item' | 'rows' | 'forceRenderTabs'> & {
-  children: BaseFormChildrenFn
+export type IBaseFormProps<FIELDS extends string> = Omit<IBaseCardProps<any>, 'item' | 'rows' | 'forceRenderTabs'> & {
   customInputNodesTags?: IObjectWithIndex
   // tslint:disable-next-line:no-any
-  initialValues?: IObjectWithIndex
-  rows: OneOrArrayWithNulls<IBaseFormRowLayout<any>>
-  uuid: string
+  initialValues?: IPartialObjectWithIndex<FIELDS>
+  rows: OneOrArrayWithNulls<IBaseFormRowLayout<FIELDS>>
   verticalLabel?: boolean
   // tslint:disable-next-line:no-any
-  customFieldValues?(get: ValuesGetter): IObjectWithIndex
-  // tslint:disable-next-line:no-any
-  onSubmit(fields: any): Promise<boolean>
+  customFieldValues?(get: ValuesGetter<FIELDS>): IPartialObjectWithIndex<FIELDS>
 }
 
-export interface IFormField {
+export interface IFormField<NAME extends string = string> {
+  name: NAME
   error: Observable<string | null>
   rules: RuleItem[]
   value: Observable<any>
 }
 
-export class BaseForm extends SUIReactComponent<IBaseFormProps, {
-  saving?: boolean
-}> {
-  private readonly customFieldValues: IObjectWithIndex = {};
-  private readonly fieldErrors: IObjectWithIndex = {};
-  private readonly formFields: Map<string, IFormField> = new Map();
+export class BaseForm<FIELDS extends string = string> extends SUIReactComponent<IBaseFormProps<FIELDS>> {
+  private readonly customFieldValues: IPartialObjectWithIndex<FIELDS> = {};
+  private readonly fieldErrors: IPartialObjectWithIndex<FIELDS, string> = {};
+  private readonly formFields: Map<FIELDS, IFormField<FIELDS>> = new Map();
   private readonly hasErrors: Observable<boolean> = new Observable<boolean>(false);
-  private readonly headerFieldValues: IObjectWithIndex = {};
+  private readonly externalFieldValues: IPartialObjectWithIndex<FIELDS> = {};
 
-  private readonly subscribedCustomFieldValues: string[] = [];
-  private readonly subscribedHeaderFieldValues: string[] = [];
+  private readonly subscribedCustomFieldValues: FIELDS[] = [];
+  private readonly subscribedExternalFieldValues: FIELDS[] = [];
 
-  public constructor(props: IBaseFormProps) {
-    super(props);
-    this.state = {};
-  }
-
-  @autobind
-  public clearForm(): void {
-    localStorage.removeItem(`${FORM_LOCALSTORAGE_KEY}${this.props.uuid}`);
-    Array.from(this.formFields.keys()).reduce((prev, cur) => {
-      prev[cur] = null;
-
-      return prev;
-    }, {} as IObjectWithIndex);
-
-    // I tak soidet
-    this.componentWillUnmount();
-    this.componentDidMount();
-  }
-
+  //<editor-fold desc="React lifecycle">
   public componentDidMount(): void {
     this.customFieldValuesUpdater();
 
@@ -91,19 +53,12 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
     if (this.props.initialValues) {
       formParsedValue = this.props.initialValues;
     }
-    const formValue = localStorage.getItem(`${FORM_LOCALSTORAGE_KEY}${this.props.uuid}`);
-    if (formParsedValue || formValue) {
+    if (formParsedValue) {
       try {
-        if (!formParsedValue) {
-          formParsedValue = JSON.parse(formValue);
-        }
         this.setFieldsValuesFromRaw(formParsedValue);
       } catch (e) {
         errorNotification('Ошибка при попытке загрузки заполненной формы', e.stack ? e.stack.toString() : e.toString());
         console.error(e);
-        console.log(formValue);
-        localStorage.removeItem(`${FORM_LOCALSTORAGE_KEY}${this.props.uuid}`);
-        console.log('Saved value cleared');
       }
     }
 
@@ -112,61 +67,42 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
     this.validateFields();
   }
 
-  // tslint:disable-next-line:no-any
-  public componentDidUpdate(prevProps: IBaseFormProps): void {
+  public componentDidUpdate(prevProps: IBaseFormProps<FIELDS>): void {
     // Very strange use-case
     if (!isEqual(prevProps.initialValues, this.props.initialValues) && this.props.initialValues) {
       this.setFieldsValues(this.props.initialValues);
     }
   }
 
-  @autobind
-  public getFieldError(field: string): string {
-    const formField = this.formFields.get(field);
+  public render(): React.ReactNode {
+    const {...rest} = this.props;
 
-    return formField ? formField.error.getValue() : null;
+    return (
+      <BaseFormContext.Provider
+        value={{
+          baseForm: this as unknown as BaseForm,
+          customInputNodesTags: this.props.customInputNodesTags,
+          verticalLabel: !!this.props.verticalLabel,
+        }}
+      >
+        <FormBodyWrapper>
+          <BaseCard
+            forceRenderTabs={true}
+            {...rest}
+          />
+        </FormBodyWrapper>
+      </BaseFormContext.Provider>
+    );
   }
+  //</editor-fold>
 
+  //<editor-fold desc="FormField">
   @autobind
-  public getFieldsError(): IObjectWithIndex {
-    return Array.from(this.formFields.entries()).reduce((prev, cur) => {
-      prev[cur[0]] = cur[1].error;
-
-      return prev;
-    }, {} as IObjectWithIndex);
-  }
-
-  @autobind
-  public getFieldsValue(): IObjectWithIndex {
-    return Array.from(this.formFields.entries()).reduce((prev, cur) => {
-      prev[cur[0]] = cur[1].value.getValue();
-
-      return prev;
-    }, {} as IObjectWithIndex);
-  }
-
-  @autobind
-  public getFieldValue(field: string): any {
-    const formField = this.formFields.get(field);
-
-    return formField ? formField.value.getValue() : null;
-  }
-
-  @autobind
-  public getFormField(field: string): IFormField {
-    return this.formFields.get(field);
-  }
-
-  @autobind
-  public getFormFields(): IFormField[] {
-    return Array.from(this.formFields.values());
-  }
-
-  @autobind
-  public getOrCreateFormField(field: string): IFormField {
+  public getOrCreateFormField(field: FIELDS): IFormField<FIELDS> {
     if (!this.formFields.has(field)) {
-      const newFormField: IFormField = {
+      const newFormField: IFormField<FIELDS> = {
         error: new Observable<string | null | undefined>(),
+        name: field,
         rules: [],
         value: new Observable<any>(),
       };
@@ -182,83 +118,79 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
     return this.formFields.get(field);
   }
 
+
   @autobind
-  public isFieldsTouched(fields?: string[]): boolean {
-    // tslint:disable-next-line:triple-equals
-    if (fields == null) {
+  public getFormField(field: FIELDS): IFormField<FIELDS> {
+    return this.formFields.get(field);
+  }
+
+  @autobind
+  public getFormFields(fields?: FIELDS[]): Array<IFormField<FIELDS>> {
+    if(!fields) {
       // tslint:disable-next-line:no-parameter-reassignment
       fields = Array.from(this.formFields.keys());
     }
 
-    return fields.some(field => this.isFieldTouched(field));
+    return fields.map(field => this.formFields.get(field));
+  }
+  //</editor-fold>
+
+  //<editor-fold desc="Value">
+  @autobind
+  public getFieldValue(field: FIELDS): any {
+    return this.getFormField(field).value.getValue();
   }
 
   @autobind
-  public isFieldTouched(field: string): boolean {
-    // Stub. Is it really needed?
-    return true;
+  public getFieldsValue(fields?: FIELDS[]): IPartialObjectWithIndex<FIELDS> {
+    return this.getFormFields(fields).reduce((prev, cur) => {
+      prev[cur.name] = cur.value.getValue();
+
+      return prev;
+    }, {} as IPartialObjectWithIndex<FIELDS>);
   }
 
   @autobind
-  public async onSubmit(): Promise<void> {
-    this.setFieldValue(SUBMITTED_FIELD, true);
-
-    if (!this.hasErrors.getValue()) {
-      this.setState({saving: true});
-      const answer = await this.props.onSubmit(this.getFieldsValue());
-      if (answer) {
-        this.clearForm();
-      }
-      this.setState({saving: false});
-    }
-  }
-
-  public render(): React.ReactNode {
-    const {onSubmit, ...rest} = this.props;
-
-    return (
-      <BaseFormContext.Provider
-        value={{
-          baseForm: this,
-          customInputNodesTags: this.props.customInputNodesTags,
-          verticalLabel: !!this.props.verticalLabel,
-        }}
-      >
-        {this.props.children({
-          get: this.headerWrapperValuesGetter,
-          hasErrors: this.hasErrors,
-          isSaveInProgress: this.state.saving,
-          onClear: this.clearForm,
-          onSubmit: this.onSubmit
-        })}
-        <FormBodyWrapper>
-          <BaseCard
-            forceRenderTabs={true}
-            {...rest}
-          />
-        </FormBodyWrapper>
-      </BaseFormContext.Provider>
-    );
-  }
-
-  @autobind
-  public setFieldError(field: string, error: string): void {
-    this.formFields.get(field).error.setValue(error)
-  }
-
-  @autobind
-  public setFieldsValues(values: IObjectWithIndex): void {
-    Object.keys(values).forEach(key => this.setFieldValue(key, values[key]));
-  }
-
-  @autobind
-  public setFieldValue(field: string, value: any): void {
+  public setFieldValue(field: FIELDS, value: any): void {
     this.getOrCreateFormField(field).value.setValue(value);
   }
 
   @autobind
-  public async validateField(field: string): Promise<void> {
-    const formField = this.formFields.get(field);
+  public setFieldsValues(values: IPartialObjectWithIndex<FIELDS>): void {
+    (Object.keys(values) as FIELDS[]).forEach(key => this.setFieldValue(key, values[key]));
+  }
+  //</editor-fold>
+
+  //<editor-fold desc="Error">
+  @autobind
+  public getFieldError(field: FIELDS): string {
+    return this.getFormField(field).value.getValue();
+  }
+
+  @autobind
+  public getFieldsErrors(fields?: FIELDS[]): IPartialObjectWithIndex<FIELDS, string> {
+    return this.getFormFields(fields).reduce((prev, cur) => {
+      prev[cur.name] = cur.error.getValue();
+
+      return prev;
+    }, {} as IPartialObjectWithIndex<FIELDS, string>);
+  }
+
+  @autobind
+  public setFieldError(field: FIELDS, error: string): void {
+    this.getFormField(field).error.setValue(error)
+  }
+
+  @autobind
+  public setFieldsErrors(errors: IPartialObjectWithIndex<FIELDS, string>): void {
+    (Object.keys(errors) as FIELDS[]).forEach((key) => this.setFieldError(key, errors[key]));
+  }
+  //</editor-fold>
+
+  //<editor-fold desc="Validate">
+  @autobind
+  public async validateField(field: FIELDS): Promise<void> {
+    const formField = this.getFormField(field);
     const validator = new asyncValidator({
       [field]: formField.rules
     });
@@ -280,23 +212,19 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   public async validateFields(): Promise<void[]> {
     return Promise.all(Array.from(this.formFields.keys()).map(field => this.validateField(field)));
   }
-
-  // @autobind
-  // public addFieldValueObserver(field: string, cb: ObservableHandler<any>): ObservableHandlerStub {
-  //   return this.getOrCreateFormField(field).value.subscribe(cb);
-  // }
+  //</editor-fold>
 
   @autobind
   private __checkHasErrors(): void {
     const prevHasErrors = this.hasErrors.getValue();
-    const hasErrors = Object.keys(this.fieldErrors).some(key => !!this.fieldErrors[key]);
+    const hasErrors = (Object.keys(this.fieldErrors) as FIELDS[]).some(key => !!this.fieldErrors[key]);
     if(prevHasErrors !== hasErrors) {
       this.hasErrors.setValue(hasErrors);
     }
   }
 
   @autobind
-  private customFieldValuesGetter(fields: string[]): IObjectWithIndex {
+  private customFieldValuesGetter(fields: FIELDS[]): IPartialObjectWithIndex<FIELDS> {
     return fields.reduce((obj, field) => {
       if (this.subscribedCustomFieldValues.includes(field)) {
         obj[field] = this.customFieldValues[field];
@@ -314,7 +242,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
       }
 
       return obj;
-    }, {} as IObjectWithIndex);
+    }, {} as IPartialObjectWithIndex<FIELDS>);
   }
 
   @autobind
@@ -322,8 +250,8 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
     if (this.props.customFieldValues) {
       const oldValue = this.customFieldValues;
       const newValue = this.props.customFieldValues(this.customFieldValuesGetter);
-      const changedValue: IObjectWithIndex = {};
-      Object.keys(newValue).forEach(key => {
+      const changedValue: IPartialObjectWithIndex<FIELDS> = {};
+      (Object.keys(newValue) as FIELDS[]).forEach(key => {
         if (!isEqual(oldValue[key], newValue[key])) {
           changedValue[key] = newValue[key];
         }
@@ -335,31 +263,31 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   }
 
   @autobind
-  private headerWrapperValuesGetter(fields: string[]): IObjectWithIndex {
+  public externalValuesGetter(fields: FIELDS[]): IPartialObjectWithIndex<FIELDS> {
     return fields.reduce((obj, field) => {
-      if (this.subscribedHeaderFieldValues.includes(field)) {
-        obj[field] = this.headerFieldValues[field];
+      if (this.subscribedExternalFieldValues.includes(field)) {
+        obj[field] = this.externalFieldValues[field];
       } else {
         const formField = this.getOrCreateFormField(field);
         this.registerObservableHandler(formField.value.subscribe(newValue => {
-          this.headerFieldValues[field] = newValue;
+          this.externalFieldValues[field] = newValue;
           this.forceUpdate();
         }));
-        this.subscribedHeaderFieldValues.push(field);
+        this.subscribedExternalFieldValues.push(field);
         const value = formField.value.getValue();
-        this.headerFieldValues[field] = value;
+        this.externalFieldValues[field] = value;
 
         obj[field] = value;
       }
 
       return obj;
-    }, {} as IObjectWithIndex);
+    }, {} as IPartialObjectWithIndex<FIELDS>);
   }
 
   @autobind
-  private setFieldsValuesFromRaw(values: IObjectWithIndex): void {
-    const parsedValues = Object.keys(values).reduce((prev, curKey) => {
-      let fieldValue = values[curKey];
+  private setFieldsValuesFromRaw(values: IPartialObjectWithIndex<FIELDS, string>): void {
+    const parsedValues = (Object.keys(values) as FIELDS[]).reduce((prev, curKey) => {
+      let fieldValue: any = values[curKey];
 
       // Magic
       // tslint:disable-next-line:no-magic-numbers
@@ -374,7 +302,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
       prev[curKey] = fieldValue;
 
       return prev;
-    }, {} as IObjectWithIndex);
+    }, {} as IPartialObjectWithIndex<FIELDS>);
 
     this.setFieldsValues(parsedValues);
   }

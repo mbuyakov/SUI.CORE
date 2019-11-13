@@ -23,9 +23,11 @@ export async function sleep(ms: number): Promise<void> {
   });
 }
 
-export interface IObjectWithIndex {
-  [index: string]: any;
+export type IObjectWithIndex<INDEX extends string = string, VALUE = any> =  {
+  [index in INDEX]: VALUE;
 }
+
+export type IPartialObjectWithIndex<INDEX extends string = string, VALUE = any> = Partial<IObjectWithIndex<INDEX, VALUE>>;
 
 /**
  * Async map
