@@ -25,20 +25,26 @@ export class NumberIntervalColumnFilter
     return (
       <div
         style={{
+          alignItems: "center",
           display: "grid",
           gap: 4,
-          gridTemplateColumns: "max-content 1fr max-content 1fr"
+          gridTemplateColumns: "1fr max-content 1fr"
         }}
       >
-        <span>С</span>
         <InputNumber
+          placeholder="С"
+          style={{width: "100%"}}
           value={this.state.fromValue}
           onChange={this.handleChangeFn("fromValue")}
+          onPressEnter={this.triggerFilter}
         />
-        <span>По</span>
+        <span>~</span>
         <InputNumber
+          placeholder="По"
+          style={{width: "100%"}}
           value={this.state.toValue}
           onChange={this.handleChangeFn("toValue")}
+          onPressEnter={this.triggerFilter}
         />
       </div>
     );
@@ -46,7 +52,7 @@ export class NumberIntervalColumnFilter
 
   @autobind
   private handleChangeFn(property: keyof INumberIntervalColumnFilterState): (value: number) => void {
-    return value => this.setState({[property]: value}, this.triggerFilter);
+    return value => this.setState({[property]: value});
   }
 
   @autobind
