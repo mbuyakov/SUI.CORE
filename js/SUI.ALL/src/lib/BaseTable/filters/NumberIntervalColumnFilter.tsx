@@ -32,6 +32,7 @@ export class NumberIntervalColumnFilter
         }}
       >
         <InputNumber
+          max={this.state.toValue}
           placeholder="С"
           style={{width: "100%"}}
           value={this.state.fromValue}
@@ -40,6 +41,7 @@ export class NumberIntervalColumnFilter
         />
         <span>~</span>
         <InputNumber
+          min={this.state.fromValue}
           placeholder="По"
           style={{width: "100%"}}
           value={this.state.toValue}
@@ -57,6 +59,8 @@ export class NumberIntervalColumnFilter
 
   @autobind
   private triggerFilter(): void {
+    console.log("NumberIntervalColumnFilter triggerFilter call");
+
     this.props.onFilter({
       columnName: this.props.column.name,
       operation: "interval",
