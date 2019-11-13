@@ -13,12 +13,12 @@ export interface IBaseCardCollapseLayout<T> {
   title: string;
 }
 
-export type IBaseFormCollapseLayout<FIELDS extends string> = Omit<IBaseCardCollapseLayout<never>, 'rows'> & {
-  rows: OneOrArrayWithNulls<IBaseFormRowLayout<FIELDS>>
+export type IBaseFormCollapseLayout<T> = Omit<IBaseCardCollapseLayout<T>, 'rows'> & {
+  rows: OneOrArrayWithNulls<IBaseFormRowLayout<T>>
 }
 
 // tslint:disable-next-line:no-any
-export function renderIBaseCardCollapseLayout<T>(sourceItem: any, panel: IBaseCardCollapseLayout<T> | IBaseFormCollapseLayout<string>, index: number, fitCollapsePanel: boolean, rowsCount: number): JSX.Element {
+export function renderIBaseCardCollapseLayout<T>(sourceItem: any, panel: IBaseCardCollapseLayout<T> | IBaseFormCollapseLayout<T>, index: number, fitCollapsePanel: boolean, rowsCount: number): JSX.Element {
   const padding = defaultIfNotBoolean(panel.padding, true);
 
   return (
@@ -30,7 +30,7 @@ export function renderIBaseCardCollapseLayout<T>(sourceItem: any, panel: IBaseCa
       header={panel.title}
       className={padding ? "" : COLLAPSE_PANEL_NO_PADDING}
     >
-      {wrapInArrayWithoutNulls<IBaseCardRowLayout<T> | IBaseFormRowLayout<string>>(panel.rows).map((row, rowIndex, arr) => renderIBaseCardRowLayout(sourceItem, row, rowIndex, 'collapse', arr.length))}
+      {wrapInArrayWithoutNulls<IBaseCardRowLayout<T> | IBaseFormRowLayout<T>>(panel.rows).map((row, rowIndex, arr) => renderIBaseCardRowLayout(sourceItem, row, rowIndex, 'collapse', arr.length))}
     </Collapse.Panel>
   );
 }

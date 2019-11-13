@@ -10,7 +10,7 @@ import { BASE_CARD_ITEM, BASE_CARD_ROW, BASE_CARD_ROWS, BASE_FORM_ITEM } from '.
 import { OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '../typeWrappers';
 
 import { BaseCard } from './BaseCard';
-import { IBaseCardCollapseLayout, IBaseFormCollapseLayout, renderIBaseCardCollapseLayout } from './BaseCardCollapseLayout';
+import { IBaseCardCollapseLayout, renderIBaseCardCollapseLayout } from './BaseCardCollapseLayout';
 import { IBaseCardColLayout, IBaseFormColLayout } from './BaseCardColLayout';
 import { BaseCardContext } from './BaseCardContext';
 import { IBaseCardDescItemLayout, IBaseCardItemLayout, renderIBaseCardItem } from './BaseCardItemLayout';
@@ -39,11 +39,10 @@ export interface IBaseCardRowLayout<T> {
   tabsInCard?: boolean;
 }
 
-export type IBaseFormRowLayout<FIELDS extends string> = Omit<IBaseCardRowLayout<never>, 'cols' | 'collapsePanels' | 'descriptionItems' | 'tabs'> & {
-  collapsePanels?: Array<IBaseFormCollapseLayout<FIELDS>>;
-  cols?: OneOrArrayWithNulls<IBaseFormColLayout<FIELDS>>
-  descriptionItems?: OneOrArrayWithNulls<IBaseFormDescItemLayout<FIELDS>>
-  tabs?: OneOrArrayWithNulls<IBaseFormTabLayout<FIELDS>>
+export type IBaseFormRowLayout<T> = Omit<IBaseCardRowLayout<T>, 'cols' | 'descriptionItems' | 'tabs'> & {
+  cols?: OneOrArrayWithNulls<IBaseFormColLayout<T>>
+  descriptionItems?: OneOrArrayWithNulls<IBaseFormDescItemLayout>
+  tabs?: OneOrArrayWithNulls<IBaseFormTabLayout<T>>
 }
 
 export const DATA_KEY_REGEXP = /@([a-zA-z0-9\|]+)/g;
@@ -73,7 +72,7 @@ export function mapFilters(filters: string, sourceItem: any): string | null {
 // tslint:disable-next-line:ban-ts-ignore
 // @ts-ignore
 // tslint:disable-next-line:cyclomatic-complexity no-any
-export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLayout<T> | IBaseFormRowLayout<string>, rowIndex: number, parent: 'card' | 'collapse' | 'tab', rowsLength: number, firstChildrenIsTab: boolean = false): JSX.Element {
+export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLayout<T> | IBaseFormRowLayout<T>, rowIndex: number, parent: 'card' | 'collapse' | 'tab', rowsLength: number, firstChildrenIsTab: boolean = false): JSX.Element {
   if (row.isDivider) {
     return (
       <Divider
@@ -100,7 +99,7 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
           <BaseCardContext.Consumer>
             {({ forceRenderTabs }): JSX.Element => (
               <ManagedTabs defaultActiveKey="0">
-                {wrapInArrayWithoutNulls(row.tabs as OneOrArrayWithNulls<IBaseCardTabLayout<T> | IBaseFormTabLayout<string>>).map((tab, index) => renderIBaseCardTabLayout(sourceItem, tab, index, forceRenderTabs))}
+                {wrapInArrayWithoutNulls(row.tabs as OneOrArrayWithNulls<IBaseCardTabLayout<T> | IBaseFormTabLayout<T>>).map((tab, index) => renderIBaseCardTabLayout(sourceItem, tab, index, forceRenderTabs))}
               </ManagedTabs>
             )}
           </BaseCardContext.Consumer>
@@ -145,9 +144,9 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
           // tslint:disable-next-line:no-magic-numbers
           marginTop: row.fitCollapsePanel && rowIndex === 0 ? (-24) : undefined,
         }}
-        defaultActiveKey={(row.collapsePanels as Array<IBaseCardCollapseLayout<T>>).filter(panel => panel.defaultOpened).map((_, index) => index.toString())}
+        defaultActiveKey={row.collapsePanels.filter(panel => panel.defaultOpened).map((_, index) => index.toString())}
       >
-        {(row.collapsePanels as Array<IBaseCardCollapseLayout<T> | IBaseFormCollapseLayout<string>>).map((panel, index) => renderIBaseCardCollapseLayout(sourceItem, panel, index, row.fitCollapsePanel || false, rowsLength))}
+        {row.collapsePanels.map((panel, index) => renderIBaseCardCollapseLayout(sourceItem, panel, index, row.fitCollapsePanel || false, rowsLength))}
       </Collapse>
     );
   }
@@ -160,7 +159,7 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
     // );
     const rows: JSX.Element[] = [];
 
-    const cols = wrapInArrayWithoutNulls<IBaseCardColLayout<T> | IBaseFormColLayout<string>>(row.cols);
+    const cols = wrapInArrayWithoutNulls<IBaseCardColLayout<T> | IBaseFormColLayout<T>>(row.cols);
     // tslint:disable-next-line:no-any
     const maxRows = Math.max(...cols.map(col => wrapInArrayWithoutNulls<any>(col.items).length));
 
@@ -170,11 +169,11 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
       // tslint:disable-next-line:prefer-for-of
       for (let colIndex = 0; colIndex < cols.length; colIndex++) {
         const col = cols[colIndex];
-        const item = wrapInArrayWithoutNulls<IBaseCardItemLayout<T> | IBaseFormItemLayout<string>>(col.items)[curRowIndex];
+        const item = wrapInArrayWithoutNulls<IBaseCardItemLayout<T> | IBaseFormItemLayout>(col.items)[curRowIndex];
         // console.log(cols, item);
         itemsInRow.push(
-          <div className={(item && (item as IBaseFormItemLayout<string>).fieldName) ? BASE_FORM_ITEM : BASE_CARD_ITEM}>
-            {item && ((item as IBaseFormItemLayout<string>).fieldName ? renderIBaseFormItemLayout(item as IBaseFormItemLayout<string>) : renderIBaseCardItem(sourceItem, item))}
+          <div className={(item && (item as IBaseFormItemLayout).fieldName) ? BASE_FORM_ITEM : BASE_CARD_ITEM}>
+            {item && ((item as IBaseFormItemLayout).fieldName ? renderIBaseFormItemLayout(item as IBaseFormItemLayout) : renderIBaseCardItem(sourceItem, item))}
           </div>,
         );
       }
@@ -199,7 +198,7 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
       <Descriptions
         size="small"
       >
-        {wrapInArrayWithoutNulls<IBaseCardItemLayout<T> | IBaseFormItemLayout<string>>(row.descriptionItems).map(descItem => (descItem as IBaseFormItemLayout<string>).fieldName ? renderIBaseFormItemLayout(descItem as IBaseFormItemLayout<string>) : renderIBaseCardItem(sourceItem, descItem as IBaseCardItemLayout<T>))}
+        {wrapInArrayWithoutNulls<IBaseCardItemLayout<T> | IBaseFormItemLayout>(row.descriptionItems).map(descItem => (descItem as IBaseFormItemLayout).fieldName ? renderIBaseFormItemLayout(descItem as IBaseFormItemLayout) : renderIBaseCardItem(sourceItem, descItem as IBaseCardItemLayout<T>))}
       </Descriptions>
     );
   }

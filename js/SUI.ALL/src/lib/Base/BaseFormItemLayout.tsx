@@ -6,12 +6,12 @@ import autobind from 'autobind-decorator';
 import classNames from 'classnames';
 import * as React from 'react';
 
-import { IObjectWithIndex, IPartialObjectWithIndex } from '../other';
+import { IObjectWithIndex } from '../other';
 import { BASE_CARD_ITEM_LABEL_HORIZONTAL, BASE_FORM_ITEM_VERTICAL } from '../styles';
-import { SUIMaskedInput } from '../SUIMaskedInput';
 import { SUIReactComponent } from '../SUIReactComponent';
 
-import { BaseForm, IFormField, ValuesGetter } from './BaseForm';
+import { SUIMaskedInput } from './../SUIMaskedInput';
+import { BaseForm, IFormField, SUBMITTED_FIELD, ValuesGetter } from './BaseForm';
 import { BaseFormContext } from './BaseFormContext';
 
 const FILL_FIELD_TEXT = 'Заполните поле';
@@ -20,7 +20,7 @@ export type FixedRuleItem = Omit<RuleItem, 'pattern'> & {
   pattern?: string | RegExp
 }
 
-export interface IBaseFormItemLayoutBase<FIELDS extends string> {
+export interface IBaseFormItemLayoutBase {
   fieldName: string;
   initialValue?: any;
   inputNode?: JSX.Element; // Required. Mark as non-required because IBaseFormItemLayoutMask
@@ -31,44 +31,44 @@ export interface IBaseFormItemLayoutBase<FIELDS extends string> {
 
   getValueFromEvent?(...args: any[]): any;
 
-  mapFormValuesToInputNodeProps?(get: ValuesGetter<FIELDS>): IObjectWithIndex;
+  mapFormValuesToInputNodeProps?(get: ValuesGetter): IObjectWithIndex;
 
-  mapFormValuesToRequired?(get: ValuesGetter<FIELDS>): boolean;
+  mapFormValuesToRequired?(get: ValuesGetter): boolean;
 }
 
-export type IBaseFormItemLayoutMask<FIELDS extends string> = Omit<IBaseFormItemLayoutBase<FIELDS>, 'inputNode' | 'rules' | 'valuePropName' | 'getValueFromEvent'> & {
+export type IBaseFormItemLayoutMask = Omit<IBaseFormItemLayoutBase, 'inputNode' | 'rules' | 'valuePropName' | 'getValueFromEvent'> & {
   mask: string
   totalValueLength: number // Костыль
 }
 
-export type IBaseFormItemLayout<FIELDS extends string> = IBaseFormItemLayoutBase<FIELDS> | IBaseFormItemLayoutMask<FIELDS>;
+export type IBaseFormItemLayout = IBaseFormItemLayoutBase | IBaseFormItemLayoutMask;
 
-export type IBaseFormDescItemLayout<FIELDS extends string> = IBaseFormItemLayout<FIELDS>;
+export type IBaseFormDescItemLayout = IBaseFormItemLayout;
 
-export function renderIBaseFormItemLayout<FIELDS extends string>(item: IBaseFormItemLayout<FIELDS>): JSX.Element {
+export function renderIBaseFormItemLayout<T>(item: IBaseFormItemLayout): JSX.Element {
   return (<BaseFormItem {...mapMaskToBase(item)}/>);
 }
 
-export function mapMaskToBase<FIELDS extends string>(item: IBaseFormItemLayout<FIELDS>): IBaseFormItemLayoutBase<FIELDS> {
-  if ((item as IBaseFormItemLayoutMask<FIELDS>).mask) {
-    if (!(item as IBaseFormItemLayoutBase<FIELDS>).rules) {
-      (item as IBaseFormItemLayoutBase<FIELDS>).rules = [];
+export function mapMaskToBase(item: IBaseFormItemLayout): IBaseFormItemLayoutBase {
+  if ((item as IBaseFormItemLayoutMask).mask) {
+    if (!(item as IBaseFormItemLayoutBase).rules) {
+      (item as IBaseFormItemLayoutBase).rules = [];
     }
-    (item as IBaseFormItemLayoutBase<FIELDS>).rules.push({
-      len: (item as IBaseFormItemLayoutMask<FIELDS>).totalValueLength,
-      message: `Заполните поле по маске ${(item as IBaseFormItemLayoutMask<FIELDS>).mask}`,
+    (item as IBaseFormItemLayoutBase).rules.push({
+      len: (item as IBaseFormItemLayoutMask).totalValueLength,
+      message: `Заполните поле по маске ${(item as IBaseFormItemLayoutMask).mask}`,
     });
-    (item as IBaseFormItemLayoutBase<FIELDS>).inputNode = (<SUIMaskedInput mask={(item as IBaseFormItemLayoutMask<FIELDS>).mask}/>);
+    (item as IBaseFormItemLayoutBase).inputNode = (<SUIMaskedInput mask={(item as IBaseFormItemLayoutMask).mask}/>);
   }
 
-  if (!(item as IBaseFormItemLayoutMask<FIELDS>).mask && !(item as IBaseFormItemLayoutBase<FIELDS>).inputNode) {
+  if (!(item as IBaseFormItemLayoutMask).mask && !(item as IBaseFormItemLayoutBase).inputNode) {
     throw new Error('inputNode required');
   }
 
-  return item as IBaseFormItemLayoutBase<FIELDS>;
+  return item as IBaseFormItemLayoutBase;
 }
 
-export class BaseFormItem<FIELDS extends string> extends SUIReactComponent<IBaseFormItemLayoutBase<FIELDS>, {
+export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
   error?: any
   subscribedFormFieldValues: IObjectWithIndex
   value?: any
@@ -78,7 +78,7 @@ export class BaseFormItem<FIELDS extends string> extends SUIReactComponent<IBase
   private formField?: IFormField;
   private readonly subscribedFields: string[] = [];
 
-  public constructor(props: IBaseFormItemLayoutBase<FIELDS>) {
+  public constructor(props: IBaseFormItemLayoutBase) {
     super(props);
     this.state = {
       subscribedFormFieldValues: {},
@@ -117,20 +117,21 @@ export class BaseFormItem<FIELDS extends string> extends SUIReactComponent<IBase
             this.formField.rules = item.rules;
           }
 
-          // noinspection PointlessBooleanExpressionJS
           const title = item.title && (
             <span className={classNames({ [BASE_CARD_ITEM_LABEL_HORIZONTAL]: !verticalLabel, 'ant-form-item-required': !!required })}>
              {item.title}:
             </span>
           );
 
+          const isSubmitted = baseForm.getFieldValue(SUBMITTED_FIELD);
           // tslint:disable-next-line:triple-equals
           const fieldHasValue = baseForm.getFieldValue(item.fieldName) != null;
+          const isTouched = fieldHasValue || baseForm.isFieldTouched(item.fieldName);
           const errors = this.state.error;
 
           const formItemProps: FormItemProps = {
-            help: (fieldHasValue) ? errors : (required ? FILL_FIELD_TEXT : ''),
-            validateStatus: (fieldHasValue ? errors : required) ? 'error' : '',
+            help: (isTouched) ? errors : ((isSubmitted && required) ? FILL_FIELD_TEXT : ''),
+            validateStatus: (isTouched ? errors : (isSubmitted && required)) ? 'error' : '',
           };
 
           let additionalProps: IObjectWithIndex = {};
@@ -186,7 +187,7 @@ export class BaseFormItem<FIELDS extends string> extends SUIReactComponent<IBase
   }
 
   @autobind
-  private valueGetter(fields: FIELDS[]): IPartialObjectWithIndex<FIELDS> {
+  private valueGetter(fields: string[]): IObjectWithIndex {
     return fields.reduce((obj, field) => {
       if (this.subscribedFields.includes(field)) {
         obj[field] = this.state.subscribedFormFieldValues[field];
@@ -203,7 +204,7 @@ export class BaseFormItem<FIELDS extends string> extends SUIReactComponent<IBase
       }
 
       return obj;
-    }, {} as IPartialObjectWithIndex<FIELDS>);
+    }, {} as IObjectWithIndex);
   }
 }
 
