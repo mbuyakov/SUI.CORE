@@ -53,7 +53,7 @@ import { translate } from '../translate';
 import { defaultIfNotBoolean } from '../typeWrappers';
 
 import { EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, WarningPlugin } from './extends';
-import { BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, StringColumnFilter } from './filters';
+import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter} from './filters';
 import { defaultSelection, ISelectionTable } from './ISelectionTable';
 import {
   IBaseTableColLayout,
@@ -508,6 +508,8 @@ export class BaseTable<TSelection = defaultSelection>
         return (<DateColumnFilter {...searchProps} />);
       case "boolean":
         return (<BooleanColumnFilter {...searchProps} />);
+      case "number":
+        return (<NumberIntervalColumnFilter {...searchProps} />);
       case "none":
         return null;
       default:
@@ -569,6 +571,7 @@ export class BaseTable<TSelection = defaultSelection>
     return (
       <ToolbarRoot {...props} style={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? {} : {display: 'none'}}>
         {(this.props.warnings && this.props.warnings.length ? [<WarningPlugin messages={this.props.warnings} key={-1}/>] : []).concat([props.children])}
-      </ToolbarRoot>);
+      </ToolbarRoot>
+    );
   }
 }
