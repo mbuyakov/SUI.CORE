@@ -7,6 +7,6 @@ export interface IBaseCardColLayout<T> {
   items: OneOrArrayWithNulls<IBaseCardItemLayout<T>>;
 }
 
-export type IBaseFormColLayout<T> = Omit<IBaseCardColLayout<T>, 'items'> & {
-  items: OneOrArrayWithNulls<IBaseFormItemLayout>
+export type IBaseFormColLayout<FIELDS extends string> = Omit<IBaseCardColLayout<never>, 'items'> & {
+  items: OneOrArrayWithNulls<IBaseFormItemLayout<FIELDS>>
 }

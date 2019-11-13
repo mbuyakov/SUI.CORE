@@ -13,15 +13,15 @@ export interface IBaseCardTabLayout<T> {
   title: string;
 }
 
-export type IBaseFormTabLayout<T> = Omit<IBaseCardTabLayout<T>, 'rows'> & {
-  rows: OneOrArrayWithNulls<IBaseFormRowLayout<T>>
+export type IBaseFormTabLayout<FIELDS extends string> = Omit<IBaseCardTabLayout<never>, 'rows'> & {
+  rows: OneOrArrayWithNulls<IBaseFormRowLayout<FIELDS>>
 }
 
 // tslint:disable-next-line:no-any
-export function renderIBaseCardTabLayout<T>(sourceItem: any, tab: IBaseCardTabLayout<T> | IBaseFormTabLayout<T>, tabIndex: number, forceRenderTabs: boolean): JSX.Element {
+export function renderIBaseCardTabLayout<T>(sourceItem: any, tab: IBaseCardTabLayout<T> | IBaseFormTabLayout<string>, tabIndex: number, forceRenderTabs: boolean): JSX.Element {
   return (
     <Tabs.TabPane key={tabIndex.toString()} tab={<span>{tab.icon && <Icon type={tab.icon}/>}{tab.title}</span>} forceRender={forceRenderTabs}>
-      {wrapInArrayWithoutNulls(tab.rows as OneOrArrayWithNulls<IBaseCardRowLayout<T> | IBaseFormRowLayout<T>>).map((row, index, arr) => renderIBaseCardRowLayout(sourceItem, row, index, 'tab', arr.length))}
+      {wrapInArrayWithoutNulls(tab.rows as OneOrArrayWithNulls<IBaseCardRowLayout<T> | IBaseFormRowLayout<string>>).map((row, index, arr) => renderIBaseCardRowLayout(sourceItem, row, index, 'tab', arr.length))}
     </Tabs.TabPane>
   );
 }
