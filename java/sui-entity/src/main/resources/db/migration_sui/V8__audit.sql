@@ -1,3 +1,70 @@
+CREATE SCHEMA sui_utils;
+
+CREATE FUNCTION sui_utils.json_difference(
+    first_json JSON,
+    second_json JSON,
+    first_result_key TEXT DEFAULT 'first'::TEXT,
+    second_result_key TEXT DEFAULT 'second'::TEXT
+)
+    RETURNS JSON
+    LANGUAGE plpgsql
+AS
+$$
+    DECLARE
+        first_result  JSON;
+        second_result JSON;
+    BEGIN
+        WITH json_difference AS (
+            SELECT first.key    AS first_key,
+                   first.value  AS first_value,
+                   second.key   AS second_key,
+                   second.value AS second_value
+            FROM json_each(first_json) first
+                     FULL JOIN json_each(second_json) second
+                               ON first.key = second.key
+            WHERE first.key IS NULL
+               OR second.key IS NULL
+               OR (first.value::TEXT != second.value::TEXT)
+        )
+
+        SELECT first.result, second.result
+        FROM (
+            SELECT json_object_agg(first_key, first_value) AS result
+            FROM json_difference
+            WHERE first_key IS NOT NULL
+        ) first, (
+            SELECT json_object_agg(second_key, second_value) AS result
+            FROM json_difference
+            WHERE second_key IS NOT NULL
+        ) second
+        INTO first_result, second_result;
+
+        RETURN json_build_object(
+                first_result_key,
+                first_result,
+                second_result_key,
+                second_result
+        );
+    END;
+$$;
+
+CREATE FUNCTION sui_utils.get_schema_name_from_oid(param_oid bigint)
+    RETURNS text
+    LANGUAGE plpgsql
+AS
+$$
+    DECLARE
+        schema_name TEXT;
+    BEGIN
+        SELECT relnamespace::regnamespace::TEXT
+        FROM pg_catalog.pg_class
+        WHERE oid = param_oid
+        INTO schema_name;
+
+        RETURN schema_name;
+    END;
+$$;
+
 CREATE SCHEMA log;
 
 CREATE TABLE log.audit_log
@@ -39,7 +106,7 @@ $$
             RAISE EXCEPTION 'Не удалось идентифицировать таблицу с table_info_id = %', table_info_id;
         END IF;
 
-        IF utils.get_schema_name_from_oid(table_oid) = 'log' THEN
+        IF sui_utils.get_schema_name_from_oid(table_oid) = 'log' THEN
             RAISE EXCEPTION 'Невозможно вести аудит данной таблицы';
         END IF;
 
@@ -73,7 +140,7 @@ $$
             RAISE EXCEPTION 'Не удалось идентифицировать таблицу с table_info_id = %', table_info_id;
         END IF;
 
-        IF utils.get_schema_name_from_oid(table_oid) = 'sui_meta' THEN
+        IF sui_utils.get_schema_name_from_oid(table_oid) = 'sui_meta' THEN
             RAISE EXCEPTION 'Аудит метасхемы отключить нельзя';
         END IF;
 
@@ -133,7 +200,7 @@ $$
             EXECUTE query USING TG_OP, OLD, row_to_json(OLD);
             RETURN OLD;
         ELSIF (TG_OP = 'UPDATE') THEN
-            update_difference := utils.json_difference(row_to_json(OLD), row_to_json(NEW), 'old', 'new');
+            update_difference := sui_utils.json_difference(row_to_json(OLD), row_to_json(NEW), 'old', 'new');
             IF (update_difference->>'old' IS NOT NULL OR update_difference->>'new' IS NOT NULL) THEN
                 EXECUTE query
                     USING TG_OP, OLD, update_difference;
