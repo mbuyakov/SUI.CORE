@@ -1,6 +1,6 @@
 /* tslint:disable:no-any */
 import {TableFilterRow} from "@devexpress/dx-react-grid";
-import {InputNumber} from "antd";
+import InputNumber from 'antd/lib/input-number';
 import autobind from "autobind-decorator";
 import * as React from 'react';
 
@@ -18,7 +18,12 @@ export class NumberIntervalColumnFilter
 
   public constructor(props: INumberIntervalColumnFilterProps) {
     super(props);
-    this.state = {};
+    const filterValue = (props.filter && (props.filter.value as unknown as number[]) || []);
+
+    this.state = {
+      fromValue: filterValue[0],
+      toValue: filterValue[1]
+    };
   }
 
   public render(): JSX.Element {
@@ -32,43 +37,63 @@ export class NumberIntervalColumnFilter
         }}
       >
         <InputNumber
-          max={this.state.toValue}
           placeholder="С"
           style={{width: "100%"}}
           value={this.state.fromValue}
           onChange={this.handleChangeFn("fromValue")}
-          onPressEnter={this.triggerFilter}
+          onKeyUp={this.enterTriggerFilter}
         />
         <span>~</span>
         <InputNumber
-          min={this.state.fromValue}
           placeholder="По"
           style={{width: "100%"}}
           value={this.state.toValue}
           onChange={this.handleChangeFn("toValue")}
-          onPressEnter={this.triggerFilter}
+          onKeyUp={this.enterTriggerFilter}
         />
       </div>
     );
   }
 
   @autobind
-  private handleChangeFn(property: keyof INumberIntervalColumnFilterState): (value: number) => void {
-    return value => this.setState({[property]: value});
+  private enterTriggerFilter(event: React.KeyboardEvent<HTMLInputElement>): void {
+    if (event.key === 'Enter') {
+      this.props.onFilter({
+        columnName: this.props.column.name,
+        operation: "interval",
+        value: [
+          this.state.fromValue || null,
+          this.state.toValue || null
+        ] as any
+      });
+    }
   }
 
   @autobind
-  private triggerFilter(): void {
-    console.log("NumberIntervalColumnFilter triggerFilter call");
+  private handleChangeFn(property: keyof INumberIntervalColumnFilterState): (value: number | string | null) => void {
+    return (value): void => {
+      let numberValue = null;
+      console.log(property, value);
 
-    this.props.onFilter({
-      columnName: this.props.column.name,
-      operation: "interval",
-      value: [
-        this.state.fromValue || null,
-        this.state.toValue || null
-      ] as any
-    });
+      // tslint:disable-next-line:switch-default
+      switch (typeof(value)) {
+        case "number":
+          numberValue = value;
+          break;
+        case "string":
+          let stringValue = value;
+
+          while (stringValue.length && Number.isNaN(Number(stringValue))) {
+            stringValue = stringValue.substr(0, stringValue.length - 1);
+          }
+
+          if (stringValue.length) {
+            numberValue = Number(stringValue);
+          }
+      }
+
+      this.setState({[property]: typeof(value) === "number" ? value : null})
+    };
   }
 
 }
