@@ -510,10 +510,13 @@ export class BackendTable<TSelection = defaultSelection>
   private onSortingChange(sorting: Sorting[]): void {
     const newState = {sorting};
     const prevSorting = this.state.sorting || [];
-    const shouldNotUpdate = (sorting.length > prevSorting.length) && sorting.every(sort => {
-      const prevSort = prevSorting.find(prev => prev.columnName === sort.columnName);
-      return !prevSort || !xor(prevSort.direction === 'desc', sort.direction === 'desc');
-    });
+
+    let shouldNotUpdate = false;
+
+    if (sorting.length > prevSorting.length) {
+      const newSorting = sorting.filter(sort => !prevSorting.find(prevSort => prevSort.columnName === sort.columnName));
+      shouldNotUpdate = newSorting.every(sort => (this.state.grouping || []).find(grouping => grouping.columnName === sort.columnName))
+    }
 
     if (shouldNotUpdate) {
       this.setState(newState);
