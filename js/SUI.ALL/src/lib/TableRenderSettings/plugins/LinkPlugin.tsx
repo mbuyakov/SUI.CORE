@@ -51,18 +51,14 @@ export class LinkPlugin extends TableRenderParamsPlugin<{}> {
 
   // tslint:disable-next-line:prefer-function-over-method variable-name
   public extraActivationKostyl(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): boolean {
-    const isLinkCol = props.columnInfo.id === props.tableInfo.linkColumnInfoId;
-    if (isLinkCol && tableRenderParams && (!tableRenderParams.renderType || tableRenderParams.renderType === 'link' || tableRenderParams.renderType === 'raw')) {
+    const isLinkCol = props.isLinkCol;
+    const renderType = getDataByKey<string>(tableRenderParams, "renderType");
+
+    if (isLinkCol && (!renderType || renderType === 'link' || renderType === 'raw')) {
       return true;
     }
 
-    if (tableRenderParams && tableRenderParams.renderType && tableRenderParams.renderType !== 'link') {
-      return false;
-    }
-
-    return getDataByKey(props.columnInfo, "foreignColumnInfo", "length")
-      ? tableRenderParams.renderType === 'link'
-      : props.columnInfo.id === props.tableInfo.linkColumnInfoId;
+    return renderType === 'link' && getDataByKey(props.columnInfo, "foreignColumnInfo", "length");
   }
 }
 
