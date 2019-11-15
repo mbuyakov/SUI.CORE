@@ -1,47 +1,39 @@
-import {CompatClient, Stomp, StompHeaders} from "@stomp/stompjs";
+import {Client, IPublishParams, StompConfig} from "@stomp/stompjs";
 import autobind from "autobind-decorator";
 
 import { sleep } from './other';
 
 const CONNECTED_AWAIT_TIMEOUT = 100;
 
-interface ISocket {
-  uri: string;
-
-  // tslint:disable-next-line:no-any
-  connect(client: CompatClient): any[];
-}
-
 export class Socket {
 
-  private readonly props: ISocket;
-  private stompClient: CompatClient | undefined;
+  private readonly config: StompConfig;
+  private stompClient: Client;
 
-  public constructor(props: ISocket) {
-    this.props = props;
+  public constructor(config: StompConfig) {
+    this.config = config;
     this.init();
   }
 
   @autobind
   // tslint:disable-next-line:no-any
-  public disconnect(callback?: any, headers?: StompHeaders): void {
+  public disconnect(): void {
     const client = this.stompClient;
     if (client) {
       this.stompClient = undefined;
-      client.disconnect(callback, headers);
+      client.deactivate();
     }
   }
 
   @autobind
-  public getClient(): CompatClient | undefined {
+  public getClient(): Client | undefined {
     return this.stompClient;
   }
 
   @autobind
   public init(): void {
-    const stompClient = Stomp.client(this.props.uri);
-    stompClient.connect(...this.props.connect(stompClient));
-    this.stompClient = stompClient;
+    const stompClient = new Client(this.config);
+    stompClient.activate();
   }
 
   @autobind
@@ -51,13 +43,13 @@ export class Socket {
 
   @autobind
   // tslint:disable-next-line:no-any
-  public async send(destination: string, headers?: { [name: string]: any }, body?: string): Promise<void> {
+  public async send(params: IPublishParams): Promise<void> {
     if (this.stompClient) {
       while (!this.isConnected()) {
         await sleep(CONNECTED_AWAIT_TIMEOUT);
       }
 
-      this.stompClient.send(destination, headers, body);
+      this.stompClient.publish(params);
     }
   }
 

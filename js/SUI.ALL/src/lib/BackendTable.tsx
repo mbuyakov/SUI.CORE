@@ -6,7 +6,7 @@ import difference from 'lodash/difference';
 import * as React from 'react';
 import uuid from 'uuid';
 
-import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getBackendUrl, getDataByKey, getFilterType, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, RawModePlugin, RefreshMetaTablePlugin, Socket, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray, xor} from './index';
+import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getBackendUrl, getDataByKey, getFilterType, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, RefreshMetaTablePlugin, Socket, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from './index';
 
 const SUBSCRIBE_DESTINATION_PREFIX = '/user/queue/response/';
 const SEND_DESTINATION = '/data';
@@ -16,6 +16,8 @@ const DX_REACT_GROUP_SEPARATOR = '|';
 const CHILDREN_KEY = '__children';
 const RECORDS_KEY = '__records';
 const SUBTOTALS_KEY = '__subtotals';
+
+const RECONNECT_DELAY = 50;
 
 type RequestMessageType =
   'INIT'
@@ -108,18 +110,17 @@ export class BackendTable<TSelection = defaultSelection>
 
   private additionalStateMap: Map<string, IBackendTableState<TSelection>> = new Map<string, IBackendTableState<TSelection>>();
   private baseTableRef: React.RefObject<BaseTable<TSelection>> = React.createRef<BaseTable<TSelection>>();
-
+  private initialSessionId: string;
   private socket: Socket;
 
   public constructor(props: any) {
     super(props);
-
     const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
 
     this.state = {
       lastSendSelection: [],
-      // tslint:disable-next-line:no-magic-numbers
       paginationEnabled,
+      // tslint:disable-next-line:no-magic-numbers
       pageSize: paginationEnabled ? undefined : 1000000000
     };
   }
@@ -140,7 +141,7 @@ export class BackendTable<TSelection = defaultSelection>
     if (this.props.watchFilters) {
       // tslint:disable-next-line:ban-ts-ignore
       // @ts-ignore
-      const isEquals = (first, second) => JSON.stringify(first) === JSON.stringify(second);
+      const isEquals = (first, second): boolean => JSON.stringify(first) === JSON.stringify(second);
 
       if (!isEquals(this.props.defaultFilters, prevProps.defaultFilters) || !isEquals(this.props.filter, prevProps.filter)) {
         return this.reinit();
@@ -151,7 +152,7 @@ export class BackendTable<TSelection = defaultSelection>
   public componentWillUnmount(): void {
     this.setInnerRefValue(undefined);
     if (this.socket) {
-      this.socket.disconnect(() => console.log('WS connection was closed'));
+      this.socket.disconnect();
     }
   }
 
@@ -170,7 +171,7 @@ export class BackendTable<TSelection = defaultSelection>
   @autobind
   public refresh(): Promise<void> {
     // nothing changing message
-    return new Promise<void>(resolve => {
+    return new Promise<void>((resolve): void => {
       this.onPageSizeChange(this.state.pageSize);
       resolve();
     });
@@ -278,15 +279,30 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private createWebSocket(): void {
+    const backendURL = new URL(getBackendUrl());
+
     this.socket = new Socket({
-      uri: getBackendUrl(),
-      connect: client => [
-        {'Authorization': `Bearer ${getUser().accessToken}`},
-        (frame: IFrame): void => {
-          client.subscribe(`${SUBSCRIBE_DESTINATION_PREFIX}${frame.body}`, this.onMessage);
+      brokerURL: backendURL.toString(),
+      reconnectDelay: RECONNECT_DELAY,
+      connectHeaders: {Authorization: `Bearer ${getUser().accessToken}`},
+      onConnect: (frame: IFrame): void => {
+        const alreadyInitiated = !!this.initialSessionId;
+        const client = this.socket.getClient();
+
+        if (!alreadyInitiated) {
+          this.initialSessionId = frame.body;
+        }
+
+        client.subscribe(`${SUBSCRIBE_DESTINATION_PREFIX}${this.initialSessionId}`, this.onMessage);
+
+        if (!alreadyInitiated) {
           this.onOpen();
-        },
-      ],
+
+          // Add new parameter to connection URL for reconnection
+          backendURL.searchParams.set("initialSessionId", this.initialSessionId);
+          client.brokerURL = backendURL.toString();
+        }
+      }
     });
   }
 
@@ -309,7 +325,7 @@ export class BackendTable<TSelection = defaultSelection>
     const stylers = [this.state.colorSettingsRowStyler, this.props.rowStyler].filter(Boolean);
 
     if (stylers.length) {
-      return row => stylers.reduce((result, styler) => ({...result, ...styler(row)}), {});
+      return (row): React.CSSProperties => stylers.reduce((result, styler) => ({...result, ...styler(row)}), {});
     }
 
     return undefined;
@@ -619,11 +635,11 @@ export class BackendTable<TSelection = defaultSelection>
         }
       }
 
-      await this.socket.send(
-        SEND_DESTINATION,
-        {[messageIdKey]: messageId},
-        JSON.stringify(messageContent),
-      );
+      await this.socket.send({
+        destination: SEND_DESTINATION,
+        headers: {[messageIdKey]: messageId},
+        body: JSON.stringify(messageContent)
+      });
     }
 
     this.setState({loading: true, ...newState, ...(selection ? {lastSendSelection: selection} : null)});
@@ -708,7 +724,7 @@ export class BackendTable<TSelection = defaultSelection>
                 });
 
             if (firstColumnInfoSetting.baseTableColLayout && (setting.constant || secondColumnInfoSetting.baseTableColLayout)) {
-              return (row: any) => checkCondition(
+              return (row: any): boolean => checkCondition(
                 setting.action,
                 setting.constant ? getFilterType(firstColumnInfoSetting.column, setting.action) : null,
                 getRowValue(row, firstColumnInfoSetting.baseTableColLayout),
@@ -716,7 +732,7 @@ export class BackendTable<TSelection = defaultSelection>
               );
             }
 
-            return () => false;
+            return (): boolean => false;
           }));
 
           colorSettingsRowStyler = (row: any): React.CSSProperties => {
