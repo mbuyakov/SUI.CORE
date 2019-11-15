@@ -15,6 +15,7 @@ import org.springframework.web.socket.handler.WebSocketHandlerDecorator;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 import static ru.smsoft.sui.suibackend.utils.Constants.*;
 
@@ -46,8 +47,13 @@ public class ReconnectionWebSocketHandlerDecorator extends WebSocketHandlerDecor
                 .ifPresent(prevSession -> {
                     val previousSessionAttributes = prevSession.getAttributes();
 
-                    currentSessionAttributes.put(USER_STATE_KEY, previousSessionAttributes.get(USER_STATE_KEY));
-                    currentSessionAttributes.put(INIT_SESSION_ID_KEY, previousSessionAttributes.get(INIT_SESSION_ID_KEY));
+                    Stream.of(USER_STATE_KEY, INIT_SESSION_ID_KEY).forEach(key -> {
+                        val value = previousSessionAttributes.get(key);
+
+                        if (value != null) {
+                            currentSessionAttributes.put(key, value);
+                        }
+                    });
                 });
 
         if (currentSessionAttributes.get(INIT_SESSION_ID_KEY) == null) {
