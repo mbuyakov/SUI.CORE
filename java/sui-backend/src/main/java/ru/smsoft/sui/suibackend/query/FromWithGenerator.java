@@ -13,6 +13,7 @@ import ru.smsoft.sui.suibackend.message.model.filtering.Filtering;
 import ru.smsoft.sui.suibackend.model.query.Column;
 import ru.smsoft.sui.suibackend.model.query.FromGraph;
 import ru.smsoft.sui.suibackend.model.query.OrderNullBehavior;
+import ru.smsoft.sui.suibackend.model.query.Table;
 import ru.smsoft.sui.suibackend.utils.QueryUtils;
 import ru.smsoft.sui.suientity.entity.suimeta.ColumnInfo;
 import ru.smsoft.sui.suisecurity.utils.MetaSchemaUtils;
@@ -83,13 +84,17 @@ public class FromWithGenerator {
                             .toBuilder()
                             .columnName((column.getRenderColumn() != null)
                                 ? column.getRenderColumn().getName()
-                                : sorting.getColumnName())
+                                // TODO: Костыль (сортировка часть 1)
+                                : MetaSchemaUtils.getFullColumnInfoName(column.getColumnInfo()))
                             .build();
                 })
                 .collect(Collectors.toCollection(LinkedList::new));
 
-        if (sorts.stream().noneMatch(sort -> "id".equals(sort.getColumnName()))) {
-          sorts.add(Sorting.builder().columnName("id").direction(SortingDirection.DESC).build());
+        // TODO: Костыль (сортировка часть 2)
+        val idColumn =  MetaSchemaUtils.getFullTableInfoName(((Table) fromGraph.getFromTable()).getTableInfo()) + "id";
+
+        if (sorts.stream().noneMatch(sort -> idColumn.equals(sort.getColumnName()))) {
+          sorts.add(Sorting.builder().columnName(idColumn).direction(SortingDirection.DESC).build());
         }
 
         if (!CollectionUtils.isEmpty(selections)) {
