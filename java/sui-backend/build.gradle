@@ -3,7 +3,6 @@ apply plugin: 'kotlin-spring'
 
 dependencies {
     compile project(":sui-security")
-    compile project(":sui-meta-schema-service")
     compile "org.springframework:spring-messaging:${springVersion}"
     compile "org.springframework.boot:spring-boot-starter-websocket:${springBootVersion}"
     compile "org.springframework.security:spring-security-messaging:${springVersion}"
@@ -12,6 +11,8 @@ dependencies {
     // query logs
     compile "com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:${jacksonVersion}"
+    compile "com.google.guava:guava:28.1-jre"
+    compile "org.apache.httpcomponents:httpclient:4.5.10"
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {

@@ -289,6 +289,8 @@ export class BackendTable<TSelection = defaultSelection>
         const alreadyInitiated = !!this.initialSessionId;
         const client = this.socket.getClient();
 
+        console.log(client);
+
         if (!alreadyInitiated) {
           this.initialSessionId = frame.body;
         }
@@ -297,11 +299,11 @@ export class BackendTable<TSelection = defaultSelection>
 
         if (!alreadyInitiated) {
           this.onOpen();
-
-          // Add new parameter to connection URL for reconnection
-          backendURL.searchParams.set("initialSessionId", this.initialSessionId);
-          client.brokerURL = backendURL.toString();
         }
+
+        // Add new parameter to connection URL for reconnection
+        backendURL.searchParams.set("previousSessionId", frame.body);
+        client.brokerURL = backendURL.toString();
       }
     });
   }

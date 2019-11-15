@@ -18,6 +18,7 @@ import org.springframework.messaging.support.GenericMessage;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
 import ru.smsoft.sui.suibackend.security.AuthChannelInterceptorAdapter;
 
 @Configuration
@@ -38,6 +39,11 @@ public class WebSocketAuthenticationSecurityConfig implements WebSocketMessageBr
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/queue");
         // use setApplicationDestinationPrefixes to add prefix to send destination
+    }
+
+    @Override
+    public void configureWebSocketTransport(WebSocketTransportRegistration registry) {
+        registry.addDecoratorFactory(ReconnectionWebSocketHandlerDecorator::new);
     }
 
     @Override

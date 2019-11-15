@@ -40,7 +40,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
-import static ru.smsoft.sui.suibackend.utils.Constants.SEND_TO_DESTINATION;
+import static ru.smsoft.sui.suibackend.utils.Constants.*;
 
 @Controller
 @Slf4j
@@ -50,7 +50,6 @@ public class SocketController {
     private static final String MESSAGE_TYPE_KEY = "type";
     private static final String MESSAGE_CURRENT_PAGE_KEY = "currentPage";
     private static final String MESSAGE_CONTENT_KEY = "content";
-    private static final String USER_STATE_KEY = "state";
     private static final String SELECTION_KEY = "selection";
     private static final String MESSAGE_ID = "__messageId";
 
@@ -292,9 +291,10 @@ public class SocketController {
                 .map(list -> list.isEmpty() ? null : list.get(0))
                 .orElse(null);
 
+        //noinspection ConstantConditions
         messagingTemplate.convertAndSendToUser(
                 principal.getName(),
-                SEND_TO_DESTINATION + "/" + headerAccessor.getSessionId(),
+                SEND_TO_DESTINATION + "/" + headerAccessor.getSessionAttributes().get(INIT_SESSION_ID_KEY),
                 content.set(MESSAGE_ID, new TextNode(messageId)));
     }
 

@@ -59,4 +59,9 @@ public class Constants {
 
     public static final String AND_FILTER_JOINER = " AND ";
     public static final String OR_FILTER_JOINER = " OR ";
+
+    public static final String USER_STATE_KEY = "state";
+    public static final String PREV_SESSION_ID_KEY = "previousSessionId";
+    public static final String INIT_SESSION_ID_KEY = "initSessionId";
+
 }
