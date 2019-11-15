@@ -32,8 +32,8 @@ export class Socket {
 
   @autobind
   public init(): void {
-    const stompClient = new Client(this.config);
-    stompClient.activate();
+    this.stompClient = new Client(this.config);
+    this.stompClient.activate();
   }
 
   @autobind
