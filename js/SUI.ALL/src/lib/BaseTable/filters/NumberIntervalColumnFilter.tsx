@@ -58,12 +58,17 @@ export class NumberIntervalColumnFilter
   @autobind
   private enterTriggerFilter(event: React.KeyboardEvent<HTMLInputElement>): void {
     if (event.key === 'Enter') {
+      const {
+        fromValue,
+        toValue
+      } = this.state;
+
       this.props.onFilter({
         columnName: this.props.column.name,
         operation: "interval",
         value: [
-          this.state.fromValue || null,
-          this.state.toValue || null
+          (fromValue != null) ? fromValue : null,
+          (toValue != null) ? toValue : null
         ] as any
       });
     }
