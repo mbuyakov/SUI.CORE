@@ -30,6 +30,7 @@ export interface IWaitDataProps<T> {
   promise?: Promise<T>;
   // tslint:disable-next-line:no-any
   query?: string | any;
+  spinning?: boolean;
 }
 
 const errorIcon = (<Icon type="close-circle" theme="twoTone" twoToneColor="#d6083f" style={{fontSize: 24}}/>);
@@ -66,7 +67,7 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
       <Spin
         wrapperClassName={SPIN_WRAPPER}
         delay={typeof this.props.delay === 'number' ? this.props.delay : SPIN_DELAY}
-        spinning={!data}
+        spinning={!data || this.props.spinning}
         indicator={hasErrors ? errorIcon : undefined}
         // tslint:disable-next-line:no-any
         tip={hasErrors && (<span style={{color: "red"}}>{this.props.errorTip}</span> as any)}
