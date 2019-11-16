@@ -2,6 +2,8 @@ import Button, {ButtonType} from 'antd/lib/button/button';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 
+import { ROUTER_LINK_BTN } from '../styles';
+
 export type RouterLinkType = 'button' | 'button-primary' | 'link';
 
 export interface IRouterLinkProps {
@@ -24,6 +26,7 @@ export class RouterLink extends React.Component<IRouterLinkProps> {
       >
         {(this.props.type && this.props.type.startsWith('button'))
           ? <Button
+            className={ROUTER_LINK_BTN}
             style={this.props.buttonStyle}
             size="small"
             type={this.props.type.replace('button-', '') as ButtonType}
