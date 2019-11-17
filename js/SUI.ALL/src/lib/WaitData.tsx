@@ -58,8 +58,9 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
     const children = (): JSX.Element => (this.props.children instanceof Function) ? this.props.children(data === '__NULL__' ? null : data, this.updateData) : this.props.children;
     // console.log(data ? 'data' : 'no data');
     const hasErrors = this.props.error || (this.state && this.state.error);
+    const spinning = !data || this.props.spinning;
 
-    if(!hasErrors && data) {
+    if(!hasErrors && !spinning) {
       return children();
     }
 
@@ -67,7 +68,7 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
       <Spin
         wrapperClassName={SPIN_WRAPPER}
         delay={typeof this.props.delay === 'number' ? this.props.delay : SPIN_DELAY}
-        spinning={!data || this.props.spinning}
+        spinning={spinning}
         indicator={hasErrors ? errorIcon : undefined}
         // tslint:disable-next-line:no-any
         tip={hasErrors && (<span style={{color: "red"}}>{this.props.errorTip}</span> as any)}
@@ -76,7 +77,8 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
           ? children()
           : <div style={{height: '100%', width: '100%'}}/>
         }
-      </Spin>);
+      </Spin>
+    );
   }
 
   public shouldComponentUpdate(nextProps: Readonly<IWaitDataProps<T>>): boolean {
