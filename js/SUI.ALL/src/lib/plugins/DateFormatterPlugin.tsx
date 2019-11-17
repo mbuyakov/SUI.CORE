@@ -1,5 +1,5 @@
 /* tslint:disable:jsx-no-lambda */
-import { Input } from 'antd';
+import { Checkbox, Input } from 'antd';
 import moment from 'moment';
 import * as React from 'react';
 
@@ -11,6 +11,7 @@ import {IColumnInfoToBaseTableColProps} from "../utils";
 
 
 export interface IDateFormatterPluginTRP {
+  convertFromUtc?: boolean;
   sourceFormat?: string;
   targetFormat?: string;
 }
@@ -23,7 +24,18 @@ export class DateFormatterPlugin extends TableRenderParamsPlugin<IDateFormatterP
 
   // tslint:disable-next-line:prefer-function-over-method variable-name no-async-without-await
   public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams<IDateFormatterPluginTRP>): Promise<void> {
-    result.render = (value: string) => value && moment(value, trp.sourceFormat).format(trp.targetFormat);
+    result.render = (value: string) => {
+      if(!value) {
+        return "";
+      }
+      const momentCreator = trp.convertFromUtc ? moment.utc : moment;
+      let momentValue = momentCreator(value, trp.sourceFormat);
+      if(trp.convertFromUtc) {
+        momentValue = momentValue.local();
+      }
+
+      return momentValue.format(trp.targetFormat);
+    };
 
     return;
   }
@@ -41,6 +53,11 @@ export class DateFormatterPlugin extends TableRenderParamsPlugin<IDateFormatterP
         <Input
           value={trsp.state.tableRenderParams.targetFormat || undefined}
           onChange={e => trsp.updateField('targetFormat')(e.target.value)}
+        />
+        <span>Конвертировать из UTC?</span>
+        <Checkbox
+          checked={trsp.state.tableRenderParams.convertFromUtc || undefined}
+          onChange={e => trsp.updateField('convertFromUtc')(e.target.checked)}
         />
       </>
     );
