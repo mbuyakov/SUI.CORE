@@ -144,6 +144,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
           isAudited
           linkColumnInfoId
           foreignLinkColumnInfoId
+          followColumnInfoId
           colorSettings
           nameByNameId {
             id
