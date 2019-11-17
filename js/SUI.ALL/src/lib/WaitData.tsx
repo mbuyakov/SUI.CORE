@@ -60,9 +60,9 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
     const hasErrors = this.props.error || (this.state && this.state.error);
     const spinning = !data || this.props.spinning;
 
-    if(!hasErrors && !spinning) {
-      return children();
-    }
+    // if(!hasErrors && !spinning) {
+    //   return children();
+    // }
 
     return (
       <Spin
