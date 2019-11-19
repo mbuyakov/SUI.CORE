@@ -80,6 +80,7 @@ public class MetaAccessService {
             val joinedRestrictions = restrictions
                     .stream()
                     .map(Objects::toString)
+                    .map(restriction -> String.format("'%s'", restriction))
                     .collect(Collectors.joining(","));
 
             val restrictionTableInfo = suiMetaSettingRepository.getRestrictionTable().orElse(null);
