@@ -446,17 +446,21 @@ export class BaseTable<TSelection = defaultSelection>
               showAll: 'Все',
             }}
           />}
-          {selectionEnabled && <TableSelection
-            cellComponent={selectionCellComponent}
-            showSelectAll={!this.props.selectionFilter}
-          />}
+          {selectionEnabled && (
+            <TableSelection
+              cellComponent={selectionCellComponent}
+              showSelectAll={!this.props.selectionFilter}
+            />
+          )}
           {groupingEnabled && <TableGroupRow contentComponent={tableGroupRowContentComponent}/>}
           {groupingEnabled && this.props.groupSubtotalData && hasSubtotals && <GroupSummaryRow subtotalData={this.props.groupSubtotalData}/>}
           <TableColumnReordering defaultOrder={this.props.cols.map(value => value.id)}/>
-          {visibilityEnabled && <TableColumnVisibility
-            defaultHiddenColumnNames={defaultHidden}
-            emptyMessageComponent={EmptyMessageComponent}
-          />}
+          {visibilityEnabled && (
+            <TableColumnVisibility
+              defaultHiddenColumnNames={defaultHidden}
+              emptyMessageComponent={EmptyMessageComponent}
+            />
+          )}
           {(visibilityEnabled || groupingEnabled || allowExport || this.props.toolbarButtons) && (
             <Toolbar
               rootComponent={this.toolbarRootComponent}
@@ -525,8 +529,11 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private onExport(): void {
-    const cols = this.mapCols().filter(col => defaultIfNotBoolean(col.exportable, true));
+  private onExport(getters: Getters): void {
+    const hiddenColumnNames = getters.hiddenColumnNames || [];
+    const cols = this.mapCols()
+      .filter(col => defaultIfNotBoolean(col.exportable, true))
+      .filter(col => !hiddenColumnNames.includes(col.id));
     // tslint:disable-next-line:ban-ts-ignore
     // @ts-ignore
     const formattedData = this.exportData.map(row => {
