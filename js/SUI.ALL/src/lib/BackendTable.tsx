@@ -59,7 +59,7 @@ export interface IBackendTableProps {
   table: string;
   titleEnabled?: boolean;
   watchFilters?: boolean;
-  // Подмена типов для красиво интерфейса
+  // Подмена типов для красивого интерфейса
   customFilterComponent?(props: ICustomFilterProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
 }
 
@@ -188,7 +188,7 @@ export class BackendTable<TSelection = defaultSelection>
 
     return (
       <WaitData
-        data={this.state.data}
+        data={this.state.cols}
         error={!!this.state.error}
         errorTip={this.state.error}
         hideChildren={!(this.state.cols)}

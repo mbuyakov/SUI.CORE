@@ -43,10 +43,12 @@ public class Constants {
     public static final String OFFSET_COLUMN_NAME = COMMON_PREFIX + "offset";
     public static final String GROUPS_COLUMN_NAME = COMMON_PREFIX + "groups";
     public static final String ROWS_COLUMN_NAME = COMMON_PREFIX + "rows";
+    public static final String TOTAL_COUNT_COLUMN_NAME = COMMON_PREFIX + "total_count";
     public static final String CHILDREN_FIELD_NAME = COMMON_PREFIX + "children";
     public static final String SUBTOTALS_FIELD_NAME = COMMON_PREFIX + "subtotals";
 
     public static final String FROM_WITH_NAME = COMMON_PREFIX + "from_with";
+    public static final String OFFSET_WITH_NAME = COMMON_PREFIX + "offset";
     public static final String DATA_WITH_NAME = GROUPED_WITH_PREFIX + "data";
     public static final String UNION_DATA_WITH_NAME = DATA_WITH_NAME + "_union";
     public static final String PAGED_DATA_WITH_NAME = DATA_WITH_NAME + "_paged";

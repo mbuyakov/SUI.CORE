@@ -17,10 +17,10 @@ import ru.smsoft.sui.suibackend.model.PageData;
 import ru.smsoft.sui.suibackend.model.UserState;
 import ru.smsoft.sui.suibackend.model.query.Column;
 import ru.smsoft.sui.suibackend.model.query.Subtotal;
-import ru.smsoft.sui.suibackend.query.DataQueryGenerator;
 import ru.smsoft.sui.suibackend.query.FromWithGenerator;
 import ru.smsoft.sui.suibackend.query.GroupQueryGenerator;
 import ru.smsoft.sui.suibackend.utils.JsonUtils;
+import ru.smsoft.sui.suibackend.utils.QueryUtils;
 import ru.smsoft.sui.suisecurity.utils.TextUtils;
 
 import java.util.*;
@@ -43,8 +43,6 @@ public class BackendService {
 
     @NonNull
     private FromWithGenerator fromWithGenerator;
-    @NonNull
-    private DataQueryGenerator dataQueryGenerator;
     @NonNull
     private GroupQueryGenerator groupQueryGenerator;
     @NonNull
@@ -85,28 +83,41 @@ public class BackendService {
                     Optional.ofNullable(userState.getExpandedGroups()).orElse(Collections.emptyList()),
                     userState.getSorts());
         } else {
-            val totalElements = Optional
-                    .ofNullable(
-                            jdbcTemplate.queryForObject(
-                                    String.format("SELECT COUNT(*) FROM (%s) t", fromWith), Long.class))
-                    .orElse(0L);
-
-            val rows = jdbcTemplate.query(
-                    dataQueryGenerator.generateQuery(
-                            fromWith,
-                            null,
-                            null,
+            val withStatements = new LinkedHashMap<String, String>();
+            withStatements.put(FROM_WITH_NAME, fromWith);
+            withStatements.put(
+                    OFFSET_WITH_NAME,
+                    String.format(
+                            "SELECT %s, LEAST(FLOOR(%1$s / %d) * %2$d, %d) AS %s" +
+                                    " FROM (SELECT COALESCE(COUNT(*), 0) AS %1$s FROM %s) __total",
+                            TOTAL_COUNT_COLUMN_NAME,
                             userState.getPageSize(),
-                            Math.min(
-                                    calculateLastPageOffset(totalElements, userState.getPageSize()),
-                                    userState.getOffset())),
-                    JsonUtils.CAMEL_CASE_KEY_JSON_OBJECT_ROW_MAPPER);
+                            userState.getOffset(),
+                            OFFSET_COLUMN_NAME,
+                            FROM_WITH_NAME));
+
+
+            val data = jdbcTemplate.queryForMap(
+                    QueryUtils.generateResultQuery(
+                            withStatements,
+                            Collections.singleton(
+                                    String.format(
+                                            "SELECT (%s) , (%s)",
+                                            String.format("SELECT %s FROM %s", TOTAL_COUNT_COLUMN_NAME, OFFSET_COLUMN_NAME),
+                                            String.format(
+                                                    "SELECT json_agg(row_to_json(__tmp)) AS %s FROM (SELECT * FROM %s LIMIT %d OFFSET (%s)) __tmp",
+                                                    ROWS_COLUMN_NAME,
+                                                    FROM_WITH_NAME,
+                                                    userState.getPageSize(),
+                                                    String.format("SELECT %s FROM %s", OFFSET_COLUMN_NAME, OFFSET_COLUMN_NAME))))));
+
+            val rows = parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) data.get(ROWS_COLUMN_NAME)), true);
             formatDataQueryResult(columnMap.values(), rows);
 
             return PageData
                     .builder()
                     .data(new JSONArray(rows))
-                    .totalCount(totalElements)
+                    .totalCount((Long) data.get(TOTAL_COUNT_COLUMN_NAME))
                     .build();
         }
     }
@@ -144,13 +155,9 @@ public class BackendService {
                         pageSize,
                         generateSubtotals(columnByColumnInfoName.values())));
 
-        val visibleRows =
-                parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) groupQueryResult.get(ROWS_COLUMN_NAME)))
-                        .stream()
-                        .map(JsonUtils.CAMEL_CASE_JSON_OBJECT_KEY_MAPPER)
-                        .collect(Collectors.toList());
+        val visibleRows = parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) groupQueryResult.get(ROWS_COLUMN_NAME)), true);
         formatDataQueryResult(columnByColumnInfoName.values(), visibleRows);
-        val visibleGroups = parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) groupQueryResult.get(GROUPS_COLUMN_NAME)));
+        val visibleGroups = parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) groupQueryResult.get(GROUPS_COLUMN_NAME)), false);
         val expandedMaxLevelGroups = visibleGroups
                 .stream()
                 .filter(group ->
@@ -229,11 +236,12 @@ public class BackendService {
                 .collect(Collectors.toList());
     }
 
-    private List<JSONObject> parseJsonArrayPgObjectToJsonObjectCollection(PGobject pgObject) {
+    private List<JSONObject> parseJsonArrayPgObjectToJsonObjectCollection(PGobject pgObject, boolean camelCaseKeys) {
         try {
             return StreamSupport
                     .stream(new JSONArray(pgObject.getValue()).spliterator(), false)
                     .map(JSONObject.class::cast)
+                    .map(camelCaseKeys ? JsonUtils.CAMEL_CASE_JSON_OBJECT_KEY_MAPPER : Function.identity())
                     .collect(Collectors.toList());
         } catch (Exception exception) {
             log.warn("Can not parse jsonArray: " + pgObject);
@@ -295,10 +303,6 @@ public class BackendService {
 
                     row.remove(rowNameColumnName);
                 }));
-    }
-
-    private long calculateLastPageOffset(long endPosition, long pageSize) {
-        return Math.floorDiv(endPosition, pageSize) * pageSize;
     }
 
     private <T> List<T> formatCollectionColumnNames(
