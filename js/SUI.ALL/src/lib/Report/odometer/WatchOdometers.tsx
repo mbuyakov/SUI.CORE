@@ -29,13 +29,13 @@ export class WatchOdometers extends React.Component<IWatchOdometersProps, IWatch
     this.state = {data: new Map()};
   }
 
-  public componentDidMount(): void {
-    this.refreshInterval();
+  public async componentDidMount(): Promise<void> {
+    return this.refreshInterval();
   }
 
-  public componentDidUpdate(prevProps: Readonly<IWatchOdometersProps>): void {
+  public async componentDidUpdate(prevProps: Readonly<IWatchOdometersProps>): Promise<void> {
     if (JSON.stringify(this.props.mutationParams) !== JSON.stringify(prevProps.mutationParams)) {
-      this.refreshInterval();
+      await this.refreshInterval();
     }
   }
 
@@ -53,16 +53,16 @@ export class WatchOdometers extends React.Component<IWatchOdometersProps, IWatch
   }
 
   @autobind
-  private refreshInterval(): void {
+  private async refreshInterval(): Promise<void> {
     clearInterval(this.intervalId);
-    this.updateOdometerData();
-    this.intervalId = setInterval(() => {
-      this.updateOdometerData();
+    await this.updateOdometerData();
+    this.intervalId = setInterval(async () => {
+      await this.updateOdometerData();
     }, refreshInterval);
   }
 
   @autobind
-  private updateOdometerData(): Promise<void> {
+  private async updateOdometerData(): Promise<void> {
     return mutate<{ json: string }>(`mutation {
       ${this.props.mutationName}(
         input: ${JSON.stringify(this.props.mutationParams || {}).replace(/"([^"]+)":/g, "$1:")}
