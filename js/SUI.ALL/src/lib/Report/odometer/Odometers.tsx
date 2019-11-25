@@ -42,6 +42,7 @@ export class Odometers extends React.Component<IOdometersProps> {
             >
               <CustomOdometer
                 {...customOdometerProps}
+                className={customOdometerProps.odometerClassName}
                 data={this.props.data.get(definition.id)}
               />
               <div>{definition.title}</div>
