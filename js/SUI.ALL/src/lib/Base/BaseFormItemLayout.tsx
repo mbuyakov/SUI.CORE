@@ -194,7 +194,8 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
       } else {
         const formField = this.baseForm.getOrCreateFormField(field);
         this.registerObservableHandler(formField.value.subscribe(newValue => {
-          this.setState({ subscribedFormFieldValues: { ...this.state.subscribedFormFieldValues, [field]: newValue } });
+          this.state.subscribedFormFieldValues[field] = newValue;
+          this.setState({ subscribedFormFieldValues: this.state.subscribedFormFieldValues });
         }));
         this.subscribedFields.push(field);
         const value = formField.value.getValue();
