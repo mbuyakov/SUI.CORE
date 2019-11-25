@@ -82,7 +82,8 @@ export async function generateCatalogDataPromise(tableName: string, valueColumnN
 
   // tslint:disable-next-line:no-any
   return (getDataByKey(queryData, "nodes") || []).map((element: any) => ({
-    value: element[selectColumn || 'id'],
+    title: element[selectColumn || 'id'],
+    value: element.id,
   }));
 }
 
