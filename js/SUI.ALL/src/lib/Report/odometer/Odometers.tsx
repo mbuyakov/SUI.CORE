@@ -30,20 +30,24 @@ export class Odometers extends React.Component<IOdometersProps> {
       <div
         style={this.props.containerStyle}
       >
-        {this.props.odometerDefinition.map(definition => (
-          <div
-            style={{
-              ...definition.containerStyle,
-              ...this.props.commonSectionStyle
-            }}
-          >
-            <CustomOdometer
-              className={definition.odometerClassName}
-              data={this.props.data.get(definition.id)}
-            />
-            <div>{definition.title}</div>
-          </div>
-        ))}
+        {this.props.odometerDefinition.map(definition => {
+          const {containerStyle, ...customOdometerProps} = definition;
+
+          return (
+            <div
+              style={{
+                ...containerStyle,
+                ...this.props.commonSectionStyle
+              }}
+            >
+              <CustomOdometer
+                {...customOdometerProps}
+                data={this.props.data.get(definition.id)}
+              />
+              <div>{definition.title}</div>
+            </div>
+          )
+        })}
       </div>
     );
   }
