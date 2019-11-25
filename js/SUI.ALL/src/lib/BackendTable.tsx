@@ -17,6 +17,8 @@ const CHILDREN_KEY = '__children';
 const RECORDS_KEY = '__records';
 const SUBTOTALS_KEY = '__subtotals';
 
+const DELETED_COLUMN = "deleted";
+
 const RECONNECT_DELAY = 50;
 
 type RequestMessageType =
@@ -54,6 +56,7 @@ export type ICustomFilterProps = Omit<TableFilterRow.CellProps, 'filter' | 'onFi
 
 export interface IBackendTableProps {
   defaultFilters?: SimpleBackendFilter | SimpleBackendFilter[];
+  disableDeletedFilter?: boolean;
   filter?: BackendFilter | BackendFilter[];
   serviceColumns?: IServiceColumn | IServiceColumn[];
   table: string;
@@ -573,10 +576,21 @@ export class BackendTable<TSelection = defaultSelection>
         currentPage: 0
       };
       const sortedColumns = await getAllowedColumnInfos(tableInfo, getUser().roles);
-      const defaultFilters = this.mapFilters(
+      let defaultFilters = this.mapFilters(
         this.props.defaultFilters && wrapInArray(this.props.defaultFilters) || [],
         true,
       );
+
+      if (!this.props.disableDeletedFilter && sortedColumns.find(column => column.columnName === DELETED_COLUMN)) {
+        defaultFilters = [
+          ...defaultFilters,
+          {
+            columnName: DELETED_COLUMN,
+            value: "true",
+            raw: true
+          }
+        ]
+      }
 
       // noinspection JSIgnoredPromiseFromCall
       this.sendMessage(

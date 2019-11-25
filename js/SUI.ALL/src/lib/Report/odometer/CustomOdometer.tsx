@@ -5,16 +5,17 @@ import * as React from "react";
 // @ts-ignore
 import Odometer from "react-odometerjs";
 
-import {DIFFERENCE_ODOMETER, MAIN_ODOMETER, MINUS_ODOMETER, PLUS_ODOMETER, ZERO_ODOMETER} from "../styles";
+import {DIFFERENCE_ODOMETER, MAIN_ODOMETER, MINUS_ODOMETER, PLUS_ODOMETER, ZERO_ODOMETER} from "../../styles";
 
 export interface ICustomOdometerData {
   current: number;
-  difference: number;
+  difference?: number;
 }
 
 interface ICustomOdometerProps {
   className?: string;
   data?: ICustomOdometerData;
+  disableDifferenceOdometer?: boolean;
 }
 
 const odometerAnimationDuration = 500;
@@ -33,13 +34,15 @@ export class CustomOdometer extends React.Component<ICustomOdometerProps> {
             format="(,ddd).dd"
           />
         </div>
-        <div className={`${(difference > 0 && PLUS_ODOMETER) || (difference < 0 && MINUS_ODOMETER) || ZERO_ODOMETER} ${DIFFERENCE_ODOMETER}`}>
-          <Odometer
-            value={Math.abs(difference)}
-            duration={odometerAnimationDuration}
-            format="(,ddd).dd"
-          />
-        </div>
+        {!this.props.disableDifferenceOdometer && (
+          <div className={`${(difference > 0 && PLUS_ODOMETER) || (difference < 0 && MINUS_ODOMETER) || ZERO_ODOMETER} ${DIFFERENCE_ODOMETER}`}>
+            <Odometer
+              value={Math.abs(difference)}
+              duration={odometerAnimationDuration}
+              format="(,ddd).dd"
+            />
+          </div>
+        )}
       </div>
     );
   }
