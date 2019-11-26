@@ -47,10 +47,10 @@ export abstract class CacheManager<T, ID = string> {
   /**
    * Check contains entity by id
    */
-  public containsById(id: ID): boolean {
+  public async containsById(id: ID): Promise<boolean> {
     try {
-      return !!this.directGetById(id) || !!this.getById(id);
-    } catch (e) {
+      return !!this.directGetById(id) || !!(await this.getById(id));
+    } catch (error) {
       return false;
     }
   }
