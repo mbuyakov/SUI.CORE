@@ -45,6 +45,17 @@ export abstract class CacheManager<T, ID = string> {
   private readonly subscribersStore: Map<number, CacheHandler<ID, T>> = new Map();
 
   /**
+   * Check contains entity by id
+   */
+  public containsById(id: ID): boolean {
+    try {
+      return !!this.directGetById(id) || !!this.getById(id);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
    * Return entity by id
    * If entity not in cache - return undefined
    */
