@@ -586,7 +586,7 @@ export class BackendTable<TSelection = defaultSelection>
           ...defaultFilters,
           {
             columnName: DELETED_COLUMN,
-            value: "true",
+            value: "false",
             raw: true
           }
         ]
