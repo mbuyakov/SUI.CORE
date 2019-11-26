@@ -4,7 +4,7 @@ import {ButtonGroupProps} from "antd/lib/button";
 import {ModalFuncProps} from "antd/lib/modal";
 import Tooltip, { TooltipProps } from 'antd/lib/tooltip';
 import autobind from "autobind-decorator";
-import classNames from "classNames";
+import classNames from "classnames";
 import React from "react";
 
 import {INFO_MODAL_FIX, NO_BORDER_MODAL} from "../styles";
