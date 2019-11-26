@@ -39,7 +39,7 @@ export class CustomSelectFilter<T extends string | number>
     this.props.onFilter({
       columnName: this.props.column.name,
       operation: "equal",
-      raw: true,
+      raw: false,
       value: value as any
     } as unknown as Filter);
   }
