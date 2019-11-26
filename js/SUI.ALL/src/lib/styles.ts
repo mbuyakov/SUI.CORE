@@ -35,3 +35,5 @@ export const TAB_SETTINGS__UNACTIVE_BUTTON = "sui-backend-unactiveButton";
 export const TREE_SELECT_DISABLE_GROUP_SELECTION = "sui-disable-group-selection";
 export const EDITABLE_PROMISED_COMPONENT_CHILDREN = "sui-editable-promised-component-children";
 export const ROUTER_LINK_BTN = "sui-router-link-btn";
+export const INFO_MODAL_FIX = "sui-info-modal-fix";
+export const NO_BORDER_MODAL = "sui-no-border-modal";

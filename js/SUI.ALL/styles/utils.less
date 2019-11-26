@@ -1,3 +1,28 @@
+.sui-info-modal-fix {
+  :global {
+    & div.ant-modal-confirm-content {
+      margin-left: 0 !important;
+    }
+    & div.ant-modal-confirm-body > .anticon-info-circle {
+      display: none;
+    }
+  }
+}
+
+.sui-no-border-modal {
+  :global {
+    & div.ant-modal-body {
+      padding: 0 !important;
+    }
+    & div.ant-modal-confirm-btns {
+      display: none;
+    }
+    & div.ant-modal-confirm-content {
+      margin-top: 0 !important;
+    }
+  }
+}
+
 .sui-backend-textOverflow() {
   overflow: hidden;
   text-overflow: ellipsis;
