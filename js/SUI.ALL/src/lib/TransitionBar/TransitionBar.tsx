@@ -70,7 +70,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
     const graphButton = enableTransitionGraph && (
       <Button
         {...commonButtonProps}
-        disabled={commonLoading}
+        // disabled={commonLoading}
         onClick={this.showTransitionGraphModal}
       >
         <Icon type={commonLoading ? "loading" : "share-alt"}/>
