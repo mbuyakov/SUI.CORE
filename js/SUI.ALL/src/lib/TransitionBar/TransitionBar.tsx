@@ -92,7 +92,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
             buttonProps = {},
             dropDownProps = {}
           } = transition;
-          const key = `${fromId}__${toId}`;
+          const key = `${String(fromId)}__${String(toId)}`;
           const loading = commonLoading || !!buttonProps.loading;
           const disabled = loading || !!transitionDisabled;
           const transitionContent = <>{loadingIcon(loading)}{name}</>;
@@ -172,7 +172,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
 
   @autobind
   private onTransitFn(transition: ITransition<TID>, resolutionId?: string): () => Promise<void> {
-    return (): Promise<void> => {
+    return async (): Promise<void> => {
       this.setState({loading: true});
 
       const toStatus = this.props.statuses.find(status => status.id === transition.toId);

@@ -1,7 +1,8 @@
+/* tslint:disable:no-return-await */
 import autobind from "autobind-decorator";
 import React from "react";
 
-import {ColumnInfo, TableInfo, TableInfoManager} from "../cache";
+import {ColumnInfo, TableInfoManager} from "../cache";
 import {asyncMap, groupBy, IObjectWithIndex, toMap} from "../other";
 import {camelCase} from "../stringFormatters";
 import {IRole} from "../types";
@@ -86,9 +87,7 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
         statusTableName,
         ROLE_TABLE_NAME
       ],
-      tableName => tableName
-        ? TableInfoManager.getById(tableName)
-        : new Promise<TableInfo>((resolve): void => resolve(undefined))
+      async tableName => tableName ? await TableInfoManager.getById(tableName) : undefined
     );
 
     // fetch join tables
@@ -102,7 +101,7 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
         actionResolutionJoinTableName || {first: actionTable, second: resolutionTable},
         !disableRoleRestrictions ? (actionRoleJoinTableName || {first: actionTable, second: roleTable}) : undefined
       ],
-      tableName => tableName ? fetchJoinTable(tableName) : undefined
+      async tableName => tableName ? await fetchJoinTable(tableName) : undefined
     );
 
     // fetch join data
@@ -124,7 +123,7 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
         actionResolutionTable,
         actionRoleTable,
       ],
-      table => table ? fetchAllRows(table) : undefined
+      async table => table ? await fetchAllRows(table) : undefined
     );
     const statuses = badTypeStatuses as unknown as TStatus[];
     const currentUserRoles = getUser().roles;
