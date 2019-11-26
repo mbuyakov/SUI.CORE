@@ -2,6 +2,7 @@ import { ICacheEntry } from '../cacheManager';
 import { getDataByKey } from '../dataKey';
 import { GqlCacheManager } from '../gql';
 import { IColumnInfo, IColumnInfoReference, IColumnInfoRole, IColumnInfoTag, IFilterType, ISubtotalType } from '../types';
+import {formatRoleName} from "../utils";
 
 import {Name} from "./Name";
 
@@ -48,7 +49,8 @@ export class ColumnInfo {
     this.roles = (getDataByKey<IColumnInfoRole[]>(item, "columnInfoRolesByColumnInfoId", "nodes") || [])
       .map(value => getDataByKey(value, "roleByRoleId", "name"))
       .filter(Boolean)
-      .map(roleName => roleName.replace("ROLE_", ""));
+      // tslint:disable-next-line:no-unnecessary-callback-wrapper
+      .map(roleName => formatRoleName(roleName));
     this.foreignColumnInfo = (getDataByKey<IColumnInfoReference[]>(item, "columnInfoReferencesByColumnInfoId", "nodes") || []).map(value => value.foreignColumnInfoId);
 
     // private

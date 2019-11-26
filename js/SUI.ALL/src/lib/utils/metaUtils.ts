@@ -20,6 +20,12 @@ export interface IRouteLink {
 
 export const routeLinks: IRouteLink[] = [];
 
+export const ROLE_PREFIX = "ROLE_";
+
+export function formatRoleName(roleName: string): string {
+  return roleName.replace(ROLE_PREFIX, "");
+}
+
 /**
  * Generate route links from raw route data
  */
