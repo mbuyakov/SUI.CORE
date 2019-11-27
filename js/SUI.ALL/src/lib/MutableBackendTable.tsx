@@ -140,25 +140,27 @@ export class MutableBackendTable<TValues extends {}, TSelection = number>
             paddingBottom: 0,
             ...(createModalProps ? createModalProps.bodyStyle : undefined)
           }}
-          footer={[
-            <Button
-              {...(createModalProps ? createModalProps.cancelButtonProps : {})}
-              key="back"
-              onClick={onCancel}
+          footer={(
+            <div
+              style={{
+                display: "grid",
+                gap: 8,
+                gridTemplateColumns: "repeat(2, max-content)",
+                justifyContent: "right"
+              }}
             >
-              {createModalProps && createModalProps.cancelText || "Отмена"}
-            </Button>,
-            // TODO: Костыль, BaseForm + Observable - мусор
-            hasErrors
-              ? (
-                <ObservableBinder
-                  observable={hasErrors}
-                  key="submit"
-                >
-                  {okButton}
-                </ObservableBinder>
-              ) : okButton(false)
-          ]}
+              <Button
+                {...(createModalProps ? createModalProps.cancelButtonProps : {})}
+                onClick={onCancel}
+              >
+                {createModalProps && createModalProps.cancelText || "Отмена"}
+              </Button>,
+              {/* TODO: Костыль, BaseForm + Observable - мусор */}
+              {hasErrors
+                ? (<ObservableBinder observable={hasErrors}>{okButton}</ObservableBinder>)
+                : okButton(false)}
+            </div>
+          )}
           onCancel={onCancel}
         >
           <BaseForm
