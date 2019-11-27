@@ -1,6 +1,6 @@
 /* tslint:disable:no-return-await */
 import autobind from "autobind-decorator";
-import React from "react";
+import * as React from "react";
 
 import {ColumnInfo, TableInfoManager} from "../cache";
 import {asyncMap, groupBy, IObjectWithIndex, toMap} from "../other";
@@ -198,7 +198,7 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
     actionStatuses.forEach(actionStatus => {
       let isAllowed = true;
 
-      if (actionStatusRoleTable) {
+      if (!currentUserRoles.includes('ADMIN') && actionStatusRoleTable) {
         // TODO: не тестил, так как не было примера (Выглядит валидно)
         isAllowed = (actionStatusRoleMap.get(actionStatus.id) || [])
           .map(actionStatusRole => roleMap.get(actionStatusRole[actionStatusRoleRoleId]))
@@ -206,31 +206,32 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
           .some(roleName => currentUserRoles.includes(roleName));
       }
 
-      if (isAllowed) {
-        const action = actionMap.get(actionStatus[actionStatusActionId]);
-        const currentActionResolutions = actionResolutionsMap.get(action.id) || [];
-        const [fromId, toId] = [actionStatusFromStatusId, actionStatusToStatusId].map(field => actionStatus[field]);
+      const action = actionMap.get(actionStatus[actionStatusActionId]);
+      const currentActionResolutions = actionResolutionsMap.get(action.id) || [];
+      const [fromId, toId] = [actionStatusFromStatusId, actionStatusToStatusId].map(field => actionStatus[field]);
 
-        // tslint:disable-next-line:no-object-literal-type-assertion
-        transitions.push({
-          fromId,
-          name: action[NAME_FIELD],
-          resolutions: currentActionResolutions.length
-            ? currentActionResolutions
-              .map(actionResolution => resolutionMap.get(actionResolution[actionResolutionResolutionId]))
-              .filter(Boolean)
-              .map(resolution => ({
-                id: resolution.id,
-                name: resolution[NAME_FIELD],
-                [RESOLUTION_FIELD]: resolution
-              }))
-            : undefined,
-          toId,
-          [ACTION_FIELD]: action,
-          [FROM_STATUS_FIELD]: statusMap.get(fromId),
-          [TO_STATUS_FIELD]: statusMap.get(toId),
-        } as ITransition<TID>);
-      }
+      // tslint:disable-next-line:no-object-literal-type-assertion
+      transitions.push({
+        disabled: !isAllowed,
+        fromId,
+        name: action[NAME_FIELD],
+        resolutions: currentActionResolutions.length
+          ? currentActionResolutions
+            .map(actionResolution => resolutionMap.get(actionResolution[actionResolutionResolutionId]))
+            .filter(Boolean)
+            .map(resolution => ({
+              disabled: !isAllowed,
+              id: resolution.id,
+              name: resolution[NAME_FIELD],
+              [RESOLUTION_FIELD]: resolution
+            }))
+          : undefined,
+        toId,
+        tooltip: isAllowed ? undefined : {title: "Действие не разрешено"},
+        [ACTION_FIELD]: action,
+        [FROM_STATUS_FIELD]: statusMap.get(fromId),
+        [TO_STATUS_FIELD]: statusMap.get(toId),
+      } as ITransition<TID>);
     });
 
     this.setState({

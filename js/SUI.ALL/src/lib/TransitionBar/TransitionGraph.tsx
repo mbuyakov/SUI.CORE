@@ -1,6 +1,6 @@
 /* tslint:disable:no-magic-numbers */
 import autobind from "autobind-decorator";
-import React from "react";
+import * as React from "react";
 
 import {ForceDirectedTree, IForceDirectedTreeAdditionalSettingProps} from "../ForceDirectedTree";
 import {toMap} from "../other";

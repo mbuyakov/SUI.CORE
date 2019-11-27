@@ -45,6 +45,8 @@ export class ForceDirectedTree<TElement = {}> extends React.Component<IForceDire
   private onChartCreated(chart: am4forceDirected.ForceDirectedTree): void {
     const series = chart.series.push(new am4forceDirected.ForceDirectedSeries());
 
+    console.log("ForceDirectedTree data", chart.data);
+
     series.dataFields.linkWith = "linkWith";
     series.dataFields.name = "name";
     series.dataFields.id = "name";

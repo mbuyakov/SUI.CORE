@@ -5,7 +5,7 @@ import {ModalFuncProps} from "antd/lib/modal";
 import Tooltip, { TooltipProps } from 'antd/lib/tooltip';
 import autobind from "autobind-decorator";
 import classNames from "classnames";
-import React from "react";
+import * as React from "react";
 
 import {INFO_MODAL_FIX, NO_BORDER_MODAL} from "../styles";
 import {defaultIfNotBoolean} from "../typeWrappers";
