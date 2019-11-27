@@ -151,7 +151,7 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
       actionStatusToStatusId,
       actionResolutionActionId,
       actionResolutionResolutionId,
-      actionStatusRoleActionId,
+      actionStatusRoleActionStatusId,
       actionStatusRoleRoleId
     ] = await asyncMap(
       [
@@ -189,7 +189,7 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
     );
     const actionStatusRoleMap = groupBy(
       actionStatusRoles || [],
-      element => element[actionStatusRoleActionId]
+      element => element[actionStatusRoleActionStatusId]
     );
 
     const transitions: Array<ITransition<TID>> = [];
@@ -197,6 +197,8 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
     // Generate transitions
     actionStatuses.forEach(actionStatus => {
       let isAllowed = true;
+
+      console.log(actionStatus, actionStatusRoleMap);
 
       if (!currentUserRoles.includes('ADMIN') && actionStatusRoleTable) {
         // TODO: не тестил, так как не было примера (Выглядит валидно)
