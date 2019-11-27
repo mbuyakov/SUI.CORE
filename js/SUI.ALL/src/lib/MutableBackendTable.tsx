@@ -66,6 +66,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number>
             await this.formRef.current.onSubmit();
 
             if (this.tableRef.current) {
+              // tslint:disable-next-line:no-floating-promises
               this.tableRef.current.refresh();
             }
           }
@@ -176,7 +177,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number>
     if (selection.length) {
       if (this.props.handleDelete) {
         await this.props.handleDelete(selection)
-          .then(() => {
+          .then(async () => {
             notification.success({message: "Записи успешно удалены"});
             this.tableRef.current.clearSelection();
 
