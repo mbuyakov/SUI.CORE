@@ -28,8 +28,8 @@ function equalOrStartWithFilter(equal: string | null | undefined, startsWith: st
 export interface IMetaTransitionBarProps<TStatus extends ITransitionStatus<TID>, TAction, TResolution, TID = string>
   extends Omit<ITransitionBarProps<TStatus, TID>, "statuses" | "transitions" | "statusNameExtractor"> {
   actionResolutionJoinTableName?: string;
-  actionRoleJoinTableName?: string;
   actionStatusJoinTableName?: string;
+  actionStatusRoleJoinTableName?: string;
   actionTableName: string;
   disableRoleRestrictions?: boolean;
   fromStatusColumnName?: string;
@@ -67,8 +67,8 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
       resolutionTableName,
       statusTableName,
       actionResolutionJoinTableName,
-      actionRoleJoinTableName,
       actionStatusJoinTableName,
+      actionStatusRoleJoinTableName,
       disableRoleRestrictions,
       fromStatusColumnName,
       toStatusColumnName
@@ -91,15 +91,17 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
     );
 
     // fetch join tables
+    const actionStatusTable = await fetchJoinTable(actionStatusJoinTableName || {first: actionTable, second: statusTable});
+
     const [
-      actionStatusTable,
       actionResolutionTable,
-      actionRoleTable
+      actionStatusRoleTable
     ] = await asyncMap(
       [
-        actionStatusJoinTableName || {first: actionTable, second: statusTable},
         actionResolutionJoinTableName || {first: actionTable, second: resolutionTable},
-        !disableRoleRestrictions ? (actionRoleJoinTableName || {first: actionTable, second: roleTable}) : undefined
+        !disableRoleRestrictions
+          ? (actionStatusRoleJoinTableName || {first: actionStatusTable, second: roleTable})
+          : undefined
       ],
       async tableName => tableName ? await fetchJoinTable(tableName) : undefined
     );
@@ -112,7 +114,7 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
       roles,
       actionStatuses,
       actionResolutions,
-      actionRoles
+      actionStatusRoles
     ] = await asyncMap(
       [
         actionTable,
@@ -121,7 +123,7 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
         roleTable,
         actionStatusTable,
         actionResolutionTable,
-        actionRoleTable,
+        actionStatusRoleTable
       ],
       async table => table ? await fetchAllRows(table) : undefined
     );
@@ -149,8 +151,8 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
       actionStatusToStatusId,
       actionResolutionActionId,
       actionResolutionResolutionId,
-      actionRoleActionId,
-      actionRoleRoleId
+      actionStatusRoleActionId,
+      actionStatusRoleRoleId
     ] = await asyncMap(
       [
         {baseTable: actionStatusTable, refTable: actionTable},
@@ -166,8 +168,8 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
         },
         {baseTable: actionResolutionTable, refTable: actionTable},
         {baseTable: actionResolutionTable, refTable: resolutionTable},
-        {baseTable: actionRoleTable, refTable: actionTable},
-        {baseTable: actionRoleTable, refTable: roleTable}
+        {baseTable: actionStatusRoleTable, refTable: actionStatusTable},
+        {baseTable: actionStatusRoleTable, refTable: roleTable}
       ],
       async item => {
         const column = await findColumnByReferencedTable(item.baseTable, item.refTable, item.filter);
@@ -185,28 +187,28 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
       actionResolutions || [],
       element => element[actionResolutionActionId]
     );
-    const actionRoleMap = groupBy(
-      actionRoles || [],
-      element => element[actionRoleActionId]
+    const actionStatusRoleMap = groupBy(
+      actionStatusRoles || [],
+      element => element[actionStatusRoleActionId]
     );
 
     const transitions: Array<ITransition<TID>> = [];
 
     // Generate transitions
     actionStatuses.forEach(actionStatus => {
-      const action = actionMap.get(actionStatus[actionStatusActionId]);
-      const currentActionResolutions = actionResolutionsMap.get(action.id) || [];
       let isAllowed = true;
 
-      if (actionRoleTable) {
+      if (actionStatusRoleTable) {
         // TODO: не тестил, так как не было примера (Выглядит валидно)
-        isAllowed = (actionRoleMap.get(action.id) || [])
-          .map(actionRole => roleMap.get(actionRole[actionRoleRoleId]))
+        isAllowed = (actionStatusRoleMap.get(actionStatus.id) || [])
+          .map(actionStatusRole => roleMap.get(actionStatusRole[actionStatusRoleRoleId]))
           .map(role => formatRoleName(role.name))
           .some(roleName => currentUserRoles.includes(roleName));
       }
 
       if (isAllowed) {
+        const action = actionMap.get(actionStatus[actionStatusActionId]);
+        const currentActionResolutions = actionResolutionsMap.get(action.id) || [];
         const [fromId, toId] = [actionStatusFromStatusId, actionStatusToStatusId].map(field => actionStatus[field]);
 
         // tslint:disable-next-line:no-object-literal-type-assertion
