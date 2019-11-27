@@ -10,6 +10,7 @@ import {errorNotification} from "./drawUtils";
 import {PromisedButton} from "./Inputs";
 import {ObservableBinder} from "./Observable";
 import {ExtractProps} from "./other";
+import {roleVisibilityWrapper} from "./RoleVisibilityWrapper";
 
 // tslint:disable-next-line:variable-name
 export const MutableBackendTableButtonGap = 32;
@@ -22,6 +23,7 @@ export type IMutableBackendTableProps<TValues, TSelection> =
     createButtonProps?: Omit<ButtonProps, "onClick">;
     createModalProps?: Omit<ModalProps, "visible" | "onOk" | "footer">;
     deleteButtonProps?: INoPromisePromisedButtonProps;
+    mutationRoles?: string[];
     customExtra?(createButton: JSX.Element, deleteButton: JSX.Element): JSX.Element;
     handleDelete?(selection: TSelection[]): Promise<void>;
     onSubmit?(values: TValues): Promise<boolean>;
@@ -48,7 +50,8 @@ export class MutableBackendTable<TValues extends {}, TSelection = number>
     const {
       createButtonProps,
       createModalProps,
-      deleteButtonProps
+      deleteButtonProps,
+      mutationRoles
     } = this.props;
     const okButtonProps = createModalProps ? createModalProps.okButtonProps: undefined;
     const onCancel = this.onModalClose;
@@ -103,26 +106,28 @@ export class MutableBackendTable<TValues extends {}, TSelection = number>
       </PromisedButton>
     );
 
+    const extra = this.props.customExtra
+      ? this.props.customExtra(createButton, deleteButton)
+      : (
+        <div
+          style={{
+            display: "grid",
+            gap: MutableBackendTableButtonGap,
+            gridTemplateColumns: "1fr 1fr"
+          }}
+        >
+          {createButton}
+          {deleteButton}
+        </div>
+      );
+
     return (
       <>
         <BackendTable<TSelection>
           {...this.props}
           innerRef={this.tableRef}
           selectionEnabled={true}
-          extra={this.props.customExtra
-            ? this.props.customExtra(createButton, deleteButton)
-            : (
-              <div
-                style={{
-                  display: "grid",
-                  gap: MutableBackendTableButtonGap,
-                  gridTemplateColumns: "1fr 1fr"
-                }}
-              >
-                {createButton}
-                {deleteButton}
-              </div>
-            )}
+          extra={mutationRoles ? roleVisibilityWrapper({content: extra, roles: mutationRoles}) : extra}
         />
         <Modal
           visible={this.state.modalVisible}
