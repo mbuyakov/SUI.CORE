@@ -8,9 +8,12 @@ export interface IRoleVisibilityWrapperProps<T = React.ReactNode> {
   roles: string[];
 }
 
-export function roleVisibilityWrapper<T>(props: IRoleVisibilityWrapperProps<T>): T {
+export function hasAnyRole(roles: string[]): boolean {
   const userRoles = getUser().roles || []; // Б - Безопасность
-  const isAllowed = userRoles.includes("ADMIN") || userRoles.some(role => props.roles.includes(role));
 
-  return isAllowed ? props.content : (props.forbiddenComponent || null);
+  return userRoles.includes("ADMIN") || userRoles.some(role => roles.includes(role));
+}
+
+export function roleVisibilityWrapper<T>(props: IRoleVisibilityWrapperProps<T>): T {
+  return hasAnyRole(props.roles) ? props.content : (props.forbiddenComponent || null);
 }

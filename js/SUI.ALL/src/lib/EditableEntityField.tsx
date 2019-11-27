@@ -6,24 +6,25 @@ import * as React from 'react';
 import { NO_DATA_TEXT } from './const';
 import { errorNotification } from './drawUtils';
 import { generateUpdate, PossibleId, PossibleValue } from './gql/queryGenerator';
-import { EditablePromisedComponent, IPromisedBaseProps } from './Inputs';
+import {EditablePromisedComponent, IEditablePromisedComponentProps, IPromisedBaseProps} from './Inputs';
 import { IObjectWithIndex } from './other';
 import { WaitData } from './WaitData';
 
-export class EditableEntityField<T = any> extends React.Component<{
-  children: React.ReactElement<Omit<IPromisedBaseProps<T>, 'promise'>>
-  customQuery?: string
-  entity: string
-  failMessage: string
-  field: string
-  id: PossibleId
-  successMessage: string
-  afterSave?(): Promise<void>
-  customDefaultValue?(value: T): any
-  nonEditRender?(value: T): React.ReactNode
-  selectValueGenerator?(data: any): Array<React.ReactElement<OptionProps>>
-  valuePreSaveConverter?(value: T): PossibleValue
-}> {
+export interface IEditableEntityFieldProps<T> extends Omit<IEditablePromisedComponentProps<T>, "children"> {
+  children: React.ReactElement<Omit<IPromisedBaseProps<T>, 'promise'>>;
+  customQuery?: string;
+  entity: string;
+  failMessage: string;
+  field: string;
+  id: PossibleId;
+  successMessage: string;
+  afterSave?(): Promise<void>;
+  customDefaultValue?(value: T): any;
+  selectValueGenerator?(data: any): Array<React.ReactElement<OptionProps>>;
+  valuePreSaveConverter?(value: T): PossibleValue;
+}
+
+export class EditableEntityField<T = any> extends React.Component<IEditableEntityFieldProps<T>> {
   private readonly waitDataRef: React.RefObject<WaitData> = React.createRef<WaitData>();
 
   public render(): JSX.Element {
@@ -41,6 +42,7 @@ export class EditableEntityField<T = any> extends React.Component<{
         >
           {(data): JSX.Element => (
             <EditablePromisedComponent
+              {...this.props}
               nonEditRender={() => {
                 const renderData = this.props.customQuery ? data : data[this.props.field];
 

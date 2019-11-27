@@ -1,28 +1,30 @@
-import { Button } from "antd";
+import {Button} from "antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import { EDITABLE_PROMISED_COMPONENT_CHILDREN } from '../styles';
+import {hasAnyRole} from "../RoleVisibilityWrapper";
+import {EDITABLE_PROMISED_COMPONENT_CHILDREN} from '../styles';
 
-import { IPromisedBaseProps } from "./PromisedBase";
+import {IPromisedBaseProps} from "./PromisedBase";
 
 export interface IEditablePromisedComponentProps<T> {
-  children: React.ReactElement<IPromisedBaseProps<T>>
-  nonEditRender?(value: T): React.ReactNode
+  children: React.ReactElement<IPromisedBaseProps<T>>;
+  editRoles?: string[];
+
+  nonEditRender?(value: T): React.ReactNode;
 }
 
-export class EditablePromisedComponent<T> extends React.Component<
-  IEditablePromisedComponentProps<T>,
-  {
-    editMode?: boolean;
-  }
-> {
+export class EditablePromisedComponent<T>
+  extends React.Component<IEditablePromisedComponentProps<T>, { editMode?: boolean; }> {
+
   public constructor(props: IEditablePromisedComponentProps<T>) {
     super(props);
     this.state = {};
   }
 
   public render(): React.ReactNode {
+    const editAllowed = this.props.editRoles ? hasAnyRole(this.props.editRoles) : true;
+
     return (
       <div
         style={{
@@ -31,14 +33,16 @@ export class EditablePromisedComponent<T> extends React.Component<
         }}
         className={EDITABLE_PROMISED_COMPONENT_CHILDREN}
       >
-        {this.state.editMode ? React.cloneElement(this.props.children, { promise: this.getPromise }) : (this.props.nonEditRender || this.DEFAULT_RENDERER).apply(null, [this.props.children.props.defaultValue])}
-        <Button
-          size="small"
-          htmlType="button"
-          style={{ marginLeft: this.state.editMode ? 4 : 8, flexShrink: 0, padding: "0 4px" }}
-          onClick={this.switchEdit}
-          icon={this.state && this.state.editMode ? "close" : "edit"}
-        />
+        {this.state.editMode ? React.cloneElement(this.props.children, {promise: this.getPromise}) : (this.props.nonEditRender || this.DEFAULT_RENDERER).apply(null, [this.props.children.props.defaultValue])}
+        {editAllowed && (
+          <Button
+            size="small"
+            htmlType="button"
+            style={{marginLeft: this.state.editMode ? 4 : 8, flexShrink: 0, padding: "0 4px"}}
+            onClick={this.switchEdit}
+            icon={this.state && this.state.editMode ? "close" : "edit"}
+          />
+        )}
       </div>
     );
   }
@@ -54,7 +58,7 @@ export class EditablePromisedComponent<T> extends React.Component<
     const promise = this.props.children.props.promise(value);
     // noinspection ES6MissingAwait
     promise.then(() => {
-      this.setState({ editMode: false })
+      this.setState({editMode: false})
     });
 
     return promise;
@@ -62,6 +66,7 @@ export class EditablePromisedComponent<T> extends React.Component<
 
   @autobind
   private switchEdit(): void {
-    this.setState({ editMode: !this.state.editMode });
+    this.setState({editMode: !this.state.editMode});
   }
+
 }
