@@ -61,7 +61,7 @@ export function generateCreateText(entity: string, fields: object): string {
   const camelCaseEntity = camelCase(entity);
 
   return `mutation {
-  create${capitalize(camelCaseEntity)}(input: {${camelCaseEntity}: {${Object.keys(fields).filter(key => (fields as IObjectWithIndex)[key] != null).map(key => `${key}: ${addQuotesIfString((fields as IObjectWithIndex)[key])}`) as unknown as string}}}) {
+  create${capitalize(camelCaseEntity)}(input: {${camelCaseEntity}: {${Object.keys(fields).filter(key => !key.startsWith('_')).filter(key => (fields as IObjectWithIndex)[key] != null).map(key => `${key}: ${addQuotesIfString((fields as IObjectWithIndex)[key])}`) as unknown as string}}}) {
     ${camelCaseEntity} {
       id
     }
