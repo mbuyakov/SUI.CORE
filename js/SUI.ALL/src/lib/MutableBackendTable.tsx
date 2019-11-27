@@ -11,13 +11,14 @@ import {PromisedButton} from "./Inputs";
 import {ObservableBinder} from "./Observable";
 import {ExtractProps} from "./other";
 import {roleVisibilityWrapper} from "./RoleVisibilityWrapper";
+import {defaultIfNotBoolean} from "./typeWrappers";
 
 // tslint:disable-next-line:variable-name
 export const MutableBackendTableButtonGap = 32;
 type INoPromisePromisedButtonProps = Omit<ExtractProps<PromisedButton>, "promise">;
 
 export type IMutableBackendTableProps<TValues, TSelection> =
-  Omit<ExtractProps<BackendTable<TSelection>>, "selectionEnabled" | "innerRef" | "extra" | "ref">
+  Omit<ExtractProps<BackendTable<TSelection>>, "innerRef" | "extra" | "ref">
   & {
     baseFormProps: Omit<IBaseFormProps, "children" | "onSubmit" | "ref">;
     createButtonProps?: Omit<ButtonProps, "onClick">;
@@ -128,7 +129,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number>
         <BackendTable<TSelection>
           {...this.props}
           innerRef={this.tableRef}
-          selectionEnabled={!!extra} // Отключение selection в случае невидимости кнопок по ролям
+          selectionEnabled={!!extra && defaultIfNotBoolean(this.props.selectionEnabled, true)} // Отключение selection в случае невидимости кнопок по ролям
           extra={extra}
         />
         <Modal
