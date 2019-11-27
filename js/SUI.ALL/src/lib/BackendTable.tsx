@@ -108,7 +108,7 @@ function calculateParentExpandedGroups(realExpandedGroupKeys: IExpandedGroup[], 
 }
 
 export class BackendTable<TSelection = defaultSelection>
-  extends React.Component<Omit<IBaseTableProps<TSelection>, 'rows' | 'cols' | 'defaultFilters' | 'customFilterComponent'> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable> }, IBackendTableState<TSelection>>
+  extends React.Component<Omit<IBaseTableProps<TSelection>, 'rows' | 'cols' | 'defaultFilters' | 'customFilterComponent'> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable<TSelection>> }, IBackendTableState<TSelection>>
   implements ISelectionTable<TSelection> {
 
   private additionalStateMap: Map<string, IBackendTableState<TSelection>> = new Map<string, IBackendTableState<TSelection>>();

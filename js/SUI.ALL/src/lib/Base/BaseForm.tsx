@@ -34,7 +34,7 @@ export interface IBaseFormChildrenProps {
 export type BaseFormChildrenFn = React.FunctionComponent<IBaseFormChildrenProps>;
 
 export type IBaseFormProps = Omit<IBaseCardProps<any>, 'item' | 'rows' | 'forceRenderTabs'> & {
-  children: BaseFormChildrenFn
+  children?: BaseFormChildrenFn
   customInputNodesTags?: IObjectWithIndex
   // tslint:disable-next-line:no-any
   initialValues?: IObjectWithIndex
@@ -224,7 +224,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
           verticalLabel: !!this.props.verticalLabel,
         }}
       >
-        {this.props.children({
+        {this.props.children && this.props.children({
           get: this.headerWrapperValuesGetter,
           hasErrors: this.hasErrors,
           isSaveInProgress: this.state.saving,
