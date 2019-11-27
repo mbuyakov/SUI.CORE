@@ -154,9 +154,8 @@ export class MutableBackendTable<TValues extends {}, TSelection = number>
                 onClick={onCancel}
               >
                 {createModalProps && createModalProps.cancelText || "Отмена"}
-              </Button>,
-              {/* TODO: Костыль, BaseForm + Observable - мусор */}
-              {hasErrors
+              </Button>
+              {hasErrors // TODO: Костыль, BaseForm + Observable - мусор
                 ? (<ObservableBinder observable={hasErrors}>{okButton}</ObservableBinder>)
                 : okButton(false)}
             </div>
