@@ -106,7 +106,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number>
       </PromisedButton>
     );
 
-    const extra = this.props.customExtra
+    let extra = this.props.customExtra
       ? this.props.customExtra(createButton, deleteButton)
       : (
         <div
@@ -121,13 +121,15 @@ export class MutableBackendTable<TValues extends {}, TSelection = number>
         </div>
       );
 
+    extra = mutationRoles ? roleVisibilityWrapper({content: extra, roles: mutationRoles}) : extra;
+
     return (
       <>
         <BackendTable<TSelection>
           {...this.props}
           innerRef={this.tableRef}
-          selectionEnabled={true}
-          extra={mutationRoles ? roleVisibilityWrapper({content: extra, roles: mutationRoles}) : extra}
+          selectionEnabled={!!extra} // Отключение selection в случае невидимости кнопок по ролям
+          extra={extra}
         />
         <Modal
           visible={this.state.modalVisible}
