@@ -198,8 +198,6 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
     actionStatuses.forEach(actionStatus => {
       let isAllowed = true;
 
-      console.log(actionStatus, actionStatusRoleMap);
-
       if (!currentUserRoles.includes('ADMIN') && actionStatusRoleTable) {
         // TODO: не тестил, так как не было примера (Выглядит валидно)
         isAllowed = (actionStatusRoleMap.get(actionStatus.id) || [])

@@ -27,8 +27,10 @@ export async function fetchJoinTable(
     const {first, second} = joinTableName;
 
     if (first && second) {
-      const firstPossibleName = joinTableNames(first, second);
-      const secondPossibleName = joinTableNames(second, first);
+      // TODO: костыль для roles
+      const [firstTableName, secondTableName] = [first, second].map(table => table.tableName).map(tableName => tableName === "roles" ? "role" : tableName);
+      const firstPossibleName = joinTableNames(firstTableName, secondTableName);
+      const secondPossibleName = joinTableNames(secondTableName, firstTableName);
 
       joinTableInfo = (await TableInfoManager.containsById(firstPossibleName))
         ? (await TableInfoManager.getById(firstPossibleName))
@@ -41,8 +43,8 @@ export async function fetchJoinTable(
   return joinTableInfo;
 }
 
-export function joinTableNames(...tables: TableInfo[]): string {
-  return tables.map(table => table.tableName).join('_');
+export function joinTableNames(...tableNames: string[]): string {
+  return tableNames.join('_');
 }
 
 export async function findColumnsByReferencedTable(
