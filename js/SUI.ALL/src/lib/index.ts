@@ -37,6 +37,7 @@ export * from "./DraggableRowTable";
 export * from "./drawUtils";
 export * from "./EditableEntityField";
 export * from "./FullScreenModal";
+export * from "./Modal";
 export * from "./MutableBackendTable";
 export * from "./ReportTop3DBarChart";
 export * from "./Socket";

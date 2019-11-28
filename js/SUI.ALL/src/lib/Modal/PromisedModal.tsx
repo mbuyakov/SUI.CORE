@@ -3,7 +3,7 @@ import {ModalProps} from "antd/lib/modal";
 import autobind from "autobind-decorator";
 import React from "react";
 
-import {PromisedButton} from "./Inputs";
+import {PromisedButton} from "../Inputs";
 
 export const defaultModalFooter = (okButton: JSX.Element, cancelButton: JSX.Element) => (
   <div
