@@ -200,7 +200,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   }
 
   @autobind
-  public async onSubmit(): Promise<void> {
+  public async onSubmit(): Promise<boolean> {
     this.setFieldValue(SUBMITTED_FIELD, true);
 
     if (!this.hasErrors.getValue()) {
@@ -210,7 +210,11 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
         this.clearForm();
       }
       this.setState({saving: false});
+
+      return answer;
     }
+
+    return false;
   }
 
   public render(): React.ReactNode {

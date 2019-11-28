@@ -67,11 +67,13 @@ export class MutableBackendTable<TValues extends {}, TSelection = number>
         // tslint:disable-next-line:jsx-no-lambda
         promise={async (): Promise<void> => {
           if (this.props.onSubmit && this.formRef.current) {
-            await this.formRef.current.onSubmit();
+            const result = await this.formRef.current.onSubmit();
 
-            if (this.tableRef.current) {
+            if (result && this.tableRef.current) {
               // tslint:disable-next-line:no-floating-promises
               this.tableRef.current.refresh();
+            } else { // Else don't refresh table and don't close modal
+              return;
             }
           }
 
