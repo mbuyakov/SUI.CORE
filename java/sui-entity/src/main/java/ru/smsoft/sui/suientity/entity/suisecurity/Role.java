@@ -28,7 +28,7 @@ public class Role implements Serializable {
     public static final String WITH_USERS = "with_users";
 
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	  @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NaturalId
@@ -37,6 +37,8 @@ public class Role implements Serializable {
     @Column(name = "name", insertable = false, updatable = false)
     @Convert(converter = RoleNameConverter.class)
     private RoleName roleName;
+
+    private String rusName;
 
     // bi-directional many-to-many association to User
     @ManyToMany(mappedBy = "roles")
