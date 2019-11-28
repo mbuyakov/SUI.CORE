@@ -3,9 +3,10 @@ import { PopconfirmProps } from 'antd/lib/popconfirm';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import { PromisedErrorPopover } from './PromisedErrorPopover';
+import {IPromisedErrorPopoverProps, PromisedErrorPopover} from './PromisedErrorPopover';
 
 export interface IPromisedBaseProps<V> {
+  errorPopoverProps: Omit<IPromisedErrorPopoverProps, "promise">;
   popconfirmSettings?: PopconfirmSettings | boolean;
 
   // Must be function to generate new promise on each change
@@ -61,7 +62,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   }
 
   protected wrapConfirmAndError(child: JSX.Element | null): JSX.Element {
-    const childWithErrorPopover = <PromisedErrorPopover promise={this.state.promise}>{child}</PromisedErrorPopover>;
+    const childWithErrorPopover = <PromisedErrorPopover {...this.props.errorPopoverProps} promise={this.state.promise}>{child}</PromisedErrorPopover>;
 
     return this.props.popconfirmSettings ? (
       <Popconfirm

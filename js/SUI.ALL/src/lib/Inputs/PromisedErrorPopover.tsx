@@ -1,9 +1,12 @@
 import { Popover } from "antd";
+import {PopoverProps} from "antd/lib/popover";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-export interface IPromisedErrorPopoverProps {
-  promise?: Promise<void>
+export interface IPromisedErrorPopoverProps
+  extends Omit<PopoverProps, "content" | "onVisibleChange" | "trigger" | "visible"> {
+  promise?: Promise<void>;
+
 }
 
 export class PromisedErrorPopover extends React.Component<
@@ -23,7 +26,13 @@ export class PromisedErrorPopover extends React.Component<
     this.onUpdate();
 
     return (
-      <Popover trigger="click" visible={this.state.popoverVisible} onVisibleChange={this.handleVisibleChange} content={this.state.errorText}>
+      <Popover
+        {...this.props}
+        content={this.state.errorText}
+        onVisibleChange={this.handleVisibleChange}
+        trigger="click"
+        visible={this.state.popoverVisible}
+      >
         {this.props.children}
       </Popover>
     );
