@@ -6,7 +6,7 @@ import * as React from 'react';
 import {IPromisedErrorPopoverProps, PromisedErrorPopover} from './PromisedErrorPopover';
 
 export interface IPromisedBaseProps<V> {
-  errorPopoverProps: Omit<IPromisedErrorPopoverProps, "promise">;
+  errorPopoverProps?: Omit<IPromisedErrorPopoverProps, "promise">;
   popconfirmSettings?: PopconfirmSettings | boolean;
 
   // Must be function to generate new promise on each change
