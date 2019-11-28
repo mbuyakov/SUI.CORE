@@ -1,3 +1,4 @@
+import autobind from "autobind-decorator";
 import * as React from "react";
 
 import {BaseForm, IBaseFormProps} from "../Base";
@@ -27,6 +28,7 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
       <PromisedModal
         {...this.props}
         ref={this.modalRef}
+        promise={this.modalPromise}
         // tslint:disable-next-line:jsx-no-lambda
         customFooter={(okButton, cancelButton): JSX.Element => defaultModalFooter(
           hasErrors
@@ -48,6 +50,15 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
         />
       </PromisedModal>
     );
+  }
+
+  @autobind
+  private async modalPromise(): Promise<boolean> {
+    if (this.props.onSubmit && this.formRef.current) {
+      return this.formRef.current.onSubmit();
+    }
+
+    return true;
   }
 
 }
