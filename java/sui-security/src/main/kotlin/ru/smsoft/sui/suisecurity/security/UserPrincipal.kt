@@ -20,7 +20,7 @@ class UserPrincipal(
     override fun isAccountNonExpired() = true
     override fun isAccountNonLocked() = true
     override fun isCredentialsNonExpired() = true
-    override fun isEnabled() = true
+    override fun isEnabled() = !user.deleted
 
     override fun equals(other: Any?) = this.user.id == (other as UserPrincipal?)?.user?.id
 
