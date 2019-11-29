@@ -166,6 +166,8 @@ export interface IRole {
   // noinspection SpellCheckingInspection
   name: string;
   // noinspection SpellCheckingInspection
+  rusName: string;
+  // noinspection SpellCheckingInspection
   columnInfoRolesByRoleId: IGraphQLConnection<IColumnInfoRole>;
   // noinspection SpellCheckingInspection
   userRolesByRoleId: IGraphQLConnection<IUserRole>;
