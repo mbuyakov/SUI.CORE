@@ -2,6 +2,7 @@
 import {Button, Dropdown, Icon, Menu, Modal} from 'antd';
 import {ButtonGroupProps} from "antd/lib/button";
 import {ModalFuncProps} from "antd/lib/modal";
+import Popconfirm, {PopconfirmProps} from "antd/lib/popconfirm";
 import Tooltip, { TooltipProps } from 'antd/lib/tooltip';
 import autobind from "autobind-decorator";
 import classNames from "classnames";
@@ -31,22 +32,39 @@ interface ITransitionBarState {
   loading: boolean;
 }
 
-function wrapInTooltip(
+function wrapInTooltipAndPopconfirm(
   element: string | JSX.Element,
-  tooltipProps?: TooltipProps
+  tooltipProps?: TooltipProps,
+  popconfirmProps?: PopconfirmProps
 ): string | JSX.Element {
-  return (tooltipProps && tooltipProps.title)
-    ? (
+  let result = element;
+
+  if (tooltipProps && tooltipProps.title) {
+    result = (
       <Tooltip
         {...tooltipProps}
       >
-        {element}
+        {result}
       </Tooltip>
-    ) : element;
+    );
+  }
+
+  if (popconfirmProps && popconfirmProps.title) {
+    result = (
+      <Popconfirm
+        {...popconfirmProps}
+      >
+        {result}
+      </Popconfirm>
+    );
+  }
+
+  return result;
 }
 
 const loadingIcon = (loading: boolean): JSX.Element => loading ? <span><Icon type="loading"/>&nbsp;</span> : null;
 
+// TODO: Popconfirm for resolutions
 export class TransitionBar<TStatus extends { id: TID }, TID = string>
   extends React.Component<ITransitionBarProps<TStatus, TID>, ITransitionBarState> {
 
@@ -118,7 +136,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
                       key={id}
                       disabled={resolutionDisabled || commonLoading}
                     >
-                      {wrapInTooltip(resolutionName, resolutionTooltip)}
+                      {wrapInTooltipAndPopconfirm(resolutionName, resolutionTooltip)}
                     </Menu.Item>
                   );
                 })}
@@ -139,7 +157,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
                   loading={false}
                   disabled={disabled}
                 >
-                  {wrapInTooltip(content, tooltip)}
+                  {wrapInTooltipAndPopconfirm(content, tooltip)}
                 </Button>
               </Dropdown>
             );
@@ -157,10 +175,10 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
               </Button>
             );
 
-            return wrapInTooltip(result, tooltip);
+            return wrapInTooltipAndPopconfirm(result, tooltip, transition.popconfirmProps);
           }
         })}
-        {enableTransitionGraph && wrapInTooltip(graphButton, {title: "Граф возможных переходов", ...graphTooltipProps})}
+        {enableTransitionGraph && wrapInTooltipAndPopconfirm(graphButton, {title: "Граф возможных переходов", ...graphTooltipProps})}
       </Button.Group>
     );
   }
