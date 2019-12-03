@@ -32,34 +32,32 @@ interface ITransitionBarState {
   loading: boolean;
 }
 
-function wrapInTooltipAndPopconfirm(
+function wrapInTooltip(
   element: string | JSX.Element,
-  tooltipProps?: TooltipProps,
-  popconfirmProps?: PopconfirmProps
+  tooltipProps?: TooltipProps
 ): string | JSX.Element {
-  let result = element;
-
-  if (tooltipProps && tooltipProps.title) {
-    result = (
+  return (tooltipProps && tooltipProps.title)
+    ? (
       <Tooltip
         {...tooltipProps}
       >
-        {result}
+        {element}
       </Tooltip>
-    );
-  }
+    ) : element;
+}
 
-  if (popconfirmProps && popconfirmProps.title) {
-    result = (
+function wrapInPopover(
+  element: string | JSX.Element,
+  popconfirmProps?: PopconfirmProps
+): string | JSX.Element {
+  return (popconfirmProps && popconfirmProps.title)
+    ? (
       <Popconfirm
         {...popconfirmProps}
       >
-        {result}
+        {element}
       </Popconfirm>
-    );
-  }
-
-  return result;
+    ) : element;
 }
 
 const loadingIcon = (loading: boolean): JSX.Element => loading ? <span><Icon type="loading"/>&nbsp;</span> : null;
@@ -136,7 +134,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
                       key={id}
                       disabled={resolutionDisabled || commonLoading}
                     >
-                      {wrapInTooltipAndPopconfirm(resolutionName, resolutionTooltip)}
+                      {wrapInTooltip(resolutionName, resolutionTooltip)}
                     </Menu.Item>
                   );
                 })}
@@ -157,7 +155,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
                   loading={false}
                   disabled={disabled}
                 >
-                  {wrapInTooltipAndPopconfirm(content, tooltip)}
+                  {wrapInTooltip(content, tooltip)}
                 </Button>
               </Dropdown>
             );
@@ -171,14 +169,14 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
                 disabled={disabled}
                 onClick={this.onTransitFn(transition)}
               >
-                {transitionContent}
+                {wrapInTooltip(transitionContent, tooltip)}
               </Button>
             );
 
-            return wrapInTooltipAndPopconfirm(result, tooltip, transition.popconfirmProps);
+            return wrapInPopover(result, transition.popconfirmProps);
           }
         })}
-        {enableTransitionGraph && wrapInTooltipAndPopconfirm(graphButton, {title: "Граф возможных переходов", ...graphTooltipProps})}
+        {enableTransitionGraph && wrapInTooltip(graphButton, {title: "Граф возможных переходов", ...graphTooltipProps})}
       </Button.Group>
     );
   }
