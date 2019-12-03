@@ -32,11 +32,19 @@ interface ITransitionBarState {
   loading: boolean;
 }
 
+function hasPopconfirm(popconfirmProps?: PopconfirmProps): boolean {
+  return !!(popconfirmProps && popconfirmProps.title);
+}
+
+function hasTooltip(tooltipProps?: TooltipProps): boolean {
+  return !!(tooltipProps && tooltipProps.title);
+}
+
 function wrapInTooltip(
   element: string | JSX.Element,
   tooltipProps?: TooltipProps
 ): string | JSX.Element {
-  return (tooltipProps && tooltipProps.title)
+  return hasTooltip(tooltipProps)
     ? (
       <Tooltip
         {...tooltipProps}
@@ -50,7 +58,7 @@ function wrapInPopover(
   element: string | JSX.Element,
   popconfirmProps?: PopconfirmProps
 ): string | JSX.Element {
-  return (popconfirmProps && popconfirmProps.title)
+  return hasPopconfirm(popconfirmProps)
     ? (
       <Popconfirm
         {...popconfirmProps}
@@ -160,6 +168,9 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
               </Dropdown>
             );
           } else {
+            const hasConfirm = hasPopconfirm(transition.popconfirmProps);
+            const onClick = this.onTransitFn(transition);
+
             const result = (
               <Button
                 {...commonButtonProps}
@@ -167,13 +178,16 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
                 loading={false}
                 key={key}
                 disabled={disabled}
-                onClick={this.onTransitFn(transition)}
+                onClick={hasConfirm ? undefined : onClick}
               >
                 {wrapInTooltip(transitionContent, tooltip)}
               </Button>
             );
 
-            return wrapInPopover(result, transition.popconfirmProps);
+            return wrapInPopover(
+              result,
+              hasConfirm ? {...transition.popconfirmProps, onConfirm: onClick} : undefined
+            );
           }
         })}
         {enableTransitionGraph && wrapInTooltip(graphButton, {title: "Граф возможных переходов", ...graphTooltipProps})}
