@@ -144,7 +144,7 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
           // tslint:disable-next-line:no-magic-numbers
           marginTop: row.fitCollapsePanel && rowIndex === 0 ? (-24) : undefined,
         }}
-        defaultActiveKey={row.collapsePanels.filter(panel => panel.defaultOpened).map((_, index) => index.toString())}
+        defaultActiveKey={row.collapsePanels.map((panel, index) => ({defaultOpened: panel.defaultOpened, index})).filter(panel => panel.defaultOpened).map(panel => panel.index.toString())}
       >
         {row.collapsePanels.map((panel, index) => renderIBaseCardCollapseLayout(sourceItem, panel, index, row.fitCollapsePanel || false, rowsLength))}
       </Collapse>
