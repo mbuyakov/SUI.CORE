@@ -186,7 +186,11 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
 
             return wrapInPopover(
               result,
-              hasConfirm ? {...transition.popconfirmProps, onConfirm: onClick} : undefined
+              hasConfirm && {
+                ...transition.popconfirmProps,
+                disabled: disabled || (transition.popconfirmProps && transition.popconfirmProps.disabled),
+                onConfirm: onClick
+              }
             );
           }
         })}
