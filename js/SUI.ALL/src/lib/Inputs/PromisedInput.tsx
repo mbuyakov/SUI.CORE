@@ -95,10 +95,10 @@ export class PromisedInput extends PromisedBase<PromisedInputProps,
   @autobind
   private handleNewValue(newValue: React.ChangeEvent<HTMLInputElement> | string): void {
     const value = typeof newValue === 'string' ? newValue : newValue.target.value;
-    const validator = this.props.mask ? maskValidator(value, this.props.mask, this.props.totalValueLength, this.props.allowEmpty) : this.props.validator;
-    if (validator) {
+    const validators = [this.props.mask && maskValidator(value, this.props.mask, this.props.totalValueLength, this.props.allowEmpty), this.props.validator].filter(Boolean);
+    if (validators.length) {
       this.setState({
-        validatorText: validator(value) || '',
+        validatorText: validators.map(v => v(value) || "").join(", "),
       });
     }
     const reg = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/;
