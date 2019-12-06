@@ -27,7 +27,7 @@ export class ChartPlugin extends MetaCardPlugin<SerializedChartSettings> {
   // tslint:disable-next-line:typedef
   public addText = 'asd';
   // tslint:disable-next-line:typedef
-  public availableRootTypes = ['root'] as DEFAULT_ROOT_TYPES[];
+  public availableRootTypes = ['root'];
   // tslint:disable-next-line:typedef
   public id = 'chart';
   // tslint:disable-next-line:typedef
