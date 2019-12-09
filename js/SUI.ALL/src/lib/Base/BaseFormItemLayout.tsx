@@ -8,9 +8,9 @@ import * as React from 'react';
 
 import { IObjectWithIndex } from '../other';
 import { BASE_CARD_ITEM_LABEL_HORIZONTAL, BASE_FORM_ITEM_VERTICAL } from '../styles';
+import { SUIMaskedInput } from '../SUIMaskedInput';
 import { SUIReactComponent } from '../SUIReactComponent';
 
-import { SUIMaskedInput } from './../SUIMaskedInput';
 import { BaseForm, IFormField, SUBMITTED_FIELD, ValuesGetter } from './BaseForm';
 import { BaseFormContext } from './BaseFormContext';
 
@@ -36,7 +36,7 @@ export interface IBaseFormItemLayoutBase {
   mapFormValuesToRequired?(get: ValuesGetter): boolean;
 }
 
-export type IBaseFormItemLayoutMask = Omit<IBaseFormItemLayoutBase, 'inputNode' | 'rules' | 'valuePropName' | 'getValueFromEvent'> & {
+export type IBaseFormItemLayoutMask = Omit<IBaseFormItemLayoutBase, 'inputNode' | 'valuePropName' | 'getValueFromEvent'> & {
   mask: string
   totalValueLength: number // Костыль
 }
@@ -54,7 +54,7 @@ export function mapMaskToBase(item: IBaseFormItemLayout): IBaseFormItemLayoutBas
     if (!(item as IBaseFormItemLayoutBase).rules) {
       (item as IBaseFormItemLayoutBase).rules = [];
     }
-    (item as IBaseFormItemLayoutBase).rules.push({
+    (item as IBaseFormItemLayoutBase).rules.unshift({
       len: (item as IBaseFormItemLayoutMask).totalValueLength,
       message: `Заполните поле по маске ${(item as IBaseFormItemLayoutMask).mask}`,
     });
