@@ -39,8 +39,8 @@ export class PromisedInput extends PromisedBase<PromisedInputProps,
   }
 
   @autobind
-  public maskValidator(value: string, mask: string, totalValueLength: number): () => string {
-    return () => ((value.length === totalValueLength) || (value.length === 0 && this.props.allowEmpty)) ? '' : `Заполните поле по маске ${mask}`;
+  public maskValidator(mask: string, totalValueLength: number): (value: string) => string {
+    return value => ((value.length === totalValueLength) || (value.length === 0 && this.props.allowEmpty)) ? '' : `Заполните поле по маске ${mask}`;
   }
 
   public render(): JSX.Element {
@@ -99,10 +99,10 @@ export class PromisedInput extends PromisedBase<PromisedInputProps,
   @autobind
   private handleNewValue(newValue: React.ChangeEvent<HTMLInputElement> | string): void {
     const value = typeof newValue === 'string' ? newValue : newValue.target.value;
-    const validator = this.props.mask ? this.maskValidator(value, this.props.mask, this.props.totalValueLength) : this.props.validator;
-    if (validator) {
+    const validators = [this.props.mask && this.maskValidator(this.props.mask, this.props.totalValueLength), this.props.validator].filter(Boolean);
+    if (validators.length) {
       this.setState({
-        validatorText: validator(value) || '',
+        validatorText: validators.map(validator => validator(value)).filter(Boolean).join(", "),
       });
     }
     const reg = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/;
