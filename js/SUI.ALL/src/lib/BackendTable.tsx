@@ -107,17 +107,17 @@ function calculateParentExpandedGroups(realExpandedGroupKeys: IExpandedGroup[], 
   return parents;
 }
 
-const maximizeLogConfig: Partial<StompConfig> = ([
-  "onDisconnect",
-  "onStompError",
-  "onUnhandledFrame",
-  "onUnhandledMessage",
-  "onUnhandledReceipt",
-  "onWebSocketClose",
-] as Array<keyof StompConfig>).reduce((result, key) => ({
-  ...result,
-  [key]: (object: any) => console.log(key, object)
-}), {logRawCommunication: true} as Partial<StompConfig>);
+const maximizeLogConfig: Partial<StompConfig> = {
+  debug: (msg): void => console.log(msg),
+  onDisconnect: (frame): void => console.log("onDisconnect", frame),
+  onStompError: (frame): void => console.log("onStompError", frame),
+  onUnhandledFrame: (frame): void => console.log("onUnhandledFrame", frame),
+  onUnhandledMessage: (message): void => console.log("onUnhandledMessage", message),
+  onUnhandledReceipt: (frame): void => console.log("onUnhandledReceipt", frame),
+  onWebSocketClose: (closeEvent): void => console.log("onWebSocketClose", closeEvent),
+  onWebSocketError: (event): void => console.log("onWebSocketError", event),
+  logRawCommunication: true
+};
 
 export class BackendTable<TSelection = defaultSelection>
   extends React.Component<Omit<IBaseTableProps<TSelection>, 'rows' | 'cols' | 'defaultFilters' | 'customFilterComponent'> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable<TSelection>> }, IBackendTableState<TSelection>>
@@ -322,6 +322,8 @@ export class BackendTable<TSelection = defaultSelection>
         client.brokerURL = backendURL.toString();
       }
     });
+
+    console.log("Client after creating:", this.socket.getClient());
   }
 
   @autobind
@@ -773,7 +775,7 @@ export class BackendTable<TSelection = defaultSelection>
       }
 
       const serviceColumns = (this.props.serviceColumns ? wrapInArray(this.props.serviceColumns) : [])
-      // tslint:disable-next-line:no-object-literal-type-assertion
+        // tslint:disable-next-line:no-object-literal-type-assertion
         .map(serviceColumn => ({
           ...serviceColumn,
           exportable: false,

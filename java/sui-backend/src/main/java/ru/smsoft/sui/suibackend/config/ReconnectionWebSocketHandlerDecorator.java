@@ -33,6 +33,8 @@ public class ReconnectionWebSocketHandlerDecorator extends WebSocketHandlerDecor
 
     @Override
     public void afterConnectionEstablished(@NonNull WebSocketSession session) throws Exception {
+        log.info("Connection for Session {} were established", session.getId());
+
         val currentSessionAttributes = session.getAttributes();
 
         Optional.of(session)

@@ -74,7 +74,16 @@ public class WebSocketAuthenticationSecurityConfig implements WebSocketMessageBr
 
     @Override
     public void configureClientInboundChannel(final ChannelRegistration registration) {
-        registration.interceptors(authChannelInterceptorAdapter);
+      registration.interceptors(
+        authChannelInterceptorAdapter,
+        // All messages logger (TMP)
+        new ChannelInterceptor() {
+          @Override
+          public void afterReceiveCompletion(Message<?> message, MessageChannel channel, Exception ex) {
+            log.info("[Message]:" + message);
+          }
+        }
+      );
     }
 
 }
