@@ -1,6 +1,6 @@
 /* tslint:disable:object-literal-sort-keys no-any unnecessary-else newline-before-return prefer-function-over-method no-floating-promises prefer-readonly promise-function-async*/
 import {Filter, Grouping, GroupKey, Sorting, TableFilterRow} from '@devexpress/dx-react-grid';
-import {IFrame, IMessage} from '@stomp/stompjs';
+import {IFrame, IMessage, StompConfig} from '@stomp/stompjs';
 import autobind from 'autobind-decorator';
 import difference from 'lodash/difference';
 import * as React from 'react';
@@ -106,6 +106,18 @@ function calculateParentExpandedGroups(realExpandedGroupKeys: IExpandedGroup[], 
 
   return parents;
 }
+
+const maximizeLogConfig: Partial<StompConfig> = ([
+  "onDisconnect",
+  "onStompError",
+  "onUnhandledFrame",
+  "onUnhandledMessage",
+  "onUnhandledReceipt",
+  "onWebSocketClose",
+] as Array<keyof StompConfig>).reduce((result, key) => ({
+  ...result,
+  [key]: (object: any) => console.log(key, object)
+}), {logRawCommunication: true} as Partial<StompConfig>);
 
 export class BackendTable<TSelection = defaultSelection>
   extends React.Component<Omit<IBaseTableProps<TSelection>, 'rows' | 'cols' | 'defaultFilters' | 'customFilterComponent'> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable<TSelection>> }, IBackendTableState<TSelection>>
@@ -285,6 +297,7 @@ export class BackendTable<TSelection = defaultSelection>
     const backendURL = new URL(getBackendUrl());
 
     this.socket = new Socket({
+      ...maximizeLogConfig,
       brokerURL: backendURL.toString(),
       reconnectDelay: RECONNECT_DELAY,
       connectHeaders: {Authorization: `Bearer ${getUser().accessToken}`},
