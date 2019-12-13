@@ -54,6 +54,36 @@ export function generateUpdateFn(entity: string, id: PossibleId, field: string):
 }
 
 /**
+ * Generate Gql mutation for update
+ * Available fields types - string, number, boolean
+ */
+export function generateMultiUpdateText(entity: string, id: PossibleId, fields: object): string {
+  const camelCaseEntity = camelCase(entity);
+
+  return `mutation {
+  update${capitalize(camelCaseEntity)}ById(input: {id: ${addQuotesIfString(id)}, ${camelCaseEntity}Patch: {${format(fields, false)}}}) {
+    clientMutationId
+  }
+}`;
+}
+
+/**
+ * Generate promise for Gql update
+ * Available fields types - string, number, boolean
+ */
+export async function generateMultiUpdate(entity: string, id: PossibleId, fields: object): Promise<void> {
+  await mutate(generateMultiUpdateText(entity, id, fields));
+}
+
+/**
+ * Generate promise for Gql update
+ * Available fields types - string, number, boolean
+ */
+export function generateMultiUpdateFn(entity: string, id: PossibleId): (fields: object) => Promise<void> {
+  return async (fields: object): Promise<void> => mutate(generateMultiUpdateText(entity, id, fields));
+}
+
+/**
  * Generate Gql mutation for create
  * Available fields types - string, number, boolean
  */
@@ -61,12 +91,23 @@ export function generateCreateText(entity: string, fields: object): string {
   const camelCaseEntity = camelCase(entity);
 
   return `mutation {
-  create${capitalize(camelCaseEntity)}(input: {${camelCaseEntity}: {${Object.keys(fields).filter(key => !key.startsWith('_')).filter(key => (fields as IObjectWithIndex)[key] != null).map(key => `${key}: ${addQuotesIfString((fields as IObjectWithIndex)[key])}`) as unknown as string}}}) {
+  create${capitalize(camelCaseEntity)}(input: {${camelCaseEntity}: {${format(fields, true)}}}) {
     ${camelCaseEntity} {
       id
     }
   }
 }`;
+}
+
+/**
+ * Fields formatter for textGenerators
+ */
+function format(fields: object, excludeNulls: boolean): string {
+  return Object.keys(fields)
+    .filter(key => !key.startsWith('_'))
+    .filter(key => excludeNulls ? ((fields as IObjectWithIndex)[key] != null) : true)
+    .map(key => `${key}: ${addQuotesIfString((fields as IObjectWithIndex)[key])}`)
+    .join(",");
 }
 
 /**
