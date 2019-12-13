@@ -9,7 +9,7 @@ import {IRole} from "../types";
 import {formatRoleName, getDataSet, getDataSetRender, getUser} from "../utils";
 
 import {ITransitionBarProps, TransitionBar} from "./TransitionBar";
-import {ITransition, ITransitionStatus} from "./types";
+import {IResolution, ITransition, ITransitionStatus} from "./types";
 import {fetchAllRows, fetchJoinTable, findColumnByReferencedTable} from "./utils";
 
 const ROLE_TABLE_NAME = "roles";
@@ -45,13 +45,20 @@ export interface IMetaTransitionBarProps<TStatus extends ITransitionStatus<TID>,
   ): ITransition<TID> | null;
 }
 
-export interface IMetaTransitionBarState<TStatus, TID = string> {
+type IStateTransition<TStatus, TAction, TResolution, TID> = Omit<ITransition<TID>, "resolutions"> & {
+  [ACTION_FIELD]: TAction;
+  [FROM_STATUS_FIELD]: TStatus;
+  [TO_STATUS_FIELD]: TStatus;
+  resolutions?: Array<IResolution & {[RESOLUTION_FIELD]: TResolution}>
+};
+
+export interface IMetaTransitionBarState<TStatus, TAction, TResolution, TID = string> {
   statuses: TStatus[];
-  transitions: Array<ITransition<TID>>;
+  transitions: Array<IStateTransition<TStatus, TAction, TResolution, TID>>;
 }
 
 export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction = IObjectWithIndex, TResolution = IObjectWithIndex, TID = string>
-  extends React.Component<IMetaTransitionBarProps<TStatus, TAction, TResolution, TID>, IMetaTransitionBarState<TStatus, TID>> {
+  extends React.Component<IMetaTransitionBarProps<TStatus, TAction, TResolution, TID>, IMetaTransitionBarState<TStatus, TAction, TResolution, TID>> {
 
   public constructor(props: IMetaTransitionBarProps<TStatus, TAction, TResolution, TID>) {
     super(props);
@@ -192,7 +199,7 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
       element => element[actionStatusRoleActionStatusId]
     );
 
-    const transitions: Array<ITransition<TID>> = [];
+    const transitions: Array<IStateTransition<TStatus, TAction, TResolution, TID>> = [];
 
     // Generate transitions
     actionStatuses.forEach(actionStatus => {
@@ -223,15 +230,15 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
               disabled: !isAllowed,
               id: resolution.id,
               name: resolution[NAME_FIELD],
-              [RESOLUTION_FIELD]: resolution
+              [RESOLUTION_FIELD]: resolution as TResolution
             }))
           : undefined,
         toId,
         tooltip: isAllowed ? undefined : {title: "Действие не разрешено"},
-        [ACTION_FIELD]: action,
+        [ACTION_FIELD]: action as TAction,
         [FROM_STATUS_FIELD]: statusMap.get(fromId),
         [TO_STATUS_FIELD]: statusMap.get(toId),
-      } as ITransition<TID>);
+      });
     });
 
     this.setState({
@@ -244,26 +251,19 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
     const {transitionFormatter, ...barProps} = this.props;
     const transitions = this.state.transitions;
 
-    // Note: transitionFormatter can return null (Then transition will be excluded)
-    if (transitionFormatter) {
-      transitions.forEach((transition, index) => {
-        const noTypeTransition = transition as IObjectWithIndex;
-
-        transitions[index] = transitionFormatter(
-          transition,
-          noTypeTransition[FROM_STATUS_FIELD],
-          noTypeTransition[TO_STATUS_FIELD],
-          noTypeTransition[ACTION_FIELD],
-          transition.resolutions ? transition.resolutions.map(resolution => (resolution as IObjectWithIndex)[RESOLUTION_FIELD]) : undefined
-        );
-      })
-    }
-
     return (
       <TransitionBar
         {...barProps}
         {...this.state}
-        transitions={transitions.filter(Boolean)}
+        transitions={transitionFormatter
+          ? transitions.map(transition => transitionFormatter(
+            transition,
+            transition[FROM_STATUS_FIELD],
+            transition[TO_STATUS_FIELD],
+            transition[ACTION_FIELD],
+            transition.resolutions ? transition.resolutions.map(resolution => resolution[RESOLUTION_FIELD]) : undefined
+          )) : transitions
+        }
         statusNameExtractor={this.statusNameExtractor}
       />
     );
