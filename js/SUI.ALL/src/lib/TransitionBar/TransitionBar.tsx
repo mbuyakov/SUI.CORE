@@ -194,7 +194,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
             );
           }
         })}
-        {enableTransitionGraph && filteredTransitions.length && wrapInTooltip(graphButton, {title: "Граф возможных переходов", ...graphTooltipProps})}
+        {enableTransitionGraph && !!filteredTransitions.length && wrapInTooltip(graphButton, {title: "Граф возможных переходов", ...graphTooltipProps})}
       </Button.Group>
     );
   }
