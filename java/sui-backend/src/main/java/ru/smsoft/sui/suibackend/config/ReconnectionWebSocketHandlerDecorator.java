@@ -65,6 +65,13 @@ public class ReconnectionWebSocketHandlerDecorator extends WebSocketHandlerDecor
         super.afterConnectionEstablished(session);
     }
 
+    // Максимизация логов
+    @Override
+    public void handleTransportError(@NonNull WebSocketSession session, @NonNull Throwable exception) throws Exception {
+        log.error("[Transport Error]: " + exception, exception);
+        super.handleTransportError(session, exception);
+    }
+
     @Override
     public void afterConnectionClosed(@NonNull WebSocketSession session, @NonNull CloseStatus closeStatus)
             throws Exception {
