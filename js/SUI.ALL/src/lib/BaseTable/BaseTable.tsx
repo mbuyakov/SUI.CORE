@@ -39,7 +39,8 @@ import {
   Toolbar,
   VirtualTable
 } from '@devexpress/dx-react-grid-material-ui';
-import {TableRow} from '@material-ui/core';
+import {IconButton, TableRow} from '@material-ui/core';
+import {ExpandMore, KeyboardArrowRight} from "@material-ui/icons";
 import Result from 'ant-design-pro/lib/Result';
 import {Card, Icon, Spin} from 'antd';
 import autobind from 'autobind-decorator';
@@ -239,11 +240,26 @@ export class BaseTable<TSelection = defaultSelection>
 
     const expandableFilter = this.props.expandableFilter;
 
-    function toggleCellComponent(props: any): JSX.Element {
+    function toggleCellComponent(props: TableRowDetail.ToggleCellProps): JSX.Element {
       return (
         expandableFilter && !expandableFilter(props.row)
-          ? <Cell {...props} />
-          : <ToggleCell {...props}/>
+          ? <Cell {...props as any} />
+          // customize icons
+          : React.createElement(
+            ToggleCell,
+            props,
+            (
+              <IconButton
+                className={getDataByKey(props, "classes", "toggleCellButton")}
+                onClick={(e): void => {
+                  e.stopPropagation();
+                  onToggle();
+                }}
+              >
+                {props.expanded ? <ExpandMore/> : <KeyboardArrowRight/>}
+              </IconButton>
+            )
+          )
       );
     }
 
