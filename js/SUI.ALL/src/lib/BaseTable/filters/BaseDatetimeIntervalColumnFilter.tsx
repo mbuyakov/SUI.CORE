@@ -3,7 +3,7 @@ import {DatePicker} from "antd";
 import {RangePickerValue} from "antd/lib/date-picker/interface";
 import autobind from "autobind-decorator";
 import moment from "moment";
-import React from 'react';
+import * as React from 'react';
 
 import { GET_DEFAULT_CALENDAR_RANGES } from '../../const';
 import {ICommonColumnSearchProps} from "../types";
@@ -19,6 +19,7 @@ interface IBaseDatetimeIntervalColumnFilterProps {
 
 interface IBaseDatetimeIntervalColumnFilterState {
   filterValue?: RangePickerValue | null;
+  lastSavedValue?: RangePickerValue | null;
   open?: boolean;
 }
 
@@ -40,22 +41,26 @@ export class BaseDatetimeIntervalColumnFilter
 
   public constructor(props: FullBaseDatetimeIntervalColumnFilterProps) {
     super(props);
-    const filterValue = this.props.filter && (this.props.filter.value as unknown as string[]);
+    const propsFilterValue = this.props.filter && (this.props.filter.value as unknown as string[]);
+    const filterValue = propsFilterValue && propsFilterValue.map(value => value && moment(value)) as RangePickerValue;
+
     this.state = {
-      filterValue: filterValue && filterValue.map(value => value && moment(value)) as RangePickerValue
+      filterValue,
+      lastSavedValue: filterValue
     };
   }
 
   public render(): JSX.Element {
     return (
       <DatePicker.RangePicker
+        showToday={true}
         {...this.props}
+        allowClear={true}
         placeholder={this.props.placeholder as [string, string] || ["Начало", "Конец"]}
         style={{width: "100%"}}
         showTime={BaseDatetimeIntervalColumnFilter.getFormat(this.props.pickerMode).includes("HH")}
         ranges={GET_DEFAULT_CALENDAR_RANGES()}
-        allowClear={true}
-        value={this.state.filterValue}
+        defaultValue={this.state.filterValue}
         onChange={this.onChange}
         onOpenChange={this.onOpenChange}
         open={this.state.open}
@@ -72,15 +77,27 @@ export class BaseDatetimeIntervalColumnFilter
       this.setState({filterValue});
     }
   }
+
   @autobind
   private onOpenChange(status: boolean): void {
-    this.setState({open: status}, () => !status && this.triggerFilter(this.state.filterValue));
+    this.setState({open: status}, () => {
+      // if closed
+      if (!status) {
+        const {filterValue, lastSavedValue} = this.state;
+        const isChanged = JSON.stringify(lastSavedValue) !== JSON.stringify(filterValue);
+
+        if (isChanged) {
+          this.triggerFilter(this.state.filterValue);
+        }
+      }
+    });
   }
 
   @autobind
   private triggerFilter(value: RangePickerValue | null | undefined): void {
     const format = BaseDatetimeIntervalColumnFilter.getFormat(this.props.pickerMode);
 
+    this.setState({lastSavedValue: value});
     this.props.onFilter({
       columnName: this.props.column.name,
       operation: "interval",

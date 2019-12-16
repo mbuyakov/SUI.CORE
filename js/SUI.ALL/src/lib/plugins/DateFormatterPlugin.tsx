@@ -24,18 +24,26 @@ export class DateFormatterPlugin extends TableRenderParamsPlugin<IDateFormatterP
 
   // tslint:disable-next-line:prefer-function-over-method variable-name no-async-without-await
   public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams<IDateFormatterPluginTRP>): Promise<void> {
+    const {convertFromUtc, sourceFormat, targetFormat} = trp;
+
     result.render = (value: string) => {
-      if(!value) {
-        return "";
+      if (!value) {
+        return value;
       }
-      const momentCreator = trp.convertFromUtc ? moment.utc : moment;
-      let momentValue = momentCreator(value, trp.sourceFormat);
-      if(trp.convertFromUtc) {
+
+      const momentCreator = convertFromUtc ? moment.utc : moment;
+      let momentValue = momentCreator(value, sourceFormat);
+
+      if (convertFromUtc) {
         momentValue = momentValue.local();
       }
 
-      return momentValue.format(trp.targetFormat);
+      return momentValue.format(targetFormat);
     };
+
+    if (result.search) {
+      result.search.format = targetFormat;
+    }
 
     return;
   }
