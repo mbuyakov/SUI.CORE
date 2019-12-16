@@ -253,7 +253,7 @@ export class BaseTable<TSelection = defaultSelection>
                 className={getDataByKey(props, "classes", "toggleCellButton")}
                 onClick={(e): void => {
                   e.stopPropagation();
-                  onToggle();
+                  props.onToggle();
                 }}
               >
                 {props.expanded ? <ExpandMore/> : <KeyboardArrowRight/>}
