@@ -244,7 +244,7 @@ export class BaseTable<TSelection = defaultSelection>
 
       return (
         expandableFilter && !expandableFilter(props.row)
-          ? <Cell {...props as any} />
+          ? <Cell {...props} />
           : (
             <TableCell
               className={classnames(classes.toggleCell, className)}
