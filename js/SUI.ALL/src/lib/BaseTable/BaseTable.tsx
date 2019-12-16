@@ -2,45 +2,9 @@
 /* tslint:disable:variable-name */
 /* tslint:disable:no-any */
 import {Getter, Getters} from '@devexpress/dx-react-core';
-import {
-  CustomGrouping,
-  CustomPaging,
-  Filter,
-  FilteringState,
-  GroupingState,
-  IntegratedFiltering,
-  IntegratedGrouping,
-  IntegratedPaging,
-  IntegratedSelection,
-  IntegratedSorting,
-  PagingState,
-  RowDetailState,
-  SelectionState,
-  Sorting,
-  SortingState,
-  TableColumnWidthInfo
-} from '@devexpress/dx-react-grid';
-import {
-  ColumnChooser,
-  DragDropProvider,
-  Grid,
-  GroupingPanel,
-  PagingPanel,
-  Table,
-  TableBandHeader,
-  TableColumnReordering,
-  TableColumnResizing,
-  TableColumnVisibility,
-  TableFilterRow,
-  TableGroupRow,
-  TableHeaderRow,
-  TableRowDetail,
-  TableSelection,
-  Toolbar,
-  VirtualTable
-} from '@devexpress/dx-react-grid-material-ui';
-import {IconButton, TableCell, TableRow} from '@material-ui/core';
-import {ExpandMore, KeyboardArrowRight} from "@material-ui/icons";
+import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSelection, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
+import {ColumnChooser, DragDropProvider, Grid, GroupingPanel, PagingPanel, Table, TableBandHeader, TableColumnReordering, TableColumnResizing, TableColumnVisibility, TableFilterRow, TableGroupRow, TableHeaderRow, TableRowDetail, TableSelection, Toolbar, VirtualTable} from '@devexpress/dx-react-grid-material-ui';
+import {TableRow} from '@material-ui/core';
 import Result from 'ant-design-pro/lib/Result';
 import {Card, Icon, Spin} from 'antd';
 import autobind from 'autobind-decorator';
@@ -48,21 +12,16 @@ import classnames from 'classnames';
 import * as React from 'react';
 import * as XLSX from 'xlsx';
 
-import { getDataByKey } from '../dataKey';
+import {getDataByKey} from '../dataKey';
 import {HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from "../styles";
-import { translate } from '../translate';
-import { defaultIfNotBoolean } from '../typeWrappers';
+import {translate} from '../translate';
+import {defaultIfNotBoolean} from '../typeWrappers';
 
-import { EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, WarningPlugin } from './extends';
+import {EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, WarningPlugin} from './extends';
+import {CustomToggleCell} from "./extends/CustomToggleCell";
 import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter} from './filters';
-import { defaultSelection, ISelectionTable } from './ISelectionTable';
-import {
-  IBaseTableColLayout,
-  IBaseTableProps,
-  IRemoteBaseTableFields,
-  IRemoteBaseTableFunctions,
-  TableCellRender
-} from './types';
+import {defaultSelection, ISelectionTable} from './ISelectionTable';
+import {IBaseTableColLayout, IBaseTableProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
 
 const Cell = Table.Cell;
 const SelectionCell = TableSelection.Cell;
@@ -240,27 +199,11 @@ export class BaseTable<TSelection = defaultSelection>
     const expandableFilter = this.props.expandableFilter;
 
     function toggleCellComponent(props: any): JSX.Element {
-      const {expanded, onToggle, tableColumn, tableRow, row, classes, className, ...restProps} = props;
-
       return (
         expandableFilter && !expandableFilter(props.row)
           ? <Cell {...props} />
-          : (
-            <TableCell
-              className={classnames(classes.toggleCell, className)}
-              {...restProps}
-            >
-              <IconButton
-                className={classes.toggleCellButton}
-                onClick={(e): void => {
-                  e.stopPropagation();
-                  props.onToggle();
-                }}
-              >
-                {props.expanded ? <ExpandMore /> : <KeyboardArrowRight />}
-              </IconButton>
-            </TableCell>
-          )
+          // customize icons
+          : <CustomToggleCell {...props} />
       );
     }
 
