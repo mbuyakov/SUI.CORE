@@ -39,7 +39,7 @@ import {
   Toolbar,
   VirtualTable
 } from '@devexpress/dx-react-grid-material-ui';
-import {IconButton, TableRow} from '@material-ui/core';
+import {IconButton, TableCell, TableRow} from '@material-ui/core';
 import {ExpandMore, KeyboardArrowRight} from "@material-ui/icons";
 import Result from 'ant-design-pro/lib/Result';
 import {Card, Icon, Spin} from 'antd';
@@ -65,7 +65,6 @@ import {
 } from './types';
 
 const Cell = Table.Cell;
-const ToggleCell = TableRowDetail.ToggleCell;
 const SelectionCell = TableSelection.Cell;
 const PagingPanelContainer = PagingPanel.Container;
 const ToolbarRoot = Toolbar.Root;
@@ -240,25 +239,27 @@ export class BaseTable<TSelection = defaultSelection>
 
     const expandableFilter = this.props.expandableFilter;
 
-    function toggleCellComponent(props: TableRowDetail.ToggleCellProps): JSX.Element {
+    function toggleCellComponent(props: any): JSX.Element {
+      const {expanded, onToggle, tableColumn, tableRow, row, classes, className, ...restProps} = props;
+
       return (
         expandableFilter && !expandableFilter(props.row)
           ? <Cell {...props as any} />
-          // customize icons
-          : React.createElement(
-            ToggleCell,
-            props,
-            (
+          : (
+            <TableCell
+              className={classnames(classes.toggleCell, className)}
+              {...restProps}
+            >
               <IconButton
-                className={getDataByKey(props, "classes", "toggleCellButton")}
+                className={classes.toggleCellButton}
                 onClick={(e): void => {
                   e.stopPropagation();
                   props.onToggle();
                 }}
               >
-                {props.expanded ? <ExpandMore/> : <KeyboardArrowRight/>}
+                {props.expanded ? <ExpandMore /> : <KeyboardArrowRight />}
               </IconButton>
-            )
+            </TableCell>
           )
       );
     }
