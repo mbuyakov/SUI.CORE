@@ -12,6 +12,7 @@ import {IColumnInfoToBaseTableColProps} from "../utils";
 
 export interface IDateFormatterPluginTRP {
   convertFromUtc?: boolean;
+  filterFormat?: string;
   sourceFormat?: string;
   targetFormat?: string;
 }
@@ -24,9 +25,9 @@ export class DateFormatterPlugin extends TableRenderParamsPlugin<IDateFormatterP
 
   // tslint:disable-next-line:prefer-function-over-method variable-name no-async-without-await
   public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams<IDateFormatterPluginTRP>): Promise<void> {
-    const {convertFromUtc, sourceFormat, targetFormat} = trp;
+    const {convertFromUtc, filterFormat, sourceFormat, targetFormat} = trp;
 
-    result.render = (value: string) => {
+    result.render = (value: string): React.ReactNode => {
       if (!value) {
         return value;
       }
@@ -42,7 +43,10 @@ export class DateFormatterPlugin extends TableRenderParamsPlugin<IDateFormatterP
     };
 
     if (result.search) {
-      result.search.format = targetFormat;
+      result.search = {
+        format: filterFormat || targetFormat,
+        type: "date"
+      }
     }
 
     return;
@@ -55,17 +59,22 @@ export class DateFormatterPlugin extends TableRenderParamsPlugin<IDateFormatterP
         <span>Исходный формат:</span>
         <Input
           value={trsp.state.tableRenderParams.sourceFormat || undefined}
-          onChange={e => trsp.updateField('sourceFormat')(e.target.value)}
+          onChange={(e): Promise<void> => trsp.updateField('sourceFormat')(e.target.value)}
         />
         <span>Целевой формат:</span>
         <Input
           value={trsp.state.tableRenderParams.targetFormat || undefined}
-          onChange={e => trsp.updateField('targetFormat')(e.target.value)}
+          onChange={(e): Promise<void> => trsp.updateField('targetFormat')(e.target.value)}
+        />
+        <span>Формат фильтра:</span>
+        <Input
+          value={trsp.state.tableRenderParams.filterFormat || undefined}
+          onChange={(e): Promise<void> => trsp.updateField('filterFormat')(e.target.value)}
         />
         <span>Конвертировать из UTC?</span>
         <Checkbox
           checked={trsp.state.tableRenderParams.convertFromUtc || undefined}
-          onChange={e => trsp.updateField('convertFromUtc')(e.target.checked)}
+          onChange={(e): Promise<void> => trsp.updateField('convertFromUtc')(e.target.checked)}
         />
       </>
     );

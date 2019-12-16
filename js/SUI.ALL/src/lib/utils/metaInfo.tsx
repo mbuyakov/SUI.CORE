@@ -30,6 +30,10 @@ export async function colToBaseTableCol(
     width: columnInfo.width,
   };
 
+  if (columnInfo.filterTypeByFilterTypeId) {
+    result.search = { type: columnInfo.filterTypeByFilterTypeId.type };
+  }
+
   const ref = getDataByKey(columnInfo, 'foreignColumnInfo', 'length')
     ? await ColumnInfoManager.getById(columnInfo!.foreignColumnInfo![0])
     : null;
@@ -89,10 +93,6 @@ export async function colToBaseTableCol(
   // if (metaInitProps && metaInitProps.baseTableColLayoutGenerateHelper) {
   //   await metaInitProps.baseTableColLayoutGenerateHelper(result, renderColumnInfo, props);
   // }
-
-  if (!result.search && columnInfo.filterTypeByFilterTypeId) {
-    result.search = { type: columnInfo.filterTypeByFilterTypeId.type };
-  }
 
   return result;
 }
