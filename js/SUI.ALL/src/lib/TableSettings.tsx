@@ -168,6 +168,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
               tableRenderParams
               filterTypeId
               subtotalTypeId
+              isNullable
               columnInfoReferencesByColumnInfoId {
                 nodes {
                   columnInfoByForeignColumnInfoId {
@@ -181,7 +182,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                       nameByNameId {
                         name
                       }
-                    } 
+                    }
                   }
                 }
               }
