@@ -94,8 +94,8 @@ export class BaseDatetimeIntervalColumnFilter
       columnName: this.props.column.name,
       operation: "interval",
       value: [
-        value && value[0] && value[0].clone().utc().startOf('day').format(format),
-        value && value[1] && value[1].clone().utc().endOf('day').format(format)
+        value && value[0] && value[0].clone().startOf('day').utc().format(format),
+        value && value[1] && value[1].clone().endOf('day').utc().format(format)
         // tslint:disable-next-line:no-any
       ] as any
     });
