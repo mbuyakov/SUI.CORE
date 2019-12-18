@@ -8,7 +8,7 @@ import {errorNotification} from "../drawUtils";
 import {PromisedButton} from "../Inputs";
 import {PromisedBaseFormModal} from "../Modal";
 import {IObjectWithIndex, sleep} from "../other";
-import {roleVisibilityWrapper} from "../RoleVisibilityWrapper";
+import {hasAnyRole} from "../RoleVisibilityWrapper";
 import {defaultIfNotBoolean} from "../typeWrappers";
 
 import {IMutableBackendTableProps} from "./types";
@@ -44,7 +44,8 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
       handleEdit,
       serviceColumns
     } = this.props;
-    const editable = !!getEditInitialValues;
+    const allowEdit = mutationRoles ? hasAnyRole(mutationRoles) : true;
+    const rowEditable = !!getEditInitialValues && allowEdit;
 
     const createButton = (
       <Button
@@ -85,7 +86,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
         </div>
       );
 
-    extra = mutationRoles ? roleVisibilityWrapper({content: extra, roles: mutationRoles}) : extra;
+    extra = allowEdit ? extra : null;
 
     const editBaseFormModalProps = this.props.editBaseFormModalProps || this.props.createBaseFormModalProps;
     const editBaseFormProps = this.props.editBaseFormProps
@@ -103,23 +104,23 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
           innerRef={this.tableRef}
           selectionEnabled={!!extra && defaultIfNotBoolean(this.props.selectionEnabled, true)} // Отключение selection в случае невидимости кнопок по ролям
           extra={extra}
-          serviceColumns={!editable
+          serviceColumns={!rowEditable
             ? serviceColumns
             : [{
-              id: "__edit",
-              render: (_: null, row: {id: TSelection}): JSX.Element => (
-                <PromisedButton
-                  loading={this.state.initEditLoading}
-                  icon="edit"
-                  promise={this.handleEditClickFn(row)}
-                />
-              ),
-              title: " ",
-              // tslint:disable-next-line:no-magic-numbers
-              width: defaultIfNotBoolean(this.props.selectionEnabled, true) ? 48 : 80,
-            }]
-              // tslint:disable-next-line:no-any
-              .concat((serviceColumns || []) as any[])
+                id: "__edit",
+                render: (_: null, row: {id: TSelection}): JSX.Element => (
+                  <PromisedButton
+                    loading={this.state.initEditLoading}
+                    icon="edit"
+                    promise={this.handleEditClickFn(row)}
+                  />
+                ),
+                title: " ",
+                // tslint:disable-next-line:no-magic-numbers
+                width: defaultIfNotBoolean(this.props.selectionEnabled, true) ? 48 : 80,
+              }]
+                // tslint:disable-next-line:no-any
+                .concat((serviceColumns || []) as any[])
           }
         />
         {/* Create modal */}
@@ -131,7 +132,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
           onSubmit={this.submitDecorator(handleCreate)}
         />
         {/* Edit modal */}
-        {editable && (
+        {rowEditable && (
           <PromisedBaseFormModal<TEditValues>
             {...this.props.commonModalProps}
             {...editBaseFormModalProps}
