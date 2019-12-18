@@ -239,7 +239,7 @@ export class BackendTable<TSelection = defaultSelection>
             )
           }
           toolbarButtons={[
-            (<RefreshMetaTablePlugin handleClick={this.reinit}/>),
+            (<RefreshMetaTablePlugin handleClick={this.refresh}/>),
             // admin && (<RawModePlugin enabled={this.state.rawMode} onClick={this.changeRaw}/>),
             admin && (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
           ].filter(Boolean)}
