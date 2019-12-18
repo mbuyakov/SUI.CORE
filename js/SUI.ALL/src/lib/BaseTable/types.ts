@@ -123,6 +123,7 @@ export interface IBaseTableProps<TSelection = any> {
   pageSizes?: number[];
   paginationEnabled?: boolean;
   paperStyle?: React.CSSProperties;
+  resizingEnabled?: boolean;
   rowDetailComponent?: RowDetail;
   rows: any[];
   selectionEnabled?: boolean;

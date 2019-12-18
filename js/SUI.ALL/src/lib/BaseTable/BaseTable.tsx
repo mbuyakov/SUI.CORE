@@ -106,6 +106,7 @@ export class BaseTable<TSelection = defaultSelection>
     const virtual = defaultIfNotBoolean(this.props.virtual, false);
     const visibilityEnabled = defaultIfNotBoolean(this.props.visibilityEnabled, true);
     const selectionEnabled = defaultIfNotBoolean(this.props.selectionEnabled, false);
+    const resizingEnabled = defaultIfNotBoolean(this.props.resizingEnabled, true);
     const allowExport = defaultIfNotBoolean(this.props.allowExport, true);
 
     const cols = this.mapCols();
@@ -391,10 +392,12 @@ export class BaseTable<TSelection = defaultSelection>
             contentComponent={rowDetail}
             toggleCellComponent={toggleCellComponent}
           />}
-          <TableColumnResizing
-            minColumnWidth={this.props.minColumnWidth || 30}
-            defaultColumnWidths={defaultWidth}
-          />
+          {resizingEnabled && (
+            <TableColumnResizing
+              minColumnWidth={this.props.minColumnWidth || 30}
+              defaultColumnWidths={defaultWidth}
+            />
+          )}
           <TableHeaderRow showSortingControls={sortingEnabled}/>
           {filteringEnabled && <TableFilterRow cellComponent={filterCell}/>}
           {paginationEnabled && <PagingPanel
