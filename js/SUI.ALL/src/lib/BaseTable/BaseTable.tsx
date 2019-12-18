@@ -541,4 +541,5 @@ export class BaseTable<TSelection = defaultSelection>
       </ToolbarRoot>
     );
   }
+
 }

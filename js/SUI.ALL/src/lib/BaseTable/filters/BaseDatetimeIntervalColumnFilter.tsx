@@ -30,19 +30,10 @@ type FullBaseDatetimeIntervalColumnFilterProps = TableFilterRow.CellProps
 export class BaseDatetimeIntervalColumnFilter
   extends React.Component<FullBaseDatetimeIntervalColumnFilterProps, IBaseDatetimeIntervalColumnFilterState> {
 
-  private static getFormat(type: DatetimeFilterType): string {
-    switch (type) {
-      case "date":
-        return "YYYY-MM-DD";
-      default:
-        return "YYYY-MM-DDTHH:mm:ss";
-    }
-  }
-
   public constructor(props: FullBaseDatetimeIntervalColumnFilterProps) {
     super(props);
     const propsFilterValue = this.props.filter && (this.props.filter.value as unknown as string[]);
-    const filterValue = propsFilterValue && propsFilterValue.map(value => value && moment(value)) as RangePickerValue;
+    const filterValue = propsFilterValue && propsFilterValue.map(value => value && moment(value).local()) as RangePickerValue;
 
     this.state = {
       filterValue,
@@ -58,7 +49,7 @@ export class BaseDatetimeIntervalColumnFilter
         allowClear={true}
         placeholder={this.props.placeholder as [string, string] || ["Начало", "Конец"]}
         style={{width: "100%"}}
-        showTime={BaseDatetimeIntervalColumnFilter.getFormat(this.props.pickerMode).includes("HH")}
+        showTime={this.props.pickerMode === "datetime"}
         ranges={GET_DEFAULT_CALENDAR_RANGES()}
         defaultValue={this.state.filterValue}
         onChange={this.onChange}
@@ -95,15 +86,16 @@ export class BaseDatetimeIntervalColumnFilter
 
   @autobind
   private triggerFilter(value: RangePickerValue | null | undefined): void {
-    const format = BaseDatetimeIntervalColumnFilter.getFormat(this.props.pickerMode);
+    const format = moment.HTML5_FMT.DATETIME_LOCAL_MS;
 
     this.setState({lastSavedValue: value});
+
     this.props.onFilter({
       columnName: this.props.column.name,
       operation: "interval",
       value: [
-        value && value[0] && value[0].format(format),
-        value && value[1] && value[1].format(format)
+        value && value[0] && value[0].clone().utc().startOf('day').format(format),
+        value && value[1] && value[1].clone().utc().endOf('day').format(format)
         // tslint:disable-next-line:no-any
       ] as any
     });
