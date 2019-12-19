@@ -17,7 +17,6 @@ export class SeparatedRow extends React.Component<ISeparatedRowProps> {
 
     return (
       <Card
-        bordered={false}
         bodyStyle={{
           display: "flex",
           flexWrap: "wrap",
