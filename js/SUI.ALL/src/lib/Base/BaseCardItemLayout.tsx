@@ -1,11 +1,11 @@
-import {Tooltip} from 'antd';
+import { Tooltip } from 'antd';
 import Icon from 'antd/lib/icon';
 import * as React from 'react';
 
-import {BaseTable, IBaseTableProps} from "../BaseTable";
+import { BaseTable, IBaseTableProps } from '../BaseTable';
 import { NO_DATA_TEXT } from '../const';
 import { DataKey, getDataByKey } from '../dataKey';
-import {BASE_CARD_ITEM_LABEL_HORIZONTAL} from "../styles";
+import { BASE_CARD_ITEM_LABEL_HORIZONTAL } from '../styles';
 import { defaultIfNotBoolean } from '../typeWrappers';
 
 // tslint:disable-next-line:no-any
@@ -39,7 +39,7 @@ class CustomRender<T> extends React.Component<ICustomRenderProps<T>, {
   public componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
     console.error(error);
     console.error(errorInfo);
-    this.setState({error: true});
+    this.setState({ error: true });
   }
 
   public render(): React.ReactNode {
@@ -50,7 +50,7 @@ class CustomRender<T> extends React.Component<ICustomRenderProps<T>, {
             type="warning"
             theme="twoTone"
             twoToneColor="#cf1322"
-            style={{fontSize: 20}}
+            style={{ fontSize: 20 }}
           />
         </Tooltip>
       );
@@ -59,7 +59,7 @@ class CustomRender<T> extends React.Component<ICustomRenderProps<T>, {
       return this.props.render(this.props.value, this.props.item);
     } catch (e) {
       console.error(e);
-      this.setState({error: true});
+      this.setState({ error: true });
 
       return null;
     }
@@ -80,7 +80,7 @@ export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayou
       // @ts-ignore
       <BaseTable
         cardType="inner"
-        paperStyle={{margin: 0}}
+        paperStyle={{ margin: 0 }}
         {...(item as IBaseCardItemLayout<T>).tableProps}
         rows={data}
       />
@@ -90,6 +90,12 @@ export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayou
   // I hate JS
   if (data === 0) {
     data = '0';
+  }
+
+  if (typeof (data) === 'boolean') {
+    data = data
+      ? <Icon type="check" theme="outlined"/>
+      : <Icon type="close" theme="outlined"/>;
   }
 
   if (data === null || data === undefined) {
