@@ -82,7 +82,7 @@ export class WsBackendDataSource extends BackendDataSource {
       reconnectDelay: RECONNECT_DELAY
     });
 
-    while (this.connectAttempts < MAX_RECONNECT_ATTEMPTS || !this.socket.isConnected()) {
+    while (this.connectAttempts < MAX_RECONNECT_ATTEMPTS && !this.socket.isConnected()) {
       // tslint:disable-next-line:no-magic-numbers
       await sleep(25);
     }
