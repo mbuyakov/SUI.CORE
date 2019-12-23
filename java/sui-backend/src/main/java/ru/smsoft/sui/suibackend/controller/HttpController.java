@@ -19,6 +19,7 @@ import static ru.smsoft.sui.suibackend.utils.Constants.*;
 
 @RestController
 @Slf4j
+@CrossOrigin
 public class HttpController {
 
     private final Cache<String, UserState> userStateCache = CacheBuilder
