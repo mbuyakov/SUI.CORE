@@ -42,7 +42,7 @@ export class RestBackendDataSource extends BackendDataSource {
 
   private async __send<T>(body: T, headers?: IObjectWithIndex): Promise<IObjectWithIndex> {
     return axios.post(
-      `http://${getBackendUrl()}-http`,
+      `${location.protocol}//${getBackendUrl()}-http`,
       body,
       {
         headers: {

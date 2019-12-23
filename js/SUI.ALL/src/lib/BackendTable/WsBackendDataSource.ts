@@ -43,7 +43,7 @@ export class WsBackendDataSource extends BackendDataSource {
 
   // tslint:disable-next-line:no-async-without-await
   public async init(): Promise<boolean> {
-    const backendURL = new URL(`ws://${getBackendUrl()}`);
+    const backendURL = new URL(`ws${location.protocol === "https:" ? "s" : ""}://${getBackendUrl()}`);
     console.log(backendURL);
 
     this.socket = new Socket({
