@@ -21,6 +21,8 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
 import ru.smsoft.sui.suibackend.security.AuthChannelInterceptorAdapter;
 
+import static ru.smsoft.sui.suibackend.utils.Constants.BACKEND_ENDPOINT;
+
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE + 99)
 @RequiredArgsConstructor
@@ -32,7 +34,7 @@ public class WebSocketAuthenticationSecurityConfig implements WebSocketMessageBr
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/table-backend").setAllowedOrigins("*");
+        registry.addEndpoint(BACKEND_ENDPOINT).setAllowedOrigins("*");
     }
 
     @Override

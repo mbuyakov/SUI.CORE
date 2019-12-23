@@ -11,6 +11,8 @@ import static ru.smsoft.sui.suibackend.message.model.filtering.enumeration.Filte
 
 public class Constants {
 
+    public static final String BACKEND_ENDPOINT = "/table-backend";
+
     public static final Set<FilteringOperation> IN_FILTERING_OPERATIONS =
             Collections.unmodifiableSet(Stream
                     .of(IN, NOT_IN, CONTAINS_ANY, NOT_CONTAINS_ANY, CONTAINS_ALL, NOT_CONTAINS_ALL)
@@ -63,7 +65,9 @@ public class Constants {
     public static final String OR_FILTER_JOINER = " OR ";
 
     public static final String USER_STATE_KEY = "state";
+    public static final String TYPE_KEY = "type";
     public static final String PREV_SESSION_ID_KEY = "previousSessionId";
     public static final String INIT_SESSION_ID_KEY = "initSessionId";
+    public static final String MESSAGE_ID_KEY = "__messageId";
 
 }

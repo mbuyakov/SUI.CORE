@@ -20,21 +20,26 @@ import java.util.List;
 public class UserState {
 
     private MetaAccessService.MetaData metaData;
-
     private Long offset;
-
     private Long pageSize;
-
     private List<Grouping> groupings;
-
     private List<ExpandedGroup> expandedGroups;
-
     private List<Sorting> sorts;
-
     private List<Filtering> globalFilters;
-
     private List<Filtering> filters;
-
     private Collection<String> selection;
+
+    // TODO: Орефлексить
+    public void clear() {
+        this.metaData = null;
+        this.offset = null;
+        this.pageSize = null;
+        this.groupings = null;
+        this.expandedGroups = null;
+        this.sorts = null;
+        this.globalFilters = null;
+        this.filters = null;
+        this.selection = null;
+    }
 
 }

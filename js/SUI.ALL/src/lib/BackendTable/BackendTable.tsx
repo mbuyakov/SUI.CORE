@@ -1,25 +1,25 @@
 /* tslint:disable:object-literal-sort-keys no-any unnecessary-else newline-before-return prefer-function-over-method no-floating-promises prefer-readonly promise-function-async*/
 import {Filter, Grouping, GroupKey, Sorting, TableFilterRow} from '@devexpress/dx-react-grid';
-import {IFrame, IMessage, StompConfig} from '@stomp/stompjs';
 import autobind from 'autobind-decorator';
 import difference from 'lodash/difference';
+import moment from "moment";
 import * as React from 'react';
 import uuid from 'uuid';
 
-import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getBackendUrl, getDataByKey, getFilterType, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, RefreshMetaTablePlugin, Socket, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from './index';
+import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFilterType, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, RefreshMetaTablePlugin, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
 
-const SUBSCRIBE_DESTINATION_PREFIX = '/user/queue/response/';
-const SEND_DESTINATION = '/data';
-const messageIdKey = '__messageId';
+import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
+import {RestBackendDataSource} from "./RestBackendDataSource";
+import {WsBackendDataSource} from "./WsBackendDataSource";
 
+const IGNORE_WS_ACTUALITY_HOURS = 3;
+const LOCAL_STORAGE_IGNORE_WS_KEY = "__SUI_BACKEND_IGNORE_WS";
 const DX_REACT_GROUP_SEPARATOR = '|';
 const CHILDREN_KEY = '__children';
 const RECORDS_KEY = '__records';
 const SUBTOTALS_KEY = '__subtotals';
 
 const DELETED_COLUMN = "deleted";
-
-const RECONNECT_DELAY = 50;
 
 type RequestMessageType =
   'INIT'
@@ -107,26 +107,13 @@ function calculateParentExpandedGroups(realExpandedGroupKeys: IExpandedGroup[], 
   return parents;
 }
 
-const maximizeLogConfig: Partial<StompConfig> = {
-  debug: (msg): void => console.log(msg),
-  onDisconnect: (frame): void => console.log("onDisconnect", frame),
-  onStompError: (frame): void => console.log("onStompError", frame),
-  onUnhandledFrame: (frame): void => console.log("onUnhandledFrame", frame),
-  onUnhandledMessage: (message): void => console.log("onUnhandledMessage", message),
-  onUnhandledReceipt: (frame): void => console.log("onUnhandledReceipt", frame),
-  onWebSocketClose: (closeEvent): void => console.log("onWebSocketClose", closeEvent),
-  onWebSocketError: (event): void => console.log("onWebSocketError", event),
-  logRawCommunication: true
-};
-
 export class BackendTable<TSelection = defaultSelection>
   extends React.Component<Omit<IBaseTableProps<TSelection>, 'rows' | 'cols' | 'defaultFilters' | 'customFilterComponent'> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable<TSelection>> }, IBackendTableState<TSelection>>
   implements ISelectionTable<TSelection> {
 
   private additionalStateMap: Map<string, IBackendTableState<TSelection>> = new Map<string, IBackendTableState<TSelection>>();
+  private backendDataSource: BackendDataSource;
   private baseTableRef: React.RefObject<BaseTable<TSelection>> = React.createRef<BaseTable<TSelection>>();
-  private initialSessionId: string;
-  private socket: Socket;
 
   public constructor(props: any) {
     super(props);
@@ -148,7 +135,7 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   public componentDidMount(): void {
-    this.updateMetaData().then(this.createWebSocket);
+    this.updateMetaData().then(this.initDataSource);
     this.setInnerRefValue(this);
   }
 
@@ -166,8 +153,8 @@ export class BackendTable<TSelection = defaultSelection>
 
   public componentWillUnmount(): void {
     this.setInnerRefValue(undefined);
-    if (this.socket) {
-      this.socket.disconnect();
+    if (this.backendDataSource) {
+      this.backendDataSource.disconnect();
     }
   }
 
@@ -293,40 +280,6 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private createWebSocket(): void {
-    const backendURL = new URL(getBackendUrl());
-
-    this.socket = new Socket({
-      ...maximizeLogConfig,
-      brokerURL: backendURL.toString(),
-      reconnectDelay: RECONNECT_DELAY,
-      connectHeaders: {Authorization: `Bearer ${getUser().accessToken}`},
-      onConnect: (frame: IFrame): void => {
-        const alreadyInitiated = !!this.initialSessionId;
-        const client = this.socket.getClient();
-
-        console.log(client);
-
-        if (!alreadyInitiated) {
-          this.initialSessionId = frame.body;
-        }
-
-        client.subscribe(`${SUBSCRIBE_DESTINATION_PREFIX}${this.initialSessionId}`, this.onMessage);
-
-        if (!alreadyInitiated) {
-          this.onOpen();
-        }
-
-        // Add new parameter to connection URL for reconnection
-        backendURL.searchParams.set("previousSessionId", frame.body);
-        client.brokerURL = backendURL.toString();
-      }
-    });
-
-    console.log("Client after creating:", this.socket.getClient());
-  }
-
-  @autobind
   private findColumnInfoByCamelCaseName(camelCaseColumnName: string): ColumnInfo {
     const tableInfo = this.state.tableInfo;
     return tableInfo
@@ -382,6 +335,26 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
+  // this.backendDataSource должно быть присвоено до вызова init()
+  private async initDataSource(): Promise<void> {
+    let shouldIgnoreWS = this.shouldIgnoreWS();
+
+    if (!shouldIgnoreWS) {
+      this.backendDataSource = new WsBackendDataSource(this.onOpen, this.onMessage);
+
+      if (!(await this.backendDataSource.init())) {
+        shouldIgnoreWS = true;
+        localStorage.setItem(LOCAL_STORAGE_IGNORE_WS_KEY, moment().toISOString());
+      }
+    }
+
+    if (shouldIgnoreWS) {
+      this.backendDataSource = new RestBackendDataSource(this.onOpen, this.onMessage);
+      await this.backendDataSource.init();
+    }
+  }
+
+  @autobind
   private mapFilters(filters: BackendFilter[], includeRaw: boolean = false): any[] {
     return (filters || [])
       .map((filter: any) => {
@@ -410,10 +383,8 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private onError(message: IMessage): void {
-    const parsedBody = JSON.parse(message.body || '{}');
-    console.error(parsedBody);
-    this.setState({error: parsedBody.message, loading: false});
+  private onError(message: IObjectWithIndex): void {
+    this.setState({error: message.message, loading: false});
   }
 
   @autobind
@@ -492,19 +463,16 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private onMessage(message: IMessage): void {
-    const parsedMessage = JSON.parse(message.body);
-    const type: ResponseMessageType = parsedMessage.type;
-
-    console.log(parsedMessage);
+  private onMessage(message: IObjectWithIndex): void {
+    const type: ResponseMessageType = message.type;
 
     if (type === 'ERROR') {
       this.onError(message);
     } else {
-      const messageId = parsedMessage[messageIdKey];
+      const messageId = message[MESSAGE_ID_KEY];
 
       if (type === 'DATA') {
-        const messageData: { currentPage: number, data: any[], totalCount: number } = parsedMessage;
+        const messageData = message as { currentPage: number, data: any[], totalCount: number };
 
         let groupSubtotalData;
         if (this.state.grouping && this.state.grouping.length > 0) {
@@ -652,7 +620,7 @@ export class BackendTable<TSelection = defaultSelection>
 
     let selection = null;
 
-    if (this.socket) {
+    if (this.backendDataSource) {
       const messageContent: any = {content, type};
 
       if (this.props.selectionEnabled) {
@@ -666,11 +634,7 @@ export class BackendTable<TSelection = defaultSelection>
         }
       }
 
-      await this.socket.send({
-        destination: SEND_DESTINATION,
-        headers: {[messageIdKey]: messageId},
-        body: JSON.stringify(messageContent)
-      });
+      await this.backendDataSource.send(messageId, messageContent);
     }
 
     this.setState({loading: true, ...newState, ...(selection ? {lastSendSelection: selection} : null)});
@@ -683,6 +647,12 @@ export class BackendTable<TSelection = defaultSelection>
       // @ts-ignore
       this.props.innerRef.current = value;
     }
+  }
+
+  @autobind
+  private shouldIgnoreWS(): boolean {
+    const ignoreWsItem = localStorage.getItem(LOCAL_STORAGE_IGNORE_WS_KEY);
+    return ignoreWsItem && moment().diff(moment(ignoreWsItem), "hours") < IGNORE_WS_ACTUALITY_HOURS;
   }
 
   @autobind
