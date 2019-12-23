@@ -5,7 +5,7 @@ import autobind from "autobind-decorator";
 import moment from "moment";
 import * as React from 'react';
 
-import { GET_DEFAULT_CALENDAR_RANGES } from '../../const';
+import {GET_DEFAULT_CALENDAR_RANGES} from "../../const";
 import {ICommonColumnSearchProps} from "../types";
 
 type DatetimeFilterType = "date" | "datetime";
@@ -33,7 +33,7 @@ export class BaseDatetimeIntervalColumnFilter
   public constructor(props: FullBaseDatetimeIntervalColumnFilterProps) {
     super(props);
     const propsFilterValue = this.props.filter && (this.props.filter.value as unknown as string[]);
-    const filterValue = propsFilterValue && propsFilterValue.map(value => value && moment(value).local()) as RangePickerValue;
+    const filterValue = propsFilterValue && propsFilterValue.map(value => value && moment.utc(value).local()) as RangePickerValue;
 
     this.state = {
       filterValue,
@@ -90,12 +90,16 @@ export class BaseDatetimeIntervalColumnFilter
 
     this.setState({lastSavedValue: value});
 
+    const isDatePickMode = this.props.pickerMode === "date";
+    const start = value && value[0] && value[0].clone();
+    const end = value && value[1] && value[1].clone();
+
     this.props.onFilter({
       columnName: this.props.column.name,
       operation: "interval",
       value: [
-        value && value[0] && value[0].clone().startOf('day').utc().format(format),
-        value && value[1] && value[1].clone().endOf('day').utc().format(format)
+        start ? (isDatePickMode ? start.startOf('day') : start).utc().format(format) : null,
+        end ? (isDatePickMode ? end.endOf('day') : end).utc().format(format) : null,
         // tslint:disable-next-line:no-any
       ] as any
     });
