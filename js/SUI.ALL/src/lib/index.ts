@@ -26,6 +26,7 @@ export * from "./translate";
 export * from "./types";
 export * from "./typeWrappers";
 export * from "./utils";
+export * from "./validator";
 export * from "./cacheManager";
 export * from "./CategoryColumnChart";
 export * from "./ChartWrapper";
