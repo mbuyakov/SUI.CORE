@@ -21,7 +21,7 @@ module.exports =  {
     // },
     dll: {
       //TODO: Umi bug, check update
-      exclude: ['@smsoft/sui-all'],
+      exclude: ['@smsoft/sui-all', "@material-ui/icons"],
     },
   },
 
