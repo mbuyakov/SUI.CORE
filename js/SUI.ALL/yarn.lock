@@ -1103,38 +1103,38 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@devexpress/dx-core@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-core/-/dx-core-2.3.1.tgz#24d9ecf6dcd0a413922c65a541e7b0fff7c44fdd"
-  integrity sha512-4K3Ds5kRPey6gU8GxKq4xIh3aeKwHiHW+Z0SfP9FXoQLOp4qILCa+susUicN//rrV3pt0BAImbvPj4BQttyCBg==
+"@devexpress/dx-core@2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-core/-/dx-core-2.3.2.tgz#91d655fc3154d1c140c835f124412e12de396cbb"
+  integrity sha512-Zknsr5MLVyu0Dqr4l+/mtcZsre6GGEFktsNGpMtb2kutdczPVk+YIj/xeSF577R9sWCDppLzxPuy+38twqyaXA==
 
-"@devexpress/dx-grid-core@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-grid-core/-/dx-grid-core-2.3.1.tgz#6f12b2dfbba2bf24d7cba5c1d76d340922dd7c8a"
-  integrity sha512-Mk/GFDHobfZoKm5lFoLsOB8lZMNLYdvL/Mgs301mYkcmrJfcjn2i+D2EP+PRJ/sFbt63xXXQyuSDFgg+VxLFiw==
+"@devexpress/dx-grid-core@2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-grid-core/-/dx-grid-core-2.3.2.tgz#e58d5022eb3a9631400155ad35b8ed24e6cb1e20"
+  integrity sha512-guMjxSZEb5NWk0beXnq3nJ2jQ3BCD7fL2qPa6qigvJGGpSNXdhhtxdR0zswj5vLob/L5jd3GA6DL0FcS97p17A==
 
-"@devexpress/dx-react-core@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-core/-/dx-react-core-2.3.1.tgz#928d0a7c774a250d6c65b04155373bcce05ad7d3"
-  integrity sha512-M7zBeczNaNQhc3fjA2Zst5ZVS5eACGTkNs/ZruoYnROKVohAfgPZ49cHvkrW9csc9V+Eecty9Bgky4Uxgl4Bug==
+"@devexpress/dx-react-core@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-core/-/dx-react-core-2.3.2.tgz#fd2404e141173656bd689877de0c9ec0ce5610c1"
+  integrity sha512-JwJQU+RMZeLTPQTRjnozlXjqyVe9nXpe3NUl6VnVLNNMyJ7NeyjYGplETUyml1shtiB53pCOExCnU5YnFXBeGQ==
   dependencies:
-    "@devexpress/dx-core" "2.3.1"
+    "@devexpress/dx-core" "2.3.2"
     prop-types "^15.7.2"
 
-"@devexpress/dx-react-grid-material-ui@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-grid-material-ui/-/dx-react-grid-material-ui-2.3.1.tgz#fa47c502b7d1568aa2c1bf9bf68b25c8bfd5d50b"
-  integrity sha512-xu+1ap2lFibexVExjiueAJxlUN72+H87FF0ILRNqhNKbiqY3cIYwgFujLJEkIqhCBA9SnCgcBEhunv3yV3IXdw==
+"@devexpress/dx-react-grid-material-ui@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-grid-material-ui/-/dx-react-grid-material-ui-2.3.2.tgz#97eb81d394f11a0ffcee7add87f476cf18a80fac"
+  integrity sha512-ukB144M6pFOZ3qqZKuuCb1vKbwJr1SyPWEGqxNG41r5/tqgj3jam4KfksEDEs2sLrYeFEyzu256Fom1jSLcJng==
   dependencies:
     clsx "^1.0.4"
     prop-types "^15.7.2"
 
-"@devexpress/dx-react-grid@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-grid/-/dx-react-grid-2.3.1.tgz#56c8fdf845f25c27c3a4afa170477dc8697d2299"
-  integrity sha512-RfjKPmG5886t4LjyiZXUeIRqJ5roWM1kSUd2wSagqidyeShcgdxEYnBKHK/BFfMnUz4NI5KE1vTwUq4g2f1suw==
+"@devexpress/dx-react-grid@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-grid/-/dx-react-grid-2.3.2.tgz#85dc0dc7d91e7c02476d28a2d5aed40b8cf664ca"
+  integrity sha512-X1uSRNOmeTtH4GIg6Onc1rO4yDJRH+1l/geyRqeEQ0v57CihF7DU3lEMu+n+Q/venUuP7I1XSBTcVaLEzZwRMg==
   dependencies:
-    "@devexpress/dx-grid-core" "2.3.1"
+    "@devexpress/dx-grid-core" "2.3.2"
 
 "@emotion/cache@^10.0.17":
   version "10.0.19"
@@ -1243,14 +1243,14 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.4.tgz#622a72bebd1e3f48d921563b4b60a762295a81fc"
   integrity sha512-6PYY5DVdAY1ifaQW6XYTnOMihmBVT27elqSjEoodchsGjzYlEsTQMcEhSud99kVawatyTZRTiVkJ/c6lwbQ7nA==
 
-"@material-ui/core@4.4.3":
-  version "4.4.3"
-  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.4.3.tgz#65665d2c4e9cb84e018774e1471f6d0417f4535e"
-  integrity sha512-Lz8sMFeCrtq5/pbhqClWFHpveL0huixjca0tw7uvh9xKKB7VyyYOyTu7RamSZLxb34UCSMPlobR+KK25Nqzkqw==
+"@material-ui/core@4.5.1":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.5.1.tgz#6f1bbb298cc2893b29169ab9398a00ca5a6ac971"
+  integrity sha512-6pyk7diT7bflf4qUpqgPCpKYqjhRHPFwsgEV2Gv71lMqwxuRygFGHE2TdZ+l5T249H66Doj2P/j6fW7yzgxTWw==
   dependencies:
     "@babel/runtime" "^7.4.4"
-    "@material-ui/styles" "^4.4.3"
-    "@material-ui/system" "^4.4.3"
+    "@material-ui/styles" "^4.5.0"
+    "@material-ui/system" "^4.5.0"
     "@material-ui/types" "^4.1.1"
     "@material-ui/utils" "^4.4.0"
     "@types/react-transition-group" "^4.2.0"
@@ -1264,14 +1264,12 @@
     prop-types "^15.7.2"
     react-transition-group "^4.3.0"
 
-"@material-ui/icons@4.4.3":
-  version "4.4.3"
-  resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-4.4.3.tgz#5d4346ddbb2673a1b57ebc78fd6d50bcd88711db"
-  integrity sha512-HVVvUyc/78kmaBd93LkfWyGkXMM+zOMKzUfulWXxaV/fFAZ3N0pD0oHjWUd94zrOoF3tZP9JC7EPlIpIcZSNow==
-  dependencies:
-    "@babel/runtime" "^7.4.4"
+"@material-ui/icons@4.5.1":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-4.5.1.tgz#6963bad139e938702ece85ca43067688018f04f8"
+  integrity sha512-YZ/BgJbXX4a0gOuKWb30mBaHaoXRqPanlePam83JQPZ/y4kl+3aW0Wv9tlR70hB5EGAkEJGW5m4ktJwMgxQAeA==
 
-"@material-ui/styles@^4.4.3":
+"@material-ui/styles@^4.5.0":
   version "4.8.2"
   resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.8.2.tgz#841acbc4314accbe82a45cb1feb758d47448c802"
   integrity sha512-r5U+93pkpwQOmHTmwyn2sqTio6PHd873xvSHiKP6fdybAXXX6CZgVvh3W8saZNbYr/QXsS8OHmFv7sYJLt5Yfg==
@@ -1293,7 +1291,7 @@
     jss-plugin-vendor-prefixer "^10.0.0"
     prop-types "^15.7.2"
 
-"@material-ui/system@^4.4.3":
+"@material-ui/system@^4.5.0":
   version "4.7.1"
   resolved "https://registry.yarnpkg.com/@material-ui/system/-/system-4.7.1.tgz#d928dacc0eeae6bea569ff3ee079f409efb3517d"
   integrity sha512-zH02p+FOimXLSKOW/OT2laYkl9bB3dD1AvnZqsHYoseUaq0aVrpbl2BGjQi+vJ5lg8w73uYlt9zOWzb3+1UdMQ==
