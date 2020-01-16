@@ -1,18 +1,20 @@
-import { Popover } from 'antd';
+import {Popover} from 'antd';
 import Button from 'antd/lib/button';
-import Input, { InputProps } from 'antd/lib/input';
+import Input, {InputProps} from 'antd/lib/input';
 import Tooltip from 'antd/lib/tooltip';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import { trimIfString } from '../stringFormatters';
-import { SUI_ROW_GROW_LEFT } from '../styles';
-import { SUIMaskedInput } from '../SUIMaskedInput';
+import {Rendered} from "../other";
+import {trimIfString} from '../stringFormatters';
+import {SUI_ROW_GROW_LEFT} from '../styles';
+import {SUIMaskedInput} from '../SUIMaskedInput';
 
-import { IPromisedBaseProps, IPromisedBaseState, PromisedBase } from './PromisedBase';
+import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from './PromisedBase';
 
 export type PromisedInputProps = {
   allowEmpty?: boolean;
+  customInput?: Rendered<Input>;
   defaultValue?: string | number;
   disabled?: boolean;
   icon?: string;
@@ -44,6 +46,8 @@ export class PromisedInput extends PromisedBase<PromisedInputProps,
   }
 
   public render(): JSX.Element {
+    const input = this.props.customInput || <Input/>;
+
     const isEmptyAndEmptyNotAllowed = !this.props.allowEmpty && typeof this.state.value !== 'number' && !trimIfString(this.state.value);
     let saveButton: JSX.Element | null = (
       <Button
@@ -82,12 +86,12 @@ export class PromisedInput extends PromisedBase<PromisedInputProps,
               />
             )
             : (
-              <Input
-                {...this.props}
-                disabled={this.props.disabled || this.state.loading}
-                onChange={this.handleNewValue}
-                value={this.state.value}
-              />
+              React.cloneElement(input, {
+                ...this.props,
+                disabled: this.props.disabled || this.state.loading,
+                onChange: this.handleNewValue,
+                value: this.state.value,
+              })
             )}
 
         </Popover>
