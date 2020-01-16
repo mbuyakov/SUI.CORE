@@ -14,7 +14,7 @@ import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from './PromisedBa
 
 export type PromisedInputProps = {
   allowEmpty?: boolean;
-  customInput?: Rendered<Input>;
+  customInput?: Rendered<React.Component<InputProps>>;
   defaultValue?: string | number;
   disabled?: boolean;
   icon?: string;
