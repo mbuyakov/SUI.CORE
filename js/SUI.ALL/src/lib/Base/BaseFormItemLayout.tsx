@@ -108,7 +108,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
             if (required) {
               // tslint:disable-next-line:triple-equals
               if (this.props.rules == null || this.props.rules.findIndex(rule => rule.required || false) < 0) {
-                this.formField.rules.push({ required: true, message: FILL_FIELD_TEXT });
+                this.formField.rules.unshift({ required: true, message: FILL_FIELD_TEXT });
               }
             }
           }
