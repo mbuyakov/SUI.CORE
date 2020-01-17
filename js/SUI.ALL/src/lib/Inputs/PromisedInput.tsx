@@ -20,7 +20,6 @@ export type PromisedInputProps = {
   icon?: string;
   mask?: string;
   rowStyle?: React.CSSProperties;
-  size?: number;
   totalValueLength?: number;
   type?: 'text' | 'number';
   validator?(value: string): string | void;
