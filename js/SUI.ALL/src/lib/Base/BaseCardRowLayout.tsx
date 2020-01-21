@@ -146,7 +146,7 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
         }}
         defaultActiveKey={row.collapsePanels.map((panel, index) => ({defaultOpened: panel.defaultOpened, index})).filter(panel => panel.defaultOpened).map(panel => panel.index.toString())}
       >
-        {row.collapsePanels.map((panel, index) => renderIBaseCardCollapseLayout(sourceItem, panel, index, row.fitCollapsePanel || false, rowsLength))}
+        {wrapInArrayWithoutNulls(row.collapsePanels).map((panel, index) => renderIBaseCardCollapseLayout(sourceItem, panel, index, row.fitCollapsePanel || false, rowsLength))}
       </Collapse>
     );
   }
