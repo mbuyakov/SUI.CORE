@@ -33,6 +33,16 @@ export function disableBirthdayDateWithDeathDate(deathDate: string): (current: M
     || dateDisabler(new Date().toISOString(), "greaterOrEqual")(current)
 }
 
+export function disableDateNotBetweenYearsFromNow(from: number, to: number): (current: Moment) => boolean {
+  return (current: Moment): boolean => {
+    const now = moment().endOf('day');
+    const fromDate = moment(now).add(from, "years").startOf("day");
+    const toDate = now.add(to, "years").endOf("day");
+
+    return current < fromDate || current > toDate;
+  }
+}
+
 export function formatByMaskFn(pattern: string): (value: string | null | undefined) => string {
   return (value: string | null | undefined): string => {
     if (!value) {
