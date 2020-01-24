@@ -23,7 +23,7 @@ export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps,
   public render(): JSX.Element {
     const {promise, popconfirmSettings, ...selectProps} = this.props;
     const saveButton: JSX.Element = this.wrapConfirmAndError(<Button type="primary" icon={this.state.loading ? "loading" : "save"} disabled={this.state.loading} onClick={this.saveWithoutValue}/>);
-    const datePickerWithPopover: JSX.Element = this.wrapInValidationPopover(
+    const datePickerWithPopover: JSX.Element = super.wrapInValidationPopover(
       <DatePicker
         {...selectProps as DatePickerProps}
         disabled={this.props.disabled || this.state.loading}
