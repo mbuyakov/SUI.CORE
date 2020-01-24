@@ -9,7 +9,9 @@ import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBa
 
 export type PromisedDatepickerProps = IPromisedBaseProps<moment.Moment | null> & Omit<DatePickerProps, "onChange" | "value">
 
-export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps, IPromisedBaseState<moment.Moment | null>, moment.Moment | null> {
+export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps,
+  IPromisedBaseState<moment.Moment | null>,
+  moment.Moment | null> {
   public constructor(props: PromisedDatepickerProps) {
     super(props);
     this.state = {
@@ -21,15 +23,18 @@ export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps, IP
   public render(): JSX.Element {
     const {promise, popconfirmSettings, ...selectProps} = this.props;
     const saveButton: JSX.Element = this.wrapConfirmAndError(<Button type="primary" icon={this.state.loading ? "loading" : "save"} disabled={this.state.loading} onClick={this.saveWithoutValue}/>);
+    const datePickerWithPopover: JSX.Element = this.wrapInValidationPopover(
+      <DatePicker
+        {...selectProps as DatePickerProps}
+        disabled={this.props.disabled || this.state.loading}
+        onChange={this.onChange}
+        value={this.state.value}
+      />
+    );
 
     return (
       <div className={SUI_ROW_GROW_LEFT}>
-        <DatePicker
-          {...selectProps as DatePickerProps}
-          disabled={this.props.disabled || this.state.loading}
-          onChange={this.onChange}
-          value={this.state.value}
-        />
+        {datePickerWithPopover}
         {this.state.savedValue !== this.state.value && saveButton}
       </div>
     );
