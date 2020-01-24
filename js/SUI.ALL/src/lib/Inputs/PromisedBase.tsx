@@ -1,4 +1,4 @@
-import { Popconfirm } from 'antd';
+import {Popconfirm, Popover} from 'antd';
 import { PopconfirmProps } from 'antd/lib/popconfirm';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
@@ -6,11 +6,13 @@ import * as React from 'react';
 import {IPromisedErrorPopoverProps, PromisedErrorPopover} from './PromisedErrorPopover';
 
 export interface IPromisedBaseProps<V> {
+  defaultValue?: V;
   errorPopoverProps?: Omit<IPromisedErrorPopoverProps, "promise">;
   popconfirmSettings?: PopconfirmSettings | boolean;
 
   // Must be function to generate new promise on each change
   promise(value: V): Promise<void>;
+  validator?(value: V): string | void;
 }
 
 export interface IPromisedBaseState<V> {
@@ -18,6 +20,7 @@ export interface IPromisedBaseState<V> {
   popconfirmVisible?: boolean;
   promise?: Promise<void>;
   savedValue?: V;
+  validatorText?: string;
   value?: V;
 }
 
@@ -28,7 +31,9 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     super(props);
     // tslint:disable-next-line:ban-ts-ignore
     // @ts-ignore
-    this.state = {};
+    this.state = {
+      validatorText: this.props.validator && this.props.validator(this.props.defaultValue) || '',
+    };
   }
 
   @autobind
@@ -58,7 +63,11 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
 
   @autobind
   protected onChange(value: V): void {
-    this.setState({ value });
+    let validatorText = "";
+    if (this.props.validator) {
+     validatorText = this.props.validator(value) || '';
+    }
+    this.setState({ value, validatorText });
   }
 
   protected wrapConfirmAndError(child: JSX.Element | null): JSX.Element {
@@ -76,6 +85,20 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     ) : (
       childWithErrorPopover
     );
+  }
+
+  protected wrapInValidationPopover(child: JSX.Element | null): JSX.Element {
+    return this.props.validator
+      ? (
+          <Popover
+            trigger="click"
+            visible={this.state.validatorText && this.state.validatorText.length > 0}
+            content={this.state.validatorText}
+          >
+            {child}
+          </Popover>
+        )
+      : (child);
   }
 
   @autobind
