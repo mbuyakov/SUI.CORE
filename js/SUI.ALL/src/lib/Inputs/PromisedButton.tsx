@@ -1,9 +1,9 @@
-import Button, {BaseButtonProps} from "antd/lib/button/button";
+import Button, {ButtonProps} from "antd/lib/button/button";
 import * as React from "react";
 
 import {IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
-export class PromisedButton extends PromisedBase<BaseButtonProps & {
+export class PromisedButton extends PromisedBase<ButtonProps & {
   disabled?: boolean;
   style?: React.CSSProperties;
 },
