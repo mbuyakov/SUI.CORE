@@ -87,6 +87,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     );
   }
 
+  @autobind
   protected wrapInValidationPopover(child: JSX.Element | null): JSX.Element {
     return this.props.validator
       ? (
