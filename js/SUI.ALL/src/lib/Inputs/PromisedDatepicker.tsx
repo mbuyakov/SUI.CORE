@@ -15,6 +15,7 @@ export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps,
   public constructor(props: PromisedDatepickerProps) {
     super(props);
     this.state = {
+      ...this.state,
       savedValue: this.props.defaultValue,
       value: this.props.defaultValue,
     };
