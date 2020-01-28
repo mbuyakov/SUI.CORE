@@ -35,7 +35,7 @@ export type BaseFormChildrenFn = React.FunctionComponent<IBaseFormChildrenProps>
 
 export type IBaseFormProps = Omit<IBaseCardProps<any>, 'item' | 'rows' | 'forceRenderTabs'> & {
   children?: BaseFormChildrenFn
-  customInputNodesTags?: IObjectWithIndex
+  customInputNodesProps?: IObjectWithIndex
   // tslint:disable-next-line:no-any
   initialValues?: IObjectWithIndex
   rows: OneOrArrayWithNulls<IBaseFormRowLayout<any>>
@@ -224,7 +224,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
       <BaseFormContext.Provider
         value={{
           baseForm: this,
-          customInputNodesTags: this.props.customInputNodesTags,
+          customInputNodesProps: this.props.customInputNodesProps,
           verticalLabel: !!this.props.verticalLabel,
         }}
       >
