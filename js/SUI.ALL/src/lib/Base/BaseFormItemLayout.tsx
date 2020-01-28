@@ -151,7 +151,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
               <Form.Item {...formItemProps}>
                 {React.cloneElement(item.inputNode, {
                   [valuePropName]: this.state.value,
-                  customInputNodesProps,
+                  ...customInputNodesProps,
                   ...item.inputNode.props,
                   onChange: this.onChange,
                   ...additionalProps,
