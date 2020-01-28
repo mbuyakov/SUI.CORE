@@ -6,7 +6,7 @@ import { BaseForm } from './BaseForm';
 
 export interface IBaseFormContext {
   baseForm: BaseForm
-  customInputNodesTags?: IObjectWithIndex
+  customInputNodesProps?: IObjectWithIndex
   verticalLabel: boolean
 }
 
