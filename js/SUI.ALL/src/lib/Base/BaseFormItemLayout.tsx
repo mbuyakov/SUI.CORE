@@ -115,6 +115,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
 
           if (item.rules) {
             this.formField.rules = item.rules;
+            console.debug(`${item.fieldName} rules:`, this.formField.rules)
           }
 
           const title = item.title && (
