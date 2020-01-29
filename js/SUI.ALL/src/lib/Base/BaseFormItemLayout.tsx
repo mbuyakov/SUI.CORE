@@ -115,8 +115,9 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
 
           if (item.rules) {
             this.formField.rules = item.rules;
-            console.debug(`${item.fieldName} rules:`, this.formField.rules)
           }
+
+          console.debug(`${item.fieldName} rules:`, this.formField.rules);
 
           const title = item.title && (
             <span className={classNames({ [BASE_CARD_ITEM_LABEL_HORIZONTAL]: !verticalLabel, 'ant-form-item-required': !!required })}>
