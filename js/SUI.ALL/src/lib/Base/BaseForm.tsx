@@ -50,6 +50,7 @@ export type IBaseFormProps = Omit<IBaseCardProps<any>, 'item' | 'rows' | 'forceR
 export interface IFormField {
   error: Observable<string | null>
   rules: RuleItem[]
+  validatorId?: number
   value: Observable<any>
 }
 
@@ -274,24 +275,21 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
       [field]: formField.rules
     });
 
-    const timestamp: number = (new Date()).getTime() % 10000000;
-    console.debug(timestamp, "Start to validate field", field);
+    const timestamp: number = (new Date()).getTime();
+    formField.validatorId = timestamp;
 
     return validator.validate({
       [field]: formField.value.getValue()
-    }, {}, errors => {
-      let error = null;
+    }, {first: true}, errors => {
+      if (formField.validatorId === timestamp ) {
+        let error = null;
 
-      console.debug(timestamp, "End of field validation", field);
-
-      if (errors && errors.length > 0) {
-        error = errors[0].message;
+        if (errors && errors.length > 0) {
+          error = errors[0].message;
+        }
+        formField.error.setValue(error);
       }
-
-      formField.error.setValue(error);
-    }).catch((err) => {/* Используем коллбек, так что пофиг (наверное). Catch нужен, так как без него браузер слегка подлагивает*/
-      console.debug(timestamp, "Catch error", err, "when validate field", field);
-    });
+    }).catch(() => {/* Используем коллбек, так что пофиг (наверное). Catch нужен, так как без него браузер слегка подлагивает*/});
   }
 
   @autobind
