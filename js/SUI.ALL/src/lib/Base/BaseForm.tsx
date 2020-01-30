@@ -264,6 +264,13 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   @autobind
   public async validateField(field: string): Promise<void> {
     const formField = this.formFields.get(field);
+
+    if (formField.rules.length === 0) {
+      formField.error.setValue(null);
+
+      return;
+    }
+
     const validator = new asyncValidator({
       [field]: formField.rules
     });

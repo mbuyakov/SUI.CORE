@@ -111,13 +111,17 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
           if (required) {
             if (this.formField.rules.findIndex(rule => rule.required || false) < 0) {
               this.formField.rules.unshift({ required: true, message: FILL_FIELD_TEXT });
+              // tslint:disable-next-line:no-floating-promises
+              this.baseForm.validateField(item.fieldName);
             }
           }
 
           if (!required) {
-            const index = this.formField.rules.findIndex(rule => rule.required || false)
+            const index = this.formField.rules.findIndex(rule => rule.required || false);
             if (index >= 0) {
               this.formField.rules.splice(index, 1);
+              // tslint:disable-next-line:no-floating-promises
+              this.baseForm.validateField(item.fieldName);
             }
           }
 
