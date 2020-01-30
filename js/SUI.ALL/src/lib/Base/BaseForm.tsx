@@ -268,14 +268,14 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
     });
 
     const timestamp: number = (new Date()).getTime() % 10000000;
-    console.debug(`${timestamp}| Start to validate field ${field}`);
+    console.debug(timestamp, "Start to validate field", field);
 
     return validator.validate({
       [field]: formField.value.getValue()
     }, {}, errors => {
       let error = null;
 
-      console.debug(`${timestamp}| End of field validation ${field}`);
+      console.debug(timestamp, "End of field validation", field);
 
       if (errors && errors.length > 0) {
         error = errors[0].message;
@@ -283,7 +283,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
 
       formField.error.setValue(error);
     }).catch((err) => {/* Используем коллбек, так что пофиг (наверное). Catch нужен, так как без него браузер слегка подлагивает*/
-      console.debug(`${timestamp}| Catch error when validate field ${field}: ${err}`);
+      console.debug(timestamp, "Catch error", err, "when validate field", field);
     });
   }
 
