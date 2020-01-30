@@ -13,8 +13,7 @@ export function normalizeDataKey(key: DataKey): string[] {
 export function concatDataKey(...keys: DataKey[]): string[] {
   return keys
     .filter(value => value != null)
-    .map(normalizeDataKey)
-    .reduce((previousValue, currentValue) => previousValue.concat(currentValue), []);
+    .flatMap(normalizeDataKey);
 }
 
 /**
