@@ -99,17 +99,8 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
             this.registerObservableHandler(this.formField.value.subscribe(value => this.setState({ value })));
             this.registerObservableHandler(this.formField.error.subscribe(error => this.setState({ error })));
             // tslint:disable-next-line:triple-equals
-            if (this.props.initialValue != null) {
-              this.formField.value.setValue(this.props.initialValue);
-            }
-            if (this.props.rules) {
-              this.formField.rules = this.props.rules;
-            }
-            if (required) {
-              // tslint:disable-next-line:triple-equals
-              if (this.props.rules == null || this.props.rules.findIndex(rule => rule.required || false) < 0) {
-                this.formField.rules.unshift({ required: true, message: FILL_FIELD_TEXT });
-              }
+            if (item.initialValue != null) {
+              this.formField.value.setValue(item.initialValue);
             }
           }
 
@@ -117,7 +108,18 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
             this.formField.rules = item.rules;
           }
 
-          console.debug(`${item.fieldName} rules:`, this.formField.rules);
+          if (required) {
+            if (this.formField.rules.findIndex(rule => rule.required || false) < 0) {
+              this.formField.rules.unshift({ required: true, message: FILL_FIELD_TEXT });
+            }
+          }
+
+          if (!required) {
+            const index = this.formField.rules.findIndex(rule => rule.required || false)
+            if (index >= 0) {
+              this.formField.rules.splice(index, 1);
+            }
+          }
 
           const title = item.title && (
             <span className={classNames({ [BASE_CARD_ITEM_LABEL_HORIZONTAL]: !verticalLabel, 'ant-form-item-required': !!required })}>

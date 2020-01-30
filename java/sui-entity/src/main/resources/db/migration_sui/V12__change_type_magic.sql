@@ -4,6 +4,45 @@ CREATE TABLE ____tmp____ (
     drop_statement TEXT NOT NULL
 );
 
+CREATE TABLE ____tmp____comments (
+    id BIGSERIAL PRIMARY KEY,
+    comment TEXT NOT NULL
+);
+
+WITH full_column_info AS (
+    SELECT schema_name,
+           table_name,
+           column_name,
+           column_info.id AS column_info_id
+    FROM sui_meta.column_info
+    INNER JOIN sui_meta.table_info ON column_info.table_info_id = table_info.id
+)
+INSERT INTO ____tmp____comments(comment)
+SELECT format(
+    'COMMENT ON COLUMN %s.%s.%s IS ''@references %s.%s(%s)'';',
+    t1.table_schema,
+    t1.table_name,
+    t1.column_name,
+    t1.ref_info[1],
+    t1.ref_info[2],
+    t1.ref_info[3]
+)
+FROM (
+    SELECT pg_namespace.nspname AS table_schema,
+           pg_class.relname AS table_name,
+           pg_attribute.attname AS column_name,
+           regexp_matches(pg_description.description, '@references (.+?)\.(.+?)\((.+?)\)', 'i') AS ref_info
+    FROM pg_catalog.pg_class
+        INNER JOIN pg_catalog.pg_namespace ON pg_class.relnamespace = pg_namespace.oid
+        INNER JOIN pg_catalog.pg_attribute ON pg_class.oid = pg_attribute.attrelid
+        INNER JOIN pg_catalog.pg_description
+            ON (pg_attribute.attrelid = pg_description.objoid AND pg_attribute.attnum = pg_description.objsubid)
+    WHERE pg_class.relkind IN ('r', 'm', 'v')
+        AND NOT pg_attribute.attisdropped
+        AND pg_attribute.attnum >= 1
+        AND pg_description.description ILIKE '%%@references%%'
+) t1;
+
 CREATE FUNCTION ____WTF____()
     RETURNS VOID
     LANGUAGE plpgsql
@@ -16,6 +55,7 @@ $$
         drop_statement TEXT;
         ____tmp____id TEXT;
         processed BIGINT[] = ARRAY[]::BIGINT[];
+        comment TEXT;
     BEGIN
         SELECT COUNT(*)
         FROM pg_catalog.pg_views
@@ -56,10 +96,15 @@ $$
         ) LOOP
             EXECUTE create_statement;
         END LOOP;
+
+        FOR comment IN ( SELECT ____tmp____comments.comment FROM ____tmp____comments) LOOP
+            EXECUTE comment;
+        END LOOP;
     END;
 $$;
 
 SELECT ____WTF____();
 
 DROP TABLE ____tmp____;
+DROP TABLE ____tmp____comments;
 DROP FUNCTION ____WTF____();
