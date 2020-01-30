@@ -7,6 +7,7 @@ import {ColumnInfo, ColumnInfoManager} from '../../cache';
 import { getDataByKey } from '../../dataKey';
 import { RouterLink } from '../../Link';
 import {getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps} from '../../utils';
+import {TableRenderSettingsPluginManager} from "../TableRenderSettingsPluginManager";
 import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
 
 import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
@@ -92,3 +93,5 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
     );
   }
 }
+
+TableRenderSettingsPluginManager.register(new LinkPlugin());
