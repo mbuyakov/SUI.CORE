@@ -9,7 +9,7 @@ import {trimIfString} from '../stringFormatters';
 import {SUI_ROW_GROW_LEFT} from '../styles';
 import {SUIMaskedInput} from '../SUIMaskedInput';
 
-import {IPromisedBaseProps, IPromisedBaseState, PromisedBase, ValidatorFunction} from './PromisedBase';
+import {ComposeValidator, IPromisedBaseProps, IPromisedBaseState, PromisedBase, ValidatorFunction} from './PromisedBase';
 
 const NUMBER_REGEX: RegExp = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/;
 
@@ -99,10 +99,8 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
     );
   }
 
-  @autobind
-  private handleNewValue(newValue: React.ChangeEvent<HTMLInputElement> | string): void {
-    const value = typeof newValue === 'string' ? newValue : newValue.target.value;
-    let validators = this.composeValidatorToAsyncValidatorRules(this.props.validator);
+  protected getValidator(): ComposeValidator<V> {
+    let validators = this.composeValidatorToAsyncValidatorRules(super.getValidator());
     if (this.props.mask) {
       if (validators == null) {
         validators = [];
@@ -111,8 +109,15 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
         this.maskValidator(this.props.mask, this.props.totalValueLength)
       ));
     }
+
+    return validators;
+  }
+
+  @autobind
+  private handleNewValue(newValue: React.ChangeEvent<HTMLInputElement> | string): void {
+    const value = typeof newValue === 'string' ? newValue : newValue.target.value;
     // tslint:disable-next-line:no-floating-promises
-    this.validate(validators, value as unknown as V);
+    this.validate(value as unknown as V);
     // tslint:disable-next-line:no-any
     if (this.props.type === 'number' && !((!Number.isNaN(value as any) && NUMBER_REGEX.test(value)) || value === '' || value === '-')) {
       return;

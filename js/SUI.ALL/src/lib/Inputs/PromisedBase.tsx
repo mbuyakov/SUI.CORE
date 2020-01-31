@@ -48,7 +48,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
 
   public componentDidMount(): void {
     // tslint:disable-next-line:no-floating-promises
-    this.validate(this.props.validator, this.props.defaultValue);
+    this.validate(this.props.defaultValue);
   }
 
   @autobind
@@ -72,8 +72,8 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   }
 
   @autobind
-  public async validate(composeValidator: ComposeValidator<V>, value: V): Promise<void> {
-    const rules = this.composeValidatorToAsyncValidatorRules(composeValidator);
+  public async validate(value: V): Promise<void> {
+    const rules = this.composeValidatorToAsyncValidatorRules(this.getValidator());
     if (rules === null || (Array.isArray(rules) && rules.length === 0)) {
       this.setState({validatorText: ""});
 
@@ -119,6 +119,10 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     };
   }
 
+  protected getValidator(): ComposeValidator<V> {
+    return this.props.validator;
+  }
+
   @autobind
   protected onCancel(): void {
     this.setState({popconfirmVisible: false});
@@ -128,7 +132,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   protected onChange(value: V): void {
     this.setState({value});
     // tslint:disable-next-line:no-floating-promises
-    this.validate(this.props.validator, value);
+    this.validate(value);
   }
 
   protected wrapConfirmAndError(child: JSX.Element | null): JSX.Element {
@@ -149,7 +153,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   }
 
   protected wrapInValidationPopover(child: JSX.Element | null): JSX.Element {
-    return this.props.validator
+    return this.getValidator()
       ? (
         <Popover
           trigger="click"
