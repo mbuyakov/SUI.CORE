@@ -86,10 +86,13 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     const options = {first: defaultIfNotBoolean(this.props.validateFirst, true)};
 
     return validator.validate({value}, options, errors => {
+      const validatorText = errors && errors.length > 0
+        ? errors.map(error => error.message).join(", ")
+        : '';
+      console.debug(timestamp, "promise base validation. validatorId: ", this.validatorId, validatorText);
       if (this.validatorId === timestamp) {
-        if (errors && errors.length > 0) {
-          this.setState({validatorText: errors.map(error => error.message).join(", ")});
-        }
+        console.debug(timestamp, "promise base validation: set state")
+        this.setState({validatorText});
       }
     }).catch(() => {/* Используем коллбек, так что пофиг (наверное). Catch нужен, так как без него браузер слегка подлагивает*/
     });
