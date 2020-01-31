@@ -110,6 +110,7 @@ export class PromisedInput extends PromisedBase<PromisedInputProps,
         this.maskValidator(this.props.mask, this.props.totalValueLength)
       ));
     }
+    // tslint:disable-next-line:no-floating-promises
     this.validate(validators, value);
     // tslint:disable-next-line:no-any
     if (this.props.type === 'number' && !((!Number.isNaN(value as any) && NUMBER_REGEX.test(value)) || value === '' || value === '-')) {

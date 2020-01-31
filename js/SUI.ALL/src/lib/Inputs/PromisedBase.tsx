@@ -38,6 +38,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   private validatorId: number = 0;
 
   public componentDidMount(): void {
+    // tslint:disable-next-line:no-floating-promises
     this.validate(this.props.validator, this.props.defaultValue);
   }
 
@@ -90,7 +91,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
       return null;
     }
     if (Array.isArray(validator)) {
-      return validator.filter(Boolean) as FixedRuleItem[];
+      return validator.filter(Boolean);
     }
 
     return [this.functionValidatorToFixedRuleItem(validator)];
@@ -114,6 +115,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   @autobind
   protected onChange(value: V): void {
     this.setState({value});
+    // tslint:disable-next-line:no-floating-promises
     this.validate(this.props.validator, value);
   }
 
