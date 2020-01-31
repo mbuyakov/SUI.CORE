@@ -99,6 +99,7 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
     );
   }
 
+  @autobind
   protected getValidator(): ComposeValidator<V> {
     let validators = this.composeValidatorToAsyncValidatorRules(super.getValidator());
     if (this.props.mask) {
