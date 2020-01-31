@@ -5,8 +5,8 @@ import Tooltip from "antd/lib/tooltip";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import { trimIfString } from '../stringFormatters';
-import { SUI_ROW_GROW_LEFT } from '../styles';
+import {trimIfString} from '../stringFormatters';
+import {SUI_ROW_GROW_LEFT} from '../styles';
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
@@ -17,10 +17,9 @@ export type PromisedTextAreaProps = {
   icon?: string;
   rowClassName?: string;
   rowStyle?: React.CSSProperties;
-  validator?(value: string): string | void;
 } & IPromisedBaseProps<string> & Omit<TextAreaProps, "onChange" | "value">
 
-export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromisedBaseState<string> & { validatorText: string }, string> {
+export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromisedBaseState<string>, string> {
 
   public constructor(props: PromisedTextAreaProps) {
     super(props);
@@ -50,18 +49,14 @@ export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromi
         className={this.props.rowClassName || SUI_ROW_GROW_LEFT}
         style={this.props.rowStyle}
       >
-        <Popover
-          trigger="click"
-          visible={this.state.validatorText.length > 0}
-          content={this.state.validatorText}
-        >
+        {this.wrapInValidationPopover(
           <Input.TextArea
             {...this.props}
             disabled={this.props.disabled || this.state.loading}
             onChange={this.handleNewValue}
             value={this.state.value}
           />
-        </Popover>
+        )}
         {saveButton && this.wrapConfirmAndError(saveButton)}
       </div>
     );
@@ -69,11 +64,7 @@ export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromi
 
   @autobind
   private handleNewValue(newValue: React.ChangeEvent<HTMLTextAreaElement>): void {
-    const value = newValue.target.value;
-    if (this.props.validator) {
-      this.setState({validatorText: this.props.validator(value) || ""});
-    }
-    this.setState({value});
+    this.onChange(newValue.target.value);
   }
 
 }

@@ -4,7 +4,7 @@ import * as React from "react";
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
-export type PromisedSwitchProps = IPromisedBaseProps<boolean> & Omit<SwitchProps, "checked" | "loading" | "onChange">;
+export type PromisedSwitchProps = Omit<IPromisedBaseProps<boolean>, "validator" | "validateFirst"> & Omit<SwitchProps, "checked" | "loading" | "onChange">;
 
 export class PromisedSwitch extends PromisedBase<PromisedSwitchProps, IPromisedBaseState<boolean>, boolean> {
   public constructor(props: PromisedSwitchProps) {
