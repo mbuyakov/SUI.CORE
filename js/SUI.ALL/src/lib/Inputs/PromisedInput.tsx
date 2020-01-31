@@ -102,8 +102,11 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
   @autobind
   private handleNewValue(newValue: React.ChangeEvent<HTMLInputElement> | string): void {
     const value = typeof newValue === 'string' ? newValue : newValue.target.value;
-    const validators = this.composeValidatorToAsyncValidatorRules(this.props.validator);
+    let validators = this.composeValidatorToAsyncValidatorRules(this.props.validator);
     if (this.props.mask) {
+      if (validators == null) {
+        validators = [];
+      }
       validators.unshift(this.functionValidatorToFixedRuleItem(
         this.maskValidator(this.props.mask, this.props.totalValueLength)
       ));
