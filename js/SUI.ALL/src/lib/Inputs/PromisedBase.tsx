@@ -41,7 +41,9 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     super(props);
     // tslint:disable-next-line:ban-ts-ignore
     // @ts-ignore
-    this.state = {};
+    this.state = {
+      validatorText: ''
+    };
   }
 
   public componentDidMount(): void {
