@@ -119,6 +119,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     };
   }
 
+  @autobind
   protected getValidator(): ComposeValidator<V> {
     return this.props.validator;
   }
@@ -153,6 +154,8 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   }
 
   protected wrapInValidationPopover(child: JSX.Element | null): JSX.Element {
+    console.debug("wrapInValidationPopover", this.getValidator());
+
     return this.getValidator()
       ? (
         <Popover
