@@ -37,6 +37,13 @@ type PopconfirmSettings = Omit<PopconfirmProps, 'onConfirm' | 'onCancel'>;
 export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extends React.Component<IPromisedBaseProps<V> & P, S> {
   private validatorId: number = 0;
 
+  public constructor(props: IPromisedBaseProps<V> & P) {
+    super(props);
+    // tslint:disable-next-line:ban-ts-ignore
+    // @ts-ignore
+    this.state = {};
+  }
+
   public componentDidMount(): void {
     // tslint:disable-next-line:no-floating-promises
     this.validate(this.props.validator, this.props.defaultValue);
