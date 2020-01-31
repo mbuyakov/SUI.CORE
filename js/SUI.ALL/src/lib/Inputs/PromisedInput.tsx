@@ -13,23 +13,21 @@ import {IPromisedBaseProps, IPromisedBaseState, PromisedBase, ValidatorFunction}
 
 const NUMBER_REGEX: RegExp = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/;
 
-export type PromisedInputProps = {
+export type PromisedInputProps<V> = {
   allowEmpty?: boolean;
   customInput?: Rendered<React.Component<InputProps>>;
-  defaultValue?: string | number;
   disabled?: boolean;
   icon?: string;
   mask?: string;
   rowStyle?: React.CSSProperties;
   totalValueLength?: number;
   type?: 'text' | 'number';
-} & IPromisedBaseProps<string | number>
+} & IPromisedBaseProps<V>
   & Omit<InputProps, 'onChange' | 'value'>
 
-export class PromisedInput extends PromisedBase<PromisedInputProps,
-  IPromisedBaseState<string | number>,
-  string | number> {
-  public constructor(props: PromisedInputProps) {
+export class PromisedInput<V = string | number> extends PromisedBase<PromisedInputProps<V>,
+  IPromisedBaseState<V>, V> {
+  public constructor(props: PromisedInputProps<V>) {
     super(props);
     this.state = {
       ...this.state,
@@ -39,9 +37,9 @@ export class PromisedInput extends PromisedBase<PromisedInputProps,
   }
 
   @autobind
-  public maskValidator(mask: string, totalValueLength: number): ValidatorFunction<string | number> {
+  public maskValidator(mask: string, totalValueLength: number): ValidatorFunction<V> {
     return value => {
-      const strValue = value as string;
+      const strValue = value.toString();
 
       return ((strValue.length === totalValueLength) || (strValue.length === 0 && this.props.allowEmpty))
         ? ''
@@ -62,7 +60,7 @@ export class PromisedInput extends PromisedBase<PromisedInputProps,
       />
     );
     saveButton = (this.state.savedValue !== this.state.value
-      && (this.props.type === 'number' ? this.state.value !== '-' : true)
+      && (this.props.type === 'number' ? this.state.value as unknown !== '-' : true)
       && (isEmptyAndEmptyNotAllowed
           ? <Tooltip title="Нельзя сохранить пустое значение">{saveButton}</Tooltip>
           : saveButton
@@ -83,7 +81,7 @@ export class PromisedInput extends PromisedBase<PromisedInputProps,
                   mask={this.props.mask} // Don't delete
                   disabled={this.props.disabled || this.state.loading}
                   onChange={this.handleNewValue}
-                  value={this.state.value as string}
+                  value={this.state.value as unknown as string}
                 />
               )
               : (
@@ -111,12 +109,12 @@ export class PromisedInput extends PromisedBase<PromisedInputProps,
       ));
     }
     // tslint:disable-next-line:no-floating-promises
-    this.validate(validators, value);
+    this.validate(validators, value as unknown as V);
     // tslint:disable-next-line:no-any
     if (this.props.type === 'number' && !((!Number.isNaN(value as any) && NUMBER_REGEX.test(value)) || value === '' || value === '-')) {
       return;
     }
-    this.setState({value: this.props.type === 'number' ? (value ? (value === '-' ? '-' : Number(value)) : undefined) : value});
+    this.setState({value: this.props.type === 'number' ? (value ? (value === '-' ? '-' : Number(value)) : undefined) : value} as unknown as V);
   }
 }
 
