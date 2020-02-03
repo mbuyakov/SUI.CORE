@@ -25,7 +25,6 @@ export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromi
     super(props);
     this.state = {
       savedValue: this.props.defaultValue,
-      validatorText: "",
       value: this.props.defaultValue,
     };
   }
@@ -36,7 +35,7 @@ export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromi
       <Button
         type="primary"
         icon={this.state.loading ? "loading" : this.props.icon || "save"}
-        disabled={this.state.loading || isEmptyAndEmptyNotAllowed || this.state.validatorText.length > 0}
+        disabled={this.state.loading || isEmptyAndEmptyNotAllowed || !this.isValidatorTextEmpty()}
         onClick={this.saveWithoutValue}
       />
     );
