@@ -111,7 +111,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
       "validator": (_, value, cb) => {
         const validationMsg = validator(value);
 
-        return cb(validationMsg ? validationMsg : '');
+        return cb(validationMsg ? validationMsg : null);
       }
     };
   }
