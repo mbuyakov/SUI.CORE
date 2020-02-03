@@ -16,7 +16,6 @@ export interface IPromisedBaseProps<V> {
   defaultValue?: V;
   errorPopoverProps?: Omit<IPromisedErrorPopoverProps, "promise">;
   popconfirmSettings?: PopconfirmSettings | boolean;
-  validateFirst?: boolean;
   validator?: ComposeValidator<V>;
 
   // Must be function to generate new promise on each change
@@ -83,7 +82,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     const validator = new asyncValidator({"value": rules});
     const timestamp: number = (new Date()).getTime();
     this.validatorId = timestamp;
-    const options = {first: defaultIfNotBoolean(this.props.validateFirst, true)};
+    const options = {first: false};
 
     return validator.validate({value}, options, errors => {
       // tslint:disable-next-line
