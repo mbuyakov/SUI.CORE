@@ -55,7 +55,7 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
       <Button
         type="primary"
         icon={this.state.loading ? 'loading' : this.props.icon || 'save'}
-        disabled={this.state.loading || isEmptyAndEmptyNotAllowed || this.state.validatorText.length > 0}
+        disabled={this.state.loading || isEmptyAndEmptyNotAllowed || !this.isValidatorTextEmpty()}
         onClick={this.saveWithoutValue}
       />
     );

@@ -28,7 +28,7 @@ export interface IPromisedBaseState<V> {
   popconfirmVisible?: boolean;
   promise?: Promise<void>;
   savedValue?: V;
-  validatorText?: string;
+  validatorText?: string | React.ReactNode;
   value?: V;
 }
 
@@ -86,13 +86,13 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     const options = {first: defaultIfNotBoolean(this.props.validateFirst, true)};
 
     return validator.validate({value}, options, errors => {
-      const validatorText = errors && errors.length > 0
-        ? errors.map(error => error.message).join(", ")
+      const validatorResult = errors && errors.length > 0
+        ? errors[0].message  //errors.map(error => error.message).join(", ")
         : '';
-      console.debug(timestamp, "promise base validation. validatorId: ", this.validatorId, validatorText);
+      console.debug(timestamp, "promise base validation. validatorId: ", this.validatorId, validatorResult);
       if (this.validatorId === timestamp) {
-        console.debug(timestamp, "promise base validation: set state")
-        this.setState({validatorText});
+        console.debug(timestamp, "promise base validation: set state");
+        this.setState({validatorText: validatorResult});
       }
     }).catch(() => {/* Используем коллбек, так что пофиг (наверное). Catch нужен, так как без него браузер слегка подлагивает*/
     });
@@ -122,6 +122,16 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   @autobind
   protected getValidator(): ComposeValidator<V> {
     return this.props.validator;
+  }
+
+
+  @autobind
+  protected isValidatorTextEmpty(): boolean {
+    const value = this.state.validatorText;
+
+    return value === null
+      || value === undefined
+      || (typeof value === 'string' && value.length === 0);
   }
 
   @autobind
@@ -160,7 +170,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
       ? (
         <Popover
           trigger="click"
-          visible={this.state.validatorText && this.state.validatorText.length > 0}
+          visible={!this.isValidatorTextEmpty()}
           content={this.state.validatorText}
         >
           {child}
