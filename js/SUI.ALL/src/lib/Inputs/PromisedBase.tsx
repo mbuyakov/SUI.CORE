@@ -84,11 +84,11 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     const options = {first: false};
 
     return validator.validate({value}, options, errors => {
-      const errorMessages = errors && errors.map(error => error.message).filter(message => message && (typeof message !== 'string' || message.length > 0));
-      const validatorResult = errorMessages && errorMessages.length > 0 ? errorMessages[0] : '';
-      console.debug(timestamp, "promise base validation. validatorId: ", this.validatorId, validatorResult);
+      const notEmptyErrors = errors.filter( e => Boolean(e.message));
+      const validatorResult = notEmptyErrors && notEmptyErrors.length > 0
+        ? notEmptyErrors[0].message  //errors.map(error => error.message).join(", ")
+        : '';
       if (this.validatorId === timestamp) {
-        console.debug(timestamp, "promise base validation: set state");
         this.setState({validatorText: validatorResult});
       }
     }).catch(() => {/* Используем коллбек, так что пофиг (наверное). Catch нужен, так как без него браузер слегка подлагивает*/
@@ -111,7 +111,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
       "validator": (_, value, cb) => {
         const validationMsg = validator(value);
 
-        return cb(validationMsg ? validationMsg : null);
+        return cb(validationMsg ? validationMsg : '');
       }
     };
   }
