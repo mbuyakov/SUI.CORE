@@ -111,11 +111,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
 
   protected functionValidatorToFixedRuleItem(validator: ValidatorFunction<V>): FixedRuleItem {
     return {
-      "validator": (_, value, cb) => {
-        const validationMsg = validator(value);
-
-        return cb(validationMsg ? validationMsg : '');
-      }
+      "validator": (_, value) => validator(value)
     };
   }
 
