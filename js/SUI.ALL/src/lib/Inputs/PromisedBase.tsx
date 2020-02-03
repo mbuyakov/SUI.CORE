@@ -86,8 +86,9 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     const options = {first: defaultIfNotBoolean(this.props.validateFirst, true)};
 
     return validator.validate({value}, options, errors => {
-      const validatorResult = errors && errors.length > 0
-        ? errors[0].message  //errors.map(error => error.message).join(", ")
+      const notEmptyErrors = errors && errors.filter(error => error.message);
+      const validatorResult = notEmptyErrors && notEmptyErrors.length > 0
+        ? notEmptyErrors[0].message
         : '';
       console.debug(timestamp, "promise base validation. validatorId: ", this.validatorId, validatorResult);
       if (this.validatorId === timestamp) {
