@@ -81,10 +81,10 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     const validator = new asyncValidator({"value": rules});
     const timestamp: number = (new Date()).getTime();
     this.validatorId = timestamp;
-    const options = {first: true};
+    const options = {first: false};
 
     return validator.validate({value}, options, errors => {
-      const errorMessages = errors && errors.map(error => error.message).filter(message => message && message.length > 0);
+      const errorMessages = errors && errors.map(error => error.message).filter(message => message && (typeof message !== 'string' || message.length > 0));
       const validatorResult = errorMessages && errorMessages.length > 0 ? errorMessages[0] : '';
       console.debug(timestamp, "promise base validation. validatorId: ", this.validatorId, validatorResult);
       if (this.validatorId === timestamp) {
