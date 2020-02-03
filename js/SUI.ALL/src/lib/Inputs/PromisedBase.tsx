@@ -85,14 +85,11 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     const options = {first: false};
 
     return validator.validate({value}, options, errors => {
-      // tslint:disable-next-line
       const notEmptyErrors = errors.filter( e => Boolean(e.message));
       const validatorResult = notEmptyErrors && notEmptyErrors.length > 0
         ? notEmptyErrors[0].message  //errors.map(error => error.message).join(", ")
         : '';
-      console.debug(timestamp, "promise base validation. validatorId: ", this.validatorId, validatorResult);
       if (this.validatorId === timestamp) {
-        console.debug(timestamp, "promise base validation: set state");
         this.setState({validatorText: validatorResult});
       }
     }).catch(() => {/* Используем коллбек, так что пофиг (наверное). Catch нужен, так как без него браузер слегка подлагивает*/
@@ -165,8 +162,6 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   }
 
   protected wrapInValidationPopover(child: JSX.Element | null): JSX.Element {
-    console.debug("wrapInValidationPopover", this.getValidator());
-
     return this.getValidator()
       ? (
         <Popover
