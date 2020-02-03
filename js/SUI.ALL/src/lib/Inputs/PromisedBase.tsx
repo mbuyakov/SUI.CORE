@@ -5,7 +5,6 @@ import autobind from 'autobind-decorator';
 import * as React from 'react';
 
 import {FixedRuleItem} from "../Base";
-import {defaultIfNotBoolean} from "../typeWrappers";
 
 import {IPromisedErrorPopoverProps, PromisedErrorPopover} from './PromisedErrorPopover';
 
@@ -16,7 +15,6 @@ export interface IPromisedBaseProps<V> {
   defaultValue?: V;
   errorPopoverProps?: Omit<IPromisedErrorPopoverProps, "promise">;
   popconfirmSettings?: PopconfirmSettings | boolean;
-  validateFirst?: boolean;
   validator?: ComposeValidator<V>;
 
   // Must be function to generate new promise on each change
@@ -83,18 +81,17 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     const validator = new asyncValidator({"value": rules});
     const timestamp: number = (new Date()).getTime();
     this.validatorId = timestamp;
-    const options = {first: defaultIfNotBoolean(this.props.validateFirst, true)};
+    const options = {first: true};
 
-    return validator.validate({value}, options).catch(errors => {
-      const notEmptyErrors = errors && errors.filter((error: { message: { length: number } }) => error.message && error.message.length > 0);
-      const validatorResult = errors && errors.length > 0
-        ? errors[0].message
-        : '';
+    return validator.validate({value}, options, errors => {
+      const errorMessages = errors && errors.map(error => error.message).filter(message => message && message.length > 0);
+      const validatorResult = errorMessages && errorMessages.length > 0 ? errorMessages[0] : '';
       console.debug(timestamp, "promise base validation. validatorId: ", this.validatorId, validatorResult);
       if (this.validatorId === timestamp) {
         console.debug(timestamp, "promise base validation: set state");
         this.setState({validatorText: validatorResult});
       }
+    }).catch(() => {/* Используем коллбек, так что пофиг (наверное). Catch нужен, так как без него браузер слегка подлагивает*/
     });
   }
 
@@ -111,7 +108,11 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
 
   protected functionValidatorToFixedRuleItem(validator: ValidatorFunction<V>): FixedRuleItem {
     return {
-      "validator": (_, value) => validator(value)
+      "validator": (_, value, cb) => {
+        const validationMsg = validator(value);
+
+        return cb(validationMsg ? validationMsg : '');
+      }
     };
   }
 
