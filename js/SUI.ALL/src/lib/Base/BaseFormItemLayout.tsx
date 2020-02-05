@@ -88,7 +88,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
   public render(): React.ReactNode {
     return (
       <BaseFormContext.Consumer>
-        {({ baseForm, verticalLabel, customInputNodesProps }): React.ReactNode => {
+        {({ baseForm, verticalLabel, customInputNodesProps, customFinalInputNodesProps }): React.ReactNode => {
           this.baseForm = baseForm;
           const item = this.props;
           const valuePropName = item.valuePropName || 'value';
@@ -148,6 +148,11 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
             additionalProps = item.mapFormValuesToInputNodeProps(this.valueGetter);
           }
 
+          if (!customFinalInputNodesProps) {
+            // tslint:disable-next-line:no-parameter-reassignment
+            customFinalInputNodesProps = {};
+          }
+
           if (!customInputNodesProps) {
             // tslint:disable-next-line:no-parameter-reassignment
             customInputNodesProps = {};
@@ -162,12 +167,15 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
                   ...customInputNodesProps,
                   ...item.inputNode.props,
                   onChange: this.onChange,
+                  ...(errors ? {disabled: false} : {}),
                   ...additionalProps,
+                  ...customFinalInputNodesProps,
                   style: {
                     width: '100%',
                     ...item.inputNode.props.style,
                     ...customInputNodesProps.style,
                     ...additionalProps.style,
+                    ...customFinalInputNodesProps.style
                   },
                 })}
               </Form.Item>
