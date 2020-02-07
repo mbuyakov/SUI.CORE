@@ -84,7 +84,6 @@ export interface IRemoteBaseTableFields {
   filters?: Filter[]; // Remote filtering
   grouping?: Grouping[]; // Remote grouping
   groupSubtotalData?: Map<GroupKey, IGroupSubtotalData>; // Remote grouping
-  pageSize?: number; // Remote paging
   sorting?: Sorting[]; // Remote sorting
   totalCount?: number; // Remote paging
 }
@@ -120,6 +119,7 @@ export interface IBaseTableProps<TSelection = any> {
   loading?: boolean;
   minColumnWidth?: number;
   noColsContent?: React.ReactNode;
+  pageSize?: number;
   pageSizes?: number[];
   paginationEnabled?: boolean;
   paperStyle?: React.CSSProperties;

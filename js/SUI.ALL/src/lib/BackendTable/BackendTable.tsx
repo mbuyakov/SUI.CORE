@@ -78,6 +78,7 @@ type IBackendTableState<T> = {
   error?: string;
   lastSendSelection?: T[];
   loading?: boolean;
+  pageSize?: number;
   paginationEnabled?: boolean;
   rawMode?: boolean;
   realExpandedGroups?: IExpandedGroup[];
@@ -123,7 +124,7 @@ export class BackendTable<TSelection = defaultSelection>
       lastSendSelection: [],
       paginationEnabled,
       // tslint:disable-next-line:no-magic-numbers
-      pageSize: paginationEnabled ? undefined : 1000000000
+      pageSize: paginationEnabled ? this.props.pageSize : 1000000000
     };
   }
 
