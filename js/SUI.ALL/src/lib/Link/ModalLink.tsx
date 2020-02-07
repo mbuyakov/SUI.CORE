@@ -11,7 +11,7 @@ import { draw } from '../utils';
 export interface IModalLinkProps {
   ghost?: boolean,
   modal: JSX.Element,
-  text: string,
+  text: string | JSX.Element,
   type?: ButtonType,
 }
 
