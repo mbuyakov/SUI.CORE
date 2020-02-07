@@ -1,6 +1,9 @@
+// tslint:disable:max-classes-per-file class-name variable-name
+import {Router} from "@material-ui/icons";
 import Button, {ButtonType} from 'antd/lib/button/button';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
 
 import { draw } from '../utils';
 
@@ -12,7 +15,7 @@ export interface IModalLinkProps {
   type?: ButtonType,
 }
 
-export class ModalLink extends React.Component<IModalLinkProps> {
+class __ModalLink extends React.Component<IModalLinkProps & RouteComponentProps> {
 
   public render(): JSX.Element {
     return (
@@ -29,6 +32,21 @@ export class ModalLink extends React.Component<IModalLinkProps> {
 
   @autobind
   private onClick(): void {
-    draw(this.props.modal);
+    draw(
+      <Router
+        {...this.props}
+      >
+        {this.props.modal}
+      </Router>
+    );
   }
+
+}
+
+export class ModalLink extends React.Component<IModalLinkProps>{
+
+  public render(): JSX.Element {
+    return React.createElement(withRouter(__ModalLink), this.props)
+  }
+
 }
