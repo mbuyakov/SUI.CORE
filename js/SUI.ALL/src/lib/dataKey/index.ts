@@ -10,11 +10,10 @@ export function normalizeDataKey(key: DataKey): string[] {
 /**
  * Concat dataKeys to string array
  */
-export function concatDataKey(...keys: DataKey[]): string[] {
+export function concatDataKey(...keys: DataKey[]): Array<number | string> {
   return keys
     .filter(value => value != null)
-    .map(normalizeDataKey)
-    .reduce((previousValue, currentValue) => previousValue.concat(currentValue), []);
+    .flatMap(key => key as string);
 }
 
 /**

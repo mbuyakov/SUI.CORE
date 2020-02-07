@@ -20,9 +20,7 @@ export class PromisedSelect<T> extends PromisedBase<PromisedSelectProps<T>, IPro
   public render(): JSX.Element {
     const {promise, popconfirmSettings, ...selectProps} = this.props;
     const saveButton: JSX.Element = this.wrapConfirmAndError(<Button type="primary" icon={this.state.loading ? "loading" : "save"} disabled={this.state.loading} onClick={this.saveWithoutValue}/>);
-
-    return (
-      <div className={SUI_ROW_GROW_LEFT}>
+    const withPopover: JSX.Element = this.wrapInValidationPopover(
         <Select<T>
           // Typescript goes crazy. Mark as any to ignore
           // tslint:disable-next-line:no-any
@@ -31,6 +29,11 @@ export class PromisedSelect<T> extends PromisedBase<PromisedSelectProps<T>, IPro
           onChange={this.onChange}
           value={this.state.value}
         />
+      );
+
+    return (
+      <div className={SUI_ROW_GROW_LEFT}>
+        {withPopover}
         {this.state.savedValue !== this.state.value && saveButton}
       </div>
     );
