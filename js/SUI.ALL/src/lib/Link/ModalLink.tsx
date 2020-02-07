@@ -43,10 +43,4 @@ class __ModalLink extends React.Component<IModalLinkProps & RouteComponentProps>
 
 }
 
-export class ModalLink extends React.Component<IModalLinkProps>{
-
-  public render(): JSX.Element {
-    return React.createElement(withRouter(__ModalLink), this.props)
-  }
-
-}
+export const ModalLink  = withRouter(__ModalLink);
