@@ -14,12 +14,12 @@ export const BIRTHDAY_NO_LESS_YEARS_AGO_FROM_NOW = 18;
 export const BIRTHDAY_NO_MORE_YEARS_AGO_FROM_NOW = 150;
 export const BIRTHDAY_LESS_THAN_18_MSG = "Возраст должен быть больше 18 лет";
 export const BIRTHDAY_GREATER_THAN_150_MSG = "Возраст должен быть меньше 150 лет";
+export const BIRTHDAY_GREATER_THAN_DEATH_MSG = "Дата рождения должна быть меньше даты смерти";
 export const BIRTHDAY_ERROR_MSG = "Укажите корректную дату рождения";
 
 export function birthDayValidator(value: Moment, deathDateString: string): string {
-
   if (disableBirthdayDateWithDeathDate(deathDateString)(value)) {
-    return BIRTHDAY_ERROR_MSG;
+    return BIRTHDAY_GREATER_THAN_DEATH_MSG;
   }
 
   const cmp = checkDateInRangeOfYearsFromNow(-BIRTHDAY_NO_MORE_YEARS_AGO_FROM_NOW, -BIRTHDAY_NO_LESS_YEARS_AGO_FROM_NOW, value);
