@@ -1,8 +1,8 @@
 import moment, {Moment} from 'moment';
 
-import {dateDisabler } from "./utils";
+import {dateDisabler} from "./utils";
 
-export function disableFutureDate(current: Moment): any {
+export function disableFutureDate(current: Moment): boolean {
   return current > moment().endOf('day');
 }
 
@@ -23,10 +23,10 @@ export function birthDayValidator(value: Moment, deathDateString: string): strin
   }
 
   const cmp = checkDateInRangeOfYearsFromNow(-BIRTHDAY_NO_MORE_YEARS_AGO_FROM_NOW, -BIRTHDAY_NO_LESS_YEARS_AGO_FROM_NOW, value);
-  if(cmp > 0) {
+  if (cmp > 0) {
     return BIRTHDAY_LESS_THAN_18_MSG;
   }
-  if(cmp < 0) {
+  if (cmp < 0) {
     return BIRTHDAY_GREATER_THAN_150_MSG;
   }
 
