@@ -23,26 +23,6 @@ export function dateDisabler(bound: string, type: "greater" | "greaterOrEqual" |
   }
 }
 
-export function disableFutureDate(current: Moment): boolean {
-  return current > moment().endOf('day');
-}
-
-export function disableBirthdayDateWithDeathDate(deathDate: string): (current: Moment) => boolean {
-  return (current: Moment): boolean => dateDisabler(new Date(1901, 0, 1).toISOString(), "less")(current)
-    || (deathDate !== null ? dateDisabler(new Date(deathDate).toISOString(), "greater")(current) : undefined)
-    || dateDisabler(new Date().toISOString(), "greaterOrEqual")(current)
-}
-
-export function disableDateNotBetweenYearsFromNow(from: number, to: number): (current: Moment) => boolean {
-  return (current: Moment): boolean => {
-    const now = moment().endOf('day');
-    const fromDate = moment(now).add(from, "years").startOf("day");
-    const toDate = now.add(to, "years").endOf("day");
-
-    return current < fromDate || current > toDate;
-  }
-}
-
 export function formatByMaskFn(pattern: string): (value: string | null | undefined) => string {
   return (value: string | null | undefined): string => {
     if (!value) {
