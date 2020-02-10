@@ -124,7 +124,7 @@ export class BackendTable<TSelection = defaultSelection>
       lastSendSelection: [],
       paginationEnabled,
       // tslint:disable-next-line:no-magic-numbers
-      pageSize: paginationEnabled ? this.props.pageSize : 1000000000
+      pageSize: paginationEnabled ? (this.props.pageSize || 10) : 1000000000
     };
   }
 
@@ -556,7 +556,7 @@ export class BackendTable<TSelection = defaultSelection>
       await ColumnInfoManager.getAllValues();
       const content = {
         // tslint:disable-next-line:no-magic-numbers
-        pageSize: this.state.paginationEnabled ? 10 : this.state.pageSize,
+        pageSize: this.state.pageSize,
         currentPage: 0
       };
       const sortedColumns = await getAllowedColumnInfos(tableInfo, getUser().roles);
