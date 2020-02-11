@@ -20,6 +20,7 @@ export const defaultModalFooter = (okButton: JSX.Element, cancelButton: JSX.Elem
 );
 
 export interface IPromisedModalProps extends Omit<ModalProps, "visible" | "onOk" | "footer"> {
+  defaultVisible?: boolean;
   customFooter?(okButton: JSX.Element, cancelButton: JSX.Element): React.ReactNode;
   promise?(): Promise<boolean>;
 }
@@ -33,7 +34,7 @@ export class PromisedModal
 
   public constructor(props: IPromisedModalProps) {
     super(props);
-    this.state = {visible: false};
+    this.state = {visible: !!props.defaultVisible};
   }
 
   public render(): JSX.Element {
