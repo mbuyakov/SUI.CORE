@@ -17,12 +17,12 @@ export const BIRTHDAY_GREATER_THAN_150_MSG = "Возраст должен быт
 export const BIRTHDAY_GREATER_THAN_DEATH_MSG = "Дата рождения должна быть меньше даты смерти";
 export const BIRTHDAY_ERROR_MSG = "Укажите корректную дату рождения";
 
-export function birthDayValidator(value: Moment, deathDateString: string): string {
-  if (disableBirthdayDateWithDeathDate(deathDateString)(value)) {
+export function birthDayValidator(birthDay: Moment, deathDateString: string): string {
+  if (disableBirthdayDateWithDeathDate(deathDateString)(birthDay)) {
     return BIRTHDAY_GREATER_THAN_DEATH_MSG;
   }
 
-  const cmp = checkDateInRangeOfYearsFromNow(-BIRTHDAY_NO_MORE_YEARS_AGO_FROM_NOW, -BIRTHDAY_NO_LESS_YEARS_AGO_FROM_NOW, value);
+  const cmp = checkDateInRangeOfYearsFromNow(-BIRTHDAY_NO_MORE_YEARS_AGO_FROM_NOW, -BIRTHDAY_NO_LESS_YEARS_AGO_FROM_NOW, birthDay);
   if (cmp > 0) {
     return BIRTHDAY_LESS_THAN_18_MSG;
   }
@@ -35,7 +35,7 @@ export function birthDayValidator(value: Moment, deathDateString: string): strin
 
 export function disableBirthdayDateWithDeathDate(deathDate: string): (current: Moment) => boolean {
   return (current: Moment): boolean => dateDisabler(new Date(1901, 0, 1).toISOString(), "less")(current)
-    || (deathDate !== null ? dateDisabler(new Date(deathDate).toISOString(), "greater")(current) : undefined)
+    || (deathDate != null ? dateDisabler(new Date(deathDate).toISOString(), "greater")(current) : undefined)
     || dateDisabler(new Date().toISOString(), "greaterOrEqual")(current)
 }
 
