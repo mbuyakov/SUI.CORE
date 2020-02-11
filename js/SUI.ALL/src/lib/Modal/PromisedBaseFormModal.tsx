@@ -19,6 +19,12 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
   public readonly formRef: React.RefObject<BaseForm> = React.createRef();
   public readonly modalRef: React.RefObject<PromisedModal> = React.createRef();
 
+  public componentDidMount(): void {
+    if (this.props.defaultVisible) {
+      setTimeout(() => this.forceUpdate(), 100);
+    }
+  }
+
   public render(): JSX.Element {
     // tslint:disable-next-line:ban-ts-ignore
     // @ts-ignore
