@@ -27,6 +27,7 @@ export type PromisedInputProps<V> = {
 
 export class PromisedInput<V = string | number> extends PromisedBase<PromisedInputProps<V>,
   IPromisedBaseState<V>, V> {
+
   public constructor(props: PromisedInputProps<V>) {
     super(props);
     this.state = {
@@ -125,6 +126,7 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
     }
     this.setState({value: this.props.type === 'number' ? (value ? (value === '-' ? '-' : Number(value)) : undefined) : value} as unknown as V);
   }
+
 }
 
 

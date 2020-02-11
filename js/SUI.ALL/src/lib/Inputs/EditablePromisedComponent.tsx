@@ -2,6 +2,7 @@ import {Button} from "antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
+import { DisableEditContext } from "../DisableEditContext";
 import {hasAnyRole} from "../RoleVisibilityWrapper";
 import {EDITABLE_PROMISED_COMPONENT_CHILDREN} from '../styles';
 
@@ -23,27 +24,34 @@ export class EditablePromisedComponent<T>
   }
 
   public render(): React.ReactNode {
-    const editAllowed = this.props.editRoles ? hasAnyRole(this.props.editRoles) : true;
-
     return (
-      <div
-        style={{
-          alignItems: "center",
-          display: "flex",
+      <DisableEditContext.Consumer>
+        {disableEdit => {
+          const editAllowed = !disableEdit && (this.props.editRoles ? hasAnyRole(this.props.editRoles) : true);
+          const editMode = editAllowed && this.state.editMode;
+
+          return (
+            <div
+              style={{
+                alignItems: "center",
+                display: "flex",
+              }}
+              className={EDITABLE_PROMISED_COMPONENT_CHILDREN}
+            >
+              {editMode ? React.cloneElement(this.props.children, {promise: this.getPromise}) : (this.props.nonEditRender || this.DEFAULT_RENDERER).apply(null, [this.props.children.props.defaultValue])}
+              {editAllowed && (
+                <Button
+                  size="small"
+                  htmlType="button"
+                  style={{marginLeft: editMode ? 4 : 8, flexShrink: 0, padding: "0 4px"}}
+                  onClick={this.switchEdit}
+                  icon={editMode ? "close" : "edit"}
+                />
+              )}
+            </div>
+          )
         }}
-        className={EDITABLE_PROMISED_COMPONENT_CHILDREN}
-      >
-        {this.state.editMode ? React.cloneElement(this.props.children, {promise: this.getPromise}) : (this.props.nonEditRender || this.DEFAULT_RENDERER).apply(null, [this.props.children.props.defaultValue])}
-        {editAllowed && (
-          <Button
-            size="small"
-            htmlType="button"
-            style={{marginLeft: this.state.editMode ? 4 : 8, flexShrink: 0, padding: "0 4px"}}
-            onClick={this.switchEdit}
-            icon={this.state && this.state.editMode ? "close" : "edit"}
-          />
-        )}
-      </div>
+      </DisableEditContext.Consumer>
     );
   }
 

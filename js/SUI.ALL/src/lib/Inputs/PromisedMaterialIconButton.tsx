@@ -9,6 +9,7 @@ export class PromisedMaterialIconButton extends PromisedBase<{
 },
   IPromisedBaseState<{}>,
   {}> {
+
   public render(): JSX.Element {
     let btn = (
       <IconButton onClick={this.saveWithoutValue}>
@@ -26,4 +27,5 @@ export class PromisedMaterialIconButton extends PromisedBase<{
 
     return this.wrapConfirmAndError(btn);
   }
+
 }

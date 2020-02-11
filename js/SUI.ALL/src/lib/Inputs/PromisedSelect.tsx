@@ -9,6 +9,7 @@ import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBa
 export type PromisedSelectProps<T> = IPromisedBaseProps<T> & Omit<SelectProps<T>, "onChange" | "value">
 
 export class PromisedSelect<T> extends PromisedBase<PromisedSelectProps<T>, IPromisedBaseState<T>, T> {
+
   public constructor(props: PromisedSelectProps<T>) {
     super(props);
     this.state = {
@@ -38,4 +39,5 @@ export class PromisedSelect<T> extends PromisedBase<PromisedSelectProps<T>, IPro
       </div>
     );
   }
+
 }

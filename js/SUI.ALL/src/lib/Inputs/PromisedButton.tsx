@@ -9,6 +9,7 @@ export class PromisedButton extends PromisedBase<ButtonProps & {
 },
   IPromisedBaseState<{}>,
   {}> {
+
   public render(): JSX.Element {
     const {promise, ...buttonProps} = this.props;
     const hasChild = this.props.children;
@@ -23,4 +24,5 @@ export class PromisedButton extends PromisedBase<ButtonProps & {
       />
     );
   }
+
 }

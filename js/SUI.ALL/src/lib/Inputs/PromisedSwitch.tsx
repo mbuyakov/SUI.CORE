@@ -7,6 +7,7 @@ import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBa
 export type PromisedSwitchProps = Omit<IPromisedBaseProps<boolean>, "validator"> & Omit<SwitchProps, "checked" | "loading" | "onChange">;
 
 export class PromisedSwitch extends PromisedBase<PromisedSwitchProps, IPromisedBaseState<boolean>, boolean> {
+
   public constructor(props: PromisedSwitchProps) {
     super(props);
     this.state = {
@@ -33,4 +34,5 @@ export class PromisedSwitch extends PromisedBase<PromisedSwitchProps, IPromisedB
       />
     );
   }
+
 }
