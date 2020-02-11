@@ -13,21 +13,38 @@ export class StringColumnFilter extends React.Component<TableFilterRow.CellProps
     return (
       <Input
         {...clearProps}
+        allowClear={true}
         placeholder={this.props.placeholder as string || 'Фильтр...'}
         defaultValue={this.props.filter ? this.props.filter.value : undefined}
-        onPressEnter={this.onChange}
+        onChange={this.onChange}
+        onPressEnter={this.onPressEnter}
       />
     );
   }
 
   @autobind
-  private onChange(event: React.KeyboardEvent<HTMLInputElement>): void {
+  private onChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    const value = event.target.value;
+
+    // Trigger on clearButton click
+    if (event.type === "click" && value === "") {
+      this.triggerFilter(value)
+    }
+  }
+
+  @autobind
+  private onPressEnter(event: React.KeyboardEvent<HTMLInputElement>): void {
+    // tslint:disable-next-line:ban-ts-ignore
+    // @ts-ignore
+    this.triggerFilter(event.target.value)
+  }
+
+  @autobind
+  private triggerFilter(value: string): void {
     this.props.onFilter({
       columnName: this.props.column.name,
       operation: this.props.operation || "contains",
-      // tslint:disable-next-line:ban-ts-ignore
-      // @ts-ignore
-      value: event.target.value
+      value
     });
   }
 
