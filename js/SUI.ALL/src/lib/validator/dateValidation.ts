@@ -59,5 +59,5 @@ export function checkDateInRangeOfYearsFromNow(from: number, to: number, date: M
 }
 
 export function disableDateNotBetweenYearsFromNow(from: number, to: number): (current: Moment) => boolean {
-  return (current: Moment): boolean => checkDateInRangeOfYearsFromNow(from, to, current) === 0
+  return (current: Moment): boolean => checkDateInRangeOfYearsFromNow(from, to, current) !== 0
 }
