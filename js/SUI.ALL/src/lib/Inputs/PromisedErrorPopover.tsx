@@ -17,6 +17,7 @@ export class PromisedErrorPopover extends React.Component<
     popoverVisible?: boolean;
   }
 > {
+
   public constructor(props: IPromisedErrorPopoverProps) {
     super(props);
     this.state = {};
@@ -58,4 +59,5 @@ export class PromisedErrorPopover extends React.Component<
       });
     }
   }
+
 }

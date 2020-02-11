@@ -1,9 +1,11 @@
+// tslint:disable:cyclomatic-complexity
 import {Button, notification} from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";
 
 import {BackendTable} from "../BackendTable";
 import {getDataByKey} from "../dataKey";
+import { DisableEditContext } from '../DisableEditContext';
 import {errorNotification} from "../drawUtils";
 import {PromisedButton} from "../Inputs";
 import {PromisedBaseFormModal} from "../Modal";
@@ -35,120 +37,126 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
   }
 
   public render(): JSX.Element {
-    const {
-      createButtonProps,
-      deleteButtonProps,
-      mutationRoles,
-      getEditInitialValues,
-      handleCreate,
-      handleEdit,
-      serviceColumns
-    } = this.props;
-    const allowEdit = mutationRoles ? hasAnyRole(mutationRoles) : true;
-    const rowEditable = !!getEditInitialValues && allowEdit;
-
-    const createButton = (
-      <Button
-        icon="plus-circle"
-        {...createButtonProps}
-        onClick={this.showBaseModalFn(this.createBaseFormModalRef)}
-      >
-        {createButtonProps && createButtonProps.children || "Создать"}
-      </Button>
-    );
-
-    const deleteButton = (
-      <PromisedButton
-        icon="delete"
-        {...deleteButtonProps}
-        promise={this.handleDeleteClick}
-        popconfirmSettings={{
-          placement: "topRight",
-          title: "Вы уверены что хотите удалить выбранные записи?"
-        }}
-      >
-        {deleteButtonProps && deleteButtonProps.children || "Удалить"}
-      </PromisedButton>
-    );
-
-    let extra = this.props.customExtra
-      ? this.props.customExtra(createButton, deleteButton)
-      : (
-        <div
-          style={{
-            display: "grid",
-            gap: MutableBackendTableButtonGap,
-            gridTemplateColumns: "1fr 1fr"
-          }}
-        >
-          {createButton}
-          {deleteButton}
-        </div>
-      );
-
-    extra = allowEdit ? extra : null;
-
-    const editBaseFormModalProps = this.props.editBaseFormModalProps || this.props.createBaseFormModalProps;
-    const editBaseFormProps = this.props.editBaseFormProps
-      ? typeof (this.props.editBaseFormProps) === "function"
-        ? this.state.editRow
-          ? this.props.editBaseFormProps(this.state.editRow)
-          : undefined
-        : this.props.editBaseFormProps
-      : {...this.props.createBaseFormProps, uuid: `${getDataByKey(this.props.createBaseFormProps, "uuid") || ""}__EDIT`};
-
     return (
-      <>
-        <BackendTable<TSelection>
-          {...this.props}
-          innerRef={this.tableRef}
-          selectionEnabled={!!extra && defaultIfNotBoolean(this.props.selectionEnabled, true)} // Отключение selection в случае невидимости кнопок по ролям
-          extra={extra}
-          serviceColumns={!rowEditable
-            ? serviceColumns
-            : [{
-                id: "__edit",
-                render: (_: null, row: {id: TSelection}): JSX.Element => (
-                  <PromisedButton
-                    loading={this.state.initEditLoading}
-                    icon="edit"
-                    promise={this.handleEditClickFn(row)}
-                  />
-                ),
-                title: " ",
-                // tslint:disable-next-line:no-magic-numbers
-                width: defaultIfNotBoolean(this.props.selectionEnabled, true) ? 48 : 80,
-              }]
-                // tslint:disable-next-line:no-any
-                .concat((serviceColumns || []) as any[])
-          }
-        />
-        {/* Create modal */}
-        <PromisedBaseFormModal<TValues>
-          {...this.props.commonModalProps}
-          {...this.props.createBaseFormModalProps}
-          baseFormProps={this.props.createBaseFormProps}
-          ref={this.createBaseFormModalRef}
-          onSubmit={this.submitDecorator(handleCreate)}
-        />
-        {/* Edit modal */}
-        {rowEditable && (
-          <PromisedBaseFormModal<TEditValues>
-            {...this.props.commonModalProps}
-            {...editBaseFormModalProps}
-            ref={this.editBaseFormModalRef}
-            baseFormProps={{
-              ...editBaseFormProps,
-              initialValues: {
-                ...(editBaseFormProps && editBaseFormProps.initialValues),
-                ...this.state.editModalInitialValues
-              }
-            }}
-            onSubmit={this.submitDecorator(values => handleEdit(values, this.state.editRow))}
-          />
-        )}
-      </>
-    );
+      <DisableEditContext.Consumer>
+        {(disableEdit): JSX.Element => {
+          const {
+            createButtonProps,
+            deleteButtonProps,
+            mutationRoles,
+            getEditInitialValues,
+            handleCreate,
+            handleEdit,
+            serviceColumns
+          } = this.props;
+          const allowEdit = !disableEdit && (mutationRoles ? hasAnyRole(mutationRoles) : true);
+          const rowEditable = !!getEditInitialValues && allowEdit;
+
+          const createButton = (
+            <Button
+              icon="plus-circle"
+              {...createButtonProps}
+              onClick={this.showBaseModalFn(this.createBaseFormModalRef)}
+            >
+              {createButtonProps && createButtonProps.children || "Создать"}
+            </Button>
+          );
+
+          const deleteButton = (
+            <PromisedButton
+              icon="delete"
+              {...deleteButtonProps}
+              promise={this.handleDeleteClick}
+              popconfirmSettings={{
+                placement: "topRight",
+                title: "Вы уверены что хотите удалить выбранные записи?"
+              }}
+            >
+              {deleteButtonProps && deleteButtonProps.children || "Удалить"}
+            </PromisedButton>
+          );
+
+          let extra = this.props.customExtra
+            ? this.props.customExtra(createButton, deleteButton)
+            : (
+              <div
+                style={{
+                  display: "grid",
+                  gap: MutableBackendTableButtonGap,
+                  gridTemplateColumns: "1fr 1fr"
+                }}
+              >
+                {createButton}
+                {deleteButton}
+              </div>
+            );
+
+          extra = allowEdit ? extra : null;
+
+          const editBaseFormModalProps = this.props.editBaseFormModalProps || this.props.createBaseFormModalProps;
+          const editBaseFormProps = this.props.editBaseFormProps
+            ? typeof (this.props.editBaseFormProps) === "function"
+              ? this.state.editRow
+                ? this.props.editBaseFormProps(this.state.editRow)
+                : undefined
+              : this.props.editBaseFormProps
+            : {...this.props.createBaseFormProps, uuid: `${getDataByKey(this.props.createBaseFormProps, "uuid") || ""}__EDIT`};
+
+          return (
+            <>
+              <BackendTable<TSelection>
+                {...this.props}
+                innerRef={this.tableRef}
+                selectionEnabled={!!extra && defaultIfNotBoolean(this.props.selectionEnabled, true)} // Отключение selection в случае невидимости кнопок по ролям
+                extra={extra}
+                serviceColumns={!rowEditable
+                  ? serviceColumns
+                  : [{
+                    id: "__edit",
+                    render: (_: null, row: {id: TSelection}): JSX.Element => (
+                      <PromisedButton
+                        loading={this.state.initEditLoading}
+                        icon="edit"
+                        promise={this.handleEditClickFn(row)}
+                      />
+                    ),
+                    title: " ",
+                    // tslint:disable-next-line:no-magic-numbers
+                    width: defaultIfNotBoolean(this.props.selectionEnabled, true) ? 48 : 80,
+                  }]
+                    // tslint:disable-next-line:no-any
+                    .concat((serviceColumns || []) as any[])
+                }
+              />
+              {/* Create modal */}
+              <PromisedBaseFormModal<TValues>
+                {...this.props.commonModalProps}
+                {...this.props.createBaseFormModalProps}
+                baseFormProps={this.props.createBaseFormProps}
+                ref={this.createBaseFormModalRef}
+                onSubmit={this.submitDecorator(handleCreate)}
+              />
+              {/* Edit modal */}
+              {rowEditable && (
+                <PromisedBaseFormModal<TEditValues>
+                  {...this.props.commonModalProps}
+                  {...editBaseFormModalProps}
+                  ref={this.editBaseFormModalRef}
+                  baseFormProps={{
+                    ...editBaseFormProps,
+                    initialValues: {
+                      ...(editBaseFormProps && editBaseFormProps.initialValues),
+                      ...this.state.editModalInitialValues
+                    }
+                  }}
+                  onSubmit={this.submitDecorator(values => handleEdit(values, this.state.editRow))}
+                />
+              )}
+            </>
+          );
+        }}
+      </DisableEditContext.Consumer>
+    )
   }
 
   @autobind

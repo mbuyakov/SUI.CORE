@@ -7,6 +7,7 @@ export * from "./color";
 export * from "./CommonForm";
 export * from "./comparators";
 export * from "./dataKey";
+export * from "./DisableEditContext";
 export * from "./Dnf";
 export * from "./Draggable";
 export * from "./ForceDirectedTree";

@@ -12,6 +12,7 @@ export type PromisedDatepickerProps = IPromisedBaseProps<moment.Moment | null> &
 export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps,
   IPromisedBaseState<moment.Moment | null>,
   moment.Moment | null> {
+
   public constructor(props: PromisedDatepickerProps) {
     super(props);
     this.state = {
@@ -40,4 +41,5 @@ export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps,
       </div>
     );
   }
+
 }

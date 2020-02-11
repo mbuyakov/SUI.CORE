@@ -33,6 +33,7 @@ export interface IPromisedBaseState<V> {
 type PopconfirmSettings = Omit<PopconfirmProps, 'onConfirm' | 'onCancel'>;
 
 export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extends React.Component<IPromisedBaseProps<V> & P, S> {
+
   private validatorId: number = 0;
 
   public constructor(props: IPromisedBaseProps<V> & P) {
@@ -44,9 +45,8 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     };
   }
 
-  public componentDidMount(): void {
-    // tslint:disable-next-line:no-floating-promises
-    this.validate(this.props.defaultValue);
+  public async componentDidMount(): Promise<void> {
+    return this.validate(this.props.defaultValue);
   }
 
   @autobind
@@ -195,5 +195,6 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     // Workaround for button handler
     this.onConfirm();
   }
+
 }
 
