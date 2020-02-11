@@ -18,7 +18,7 @@ export const BIRTHDAY_GREATER_THAN_DEATH_MSG = "Дата рождения дол
 export const BIRTHDAY_ERROR_MSG = "Укажите корректную дату рождения";
 
 export function birthDayValidator(birthDay: Moment, deathDateString: string): string {
-  if (disableBirthdayDateWithDeathDate(deathDateString)(birthDay)) {
+  if (deathDateString != null && disableBirthdayDateWithDeathDate(deathDateString)(birthDay)) {
     return BIRTHDAY_GREATER_THAN_DEATH_MSG;
   }
 
