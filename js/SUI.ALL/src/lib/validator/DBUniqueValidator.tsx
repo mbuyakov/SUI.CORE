@@ -7,7 +7,6 @@ export type gqlCompareOperations = 'equalTo' | 'notEqualTo' | 'distinctFrom' | '
 export interface IQueryResult {
   table: {
     nodes: {
-      __alias: string
       __id: string
     },
     totalCount: number,
@@ -17,7 +16,6 @@ export interface IQueryResult {
 export async function DBUniqueValidator(gqTable: string,
                                         queryFields: IObjectWithIndex,
                                         idFieldName: string = 'id',
-                                        existsMessage: string = 'Элемент уже существует',
                                         excludeId: string = null): Promise<IQueryResult> {
   const fieldsFilter = createFieldsFilter(queryFields, idFieldName, excludeId);
   if (!gqTable || !fieldsFilter || fieldsFilter.length === 0) {
