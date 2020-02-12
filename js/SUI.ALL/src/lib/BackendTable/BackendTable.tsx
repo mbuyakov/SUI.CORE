@@ -7,6 +7,7 @@ import * as React from 'react';
 import uuid from 'uuid';
 
 import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFilterType, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, RefreshMetaTablePlugin, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
+import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
 import {RestBackendDataSource} from "./RestBackendDataSource";
@@ -129,6 +130,14 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
+  public clearFilters(): Promise<void> {
+    return new Promise<void>((resolve): void => {
+      this.onFiltersChange([]);
+      resolve();
+    });
+  }
+
+  @autobind
   public clearSelection(): void {
     return this.baseTableRef
       && this.baseTableRef.current
@@ -227,9 +236,10 @@ export class BackendTable<TSelection = defaultSelection>
             )
           }
           toolbarButtons={[
+            (<ClearFiltersPlugin handleClick={this.clearFilters}/>),
             (<RefreshMetaTablePlugin handleClick={this.refresh}/>),
             // admin && (<RawModePlugin enabled={this.state.rawMode} onClick={this.changeRaw}/>),
-            admin && (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
+            admin && (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>)
           ].filter(Boolean)}
           rowStyler={this.generateRowStyler()}
           warnings={admin ? this.state.warnings : undefined}
