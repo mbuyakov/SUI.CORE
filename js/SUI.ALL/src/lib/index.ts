@@ -41,6 +41,7 @@ export * from "./FullScreenModal";
 export * from "./Modal";
 export * from "./MutableBackendTable";
 export * from "./ReportTop3DBarChart";
+export * from "./RoleVisibilityWrapper";
 export * from "./Socket";
 export * from "./SparkLine";
 export * from "./styles";
