@@ -35,7 +35,7 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
     this.state = {};
   }
 
-  public componentDidMount(): Promise<void> {
+  public async componentDidMount(): Promise<void> {
     return this.updateData();
   }
 
