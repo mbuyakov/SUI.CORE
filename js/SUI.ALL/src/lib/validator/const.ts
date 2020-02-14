@@ -12,3 +12,8 @@ export const OMS_MASK_LENGTH = 16;
 export const SNILS_MASK = "111-111-111 11";
 export const SNILS_MASK_LENGTH = 11;
 
+export const KPP_MASK = "1111 11 111";
+export const KPP_MASK_LENGTH = 9;
+
+export const ORGANIZATION_INN_MASK = "1111111111";
+export const ORGANIZATION_INN_MASK_LENGTH = 10;
