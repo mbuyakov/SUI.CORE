@@ -63,6 +63,7 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
         value={(this.props.value != null) ? this.props.value : undefined}
         style={{...this.props.style, ...(!ready && {filter: 'blur(1px)'})}}
         mode={this.props.multiple ? "multiple" : "default"}
+        disabled={(this.state.dataSet && !ready) || this.props.disabled}
         optionFilterProp="children"
         placeholder={this.props.placeholder || this.state.placeholder}
       >

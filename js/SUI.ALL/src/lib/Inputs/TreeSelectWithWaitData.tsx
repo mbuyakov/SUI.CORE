@@ -63,6 +63,7 @@ export class TreeSelectWithWaitData<TValue extends TreeNodeValue, TValueType = {
         {...this.props}
         style={{...this.props.style, ...(!ready && {filter: 'blur(0.5px)'})}}
         treeData={this.state.treeData}
+        disabled={(this.state.treeData && !ready) || this.props.disabled}
         treeNodeFilterProp="title"
         dropdownClassName={classNames(
           this.props.dropdownClassName,
