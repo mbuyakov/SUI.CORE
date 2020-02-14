@@ -106,7 +106,15 @@ function format(fields: object, excludeNulls: boolean): string {
   return Object.keys(fields)
     .filter(key => !key.startsWith('_'))
     .filter(key => excludeNulls ? ((fields as IObjectWithIndex)[key] != null) : true)
-    .map(key => `${key}: ${addQuotesIfString((fields as IObjectWithIndex)[key])}`)
+    .map(key => {
+      const value = (fields as IObjectWithIndex)[key];
+      const valueStr = Array.isArray(value)
+        // tslint:disable-next-line
+        ? `[${value.map(element => addQuotesIfString(element))}]`
+        : addQuotesIfString(value);
+
+      return `${key}: ${valueStr}`;
+    })
     .join(",");
 }
 

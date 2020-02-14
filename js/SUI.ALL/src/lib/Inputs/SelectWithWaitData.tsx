@@ -10,19 +10,25 @@ import {IGqlFilter} from "../gql";
 import {ExtractProps} from "../other";
 import {getDataSet, getDataSetRender, getUser, IDataSet} from "../utils";
 
-export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
-  extends React.Component<Omit<SelectProps, 'mode'> & {
+export type ISelectWithWaitDataProps<TValueType, TGroupType> =
+  Omit<SelectProps, 'mode'> & {
   groupTableFilter?: IGqlFilter<TGroupType>;
   groupTableIdentifier?: string;
   multiple?: boolean;
   valueTableFilter?: IGqlFilter<TValueType>;
   valueTableIdentifier: string;
-}, {
+  watchFilter?: boolean;
+}
+
+export interface ISelectWithWaitDataState {
   dataSet?: IDataSet[];
   options?: JSX.Element[];
   placeholder?: string;
   ready?: boolean;
-}> {
+}
+
+export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
+  extends React.Component<ISelectWithWaitDataProps<TValueType, TGroupType>, ISelectWithWaitDataState> {
 
   public constructor(props: ExtractProps<SelectWithWaitData<TValueType, TGroupType>>) {
     super(props);
@@ -30,6 +36,62 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
   }
 
   public async componentDidMount(): Promise<void> {
+    return this.updateData();
+  }
+
+  public async componentDidUpdate(prevProps: Readonly<ISelectWithWaitDataProps<TValueType, TGroupType>> ): Promise<void> {
+    if (this.props.watchFilter) {
+      if (JSON.stringify(this.props.valueTableFilter) !== JSON.stringify(prevProps.valueTableFilter)) {
+        await this.updateData();
+      }
+    }
+  }
+
+  public getData(): IDataSet[] {
+    return this.state.dataSet;
+  }
+
+  public render(): JSX.Element {
+    const ready = this.state.ready;
+
+    return (
+      <Select
+        allowClear={true}
+        showSearch={true}
+        {...this.props}
+        // tslint:disable-next-line:triple-equals
+        value={(this.props.value != null) ? this.props.value : undefined}
+        style={{...this.props.style, ...(!ready && {filter: 'blur(1px)'})}}
+        mode={this.props.multiple ? "multiple" : "default"}
+        disabled={(this.state.dataSet && !ready) || this.props.disabled}
+        optionFilterProp="children"
+        placeholder={this.props.placeholder || this.state.placeholder}
+      >
+        {this.state.options}
+      </Select>
+    );
+  }
+
+  @autobind
+  private generateOptions(data: IDataSet[]): JSX.Element[] {
+    return (data || []).map(element => (
+      <Select.Option
+        key={element.id}
+        // TODO: toString is kostyl' for integer PK  tables (remove in future) value={element.id}
+        // tslint:disable-next-line:triple-equals
+        value={element.id != null ? String(element.id) : element.id}
+      >
+        {getDataSetRender(element) || NO_DATA_TEXT}
+      </Select.Option>
+    ))
+  }
+
+  @autobind
+  private async updateData(): Promise<void> {
+    if (this.state.ready) {
+      this.setState({ready: false});
+    }
+
     const groupTableInfo = this.props.groupTableIdentifier && await TableInfoManager.getById(this.props.groupTableIdentifier);
     const valueTableInfo = await TableInfoManager.getById(this.props.valueTableIdentifier);
 
@@ -65,44 +127,6 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
       placeholder: firstElement && getDataSetRender(firstElement),
       ready: true
     });
-  }
-
-  public getData(): IDataSet[] {
-    return this.state.dataSet;
-  }
-
-  public render(): JSX.Element {
-    const ready = this.state.ready;
-
-    return (
-      <Select
-        allowClear={true}
-        showSearch={true}
-        {...this.props}
-        // tslint:disable-next-line:triple-equals
-        value={(this.props.value != null) ? this.props.value : undefined}
-        style={{...this.props.style, ...(!ready && {filter: 'blur(1px)'})}}
-        mode={this.props.multiple ? "multiple" : "default"}
-        optionFilterProp="children"
-        placeholder={this.props.placeholder || this.state.placeholder}
-      >
-        {this.state.options}
-      </Select>
-    );
-  }
-
-  @autobind
-  private generateOptions(data: IDataSet[]): JSX.Element[] {
-    return (data || []).map(element => (
-      <Select.Option
-        key={element.id}
-        // TODO: toString is kostyl' for integer PK  tables (remove in future) value={element.id}
-        // tslint:disable-next-line:triple-equals
-        value={element.id != null ? String(element.id) : element.id}
-      >
-        {getDataSetRender(element) || NO_DATA_TEXT}
-      </Select.Option>
-    ))
   }
 
 }
