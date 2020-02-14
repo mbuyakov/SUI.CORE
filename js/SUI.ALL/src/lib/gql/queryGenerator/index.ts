@@ -109,7 +109,8 @@ function format(fields: object, excludeNulls: boolean): string {
     .map(key => {
       const value = (fields as IObjectWithIndex)[key];
       const valueStr = Array.isArray(value)
-        ? `[${value.map(addQuotesIfString)}]`
+        // tslint:disable-next-line
+        ? `[${value.map(element => addQuotesIfString(element))}]`
         : addQuotesIfString(value);
 
       return `${key}: ${valueStr}`;
