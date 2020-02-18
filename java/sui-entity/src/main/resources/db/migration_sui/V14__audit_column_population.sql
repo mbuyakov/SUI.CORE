@@ -231,7 +231,7 @@ $$
     END;
 $$;
 
--- Без ограничения на аудит метасхемы
+-- Без ограничения на аудит метасхемы + выставления is_audited
 CREATE OR REPLACE FUNCTION log.stop_audit_table(table_info_id bigint)
     RETURNS VOID
     LANGUAGE plpgsql
@@ -248,15 +248,13 @@ $$
 
         EXECUTE 'DROP TRIGGER IF EXISTS audit_log_trigger ON ' || table_oid::regclass::text || ';';
         EXECUTE 'DROP TRIGGER IF EXISTS populate_audit_columns_trigger ON ' || table_oid::regclass::text || ';';
-
-        UPDATE sui_meta.table_info SET is_audited = false WHERE id = table_info_id;
     END;
 $$;
 
 SELECT log.stop_audit_table(id) FROM sui_meta.table_info WHERE is_audited IS TRUE;
 SELECT log.start_audit_table(id) FROM sui_meta.table_info WHERE is_audited IS TRUE;
 
--- Возвращаем ограничение на аудит метасхемы
+-- Возвращаем полную реализацию
 CREATE OR REPLACE FUNCTION log.stop_audit_table(table_info_id bigint)
     RETURNS VOID
     LANGUAGE plpgsql
