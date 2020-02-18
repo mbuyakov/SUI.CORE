@@ -8,9 +8,6 @@ $$
     END;
 $$;
 
-ALTER TABLE log.audit_log ALTER COLUMN content SET DATA TYPE JSONB USING content::JSONB;
-ALTER TABLE log.meta_audit_log ALTER COLUMN content SET DATA TYPE JSONB USING content::JSONB;
-
 CREATE FUNCTION sui_utils.jsonb_unidirectional_difference(first JSONB, second JSONB)
     RETURNS JSONB
     LANGUAGE plpgsql
@@ -258,3 +255,6 @@ $$
         UPDATE sui_meta.table_info SET is_audited = false WHERE id = table_info_id;
     END;
 $$;
+
+SELECT log.stop_audit_table(id) FROM sui_meta.table_info WHERE is_audited IS TRUE;
+SELECT log.start_audit_table(id) FROM sui_meta.table_info WHERE is_audited IS TRUE;
