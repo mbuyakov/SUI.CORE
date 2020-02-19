@@ -1,4 +1,5 @@
 export * from "./additionalTabs";
+export * from "./Audit";
 export * from "./Base";
 export * from "./BaseTable";
 export * from "./BackendTable";
