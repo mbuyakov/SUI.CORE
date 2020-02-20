@@ -96,8 +96,11 @@ export class PromisedModal
   }
 
   @autobind
-  private onModalClose(): void {
+  private onModalClose(e: React.MouseEvent<HTMLElement>): void {
     this.setModalVisibility(false);
+    if(this.props.onCancel) {
+      this.props.onCancel(e);
+    }
   }
 
 }

@@ -165,13 +165,16 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
     if (selection.length) {
       if (this.props.handleDelete) {
-        await this.props.handleDelete(selection)
+        await (this.props.handleDelete(selection)
           .then(async () => {
             notification.success({message: "Записи успешно удалены"});
             this.tableRef.current.clearSelection();
 
             return this.tableRef.current.refresh();
-          });
+          })
+          .catch(() => {
+            this.tableRef.current.clearSelection();
+          }));
       }
     } else {
       errorNotification("Ничего не выбрано", "Пожалуйста, выберите записи, которые Вы хотите удалить");
