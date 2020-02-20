@@ -4,6 +4,7 @@ import autobind from "autobind-decorator";
 import React from "react";
 
 import {PromisedButton} from "../Inputs";
+import {ExtractProps} from "../other";
 
 export const defaultModalFooter = (okButton: JSX.Element, cancelButton: JSX.Element) => (
   <div
@@ -19,8 +20,9 @@ export const defaultModalFooter = (okButton: JSX.Element, cancelButton: JSX.Elem
   </div>
 );
 
-export interface IPromisedModalProps extends Omit<ModalProps, "visible" | "onOk" | "footer"> {
+export interface IPromisedModalProps extends Omit<ModalProps, "visible" | "onOk" | "footer" | "okButtonProps"> {
   defaultVisible?: boolean;
+  okButtonProps?: Omit<ExtractProps<PromisedButton>, "promise" | "children">,
   customFooter?(okButton: JSX.Element, cancelButton: JSX.Element): React.ReactNode;
   promise?(): Promise<boolean>;
 }
