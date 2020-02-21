@@ -172,8 +172,8 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
             return this.tableRef.current.refresh();
           })
-          .catch(() => {
-            this.tableRef.current.clearSelection();
+          .catch(err => {
+            errorNotification("Возникла ошибка в процессе удаления", err);
           }));
       }
     } else {
