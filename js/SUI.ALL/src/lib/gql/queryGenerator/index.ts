@@ -172,3 +172,41 @@ export function generateDeleteFn(entity: string): (id: PossibleId) => Promise<vo
 export function stringifyGqlFilter<T = {}>(filter: {filter: IGqlFilter<T>}): string {
   return `filter: ${JSON.stringify(filter.filter).replace(/"([^"]+)":/g, "$1:")}`;
 }
+
+/**
+ * Joins several mutate queries into one.
+ *
+ * @param queries - queries to join.
+ *
+ * @return joint mutation query consists of all the incoming queries.
+ */
+export function concatQueryTexts(queries: string[]): string {
+  if(queries) {
+    const queriesInside = queries
+      .map(unpackQueryTextFromCurlyBrackets)
+      .filter(Boolean)
+      .join("\n");
+
+    return `mutation {
+      ${queriesInside}
+      }`;
+  }
+
+  return null;
+}
+
+/**
+ * Extract GraphQL query from first wrapper mutation {...} in query text.
+ *
+ * @return string - text of query inside curly brackets.
+ *  }.
+ */
+function unpackQueryTextFromCurlyBrackets(queryText: string): string {
+  const start: number = queryText.indexOf('{');
+  const end: number = queryText.lastIndexOf('}');
+  if(start === -1 || start >= end) {
+    return null;
+  }
+
+  return queryText.substring(start + 1, end);
+}
