@@ -178,7 +178,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
               : (err.hasOwnProperty("message")
                 ? err.message
                 : err.toString());
-            errorNotification("Возникла ошибка в процессе удаления", err);
+            errorNotification("Возникла ошибка в процессе удаления", errMsg);
           }));
       }
     } else {
