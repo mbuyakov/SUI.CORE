@@ -21,7 +21,7 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
 
   public componentDidMount(): void {
     if (this.props.defaultVisible) {
-      setTimeout(() => this.forceUpdate(), 100);
+      setTimeout(() => this.forceUpdate(), 500);
     }
   }
 

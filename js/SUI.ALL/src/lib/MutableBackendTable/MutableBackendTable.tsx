@@ -220,7 +220,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
         baseFormModal.modalRef.current.setModalVisibility(
           true,
-          () => setTimeout(() => this.forceUpdate(), 100)
+          () => setTimeout(() => this.forceUpdate(), 500)
         );
       }
     }
