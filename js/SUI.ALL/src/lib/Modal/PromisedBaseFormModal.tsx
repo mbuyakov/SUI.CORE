@@ -40,7 +40,11 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
           hasErrors
             ? (
               <ObservableBinder observable={hasErrors}>
-                {hasErrorsValue => React.cloneElement(okButton, {disabled: hasErrorsValue || okButton.props.disabled})}
+                {hasErrorsValue => {
+                  console.log("hasErrorsValue", hasErrorsValue, okButton.props.disabled);
+
+                  return React.cloneElement(okButton, {disabled: hasErrorsValue || okButton.props.disabled});
+                }}
               </ObservableBinder>
             ) : okButton,
           cancelButton
