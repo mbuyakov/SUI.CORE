@@ -174,6 +174,15 @@ export function stringifyGqlFilter<T = {}>(filter: {filter: IGqlFilter<T>}): str
 }
 
 /**
+ * Join queries and run mutate.
+ *
+ * @param queries - queries to run.
+ */
+export async function concatAndMutate<T = void>(queries: string[]): Promise<T> {
+  return mutate(concatQueryTexts(queries), 1);
+}
+
+/**
  * Joins several mutate queries into one.
  *
  * @param queries - queries to join.
