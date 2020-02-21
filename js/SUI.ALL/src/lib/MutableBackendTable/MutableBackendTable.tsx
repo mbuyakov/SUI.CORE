@@ -173,12 +173,14 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
             return this.tableRef.current.refresh();
           })
           .catch(err => {
-            const errMsg = (typeof err === "string")
-              ? err
-              : (err.hasOwnProperty("message")
-                ? err.message
-                : err.toString());
-            errorNotification("Возникла ошибка в процессе удаления", errMsg);
+            if(err) {
+              const errMsg = (typeof err === "string")
+                ? err
+                : (err.hasOwnProperty("message")
+                  ? err.message
+                  : err.toString());
+              errorNotification("Возникла ошибка в процессе удаления", errMsg);
+            }
           }));
       }
     } else {
