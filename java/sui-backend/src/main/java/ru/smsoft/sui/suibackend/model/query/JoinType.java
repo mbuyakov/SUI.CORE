@@ -7,12 +7,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum JoinType {
 
-    INNER_JOIN("INNER JOIN"),
-    CROSS_JOIN("CROSS JOIN"),
-    LEFT_JOIN("LEFT JOIN"),
-    RIGHT_JOIN("RIGHT JOIN"),
-    FULL_JOIN("FULL JOIN");
+  INNER_JOIN("INNER JOIN"),
+  CROSS_JOIN("CROSS JOIN"),
+  LEFT_JOIN("LEFT JOIN"),
+  RIGHT_JOIN("RIGHT JOIN"),
+  FULL_JOIN("FULL JOIN");
 
-    private final String statement;
+  private final String statement;
 
 }

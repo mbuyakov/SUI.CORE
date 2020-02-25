@@ -9,20 +9,20 @@ import ru.smsoft.sui.suibackend.message.model.filtering.enumeration.FilteringTyp
 @EqualsAndHashCode(callSuper = true)
 public class ColumnFiltering extends Filtering {
 
-    private String columnName;
+  private String columnName;
 
-    private FilteringOperation operation;
+  private FilteringOperation operation;
 
-    private boolean raw;
+  private boolean raw;
 
-    ColumnFiltering() {
-        super(FilteringType.COLUMN);
-    }
+  ColumnFiltering() {
+    super(FilteringType.COLUMN);
+  }
 
-    ColumnFiltering(String columnName, FilteringOperation operation, boolean raw) {
-        this();
-        this.columnName = columnName;
-        this.operation = operation;
-        this.raw = raw;
-    }
+  ColumnFiltering(String columnName, FilteringOperation operation, boolean raw) {
+    this();
+    this.columnName = columnName;
+    this.operation = operation;
+    this.raw = raw;
+  }
 }

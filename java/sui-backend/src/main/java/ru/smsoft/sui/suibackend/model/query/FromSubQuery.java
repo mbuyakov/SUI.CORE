@@ -10,22 +10,27 @@ import org.springframework.lang.NonNull;
 @Builder
 public class FromSubQuery implements TableSegment {
 
-    private final @NonNull String alias;
-    private final @NonNull String query;
+  private final @NonNull
+  String alias;
+  private final @NonNull
+  String query;
 
-    @Override
-    public @NonNull String getAlias() {
-        return this.alias;
-    }
+  @Override
+  public @NonNull
+  String getAlias() {
+    return this.alias;
+  }
 
-    @Override
-    public @NonNull String getStatement() {
-        return String.format("(%s)", query);
-    }
+  @Override
+  public @NonNull
+  String getStatement() {
+    return String.format("(%s)", query);
+  }
 
-    @Override
-    public @NonNull String toString() {
-        return getAlias();
-    }
+  @Override
+  public @NonNull
+  String toString() {
+    return getAlias();
+  }
 
 }

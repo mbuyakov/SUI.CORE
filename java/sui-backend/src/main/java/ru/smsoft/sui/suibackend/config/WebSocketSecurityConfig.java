@@ -10,14 +10,14 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 @EnableWebSocketMessageBroker
 public class WebSocketSecurityConfig extends AbstractSecurityWebSocketMessageBrokerConfigurer {
 
-    @Override
-    protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
-        messages.anyMessage().permitAll();
-    }
+  @Override
+  protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
+    messages.anyMessage().permitAll();
+  }
 
-    @Override
-    protected boolean sameOriginDisabled() {
-        return true;
-    }
+  @Override
+  protected boolean sameOriginDisabled() {
+    return true;
+  }
 
 }

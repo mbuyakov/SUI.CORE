@@ -10,7 +10,7 @@ import ru.smsoft.sui.suibackend.message.response.ResponseMessageType;
 @Builder(toBuilder = true)
 public class ResponseMessage {
 
-    private @NonNull ObjectNode data;
-    private @NonNull ResponseMessageType type;
+  private @NonNull ObjectNode data;
+  private @NonNull ResponseMessageType type;
 
 }

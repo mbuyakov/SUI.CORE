@@ -11,17 +11,17 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class PredicateFiltering extends Filtering {
 
-    private FilteringPredicate predicate;
+  private FilteringPredicate predicate;
 
-    private List<Filtering> filters;
+  private List<Filtering> filters;
 
-    PredicateFiltering() {
-        super(FilteringType.PREDICATE);
-    }
+  PredicateFiltering() {
+    super(FilteringType.PREDICATE);
+  }
 
-    public PredicateFiltering(FilteringPredicate predicate, List<Filtering> filters) {
-        this();
-        this.predicate = predicate;
-        this.filters = filters;
-    }
+  public PredicateFiltering(FilteringPredicate predicate, List<Filtering> filters) {
+    this();
+    this.predicate = predicate;
+    this.filters = filters;
+  }
 }

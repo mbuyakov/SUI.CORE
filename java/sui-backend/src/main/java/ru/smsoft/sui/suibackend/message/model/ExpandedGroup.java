@@ -13,5 +13,5 @@ import java.util.List;
 @Builder(toBuilder = true)
 public class ExpandedGroup {
 
-    List<String> group;
+  List<String> group;
 }

@@ -22,39 +22,39 @@ import static ru.smsoft.sui.suibackend.utils.Constants.*;
 @CrossOrigin
 public class HttpController {
 
-    private final Cache<String, UserState> userStateCache = CacheBuilder
-            .newBuilder()
-            .expireAfterWrite(3, TimeUnit.HOURS)
-            .build();
+  private final Cache<String, UserState> userStateCache = CacheBuilder
+    .newBuilder()
+    .expireAfterWrite(3, TimeUnit.HOURS)
+    .build();
 
-    @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
-    private MessageHandlerService messageHandlerService;
+  @Autowired
+  private ObjectMapper objectMapper;
+  @Autowired
+  private MessageHandlerService messageHandlerService;
 
-    @PostMapping(BACKEND_ENDPOINT + "-http")
-    public ObjectNode processMessage(
-            @RequestHeader(INIT_SESSION_ID_KEY) String sessionId,
-            @RequestBody String payload) {
-        if (!"DISCONNECT".equals(payload)) {
-            var userState = userStateCache.getIfPresent(sessionId);
+  @PostMapping(BACKEND_ENDPOINT + "-http")
+  public ObjectNode processMessage(
+    @RequestHeader(INIT_SESSION_ID_KEY) String sessionId,
+    @RequestBody String payload) {
+    if (!"DISCONNECT".equals(payload)) {
+      var userState = userStateCache.getIfPresent(sessionId);
 
-            if (userState == null) {
-                userState = new UserState();
-                userStateCache.put(sessionId, userState);
-            }
+      if (userState == null) {
+        userState = new UserState();
+        userStateCache.put(sessionId, userState);
+      }
 
-            val responseMessage = messageHandlerService.processMessage(payload, userState);
-            val content = responseMessage.getData();
+      val responseMessage = messageHandlerService.processMessage(payload, userState);
+      val content = responseMessage.getData();
 
-            content.set(TYPE_KEY, new TextNode(responseMessage.getType().toString()));
+      content.set(TYPE_KEY, new TextNode(responseMessage.getType().toString()));
 
-            return content;
-        } else {
-            userStateCache.invalidate(sessionId);
+      return content;
+    } else {
+      userStateCache.invalidate(sessionId);
 
-            return objectMapper.createObjectNode();
-        }
+      return objectMapper.createObjectNode();
     }
+  }
 
 }

@@ -8,13 +8,13 @@ import java.io.IOException;
 
 public class ToStringSerializer<T> extends JsonSerializer<T> {
 
-    @Override
-    public void serialize(T value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-        if (value != null) {
-            gen.writeString(value.toString());
-        } else {
-            gen.writeNull();
-        }
+  @Override
+  public void serialize(T value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+    if (value != null) {
+      gen.writeString(value.toString());
+    } else {
+      gen.writeNull();
     }
+  }
 
 }

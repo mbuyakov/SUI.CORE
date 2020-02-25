@@ -11,18 +11,18 @@ import java.util.Optional;
 @Setter
 public class Join {
 
-    private JoinType joinType;
-    private TableSegment joinSegment;
-    private Condition condition;
+  private JoinType joinType;
+  private TableSegment joinSegment;
+  private Condition condition;
 
-    @Override
-    public String toString() {
-        return String.format(
-                "%s %s %s ON %s",
-                joinType.getStatement(),
-                joinSegment.getStatement(),
-                Optional.ofNullable(joinSegment.getAlias()).orElse(""),
-                condition);
-    }
+  @Override
+  public String toString() {
+    return String.format(
+      "%s %s %s ON %s",
+      joinType.getStatement(),
+      joinSegment.getStatement(),
+      Optional.ofNullable(joinSegment.getAlias()).orElse(""),
+      condition);
+  }
 
 }

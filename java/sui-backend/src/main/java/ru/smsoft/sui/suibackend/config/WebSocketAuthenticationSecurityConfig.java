@@ -29,63 +29,63 @@ import static ru.smsoft.sui.suibackend.utils.Constants.BACKEND_ENDPOINT;
 @Slf4j
 public class WebSocketAuthenticationSecurityConfig implements WebSocketMessageBrokerConfigurer {
 
-    @NonNull
-    private AuthChannelInterceptorAdapter authChannelInterceptorAdapter;
+  @NonNull
+  private AuthChannelInterceptorAdapter authChannelInterceptorAdapter;
 
-    @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint(BACKEND_ENDPOINT).setAllowedOrigins("*");
-    }
+  @Override
+  public void registerStompEndpoints(StompEndpointRegistry registry) {
+    registry.addEndpoint(BACKEND_ENDPOINT).setAllowedOrigins("*");
+  }
 
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/queue");
-        // use setApplicationDestinationPrefixes to add prefix to send destination
-    }
+  @Override
+  public void configureMessageBroker(MessageBrokerRegistry config) {
+    config.enableSimpleBroker("/queue");
+    // use setApplicationDestinationPrefixes to add prefix to send destination
+  }
 
-    @Override
-    public void configureWebSocketTransport(WebSocketTransportRegistration registry) {
-        registry.addDecoratorFactory(ReconnectionWebSocketHandlerDecorator::new);
-    }
+  @Override
+  public void configureWebSocketTransport(WebSocketTransportRegistration registry) {
+    registry.addDecoratorFactory(ReconnectionWebSocketHandlerDecorator::new);
+  }
 
-    @Override
-    public void configureClientOutboundChannel(ChannelRegistration registration) {
-        registration.interceptors(new ChannelInterceptor() {
+  @Override
+  public void configureClientOutboundChannel(ChannelRegistration registration) {
+    registration.interceptors(new ChannelInterceptor() {
 
-            @Override
-            public Message<?> preSend(@org.springframework.lang.NonNull Message<?> message, MessageChannel channel) {
-                val accessor = MessageHeaderAccessor.getAccessor(message, MessageHeaderAccessor.class);
+      @Override
+      public Message<?> preSend(@org.springframework.lang.NonNull Message<?> message, MessageChannel channel) {
+        val accessor = MessageHeaderAccessor.getAccessor(message, MessageHeaderAccessor.class);
 
-                if (accessor instanceof SimpMessageHeaderAccessor) {
-                    val simpMessageHeaderAccessor = (SimpMessageHeaderAccessor) accessor;
+        if (accessor instanceof SimpMessageHeaderAccessor) {
+          val simpMessageHeaderAccessor = (SimpMessageHeaderAccessor) accessor;
 
-                    if (simpMessageHeaderAccessor.getSessionId() != null
-                            && simpMessageHeaderAccessor.getMessageType() == SimpMessageType.CONNECT_ACK) {
-                        // Put session id to CONNECTED message payload
-                        return new GenericMessage<>(
-                                simpMessageHeaderAccessor.getSessionId().getBytes(),
-                                message.getHeaders());
-                    }
-                }
-
-                return message;
-            }
-
-        });
-    }
-
-    @Override
-    public void configureClientInboundChannel(final ChannelRegistration registration) {
-      registration.interceptors(
-        authChannelInterceptorAdapter,
-        // All messages logger (TMP)
-        new ChannelInterceptor() {
-          @Override
-          public void afterReceiveCompletion(Message<?> message, MessageChannel channel, Exception ex) {
-            log.info("[Message]:" + message);
+          if (simpMessageHeaderAccessor.getSessionId() != null
+            && simpMessageHeaderAccessor.getMessageType() == SimpMessageType.CONNECT_ACK) {
+            // Put session id to CONNECTED message payload
+            return new GenericMessage<>(
+              simpMessageHeaderAccessor.getSessionId().getBytes(),
+              message.getHeaders());
           }
         }
-      );
-    }
+
+        return message;
+      }
+
+    });
+  }
+
+  @Override
+  public void configureClientInboundChannel(final ChannelRegistration registration) {
+    registration.interceptors(
+      authChannelInterceptorAdapter,
+      // All messages logger (TMP)
+      new ChannelInterceptor() {
+        @Override
+        public void afterReceiveCompletion(Message<?> message, MessageChannel channel, Exception ex) {
+          log.info("[Message]:" + message);
+        }
+      }
+    );
+  }
 
 }

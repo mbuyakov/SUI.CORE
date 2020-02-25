@@ -10,5 +10,5 @@ import ru.smsoft.sui.suibackend.message.model.filtering.enumeration.FilteringTyp
 @AllArgsConstructor
 public abstract class Filtering {
 
-    private FilteringType type;
+  private FilteringType type;
 }

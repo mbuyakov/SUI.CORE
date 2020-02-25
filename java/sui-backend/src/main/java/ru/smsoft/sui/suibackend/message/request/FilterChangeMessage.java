@@ -14,6 +14,6 @@ import java.util.List;
 @Builder(toBuilder = true)
 public class FilterChangeMessage {
 
-    private List<Filtering> filters;
+  private List<Filtering> filters;
 
 }

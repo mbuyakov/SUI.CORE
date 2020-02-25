@@ -11,20 +11,20 @@ import java.sql.Timestamp;
 
 public class BackendJacksonModule extends SimpleModule {
 
-    private static final long serialVersionUID = 1;
+  private static final long serialVersionUID = 1;
 
-    private final static String NAME = "BackendJacksonModule";
+  private final static String NAME = "BackendJacksonModule";
 
-    public BackendJacksonModule() {
-        super(NAME, PackageVersion.VERSION);
-        // Serializers
-        addSerializer(Timestamp.class, new ToStringSerializer<>());
-        addSerializer(Date.class, new ToStringSerializer<>());
-        addSerializer(PGobject.class, new ToStringSerializer<>());
-        addSerializer(PgArray.class, new PgArraySerializer());
+  public BackendJacksonModule() {
+    super(NAME, PackageVersion.VERSION);
+    // Serializers
+    addSerializer(Timestamp.class, new ToStringSerializer<>());
+    addSerializer(Date.class, new ToStringSerializer<>());
+    addSerializer(PGobject.class, new ToStringSerializer<>());
+    addSerializer(PgArray.class, new PgArraySerializer());
 
-        // Deserializers
-        addDeserializer(Filtering.class, new FilteringDeserializer());
-    }
+    // Deserializers
+    addDeserializer(Filtering.class, new FilteringDeserializer());
+  }
 
 }

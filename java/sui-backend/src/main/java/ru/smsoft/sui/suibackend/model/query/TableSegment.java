@@ -5,8 +5,13 @@ import org.springframework.lang.Nullable;
 
 public interface TableSegment {
 
-    @Nullable String getAlias();
-    @NonNull String getStatement();
-    @NonNull String toString();
+  @Nullable
+  String getAlias();
+
+  @NonNull
+  String getStatement();
+
+  @NonNull
+  String toString();
 
 }

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class Subtotal {
 
-    private String columnName;
+  private String columnName;
 
-    private String operation; // i.e. SUM, AVG
+  private String operation; // i.e. SUM, AVG
 }

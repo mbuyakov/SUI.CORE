@@ -15,6 +15,6 @@ import java.util.List;
 @Builder(toBuilder = true)
 public class ExpandedGroupChangeMessage {
 
-    private List<ExpandedGroup> expandedGroups;
+  private List<ExpandedGroup> expandedGroups;
 
 }
