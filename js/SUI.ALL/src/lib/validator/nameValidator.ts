@@ -11,10 +11,10 @@ export const WHITESPACE_MESSAGE = "Удалите лишние пробелы в
 export const ONLY_ONE_ALPHABET_MESSAGE = "Введите все буквы в одной раскладке";
 export const HYPHEN_REGEXP_MESSAGE = "Знак \"-\" не может быть последним символом, идти подряд или через пробел";
 
-export function nameValidator(field: string): (name: string | null) => string {
+export function nameValidator(field: string, allowNulls: boolean): (name: string | null) => string {
   return (name: string): string | null => {
     if (!name || !name.trim().length) {
-      return field === "middleName" ? '' : "Поле должно быть заполнено";
+      return (field === "middleName" || allowNulls) ? '' : "Поле должно быть заполнено";
       // tslint:disable-next-line:unnecessary-else
     } else {
       // tslint:disable-next-line:no-parameter-reassignment
