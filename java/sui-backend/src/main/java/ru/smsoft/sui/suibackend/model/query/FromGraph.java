@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 public class FromGraph {
 
   @Getter
-  private final TableSegment fromTable;
+  private final Table fromTable;
   private Map<TableSegment, List<Join>> joinMap;
 
   public FromGraph(Table fromTable) {

@@ -91,9 +91,9 @@ public class FromWithGenerator {
       .collect(Collectors.toCollection(LinkedList::new));
 
     // TODO: Костыль (сортировка часть 2)
-    val idColumn = MetaSchemaUtils.getFullTableInfoName(((Table) fromGraph.getFromTable()).getTableInfo()) + ".id";
+    val idColumn = MetaSchemaUtils.getFullTableInfoName(fromGraph.getFromTable().getTableInfo()) + ".id";
 
-    if (sorts.stream().noneMatch(sort -> idColumn.equals(sort.getColumnName()))) {
+    if (sorts.stream().noneMatch(sort -> idColumn.equals(sort.getColumnName())) && !"MATERIALIZED VIEW".equals(fromGraph.getFromTable().getTableInfo().getType())) {
       sorts.add(Sorting.builder().columnName(idColumn).direction(SortingDirection.DESC).build());
     }
 
