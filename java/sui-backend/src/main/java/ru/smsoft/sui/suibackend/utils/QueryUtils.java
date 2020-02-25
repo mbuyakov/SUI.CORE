@@ -1,6 +1,7 @@
 package ru.smsoft.sui.suibackend.utils;
 
 import lombok.val;
+import lombok.var;
 import org.springframework.lang.NonNull;
 import ru.smsoft.sui.suibackend.message.model.Sorting;
 import ru.smsoft.sui.suibackend.message.model.SortingDirection;
@@ -47,16 +48,24 @@ public class QueryUtils {
       val operationStr = operation.name().replace('_', ' ');
 
 
-      if (!hasNull) {
-        if (operation == FilteringOperation.IN || operation == FilteringOperation.NOT_IN) {
+      val isIn = operation == FilteringOperation.IN || operation == FilteringOperation.NOT_IN;
+
+      if (!hasNull || isIn) {
+        if (isIn) {
           if (!elements.isEmpty()) {
-            return String.format(
+            var inFilterStr = String.format(
               "%s %s (%s)",
               columnName,
               operationStr,
               elements.stream()
                 .map(element -> '\'' + element + '\'')
                 .collect(Collectors.joining(COLUMN_SEPARATOR)));
+
+            if (hasNull) {
+              inFilterStr += String.format(" OR %s IS NULL", columnName);
+            }
+
+            return inFilterStr;
           }
         } else if (operation.name().contains("CONTAINS")) {
           return String.format(
