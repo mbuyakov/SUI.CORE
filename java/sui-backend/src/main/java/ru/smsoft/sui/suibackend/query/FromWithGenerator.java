@@ -139,11 +139,9 @@ public class FromWithGenerator {
             columnFiltering.isRaw())));
     }
 
-    if (!sorts.isEmpty()) {
-      // Add ORDER BY statement
-      resultQuerySB.append("\nORDER BY ");
-      resultQuerySB.append(QueryUtils.generateOrderByInnerStatement(sorts, OrderNullBehavior.LAST));
-    }
+    // Add ORDER BY statement
+    resultQuerySB.append("\nORDER BY ");
+    resultQuerySB.append(QueryUtils.generateOrderByInnerStatement(sorts, OrderNullBehavior.LAST));
 
     return String.format(
       "SELECT tmp.*, row_number() OVER() AS %s FROM (%s) tmp",
