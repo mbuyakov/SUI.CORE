@@ -24,6 +24,7 @@ export interface IPromisedModalProps extends Omit<ModalProps, "visible" | "onOk"
   defaultVisible?: boolean;
   okButtonProps?: Omit<ExtractProps<PromisedButton>, "promise" | "children">,
   customFooter?(okButton: JSX.Element, cancelButton: JSX.Element): React.ReactNode;
+  onOpen?(): Promise<void>;
   promise?(): Promise<boolean>;
 }
 
@@ -37,6 +38,12 @@ export class PromisedModal
   public constructor(props: IPromisedModalProps) {
     super(props);
     this.state = {visible: !!props.defaultVisible};
+  }
+
+  public async componentDidMount(): Promise<void> {
+    if (this.state.visible && this.props.onOpen) {
+      await this.props.onOpen();
+    }
   }
 
   public render(): JSX.Element {
@@ -94,7 +101,15 @@ export class PromisedModal
 
   @autobind
   public setModalVisibility(visible: boolean = true, callback?: () => void): void {
-    this.setState({visible}, callback);
+    this.setState({visible}, async (): Promise<void> => {
+      if (callback) {
+        callback();
+      }
+
+      if (this.props.onOpen) {
+        await this.props.onOpen();
+      }
+    });
   }
 
   @autobind

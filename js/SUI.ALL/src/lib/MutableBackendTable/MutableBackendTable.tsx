@@ -217,11 +217,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
       const baseFormModal = ref.current;
 
       if (baseFormModal && baseFormModal.modalRef.current) {
-
-        baseFormModal.modalRef.current.setModalVisibility(
-          true,
-          () => setTimeout(() => this.forceUpdate(), 500)
-        );
+        baseFormModal.modalRef.current.setModalVisibility(true);
       }
     }
   }

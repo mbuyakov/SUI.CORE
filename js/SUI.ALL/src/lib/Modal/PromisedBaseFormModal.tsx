@@ -3,6 +3,7 @@ import * as React from "react";
 
 import {BaseForm, IBaseFormProps} from "../Base";
 import {ObservableBinder} from "../Observable";
+import {sleep} from "../other";
 
 import {defaultModalFooter, IPromisedModalProps, PromisedModal} from "./PromisedModal";
 
@@ -19,12 +20,6 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
   public readonly formRef: React.RefObject<BaseForm> = React.createRef();
   public readonly modalRef: React.RefObject<PromisedModal> = React.createRef();
 
-  public componentDidMount(): void {
-    if (this.props.defaultVisible) {
-      setTimeout(() => this.forceUpdate(), 500);
-    }
-  }
-
   public render(): JSX.Element {
     // tslint:disable-next-line:ban-ts-ignore
     // @ts-ignore
@@ -40,15 +35,12 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
           hasErrors
             ? (
               <ObservableBinder observable={hasErrors}>
-                {hasErrorsValue => {
-                  console.log("hasErrorsValue", hasErrorsValue, okButton.props.disabled);
-
-                  return React.cloneElement(okButton, {disabled: hasErrorsValue || okButton.props.disabled});
-                }}
+                {hasErrorsValue => React.cloneElement(okButton, {disabled: hasErrorsValue || okButton.props.disabled})}
               </ObservableBinder>
             ) : okButton,
           cancelButton
         )}
+        onOpen={this.onOpen}
       >
         {this.props.modalHeader}
         <BaseForm
@@ -69,6 +61,19 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
     }
 
     return true;
+  }
+
+  @autobind
+  private async onOpen(): Promise<void> {
+    while (!this.formRef.current) {
+      await sleep(100);
+    }
+
+    this.forceUpdate();
+
+    if (this.props.onOpen) {
+      await this.props.onOpen();
+    }
   }
 
 }
