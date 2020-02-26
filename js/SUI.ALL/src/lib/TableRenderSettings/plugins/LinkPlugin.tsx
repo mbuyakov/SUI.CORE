@@ -28,10 +28,10 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
 
     const customColumnInfo = tableRenderParams.customColumnInfoId && await ColumnInfoManager.getById(tableRenderParams.customColumnInfoId);
 
-    const referencedTableInfo = customColumnInfo
-      ? await getReferencedTableInfo(customColumnInfo)
-      : props.isLinkCol
-        ? props.tableInfo
+    const referencedTableInfo = props.isLinkCol
+      ? props.tableInfo
+      : customColumnInfo
+        ? await getReferencedTableInfo(customColumnInfo)
         : await getReferencedTableInfo(props.columnInfo);
 
     if (!referencedTableInfo) {
