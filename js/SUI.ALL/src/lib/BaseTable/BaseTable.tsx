@@ -322,6 +322,7 @@ export class BaseTable<TSelection = defaultSelection>
               filters={this.props.filters}
               onFiltersChange={this.props.onFiltersChange}
               defaultFilters={this.props.defaultFilters || []}
+              columnExtensions={(this.props.disabledFilters || []).map(columnName => ({columnName, filteringEnabled: false}))}
             />
           )}
           {rowDetail && <RowDetailState defaultExpandedRowIds={[]}/>}
@@ -450,10 +451,11 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private getSearchComponent(props: TableFilterRow.CellProps): React.ReactNode {
+  private getSearchComponent(props: TableFilterRow.CellProps & {disabled?: boolean}): React.ReactNode {
     const column: IBaseTableColLayout = getDataByKey(props, "tableColumn", "column");
     const searchProps = {
       ...props,
+      disabled: !props.filteringEnabled || props.disabled,
       ...getDataByKey(column, "search")
     };
     const type = searchProps.type;

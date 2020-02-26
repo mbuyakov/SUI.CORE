@@ -107,6 +107,7 @@ export interface IBaseTableProps<TSelection = any> {
   defaultFilters?: Filter[];
   defaultSortings?: Sorting[];
   defaultWidth?: number;
+  disabledFilters?: string[];
   extra?: string | JSX.Element;
   filteringEnabled?: boolean;
   fitToCardBody?: boolean;
