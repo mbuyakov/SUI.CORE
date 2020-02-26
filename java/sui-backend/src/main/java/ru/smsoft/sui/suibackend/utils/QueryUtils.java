@@ -184,7 +184,8 @@ public class QueryUtils {
       return String.format(
         filterFormat,
         columnName,
-        formatSimpleFilteringValue(simpleColumnFiltering.getValue()));
+        formatSimpleFilteringValue(simpleColumnFiltering.getValue())
+      );
     } else {
       throw new IllegalArgumentException("Unsupported column filtering class: " + columnFiltering.getClass());
     }
@@ -317,15 +318,19 @@ public class QueryUtils {
   }
 
   private static String formatSimpleFilteringValue(Object value) {
-    val valueStr = Objects.toString(value);
-
-    switch (valueStr) {
-      case INFINITY:
-      case NEGATIVE_INFINITY:
-        return valueStr.replaceFirst(INFINITY, "infinity");
-      default:
-        return valueStr;
-    }
+    return Optional
+      .ofNullable(value)
+      .map(Object::toString)
+      .map(valueStr -> {
+        switch (valueStr) {
+          case INFINITY:
+          case NEGATIVE_INFINITY:
+            return valueStr.replaceFirst(INFINITY, "infinity");
+          default:
+            return valueStr;
+        }
+      })
+      .orElse(null);
   }
 
 }
