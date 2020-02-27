@@ -1,11 +1,10 @@
-import {TableFilterRow} from '@devexpress/dx-react-grid';
 import Input from 'antd/lib/input/Input';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import {INewSearchProps} from "../types";
+import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
 
-export class StringColumnFilter extends React.Component<TableFilterRow.CellProps & INewSearchProps> {
+export class StringColumnFilter extends React.Component<LazyTableFilterRowCellProps & INewSearchProps> {
 
   public render(): JSX.Element {
     const {children, ...clearProps} = this.props;
@@ -25,11 +24,9 @@ export class StringColumnFilter extends React.Component<TableFilterRow.CellProps
   @autobind
   private onChange(event: React.ChangeEvent<HTMLInputElement>): void {
     const value = event.target.value;
+    const lazy = !(event.type === "click" && value === ""); // Trigger on clearButton click
 
-    // Trigger on clearButton click
-    if (event.type === "click" && value === "") {
-      this.triggerFilter(value)
-    }
+    this.triggerFilter(value, lazy)
   }
 
   @autobind
@@ -40,9 +37,10 @@ export class StringColumnFilter extends React.Component<TableFilterRow.CellProps
   }
 
   @autobind
-  private triggerFilter(value: string): void {
+  private triggerFilter(value: string, lazy: boolean = false): void {
     this.props.onFilter({
       columnName: this.props.column.name,
+      lazy,
       operation: this.props.operation || "contains",
       value
     });

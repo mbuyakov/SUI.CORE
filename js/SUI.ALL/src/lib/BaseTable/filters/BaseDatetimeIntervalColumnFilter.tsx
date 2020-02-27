@@ -1,4 +1,3 @@
-import {Filter, TableFilterRow} from "@devexpress/dx-react-grid";
 import {DatePicker} from "antd";
 import {RangePickerValue} from "antd/lib/date-picker/interface";
 import autobind from "autobind-decorator";
@@ -6,15 +5,13 @@ import moment from "moment";
 import * as React from 'react';
 
 import {GET_DEFAULT_CALENDAR_RANGES} from "../../const";
-import {ICommonColumnSearchProps} from "../types";
+import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 type DatetimeFilterType = "date" | "datetime";
 
 interface IBaseDatetimeIntervalColumnFilterProps {
   format?: string;
   pickerMode: DatetimeFilterType;
-
-  onFilter(filter: Filter | Filter[] | null): void;
 }
 
 interface IBaseDatetimeIntervalColumnFilterState {
@@ -23,7 +20,7 @@ interface IBaseDatetimeIntervalColumnFilterState {
   open?: boolean;
 }
 
-type FullBaseDatetimeIntervalColumnFilterProps = TableFilterRow.CellProps
+type FullBaseDatetimeIntervalColumnFilterProps = LazyTableFilterRowCellProps
   & IBaseDatetimeIntervalColumnFilterProps
   & ICommonColumnSearchProps;
 

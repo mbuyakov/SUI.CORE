@@ -1,5 +1,4 @@
 /* tslint:disable:no-any */
-import {TableFilterRow} from '@devexpress/dx-react-grid';
 import {Select} from 'antd';
 import {SelectProps, SelectValue} from "antd/lib/select";
 import autobind from 'autobind-decorator';
@@ -9,14 +8,14 @@ import * as React from 'react';
 import {getDataByKey} from "../../dataKey";
 import {Omit} from "../../other";
 import {OneOrArray} from "../../typeWrappers";
-import {ICommonColumnSearchProps} from "../types";
+import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 export interface ISelectColumnFilterData {
   title?: string | JSX.Element;
   value: string | number;
 }
 
-export type IBaseSelectFilterProps<T> = TableFilterRow.CellProps
+export type IBaseSelectFilterProps<T> = LazyTableFilterRowCellProps
   & ICommonColumnSearchProps
   & Omit<SelectProps<T>, "disabled" | "value" | "onChange">
   & {

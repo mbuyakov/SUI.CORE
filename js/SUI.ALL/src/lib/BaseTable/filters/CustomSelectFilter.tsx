@@ -1,18 +1,17 @@
 // tslint:disable:no-any
-import {Filter} from "@devexpress/dx-react-grid";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import { WaitData } from '../../WaitData';
+import {WaitData} from '../../WaitData';
 import {INewSearchProps, SelectData} from "../types";
 
 import {BaseSelectFilter, IBaseSelectFilterProps} from "./BaseSelectFilter";
 
-export class CustomSelectFilter<T extends string | number>
+export class CustomSelectFilter<T extends string | string[] | number | number[]>
   extends React.Component<Omit<IBaseSelectFilterProps<T>, "data" | "onChange"> & INewSearchProps> {
 
   public static isPromise(element: any): boolean {
-    return !!element && (typeof(element) === 'object' || typeof(element) === 'function') && typeof(element.then) === 'function'
+    return !!element && (typeof (element) === 'object' || typeof (element) === 'function') && typeof (element.then) === 'function'
   }
 
   public render(): JSX.Element {
@@ -36,12 +35,20 @@ export class CustomSelectFilter<T extends string | number>
 
   @autobind
   private onChange(value: T): void {
-    this.props.onFilter({
-      columnName: this.props.column.name,
-      operation: "equal",
-      raw: true,
-      value: value as any
-    } as unknown as Filter);
+    const filter = (this.props.mode && ["multiple", "tags", "combobox"].includes(this.props.mode))
+      ? {
+        columnName: this.props.column.name,
+        operation: "in",
+        raw: true,
+        value: (value || [])
+      } : {
+        columnName: this.props.column.name,
+        operation: "equal",
+        raw: true,
+        value: value as any
+      };
+
+    this.props.onFilter(filter);
   }
 
 }

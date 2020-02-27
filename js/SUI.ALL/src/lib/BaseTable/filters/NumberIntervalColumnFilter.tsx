@@ -1,12 +1,11 @@
 /* tslint:disable:no-any */
-import {TableFilterRow} from "@devexpress/dx-react-grid";
 import InputNumber from 'antd/lib/input-number';
 import autobind from "autobind-decorator";
 import * as React from 'react';
 
-import {INewSearchProps} from "../types";
+import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
 
-type INumberIntervalColumnFilterProps = TableFilterRow.CellProps & INewSearchProps;
+type INumberIntervalColumnFilterProps = LazyTableFilterRowCellProps & INewSearchProps;
 
 interface INumberIntervalColumnFilterState {
   fromValue?: number;
@@ -58,19 +57,7 @@ export class NumberIntervalColumnFilter
   @autobind
   private enterTriggerFilter(event: React.KeyboardEvent<HTMLInputElement>): void {
     if (event.key === 'Enter') {
-      const {
-        fromValue,
-        toValue
-      } = this.state;
-
-      this.props.onFilter({
-        columnName: this.props.column.name,
-        operation: "interval",
-        value: [
-          (fromValue != null) ? fromValue : null,
-          (toValue != null) ? toValue : null
-        ] as any
-      });
+      this.triggerFilter();
     }
   }
 
@@ -78,7 +65,6 @@ export class NumberIntervalColumnFilter
   private handleChangeFn(property: keyof INumberIntervalColumnFilterState): (value: number | string | null) => void {
     return (value): void => {
       let numberValue = null;
-      console.log(property, value);
 
       // tslint:disable-next-line:switch-default
       switch (typeof(value)) {
@@ -97,8 +83,27 @@ export class NumberIntervalColumnFilter
           }
       }
 
-      this.setState({[property]: typeof(value) === "number" ? value : null})
+      this.setState({[property]: typeof(numberValue) === "number" ? numberValue : null});
+      this.triggerFilter(true);
     };
+  }
+
+  @autobind
+  private triggerFilter(lazy: boolean = false): void {
+    const {
+      fromValue,
+      toValue
+    } = this.state;
+
+    this.props.onFilter({
+      columnName: this.props.column.name,
+      lazy,
+      operation: "interval",
+      value: [
+        (fromValue != null) ? fromValue : null,
+        (toValue != null) ? toValue : null
+      ] as any
+    });
   }
 
 }
