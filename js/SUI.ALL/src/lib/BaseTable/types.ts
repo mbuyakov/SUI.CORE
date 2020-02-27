@@ -9,6 +9,11 @@ export type TableCellRender = (value: any, row: any, tableColumn: any) => React.
 export type TableSearchType = 'select' | 'date' | 'boolean' | 'string' | 'none';
 export type RowDetail = React.ComponentType<TableRowDetail.ContentProps>;
 export type SortingDirection = 'asc' | 'desc';
+export type LazyFilter = Filter & { lazy?: boolean };
+export type LazyTableFilterRowCellProps = Omit<TableFilterRow.CellProps, "filter" | "onFilter"> & {
+  filter: LazyFilter | null;
+  onFilter(filter: LazyFilter | null): void;
+}
 
 export interface ISearchProps /*extends TableFilterRow.CellProps*/
 {
@@ -81,7 +86,7 @@ export interface IRemoteBaseTableFields {
   customExpandedGroups?: GroupKey[]; // Remote grouping
   customGrouping?: Grouping[]; // Remote grouping
   expandedGroups?: GroupKey[]; // Remote grouping
-  filters?: Filter[]; // Remote filtering
+  filters?: LazyFilter[]; // Remote filtering
   grouping?: Grouping[]; // Remote grouping
   groupSubtotalData?: Map<GroupKey, IGroupSubtotalData>; // Remote grouping
   sorting?: Sorting[]; // Remote sorting
@@ -89,10 +94,11 @@ export interface IRemoteBaseTableFields {
 }
 
 export interface IRemoteBaseTableFunctions {
+  customFilterComponent?(props: LazyTableFilterRowCellProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
   getChildGroups?(currentRows: any[], grouping: Grouping, rootRows: any[]): Array<{ childRows?: any[], key: number | string, value?: any }>; // Remote grouping
   onCurrentPageChange?(currentPage: number): void; // Remote paging
   onExpandedGroupsChange?(expandedGroups: GroupKey[]): void; // Remote grouping
-  onFiltersChange?(filters: Filter[]): void; // Remote filtering
+  onFiltersChange?(filters: LazyFilter[]): void; // Remote filtering
   onGroupingChange?(grouping: Grouping[]): void; // Remote grouping
   onPageSizeChange?(pageSize: number): void; // Remote paging
   onSortingChange?(sorting: Sorting[]): void; // Remote sorting

@@ -31,7 +31,7 @@ const TableGroupRowContent = TableGroupRow.Content;
 
 // Не нашел куда добавить
 export function booleanRender(value: boolean | null | undefined): JSX.Element {
-  return (typeof(value)=== "boolean")
+  return (typeof (value) === "boolean")
     ? value
       ? <Icon type="check" theme="outlined"/>
       : <Icon type="close" theme="outlined"/>
@@ -39,7 +39,7 @@ export function booleanRender(value: boolean | null | undefined): JSX.Element {
 }
 
 export class BaseTable<TSelection = defaultSelection>
-  extends React.Component<IBaseTableProps<TSelection> & IRemoteBaseTableFields & IRemoteBaseTableFunctions,
+  extends React.Component<Omit<IBaseTableProps<TSelection>, "customFilterComponent"> & IRemoteBaseTableFields & IRemoteBaseTableFunctions,
     { selection?: TSelection[]; }>
   implements ISelectionTable<TSelection> {
 
@@ -293,7 +293,7 @@ export class BaseTable<TSelection = defaultSelection>
         style={{
           ...(borderless ? {} : {margin: 10}),
           ...(this.props.fitToCardBody ? {margin: -24, marginTop: -23} : {}),
-          ...(this.props.fitToCollapseBody ? { margin: -16, marginBottom: -29 } : {}),
+          ...(this.props.fitToCollapseBody ? {margin: -16, marginBottom: -29} : {}),
           ...(this.props.fitToRowDetailContainer ? {margin: "-3px -24px"} : {}),
           ...(this.props.fitToTabPanelBody ? {margin: 0, marginTop: -17} : {}),
           ...(this.props.paperStyle || {}),
@@ -451,7 +451,7 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private getSearchComponent(props: TableFilterRow.CellProps & {disabled?: boolean}): React.ReactNode {
+  private getSearchComponent(props: TableFilterRow.CellProps & { disabled?: boolean }): React.ReactNode {
     const column: IBaseTableColLayout = getDataByKey(props, "tableColumn", "column");
     const searchProps = {
       ...props,
@@ -464,7 +464,7 @@ export class BaseTable<TSelection = defaultSelection>
       const customFilter = this.props.customFilterComponent(props, column, type);
 
       if (customFilter) {
-         return customFilter;
+        return customFilter;
       }
     }
 
@@ -487,8 +487,8 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private getterComputed({ rows }: Getters): any[] {
-    this.exportData = rows.map((row: any) => ({ ...row }));
+  private getterComputed({rows}: Getters): any[] {
+    this.exportData = rows.map((row: any) => ({...row}));
 
     return rows;
   }
@@ -515,7 +515,7 @@ export class BaseTable<TSelection = defaultSelection>
     // @ts-ignore
     console.log(formattedData);
     const ws = XLSX.utils.json_to_sheet(formattedData, {
-        header: cols.map(col => col.title)
+      header: cols.map(col => col.title)
     });
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, '1');

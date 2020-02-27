@@ -1,13 +1,13 @@
-import {TableFilterRow} from '@devexpress/dx-react-grid';
 import {Icon} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import {INewSearchProps} from '../types';
+import {INewSearchProps, LazyTableFilterRowCellProps} from '../types';
 
 import {BaseSelectFilter} from './BaseSelectFilter';
 
-export type BooleanColumnFilterProps = TableFilterRow.CellProps & INewSearchProps & {
+export type BooleanColumnFilterProps = LazyTableFilterRowCellProps
+  & INewSearchProps & {
   falseValue: string | number
   trueValue: string | number
 };

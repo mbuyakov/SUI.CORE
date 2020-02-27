@@ -35,9 +35,9 @@ type ResponseMessageType = 'DATA' | 'WITHOUT_UPDATE' | 'ERROR';
 // Default operation filter = equals
 export type SimpleBackendFilter = Omit<Filter, 'value'> & {
   elements?: any[];
+  lazy?: boolean;
   raw?: boolean;
-} & {
-  value?: string | string[]
+  value?: string | string[];
 }
 
 export type PredicateType = 'AND' | 'OR' | 'NOT' | string;
@@ -452,14 +452,28 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private onFiltersChange(filters: SimpleBackendFilter[]): void {
-    // noinspection JSIgnoredPromiseFromCall
-    this.sendMessage(
-      'FILTER_CHANGE',
-      {
-        filters: this.mapFilters(filters),
-      },
-      {filters},
+    const stateFiltersAsString = (this.state.filters || []).map(filter => JSON.stringify(filter));
+    const newFilters = filters.filter(filter => !stateFiltersAsString.includes(JSON.stringify(filter)));
+
+    console.log(
+      "State filters",
+      this.state.filters,
+      "In filters",
+      filters,
+      "Send message?",
+      newFilters.some(filter => !filter.lazy)
     );
+
+    if (newFilters.some(filter => !filter.lazy)) {
+      // noinspection JSIgnoredPromiseFromCall
+      this.sendMessage(
+        'FILTER_CHANGE',
+        {
+          filters: this.mapFilters(filters),
+        },
+        {filters},
+      );
+    }
   }
 
   @autobind
