@@ -456,9 +456,9 @@ export class BaseTable<TSelection = defaultSelection>
     const searchProps = {
       ...props,
       disabled: !props.filteringEnabled || props.disabled,
-      ...(getDataByKey(column, "search") as INewSearchProps)
+      ...getDataByKey<INewSearchProps>(column, "search")
     };
-    const type = searchProps.type;
+    const type: string = searchProps.type;
 
     if (this.props.customFilterComponent) {
       const customFilter = this.props.customFilterComponent(props, column, type);
@@ -468,7 +468,7 @@ export class BaseTable<TSelection = defaultSelection>
       }
     }
 
-    switch (type as string) {
+    switch (type) {
       case "customSelect":
         return (<CustomSelectFilter {...searchProps} mode={searchProps.multiple ? "multiple" : undefined} />);
       case "datetime":
