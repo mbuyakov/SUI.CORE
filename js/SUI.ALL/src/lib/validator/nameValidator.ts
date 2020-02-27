@@ -1,7 +1,7 @@
-export const NAME_REGEXP = /^(((?:[А-Яа-я0-9()]+[\-'][А-Яа-я0-9()]+\s*))*((?:(?![A-Za-z]+)([А-Яа-я0-9().]+)(?![A-Za-z]+)\s*)|))+$/;
-export const SURNAME_REGEXP = /^(((?:[А-Яа-я0-9()]+[\-'][А-Яа-я0-9()]+\s*))*((?:(?![A-Za-z]+)([А-Яа-я0-9()]+)(?![A-Za-z]+)\s*)|))+$/;
+export const NAME_REGEXP = /^(((?:[А-Яа-яA-Za-z0-9()]+[\-'][А-Яа-яA-Za-z0-9()]+\s*))*((?:[А-Яа-яA-Za-z0-9().]+\s*))*)+$/;
+export const SURNAME_REGEXP = /^(((?:[А-Яа-яA-Za-z0-9()]+[\-'][А-Яа-яA-Za-z0-9()]+\s*))*((?:[А-Яа-яA-Za-z0-9()]+\s*))*)+$/;
 export const WHITESPACE_REGEXP = /^\s+.+$/;
-export const HYPHEN_REGEXP = /(?:\s*-\s*)/;
+export const HYPHEN_REGEXP = /\-$/;
 export const ONLY_ONE_ALPHABET_REGEXP = /^(?:[^А-Яа-я]*|[^A-Za-z]*)$/;
 export const ALL_SYMBOL_DIGIT_REGEXP = /^((?:\d+)*|(?:[()]+)*)*$/;
 export const POINT_REGEXP_SURNAME_REGEXP = /(?:\s*\.\s*)/;
