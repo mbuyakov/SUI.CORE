@@ -2,9 +2,10 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
+import {SimpleBackendFilter} from "../../BackendTable";
 import {OneOrArray} from "../../typeWrappers";
 import {WaitData} from '../../WaitData';
-import {INewSearchProps, LazyFilter, SelectData} from "../types";
+import {INewSearchProps, SelectData} from "../types";
 
 import {BaseSelectFilter, IBaseSelectFilterProps} from "./BaseSelectFilter";
 
@@ -34,13 +35,10 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
         {...(CustomSelectFilter.isPromise(data) ? {promise: data} : {data})}
         alwaysUpdate={true}
       >
-        {(selectData) => (
+        {(selectData): JSX.Element => (
           <BaseSelectFilter<T>
             {...this.props}
-            filter={this.props.filter
-              ? { ...this.props.filter, value: this.state.value as any }
-              : undefined
-            }
+            filter={{ ...this.props.filter, value: this.state.value as any }}
             data={selectData}
             onChange={this.onChange}
             onInputKeyDown={this.onInputKeyDown}
@@ -59,29 +57,30 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
   private onChange(value: T, option: OneOrArray<React.ReactElement>): void {
     const lazy = !!(option && Array.isArray(option) && option.length); // Don't trigger for option click in multiple mode
 
-    this.setState({value}, () => this.triggerFilter(lazy));
+    this.triggerFilter(value, lazy);
+    this.setState({value});
   }
 
   @autobind
   private onInputKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
     if (this.isMultiple() && event.key === 'Enter') {
-      this.triggerFilter();
+      this.triggerFilter(this.state.value);
     }
   }
 
   @autobind
-  private triggerFilter(lazy: boolean = false): void {
-    const value = this.state.value;
-    let filter: LazyFilter & {raw?: boolean};
+  private triggerFilter(value: T, lazy: boolean = false): void {
+    let filter: SimpleBackendFilter;
 
     if (this.isMultiple()) {
       if (value && Array.isArray(value) && value.length) {
         filter = {
           columnName: this.props.column.name,
+          elements: value as any,
           lazy,
           operation: "in",
           raw: true,
-          value: value  as any
+          value: value as any
         };
       } else {
         filter = null;
