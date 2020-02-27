@@ -83,8 +83,7 @@ export class NumberIntervalColumnFilter
           }
       }
 
-      this.setState({[property]: typeof(numberValue) === "number" ? numberValue : null});
-      this.triggerFilter(true);
+      this.setState({[property]: typeof(numberValue) === "number" ? numberValue : null}, () => this.triggerFilter(true));
     };
   }
 
