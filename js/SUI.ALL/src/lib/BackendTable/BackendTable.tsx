@@ -473,6 +473,8 @@ export class BackendTable<TSelection = defaultSelection>
         },
         {filters},
       );
+    } else {
+      this.setState({filters});
     }
   }
 
