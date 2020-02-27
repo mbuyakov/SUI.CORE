@@ -57,7 +57,7 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
 
   @autobind
   private onChange(value: T, option: OneOrArray<React.ReactElement>): void {
-    const lazy = !(option && Array.isArray(option) && option.length); // Don't trigger for option click in multiple mode
+    const lazy = !!(option && Array.isArray(option) && option.length); // Don't trigger for option click in multiple mode
 
     this.setState({value}, () => this.triggerFilter(lazy));
   }
