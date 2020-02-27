@@ -53,7 +53,7 @@ export async function colToBaseTableCol(
 
       if (foreignTableInfo.isCatalog) {
         result.search = {
-          multiple: result.search.type === "multiple",
+          multiple: result.search && result.search.type === "multiple",
           selectData: generateCatalogDataPromise(
             renderTableInfo.tableName,
             renderColumnInfo.columnName,
