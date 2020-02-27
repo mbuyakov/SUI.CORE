@@ -14,12 +14,11 @@ import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import ru.rosneft.antifraud.pilot.usertransactionconfigurier.WithUser;
 import ru.rosneft.antifraud.pilot.usertransactionconfigurier.resolve.DefaultResolveUserStrategy;
-import ru.rosneft.antifraud.pilot.usertransactionconfigurier.resolve.ResolveUserStrategy;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
 
-import static ru.smsoft.sui.suisecurity.utils.ConstantsKt.USER_ID_SETTING_NAME;
+// import static ru.smsoft.sui.suisecurity.utils.ConstantsKt.USER_ID_SETTING_NAME;
 
 
 @Component
@@ -61,7 +60,8 @@ public class PostgresSettingAspect implements Ordered {
 
                         if (transactionStatus.isNewTransaction()) {
                             entityManager
-                                    .createNativeQuery(String.format("SET LOCAL \"%s\" = '%s'", USER_ID_SETTING_NAME, id))
+                                    // .createNativeQuery(String.format("SET LOCAL \"%s\" = '%s'", USER_ID_SETTING_NAME, id))
+                                    .createNativeQuery(String.format("SET LOCAL \"%s\" = '%s'", "user.id", id)) // TODO: USER_ID_SETTING_NAME брать из sui-security
                                     .executeUpdate();
                         }
                     } catch (NoTransactionException ignored) {}
