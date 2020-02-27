@@ -41,6 +41,7 @@ export type SelectData = Array<{title?: string | JSX.Element, value: string | nu
 // tslint:disable-next-line:interface-over-type-literal
 export type INewSearchProps = ICommonColumnSearchProps & {
   format?: string; // for datetime and date
+  multiple?: boolean; // for customSelect
   selectData?: SelectData | Promise<SelectData>; // for customSelect
   type?: "customSelect" | "datetime" | "date" | "boolean" | "none" | "default" | string;
   optionFilter?(option: any): boolean; // for selects

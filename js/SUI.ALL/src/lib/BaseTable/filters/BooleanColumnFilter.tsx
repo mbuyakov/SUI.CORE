@@ -8,11 +8,11 @@ import {BaseSelectFilter} from './BaseSelectFilter';
 
 export type BooleanColumnFilterProps = LazyTableFilterRowCellProps
   & INewSearchProps & {
-  falseValue: string | number
-  trueValue: string | number
+  falseValue?: string | number
+  trueValue?: string | number
 };
 
-export class BooleanColumnFilter extends React.Component<BooleanColumnFilterProps> {
+export class BooleanColumnFilter extends React.Component<BooleanColumnFilterProps & INewSearchProps> {
 
   public render(): JSX.Element {
     return (

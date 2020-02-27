@@ -21,7 +21,7 @@ import {EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, T
 import {CustomToggleCell} from "./extends/CustomToggleCell";
 import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter} from './filters';
 import {defaultSelection, ISelectionTable} from './ISelectionTable';
-import {IBaseTableColLayout, IBaseTableProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
+import {IBaseTableColLayout, IBaseTableProps, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
 
 const Cell = Table.Cell;
 const SelectionCell = TableSelection.Cell;
@@ -456,7 +456,7 @@ export class BaseTable<TSelection = defaultSelection>
     const searchProps = {
       ...props,
       disabled: !props.filteringEnabled || props.disabled,
-      ...getDataByKey(column, "search")
+      ...(getDataByKey(column, "search") as INewSearchProps)
     };
     const type = searchProps.type;
 
@@ -468,9 +468,9 @@ export class BaseTable<TSelection = defaultSelection>
       }
     }
 
-    switch (type) {
+    switch (type as string) {
       case "customSelect":
-        return (<CustomSelectFilter {...searchProps} />);
+        return (<CustomSelectFilter {...searchProps} mode={searchProps.multiple ? "multiple" : undefined} />);
       case "datetime":
         return (<DatetimeColumnFilter {...searchProps} />);
       case "date":
