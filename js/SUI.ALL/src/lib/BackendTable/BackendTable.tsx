@@ -122,6 +122,7 @@ export class BackendTable<TSelection = defaultSelection>
     const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
 
     this.state = {
+      filters: [],
       lastSendSelection: [],
       paginationEnabled,
       // tslint:disable-next-line:no-magic-numbers
@@ -214,7 +215,7 @@ export class BackendTable<TSelection = defaultSelection>
             borderBottom: this.state.paginationEnabled ? undefined : 0,
             ...this.props.paperStyle
           }}
-          filters={this.state.filters ? this.state.filters.map(filter => ({...filter, columnName: camelCase(filter.columnName)})) : undefined}
+          filters={this.state.filters}
           rows={this.state.data}
           cols={this.state.cols}
           ref={this.baseTableRef}
@@ -455,15 +456,6 @@ export class BackendTable<TSelection = defaultSelection>
     const stateFiltersAsString = (this.state.filters || []).map(filter => JSON.stringify(filter));
     const newFilters = filters.filter(filter => !stateFiltersAsString.includes(JSON.stringify(filter)));
 
-    console.log(
-      "State filters",
-      this.state.filters,
-      "In filters",
-      filters,
-      "Send message?",
-      newFilters.some(filter => !filter.lazy)
-    );
-
     if (newFilters.some(filter => !filter.lazy)) {
       // noinspection JSIgnoredPromiseFromCall
       this.sendMessage(
@@ -474,7 +466,10 @@ export class BackendTable<TSelection = defaultSelection>
         {filters},
       );
     } else {
-      this.setState({filters});
+      // TODO: Высокоуровневый костыль, чтобы не рефрешить state, работает на честном слове
+      // Если что-то сломается, то это первый кандидат
+      while (this.state.filters.length) { this.state.filters.pop() }
+      filters.forEach(filter => this.state.filters.push(filter));
     }
   }
 
