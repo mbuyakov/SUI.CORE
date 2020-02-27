@@ -1,4 +1,5 @@
 dependencies {
     compileOnly "org.projectlombok:lombok"
-    compile project(":sui-security")
+    compile project(":sui-entity")
+    compile "org.springframework.security:spring-security-core:${springVersion}"
 }
