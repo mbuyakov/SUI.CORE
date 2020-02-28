@@ -179,7 +179,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
   @autobind
   private async loadData(treeNode: any): Promise<void> {
     console.log(treeNode);
-    const field: IFieldNode = treeNode.props.dataRef;
+    const field: IFieldNode = treeNode.props.data;
     field.child = (await getFieldsForCol(field.colInfoIds)).child;
     console.log(field);
     this.setState({
