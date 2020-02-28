@@ -1,5 +1,7 @@
 // tslint:disable:unnecessary-else
-import {Button, Dropdown, Icon, Menu, Modal} from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+
+import { Button, Dropdown, Menu, Modal } from 'antd';
 import {ButtonGroupProps} from "antd/lib/button";
 import {ModalFuncProps} from "antd/lib/modal";
 import Popconfirm, {PopconfirmProps} from "antd/lib/popconfirm";
@@ -68,7 +70,7 @@ function wrapInPopover(
     ) : element;
 }
 
-const loadingIcon = (loading: boolean): JSX.Element => loading ? <span><Icon type="loading"/>&nbsp;</span> : null;
+const loadingIcon = (loading: boolean): JSX.Element => loading ? <span><LegacyIcon type="loading"/>&nbsp;</span> : null;
 
 // TODO: Popconfirm for resolutions
 export class TransitionBar<TStatus extends { id: TID }, TID = string>
@@ -97,7 +99,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
         // disabled={commonLoading}
         onClick={this.showTransitionGraphModal}
       >
-        <Icon type={commonLoading ? "loading" : "share-alt"}/>
+        <LegacyIcon type={commonLoading ? "loading" : "share-alt"}/>
       </Button>
     );
 
@@ -148,7 +150,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
                 })}
               </Menu>
             );
-            const content = <>{transitionContent} <Icon type="down"/></>;
+            const content = <>{transitionContent} <LegacyIcon type="down"/></>;
 
             return (
               <Dropdown

@@ -1,4 +1,4 @@
-import {Icon} from "antd";
+import { Icon as LegacyIcon } from '@ant-design/compatible';
 import React from 'react';
 
 // tslint:disable-next-line:variable-name
@@ -12,7 +12,7 @@ export const DnDDragHandler: React.FC = () => (
     }}
     className="dragHandle"
   >
-    <Icon
+    <LegacyIcon
       type="drag"
       style={{marginRight: 8, color: '#888'}}
     />

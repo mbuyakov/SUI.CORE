@@ -1,3 +1,4 @@
+import { Icon as LegacyIcon } from '@ant-design/compatible';
 import {Button} from "antd";
 import * as React from "react";
 
@@ -39,7 +40,7 @@ export class AndFormRowElement extends React.Component<IAndFormRowElementProps> 
             {!this.props.disableRowSwap && (
               <Button
                 htmlType="button"
-                icon="arrow-up"
+                icon={<LegacyIcon type="arrow-up" />}
                 className={DNF_BUTTON}
                 disabled={this.props.isFirst}
                 onClick={this.props.onUpClick}
@@ -47,14 +48,14 @@ export class AndFormRowElement extends React.Component<IAndFormRowElementProps> 
             )}
             <Button
               htmlType="button"
-              icon="minus-circle-o"
+              icon={<LegacyIcon type="minus-circle-o" />}
               className={DNF_BUTTON}
               onClick={this.props.onDeleteClick}
             />
             {!this.props.disableRowSwap && (
               <Button
                 htmlType="button"
-                icon="arrow-down"
+                icon={<LegacyIcon type="arrow-down" />}
                 className={DNF_BUTTON}
                 disabled={this.props.isLast}
                 onClick={this.props.onDownClick}

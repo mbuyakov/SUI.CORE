@@ -1,5 +1,8 @@
 /* tslint:disable:jsx-no-lambda no-any */
-import {Card, Form, Input} from "antd";
+import { Form } from '@ant-design/compatible';
+
+import '@ant-design/compatible/assets/index.css';
+import { Card, Input } from "antd";
 import {WrappedFormUtils} from "antd/lib/form/Form";
 import autobind from 'autobind-decorator';
 import moment from "moment";

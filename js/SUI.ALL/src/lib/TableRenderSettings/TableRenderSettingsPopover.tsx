@@ -1,5 +1,7 @@
 /* tslint:disable:jsx-no-lambda */
-import { Icon, Popover, Tooltip } from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+
+import { Popover, Tooltip } from 'antd';
 import Button from 'antd/lib/button';
 import Select from 'antd/lib/select';
 import autobind from 'autobind-decorator';
@@ -146,7 +148,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
   @autobind
   // tslint:disable-next-line:no-any
   public updateField(field: string, save: boolean = false): (value: any) => Promise<any> {
-    return (async value => {
+    return async value => {
       // console.log(field, value);
       const tableRenderParams = this.state.tableRenderParams;
       // tslint:disable-next-line:ban-ts-ignore
@@ -155,7 +157,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
       this.setState({ tableRenderParams: { ...tableRenderParams }, changed: true });
 
       return save ? this.props.promise(JSON.stringify(tableRenderParams).replace(/"/g, '\\"')) : sleep(Number.MAX_VALUE);
-    });
+    };
   }
 
   @autobind
@@ -168,7 +170,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
           <Tooltip
             title="Неизвестный плагин"
           >
-            <Icon
+            <LegacyIcon
               style={{ transform: 'scale(1.5)' }}
               type="warning"
               theme="twoTone"

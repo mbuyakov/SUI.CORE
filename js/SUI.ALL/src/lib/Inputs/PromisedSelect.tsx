@@ -1,3 +1,4 @@
+import { Icon as LegacyIcon } from '@ant-design/compatible';
 import {Button} from "antd";
 import Select, {SelectProps} from "antd/lib/select";
 import * as React from "react";
@@ -20,7 +21,7 @@ export class PromisedSelect<T> extends PromisedBase<PromisedSelectProps<T>, IPro
 
   public render(): JSX.Element {
     const {promise, popconfirmSettings, ...selectProps} = this.props;
-    const saveButton: JSX.Element = this.wrapConfirmAndError(<Button type="primary" icon={this.state.loading ? "loading" : "save"} disabled={this.state.loading} onClick={this.saveWithoutValue}/>);
+    const saveButton: JSX.Element = this.wrapConfirmAndError(<Button type="primary" icon={<LegacyIcon type={this.state.loading ? "loading" : "save"} />} disabled={this.state.loading} onClick={this.saveWithoutValue}/>);
     const withPopover: JSX.Element = this.wrapInValidationPopover(
         <Select<T>
           // Typescript goes crazy. Mark as any to ignore

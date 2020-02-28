@@ -1,5 +1,7 @@
 /* tslint:disable:ban-ts-ignore */
-import {Icon, Spin} from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+
+import { Spin } from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
@@ -34,7 +36,7 @@ export interface IWaitDataProps<T> {
   spinning?: boolean;
 }
 
-const errorIcon = (<Icon type="close-circle" theme="twoTone" twoToneColor="#d6083f" style={{fontSize: 24}}/>);
+const errorIcon = (<LegacyIcon type="close-circle" theme="twoTone" twoToneColor="#d6083f" style={{fontSize: 24}}/>);
 
 // tslint:disable-next-line:no-any
 export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {

@@ -1,5 +1,8 @@
 // tslint:disable:no-any
-import {Form, Switch, Tooltip} from "antd";
+import { Form } from '@ant-design/compatible';
+
+import '@ant-design/compatible/assets/index.css';
+import { Switch, Tooltip } from "antd";
 import {GetFieldDecoratorOptions} from "antd/lib/form/Form";
 import {SelectProps} from "antd/lib/select";
 import {SwitchProps} from "antd/lib/switch";

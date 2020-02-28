@@ -1,5 +1,7 @@
-import {Button, Card, Divider, Form, Icon} from "antd";
-import {FormComponentProps} from "antd/lib/form";
+import { Form, Icon as LegacyIcon } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Card, Divider } from "antd";
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import autobind from "autobind-decorator";
 import isEqual from "lodash/isEqual";
 import * as React from "react";
@@ -243,7 +245,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
                       onClick={(): void => this.updateFormProps(dnfForms => dnfForms[formIndex] && dnfForms[formIndex].push(this.id++))}
                       style={{width: "100%"}}
                     >
-                      <Icon type="plus"/> {this.props.addConjunctionButtonTitle || "Добавить Конъюнкцию"}
+                      <LegacyIcon type="plus"/> {this.props.addConjunctionButtonTitle || "Добавить Конъюнкцию"}
                     </Button>
                   </Form.Item>
                 </Card>
@@ -265,7 +267,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
                   {!disableDisjunctionSwap && <Button
                     size="small"
                     htmlType="button"
-                    icon="arrow-left"
+                    icon={<LegacyIcon type="arrow-left" />}
                     className={DNF_BUTTON}
                     disabled={formIndex === 0}
                     onClick={(): void => this.updateFormProps(dnfForms => InnerDnfForm.swapElements(dnfForms, formIndex, formIndex - 1))}
@@ -273,7 +275,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
                   <Button
                     size="small"
                     htmlType="button"
-                    icon="minus-circle"
+                    icon={<LegacyIcon type="minus-circle" />}
                     className={DNF_BUTTON}
                     style={{transform: "rotate(90deg)"}}
                     onClick={(): void => this.updateFormProps(dnfForms => {
@@ -288,7 +290,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
                       size="small"
                       className={DNF_BUTTON}
                       htmlType="button"
-                      icon="arrow-right"
+                      icon={<LegacyIcon type="arrow-right" />}
                       disabled={formIndex === forms.length - 1}
                       onClick={(): void => this.updateFormProps(dnfForms => InnerDnfForm.swapElements(dnfForms, formIndex, formIndex + 1))}
                     />
@@ -314,7 +316,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
             onClick={(): void => this.updateFormProps(dnfForms => dnfForms.push([this.id++]))}
             style={{width: "100%"}}
           >
-            <Icon type="plus"/> {this.props.addDisjunctionButtonTitle || "Добавить Дизъюнкцию"}
+            <LegacyIcon type="plus"/> {this.props.addDisjunctionButtonTitle || "Добавить Дизъюнкцию"}
           </Button>
         </Form.Item>}
         {!this.props.disableDefaultSubmitButton && <Form.Item {...formItemLayout}>

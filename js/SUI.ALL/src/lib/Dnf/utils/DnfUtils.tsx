@@ -1,4 +1,6 @@
-import {DatePicker, Form, Icon, Input, InputNumber, Select, Switch} from 'antd';
+import { Form, Icon as LegacyIcon } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { DatePicker, Input, InputNumber, Select, Switch } from 'antd';
 import {FormItemProps} from "antd/lib/form";
 import {GetFieldDecoratorOptions, WrappedFormUtils} from "antd/lib/form/Form";
 import {OptionProps, SelectProps} from "antd/lib/select";
@@ -72,8 +74,8 @@ export function getInputElement<Props>(type: FilterType | undefined, action: Act
         <Switch
           {...props}
           style={{marginTop: 0}}
-          checkedChildren={<Icon type="check"/>}
-          unCheckedChildren={<Icon type="close"/>}
+          checkedChildren={<LegacyIcon type="check"/>}
+          unCheckedChildren={<LegacyIcon type="close"/>}
         />
       );
     default:

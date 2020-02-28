@@ -1,4 +1,5 @@
-import { Icon, Tooltip } from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Tooltip } from 'antd';
 import * as React from 'react';
 
 import { IBaseTableColLayout } from '../../BaseTable';
@@ -54,7 +55,7 @@ export abstract class TableRenderParamsPlugin<T> {
       <Tooltip
         title="Для данного режима нет настроек"
       >
-        <Icon
+        <LegacyIcon
           style={{ transform: 'scale(1.5)' }}
           type="warning"
           theme="twoTone"

@@ -6,7 +6,8 @@ import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, Int
 import {ColumnChooser, DragDropProvider, Grid, GroupingPanel, PagingPanel, Table, TableBandHeader, TableColumnReordering, TableColumnResizing, TableColumnVisibility, TableFilterRow, TableGroupRow, TableHeaderRow, TableRowDetail, TableSelection, Toolbar, VirtualTable} from '@devexpress/dx-react-grid-material-ui';
 import {TableRow} from '@material-ui/core';
 import Result from 'ant-design-pro/lib/Result';
-import {Card, Icon, Spin} from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Card, Spin } from 'antd';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import * as React from 'react';
@@ -33,9 +34,9 @@ const TableGroupRowContent = TableGroupRow.Content;
 export function booleanRender(value: boolean | null | undefined): JSX.Element {
   return (typeof (value) === "boolean")
     ? value
-      ? <Icon type="check" theme="outlined"/>
-      : <Icon type="close" theme="outlined"/>
-    : <Icon type="question" theme="outlined"/>;
+      ? <LegacyIcon type="check" theme="outlined"/>
+      : <LegacyIcon type="close" theme="outlined"/>
+    : <LegacyIcon type="question" theme="outlined"/>;
 }
 
 export class BaseTable<TSelection = defaultSelection>

@@ -1,4 +1,4 @@
-import {Icon} from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
@@ -22,11 +22,11 @@ export class BooleanColumnFilter extends React.Component<BooleanColumnFilterProp
         onChange={this.onChange}
         data={[
           {
-            title: <Icon type="check" theme="outlined"/>,
+            title: <LegacyIcon type="check" theme="outlined"/>,
             // tslint:disable-next-line:triple-equals
             value: this.props.trueValue != null ? this.props.trueValue.toString() : 'true'
           }, {
-            title: <Icon type="close" theme="outlined"/>,
+            title: <LegacyIcon type="close" theme="outlined"/>,
             // tslint:disable-next-line:triple-equals
             value: this.props.falseValue != null ? this.props.falseValue.toString() : 'false'
           }
