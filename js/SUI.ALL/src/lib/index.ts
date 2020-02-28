@@ -32,6 +32,7 @@ export * from "./validator";
 export * from "./cacheManager";
 export * from "./CategoryColumnChart";
 export * from "./ChartWrapper";
+export * from "./compatibleTypes";
 export * from "./const";
 export * from "./DeletableSmallCard";
 export * from "./DescriptionItem";

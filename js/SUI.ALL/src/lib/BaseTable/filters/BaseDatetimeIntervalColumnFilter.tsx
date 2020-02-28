@@ -1,9 +1,9 @@
 import {DatePicker} from "antd";
 import autobind from "autobind-decorator";
-import moment, {Moment} from "moment";
-import { RangeValue } from 'rc-picker/lib/interface';
+import moment from "moment";
 import * as React from 'react';
 
+import {RangePickerValue} from "../../compatibleTypes";
 import {GET_DEFAULT_CALENDAR_RANGES} from "../../const";
 import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from "../types";
 
@@ -15,8 +15,8 @@ interface IBaseDatetimeIntervalColumnFilterProps {
 }
 
 interface IBaseDatetimeIntervalColumnFilterState {
-  filterValue?: RangeValue<Moment> | null;
-  lastSavedValue?: RangeValue<Moment> | null;
+  filterValue?: RangePickerValue;
+  lastSavedValue?: RangePickerValue;
   open?: boolean;
 }
 
@@ -30,7 +30,7 @@ export class BaseDatetimeIntervalColumnFilter
   public constructor(props: FullBaseDatetimeIntervalColumnFilterProps) {
     super(props);
     const propsFilterValue = this.props.filter && (this.props.filter.value as unknown as string[]);
-    const filterValue = propsFilterValue && propsFilterValue.map(value => value && moment.utc(value).local()) as RangeValue<Moment>;
+    const filterValue = propsFilterValue && propsFilterValue.map(value => value && moment.utc(value).local()) as RangePickerValue;
 
     this.state = {
       filterValue,
@@ -56,7 +56,7 @@ export class BaseDatetimeIntervalColumnFilter
   }
 
   @autobind
-  private onChange(filterValue: RangeValue<Moment>): void {
+  private onChange(filterValue: RangePickerValue): void {
     if (!filterValue || !filterValue.length) {
       // clear filter
       this.triggerFilter(filterValue);
@@ -81,7 +81,7 @@ export class BaseDatetimeIntervalColumnFilter
   }
 
   @autobind
-  private triggerFilter(value: RangeValue<Moment> | null | undefined): void {
+  private triggerFilter(value: RangePickerValue): void {
     const format = moment.HTML5_FMT.DATETIME_LOCAL_MS;
 
     this.setState({lastSavedValue: value});

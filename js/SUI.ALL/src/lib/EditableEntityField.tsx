@@ -1,13 +1,12 @@
 /* tslint:disable:jsx-no-lambda typedef no-any */
 import { notification } from 'antd';
-import { OptionCoreData } from 'rc-select/lib/interface';
 import * as React from 'react';
 
 import { NO_DATA_TEXT } from './const';
 import { errorNotification } from './drawUtils';
 import { generateUpdate, PossibleId, PossibleValue } from './gql/queryGenerator';
 import {EditablePromisedComponent, IEditablePromisedComponentProps, IPromisedBaseProps} from './Inputs';
-import { IObjectWithIndex } from './other';
+import {ExtractProps, IObjectWithIndex} from './other';
 import { WaitData } from './WaitData';
 
 export interface IEditableEntityFieldProps<T> extends Omit<IEditablePromisedComponentProps<T>, "children"> {
@@ -20,7 +19,7 @@ export interface IEditableEntityFieldProps<T> extends Omit<IEditablePromisedComp
   successMessage: string;
   afterSave?(): Promise<void>;
   customDefaultValue?(value: T): any;
-  selectValueGenerator?(data: any): Array<React.ReactElement<OptionCoreData>>;
+  selectValueGenerator?(data: any): JSX.Element[];
   valuePreSaveConverter?(value: T): PossibleValue;
 }
 

@@ -6,7 +6,6 @@ import Popover from 'antd/lib/popover';
 import Select from 'antd/lib/select';
 import autobind from 'autobind-decorator';
 import gql from 'graphql-tag';
-import {OptionData, OptionGroupData} from "rc-select/lib/interface"
 import * as React from 'react';
 
 import { mutate, query } from '../gql';
@@ -30,7 +29,8 @@ export class NamePopover extends React.Component<INamePopoverProps, {
   visible?: boolean;
 }> {
 
-  private static filterOption(inputValue: string, option: OptionData | OptionGroupData): boolean {
+  // tslint:disable-next-line:no-any
+  private static filterOption(inputValue: string, option: any): boolean {
     return option.props.children.toString().toLowerCase().indexOf(inputValue.toLowerCase()) >= 0;
   }
 
