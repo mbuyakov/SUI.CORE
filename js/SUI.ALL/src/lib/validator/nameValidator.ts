@@ -1,3 +1,5 @@
+import capitalize from 'lodash/capitalize';
+
 export const NAME_REGEXP = /^(((?:[А-Яа-яA-Za-z0-9()]+[\-'][А-Яа-яA-Za-z0-9()]+\s*))*((?:[А-Яа-яA-Za-z0-9().]+\s*))*)+$/;
 export const SURNAME_REGEXP = /^(((?:[А-Яа-яA-Za-z0-9()]+[\-'][А-Яа-яA-Za-z0-9()]+\s*))*((?:[А-Яа-яA-Za-z0-9()]+\s*))*)+$/;
 export const WHITESPACE_REGEXP = /^\s+.+$/;
@@ -55,4 +57,8 @@ function whiteSpaceAndHyphenValidator(name: string): string {
       : HYPHEN_REGEXP.test(name)
         ? HYPHEN_REGEXP_MESSAGE
         : NAME_REGEXP_MESSAGE;
+}
+
+export function fioConverter(name: string): string {
+  return name.trim().replace(/\s\s+/g, ' ').replace(/\w+|[А-Яа-я]+/g, capitalize);
 }
