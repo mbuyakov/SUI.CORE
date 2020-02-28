@@ -1,4 +1,5 @@
 import { Form } from '@ant-design/compatible';
+// tslint:disable-next-line:no-import-side-effect
 import '@ant-design/compatible/assets/index.css';
 import { Select } from "antd";
 import autobind from 'autobind-decorator';

@@ -1,6 +1,6 @@
 /* tslint:disable:cyclomatic-complexity no-any */
 import { Form } from '@ant-design/compatible';
-
+// tslint:disable-next-line:no-import-side-effect
 import '@ant-design/compatible/assets/index.css';
 import { FormItemProps } from 'antd/lib/form';
 import { RuleItem } from 'async-validator';
@@ -15,6 +15,8 @@ import { SUIReactComponent } from '../SUIReactComponent';
 
 import { BaseForm, IFormField, SUBMITTED_FIELD, ValuesGetter } from './BaseForm';
 import { BaseFormContext } from './BaseFormContext';
+
+// tslint:disable-next-line:no-import-side-effect
 
 const FILL_FIELD_TEXT = 'Заполните поле';
 
@@ -139,7 +141,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
           const isTouched = fieldHasValue || baseForm.isFieldTouched(item.fieldName);
           const errors = this.state.error;
 
-          const formItemProps: FormItemProps = {
+          const formItemProps: Partial<FormItemProps> = {
             help: (isTouched) ? errors : ((isSubmitted && required) ? FILL_FIELD_TEXT : ''),
             validateStatus: (isTouched ? errors : (isSubmitted && required)) ? 'error' : '',
           };

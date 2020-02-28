@@ -92,7 +92,8 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
           key={key}
           title={title}
           isLeaf={field.isLeaf}
-          dataRef={field}
+          data={field as any}
+          active={undefined as boolean}
         >
           {child}
         </Tree.TreeNode>
@@ -144,8 +145,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
                     loadData={this.loadData}
                     className={MAIN_SETTINGS__ITEM_TREE}
                   >
-                    {this.state.fields &&
-                    MainSettings.mapFields(this.state.fields)}
+                    {this.state.fields && MainSettings.mapFields(this.state.fields)}
                   </Tree>
                 </WaitData>
               </DeletableSmallCard>

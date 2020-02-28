@@ -1,6 +1,5 @@
 // tslint:disable:cyclomatic-complexity
 import { Icon as LegacyIcon } from '@ant-design/compatible';
-
 import { Button, notification } from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";

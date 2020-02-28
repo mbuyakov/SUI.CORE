@@ -1,9 +1,9 @@
 /* tslint:disable:no-floating-promises */
+import { Icon } from '@ant-design/compatible';
 import { Chip } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { Spin, Tooltip } from 'antd';
-import Icon from 'antd/lib/icon';
 import Input from 'antd/lib/input';
 import Popover from 'antd/lib/popover';
 import Select from 'antd/lib/select';

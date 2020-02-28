@@ -1,10 +1,10 @@
 import { Icon as LegacyIcon } from '@ant-design/compatible';
-import { Button } from 'antd';
+import {Button, Select} from 'antd';
 import Input from 'antd/es/input';
 import Alert from 'antd/lib/alert';
 import Popover from 'antd/lib/popover';
-import Select, { OptionProps } from 'antd/lib/select';
 import autobind from 'autobind-decorator';
+import {OptionData, OptionGroupData} from "rc-select/lib/interface"
 import * as React from 'react';
 
 import { mutate, query } from '../gql';
@@ -30,8 +30,8 @@ export class TagsPopover extends React.Component<ITagsPopoverProps, {
   visible?: boolean;
 }> {
 
-  private static filterOption(inputValue: string, option: React.ReactElement<OptionProps>): boolean {
-    return option.props.children.toString().toLowerCase().indexOf(inputValue.toLowerCase()) >= 0;
+  private static filterOption(inputValue: string, option: OptionData | OptionGroupData): boolean {
+    return option.props.label.toString().toLowerCase().indexOf(inputValue.toLowerCase()) >= 0;
   }
 
   public constructor(props: ITagsPopoverProps) {

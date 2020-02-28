@@ -65,7 +65,7 @@ export class ChartSettings extends SerializableDnDChild<SerializedChartSettings,
           />
           <span>Код</span>
           <TextArea
-            autosize={{ minRows: 5, maxRows: 20 }}
+            autoSize={{ minRows: 5, maxRows: 20 }}
             value={this.state.js}
             onChange={this.onJsChanged}
           />

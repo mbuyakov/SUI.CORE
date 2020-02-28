@@ -1,9 +1,9 @@
 // tslint:disable:no-any
 import { Form } from '@ant-design/compatible';
-
+// tslint:disable-next-line:no-import-side-effect
 import '@ant-design/compatible/assets/index.css';
+import {GetFieldDecoratorOptions} from "@ant-design/compatible/lib/form/Form";
 import { Switch, Tooltip } from "antd";
-import {GetFieldDecoratorOptions} from "antd/lib/form/Form";
 import {SelectProps} from "antd/lib/select";
 import {SwitchProps} from "antd/lib/switch";
 import autobind from 'autobind-decorator';
@@ -12,6 +12,8 @@ import * as React from "react";
 import {ActionType, emptyFilter, FilterType, isListAction} from "../../utils";
 import {AbstractDnfFormRowElement} from "../AbstractDnfFormRowElement";
 import {generateActionSelectFormItem, getInputElement, getValuePropName} from "../utils";
+
+// tslint:disable-next-line:no-import-side-effect
 
 export interface IFilterProps {
   actions: ActionType[];
@@ -132,7 +134,7 @@ export abstract class ParameterRowComponent<TElement extends IParameterRowElemen
           {getFieldDecorator(this.getDecoratorName("simpleFilter"), {
             initialValue: filterType === FilterType.BOOLEAN ? false : null,
             ...props.simpleFilterDecoratorOptions,
-            normalize: (value): any => emptyFilter(values.action) ? undefined : value,
+            normalize: (value: any): any => emptyFilter(values.action) ? undefined : value,
             valuePropName: getValuePropName(filterType)
           })(
             getInputElement(filterType, values.action, filterProps)
@@ -149,7 +151,7 @@ export abstract class ParameterRowComponent<TElement extends IParameterRowElemen
   }
 
   @autobind
-  private onActionSelectChangeFunc(props: IParameterRowComponentProps<TElement>): (action: ActionType, option: React.ReactElement | React.ReactElement[]) => void {
+  private onActionSelectChangeFunc(props: IParameterRowComponentProps<TElement>): (action: ActionType, option: any) => void {
     return (action, option) => {
       if (emptyFilter(action)) {
         this.setField("simpleFilter", undefined);

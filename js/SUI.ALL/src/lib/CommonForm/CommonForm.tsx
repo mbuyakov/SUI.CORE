@@ -1,10 +1,10 @@
 import { Form } from '@ant-design/compatible';
+// tslint:disable-next-line:no-import-side-effect
 import '@ant-design/compatible/assets/index.css';
+import {FormComponentProps, FormItemProps, FormProps} from '@ant-design/compatible/lib/form';
+import {WrappedFormUtils} from "@ant-design/compatible/lib/form/Form";
 import { Button } from "antd";
 import {ButtonProps} from "antd/lib/button";
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
-import { FormItemProps, FormProps } from "antd/lib/form";
-import {WrappedFormUtils} from "antd/lib/form/Form";
 import autobind from "autobind-decorator";
 import * as React from "react";
 

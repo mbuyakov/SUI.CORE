@@ -1,7 +1,8 @@
 import { Form, Icon as LegacyIcon } from '@ant-design/compatible';
+// tslint:disable-next-line:no-import-side-effect
 import '@ant-design/compatible/assets/index.css';
-import { Button, Card, Divider } from "antd";
 import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { Button, Card, Divider } from "antd";
 import autobind from "autobind-decorator";
 import isEqual from "lodash/isEqual";
 import * as React from "react";

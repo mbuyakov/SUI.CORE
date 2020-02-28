@@ -1,4 +1,4 @@
-import {WrappedFormUtils} from "antd/lib/form/Form";
+import {WrappedFormUtils} from "@ant-design/compatible/lib/form/Form";
 import * as React from "react";
 
 import {ButtonAlignment} from "./AndFormRowElement";

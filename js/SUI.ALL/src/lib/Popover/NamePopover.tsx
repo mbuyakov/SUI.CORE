@@ -3,9 +3,10 @@ import {Button} from 'antd';
 import Input from 'antd/es/input';
 import Alert from 'antd/lib/alert';
 import Popover from 'antd/lib/popover';
-import Select, {OptionProps} from 'antd/lib/select';
+import Select from 'antd/lib/select';
 import autobind from 'autobind-decorator';
 import gql from 'graphql-tag';
+import {OptionData, OptionGroupData} from "rc-select/lib/interface"
 import * as React from 'react';
 
 import { mutate, query } from '../gql';
@@ -29,7 +30,7 @@ export class NamePopover extends React.Component<INamePopoverProps, {
   visible?: boolean;
 }> {
 
-  private static filterOption(inputValue: string, option: React.ReactElement<OptionProps>): boolean {
+  private static filterOption(inputValue: string, option: OptionData | OptionGroupData): boolean {
     return option.props.children.toString().toLowerCase().indexOf(inputValue.toLowerCase()) >= 0;
   }
 

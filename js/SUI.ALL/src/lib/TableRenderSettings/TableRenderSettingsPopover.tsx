@@ -1,9 +1,6 @@
 /* tslint:disable:jsx-no-lambda */
 import { Icon as LegacyIcon } from '@ant-design/compatible';
-
-import { Popover, Tooltip } from 'antd';
-import Button from 'antd/lib/button';
-import Select from 'antd/lib/select';
+import { Button, Popover, Select, Tooltip } from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
@@ -109,7 +106,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
           {
             Array.from(TableRenderSettingsPluginManager.plugins.values())
               .filter(curPlugin => !curPlugin.hidden)
-              .map(curPlugin => (<Select.Option key={curPlugin.id}>{curPlugin.title}</Select.Option>))
+              .map(curPlugin => (<Select.Option key={curPlugin.id} value={curPlugin.id}>{curPlugin.title}</Select.Option>))
           }
         </Select>
         {plugin && plugin.hasSettings && (

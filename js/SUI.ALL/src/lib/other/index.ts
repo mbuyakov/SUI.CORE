@@ -1,7 +1,7 @@
 /* tslint:disable:no-any no-shadowed-variable completed-docs */
 export * from "./AddressFlag";
 
-import {WrappedFormUtils} from "antd/lib/form/Form";
+import {WrappedFormUtils} from "@ant-design/compatible/lib/form/Form";
 import * as H from "history";
 import * as React from "react";
 

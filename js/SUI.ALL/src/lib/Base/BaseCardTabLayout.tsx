@@ -1,4 +1,4 @@
-import Icon from 'antd/lib/icon';
+import { Icon } from '@ant-design/compatible';
 import Tabs, { TabsProps } from 'antd/lib/tabs';
 import * as React from 'react';
 

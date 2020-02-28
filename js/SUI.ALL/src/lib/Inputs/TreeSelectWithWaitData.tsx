@@ -1,8 +1,8 @@
 import {TreeSelect} from 'antd';
-import {TreeNode, TreeSelectProps} from 'antd/lib/tree-select';
-import {TreeNodeValue} from "antd/lib/tree-select/interface";
+import {TreeSelectProps} from "antd/lib/tree-select";
 import autobind from "autobind-decorator";
 import classNames from "classnames";
+import {DataNode, DefaultValueType} from "rc-tree-select/lib/interface"
 import * as React from "react";
 
 import {TableInfoManager} from "../cache";
@@ -11,7 +11,7 @@ import {IGqlFilter} from "../gql";
 import {TREE_SELECT_DISABLE_GROUP_SELECTION} from "../styles";
 import {getDataSet, getDataSetRender, getUser, IDataSet} from "../utils";
 
-export type ITreeSelectWithWaitDataProps<TValue extends TreeNodeValue, TValueType, TGroupType> =
+export type ITreeSelectWithWaitDataProps<TValue, TValueType, TGroupType> =
   Omit<TreeSelectProps<TValue>, 'treeData' | 'treeNodeFilterProp'> & {
   disableGroupSelection?: boolean;
   groupTableFilter?: IGqlFilter<TGroupType>;
@@ -24,10 +24,10 @@ export type ITreeSelectWithWaitDataProps<TValue extends TreeNodeValue, TValueTyp
 export interface ITreeSelectWithWaitDataState {
   dataSet?: IDataSet[];
   ready?: boolean;
-  treeData?: TreeNode[];
+  treeData?: DataNode[];
 }
 
-export class TreeSelectWithWaitData<TValue extends TreeNodeValue, TValueType = {}, TGroupType = {}>
+export class TreeSelectWithWaitData<TValue = DefaultValueType, TValueType = {}, TGroupType = {}>
   extends React.Component<ITreeSelectWithWaitDataProps<TValue, TValueType, TGroupType>, ITreeSelectWithWaitDataState> {
 
   public constructor(props: ITreeSelectWithWaitDataProps<TValue, TValueType, TGroupType>) {
@@ -56,7 +56,7 @@ export class TreeSelectWithWaitData<TValue extends TreeNodeValue, TValueType = {
     const ready = this.state.ready;
 
     return (
-      <TreeSelect
+      <TreeSelect<TValue>
         allowClear={true}
         showSearch={true}
         showCheckedStrategy="SHOW_PARENT"

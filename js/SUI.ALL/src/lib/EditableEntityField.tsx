@@ -1,6 +1,6 @@
 /* tslint:disable:jsx-no-lambda typedef no-any */
 import { notification } from 'antd';
-import { OptionProps } from 'antd/lib/select';
+import { OptionCoreData } from 'rc-select/lib/interface';
 import * as React from 'react';
 
 import { NO_DATA_TEXT } from './const';
@@ -20,7 +20,7 @@ export interface IEditableEntityFieldProps<T> extends Omit<IEditablePromisedComp
   successMessage: string;
   afterSave?(): Promise<void>;
   customDefaultValue?(value: T): any;
-  selectValueGenerator?(data: any): Array<React.ReactElement<OptionProps>>;
+  selectValueGenerator?(data: any): Array<React.ReactElement<OptionCoreData>>;
   valuePreSaveConverter?(value: T): PossibleValue;
 }
 

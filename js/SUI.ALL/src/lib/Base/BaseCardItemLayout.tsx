@@ -1,5 +1,5 @@
+import { Icon } from '@ant-design/compatible';
 import { Tooltip } from 'antd';
-import Icon from 'antd/lib/icon';
 import * as React from 'react';
 
 import { BaseTable, IBaseTableProps } from '../BaseTable';

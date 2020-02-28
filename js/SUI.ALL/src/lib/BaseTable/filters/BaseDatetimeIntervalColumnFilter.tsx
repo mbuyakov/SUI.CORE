@@ -1,7 +1,7 @@
 import {DatePicker} from "antd";
-import {RangePickerValue} from "antd/lib/date-picker/interface";
 import autobind from "autobind-decorator";
-import moment from "moment";
+import moment, {Moment} from "moment";
+import { RangeValue } from 'rc-picker/lib/interface';
 import * as React from 'react';
 
 import {GET_DEFAULT_CALENDAR_RANGES} from "../../const";
@@ -15,8 +15,8 @@ interface IBaseDatetimeIntervalColumnFilterProps {
 }
 
 interface IBaseDatetimeIntervalColumnFilterState {
-  filterValue?: RangePickerValue | null;
-  lastSavedValue?: RangePickerValue | null;
+  filterValue?: RangeValue<Moment> | null;
+  lastSavedValue?: RangeValue<Moment> | null;
   open?: boolean;
 }
 
@@ -30,7 +30,7 @@ export class BaseDatetimeIntervalColumnFilter
   public constructor(props: FullBaseDatetimeIntervalColumnFilterProps) {
     super(props);
     const propsFilterValue = this.props.filter && (this.props.filter.value as unknown as string[]);
-    const filterValue = propsFilterValue && propsFilterValue.map(value => value && moment.utc(value).local()) as RangePickerValue;
+    const filterValue = propsFilterValue && propsFilterValue.map(value => value && moment.utc(value).local()) as RangeValue<Moment>;
 
     this.state = {
       filterValue,
@@ -41,7 +41,6 @@ export class BaseDatetimeIntervalColumnFilter
   public render(): JSX.Element {
     return (
       <DatePicker.RangePicker
-        showToday={true}
         {...this.props}
         allowClear={true}
         placeholder={this.props.placeholder as [string, string] || ["Начало", "Конец"]}
@@ -57,7 +56,7 @@ export class BaseDatetimeIntervalColumnFilter
   }
 
   @autobind
-  private onChange(filterValue: RangePickerValue): void {
+  private onChange(filterValue: RangeValue<Moment>): void {
     if (!filterValue || !filterValue.length) {
       // clear filter
       this.triggerFilter(filterValue);
@@ -82,7 +81,7 @@ export class BaseDatetimeIntervalColumnFilter
   }
 
   @autobind
-  private triggerFilter(value: RangePickerValue | null | undefined): void {
+  private triggerFilter(value: RangeValue<Moment> | null | undefined): void {
     const format = moment.HTML5_FMT.DATETIME_LOCAL_MS;
 
     this.setState({lastSavedValue: value});

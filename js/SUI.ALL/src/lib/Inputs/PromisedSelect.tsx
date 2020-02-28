@@ -1,6 +1,6 @@
 import { Icon as LegacyIcon } from '@ant-design/compatible';
 import {Button} from "antd";
-import Select, {SelectProps} from "antd/lib/select";
+import Select, {SelectProps, SelectValue} from "antd/lib/select";
 import * as React from "react";
 
 import { SUI_ROW_GROW_LEFT } from '../styles';
@@ -9,7 +9,7 @@ import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBa
 
 export type PromisedSelectProps<T> = IPromisedBaseProps<T> & Omit<SelectProps<T>, "onChange" | "value">
 
-export class PromisedSelect<T> extends PromisedBase<PromisedSelectProps<T>, IPromisedBaseState<T>, T> {
+export class PromisedSelect<T extends SelectValue> extends PromisedBase<PromisedSelectProps<T>, IPromisedBaseState<T>, T> {
 
   public constructor(props: PromisedSelectProps<T>) {
     super(props);

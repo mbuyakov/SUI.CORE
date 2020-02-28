@@ -7,7 +7,7 @@ import * as React from 'react';
 import { DndProvider, DragSource, DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import { Omit } from './other';
+import {ExtractProps, IObjectWithIndex, Omit} from './other';
 import { WaitData } from './WaitData';
 
 let dragingIndex = -1;
@@ -96,7 +96,7 @@ const DragableBodyRow = DropTarget(
 );
 
 // tslint:disable-next-line:max-classes-per-file
-class DraggableRowTableClass<T> extends React.Component<Omit<TableProps<T>, 'onRow'> & {
+class DraggableRowTableClass<T extends IObjectWithIndex> extends React.Component<Omit<TableProps<T>, 'onRow'> & {
   onOrderChanged(sortedDataSource: T[]): Promise<any>
 }, {
   data: T[],
@@ -162,7 +162,7 @@ class DraggableRowTableClass<T> extends React.Component<Omit<TableProps<T>, 'onR
 }
 
 // tslint:disable-next-line:max-classes-per-file
-export class DraggableRowTable<T> extends React.Component<Pick<TableProps<any>, "loading" | "footer" | "style" | "title" | "scroll" | "size" | "children" | "className" | "prefixCls" | "locale" | "getPopupContainer" | "onChange" | "dataSource" | "expandIcon" | "tableLayout" | "columns" | "bordered" | "bodyStyle" | "pagination" | "rowKey" | "dropdownPrefixCls" | "rowSelection" | "components" | "rowClassName" | "expandedRowRender" | "defaultExpandAllRows" | "defaultExpandedRowKeys" | "expandedRowKeys" | "expandIconAsCell" | "expandIconColumnIndex" | "expandRowByClick" | "onExpandedRowsChange" | "onExpand" | "indentSize" | "onRowClick" /*| "onRow" */| "onHeaderRow" | "useFixedHeader" | "showHeader" | "childrenColumnName" | "sortDirections"> & {
+export class DraggableRowTable<T> extends React.Component<ExtractProps<DraggableRowTableClass<T>> & {
   onOrderChanged(sortedDataSource: T[]): Promise<any>
 }> {
   public render(): JSX.Element {

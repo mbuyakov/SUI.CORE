@@ -1,12 +1,11 @@
-import {RangePickerPresetRange} from "antd/lib/date-picker/interface";
-import moment from "moment";
+import moment, {Moment} from "moment";
 
 export const NO_DATA_TEXT = "н/д";
 
 /**
  * Get most popular calendar ranges
  */
-export function GET_DEFAULT_CALENDAR_RANGES(): {[range: string]: RangePickerPresetRange} {
+export function GET_DEFAULT_CALENDAR_RANGES(): {[range: string]: [Moment, Moment]} {
   // tslint:disable-next-line:comment-format
   // noinspection NonAsciiCharacters
   return {

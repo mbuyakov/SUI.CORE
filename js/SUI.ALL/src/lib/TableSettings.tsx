@@ -1,10 +1,10 @@
 /* tslint:disable:jsx-no-lambda no-magic-numbers no-any object-literal-sort-keys no-floating-promises promise-function-async */
+import { Icon } from '@ant-design/compatible';
 import { Cached } from '@material-ui/icons';
 import { Table } from 'antd';
 import Button from 'antd/lib/button';
 import Card from 'antd/lib/card';
 import Empty from 'antd/lib/empty';
-import Icon from 'antd/lib/icon';
 import Popover from 'antd/lib/popover';
 import Select from 'antd/lib/select';
 import Column from 'antd/lib/table/Column';
@@ -397,7 +397,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                           ...setting,
                           render: (value: string): JSX.Element => (
                             <div style={{ width: 500 }}>
-                              <PromisedSelect
+                              <PromisedSelect<string>
                                 defaultValue={value}
                                 promise={generateUpdateFn('tableInfo', this.props.id, setting.dataKey)}
                               >
@@ -688,7 +688,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                                     <Table
                                       components={{
                                         body: {
-                                          row: (props): JSX.Element => {
+                                          row: (props: any): JSX.Element => {
                                             const visible = props.children[0].props.record.visible;
 
                                             return (

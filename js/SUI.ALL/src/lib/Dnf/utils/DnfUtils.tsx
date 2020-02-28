@@ -1,11 +1,13 @@
 import { Form, Icon as LegacyIcon } from '@ant-design/compatible';
+// tslint:disable-next-line:no-import-side-effect
 import '@ant-design/compatible/assets/index.css';
+import {GetFieldDecoratorOptions, WrappedFormUtils} from "@ant-design/compatible/lib/form/Form";
 import { DatePicker, Input, InputNumber, Select, Switch } from 'antd';
 import {FormItemProps} from "antd/lib/form";
-import {GetFieldDecoratorOptions, WrappedFormUtils} from "antd/lib/form/Form";
-import {OptionProps, SelectProps} from "antd/lib/select";
+import {SelectProps} from "antd/lib/select";
 import * as React from 'react';
 
+import {IObjectWithIndex} from "../../other";
 import {ActionType, FilterType, getRussianName, isListAction, isMomentType} from '../../utils';
 
 export function getActions(filterType?: FilterType, constant?: boolean): ActionType[] {
@@ -95,7 +97,7 @@ export function getValuePropName(type: FilterType | undefined): string {
 export function generateSelectFormItem(
   form: WrappedFormUtils,
   decoratorName: string,
-  selectData: OptionProps[],
+  selectData: IObjectWithIndex[],
   props?: {
     decoratorOptions?: GetFieldDecoratorOptions;
     formItemProps?: FormItemProps;
@@ -118,7 +120,8 @@ export function generateSelectFormItem(
         >
           {selectData.map(optionProps => (
             <Select.Option
-              {...optionProps}
+              // tslint:disable-next-line:no-any
+              {...optionProps as any}
             />
           ))}
         </Select>

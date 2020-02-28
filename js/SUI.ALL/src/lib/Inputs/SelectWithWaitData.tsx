@@ -1,5 +1,5 @@
 import {Select} from 'antd';
-import {SelectProps} from 'antd/lib/select';
+import {SelectProps, SelectValue} from 'antd/lib/select';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
@@ -10,8 +10,7 @@ import {IGqlFilter} from "../gql";
 import {ExtractProps} from "../other";
 import {getDataSet, getDataSetRender, getUser, IDataSet} from "../utils";
 
-export type ISelectWithWaitDataProps<TValueType, TGroupType> =
-  Omit<SelectProps, 'mode'> & {
+export type ISelectWithWaitDataProps<TValueType, TGroupType> = Omit<SelectProps<SelectValue>, 'mode'> & {
   groupTableFilter?: IGqlFilter<TGroupType>;
   groupTableIdentifier?: string;
   multiple?: boolean;
@@ -62,7 +61,7 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
         // tslint:disable-next-line:triple-equals
         value={(this.props.value != null) ? this.props.value : undefined}
         style={{...this.props.style, ...(!ready && {filter: 'blur(1px)'})}}
-        mode={this.props.multiple ? "multiple" : "default"}
+        mode={this.props.multiple ? "multiple" : undefined}
         disabled={(this.state.dataSet && !ready) || this.props.disabled}
         optionFilterProp="children"
         placeholder={this.props.placeholder || this.state.placeholder}

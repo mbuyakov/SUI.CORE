@@ -1,9 +1,9 @@
 /* tslint:disable:jsx-no-lambda no-any */
 import { Form } from '@ant-design/compatible';
-
+// tslint:disable-next-line:no-import-side-effect
 import '@ant-design/compatible/assets/index.css';
+import {WrappedFormUtils} from "@ant-design/compatible/lib/form/Form";
 import { Card, Input } from "antd";
-import {WrappedFormUtils} from "antd/lib/form/Form";
 import autobind from 'autobind-decorator';
 import moment from "moment";
 import * as React from "react";
@@ -14,6 +14,8 @@ import { generateUpdate } from '../gql/queryGenerator';
 import { formatRawForGraphQL } from '../stringFormatters';
 import { FilterType, getFilterType } from '../utils';
 import { WaitData } from '../WaitData';
+
+// tslint:disable-next-line:no-import-side-effect
 
 interface IAdditionalTabProps {
   columnInfos: ColumnInfo[];

@@ -1,6 +1,6 @@
 import { Icon as LegacyIcon } from '@ant-design/compatible';
 import {Button, DatePicker} from "antd";
-import {DatePickerProps} from "antd/lib/date-picker/interface";
+import {DatePickerProps} from "antd/lib/date-picker";
 import moment from 'moment';
 import * as React from "react";
 
