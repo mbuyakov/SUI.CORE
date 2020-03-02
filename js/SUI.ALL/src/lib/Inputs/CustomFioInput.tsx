@@ -12,6 +12,7 @@ export class CustomFioInput extends React.Component<CustomFioInputProps> {
     return (
       <Input
         value={this.props.value && fioConverterWithoutTrim(this.props.value as string)}
+        {...this.props}
       />
     );
   }
