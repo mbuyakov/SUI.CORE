@@ -19,7 +19,7 @@ public class DefaultResolveUserStrategy implements ResolveUserStrategy {
                 .ofNullable(SecurityContextHolder.getContext())
                 .map(SecurityContext::getAuthentication)
                 .map(Authentication::getPrincipal)
-                .map(principal -> getFieldValue(principal, "user", Object.class))
+                .map(principal -> getFieldValue(principal, "user", principal.getClass()))
                 .map(user -> getFieldValue(user, "id", Long.class))
                 .orElse(null);
     }
