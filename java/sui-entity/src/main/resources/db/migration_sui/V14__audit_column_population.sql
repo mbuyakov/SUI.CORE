@@ -152,7 +152,7 @@ $$
     BEGIN
         table_info := sui_meta.get_table_info_by_oid(TG_RELID);
 
-        SELECT array_agg(column_name)
+        SELECT array_agg(column_name::TEXT)
         FROM information_schema.columns
         WHERE columns.table_schema = table_info.schema_name
           AND columns.table_name = table_info.table_name
