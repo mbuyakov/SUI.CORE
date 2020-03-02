@@ -26,10 +26,10 @@ public class DefaultResolveUserStrategy implements ResolveUserStrategy {
 
     @SuppressWarnings("unchecked")
     private <T> T getFieldValue(Object object, String fieldName, Class<T> tClass) {
-      return (T) ReflectionUtils.getField(
-        Objects.requireNonNull(ReflectionUtils.findField(object.getClass(), fieldName)),
-        object
-      );
+      return Optional
+        .ofNullable(ReflectionUtils.findField(object.getClass(), fieldName))
+        .map(field -> (T) ReflectionUtils.getField(field, object))
+        .orElse(null);
     }
 
 }
