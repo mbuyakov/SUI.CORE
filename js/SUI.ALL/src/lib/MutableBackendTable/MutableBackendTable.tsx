@@ -1,5 +1,4 @@
 // tslint:disable:cyclomatic-complexity
-import { Icon as LegacyIcon } from '@ant-design/compatible';
 import { Button, notification } from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";
@@ -55,7 +54,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
           const createButton = (
             <Button
-              icon={<LegacyIcon type="plus-circle" />}
+              icon="plus-circle"
               {...createButtonProps}
               onClick={this.showBaseModalFn(this.createBaseFormModalRef)}
             >

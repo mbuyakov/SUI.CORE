@@ -1,4 +1,3 @@
-import { Icon as LegacyIcon } from '@ant-design/compatible';
 import { Button, Card } from 'antd';
 import { CardType } from 'antd/lib/card';
 import * as React from 'react';
@@ -55,7 +54,7 @@ export class ReportElement extends React.Component<IReportElement, {
         extra={this.props.print ? (
           <ReactToPrint
             trigger={() => (
-              <Button icon={<LegacyIcon type="printer" />}/>
+              <Button icon="printer"/>
             )}
             content={() => this.printContentRef.current}
             onBeforeGetContent={async () => new Promise(resolve => this.setState({printMode: true}, resolve))}

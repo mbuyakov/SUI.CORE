@@ -1,4 +1,3 @@
-import { Icon as LegacyIcon } from '@ant-design/compatible';
 import {Button, Select} from 'antd';
 import Input from 'antd/es/input';
 import Alert from 'antd/lib/alert';
@@ -73,7 +72,7 @@ export class TagsPopover extends React.Component<ITagsPopoverProps, {
               />
               <div className={SUI_ROW_GROW_RIGHT}>
                 <Button
-                  icon={<LegacyIcon type="arrow-left" />}
+                  icon="arrow-left"
                   onClick={this.disableCreateMode}
                   disabled={this.state.savingInProcess}
                 />
@@ -123,7 +122,7 @@ export class TagsPopover extends React.Component<ITagsPopoverProps, {
                     </Select>
                     <Button
                       disabled={!(data && this.state.selectedTags && this.state.selectedTags.length > 0)}
-                      icon={<LegacyIcon type="close" />}
+                      icon="close"
                       type="danger"
                       onClick={this.clearSelect}
                     />

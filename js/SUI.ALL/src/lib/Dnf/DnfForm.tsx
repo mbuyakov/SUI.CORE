@@ -268,7 +268,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
                   {!disableDisjunctionSwap && <Button
                     size="small"
                     htmlType="button"
-                    icon={<LegacyIcon type="arrow-left" />}
+                    icon="arrow-left"
                     className={DNF_BUTTON}
                     disabled={formIndex === 0}
                     onClick={(): void => this.updateFormProps(dnfForms => InnerDnfForm.swapElements(dnfForms, formIndex, formIndex - 1))}
@@ -276,7 +276,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
                   <Button
                     size="small"
                     htmlType="button"
-                    icon={<LegacyIcon type="minus-circle" />}
+                    icon="minus-circle"
                     className={DNF_BUTTON}
                     style={{transform: "rotate(90deg)"}}
                     onClick={(): void => this.updateFormProps(dnfForms => {
@@ -291,7 +291,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
                       size="small"
                       className={DNF_BUTTON}
                       htmlType="button"
-                      icon={<LegacyIcon type="arrow-right" />}
+                      icon="arrow-right"
                       disabled={formIndex === forms.length - 1}
                       onClick={(): void => this.updateFormProps(dnfForms => InnerDnfForm.swapElements(dnfForms, formIndex, formIndex + 1))}
                     />

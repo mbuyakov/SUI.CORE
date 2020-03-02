@@ -1,4 +1,3 @@
-import { Icon as LegacyIcon } from '@ant-design/compatible';
 import { Button } from 'antd';
 import Card, { CardProps } from 'antd/lib/card';
 import Popover from 'antd/lib/popover';
@@ -40,7 +39,7 @@ export const DeletableSmallCard: React.FC<Omit<CardProps, 'size' | 'type'> & {
               <Button
                 href={null}
                 size="small"
-                icon={<LegacyIcon type="setting" />}
+                icon="setting"
                 style={{ marginRight: 8 }}
               />
             </Popover>
@@ -52,7 +51,7 @@ export const DeletableSmallCard: React.FC<Omit<CardProps, 'size' | 'type'> & {
           href={null}
           size="small"
           type="danger"
-          icon={<LegacyIcon type="close" />}
+          icon="close"
           onClick={onDelete}
         />}
       </>

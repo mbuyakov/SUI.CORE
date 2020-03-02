@@ -1,4 +1,3 @@
-import { Icon as LegacyIcon } from '@ant-design/compatible';
 import {Button} from 'antd';
 import Input from 'antd/es/input';
 import Alert from 'antd/lib/alert';
@@ -73,7 +72,7 @@ export class NamePopover extends React.Component<INamePopoverProps, {
               />
               <div className={SUI_ROW_GROW_RIGHT}>
                 <Button
-                  icon={<LegacyIcon type="arrow-left" />}
+                  icon="arrow-left"
                   onClick={this.disableCreateMode}
                   disabled={this.state.savingInProcess}
                 />
@@ -121,7 +120,7 @@ export class NamePopover extends React.Component<INamePopoverProps, {
                     </Select>
                     <Button
                       disabled={!(data && this.state.selectedNameId)}
-                      icon={<LegacyIcon type="close" />}
+                      icon="close"
                       type="danger"
                       onClick={this.clearSelect}
                     />
