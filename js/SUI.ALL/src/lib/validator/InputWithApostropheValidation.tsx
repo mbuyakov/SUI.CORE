@@ -1,8 +1,11 @@
 /* tslint:disable:triple-equals */
-import {Button, Input, Popover} from 'antd';
+import {Button, Popover} from 'antd';
 import {InputProps} from "antd/lib/input/Input";
 import autobind from 'autobind-decorator';
 import React, {ChangeEvent} from 'react';
+
+import {CustomFioInput} from "../Inputs";
+import {ExtractProps} from "../other";
 
 
 export type ValidatorFunc = (name: string | null) => string;
@@ -26,7 +29,8 @@ export function wrapWithApostropheValidator(validator: ValidatorFunc) {
 
 export type InputWithApostropheValidationProps = InputProps & {
   errorPlacement: "top" | "right" | "bottom" | "left" | null,
-  onChange?(value: string): void
+  input:  React.ComponentClass<ExtractProps<CustomFioInput>>
+  onChange?(value: string): void,
 }
 
 interface IInputWithApostropheValidationState {
@@ -64,13 +68,14 @@ export class InputWithApostropheValidation extends React.Component<InputWithApos
           overlayStyle={{width: 215}}
           placement={this.props.errorPlacement === null ? "top" : this.props.errorPlacement}
         >
-          <Input
-            {...this.props}
-            value={clearValue}
-            onChange={this.onChange}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-          />
+          {React.createElement(this.props.input,
+            {
+            ...this.props,
+            onBlur: this.onBlur,
+            onChange: this.onChange,
+            onFocus: this.onFocus,
+            value: clearValue})
+          }
         </Popover>
       </div>
     );

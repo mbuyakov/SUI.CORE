@@ -1,3 +1,4 @@
+/* tslint:disable */
 import capitalize from 'lodash/capitalize';
 
 export const NAME_REGEXP = /^(((?:[А-Яа-яA-Za-z0-9()]+[\-'][А-Яа-яA-Za-z0-9()]+\s*))*((?:[А-Яа-яA-Za-z0-9().]+\s*))*)+$/;
@@ -20,22 +21,18 @@ export function nameValidator(field: string, allowNulls?: boolean): (name: strin
   return (name: string): string | null => {
     if (!name || !name.trim().length) {
       return (field === "middleName" || allowNulls) ? '' : "Поле должно быть заполнено";
-      // tslint:disable-next-line:unnecessary-else
     } else {
-      // tslint:disable-next-line:no-parameter-reassignment
       if (!ONLY_ONE_ALPHABET_REGEXP.test(name)) {
         return ONLY_ONE_ALPHABET_MESSAGE;
-        // tslint:disable-next-line:unnecessary-else
       } else {
         if (field === 'surName') {
           return SURNAME_REGEXP.test(name)
             ? allSymbolValidator(name)
-            : whiteSpaceAndHyphenValidator(name);
-          // tslint:disable-next-line:unnecessary-else
+            : whiteSpaceAndHyphenValidator(name, field);
         } else {
           return NAME_REGEXP.test(name)
             ? allSymbolValidator(name)
-            : whiteSpaceAndHyphenValidator(name);
+            : whiteSpaceAndHyphenValidator(name, field);
         }
       }
     }
@@ -49,10 +46,10 @@ function allSymbolValidator(name: string): string {
       ? ALL_SYMBOL_MESSAGE
       : '';
 }
-function whiteSpaceAndHyphenValidator(name: string): string {
+function whiteSpaceAndHyphenValidator(name: string, field: string): string {
   return WHITESPACE_REGEXP.test(name)
     ? WHITESPACE_MESSAGE
-    : POINT_REGEXP_SURNAME_REGEXP.test(name)
+    : POINT_REGEXP_SURNAME_REGEXP.test(name) && field === 'surName'
       ? POINT_REGEXP_SURNAME_MESSAGE
       : HYPHEN_REGEXP.test(name)
         ? HYPHEN_REGEXP_MESSAGE
@@ -60,5 +57,9 @@ function whiteSpaceAndHyphenValidator(name: string): string {
 }
 
 export function fioConverter(name: string): string {
-  return name.trim().replace(/\s\s+/g, ' ').replace(/\w+|[А-Яа-я]+/g, capitalize);
+  return fioConverterWithoutTrim(name).trim();
+}
+
+export function fioConverterWithoutTrim(name: string): string {
+  return name.replace(/\s\s+/g, ' ').replace(/\w+|[А-Яа-я]+/g, capitalize);
 }
