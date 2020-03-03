@@ -36,5 +36,5 @@ export function isAdmin(): boolean {
 export function getUser(): ICoreUser {
   // tslint:disable-next-line:ban-ts-ignore
   // @ts-ignore
-  return getDataByKey(window.g_app._store.getState(), ["user", "user"]);
+  return window.__SUI_USER;
 }
