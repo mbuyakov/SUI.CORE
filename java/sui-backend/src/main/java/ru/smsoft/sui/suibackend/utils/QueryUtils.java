@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 
 import static ru.smsoft.sui.suibackend.utils.Constants.*;
 
-
 public class QueryUtils {
 
   public static String generateResultQuery(Map<String, String> withStatements, Collection<String> selectStatements) {
