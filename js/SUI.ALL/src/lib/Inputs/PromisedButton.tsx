@@ -1,3 +1,4 @@
+import { Icon } from '@ant-design/compatible';
 import Button, {ButtonProps} from "antd/lib/button/button";
 import * as React from "react";
 
@@ -19,7 +20,7 @@ export class PromisedButton extends PromisedBase<ButtonProps & {
         {...buttonProps}
         onClick={this.saveWithoutValue}
         loading={this.props.loading || (hasChild ? this.state.loading : undefined)}
-        icon={!hasChild && this.state.loading ? "loading" : this.props.icon}
+        icon={!hasChild && this.state.loading ? <Icon type="loading"/> : this.props.icon}
         disabled={this.props.disabled || (!hasChild && this.state.loading)}
       />
     );

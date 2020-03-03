@@ -1,3 +1,4 @@
+import { Icon } from '@ant-design/compatible';
 import Button from 'antd/lib/button';
 import Input, {InputProps} from 'antd/lib/input';
 import Tooltip from 'antd/lib/tooltip';
@@ -55,7 +56,7 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
     let saveButton: JSX.Element | null = (
       <Button
         type="primary"
-        icon={this.state.loading ? 'loading' : this.props.icon || 'save'}
+        icon={<Icon type={this.state.loading ? 'loading' : this.props.icon || 'save'}/>}
         disabled={this.state.loading || isEmptyAndEmptyNotAllowed || !this.isValidatorTextEmpty()}
         onClick={this.saveWithoutValue}
       />

@@ -133,7 +133,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
               </div>}
           >
             <Button
-              icon="experiment"
+              icon={<LegacyIcon type={"experiment"} />}
               onClick={this.openPopover}
             />
           </Popover>

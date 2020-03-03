@@ -1,3 +1,4 @@
+import { Icon } from '@ant-design/compatible';
 import { Button } from 'antd';
 import Card, { CardProps } from 'antd/lib/card';
 import Popover from 'antd/lib/popover';
@@ -39,7 +40,7 @@ export const DeletableSmallCard: React.FC<Omit<CardProps, 'size' | 'type'> & {
               <Button
                 href={null}
                 size="small"
-                icon="setting"
+                icon={<Icon type={"setting"} />}
                 style={{ marginRight: 8 }}
               />
             </Popover>
@@ -51,7 +52,7 @@ export const DeletableSmallCard: React.FC<Omit<CardProps, 'size' | 'type'> & {
           href={null}
           size="small"
           type="danger"
-          icon="close"
+          icon={<Icon type={"close"} />}
           onClick={onDelete}
         />}
       </>

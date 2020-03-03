@@ -256,7 +256,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                                   <Link to={getLinkForTable(data.tableInfoById.tableName, 'table')}>
                                     <Button
                                       href={null}
-                                      icon="profile"
+                                      icon={<Icon type={"profile"} />}
                                       type="primary"
                                       style={{ marginBottom: 8 }}
                                     >
@@ -283,7 +283,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                                   >
                                     <Button
                                       href={null}
-                                      icon="idcard"
+                                      icon={<Icon type={"idcard"} />}
                                       type="primary"
                                       style={{ marginBottom: 8, marginLeft: 8 }}
                                     >
@@ -292,7 +292,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                                   </Popover>
                                   {/*<Button*/}
                                   {/*  href={null}*/}
-                                  {/*  icon="sync"*/}
+                                  {/*  icon={<Icon type={"sync"} />}*/}
                                   {/*  type="primary"*/}
                                   {/*  style={{ marginBottom: 8, marginLeft: 8 }}*/}
                                   {/*  onClick={() => fullReloadTableInfo(this.props.id)}*/}
@@ -763,12 +763,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                                                 'primary',
                                                 undefined,
                                               )}
-                                              icon={TableSettings.getElementBySortType<string>(
-                                                record.defaultSorting as SortingDirection,
-                                                'sort-ascending',
-                                                'sort-descending',
-                                                'question',
-                                              )}
+                                              icon={<Icon type={TableSettings.getElementBySortType<string>(record.defaultSorting as SortingDirection, 'sort-ascending', 'sort-descending', 'question')}/>}
                                               onClick={() => {
                                                 const sequence = [null, 'asc', 'desc'];
                                                 this.updateColFieldFn(record.id, 'defaultSorting')(

@@ -1,4 +1,5 @@
 // tslint:disable:cyclomatic-complexity
+import { Icon } from '@ant-design/compatible';
 import { Button, notification } from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";
@@ -54,7 +55,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
           const createButton = (
             <Button
-              icon="plus-circle"
+              icon={<Icon type={"plus-circle"} />}
               {...createButtonProps}
               onClick={this.showBaseModalFn(this.createBaseFormModalRef)}
             >
@@ -64,7 +65,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
           const deleteButton = (
             <PromisedButton
-              icon="delete"
+              icon={<Icon type={"delete"} />}
               {...deleteButtonProps}
               promise={this.handleDeleteClick}
               popconfirmSettings={{
@@ -116,7 +117,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
                     render: (_: null, row: {id: TSelection}): JSX.Element => (
                       <PromisedButton
                         loading={this.state.initEditLoading}
-                        icon="edit"
+                        icon={<Icon type={"edit"} />}
                         promise={this.handleEditClickFn(row)}
                       />
                     ),

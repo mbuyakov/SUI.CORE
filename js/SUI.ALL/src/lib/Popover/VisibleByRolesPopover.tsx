@@ -1,3 +1,4 @@
+import { Icon } from '@ant-design/compatible';
 import { Popover } from 'antd';
 import Button from 'antd/lib/button';
 import Divider from 'antd/lib/divider';
@@ -123,7 +124,7 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
         >
           <Button
             style={!(this.state.selectedRoles || this.props.columnInfo.columnInfoRolesByColumnInfoId.nodes.length > 0) ? { color: '#f5f5f5', backgroundColor: '#f5222d' } : {}}
-            icon="usergroup-add"
+            icon={<Icon type={"usergroup-add"} />}
             onClick={this.openPopover}
           />
         </Popover>

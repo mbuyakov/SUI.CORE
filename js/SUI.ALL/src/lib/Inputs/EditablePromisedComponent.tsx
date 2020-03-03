@@ -46,7 +46,7 @@ export class EditablePromisedComponent<T>
                   htmlType="button"
                   style={{marginLeft: editMode ? 4 : 8, flexShrink: 0, padding: "0 4px"}}
                   onClick={this.switchEdit}
-                  icon={editMode ? "close" : "edit"}
+                  icon={<LegacyIcon type={editMode ? "close" : "edit"}/>}
                 />
               )}
             </div>

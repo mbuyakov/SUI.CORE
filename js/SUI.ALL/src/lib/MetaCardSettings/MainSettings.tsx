@@ -1,4 +1,5 @@
 // tslint:disable:no-any
+import { Icon } from '@ant-design/compatible';
 import { Switch } from 'antd';
 import Tooltip from 'antd/lib/tooltip';
 import Tree from 'antd/lib/tree';
@@ -162,7 +163,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
         <PromisedButton
           block={true}
           promise={this.onSave}
-          icon="save"
+          icon={<Icon type={"save"} />}
           type="primary"
         >
           Сохранить

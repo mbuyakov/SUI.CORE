@@ -1,3 +1,4 @@
+import { Icon } from '@ant-design/compatible';
 import {Popover} from "antd";
 import Button from "antd/lib/button";
 import Input, {TextAreaProps} from "antd/lib/input";
@@ -34,7 +35,7 @@ export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromi
     let saveButton: JSX.Element | null = (
       <Button
         type="primary"
-        icon={this.state.loading ? "loading" : this.props.icon || "save"}
+        icon={<Icon type={this.state.loading ? "loading" : this.props.icon || "save"}/>}
         disabled={this.state.loading || isEmptyAndEmptyNotAllowed || !this.isValidatorTextEmpty()}
         onClick={this.saveWithoutValue}
       />
