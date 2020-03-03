@@ -100,7 +100,7 @@ export class FilterReportElement<TData, TFilter = {}>
   }
 
   @autobind
-  private onPopoverVisibleChange(visible: boolean): void {
+  private async onPopoverVisibleChange(visible: boolean): Promise<void> {
     const {
       filter,
       lastFetchedFilter
@@ -113,7 +113,7 @@ export class FilterReportElement<TData, TFilter = {}>
         loading: true
       });
 
-      this.props.fetchData(filter)
+      await this.props.fetchData(filter)
         .then(data => this.setState({data}))
         .catch(reason => {
           errorNotification(

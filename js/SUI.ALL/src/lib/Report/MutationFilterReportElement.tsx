@@ -57,7 +57,7 @@ export class MutationFilterReportElement<TData, TFilter = {}, TRaw = any>
   }
 
   @autobind
-  private fetchData(filter: TFilter): Promise<TData> {
+  private async fetchData(filter: TFilter): Promise<TData> {
     return jsonMutationDataFetcher<TRaw, TData>(
       this.props.mutationName,
       this.props.filterFormatter ? this.props.filterFormatter(filter) : filter,
