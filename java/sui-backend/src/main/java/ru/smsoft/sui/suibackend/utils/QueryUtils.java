@@ -89,15 +89,19 @@ public class QueryUtils {
       val filters = Arrays
         .stream(interval)
         .map(Optional::ofNullable)
-        .map(valueOpt -> valueOpt
-          .map(value -> new SimpleColumnFiltering(
-            columnName,
-            (index.getAndIncrement() == 0)
-              ? FilteringOperation.GREATER_THAN_OR_EQUAL
-              : FilteringOperation.LESS_THAN_OR_EQUAL,
-            intervalColumnFiltering.isRaw(),
-            value))
-          .orElse(null))
+        .map(valueOpt -> {
+          val valueIndex = index.getAndIncrement();
+
+          return valueOpt
+            .map(value -> new SimpleColumnFiltering(
+              columnName,
+              (valueIndex == 0)
+                ? FilteringOperation.GREATER_THAN_OR_EQUAL
+                : FilteringOperation.LESS_THAN_OR_EQUAL,
+              intervalColumnFiltering.isRaw(),
+              value))
+            .orElse(null);
+        })
         .filter(Objects::nonNull)
         .collect(Collectors.toList());
 
