@@ -23,19 +23,16 @@ const FILTER_URL_PARAM = "filter";
 
 // Public functions
 
+export function appendFiltersToLink(
+  link: string,
+  tableId: string,
+  filter: OneOrArray<SimpleBackendFilter>
+): string {
+  return generateLinkWithFilters(getHrefLocation(), tableId, filter);
+}
+
 export function putFiltersToUrlParam(tableId: string, filter: OneOrArray<SimpleBackendFilter>): void {
-  const location = getLocation();
-  const filters = getFilters(location.searchParams) || {};
-
-  filters[tableId] = wrapInArray(filter).map(simpleFilter => {
-    delete simpleFilter.lazy;
-
-    return simpleFilter;
-  });
-
-  location.searchParams.set(FILTER_URL_PARAM, encodeFilters(filters));
-
-  getMetaInitProps().routerReplaceFn(`${location.pathname}?${location.searchParams.toString()}`);
+  getMetaInitProps().routerReplaceFn(generateLinkWithFilters(getHrefLocation(), tableId, filter));
 }
 
 export function getFiltersFromUrlParam(tableId: string): SimpleBackendFilter[] | undefined {
@@ -46,9 +43,14 @@ export function getFiltersFromUrlParam(tableId: string): SimpleBackendFilter[] |
 
 // Private functions
 
-function getLocation(): ISimpleLocation {
+function getHrefLocation(): ISimpleLocation {
   const href = window.location.href;
-  const stubUrl = new URL(`http://stub:9999${href.substring(href.indexOf("#") + 1)}`);
+
+  return splitLink(href.substring(href.indexOf("#") + 1));
+}
+
+function splitLink(link: string): ISimpleLocation {
+  const stubUrl = new URL(`http://stub:9999${link}`);
 
   return {
     pathname: stubUrl.pathname,
@@ -56,7 +58,27 @@ function getLocation(): ISimpleLocation {
   };
 }
 
-function getFilters(searchParams: URLSearchParams = getLocation().searchParams): IFilterSearchParam | undefined {
+function generateLinkWithFilters(
+  location: ISimpleLocation,
+  tableId: string,
+  filter: OneOrArray<SimpleBackendFilter>
+): string {
+  const filters = getFilters(location.searchParams) || {};
+
+  filters[tableId] = wrapInArray(filter).map(simpleFilter => {
+    delete simpleFilter.lazy;
+
+    return simpleFilter;
+  });
+
+  location.searchParams.set(FILTER_URL_PARAM, encodeFilters(filters));
+
+  return `${location.pathname}?${location.searchParams.toString()}`;
+}
+
+function getFilters(
+  searchParams: URLSearchParams = getHrefLocation().searchParams
+): IFilterSearchParam | undefined {
   const filterParam = searchParams.get(FILTER_URL_PARAM);
 
   return filterParam ? decodeFilters(filterParam) : undefined;
