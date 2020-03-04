@@ -21,7 +21,6 @@ import ru.smsoft.sui.suibackend.query.FromWithGenerator;
 import ru.smsoft.sui.suibackend.query.GroupQueryGenerator;
 import ru.smsoft.sui.suibackend.utils.JsonUtils;
 import ru.smsoft.sui.suibackend.utils.QueryUtils;
-import ru.smsoft.sui.suisecurity.utils.TextUtils;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -39,7 +38,7 @@ import static ru.smsoft.sui.suibackend.utils.Constants.*;
 public class BackendService {
 
   private final static Set<String> groupResponseIncludedColumns =
-    Stream.of(RECORDS_COLUMN_NAME, CHILDREN_FIELD_NAME).collect(Collectors.toSet());
+          Stream.of(RECORDS_COLUMN_NAME, CHILDREN_FIELD_NAME).collect(Collectors.toSet());
 
   @NonNull
   private FromWithGenerator fromWithGenerator;
@@ -70,7 +69,8 @@ public class BackendService {
       columnMap.values(),
       extractAllFilters(userState),
       userState.getSorts(),
-      userState.getSelection());
+      userState.getSelection()
+    );
     val grouping = userState.getGroupings();
 
     if (grouping != null && !grouping.isEmpty()) {
@@ -81,7 +81,8 @@ public class BackendService {
         userState.getPageSize(),
         grouping,
         Optional.ofNullable(userState.getExpandedGroups()).orElse(Collections.emptyList()),
-        userState.getSorts());
+        userState.getSorts()
+      );
     } else {
       val withStatements = new LinkedHashMap<String, String>();
       withStatements.put(FROM_WITH_NAME, fromWith);
@@ -94,7 +95,9 @@ public class BackendService {
           userState.getPageSize(),
           userState.getOffset(),
           OFFSET_COLUMN_NAME,
-          FROM_WITH_NAME));
+          FROM_WITH_NAME
+        )
+      );
 
 
       val data = jdbcTemplate.queryForMap(
@@ -109,9 +112,14 @@ public class BackendService {
                 ROWS_COLUMN_NAME,
                 FROM_WITH_NAME,
                 userState.getPageSize(),
-                String.format("SELECT %s FROM %s", OFFSET_COLUMN_NAME, OFFSET_COLUMN_NAME))))));
+                String.format("SELECT %s FROM %s", OFFSET_COLUMN_NAME, OFFSET_COLUMN_NAME)
+              )
+            )
+          )
+        )
+      );
 
-      val rows = parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) data.get(ROWS_COLUMN_NAME)), true);
+      val rows = parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) data.get(ROWS_COLUMN_NAME)));
       formatDataQueryResult(columnMap.values(), rows);
 
       return PageData
@@ -155,9 +163,9 @@ public class BackendService {
         pageSize,
         generateSubtotals(columnByColumnInfoName.values())));
 
-    val visibleRows = parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) groupQueryResult.get(ROWS_COLUMN_NAME)), true);
+    val visibleRows = parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) groupQueryResult.get(ROWS_COLUMN_NAME)));
     formatDataQueryResult(columnByColumnInfoName.values(), visibleRows);
-    val visibleGroups = parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) groupQueryResult.get(GROUPS_COLUMN_NAME)), false);
+    val visibleGroups = parseJsonArrayPgObjectToJsonObjectCollection(((PGobject) groupQueryResult.get(GROUPS_COLUMN_NAME)));
     val expandedMaxLevelGroups = visibleGroups
       .stream()
       .filter(group ->
@@ -178,9 +186,7 @@ public class BackendService {
 
     val formattedVisibleGroups = visibleGroups
       .stream()
-      .map(jsonObject -> JsonUtils.PREDICATE_CAMEL_CASE_JSON_OBJECT_KEY_MAPPER.apply(
-        jsonObject,
-        key -> !key.startsWith(COMMON_PREFIX)))
+      .map(JsonUtils.JSON_VALUE_FORMATTER)
       .collect(Collectors.toList());
 
     treeGenerator.setChildren(formattedVisibleGroups, 0, null);
@@ -188,12 +194,8 @@ public class BackendService {
     val firstLevelGroups = formattedVisibleGroups.stream()
       .filter(group -> group.getInt(LEVEL_COLUMN_NAME) == 1)
       .collect(Collectors.toList());
-    formatGroups(
-      formattedVisibleGroups,
-      groupingColumns
-        .stream()
-        .map(TextUtils::toCamelCase)
-        .collect(Collectors.toList()));
+
+    formatGroups(formattedVisibleGroups, groupingColumns);
 
     return PageData
       .builder()
@@ -236,12 +238,11 @@ public class BackendService {
       .collect(Collectors.toList());
   }
 
-  private List<JSONObject> parseJsonArrayPgObjectToJsonObjectCollection(PGobject pgObject, boolean camelCaseKeys) {
+  private List<JSONObject> parseJsonArrayPgObjectToJsonObjectCollection(PGobject pgObject) {
     try {
       return StreamSupport
         .stream(new JSONArray(pgObject.getValue()).spliterator(), false)
         .map(JSONObject.class::cast)
-        .map(camelCaseKeys ? JsonUtils.CAMEL_CASE_JSON_OBJECT_KEY_MAPPER : Function.identity())
         .collect(Collectors.toList());
     } catch (Exception exception) {
       log.warn("Can not parse jsonArray: " + pgObject);
@@ -268,10 +269,8 @@ public class BackendService {
       if (!subtotalKeys.isEmpty()) {
         val subtotalJsonObject = new JSONObject(subtotalKeys.size());
 
-        subtotalKeys.forEach(key ->
-          subtotalJsonObject.put(
-            TextUtils.toCamelCase(key.substring(SUBTOTAL_PREFIX.length())),
-            group.get(key)));
+        subtotalKeys.forEach(key -> subtotalJsonObject.put(key.substring(SUBTOTAL_PREFIX.length()), group.get(key)));
+
         keySet.removeAll(subtotalKeys);
 
         group.put(SUBTOTALS_FIELD_NAME, subtotalJsonObject);
@@ -288,18 +287,21 @@ public class BackendService {
     rows.forEach(row ->
       columnsWithRender.forEach(column -> {
         val renderColumn = column.getRenderColumn();
-        val rowNameColumnName = TextUtils.toCamelCase(renderColumn.getName());
+        val rowNameColumnName = renderColumn.getName();
 
         row.put(
-          TextUtils.toCamelCase(
-            String.format(
-              "%s_by_%s",
-              renderColumn.getFrom().getTableInfo().getTableName(),
-              column.getColumnName())),
+          String.format(
+            "%s_by_%s",
+            renderColumn.getFrom().getTableInfo().getTableName(),
+            column.getColumnName()
+          ),
           new JSONObject(
             Collections.singletonMap(
-              TextUtils.toCamelCase(renderColumn.getColumnInfo().getColumnName()),
-              row.opt(rowNameColumnName))));
+              renderColumn.getColumnInfo().getColumnName(),
+              row.opt(rowNameColumnName)
+            )
+          )
+        );
 
         row.remove(rowNameColumnName);
       }));

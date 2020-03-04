@@ -122,11 +122,12 @@ export class BackendTable<TSelection = defaultSelection>
   public constructor(props: any) {
     super(props);
     const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
+    const defaultFilters = (this.props.id && getFiltersFromUrlParam(this.props.id))
+      || (this.props.defaultFilters && wrapInArray(this.props.defaultFilters))
+      || undefined;
 
     this.state = {
-      defaultFilters: (this.props.id && getFiltersFromUrlParam(this.props.id))
-        || (this.props.defaultFilters && wrapInArray(this.props.defaultFilters))
-        || undefined,
+      defaultFilters: defaultFilters ? defaultFilters.map(this.normalizeColumnName) : undefined,
       filters: [],
       lastSendSelection: [],
       paginationEnabled,
@@ -171,8 +172,10 @@ export class BackendTable<TSelection = defaultSelection>
       const defaultFiltersChanged = !isEquals(this.props.defaultFilters, prevProps.defaultFilters);
 
       if (defaultFiltersChanged) {
+        const defaultFilters = this.props.defaultFilters && wrapInArray(this.props.defaultFilters) || undefined;
+
         this.setState(
-          {defaultFilters: this.props.defaultFilters && wrapInArray(this.props.defaultFilters) || undefined},
+          {defaultFilters: defaultFilters ? defaultFilters.map(this.normalizeColumnName) : undefined},
           () => this.reinit()
         );
       }
@@ -357,7 +360,7 @@ export class BackendTable<TSelection = defaultSelection>
       const referencedTableInfo = TableInfoManager.directGetById(referencedColumnInfo.tableInfoId);
 
       if (referencedTableInfo.foreignLinkColumnInfoId && referencedColumnInfo.id !== referencedTableInfo.foreignLinkColumnInfoId) {
-        groupRowField = `${groupRowField}Name`;
+        groupRowField = `${groupRowField}_name`;
       }
     }
 
@@ -395,12 +398,23 @@ export class BackendTable<TSelection = defaultSelection>
           };
         } else {
           return (filter.elements || (filter.value !== undefined && filter.value !== ''))
-            ? {
+            ? this.normalizeColumnName({
               ...filter,
               raw: includeRaw ? defaultIfNotBoolean(filter.raw, true) : filter.raw,
-            } : null;
+            }) : null;
         }
       }).filter(filter => filter);
+  }
+
+  @autobind
+  private normalizeColumnName<T extends {columnName: string}>(element: T): T {
+    return {
+      ...element,
+      columnName: getDataByKey<string>(
+        this.findColumnInfoByName(element.columnName) || this.findColumnInfoByCamelCaseName(element.columnName),
+        "columnName"
+      )
+    }
   }
 
   @autobind
