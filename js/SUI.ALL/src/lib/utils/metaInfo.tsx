@@ -1,12 +1,8 @@
-import camelCase from 'lodash/camelCase';
-// tslint:disable-next-line:ban-ts-ignore
-// @ts-ignore
 import * as React from 'react';
 
 import { booleanRender, IBaseTableColLayout, SortingDirection } from '../BaseTable';
 import { ColumnInfo, ColumnInfoManager, TableInfoManager } from '../cache';
 import { getDataByKey } from '../dataKey';
-import { capitalize } from '../stringFormatters';
 import { TableRenderSettingsPluginManager, TableRenderSettingsPopover } from '../TableRenderSettings';
 
 import { IColumnInfoToBaseTableColProps } from './init';
@@ -24,7 +20,7 @@ export async function colToBaseTableCol(
     defaultVisible: columnInfo.defaultVisible,
     // tslint:disable-next-line:no-any
     groupingCriteria: (value: any) => value,
-    id: camelCase(columnInfo.columnName),
+    id: columnInfo.columnName,
     subtotal: columnInfo.subtotalTypeBySubtotalTypeId,
     title: `${columnName}${rawMode ? ` (${columnInfo.columnName})` : ''}`,
     width: columnInfo.width,
@@ -47,8 +43,8 @@ export async function colToBaseTableCol(
       const renderTableInfo = await TableInfoManager.getById(renderColumnInfo.tableInfoId);
 
       result.dataKey = [
-        `${camelCase(renderTableInfo.tableName)}By${capitalize(camelCase(columnInfo.columnName))}`,
-        camelCase(renderColumnInfo.columnName),
+        `${renderTableInfo.tableName}_by_${columnInfo.columnName}`,
+        renderColumnInfo.columnName,
       ];
 
       if (foreignTableInfo.isCatalog) {

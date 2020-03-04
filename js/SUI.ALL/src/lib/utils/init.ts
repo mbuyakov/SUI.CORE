@@ -42,6 +42,8 @@ export interface IMetaInitProps {
 
   // tslint:disable-next-line:no-any
   routerPushFn(link: any): void;
+  // tslint:disable-next-line:no-any
+  routerReplaceFn(link: any): void;
 }
 
 declare let window: Window & {

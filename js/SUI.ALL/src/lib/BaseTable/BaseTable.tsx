@@ -462,7 +462,7 @@ export class BaseTable<TSelection = defaultSelection>
     const type: string = searchProps.type;
 
     if (this.props.customFilterComponent) {
-      const customFilter = this.props.customFilterComponent(props, column, type);
+      const customFilter = this.props.customFilterComponent(searchProps, column, type);
 
       if (customFilter) {
         return customFilter;

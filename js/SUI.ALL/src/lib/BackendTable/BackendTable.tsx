@@ -6,7 +6,7 @@ import moment from "moment";
 import * as React from 'react';
 import uuid from 'uuid';
 
-import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFilterType, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, RefreshMetaTablePlugin, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
+import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFiltersFromUrlParam, getFilterType, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, putFiltersToUrlParam, RefreshMetaTablePlugin, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
@@ -59,6 +59,7 @@ export interface IBackendTableProps {
   defaultFilters?: SimpleBackendFilter | SimpleBackendFilter[];
   disableDeletedFilter?: boolean;
   filter?: BackendFilter | BackendFilter[];
+  id?: string;
   serviceColumns?: IServiceColumn | IServiceColumn[];
   table: string;
   titleEnabled?: boolean;
@@ -76,6 +77,7 @@ type IBackendTableState<T> = {
   cols?: IBaseTableColLayout[];
   // tslint:disable-next-line:no-any
   data?: any[];
+  defaultFilters?: SimpleBackendFilter[];
   error?: string;
   lastSendSelection?: T[];
   loading?: boolean;
@@ -122,6 +124,9 @@ export class BackendTable<TSelection = defaultSelection>
     const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
 
     this.state = {
+      defaultFilters: (this.props.id && getFiltersFromUrlParam(this.props.id))
+        || (this.props.defaultFilters && wrapInArray(this.props.defaultFilters))
+        || undefined,
       filters: [],
       lastSendSelection: [],
       paginationEnabled,
@@ -156,8 +161,20 @@ export class BackendTable<TSelection = defaultSelection>
       // @ts-ignore
       const isEquals = (first, second): boolean => JSON.stringify(first) === JSON.stringify(second);
 
-      if (!isEquals(this.props.defaultFilters, prevProps.defaultFilters) || !isEquals(this.props.filter, prevProps.filter)) {
-        return this.reinit();
+      const filtersChanged = !isEquals(this.props.filter, prevProps.filter);
+
+      if (filtersChanged) {
+        await this.reinit();
+      }
+
+      // Опасно: можно потерять фильтры из URL
+      const defaultFiltersChanged = !isEquals(this.props.defaultFilters, prevProps.defaultFilters);
+
+      if (defaultFiltersChanged) {
+        this.setState(
+          {defaultFilters: this.props.defaultFilters && wrapInArray(this.props.defaultFilters) || undefined},
+          () => this.reinit()
+        );
       }
     }
   }
@@ -209,17 +226,16 @@ export class BackendTable<TSelection = defaultSelection>
       >
         <BaseTable<TSelection>
           {...this.props}
-          defaultFilters={this.props.defaultFilters ? wrapInArray(this.props.defaultFilters) : undefined}
           {...this.state}
+          defaultFilters={this.state.defaultFilters as any[]}
+          cols={this.state.cols || []}
+          rows={this.state.data}
+          ref={this.baseTableRef}
+          title={this.props.title || this.state.title}
           paperStyle={{
             borderBottom: this.state.paginationEnabled ? undefined : 0,
             ...this.props.paperStyle
           }}
-          filters={this.state.filters}
-          rows={this.state.data}
-          cols={this.state.cols}
-          ref={this.baseTableRef}
-          title={this.props.title || this.state.title}
           noColsContent={
             admin && (
               <TableSettingsDialog
@@ -300,9 +316,11 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private findPascalCaseColumnName(camelCaseColumnName: string): string {
-    const resultColumnInfo = this.findColumnInfoByCamelCaseName(camelCaseColumnName);
-    return resultColumnInfo && resultColumnInfo.columnName;
+  private findColumnInfoByName(name: string): ColumnInfo {
+    const tableInfo = this.state.tableInfo;
+    return tableInfo
+      ? tableInfo.directGetColumns().find(columnInfo => columnInfo.columnName === name)
+      : null;
   }
 
   @autobind
@@ -331,7 +349,7 @@ export class BackendTable<TSelection = defaultSelection>
   private getGroupRowField(grouping: Grouping): string {
     let groupRowField = grouping.columnName;
 
-    const groupingColumnInfo = this.findColumnInfoByCamelCaseName(grouping.columnName);
+    const groupingColumnInfo = this.findColumnInfoByName(grouping.columnName);
     const references = groupingColumnInfo && groupingColumnInfo.foreignColumnInfo;
 
     if (references.length > 0) {
@@ -379,8 +397,6 @@ export class BackendTable<TSelection = defaultSelection>
           return (filter.elements || (filter.value !== undefined && filter.value !== ''))
             ? {
               ...filter,
-              operation: filter.operation,
-              columnName: this.findPascalCaseColumnName(filter.columnName),
               raw: includeRaw ? defaultIfNotBoolean(filter.raw, true) : filter.raw,
             } : null;
         }
@@ -457,6 +473,10 @@ export class BackendTable<TSelection = defaultSelection>
     const newFilters = filters.filter(filter => !stateFiltersAsString.includes(JSON.stringify(filter)));
 
     if (newFilters.some(filter => !filter.lazy)) {
+      if (this.props.id) {
+        putFiltersToUrlParam(this.props.id, filters);
+      }
+
       // noinspection JSIgnoredPromiseFromCall
       this.sendMessage(
         'FILTER_CHANGE',
@@ -478,7 +498,7 @@ export class BackendTable<TSelection = defaultSelection>
     // noinspection JSIgnoredPromiseFromCall
     this.sendMessage(
       'GROUPING_CHANGE',
-      {groupings: groupings.map(grouping => ({columnName: this.findPascalCaseColumnName(grouping.columnName)}))},
+      {groupings},
       {grouping: groupings, customGrouping: this.state.grouping, customExpandedGroups: this.state.customExpandedGroups},
       {customGrouping: null, customExpandedGroups: null},
     );
@@ -504,7 +524,8 @@ export class BackendTable<TSelection = defaultSelection>
             groupSubtotalData,
             messageData.data,
             this.state.grouping.map(this.getGroupRowField),
-            '');
+            ''
+          );
         }
 
         this.setState({
@@ -552,7 +573,7 @@ export class BackendTable<TSelection = defaultSelection>
         'SORT_CHANGE',
         {
           sorts: sorting.map(sort => ({
-            columnName: this.findPascalCaseColumnName(sort.columnName),
+            columnName: sort.columnName,
             direction: sort.direction.toUpperCase(),
           })),
         },
@@ -565,7 +586,7 @@ export class BackendTable<TSelection = defaultSelection>
     return this.sendInitMessage(this.state.tableInfo, {
       data: [],
       expandedGroups: [],
-      filters: this.mapFilters(this.props.defaultFilters && wrapInArray(this.props.defaultFilters) || []),
+      filters: this.mapFilters(this.state.defaultFilters || []),
       groupSubtotalData: new Map<GroupKey, IGroupSubtotalData>(),
     });
   }
@@ -581,10 +602,7 @@ export class BackendTable<TSelection = defaultSelection>
         currentPage: 0
       };
       const sortedColumns = await getAllowedColumnInfos(tableInfo, getUser().roles);
-      let defaultFilters = this.mapFilters(
-        this.props.defaultFilters && wrapInArray(this.props.defaultFilters) || [],
-        true,
-      );
+      let defaultFilters = this.mapFilters(this.state.defaultFilters || [], true);
 
       if (!this.props.disableDeletedFilter && sortedColumns.find(column => column.columnName === DELETED_COLUMN)) {
         defaultFilters = [
@@ -614,14 +632,12 @@ export class BackendTable<TSelection = defaultSelection>
           sorting: sortedColumns
             .filter(columnInfo => columnInfo.defaultSorting)
             .map(columnInfo => ({
-              columnName: camelCase(columnInfo.columnName),
+              columnName: columnInfo.columnName,
               direction: columnInfo.defaultSorting as 'asc' | 'desc',
             })),
           grouping: sortedColumns
             .filter(columnInfo => columnInfo.defaultGrouping)
-            .map(columnInfo => ({
-              columnName: camelCase(columnInfo.columnName),
-            })),
+            .map(columnInfo => ({columnName: columnInfo.columnName,})),
           filters: defaultFilters,
           ...additionalState,
         });
@@ -732,12 +748,10 @@ export class BackendTable<TSelection = defaultSelection>
               (['firstColumnInfoId', 'secondColumnInfoId'] as Array<keyof IMetaSettingTableRowColorRowElement>)
                 .map(name => {
                   const column = setting[name] && cols.find(col => col.id === setting[name]);
-                  let columnCamelCaseName: string;
                   let baseTableColLayout;
 
                   if (column) {
-                    columnCamelCaseName = camelCase(column.columnName);
-                    baseTableColLayout = allowedCols.find(col => col.id === columnCamelCaseName);
+                    baseTableColLayout = allowedCols.find(col => col.id === column.columnName);
                   }
 
                   return {
