@@ -122,12 +122,11 @@ export class BackendTable<TSelection = defaultSelection>
   public constructor(props: any) {
     super(props);
     const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
-    const defaultFilters = (this.props.id && getFiltersFromUrlParam(this.props.id))
-      || (this.props.defaultFilters && wrapInArray(this.props.defaultFilters))
-      || undefined;
 
     this.state = {
-      defaultFilters: defaultFilters ? defaultFilters.map(this.normalizeColumnName) : undefined,
+      defaultFilters: (this.props.id && getFiltersFromUrlParam(this.props.id))
+        || (this.props.defaultFilters && wrapInArray(this.props.defaultFilters))
+        || undefined,
       filters: [],
       lastSendSelection: [],
       paginationEnabled,
@@ -172,10 +171,8 @@ export class BackendTable<TSelection = defaultSelection>
       const defaultFiltersChanged = !isEquals(this.props.defaultFilters, prevProps.defaultFilters);
 
       if (defaultFiltersChanged) {
-        const defaultFilters = this.props.defaultFilters && wrapInArray(this.props.defaultFilters) || undefined;
-
         this.setState(
-          {defaultFilters: defaultFilters ? defaultFilters.map(this.normalizeColumnName) : undefined},
+          {defaultFilters: this.props.defaultFilters && wrapInArray(this.props.defaultFilters) || undefined},
           () => this.reinit()
         );
       }
@@ -230,7 +227,7 @@ export class BackendTable<TSelection = defaultSelection>
         <BaseTable<TSelection>
           {...this.props}
           {...this.state}
-          defaultFilters={this.state.defaultFilters as any[]}
+          defaultFilters={undefined}
           cols={this.state.cols || []}
           rows={this.state.data}
           ref={this.baseTableRef}
