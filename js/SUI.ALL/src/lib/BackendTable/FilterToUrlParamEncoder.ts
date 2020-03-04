@@ -25,14 +25,21 @@ const FILTER_URL_PARAM = "filter";
 
 export function appendFiltersToLink(
   link: string,
-  tableId: string,
-  filter: OneOrArray<SimpleBackendFilter>
+  filters: {[tableId: string]: OneOrArray<SimpleBackendFilter>}
 ): string {
-  return generateLinkWithFilters(getHrefLocation(), tableId, filter);
+  const location = linkToLocation(link);
+
+  Object.keys(filters).forEach(tableId => putFiltersToLocation(location, tableId, filters[tableId]));
+
+  return locationToLink(location);
 }
 
 export function putFiltersToUrlParam(tableId: string, filter: OneOrArray<SimpleBackendFilter>): void {
-  getMetaInitProps().routerReplaceFn(generateLinkWithFilters(getHrefLocation(), tableId, filter));
+  const location = getHrefLocation();
+
+  putFiltersToLocation(location, tableId, filter);
+
+  getMetaInitProps().routerReplaceFn(locationToLink(location));
 }
 
 export function getFiltersFromUrlParam(tableId: string): SimpleBackendFilter[] | undefined {
@@ -43,13 +50,19 @@ export function getFiltersFromUrlParam(tableId: string): SimpleBackendFilter[] |
 
 // Private functions
 
-function getHrefLocation(): ISimpleLocation {
-  const href = window.location.href;
-
-  return splitLink(href.substring(href.indexOf("#") + 1));
+function encodeFilters(filters: IFilterSearchParam): string {
+  return btoa(pako.deflate(jsonpack.pack(filters), { to: 'string' }));
 }
 
-function splitLink(link: string): ISimpleLocation {
+function decodeFilters(filterString: string): IFilterSearchParam {
+  return jsonpack.unpack(pako.inflate(atob(filterString), { to: 'string' }));
+}
+
+function locationToLink(location: ISimpleLocation): string {
+  return `${location.pathname}?${location.searchParams.toString()}`;
+}
+
+function linkToLocation(link: string): ISimpleLocation {
   const stubUrl = new URL(`http://stub:9999${link}`);
 
   return {
@@ -58,22 +71,10 @@ function splitLink(link: string): ISimpleLocation {
   };
 }
 
-function generateLinkWithFilters(
-  location: ISimpleLocation,
-  tableId: string,
-  filter: OneOrArray<SimpleBackendFilter>
-): string {
-  const filters = getFilters(location.searchParams) || {};
+function getHrefLocation(): ISimpleLocation {
+  const href = window.location.href;
 
-  filters[tableId] = wrapInArray(filter).map(simpleFilter => {
-    delete simpleFilter.lazy;
-
-    return simpleFilter;
-  });
-
-  location.searchParams.set(FILTER_URL_PARAM, encodeFilters(filters));
-
-  return `${location.pathname}?${location.searchParams.toString()}`;
+  return linkToLocation(href.substring(href.indexOf("#") + 1));
 }
 
 function getFilters(
@@ -84,10 +85,18 @@ function getFilters(
   return filterParam ? decodeFilters(filterParam) : undefined;
 }
 
-function encodeFilters(filters: IFilterSearchParam): string {
-  return btoa(pako.deflate(jsonpack.pack(filters), { to: 'string' }));
-}
+function putFiltersToLocation(
+  location: ISimpleLocation,
+  tableId: string,
+  filter: OneOrArray<SimpleBackendFilter>
+): void {
+  const filters = getFilters(location.searchParams) || {};
 
-function decodeFilters(filterString: string): IFilterSearchParam {
-  return jsonpack.unpack(pako.inflate(atob(filterString), { to: 'string' }));
+  filters[tableId] = wrapInArray(filter).map(simpleFilter => {
+    delete simpleFilter.lazy;
+
+    return simpleFilter;
+  });
+
+  location.searchParams.set(FILTER_URL_PARAM, encodeFilters(filters));
 }
