@@ -360,7 +360,7 @@ export class BackendTable<TSelection = defaultSelection>
       const referencedTableInfo = TableInfoManager.directGetById(referencedColumnInfo.tableInfoId);
 
       if (referencedTableInfo.foreignLinkColumnInfoId && referencedColumnInfo.id !== referencedTableInfo.foreignLinkColumnInfoId) {
-        groupRowField = `${groupRowField}_name`;
+        groupRowField = `${groupRowField}__name`;
       }
     }
 
