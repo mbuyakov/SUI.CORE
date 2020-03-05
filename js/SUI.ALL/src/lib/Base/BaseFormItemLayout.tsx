@@ -33,10 +33,9 @@ export interface IBaseFormItemLayoutBase {
   title?: string | React.ReactNode;
   valuePropName?: string;
 
+  afterChange(value: any, form: BaseForm): void,
   getValueFromEvent?(...args: any[]): any;
-
   mapFormValuesToInputNodeProps?(get: ValuesGetter): IObjectWithIndex;
-
   mapFormValuesToRequired?(get: ValuesGetter): boolean;
 }
 
@@ -204,7 +203,13 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
   private onChange(e: any): void {
     // tslint:disable-next-line:variable-name
     const _getValueFromEvent = this.props.getValueFromEvent || getValueFromEvent;
-    this.formField.value.setValue(_getValueFromEvent(e));
+    const value = _getValueFromEvent(e);
+
+    this.formField.value.setValue(value);
+
+    if (this.props.afterChange) {
+      this.props.afterChange(value, this.baseForm);
+    }
   }
 
   @autobind
