@@ -52,7 +52,7 @@ export function appendFiltersToLink(
   Object.keys(filters).forEach(tableId => putFiltersToLocation(location, tableId, filters[tableId]));
 
   if (mergeFlag) {
-    location.searchParams.set(MERGE_URL_PARAM, "");
+    location.searchParams.set(MERGE_URL_PARAM, "true");
   }
 
   return locationToLink(location);
