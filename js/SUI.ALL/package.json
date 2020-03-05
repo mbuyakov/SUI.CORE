@@ -15,7 +15,7 @@
     "build": "rimraf dist && yarn build:types && yarn build:js",
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "babel src/lib --out-dir dist --extensions \".ts,.tsx\" --source-maps inline",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "NODE_OPTIONS=--max_old_space_size=4096 start-storybook -p 6006",
     "ci": "yarn lint && yarn build",
     "build-storybook": "build-storybook"
   },
