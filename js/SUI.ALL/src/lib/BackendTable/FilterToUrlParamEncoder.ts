@@ -1,18 +1,12 @@
 import jsonpack from "jsonpack";
 import pako from "pako";
 
-import {defaultIfNotBoolean, OneOrArray, wrapInArray} from "../typeWrappers";
+import {OneOrArray, wrapInArray} from "../typeWrappers";
 import {getMetaInitProps} from "../utils";
 
 import {SimpleBackendFilter} from "./BackendTable";
 
 // Interfaces
-
-export interface IAddedFilter {
-  filter: OneOrArray<SimpleBackendFilter>;
-  merge?: boolean;
-  tableId: string
-}
 
 interface ISimpleLocation {
   pathname: string;
@@ -25,22 +19,41 @@ interface IFilterSearchParam {
 
 // Consts
 
+export const MERGE_URL_PARAM = "merge";
 const FILTER_URL_PARAM = "filter";
 
 // Public functions
 
+export function getHrefLocation(): ISimpleLocation {
+  const href = window.location.href;
+
+  return linkToLocation(href.substring(href.indexOf("#") + 1));
+}
+
+export function mergeFilters(
+  oldFilters?: OneOrArray<SimpleBackendFilter>,
+  newFilters?: OneOrArray<SimpleBackendFilter>
+): SimpleBackendFilter[] {
+  const newFiltersArray = wrapInArray(newFilters || []);
+  const oldFiltersArray = wrapInArray(oldFilters || []);
+
+  return oldFiltersArray
+    .filter(oldFilter => !newFiltersArray.some(newFilter => newFilter.columnName === oldFilter.columnName))
+    .concat(newFiltersArray);
+}
+
 export function appendFiltersToLink(
   link: string,
-  filters: IAddedFilter[],
+  filters: {[tableId: string]: OneOrArray<SimpleBackendFilter>},
+  mergeFlag: boolean
 ): string {
   const location = linkToLocation(link);
 
-  filters.forEach(element => putFiltersToLocation(
-    location,
-    element.tableId,
-    element.filter,
-    defaultIfNotBoolean(element.merge, true)
-  ));
+  Object.keys(filters).forEach(tableId => putFiltersToLocation(location, tableId, filters[tableId]));
+
+  if (mergeFlag) {
+    location.searchParams.set(MERGE_URL_PARAM, "");
+  }
 
   return locationToLink(location);
 }
@@ -86,12 +99,6 @@ function linkToLocation(link: string): ISimpleLocation {
   };
 }
 
-function getHrefLocation(): ISimpleLocation {
-  const href = window.location.href;
-
-  return linkToLocation(href.substring(href.indexOf("#") + 1));
-}
-
 function getFilters(
   searchParams: URLSearchParams = getHrefLocation().searchParams
 ): IFilterSearchParam | undefined {
@@ -115,9 +122,7 @@ function putFiltersToLocation(
   });
 
   if (merge) {
-    const oldSavedFilters = (urlFilters[tableId] || []).filter(urlFilter => !formattedNewFilters.some(newFilter => newFilter.columnName === urlFilter.columnName));
-
-    formattedNewFilters = oldSavedFilters.concat(formattedNewFilters);
+    formattedNewFilters = mergeFilters(urlFilters[tableId], formattedNewFilters);
   }
 
   urlFilters[tableId] = formattedNewFilters;

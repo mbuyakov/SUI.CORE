@@ -6,7 +6,7 @@ import moment from "moment";
 import * as React from 'react';
 import uuid from 'uuid';
 
-import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFiltersFromUrlParam, getFilterType, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, putFiltersToUrlParam, RefreshMetaTablePlugin, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
+import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFiltersFromUrlParam, getFilterType, getHrefLocation, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, MERGE_URL_PARAM, mergeFilters, putFiltersToUrlParam, RefreshMetaTablePlugin, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
@@ -123,10 +123,22 @@ export class BackendTable<TSelection = defaultSelection>
     super(props);
     const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
 
+    let defaultFilters = (this.props.defaultFilters && wrapInArray(this.props.defaultFilters)) || undefined;
+
+    if (this.props.id) {
+      const urlFilters = getFiltersFromUrlParam(this.props.id);
+
+      if (urlFilters) {
+        const shouldMergeFilters = getHrefLocation().searchParams.has(MERGE_URL_PARAM);
+
+        defaultFilters = shouldMergeFilters
+          ? mergeFilters(defaultFilters, urlFilters)
+          : urlFilters
+      }
+    }
+
     this.state = {
-      defaultFilters: (this.props.id && getFiltersFromUrlParam(this.props.id))
-        || (this.props.defaultFilters && wrapInArray(this.props.defaultFilters))
-        || undefined,
+      defaultFilters,
       filters: [],
       lastSendSelection: [],
       paginationEnabled,

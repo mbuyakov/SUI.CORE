@@ -2,8 +2,9 @@ import Button, {ButtonType} from 'antd/lib/button/button';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 
-import {appendFiltersToLink, IAddedFilter} from "../BackendTable";
+import {appendFiltersToLink, SimpleBackendFilter} from "../BackendTable";
 import { ROUTER_LINK_BTN } from '../styles';
+import {defaultIfNotBoolean, OneOrArray} from "../typeWrappers";
 
 export type RouterLinkType = 'button' | 'button-primary' | 'link';
 
@@ -13,7 +14,8 @@ export interface IRouterLinkProps {
   ghost?: boolean; // only for button type
   monospace?: boolean;
   style?: React.CSSProperties;
-  tableFilters?: IAddedFilter[];
+  tableFilters?: {[tableId: string]: OneOrArray<SimpleBackendFilter>};
+  tableFiltersMerge?: boolean,
   text: string | JSX.Element;
   to: string;
   type?: RouterLinkType;
@@ -26,7 +28,7 @@ export class RouterLink extends React.Component<IRouterLinkProps> {
       <Link
         style={{...(this.props.monospace ? {fontFamily: 'monospace'} : {}), ...(this.props.style || {})}}
         to={this.props.tableFilters
-          ? appendFiltersToLink(this.props.to, this.props.tableFilters)
+          ? appendFiltersToLink(this.props.to, this.props.tableFilters, defaultIfNotBoolean(this.props.tableFiltersMerge, true))
           : this.props.to
         }
       >
@@ -41,7 +43,8 @@ export class RouterLink extends React.Component<IRouterLinkProps> {
           >
             {this.props.text}
           </Button>
-          : this.props.text}
+          : this.props.text
+        }
       </Link>
     );
   }
