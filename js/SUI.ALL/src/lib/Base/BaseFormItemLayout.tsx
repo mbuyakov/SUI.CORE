@@ -33,7 +33,7 @@ export interface IBaseFormItemLayoutBase {
   title?: string | React.ReactNode;
   valuePropName?: string;
 
-  afterChange(value: any, form: BaseForm): void,
+  afterChange?(value: any, form: BaseForm): void,
   getValueFromEvent?(...args: any[]): any;
   mapFormValuesToInputNodeProps?(get: ValuesGetter): IObjectWithIndex;
   mapFormValuesToRequired?(get: ValuesGetter): boolean;
