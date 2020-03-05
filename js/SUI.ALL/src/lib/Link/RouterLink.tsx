@@ -2,9 +2,8 @@ import Button, {ButtonType} from 'antd/lib/button/button';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 
-import {appendFiltersToLink, SimpleBackendFilter} from "../BackendTable";
+import {appendFiltersToLink, IAddedFilter} from "../BackendTable";
 import { ROUTER_LINK_BTN } from '../styles';
-import {OneOrArray} from "../typeWrappers";
 
 export type RouterLinkType = 'button' | 'button-primary' | 'link';
 
@@ -14,7 +13,7 @@ export interface IRouterLinkProps {
   ghost?: boolean; // only for button type
   monospace?: boolean;
   style?: React.CSSProperties;
-  tableFilters?: {[tableId: string]: OneOrArray<SimpleBackendFilter>}
+  tableFilters?: IAddedFilter[];
   text: string | JSX.Element;
   to: string;
   type?: RouterLinkType;

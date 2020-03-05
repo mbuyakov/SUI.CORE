@@ -1,12 +1,18 @@
 import jsonpack from "jsonpack";
 import pako from "pako";
 
-import {OneOrArray, wrapInArray} from "../typeWrappers";
+import {defaultIfNotBoolean, OneOrArray, wrapInArray} from "../typeWrappers";
 import {getMetaInitProps} from "../utils";
 
 import {SimpleBackendFilter} from "./BackendTable";
 
 // Interfaces
+
+export interface IAddedFilter {
+  filter: OneOrArray<SimpleBackendFilter>;
+  merge?: boolean;
+  tableId: string
+}
 
 interface ISimpleLocation {
   pathname: string;
@@ -25,19 +31,28 @@ const FILTER_URL_PARAM = "filter";
 
 export function appendFiltersToLink(
   link: string,
-  filters: {[tableId: string]: OneOrArray<SimpleBackendFilter>}
+  filters: IAddedFilter[],
 ): string {
   const location = linkToLocation(link);
 
-  Object.keys(filters).forEach(tableId => putFiltersToLocation(location, tableId, filters[tableId]));
+  filters.forEach(element => putFiltersToLocation(
+    location,
+    element.tableId,
+    element.filter,
+    defaultIfNotBoolean(element.merge, true)
+  ));
 
   return locationToLink(location);
 }
 
-export function putFiltersToUrlParam(tableId: string, filter: OneOrArray<SimpleBackendFilter>): void {
+export function putFiltersToUrlParam(
+  tableId: string,
+  filter: OneOrArray<SimpleBackendFilter>,
+  merge: boolean = false
+): void {
   const location = getHrefLocation();
 
-  putFiltersToLocation(location, tableId, filter);
+  putFiltersToLocation(location, tableId, filter, merge);
 
   getMetaInitProps().routerReplaceFn(locationToLink(location));
 }
@@ -88,15 +103,24 @@ function getFilters(
 function putFiltersToLocation(
   location: ISimpleLocation,
   tableId: string,
-  filter: OneOrArray<SimpleBackendFilter>
+  filters: OneOrArray<SimpleBackendFilter>,
+  merge: boolean = false
 ): void {
-  const filters = getFilters(location.searchParams) || {};
+  const urlFilters = getFilters(location.searchParams) || {};
 
-  filters[tableId] = wrapInArray(filter).map(simpleFilter => {
+  let formattedNewFilters = wrapInArray(filters).map(simpleFilter => {
     delete simpleFilter.lazy;
 
     return simpleFilter;
   });
 
-  location.searchParams.set(FILTER_URL_PARAM, encodeFilters(filters));
+  if (merge) {
+    const oldSavedFilters = (urlFilters[tableId] || []).filter(urlFilter => !formattedNewFilters.some(newFilter => newFilter.columnName === urlFilter.columnName));
+
+    formattedNewFilters = oldSavedFilters.concat(formattedNewFilters);
+  }
+
+  urlFilters[tableId] = formattedNewFilters;
+
+  location.searchParams.set(FILTER_URL_PARAM, encodeFilters(urlFilters));
 }
