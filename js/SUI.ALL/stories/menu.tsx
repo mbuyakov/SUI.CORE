@@ -29,11 +29,11 @@ export default class LeftMenu extends React.Component<{}> {
               background: #202020;
             }
             .SUI_LEFT_MENU .ant-menu.ant-menu-dark .ant-menu-item-selected {
-              background-color: #FCF69B;
+              background-color: #FBD379;
               color: #000 !important;
             }
             .SUI_LEFT_MENU_SUB .ant-menu.ant-menu-dark .ant-menu-item-selected {
-              background-color: #FCF69B;
+              background-color: #FBD379;
               color: #000 !important;
             }
             .SUI_LEFT_MENU .ant-menu-dark .ant-menu-inline.ant-menu-sub {
