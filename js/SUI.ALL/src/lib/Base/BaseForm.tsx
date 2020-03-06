@@ -87,8 +87,6 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   }
 
   public componentDidMount(): void {
-    this.customFieldValuesUpdater();
-
     let formParsedValue;
     if (this.props.initialValues) {
       formParsedValue = this.props.initialValues;
@@ -108,6 +106,8 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
         console.log('Saved value cleared');
       }
     }
+
+    this.customFieldValuesUpdater();
 
     // To disabled submit button at the beginning
     // tslint:disable-next-line:no-floating-promises
