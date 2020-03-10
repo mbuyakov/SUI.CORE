@@ -4,9 +4,19 @@ import pako from "pako";
 import {OneOrArray, wrapInArray} from "../typeWrappers";
 import {getMetaInitProps} from "../utils";
 
-import {SimpleBackendFilter} from "./BackendTable";
+import {BackendFilter, SimpleBackendFilter} from "./BackendTable";
 
 // Interfaces
+
+export interface IOneOrArrayFilterDefinition {
+  defaultFilter: OneOrArray<SimpleBackendFilter>,
+  filter?: OneOrArray<BackendFilter>
+}
+
+export interface IArrayFilterDefinition {
+  defaultFilter: SimpleBackendFilter[],
+  filter?: BackendFilter[]
+}
 
 interface ISimpleLocation {
   pathname: string;
@@ -14,7 +24,7 @@ interface ISimpleLocation {
 }
 
 interface IFilterSearchParam {
-  [tableId: string]: SimpleBackendFilter[];
+  [tableId: string]: IArrayFilterDefinition;
 }
 
 // Consts
@@ -30,7 +40,7 @@ export function getHrefLocation(): ISimpleLocation {
   return linkToLocation(href.substring(href.indexOf("#") + 1));
 }
 
-export function mergeFilters(
+export function mergeDefaultFilters(
   oldFilters?: OneOrArray<SimpleBackendFilter>,
   newFilters?: OneOrArray<SimpleBackendFilter>
 ): SimpleBackendFilter[] {
@@ -44,7 +54,7 @@ export function mergeFilters(
 
 export function appendFiltersToLink(
   link: string,
-  filters: {[tableId: string]: OneOrArray<SimpleBackendFilter>},
+  filters: { [tableId: string]: IOneOrArrayFilterDefinition },
   mergeFlag: boolean
 ): string {
   const location = linkToLocation(link);
@@ -60,7 +70,7 @@ export function appendFiltersToLink(
 
 export function putFiltersToUrlParam(
   tableId: string,
-  filter: OneOrArray<SimpleBackendFilter>,
+  filter: IOneOrArrayFilterDefinition,
   merge: boolean = false
 ): void {
   const location = getHrefLocation();
@@ -70,7 +80,7 @@ export function putFiltersToUrlParam(
   getMetaInitProps().routerReplaceFn(locationToLink(location));
 }
 
-export function getFiltersFromUrlParam(tableId: string): SimpleBackendFilter[] | undefined {
+export function getFiltersFromUrlParam(tableId: string): IArrayFilterDefinition | undefined {
   const filters = getFilters();
 
   return filters && filters[tableId] || undefined;
@@ -79,11 +89,11 @@ export function getFiltersFromUrlParam(tableId: string): SimpleBackendFilter[] |
 // Private functions
 
 function encodeFilters(filters: IFilterSearchParam): string {
-  return btoa(pako.deflate(jsonpack.pack(filters), { to: 'string' }));
+  return btoa(pako.deflate(jsonpack.pack(filters), {to: 'string'}));
 }
 
 function decodeFilters(filterString: string): IFilterSearchParam {
-  return jsonpack.unpack(pako.inflate(atob(filterString), { to: 'string' }));
+  return jsonpack.unpack(pako.inflate(atob(filterString), {to: 'string'}));
 }
 
 function locationToLink(location: ISimpleLocation): string {
@@ -110,22 +120,28 @@ function getFilters(
 function putFiltersToLocation(
   location: ISimpleLocation,
   tableId: string,
-  filters: OneOrArray<SimpleBackendFilter>,
+  filters: IOneOrArrayFilterDefinition,
   merge: boolean = false
 ): void {
-  const urlFilters = getFilters(location.searchParams) || {};
+  const urlFilterDefinition: IFilterSearchParam = getFilters(location.searchParams) || {};
+  const tableFilters: Partial<IArrayFilterDefinition> = urlFilterDefinition[tableId] || {};
 
-  let formattedNewFilters = wrapInArray(filters).map(simpleFilter => {
+  const formattedNewDefaultFilters = wrapInArray(filters.defaultFilter).map(simpleFilter => {
     delete simpleFilter.lazy;
 
     return simpleFilter;
   });
+  const formattedNewFilters = wrapInArray(filters.filter);
 
-  if (merge) {
-    formattedNewFilters = mergeFilters(urlFilters[tableId], formattedNewFilters);
-  }
+  urlFilterDefinition[tableId] = {
+    defaultFilter: merge
+      ? mergeDefaultFilters(tableFilters.defaultFilter, formattedNewDefaultFilters)
+      : formattedNewDefaultFilters,
+    filter: formattedNewFilters
+    // filter: merge
+    //   ? (tableFilters.filter || formattedNewFilters ? (tableFilters.filter || []).concat(formattedNewFilters || []) : undefined)
+    //   : formattedNewFilters
+  };
 
-  urlFilters[tableId] = formattedNewFilters;
-
-  location.searchParams.set(FILTER_URL_PARAM, encodeFilters(urlFilters));
+  location.searchParams.set(FILTER_URL_PARAM, encodeFilters(urlFilterDefinition));
 }

@@ -6,7 +6,7 @@ import moment from "moment";
 import * as React from 'react';
 import uuid from 'uuid';
 
-import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFiltersFromUrlParam, getFilterType, getHrefLocation, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, MERGE_URL_PARAM, mergeFilters, putFiltersToUrlParam, RefreshMetaTablePlugin, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
+import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFiltersFromUrlParam, getFilterType, getHrefLocation, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, MERGE_URL_PARAM, mergeDefaultFilters, putFiltersToUrlParam, RefreshMetaTablePlugin, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
@@ -56,7 +56,7 @@ export type ICustomFilterProps = Omit<TableFilterRow.CellProps, 'filter' | 'onFi
 };
 
 export interface IBackendTableProps {
-  defaultFilters?: SimpleBackendFilter | SimpleBackendFilter[];
+  defaultFilter?: SimpleBackendFilter | SimpleBackendFilter[];
   disableDeletedFilter?: boolean;
   filter?: BackendFilter | BackendFilter[];
   id?: string;
@@ -77,8 +77,9 @@ type IBackendTableState<T> = {
   cols?: IBaseTableColLayout[];
   // tslint:disable-next-line:no-any
   data?: any[];
-  defaultFilters?: SimpleBackendFilter[];
+  defaultFilter?: SimpleBackendFilter[];
   error?: string;
+  filter?: BackendFilter[];
   lastSendSelection?: T[];
   loading?: boolean;
   pageSize?: number;
@@ -123,7 +124,8 @@ export class BackendTable<TSelection = defaultSelection>
     super(props);
     const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
 
-    let defaultFilters = (this.props.defaultFilters && wrapInArray(this.props.defaultFilters)) || undefined;
+    let defaultFilter = (this.props.defaultFilter && wrapInArray(this.props.defaultFilter)) || undefined;
+    let filter = (this.props.filter && wrapInArray(this.props.filter)) || undefined;
 
     if (this.props.id) {
       const urlFilters = getFiltersFromUrlParam(this.props.id);
@@ -131,14 +133,19 @@ export class BackendTable<TSelection = defaultSelection>
       if (urlFilters) {
         const shouldMergeFilters = getHrefLocation().searchParams.has(MERGE_URL_PARAM);
 
-        defaultFilters = shouldMergeFilters
-          ? mergeFilters(defaultFilters, urlFilters)
-          : urlFilters
+        defaultFilter = shouldMergeFilters
+          ? mergeDefaultFilters(defaultFilter, urlFilters.defaultFilter)
+          : urlFilters.defaultFilter;
+
+        filter = shouldMergeFilters
+          ? (urlFilters.filter || filter ? (urlFilters.filter || []).concat(filter || []) : undefined)
+          : urlFilters.filter;
       }
     }
 
     this.state = {
-      defaultFilters,
+      defaultFilter,
+      filter,
       filters: [],
       lastSendSelection: [],
       paginationEnabled,
@@ -167,27 +174,30 @@ export class BackendTable<TSelection = defaultSelection>
     this.setInnerRefValue(this);
   }
 
-  public async componentDidUpdate(prevProps: IBackendTableProps): Promise<void> {
+  public componentDidUpdate(prevProps: IBackendTableProps): void {
     if (this.props.watchFilters) {
       // tslint:disable-next-line:ban-ts-ignore
       // @ts-ignore
       const isEquals = (first, second): boolean => JSON.stringify(first) === JSON.stringify(second);
 
-      const filtersChanged = !isEquals(this.props.filter, prevProps.filter);
-
-      if (filtersChanged) {
-        await this.reinit();
-      }
+      const newState: Partial<IBackendTableState<TSelection>> = {};
 
       // Опасно: можно потерять фильтры из URL
-      const defaultFiltersChanged = !isEquals(this.props.defaultFilters, prevProps.defaultFilters);
+      const filterChanged = !isEquals(this.props.filter, prevProps.filter);
+      const defaultFilterChanged = !isEquals(this.props.defaultFilter, prevProps.defaultFilter);
 
-      if (defaultFiltersChanged) {
-        this.setState(
-          {defaultFilters: this.props.defaultFilters && wrapInArray(this.props.defaultFilters) || undefined},
-          () => this.reinit()
-        );
+      if (filterChanged) {
+        newState.filter = this.props.filter && wrapInArray(this.props.filter) || undefined;
       }
+      if (defaultFilterChanged) {
+        newState.defaultFilter = this.props.defaultFilter && wrapInArray(this.props.defaultFilter) || undefined;
+      }
+
+      this.setState(newState, async () => {
+        if (filterChanged || defaultFilterChanged) {
+          await this.reinit();
+        }
+      });
     }
   }
 
@@ -497,7 +507,7 @@ export class BackendTable<TSelection = defaultSelection>
 
     if (newFilters.some(filter => !filter.lazy)) {
       if (this.props.id) {
-        putFiltersToUrlParam(this.props.id, filters);
+        putFiltersToUrlParam(this.props.id, {defaultFilter: filters});
       }
 
       // noinspection JSIgnoredPromiseFromCall
@@ -609,7 +619,7 @@ export class BackendTable<TSelection = defaultSelection>
     return this.sendInitMessage(this.state.tableInfo, {
       data: [],
       expandedGroups: [],
-      filters: this.mapFilters(this.state.defaultFilters || []),
+      filters: this.mapFilters(this.state.defaultFilter || []),
       groupSubtotalData: new Map<GroupKey, IGroupSubtotalData>(),
     });
   }
@@ -625,11 +635,11 @@ export class BackendTable<TSelection = defaultSelection>
         currentPage: 0
       };
       const sortedColumns = await getAllowedColumnInfos(tableInfo, getUser().roles);
-      let defaultFilters = this.mapFilters(this.state.defaultFilters || [], true);
+      let defaultFilter = this.mapFilters(this.state.defaultFilter || [], true);
 
       if (!this.props.disableDeletedFilter && sortedColumns.find(column => column.columnName === DELETED_COLUMN)) {
-        defaultFilters = [
-          ...defaultFilters,
+        defaultFilter = [
+          ...defaultFilter,
           {
             columnName: DELETED_COLUMN,
             value: "false",
@@ -644,9 +654,9 @@ export class BackendTable<TSelection = defaultSelection>
         {
           ...content,
           tableInfoId: tableInfo.id,
-          defaultFilters,
+          defaultFilter,
           globalFilters: this.mapFilters(
-            this.props.filter && wrapInArray(this.props.filter) || [],
+            this.state.filter && wrapInArray(this.state.filter) || [],
             true,
           ),
         },
@@ -661,7 +671,7 @@ export class BackendTable<TSelection = defaultSelection>
           grouping: sortedColumns
             .filter(columnInfo => columnInfo.defaultGrouping)
             .map(columnInfo => ({columnName: columnInfo.columnName,})),
-          filters: defaultFilters,
+          filters: defaultFilter,
           ...additionalState,
         });
     }
