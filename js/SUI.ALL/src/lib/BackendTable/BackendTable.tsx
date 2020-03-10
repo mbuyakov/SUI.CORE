@@ -505,7 +505,7 @@ export class BackendTable<TSelection = defaultSelection>
     const stateFiltersAsString = (this.state.filters || []).map(filter => JSON.stringify(filter));
     const newFilters = filters.filter(filter => !stateFiltersAsString.includes(JSON.stringify(filter)));
 
-    if (newFilters.some(filter => !filter.lazy)) {
+    if (filters.length < stateFiltersAsString.length || newFilters.some(filter => !filter.lazy)) {
       if (this.props.id) {
         putFiltersToUrlParam(this.props.id, {defaultFilter: filters});
       }
