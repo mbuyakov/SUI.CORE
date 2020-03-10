@@ -9,12 +9,12 @@ import {BackendFilter, SimpleBackendFilter} from "./BackendTable";
 // Interfaces
 
 export interface IOneOrArrayFilterDefinition {
-  defaultFilter: OneOrArray<SimpleBackendFilter>,
+  defaultFilter?: OneOrArray<SimpleBackendFilter>,
   filter?: OneOrArray<BackendFilter>
 }
 
 export interface IArrayFilterDefinition {
-  defaultFilter: SimpleBackendFilter[],
+  defaultFilter?: SimpleBackendFilter[],
   filter?: BackendFilter[]
 }
 
@@ -126,21 +126,20 @@ function putFiltersToLocation(
   const urlFilterDefinition: IFilterSearchParam = getFilters(location.searchParams) || {};
   const tableFilters: Partial<IArrayFilterDefinition> = urlFilterDefinition[tableId] || {};
 
-  const formattedNewDefaultFilters = wrapInArray(filters.defaultFilter).map(simpleFilter => {
+  const formattedNewDefaultFilters = filters.defaultFilter && wrapInArray(filters.defaultFilter).map(simpleFilter => {
     delete simpleFilter.lazy;
 
     return simpleFilter;
   });
-  const formattedNewFilters = wrapInArray(filters.filter);
+  const formattedNewFilters = filters.filter && wrapInArray(filters.filter);
 
   urlFilterDefinition[tableId] = {
     defaultFilter: merge
       ? mergeDefaultFilters(tableFilters.defaultFilter, formattedNewDefaultFilters)
       : formattedNewDefaultFilters,
-    filter: formattedNewFilters
-    // filter: merge
-    //   ? (tableFilters.filter || formattedNewFilters ? (tableFilters.filter || []).concat(formattedNewFilters || []) : undefined)
-    //   : formattedNewFilters
+    filter: merge
+      ? (tableFilters.filter || formattedNewFilters ? (tableFilters.filter || []).concat(formattedNewFilters || []) : undefined)
+      : formattedNewFilters
   };
 
   location.searchParams.set(FILTER_URL_PARAM, encodeFilters(urlFilterDefinition));

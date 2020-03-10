@@ -654,7 +654,7 @@ export class BackendTable<TSelection = defaultSelection>
         {
           ...content,
           tableInfoId: tableInfo.id,
-          defaultFilter,
+          defaultFilters: defaultFilter,
           globalFilters: this.mapFilters(
             this.state.filter && wrapInArray(this.state.filter) || [],
             true,

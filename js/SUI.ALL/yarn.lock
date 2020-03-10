@@ -1149,7 +1149,7 @@
     "@devexpress/dx-core" "2.4.0"
     prop-types "^15.7.2"
 
-"@devexpress/dx-react-grid-material-ui@^2.4.0":
+"@devexpress/dx-react-grid-material-ui@2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@devexpress/dx-react-grid-material-ui/-/dx-react-grid-material-ui-2.4.0.tgz#71c94aeca4ffed355e2c2f097303237545faab16"
   integrity sha512-Jepr0Abh8LrZykagrSD4S4GJ3Zs0ADAy6dBs+f6Sh6Bnlgr6pzE4J2AxOsYYIfcaKL6IWd0XkKAmUBLF12sJ9w==
@@ -2359,7 +2359,7 @@ antd-mask-input@^0.1.12:
   resolved "https://registry.yarnpkg.com/antd-mask-input/-/antd-mask-input-0.1.12.tgz#8b75b1cdd4edacf52f76e9d7bf4ae0efa4558ebf"
   integrity sha512-pUR5Q5JSlQfwAGHiTdTUYUx3kHGH9F6sufPuSdi7UpUQhjLasOHZxyyKvGElrX/Li4EI40SpW5Ec9TPA9CQKzQ==
 
-antd@^4.0.0, antd@^4.0.0-alpha.9:
+antd@4.0.0, antd@^4.0.0-alpha.9:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/antd/-/antd-4.0.0.tgz#1566ee4a4c9ff5deb446cc3ce7604d4495fd2d38"
   integrity sha512-sfaxNqqtaGg+5JWucSPM0Nr3eBh5gUBlmsH5RqdtpcP5qTM2NOxcmhx3I8KlSs5O39jAZ6nRVmjubjpw3GS5oQ==

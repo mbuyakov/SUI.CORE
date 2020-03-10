@@ -1,5 +1,4 @@
 import {Select} from "antd";
-import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
 import { IBaseTableColLayout } from '../../BaseTable';
@@ -47,11 +46,11 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
           to={link.replace(
             ':id',
             customColumnInfo
-              ? row[camelCase(customColumnInfo.columnName)]
+              ? row[customColumnInfo.columnName]
               : props.isLinkCol
               ? row.id
               : result.dataKey
-                ? row[camelCase(props.columnInfo.columnName)]
+                ? row[props.columnInfo.columnName]
                 : value,
           )}
           text={value}

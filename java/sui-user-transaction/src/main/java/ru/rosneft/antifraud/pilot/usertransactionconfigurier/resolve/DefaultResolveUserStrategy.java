@@ -28,7 +28,11 @@ public class DefaultResolveUserStrategy implements ResolveUserStrategy {
     private <T> T getFieldValue(Object object, String fieldName, Class<T> tClass) {
       return Optional
         .ofNullable(ReflectionUtils.findField(object.getClass(), fieldName))
-        .map(field -> (T) ReflectionUtils.getField(field, object))
+        .map(field -> {
+          field.setAccessible(true);
+
+          return (T) ReflectionUtils.getField(field, object);
+        })
         .orElse(null);
     }
 
