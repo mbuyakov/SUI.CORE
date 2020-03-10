@@ -123,7 +123,7 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
         fitToCardBody={(parent === 'card' || (parent === 'tab' && firstChildrenIsTab)) && rowIndex === 0 && rowsLength === 1}
         fitToCollapseBody={parent === 'collapse' && rowIndex === 0 && rowsLength === 1}
         filter={JSON.parse(mapFilters(row.metaTableProps.globalFilter as string, sourceItem))}
-        defaultFilters={JSON.parse(mapFilters(row.metaTableProps.filter as string, sourceItem))}
+        defaultFilter={JSON.parse(mapFilters(row.metaTableProps.filter as string, sourceItem))}
       />
     );
   }
