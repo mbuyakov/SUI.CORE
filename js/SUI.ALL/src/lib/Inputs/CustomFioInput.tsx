@@ -12,7 +12,7 @@ function convertValue(value?: string): string | null | undefined {
 
 export type CustomFioInputProps = InputProps & {}
 
-export default class CustomFioInput extends React.Component<CustomFioInputProps> {
+export class CustomFioInput extends React.Component<CustomFioInputProps> {
 
   public componentDidUpdate(): void {
     const value = this.props.value && convertValue(this.props.value as string);
