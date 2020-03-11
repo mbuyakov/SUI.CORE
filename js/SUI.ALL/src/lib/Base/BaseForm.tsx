@@ -34,18 +34,19 @@ export interface IBaseFormChildrenProps {
 export type BaseFormChildrenFn = React.FunctionComponent<IBaseFormChildrenProps>;
 
 export type IBaseFormProps = Omit<IBaseCardProps<any>, 'item' | 'rows' | 'forceRenderTabs'> & {
-  children?: BaseFormChildrenFn
-  customFinalInputNodesProps?: IObjectWithIndex
-  customInputNodesProps?: IObjectWithIndex
+  children?: BaseFormChildrenFn;
+  customFinalInputNodesProps?: IObjectWithIndex;
+  customInputNodesProps?: IObjectWithIndex;
   // tslint:disable-next-line:no-any
-  initialValues?: IObjectWithIndex
-  rows: OneOrArrayWithNulls<IBaseFormRowLayout<any>>
-  uuid: string
-  verticalLabel?: boolean
+  initialValues?: IObjectWithIndex;
+  rows: OneOrArrayWithNulls<IBaseFormRowLayout<any>>;
+  uuid: string;
+  verticalLabel?: boolean;
   // tslint:disable-next-line:no-any
-  customFieldValues?(get: ValuesGetter): IObjectWithIndex
+  customFieldValues?(get: ValuesGetter): IObjectWithIndex;
+  onInitialized?(form: BaseForm): void;
   // tslint:disable-next-line:no-any
-  onSubmit(fields: any): Promise<boolean>
+  onSubmit(fields: any): Promise<boolean>;
 }
 
 export interface IFormField {
@@ -108,6 +109,10 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
     }
 
     this.customFieldValuesUpdater();
+
+    if (this.props.onInitialized) {
+      this.props.onInitialized(this);
+    }
 
     // To disabled submit button at the beginning
     // tslint:disable-next-line:no-floating-promises
