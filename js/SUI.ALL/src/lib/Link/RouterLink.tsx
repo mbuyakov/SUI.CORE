@@ -17,7 +17,7 @@ export interface IRouterLinkProps {
   style?: React.CSSProperties;
   tableFilters?: {[tableId: string]: IOneOrArrayFilterDefinition};
   tableFiltersMerge?: boolean,
-  text: string | JSX.Element;
+  text?: React.ReactNode;
   to: string;
   type?: RouterLinkType;
 }
