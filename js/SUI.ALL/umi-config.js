@@ -30,6 +30,13 @@ module.exports =  {
     theme: {
       'layout-header-height': '48px',
       'card-padding-wider': '24px',
+      "primary-color": "#56CBF8",
+      "error-color": "#FF6565",
+      "border-radius-base": "8px",
+      "btn-border-radius-sm": "6px",
+      "btn-border-width": "2px",
+      "font-size-base": "15px",
+      "btn-font-size-sm": "12px" //@font-size-sm
     },
     treeShaking: true,
     history: 'hash',
