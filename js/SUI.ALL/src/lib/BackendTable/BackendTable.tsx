@@ -1,26 +1,26 @@
 /* tslint:disable:object-literal-sort-keys no-any unnecessary-else newline-before-return prefer-function-over-method no-floating-promises prefer-readonly promise-function-async*/
-import {Filter, Grouping, GroupKey, Sorting, TableFilterRow} from '@devexpress/dx-react-grid';
+import { Filter, Grouping, GroupKey, Sorting, TableFilterRow } from '@devexpress/dx-react-grid';
 import autobind from 'autobind-decorator';
 import difference from 'lodash/difference';
-import moment from "moment";
+import moment from 'moment';
 import * as React from 'react';
 import uuid from 'uuid';
 
-import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFiltersFromUrlParam, getFilterType, getHrefLocation, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, MERGE_URL_PARAM, mergeDefaultFilters, putFiltersToUrlParam, RefreshMetaTablePlugin, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
-import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
+import { asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFiltersFromUrlParam, getFilterType, getHrefLocation, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, MERGE_URL_PARAM, mergeDefaultFilters, putFiltersToUrlParam, RefreshMetaTablePlugin, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray } from '../index';
+import { ClearFiltersPlugin } from '../plugins/ClearFiltersPlugin';
 
-import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
-import {RestBackendDataSource} from "./RestBackendDataSource";
-import {WsBackendDataSource} from "./WsBackendDataSource";
+import { BackendDataSource, MESSAGE_ID_KEY } from './BackendDataSource';
+import { RestBackendDataSource } from './RestBackendDataSource';
+import { WsBackendDataSource } from './WsBackendDataSource';
 
 const IGNORE_WS_ACTUALITY_HOURS = 3;
-const LOCAL_STORAGE_IGNORE_WS_KEY = "__SUI_BACKEND_IGNORE_WS";
+const LOCAL_STORAGE_IGNORE_WS_KEY = '__SUI_BACKEND_IGNORE_WS';
 const DX_REACT_GROUP_SEPARATOR = '|';
 const CHILDREN_KEY = '__children';
 const RECORDS_KEY = '__records';
 const SUBTOTALS_KEY = '__subtotals';
 
-const DELETED_COLUMN = "deleted";
+const DELETED_COLUMN = 'deleted';
 
 type RequestMessageType =
   'INIT'
@@ -64,6 +64,7 @@ export interface IBackendTableProps {
   table: string;
   titleEnabled?: boolean;
   watchFilters?: boolean;
+
   // Подмена типов для красивого интерфейса
   customFilterComponent?(props: ICustomFilterProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
 }
@@ -150,7 +151,7 @@ export class BackendTable<TSelection = defaultSelection>
       lastSendSelection: [],
       paginationEnabled,
       // tslint:disable-next-line:no-magic-numbers
-      pageSize: paginationEnabled ? (this.props.pageSize || 10) : 1000000000
+      pageSize: paginationEnabled ? (this.props.pageSize || 10) : 1000000000,
     };
   }
 
@@ -193,11 +194,9 @@ export class BackendTable<TSelection = defaultSelection>
         newState.defaultFilter = this.props.defaultFilter && wrapInArray(this.props.defaultFilter) || undefined;
       }
 
-      this.setState(newState, async () => {
-        if (filterChanged || defaultFilterChanged) {
-          await this.reinit();
-        }
-      });
+      if (filterChanged || defaultFilterChanged) {
+        this.setState(newState, () => this.reinit());
+      }
     }
   }
 
@@ -256,7 +255,7 @@ export class BackendTable<TSelection = defaultSelection>
           title={this.props.title || this.state.title}
           paperStyle={{
             borderBottom: this.state.paginationEnabled ? undefined : 0,
-            ...this.props.paperStyle
+            ...this.props.paperStyle,
           }}
           noColsContent={
             admin && (
@@ -278,7 +277,7 @@ export class BackendTable<TSelection = defaultSelection>
             (<ClearFiltersPlugin handleClick={this.clearFilters}/>),
             (<RefreshMetaTablePlugin handleClick={this.refresh}/>),
             // admin && (<RawModePlugin enabled={this.state.rawMode} onClick={this.changeRaw}/>),
-            admin && (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>)
+            admin && (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
           ].filter(Boolean)}
           rowStyler={this.generateRowStyler()}
           warnings={admin ? this.state.warnings : undefined}
@@ -299,7 +298,7 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private changeRaw(): void {
-    this.setState({rawMode: !this.state.rawMode}); // , this.updateData);
+    this.setState({ rawMode: !this.state.rawMode }); // , this.updateData);
   }
 
   @autobind
@@ -350,7 +349,7 @@ export class BackendTable<TSelection = defaultSelection>
     const stylers = [this.state.colorSettingsRowStyler, this.props.rowStyler].filter(Boolean);
 
     if (stylers.length) {
-      return (row): React.CSSProperties => stylers.reduce((result, styler) => ({...result, ...styler(row)}), {});
+      return (row): React.CSSProperties => stylers.reduce((result, styler) => ({ ...result, ...styler(row) }), {});
     }
 
     return undefined;
@@ -426,26 +425,26 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private normalizeColumnName<T extends {columnName: string}>(element: T): T {
+  private normalizeColumnName<T extends { columnName: string }>(element: T): T {
     return {
       ...element,
       columnName: getDataByKey<string>(
         this.findColumnInfoByName(element.columnName) || this.findColumnInfoByCamelCaseName(element.columnName),
-        "columnName"
-      )
-    }
+        'columnName',
+      ),
+    };
   }
 
   @autobind
   private onCurrentPageChange(currentPage: number): void {
-    const content = {currentPage};
+    const content = { currentPage };
     // noinspection JSIgnoredPromiseFromCall
     this.sendMessage('PAGE_CHANGE', content, content);
   }
 
   @autobind
   private onError(message: IObjectWithIndex): void {
-    this.setState({error: message.message, loading: false});
+    this.setState({ error: message.message, loading: false });
   }
 
   @autobind
@@ -488,7 +487,7 @@ export class BackendTable<TSelection = defaultSelection>
             const groupKeyPrefix = `${group.key}${DX_REACT_GROUP_SEPARATOR}`;
             return groups.every(element => !element.key.startsWith(groupKeyPrefix));
           })
-          .map(expandedGroup => ({group: expandedGroup.path})),
+          .map(expandedGroup => ({ group: expandedGroup.path })),
       },
       {
         customGrouping: this.state.grouping,
@@ -496,7 +495,7 @@ export class BackendTable<TSelection = defaultSelection>
         expandedGroups,
         realExpandedGroups,
       },
-      {customExpandedGroups: null, customGrouping: null},
+      { customExpandedGroups: null, customGrouping: null },
     );
   }
 
@@ -507,7 +506,7 @@ export class BackendTable<TSelection = defaultSelection>
 
     if (filters.length < stateFiltersAsString.length || newFilters.some(filter => !filter.lazy)) {
       if (this.props.id) {
-        putFiltersToUrlParam(this.props.id, {defaultFilter: filters});
+        putFiltersToUrlParam(this.props.id, { defaultFilter: filters });
       }
 
       // noinspection JSIgnoredPromiseFromCall
@@ -516,12 +515,14 @@ export class BackendTable<TSelection = defaultSelection>
         {
           filters: this.mapFilters(filters),
         },
-        {filters},
+        { filters },
       );
     } else {
       // TODO: Высокоуровневый костыль, чтобы не рефрешить state, работает на честном слове
       // Если что-то сломается, то это первый кандидат
-      while (this.state.filters.length) { this.state.filters.pop() }
+      while (this.state.filters.length) {
+        this.state.filters.pop();
+      }
       filters.forEach(filter => this.state.filters.push(filter));
     }
   }
@@ -531,9 +532,9 @@ export class BackendTable<TSelection = defaultSelection>
     // noinspection JSIgnoredPromiseFromCall
     this.sendMessage(
       'GROUPING_CHANGE',
-      {groupings},
-      {grouping: groupings, customGrouping: this.state.grouping, customExpandedGroups: this.state.customExpandedGroups},
-      {customGrouping: null, customExpandedGroups: null},
+      { groupings },
+      { grouping: groupings, customGrouping: this.state.grouping, customExpandedGroups: this.state.customExpandedGroups },
+      { customGrouping: null, customExpandedGroups: null },
     );
   }
 
@@ -557,7 +558,7 @@ export class BackendTable<TSelection = defaultSelection>
             groupSubtotalData,
             messageData.data,
             this.state.grouping.map(this.getGroupRowField),
-            ''
+            '',
           );
         }
 
@@ -583,19 +584,19 @@ export class BackendTable<TSelection = defaultSelection>
   @autobind
   private onPageSizeChange(pageSize: number): void {
     // noinspection JSIgnoredPromiseFromCall
-    this.sendMessage('PAGE_SIZE_CHANGE', {pageSize}, {pageSize});
+    this.sendMessage('PAGE_SIZE_CHANGE', { pageSize }, { pageSize });
   }
 
   @autobind
   private onSortingChange(sorting: Sorting[]): void {
-    const newState = {sorting};
+    const newState = { sorting };
     const prevSorting = this.state.sorting || [];
 
     let shouldNotUpdate = false;
 
     if (sorting.length > prevSorting.length) {
       const newSorting = sorting.filter(sort => !prevSorting.find(prevSort => prevSort.columnName === sort.columnName));
-      shouldNotUpdate = newSorting.every(sort => (this.state.grouping || []).find(grouping => grouping.columnName === sort.columnName))
+      shouldNotUpdate = newSorting.every(sort => (this.state.grouping || []).find(grouping => grouping.columnName === sort.columnName));
     }
 
     if (shouldNotUpdate) {
@@ -632,7 +633,7 @@ export class BackendTable<TSelection = defaultSelection>
       const content = {
         // tslint:disable-next-line:no-magic-numbers
         pageSize: this.state.pageSize,
-        currentPage: 0
+        currentPage: 0,
       };
       const sortedColumns = await getAllowedColumnInfos(tableInfo, getUser().roles);
       let defaultFilter = this.mapFilters(this.state.defaultFilter || [], true);
@@ -642,10 +643,10 @@ export class BackendTable<TSelection = defaultSelection>
           ...defaultFilter,
           {
             columnName: DELETED_COLUMN,
-            value: "false",
-            raw: true
-          }
-        ]
+            value: 'false',
+            raw: true,
+          },
+        ];
       }
 
       // noinspection JSIgnoredPromiseFromCall
@@ -670,7 +671,7 @@ export class BackendTable<TSelection = defaultSelection>
             })),
           grouping: sortedColumns
             .filter(columnInfo => columnInfo.defaultGrouping)
-            .map(columnInfo => ({columnName: columnInfo.columnName,})),
+            .map(columnInfo => ({ columnName: columnInfo.columnName })),
           filters: defaultFilter,
           ...additionalState,
         });
@@ -692,7 +693,7 @@ export class BackendTable<TSelection = defaultSelection>
     let selection = null;
 
     if (this.backendDataSource) {
-      const messageContent: any = {content, type};
+      const messageContent: any = { content, type };
 
       if (this.props.selectionEnabled) {
         selection = this.getSelection() || [];
@@ -708,7 +709,7 @@ export class BackendTable<TSelection = defaultSelection>
       await this.backendDataSource.send(messageId, messageContent);
     }
 
-    this.setState({loading: true, ...newState, ...(selection ? {lastSendSelection: selection} : null)});
+    this.setState({ loading: true, ...newState, ...(selection ? { lastSendSelection: selection } : null) });
   }
 
   @autobind
@@ -723,7 +724,7 @@ export class BackendTable<TSelection = defaultSelection>
   @autobind
   private shouldIgnoreWS(): boolean {
     const ignoreWsItem = localStorage.getItem(LOCAL_STORAGE_IGNORE_WS_KEY);
-    return ignoreWsItem && moment().diff(moment(ignoreWsItem), "hours") < IGNORE_WS_ACTUALITY_HOURS;
+    return ignoreWsItem && moment().diff(moment(ignoreWsItem), 'hours') < IGNORE_WS_ACTUALITY_HOURS;
   }
 
   @autobind
@@ -737,10 +738,10 @@ export class BackendTable<TSelection = defaultSelection>
         if (this.state.rawMode) {
           title += ` (${tableInfo.schemaName}.${tableInfo.tableName})`;
         }
-        this.setState({title});
+        this.setState({ title });
       }
       if (this.state.title && !(this.state.rawMode || this.props.titleEnabled)) {
-        this.setState({title: null});
+        this.setState({ title: null });
       }
 
       const cols = await tableInfo.getColumns();
@@ -808,7 +809,7 @@ export class BackendTable<TSelection = defaultSelection>
           colorSettingsRowStyler = (row: any): React.CSSProperties => {
             const isValid = checkDnf.some(andChecks => andChecks.every(check => check(row)));
 
-            return isValid ? {backgroundColor: colorSettings.color} : undefined;
+            return isValid ? { backgroundColor: colorSettings.color } : undefined;
           };
         }
       }
@@ -820,7 +821,7 @@ export class BackendTable<TSelection = defaultSelection>
           exportable: false,
           groupingEnabled: false,
           sortingEnabled: false,
-          search: {type: 'none'},
+          search: { type: 'none' },
         } as IBaseTableColLayout));
 
       this.setState({
