@@ -12,6 +12,7 @@ export interface IRouterLinkProps {
   buttonStyle?: React.CSSProperties;
   disabled?: boolean; // only for button type
   ghost?: boolean; // only for button type
+  icon?: React.ReactNode;
   monospace?: boolean;
   style?: React.CSSProperties;
   tableFilters?: {[tableId: string]: IOneOrArrayFilterDefinition};
@@ -40,6 +41,7 @@ export class RouterLink extends React.Component<IRouterLinkProps> {
             type={this.props.type.replace('button-', '') as ButtonType}
             disabled={this.props.disabled}
             ghost={this.props.ghost}
+            icon={this.props.icon}
           >
             {this.props.text}
           </Button>
