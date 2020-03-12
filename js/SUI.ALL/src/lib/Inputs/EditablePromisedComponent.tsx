@@ -1,5 +1,6 @@
-import { Icon as LegacyIcon } from '@ant-design/compatible';
-import {Button} from "antd";
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import CreateIcon from '@material-ui/icons/CreateOutlined';
 import autobind from "autobind-decorator";
 import * as React from "react";
 
@@ -41,13 +42,13 @@ export class EditablePromisedComponent<T>
             >
               {editMode ? React.cloneElement(this.props.children, {promise: this.getPromise}) : (this.props.nonEditRender || this.DEFAULT_RENDERER).apply(null, [this.props.children.props.defaultValue])}
               {editAllowed && (
-                <Button
-                  size="small"
-                  htmlType="button"
-                  style={{marginLeft: editMode ? 4 : 8, flexShrink: 0, padding: "0 4px"}}
+                <IconButton
                   onClick={this.switchEdit}
-                  icon={<LegacyIcon type={editMode ? "close" : "edit"}/>}
-                />
+                  style={{marginLeft: 6}}
+                  size="small"
+                >
+                  {editMode? (<CloseIcon/>) : (<CreateIcon/>)}
+                </IconButton>
               )}
             </div>
           );

@@ -1,5 +1,4 @@
 import { Icon } from '@ant-design/compatible';
-import {Popover} from "antd";
 import Button from "antd/lib/button";
 import Input, {TextAreaProps} from "antd/lib/input";
 import Tooltip from "antd/lib/tooltip";
@@ -10,12 +9,14 @@ import {trimIfString} from '../stringFormatters';
 import {SUI_ROW_GROW_LEFT} from '../styles';
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
+import { CircularProgress, IconButton } from '@material-ui/core';
+import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 
 export type PromisedTextAreaProps = {
   allowEmpty?: boolean;
   defaultValue?: string;
   disabled?: boolean;
-  icon?: string;
+  icon?: JSX.Element;
   rowClassName?: string;
   rowStyle?: React.CSSProperties;
 } & IPromisedBaseProps<string> & Omit<TextAreaProps, "onChange" | "value">
@@ -33,12 +34,13 @@ export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromi
   public render(): JSX.Element {
     const isEmptyAndEmptyNotAllowed = !this.props.allowEmpty && !trimIfString(this.state.value);
     let saveButton: JSX.Element | null = (
-      <Button
-        type="primary"
-        icon={<Icon type={this.state.loading ? "loading" : this.props.icon || "save"}/>}
+      <IconButton
         disabled={this.state.loading || isEmptyAndEmptyNotAllowed || !this.isValidatorTextEmpty()}
         onClick={this.saveWithoutValue}
-      />
+        size="small"
+      >
+        {this.state.loading ? (<CircularProgress size={16} />) : (this.props.icon || <SaveOutlinedIcon/>)}
+      </IconButton>
     );
     saveButton = (this.state.savedValue !== this.state.value)
       && (isEmptyAndEmptyNotAllowed ? <Tooltip title="Нельзя сохранить пустое значение">{saveButton}</Tooltip> : saveButton)
