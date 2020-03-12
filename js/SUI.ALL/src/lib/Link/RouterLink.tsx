@@ -2,6 +2,7 @@ import Button, {ButtonType} from 'antd/lib/button/button';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 
+import { SizeType } from 'antd/lib/config-provider/SizeContext';
 import {appendFiltersToLink, IOneOrArrayFilterDefinition} from "../BackendTable";
 import {ROUTER_LINK_BTN} from '../styles';
 import {defaultIfNotBoolean} from "../typeWrappers";
@@ -14,6 +15,7 @@ export interface IRouterLinkProps {
   ghost?: boolean; // only for button type
   icon?: React.ReactNode;
   monospace?: boolean;
+  size?: SizeType;
   style?: React.CSSProperties;
   tableFilters?: {[tableId: string]: IOneOrArrayFilterDefinition};
   tableFiltersMerge?: boolean,
@@ -37,7 +39,7 @@ export class RouterLink extends React.Component<IRouterLinkProps> {
           ? <Button
             className={ROUTER_LINK_BTN}
             style={this.props.buttonStyle}
-            size="small"
+            size={this.props.size || "small"}
             type={this.props.type.replace('button-', '') as ButtonType}
             disabled={this.props.disabled}
             ghost={this.props.ghost}
