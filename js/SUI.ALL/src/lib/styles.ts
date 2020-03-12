@@ -37,3 +37,4 @@ export const EDITABLE_PROMISED_COMPONENT_CHILDREN = "sui-editable-promised-compo
 export const ROUTER_LINK_BTN = "sui-router-link-btn";
 export const INFO_MODAL_FIX = "sui-info-modal-fix";
 export const NO_BORDER_MODAL = "sui-no-border-modal";
+export const BASE_TABLE = "sui-base-table";

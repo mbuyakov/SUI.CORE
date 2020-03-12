@@ -24,7 +24,7 @@ export class TableSettingsDialog extends React.Component<ITableSettingsDialogPro
         {/* tslint:disable-next-line:no-magic-numbers */}
         <Tooltip title='Редактировать права и видимость колонок' placement='bottom' enterDelay={300}>
           <IconButton style={this.props.buttonStyle} onClick={this.handleClickOpen}>
-            <Build style={{color: '#1890ff'}}/>
+            <Build style={{color: '#56CBF8'}}/>
           </IconButton>
         </Tooltip>
         <FullScreenTableSettings

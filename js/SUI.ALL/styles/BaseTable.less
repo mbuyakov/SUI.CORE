@@ -1,0 +1,15 @@
+@import "~antd/lib/style/themes/default";
+
+:global {
+  .sui-base-table > * > * > *:nth-child(2) {
+    background-image: linear-gradient(to right, #fff, rgba(255, 255, 255, 0)),
+    linear-gradient(to left, #fff, rgba(255, 255, 255, 0)),
+    linear-gradient(to right, #e1e1e1, rgba(255, 255, 255, 0)),
+    linear-gradient(to left, #e1e1e1, rgba(255, 255, 255, 0));
+    background-position: left center, right center, left center, right center;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-size: 10em 100%, 10em 100%, 2em 100%, 2em 100%;
+    background-attachment: local, local, scroll, scroll;
+  }
+}
