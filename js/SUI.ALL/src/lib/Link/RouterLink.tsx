@@ -1,8 +1,8 @@
 import Button, {ButtonType} from 'antd/lib/button/button';
+import { SizeType } from 'antd/lib/config-provider/SizeContext';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 
-import { SizeType } from 'antd/lib/config-provider/SizeContext';
 import {appendFiltersToLink, IOneOrArrayFilterDefinition} from "../BackendTable";
 import {ROUTER_LINK_BTN} from '../styles';
 import {defaultIfNotBoolean} from "../typeWrappers";
