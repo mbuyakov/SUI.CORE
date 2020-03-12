@@ -1,5 +1,5 @@
-import { Icon } from '@ant-design/compatible';
-import Button from "antd/lib/button";
+import { CircularProgress, IconButton } from '@material-ui/core';
+import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import Input, {TextAreaProps} from "antd/lib/input";
 import Tooltip from "antd/lib/tooltip";
 import autobind from "autobind-decorator";
@@ -9,8 +9,6 @@ import {trimIfString} from '../stringFormatters';
 import {SUI_ROW_GROW_LEFT} from '../styles';
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
-import { CircularProgress, IconButton } from '@material-ui/core';
-import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 
 export type PromisedTextAreaProps = {
   allowEmpty?: boolean;
