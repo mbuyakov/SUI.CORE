@@ -126,7 +126,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
                     ),
                     title: " ",
                     // tslint:disable-next-line:no-magic-numbers
-                    width: defaultIfNotBoolean(this.props.selectionEnabled, true) ? 48 : 80,
+                    width: defaultIfNotBoolean(this.props.selectionEnabled, true) ? 80 : (80 + 32),
                   }]
                     // tslint:disable-next-line:no-any
                     .concat((serviceColumns || []) as any[])
