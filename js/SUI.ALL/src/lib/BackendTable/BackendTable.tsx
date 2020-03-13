@@ -1,12 +1,14 @@
 /* tslint:disable:object-literal-sort-keys no-any unnecessary-else newline-before-return prefer-function-over-method no-floating-promises prefer-readonly promise-function-async*/
 import { Filter, Grouping, GroupKey, Sorting, TableFilterRow } from '@devexpress/dx-react-grid';
+import IconButton from '@material-ui/core/IconButton';
+import LinkIcon from '@material-ui/icons/Link';
 import autobind from 'autobind-decorator';
 import difference from 'lodash/difference';
 import moment from 'moment';
 import * as React from 'react';
 import uuid from 'uuid';
 
-import { asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFiltersFromUrlParam, getFilterType, getHrefLocation, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, MERGE_URL_PARAM, mergeDefaultFilters, putFiltersToUrlParam, RefreshMetaTablePlugin, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray } from '../index';
+import { asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFiltersFromUrlParam, getFilterType, getHrefLocation, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, MERGE_URL_PARAM, mergeDefaultFilters, putFiltersToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray } from '../index';
 import { ClearFiltersPlugin } from '../plugins/ClearFiltersPlugin';
 
 import { BackendDataSource, MESSAGE_ID_KEY } from './BackendDataSource';
@@ -65,6 +67,7 @@ export interface IBackendTableProps {
   titleEnabled?: boolean;
   watchFilters?: boolean;
 
+  cardLinkFn?(id: string, row: IObjectWithIndex): string;
   // Подмена типов для красивого интерфейса
   customFilterComponent?(props: ICustomFilterProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
 }
@@ -814,7 +817,20 @@ export class BackendTable<TSelection = defaultSelection>
         }
       }
 
-      const serviceColumns = (this.props.serviceColumns ? wrapInArray(this.props.serviceColumns) : [])
+      // tslint:disable-next-line:variable-name
+      const _serviceColumns = (this.props.serviceColumns ? wrapInArray(this.props.serviceColumns) : []);
+
+      if (this.props.cardLinkFn) {
+        _serviceColumns.push({
+          id: "__link__",
+          title: " ",
+          width: 80,
+          dataKey: "id",
+          render: (value: any, row: IObjectWithIndex) => (<RouterLink to={this.props.cardLinkFn(value, row)} type="link" text={<IconButton><LinkIcon/></IconButton>}/>)
+        });
+      }
+
+      const serviceColumns = _serviceColumns
         // tslint:disable-next-line:no-object-literal-type-assertion
         .map(serviceColumn => ({
           ...serviceColumn,
