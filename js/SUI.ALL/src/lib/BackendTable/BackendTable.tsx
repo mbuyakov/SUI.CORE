@@ -823,9 +823,10 @@ export class BackendTable<TSelection = defaultSelection>
       if (this.props.cardLinkFn) {
         _serviceColumns.push({
           id: "__link__",
+          title: " ",
           width: 80,
           dataKey: "id",
-          render: (value: any, row: IObjectWithIndex) => (<RouterLink to={this.props.cardLinkFn(value, row)} type="link"><IconButton><LinkIcon/></IconButton></RouterLink>)
+          render: (value: any, row: IObjectWithIndex) => (<RouterLink to={this.props.cardLinkFn(value, row)} type="link" text={<IconButton><LinkIcon/></IconButton>}/>)
         });
       }
 
