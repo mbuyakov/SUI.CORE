@@ -1,4 +1,4 @@
-package ru.rosneft.antifraud.pilot.usertransactionconfigurier.autoconfigure;
+package ru.smsoft.sui.usertransactionconfigurier.autoconfigure;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.Ordered;

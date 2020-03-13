@@ -1,4 +1,4 @@
-package ru.rosneft.antifraud.pilot.usertransactionconfigurier.aspect;
+package ru.smsoft.sui.usertransactionconfigurier.aspect;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +12,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
-import ru.rosneft.antifraud.pilot.usertransactionconfigurier.WithUser;
-import ru.rosneft.antifraud.pilot.usertransactionconfigurier.resolve.DefaultResolveUserStrategy;
+import ru.smsoft.sui.usertransactionconfigurier.WithUser;
+import ru.smsoft.sui.usertransactionconfigurier.resolve.DefaultResolveUserStrategy;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
@@ -34,7 +34,7 @@ public class PostgresSettingAspect implements Ordered {
     @NonNull
     private DefaultResolveUserStrategy defaultResolveUserStrategy;
 
-    @Before("execution(public * *(..)) && bean(*Controller) && !@annotation(ru.rosneft.antifraud.pilot.usertransactionconfigurier.WithUser)")
+    @Before("execution(public * *(..)) && bean(*Controller) && !@annotation(ru.smsoft.sui.usertransactionconfigurier.WithUser)")
     public void appendCurrentUserSetting() {
         appendCurrentUserSetting(defaultResolveUserStrategy.getUserId());
     }

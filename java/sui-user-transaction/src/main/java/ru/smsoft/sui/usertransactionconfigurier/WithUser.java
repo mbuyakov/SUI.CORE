@@ -1,8 +1,8 @@
-package ru.rosneft.antifraud.pilot.usertransactionconfigurier;
+package ru.smsoft.sui.usertransactionconfigurier;
 
 import org.springframework.lang.Nullable;
-import ru.rosneft.antifraud.pilot.usertransactionconfigurier.resolve.DefaultResolveUserStrategy;
-import ru.rosneft.antifraud.pilot.usertransactionconfigurier.resolve.ResolveUserStrategy;
+import ru.smsoft.sui.usertransactionconfigurier.resolve.DefaultResolveUserStrategy;
+import ru.smsoft.sui.usertransactionconfigurier.resolve.ResolveUserStrategy;
 
 import java.lang.annotation.*;
 

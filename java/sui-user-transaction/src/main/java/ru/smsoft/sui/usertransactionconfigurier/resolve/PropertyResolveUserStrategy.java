@@ -1,4 +1,4 @@
-package ru.rosneft.antifraud.pilot.usertransactionconfigurier.resolve;
+package ru.smsoft.sui.usertransactionconfigurier.resolve;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
