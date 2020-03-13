@@ -1,14 +1,12 @@
 package ru.smsoft.sui.suisecurity.security
 
-import jdk.nashorn.internal.runtime.regexp.joni.Config.log
 import mu.KotlinLogging
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.stereotype.Component
-
+import java.io.IOException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import java.io.IOException
 
 @Component
 class JwtAuthenticationEntryPoint : AuthenticationEntryPoint {

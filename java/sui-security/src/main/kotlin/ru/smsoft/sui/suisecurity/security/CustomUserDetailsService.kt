@@ -52,4 +52,5 @@ class CustomUserDetailsService : UserDetailsService {
             exception: RuntimeException): UserDetails {
         return UserPrincipal(userCache.get(Pair.of(type, identifier), Supplier { loader.get() }) ?: throw exception)
     }
+
 }
