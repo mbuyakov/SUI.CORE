@@ -37,6 +37,14 @@ pipeline {
                 {
                   "files": [
                     {
+                      "pattern": "**/sui-backend/build/libs/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
+                      "target": "sui/ru/smsoft/sui/sui-backend/${BUILD_NUMBER}-${BRANCH_NAME}/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
+                    },
+                    {
+                      "pattern": "**/sui-backend/build/libs/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
+                      "target": "sui/ru/smsoft/sui/sui-backend/${BUILD_NUMBER}-${BRANCH_NAME}/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
+                    },
+                    {
                       "pattern": "**/sui-entity/build/libs/sui-entity-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
                       "target": "sui/ru/smsoft/sui/sui-entity/${BUILD_NUMBER}-${BRANCH_NAME}/sui-entity-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
                     },
@@ -67,14 +75,6 @@ pipeline {
                     {
                       "pattern": "**/sui-user-transaction/build/libs/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
                       "target": "sui/ru/smsoft/sui/sui-user-transaction/${BUILD_NUMBER}-${BRANCH_NAME}/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
-                    },
-                    {
-                      "pattern": "**/sui-backend/build/libs/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
-                      "target": "sui/ru/smsoft/sui/sui-backend/${BUILD_NUMBER}-${BRANCH_NAME}/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
-                    },
-                    {
-                      "pattern": "**/sui-backend/build/libs/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
-                      "target": "sui/ru/smsoft/sui/sui-backend/${BUILD_NUMBER}-${BRANCH_NAME}/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     }
                   ]
                 }
