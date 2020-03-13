@@ -1,5 +1,8 @@
 // tslint:disable:cyclomatic-complexity
-import { Icon } from '@ant-design/compatible';
+import Icon from '@ant-design/icons';
+import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
+import CreateIcon from '@material-ui/icons/CreateOutlined';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { Button, notification } from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";
@@ -8,7 +11,7 @@ import {BackendTable} from "../BackendTable";
 import {getDataByKey} from "../dataKey";
 import { DisableEditContext } from '../DisableEditContext';
 import {errorNotification} from "../drawUtils";
-import {PromisedButton} from "../Inputs";
+import { PromisedButton, PromisedMaterialIconButton } from '../Inputs';
 import {PromisedBaseFormModal} from "../Modal";
 import {IObjectWithIndex, sleep} from "../other";
 import {hasAnyRole} from "../RoleVisibilityWrapper";
@@ -55,7 +58,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
           const createButton = (
             <Button
-              icon={<Icon type={"plus-circle"} />}
+              icon={<Icon component={AddOutlinedIcon} />}
               {...createButtonProps}
               onClick={this.showBaseModalFn(this.createBaseFormModalRef)}
             >
@@ -65,7 +68,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
           const deleteButton = (
             <PromisedButton
-              icon={<Icon type={"delete"} />}
+              icon={<Icon component={DeleteOutlineIcon} />}
               {...deleteButtonProps}
               promise={this.handleDeleteClick}
               popconfirmSettings={{
@@ -115,15 +118,15 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
                   : [{
                     id: "__edit",
                     render: (_: null, row: {id: TSelection}): JSX.Element => (
-                      <PromisedButton
+                      <PromisedMaterialIconButton
                         loading={this.state.initEditLoading}
-                        icon={<Icon type={"edit"} />}
+                        icon={<CreateIcon/>}
                         promise={this.handleEditClickFn(row)}
                       />
                     ),
                     title: " ",
                     // tslint:disable-next-line:no-magic-numbers
-                    width: defaultIfNotBoolean(this.props.selectionEnabled, true) ? 48 : 80,
+                    width: defaultIfNotBoolean(this.props.selectionEnabled, true) ? 80 : (80 + 32),
                   }]
                     // tslint:disable-next-line:no-any
                     .concat((serviceColumns || []) as any[])

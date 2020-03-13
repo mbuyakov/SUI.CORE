@@ -1,5 +1,7 @@
 import { Icon } from '@ant-design/compatible';
-import {Button, Popover} from 'antd';
+import IconButton from '@material-ui/core/IconButton';
+import SettingsIcon from '@material-ui/icons/Settings';
+import {Popover} from 'antd';
 import {PopoverProps} from "antd/lib/popover";
 import autobind from "autobind-decorator";
 import React from "react";
@@ -27,6 +29,7 @@ export interface IFilterReportElementState<TData, TFilter> {
   filter: TFilter;
   lastFetchedFilter: TFilter;
   loading: boolean;
+  popoverOpened: boolean;
 }
 
 export class FilterReportElement<TData, TFilter = {}>
@@ -38,6 +41,7 @@ export class FilterReportElement<TData, TFilter = {}>
       filter: this.props.initialFilter,
       lastFetchedFilter: this.props.initialFilter,
       loading: false,
+      popoverOpened: false,
     };
   }
 
@@ -47,7 +51,7 @@ export class FilterReportElement<TData, TFilter = {}>
 
   public render(): JSX.Element {
     const {children, ...restProps} = this.props;
-    const {data, filter, loading} = this.state;
+    const {data, filter, loading, popoverOpened} = this.state;
 
     return (
       <ReportElement
@@ -64,14 +68,18 @@ export class FilterReportElement<TData, TFilter = {}>
               placement="topRight"
               {...restProps.popoverProps}
               trigger="click"
+              visible={popoverOpened}
               content={restProps.popoverContent(filter, this.onFilterChangeFn)}
               onVisibleChange={this.onPopoverVisibleChange}
             >
-              <Button
-                icon={<Icon type={"setting"}/>}
-                size="small"
+              <IconButton
+                onClick={this.onClick}
                 disabled={!!this.state.loading}
-              />
+                style={{margin: "-6px 0", height: 45, width: 45}}
+                size="small"
+              >
+                <SettingsIcon/>
+              </IconButton>
             </Popover>
           </div>
         )}
@@ -86,6 +94,11 @@ export class FilterReportElement<TData, TFilter = {}>
         </WaitData>
       </ReportElement>
     );
+  }
+
+  @autobind
+  private onClick(): void {
+    this.setState({popoverOpened: !this.state.popoverOpened});
   }
 
   @autobind
@@ -129,6 +142,7 @@ export class FilterReportElement<TData, TFilter = {}>
     if (this.props.popoverProps && this.props.popoverProps.onVisibleChange) {
       this.props.popoverProps.onVisibleChange(visible);
     }
+    this.onClick();
   }
 
 }

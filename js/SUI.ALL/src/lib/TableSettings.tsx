@@ -1,6 +1,7 @@
 /* tslint:disable:jsx-no-lambda no-magic-numbers no-any object-literal-sort-keys no-floating-promises promise-function-async */
 import { Icon } from '@ant-design/compatible';
 import { Cached } from '@material-ui/icons';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { Table } from 'antd';
 import Button from 'antd/lib/button';
 import Card from 'antd/lib/card';
@@ -270,7 +271,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                                     content={
                                       <PromisedInput
                                         rowStyle={{ width: 200 - 32 }}
-                                        icon="right"
+                                        icon={<ChevronRightIcon/>}
                                         type="number"
                                         promise={(value: any): any => {
                                           getMetaInitProps().routerPushFn(getLinkForTable(data.tableInfoById.tableName, 'card', value));

@@ -14,7 +14,7 @@ import * as React from 'react';
 import * as XLSX from 'xlsx';
 
 import {getDataByKey} from '../dataKey';
-import {HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from "../styles";
+import { BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER } from '../styles';
 import {translate} from '../translate';
 import {defaultIfNotBoolean} from '../typeWrappers';
 
@@ -304,6 +304,7 @@ export class BaseTable<TSelection = defaultSelection>
         type={this.props.cardType}
         extra={this.props.extra}
         bordered={!borderless}
+        className={BASE_TABLE}
       >
         {cols.length === 0 && <>
           {this.props.noColsContent}

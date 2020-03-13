@@ -1,5 +1,5 @@
-import { Icon } from '@ant-design/compatible';
-import Button from 'antd/lib/button';
+import { CircularProgress, IconButton } from '@material-ui/core';
+import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import Input, {InputProps} from 'antd/lib/input';
 import Tooltip from 'antd/lib/tooltip';
 import autobind from 'autobind-decorator';
@@ -18,7 +18,7 @@ export type PromisedInputProps<V> = {
   allowEmpty?: boolean;
   customInput?: Rendered<React.Component<InputProps>>;
   disabled?: boolean;
-  icon?: string;
+  icon?: JSX.Element;
   mask?: string;
   rowStyle?: React.CSSProperties;
   totalValueLength?: number;
@@ -54,12 +54,13 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
 
     const isEmptyAndEmptyNotAllowed = !this.props.allowEmpty && typeof this.state.value !== 'number' && !trimIfString(this.state.value);
     let saveButton: JSX.Element | null = (
-      <Button
-        type="primary"
-        icon={<Icon type={this.state.loading ? 'loading' : this.props.icon || 'save'}/>}
+      <IconButton
         disabled={this.state.loading || isEmptyAndEmptyNotAllowed || !this.isValidatorTextEmpty()}
         onClick={this.saveWithoutValue}
-      />
+        size="small"
+      >
+        {this.state.loading ? (<CircularProgress size={16} />) : (this.props.icon || <SaveOutlinedIcon/>)}
+      </IconButton>
     );
     saveButton = (this.state.savedValue !== this.state.value
       && (this.props.type === 'number' ? this.state.value as unknown !== '-' : true)
