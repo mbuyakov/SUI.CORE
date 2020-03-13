@@ -36,7 +36,7 @@ module.exports =  {
       "btn-border-radius-sm": "6px",
       "btn-border-width": "2px",
       "font-size-base": "15px",
-      "btn-font-size-sm": "12px" //@font-size-sm
+      "btn-font-size-sm": "14px" // as text
     },
     treeShaking: true,
     history: 'hash',
