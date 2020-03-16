@@ -26,7 +26,7 @@ class NewSparkline extends React.Component<{
   public render(): JSX.Element {
     return (
       <div className="SPARKLINE">
-        <div className="SPARKLINE-VALUE" style={{ width: `calc(${this.props.value}% + 4px)`, backgroundColor: getLevelColor(this.props.value).toRgba() }}/>
+        <div className="SPARKLINE-VALUE" style={{ width: `calc(${Math.min(this.props.value, 100)}% + 4px)`, backgroundColor: getLevelColor(this.props.value).toRgba() }}/>
         <div className="SPARKLINE-LABEL">
           <span>{this.props.value.toFixed(1)}</span>
         </div>
@@ -73,18 +73,6 @@ export default class Sparkline extends React.Component<{}> {
               border-radius: 8px;
               height: 32px;
               min-width: 12px;
-            }
-            .SUI .ant-btn-sm {
-              font-size: 12px;
-            }
-            .SUI .ant-btn-lg {
-              font-size: 17px;
-            }
-            .SUI .ant-btn-lg:not(.ant-btn-round), .SUI .ant-btn:not(.ant-btn-round) {
-              border-radius: 8px;
-            }
-            .SUI .ant-btn-sm:not(.ant-btn-round) {
-              border-radius: 6px;
             }
           `}
         </style>

@@ -21,7 +21,7 @@ export class SparklinePlugin extends TableRenderParamsPlugin<{}> {
   }
 
   // tslint:disable-next-line:prefer-function-over-method variable-name no-async-without-await
-  public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams<{}>): Promise<void> {
+  public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams): Promise<void> {
     // tslint:disable-next-line:no-any
     result.render = (value: any, _: any, col: any): React.ReactNode =>
       value != null
