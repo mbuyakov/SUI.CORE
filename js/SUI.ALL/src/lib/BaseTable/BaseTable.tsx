@@ -299,7 +299,7 @@ export class BaseTable<TSelection = defaultSelection>
           ...(this.props.fitToTabPanelBody ? {margin: 0, marginTop: -17} : {}),
           ...(this.props.paperStyle || {}),
         }}
-        bodyStyle={{padding: 0}}
+        bodyStyle={{padding: 0, paddingTop: this.props.toolbarEnabled ? 0 : 1}}
         title={this.props.title}
         type={this.props.cardType}
         extra={this.props.extra}
