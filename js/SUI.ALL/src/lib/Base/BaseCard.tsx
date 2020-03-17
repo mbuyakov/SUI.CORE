@@ -37,12 +37,14 @@ export class BaseCard<T> extends React.Component<IBaseCardProps<T>, {
   public render(): JSX.Element {
     const rows = wrapInArrayWithoutNulls(this.props.rows).filter(row => row);
     let tabList;
+    let tabBarExtraContent;
     const firstChildrenIsTab = this.isFirstChildrenIsTab();
     // Attach tab to card props
     if (firstChildrenIsTab) {
       // tslint:disable-next-line:ban-ts-ignore
       // @ts-ignore
       tabList = rows[0].tabs.map((tab, i) => ({ key: i.toString(), tab: (<span>{tab.icon && <Icon type={tab.icon}/>}{tab.title}</span>) }));
+      tabBarExtraContent = rows[0].tabBarExtraContent;
     }
     let body = null;
     // tslint:disable-next-line:prefer-conditional-expression
@@ -63,6 +65,7 @@ export class BaseCard<T> extends React.Component<IBaseCardProps<T>, {
             <Card
               title={this.props.cardTitle}
               tabList={tabList}
+              tabBarExtraContent={tabBarExtraContent}
               defaultActiveTabKey="0"
               onTabChange={this.onTabChange}
               extra={this.props.extra}
@@ -71,7 +74,7 @@ export class BaseCard<T> extends React.Component<IBaseCardProps<T>, {
             >
               {firstChildrenIsTab
                 ? <BaseCardTabContext.Provider value={this.onTabChange}>
-                  <Tabs style={{ padding: 24 }} renderTabBar={renderTabBar} activeKey={this.state.tab}>
+                  <Tabs style={{ padding: 24 }} renderTabBar={renderTabBar} activeKey={this.state.tab} tabBarExtraContent={tabBarExtraContent} >
                     {body}
                   </Tabs>
                 </BaseCardTabContext.Provider>

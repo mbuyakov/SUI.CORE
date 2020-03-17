@@ -36,6 +36,7 @@ export interface IBaseCardRowLayout<T> {
   metaTableProps?: IMetaTableProps;
   style?: React.CSSProperties;
   tabs?: OneOrArrayWithNulls<IBaseCardTabLayout<T>>;
+  tabBarExtraContent?: React.ReactNode;
   tabsInCard?: boolean;
 }
 
