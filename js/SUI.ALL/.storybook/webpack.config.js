@@ -39,7 +39,8 @@ module.exports = ({ config }) => {
           javascriptEnabled: true,
           modifyVars: {
             'primary-color': '#56CBF8',
-            'error-color': '#FF6565'
+            'error-color': '#FF6565',
+            'border-radius-base': '8px'
           },
         },
       },
