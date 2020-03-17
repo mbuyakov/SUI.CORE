@@ -2,7 +2,7 @@
 import Icon from '@ant-design/icons';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import CreateIcon from '@material-ui/icons/CreateOutlined';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { Button, notification } from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";
@@ -68,7 +68,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
           const deleteButton = (
             <PromisedButton
-              icon={<Icon component={DeleteIcon} />}
+              icon={<Icon component={DeleteOutlineIcon} />}
               {...deleteButtonProps}
               promise={this.handleDeleteClick}
               popconfirmSettings={{
