@@ -42,7 +42,7 @@ module.exports =  {
       "font-size-base": "15px",
       "btn-font-size-sm": "14px", // as text
       "border-color-base":"rgba(217, 217, 217, 0.6)",
-      "btn-shadow": "0 0px"
+      "btn-shadow": "none"
     },
     treeShaking: true,
     history: 'hash',
