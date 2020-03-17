@@ -105,6 +105,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
     return (
       <Button.Group
         {...buttonGroupProps}
+        style={{display: 'flex', ...(buttonGroupProps && buttonGroupProps.style)}}
       >
         {filteredTransitions.map(transition => {
           const {

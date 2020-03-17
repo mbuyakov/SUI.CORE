@@ -31,8 +31,12 @@
     width: 0.9em;
   }
 
-  .ant-btn .anticon {
+  .ant-btn:not(.ant-dropdown-trigger) .anticon {
     margin: -2px -4px -4px;
+  }
+
+  .ant-btn.ant-dropdown-trigger .anticon {
+    margin: -2px -4px -4px 4px;
   }
 
   .ant-btn-sm .anticon > .MuiSvgIcon-root {
