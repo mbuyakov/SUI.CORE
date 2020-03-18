@@ -45,9 +45,9 @@ export class RouterLink extends React.Component<IRouterLinkProps> {
             ghost={this.props.ghost}
             icon={this.props.icon}
           >
-            {this.props.text}
+            {this.props.text || this.props.children}
           </Button>
-          : this.props.text
+          : (this.props.text || this.props.children)
         }
       </Link>
     );
