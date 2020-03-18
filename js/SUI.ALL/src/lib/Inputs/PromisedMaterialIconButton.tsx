@@ -1,12 +1,9 @@
-import { CircularProgress, IconButton, Tooltip } from '@material-ui/core';
-import { ExtendButtonBaseTypeMap } from '@material-ui/core/ButtonBase/ButtonBase';
-import { IconButtonTypeMap } from '@material-ui/core/IconButton/IconButton';
-import { OverrideProps } from '@material-ui/core/OverridableComponent';
+import { CircularProgress, IconButton, IconButtonProps, Tooltip } from '@material-ui/core';
 import * as React from 'react';
 
 import { IPromisedBaseState, PromisedBase } from './PromisedBase';
 
-export class PromisedMaterialIconButton extends PromisedBase<{ href: string } & OverrideProps<ExtendButtonBaseTypeMap<IconButtonTypeMap>, 'a'> & {
+export class PromisedMaterialIconButton extends PromisedBase<IconButtonProps & {
   icon?: JSX.Element;
   loading?: boolean;
   progressColor?: 'primary' | 'secondary';
