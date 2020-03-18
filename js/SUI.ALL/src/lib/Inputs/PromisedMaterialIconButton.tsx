@@ -4,6 +4,7 @@ import * as React from 'react';
 import { IPromisedBaseState, PromisedBase } from './PromisedBase';
 
 export class PromisedMaterialIconButton extends PromisedBase<{
+  disabled?: boolean;
   icon?: JSX.Element;
   loading?: boolean;
   progressColor?: 'primary' | 'secondary';
@@ -15,7 +16,7 @@ export class PromisedMaterialIconButton extends PromisedBase<{
 
   public render(): JSX.Element {
     let btn = (
-      <IconButton onClick={this.saveWithoutValue} size={this.props.size}>
+      <IconButton onClick={this.saveWithoutValue} size={this.props.size} disabled={this.props.disabled}>
         {(this.props.loading || this.state.loading) ? <CircularProgress size={this.props.size === 'small' ? 16 : 24} color={this.props.progressColor}/> : (this.props.children || this.props.icon)}
       </IconButton>
     );
