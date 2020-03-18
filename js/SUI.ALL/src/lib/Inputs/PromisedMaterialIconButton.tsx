@@ -7,6 +7,7 @@ export class PromisedMaterialIconButton extends PromisedBase<{
   disabled?: boolean;
   icon?: JSX.Element;
   loading?: boolean;
+  mode?: 'primary' | 'secondary';
   progressColor?: 'primary' | 'secondary';
   size?: 'small' | 'medium';
   tooltipText?: string;
@@ -16,7 +17,7 @@ export class PromisedMaterialIconButton extends PromisedBase<{
 
   public render(): JSX.Element {
     let btn = (
-      <IconButton onClick={this.saveWithoutValue} size={this.props.size} disabled={this.props.disabled}>
+      <IconButton onClick={this.saveWithoutValue} size={this.props.size} disabled={this.props.disabled} color={this.props.mode}>
         {(this.props.loading || this.state.loading) ? <CircularProgress size={this.props.size === 'small' ? 16 : 24} color={this.props.progressColor}/> : (this.props.children || this.props.icon)}
       </IconButton>
     );
