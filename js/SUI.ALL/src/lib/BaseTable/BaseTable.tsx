@@ -6,8 +6,7 @@ import {Getter, Getters} from '@devexpress/dx-react-core';
 import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSelection, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
 import {ColumnChooser, DragDropProvider, Grid, GroupingPanel, PagingPanel, Table, TableBandHeader, TableColumnReordering, TableColumnResizing, TableColumnVisibility, TableFilterRow, TableGroupRow, TableHeaderRow, TableRowDetail, TableSelection, Toolbar, VirtualTable} from '@devexpress/dx-react-grid-material-ui';
 import {TableRow} from '@material-ui/core';
-import Result from 'ant-design-pro/lib/Result';
-import { Card, Spin } from 'antd';
+import { Card, Spin, Result } from 'antd';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import * as React from 'react';
@@ -309,8 +308,8 @@ export class BaseTable<TSelection = defaultSelection>
         {cols.length === 0 && <>
           {this.props.noColsContent}
           <Result
-            style={{paddingTop: 42}}
-            type="error"
+            style={{paddingTop: 12, paddingBottom: 12}}
+            status="error"
             title="Нет доступных колонок"
           />
         </>}
