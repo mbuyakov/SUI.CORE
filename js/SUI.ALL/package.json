@@ -71,6 +71,7 @@
   "dependencies": {
     "@amcharts/amcharts4": "^4.6.4",
     "@ant-design/compatible": "^0.0.1-rc.1",
+    "@ant-design/icons": "^4.0.3",
     "@devexpress/dx-react-core": "2.4.0",
     "@devexpress/dx-react-grid": "2.4.0",
     "@devexpress/dx-react-grid-material-ui": "2.4.0",
