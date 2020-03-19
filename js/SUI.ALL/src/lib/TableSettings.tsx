@@ -451,7 +451,6 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                             {
                               items: [
                                 {
-                                  containerStyle: { marginTop: 8, marginBottom: 0 },
                                   title: 'Доступность для всех колонок',
                                   dataKey: ['columnInfosByTableInfoId', 'nodes'],
                                   render: (value: IColumnInfo[]): JSX.Element => (
@@ -654,7 +653,6 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                             {
                               items: [
                                 {
-                                  containerStyle: { marginTop: 8, marginBottom: 0 },
                                   title: 'Отображение по умолчанию для всех колонок',
                                   dataKey: ['columnInfosByTableInfoId', 'nodes'],
                                   render: (value: IColumnInfo[]): JSX.Element => (
