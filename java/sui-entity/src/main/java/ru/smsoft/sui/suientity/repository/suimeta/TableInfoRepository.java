@@ -2,9 +2,11 @@ package ru.smsoft.sui.suientity.repository.suimeta;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.smsoft.sui.suientity.entity.suimeta.TableInfo;
 import ru.smsoft.sui.suientity.repository.custom.suimeta.CustomTableInfoRepository;
 
@@ -27,5 +29,10 @@ public interface TableInfoRepository extends JpaRepository<TableInfo, Long>, Cus
   Optional<TableInfo> findByIdWithColumnInfoAndRolesAndReferencesAndSubtotalTypesAndFilterTypes(@Param("id") Long id);
 
   Optional<TableInfo> findBySchemaNameAndTableName(String schemaName, String tableName);
+
+  @Transactional
+  @Modifying(clearAutomatically = true, flushAutomatically = true)
+  @Query("UPDATE TableInfo tableInfo SET tableInfo.isAudited = :isAudited WHERE tableInfo = :tableInfo")
+  void setIsAudited(@Param("tableInfo") TableInfo tableInfo, boolean isAudited);
 
 }

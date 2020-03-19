@@ -68,6 +68,8 @@ public class TableInfo implements Persistable<Long> {
 
     private Boolean isCatalog;
 
+    private Boolean isAudited;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Name name;
 
