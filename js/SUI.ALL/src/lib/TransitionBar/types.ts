@@ -4,6 +4,7 @@ import {MenuProps} from "antd/lib/menu";
 import {MenuItemProps} from "antd/lib/menu/MenuItem";
 import { PopconfirmProps } from "antd/lib/popconfirm";
 import {TooltipProps} from "antd/lib/tooltip";
+import React from 'react';
 
 export type TransitionButtonProps = Omit<ButtonProps, "children" | "disabled" | "onClick">;
 
@@ -13,7 +14,7 @@ export interface ITransitionStatus<TID = string> {
 
 export interface IButtonBase {
   disabled?: boolean;
-  name: string | JSX.Element;
+  name: React.ReactElement;
   popconfirmProps?: Omit<PopconfirmProps, "onConfirm">;
   tooltip?: TooltipProps;
 }

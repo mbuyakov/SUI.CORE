@@ -8,7 +8,7 @@ import moment from 'moment';
 import * as React from 'react';
 import uuid from 'uuid';
 
-import { asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFiltersFromUrlParam, getFilterType, getHrefLocation, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, MERGE_URL_PARAM, mergeDefaultFilters, putFiltersToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray } from '../index';
+import { asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFiltersFromUrlParam, getFilterType, getHrefLocation, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, MERGE_URL_PARAM, putFiltersToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray } from '../index';
 import { ClearFiltersPlugin } from '../plugins/ClearFiltersPlugin';
 
 import { BackendDataSource, MESSAGE_ID_KEY } from './BackendDataSource';
@@ -68,6 +68,7 @@ export interface IBackendTableProps {
   watchFilters?: boolean;
 
   cardLinkFn?(id: string, row: IObjectWithIndex): string;
+
   // Подмена типов для красивого интерфейса
   customFilterComponent?(props: ICustomFilterProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
 }
@@ -822,11 +823,11 @@ export class BackendTable<TSelection = defaultSelection>
 
       if (this.props.cardLinkFn) {
         _serviceColumns.push({
-          id: "__link__",
-          title: " ",
+          id: '__link__',
+          title: ' ',
           width: 80,
-          dataKey: "id",
-          render: (value: any, row: IObjectWithIndex) => (<RouterLink to={this.props.cardLinkFn(value, row)} type="link" text={<IconButton><LinkIcon/></IconButton>}/>)
+          dataKey: 'id',
+          render: (value: any, row: IObjectWithIndex) => (<RouterLink to={this.props.cardLinkFn(value, row)} type="link" text={<IconButton><LinkIcon/></IconButton>}/>),
         });
       }
 

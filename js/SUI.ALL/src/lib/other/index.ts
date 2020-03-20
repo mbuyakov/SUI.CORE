@@ -1,9 +1,11 @@
 /* tslint:disable:no-any no-shadowed-variable completed-docs */
-export * from "./AddressFlag";
-
 import {WrappedFormUtils} from "@ant-design/compatible/lib/form/Form";
+import { CustomIconComponentProps } from '@ant-design/icons/lib/components/Icon';
 import * as H from "history";
 import * as React from "react";
+
+export * from "./AddressFlag";
+
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
@@ -159,3 +161,6 @@ const UUID_REGEXP = /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[
 export function isValidUuid(uuid: string): boolean {
   return UUID_REGEXP.test(uuid);
 }
+
+
+export type IAntIconComponent = React.ComponentType<CustomIconComponentProps | React.SVGProps<SVGSVGElement>>;

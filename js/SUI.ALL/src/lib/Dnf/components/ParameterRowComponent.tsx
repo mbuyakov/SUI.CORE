@@ -1,7 +1,5 @@
 // tslint:disable:no-any
 import { Form } from '@ant-design/compatible';
-// tslint:disable-next-line:no-import-side-effect
-import '@ant-design/compatible/assets/index.css';
 import {GetFieldDecoratorOptions} from "@ant-design/compatible/lib/form/Form";
 import { Switch, Tooltip } from "antd";
 import {SelectProps} from "antd/lib/select";
@@ -74,7 +72,7 @@ export abstract class ParameterRowComponent<TElement extends IParameterRowElemen
                   }}
                   onChange={this.onConstantSwitchChangeFunc(props, filterProps.actions, values.action)}
                 />
-              )}
+              ) as React.ReactElement}
             </Tooltip>
           </Form.Item>
         )}

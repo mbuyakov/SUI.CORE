@@ -1,7 +1,5 @@
 /* tslint:disable:jsx-no-lambda no-any */
 import { Form } from '@ant-design/compatible';
-// tslint:disable-next-line:no-import-side-effect
-import '@ant-design/compatible/assets/index.css';
 import {WrappedFormUtils} from "@ant-design/compatible/lib/form/Form";
 import { Card, Input } from "antd";
 import autobind from 'autobind-decorator';

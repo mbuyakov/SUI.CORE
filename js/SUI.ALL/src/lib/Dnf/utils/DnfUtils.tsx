@@ -1,6 +1,4 @@
 import { Form, Icon as LegacyIcon } from '@ant-design/compatible';
-// tslint:disable-next-line:no-import-side-effect
-import '@ant-design/compatible/assets/index.css';
 import {GetFieldDecoratorOptions, WrappedFormUtils} from "@ant-design/compatible/lib/form/Form";
 import { DatePicker, Input, InputNumber, Select, Switch } from 'antd';
 import {FormItemProps} from "antd/lib/form";

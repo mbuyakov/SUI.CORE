@@ -1,6 +1,4 @@
 import { Form } from '@ant-design/compatible';
-// tslint:disable-next-line:no-import-side-effect
-import '@ant-design/compatible/assets/index.css';
 import {FormComponentProps, FormItemProps, FormProps} from '@ant-design/compatible/lib/form';
 import {WrappedFormUtils} from "@ant-design/compatible/lib/form/Form";
 import { Button } from "antd";

@@ -1,4 +1,5 @@
 /* tslint:disable:no-import-side-effect */
+import '@ant-design/compatible/assets/index.css';
 import "odometer/themes/odometer-theme-default.css";
 import * as React from "react";
 // tslint:disable-next-line:ban-ts-ignore
