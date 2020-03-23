@@ -13,7 +13,7 @@ import { DisableEditContext } from '../DisableEditContext';
 import {errorNotification} from "../drawUtils";
 import { PromisedButton, PromisedMaterialIconButton } from '../Inputs';
 import {PromisedBaseFormModal} from "../Modal";
-import {IObjectWithIndex, sleep} from "../other";
+import { IAntIconComponent, IObjectWithIndex, sleep } from '../other';
 import {hasAnyRole} from "../RoleVisibilityWrapper";
 import {defaultIfNotBoolean} from "../typeWrappers";
 
@@ -58,7 +58,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
           const createButton = (
             <Button
-              icon={<Icon component={AddOutlinedIcon} />}
+              icon={<Icon component={AddOutlinedIcon as IAntIconComponent} />}
               {...createButtonProps}
               onClick={this.showBaseModalFn(this.createBaseFormModalRef)}
             >
@@ -68,7 +68,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
           const deleteButton = (
             <PromisedButton
-              icon={<Icon component={DeleteOutlineIcon} />}
+              icon={<Icon component={DeleteOutlineIcon as IAntIconComponent} />}
               {...deleteButtonProps}
               promise={this.handleDeleteClick}
               popconfirmSettings={{

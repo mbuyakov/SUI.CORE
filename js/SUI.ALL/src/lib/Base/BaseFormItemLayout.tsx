@@ -1,7 +1,5 @@
 /* tslint:disable:cyclomatic-complexity no-any */
 import { Form } from '@ant-design/compatible';
-// tslint:disable-next-line:no-import-side-effect
-import '@ant-design/compatible/assets/index.css';
 import { FormItemProps } from 'antd/lib/form';
 import { RuleItem } from 'async-validator';
 import autobind from 'autobind-decorator';

@@ -42,7 +42,7 @@ function hasTooltip(tooltipProps?: TooltipProps): boolean {
 }
 
 function wrapInTooltip(
-  element: string | JSX.Element,
+  element: React.ReactElement,
   tooltipProps?: TooltipProps
 ): string | JSX.Element {
   return hasTooltip(tooltipProps)
@@ -56,7 +56,7 @@ function wrapInTooltip(
 }
 
 function wrapInPopover(
-  element: string | JSX.Element,
+  element: React.ReactElement,
   popconfirmProps?: PopconfirmProps
 ): string | JSX.Element {
   return hasPopconfirm(popconfirmProps)
