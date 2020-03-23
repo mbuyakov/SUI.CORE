@@ -1,5 +1,6 @@
 /* tslint:disable:jsx-no-lambda no-magic-numbers no-any object-literal-sort-keys no-floating-promises promise-function-async */
 import { Icon } from '@ant-design/compatible';
+import { ThemeProvider, useTheme, withTheme } from '@material-ui/core';
 import { Cached } from '@material-ui/icons';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { Table } from 'antd';
@@ -83,6 +84,7 @@ interface ITableSettingsProps {
   id: string;
   popupMode?: boolean;
   startTimeout?: number;
+  theme?: any;
 
   getPopupContainer(): HTMLElement;
 }
@@ -94,7 +96,8 @@ interface ITableSettingsState {
   tableInfoById?: ITableInfo;
 }
 
-export class TableSettings extends React.Component<ITableSettingsProps, ITableSettingsState> {
+// tslint:disable-next-line:class-name
+class _TableSettings extends React.Component<ITableSettingsProps, ITableSettingsState> {
 
   private static getElementBySortType<T>(sorting: SortingDirection, ascElement: T, descElement: T, emptyElement: T): T {
     return (sorting === 'asc')
@@ -504,7 +507,7 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                                               ? (<Button
                                                 size="small"
                                                 type="ghost"
-                                                onClick={() => draw(<FullScreenTableSettings id={refColInfo.tableInfoId} defaultOpen={true}/>)}
+                                                onClick={() => draw(<ThemeProvider theme={this.props.theme}><FullScreenTableSettings id={refColInfo.tableInfoId} defaultOpen={true}/></ThemeProvider>)}
                                               >
                                                 {`${refTableInfo.nameByNameId ? refTableInfo.nameByNameId.name : refTableInfo.tableName}.${refColInfo.nameByNameId ? refColInfo.nameByNameId.name : refColInfo.columnName}`}
                                               </Button>)
@@ -756,13 +759,13 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
                                             <Button
                                               href={null}
                                               htmlType="button"
-                                              type={TableSettings.getElementBySortType(
+                                              type={_TableSettings.getElementBySortType(
                                                 record.defaultSorting as SortingDirection,
                                                 'primary',
                                                 'primary',
                                                 undefined,
                                               )}
-                                              icon={<Icon type={TableSettings.getElementBySortType<string>(record.defaultSorting as SortingDirection, 'sort-ascending', 'sort-descending', 'question')}/>}
+                                              icon={<Icon type={_TableSettings.getElementBySortType<string>(record.defaultSorting as SortingDirection, 'sort-ascending', 'sort-descending', 'question')}/>}
                                               onClick={() => {
                                                 const sequence = [null, 'asc', 'desc'];
                                                 this.updateColFieldFn(record.id, 'defaultSorting')(
@@ -957,3 +960,6 @@ export class TableSettings extends React.Component<ITableSettingsProps, ITableSe
     await fullReloadTableInfo(this.props.id);
   }
 }
+
+// tslint:disable-next-line:variable-name
+export const TableSettings = withTheme(_TableSettings);
