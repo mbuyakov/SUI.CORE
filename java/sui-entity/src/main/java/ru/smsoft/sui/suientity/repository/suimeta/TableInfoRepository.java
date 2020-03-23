@@ -33,6 +33,6 @@ public interface TableInfoRepository extends JpaRepository<TableInfo, Long>, Cus
   @Transactional
   @Modifying(clearAutomatically = true, flushAutomatically = true)
   @Query("UPDATE TableInfo tableInfo SET tableInfo.isAudited = :isAudited WHERE tableInfo = :tableInfo")
-  void setIsAudited(@Param("tableInfo") TableInfo tableInfo, boolean isAudited);
+  void setIsAudited(@Param("tableInfo") TableInfo tableInfo, @Param("isAudited") boolean isAudited);
 
 }
