@@ -9,9 +9,9 @@ import { OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '../typeWrappers';
 
 import { BaseCard } from './BaseCard';
 import { IBaseCardCollapseLayout, renderIBaseCardCollapseLayout } from './BaseCardCollapseLayout';
-import { IBaseCardColLayout, IBaseFormColLayout, renderIBaseCardColsLayout } from './BaseCardColLayout';
+import { IBaseCardColLayout, renderIBaseCardColsLayout } from './BaseCardColLayout';
 import { BaseCardContext } from './BaseCardContext';
-import { IBaseCardTabLayout, IBaseFormTabLayout, ManagedTabs, renderIBaseCardTabLayout } from './BaseCardTabLayout';
+import { IBaseCardTabLayout, ManagedTabs, renderIBaseCardTabLayout } from './BaseCardTabLayout';
 
 // It's BACKEND props. Mark as MetaTableProps for backward computability in RN
 export interface IMetaTableProps {
@@ -21,9 +21,9 @@ export interface IMetaTableProps {
   titleEnabled?: boolean;
 }
 
-export interface IBaseCardRowLayout<T> {
-  collapsePanels?: Array<IBaseCardCollapseLayout<T>>;
-  cols?: OneOrArrayWithNulls<IBaseCardColLayout<T>>;
+export interface IBaseCardRowLayout<T, ITEM> {
+  collapsePanels?: Array<IBaseCardCollapseLayout<T, ITEM>>;
+  cols?: OneOrArrayWithNulls<IBaseCardColLayout<T, ITEM>>;
   dividerDashed?: boolean;
   dividerText?: string;
   fitCollapsePanel?: boolean;
@@ -31,13 +31,8 @@ export interface IBaseCardRowLayout<T> {
   metaTableProps?: IMetaTableProps;
   style?: React.CSSProperties;
   tabBarExtraContent?: React.ReactNode;
-  tabs?: OneOrArrayWithNulls<IBaseCardTabLayout<T>>;
+  tabs?: OneOrArrayWithNulls<IBaseCardTabLayout<T, ITEM>>;
   tabsInCard?: boolean;
-}
-
-export type IBaseFormRowLayout<T> = Omit<IBaseCardRowLayout<T>, 'cols' | 'tabs'> & {
-  cols?: OneOrArrayWithNulls<IBaseFormColLayout<T>>
-  tabs?: OneOrArrayWithNulls<IBaseFormTabLayout<T>>
 }
 
 export const DATA_KEY_REGEXP = /@([a-zA-z0-9\|]+)/g;
@@ -67,7 +62,7 @@ export function mapFilters(filters: string, sourceItem: any): string | null {
 // tslint:disable-next-line:ban-ts-ignore
 // @ts-ignore
 // tslint:disable-next-line:cyclomatic-complexity no-any
-export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLayout<T> | IBaseFormRowLayout<T>, rowIndex: number, parent: 'card' | 'collapse' | 'tab', rowsLength: number, firstChildrenIsTab: boolean = false): JSX.Element {
+export function renderIBaseCardRowLayout<T, ITEM>(sourceItem: any, row: IBaseCardRowLayout<T, ITEM>, rowIndex: number, parent: 'card' | 'collapse' | 'tab', rowsLength: number, firstChildrenIsTab: boolean = false): JSX.Element {
   if (row.isDivider) {
     return (
       <Divider
@@ -94,7 +89,7 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
           <BaseCardContext.Consumer>
             {({ forceRenderTabs }): JSX.Element => (
               <ManagedTabs defaultActiveKey="0">
-                {wrapInArrayWithoutNulls(row.tabs as OneOrArrayWithNulls<IBaseCardTabLayout<T> | IBaseFormTabLayout<T>>).map((tab, index) => renderIBaseCardTabLayout(sourceItem, tab, index, forceRenderTabs))}
+                {wrapInArrayWithoutNulls(row.tabs).map((tab, index) => renderIBaseCardTabLayout(sourceItem, tab, index, forceRenderTabs))}
               </ManagedTabs>
             )}
           </BaseCardContext.Consumer>
@@ -147,7 +142,7 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
   }
 
   if (row.cols) {
-    const cols = wrapInArrayWithoutNulls<IBaseCardColLayout<T> | IBaseFormColLayout<T>>(row.cols);
+    const cols = wrapInArrayWithoutNulls(row.cols);
 
     return renderIBaseCardColsLayout(sourceItem, cols);
   }

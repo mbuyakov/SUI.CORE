@@ -4,21 +4,17 @@ import * as React from 'react';
 import {COLLAPSE_PANEL_NO_PADDING} from "../styles";
 import { defaultIfNotBoolean, OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '../typeWrappers';
 
-import { IBaseCardRowLayout, IBaseFormRowLayout, renderIBaseCardRowLayout } from './BaseCardRowLayout';
+import { IBaseCardRowLayout, renderIBaseCardRowLayout } from './BaseCardRowLayout';
 
-export interface IBaseCardCollapseLayout<T> {
+export interface IBaseCardCollapseLayout<T, ITEM> {
   defaultOpened?: boolean;
   padding?: boolean;
-  rows: OneOrArrayWithNulls<IBaseCardRowLayout<T>>;
+  rows: OneOrArrayWithNulls<IBaseCardRowLayout<T, ITEM>>;
   title: string;
 }
 
-export type IBaseFormCollapseLayout<T> = Omit<IBaseCardCollapseLayout<T>, 'rows'> & {
-  rows: OneOrArrayWithNulls<IBaseFormRowLayout<T>>
-}
-
 // tslint:disable-next-line:no-any
-export function renderIBaseCardCollapseLayout<T>(sourceItem: any, panel: IBaseCardCollapseLayout<T> | IBaseFormCollapseLayout<T>, index: number, fitCollapsePanel: boolean, rowsCount: number): JSX.Element {
+export function renderIBaseCardCollapseLayout<T, ITEM>(sourceItem: any, panel: IBaseCardCollapseLayout<T, ITEM>, index: number, fitCollapsePanel: boolean, rowsCount: number): JSX.Element {
   const padding = defaultIfNotBoolean(panel.padding, true);
 
   return (
@@ -30,7 +26,7 @@ export function renderIBaseCardCollapseLayout<T>(sourceItem: any, panel: IBaseCa
       header={panel.title}
       className={padding ? "" : COLLAPSE_PANEL_NO_PADDING}
     >
-      {wrapInArrayWithoutNulls<IBaseCardRowLayout<T> | IBaseFormRowLayout<T>>(panel.rows).map((row, rowIndex, arr) => renderIBaseCardRowLayout(sourceItem, row, rowIndex, 'collapse', arr.length))}
+      {wrapInArrayWithoutNulls(panel.rows).map((row, rowIndex, arr) => renderIBaseCardRowLayout(sourceItem, row, rowIndex, 'collapse', arr.length))}
     </Collapse.Panel>
   );
 }

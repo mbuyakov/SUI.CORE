@@ -7,27 +7,30 @@ import * as React from 'react';
 import { OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '../typeWrappers';
 
 import { BaseCardContext } from './BaseCardContext';
+import { DEFAULT_ITEM_RENDERER, IBaseCardItemLayout } from './BaseCardItemLayout';
 import { IBaseCardRowLayout, renderIBaseCardRowLayout } from './BaseCardRowLayout';
 import { BaseCardTabContext } from './BaseCardTabContext';
 import { renderIBaseCardTabLayout } from './BaseCardTabLayout';
 
 const renderTabBar = () => <React.Fragment/>;
 
-export interface IBaseCardProps<T> {
+export interface IBaseCardProps<T, ITEM> {
   cardStyle?: React.CSSProperties;
   cardTitle?: JSX.Element | string; // only for noCard: false
   extra?: string | JSX.Element;
   forceRenderTabs?: boolean;
   item?: T;
   noCard?: boolean; // Paradox mode
-  rows: OneOrArrayWithNulls<IBaseCardRowLayout<T>>;
+  rows: OneOrArrayWithNulls<IBaseCardRowLayout<T, ITEM>>;
+  // tslint:disable-next-line:no-any
+  itemRenderer?(sourceItem: any, item: ITEM, colspan: number): React.ReactNode;
 }
 
-export class BaseCard<T> extends React.Component<IBaseCardProps<T>, {
+export class BaseCard<T, ITEM = IBaseCardItemLayout<T>> extends React.Component<IBaseCardProps<T, ITEM>, {
   tab: string
 }> {
 
-  public constructor(props: IBaseCardProps<T>) {
+  public constructor(props: IBaseCardProps<T, ITEM>) {
     super(props);
     this.state = {
       tab: '0',
@@ -59,7 +62,7 @@ export class BaseCard<T> extends React.Component<IBaseCardProps<T>, {
     }
 
     return (
-      <BaseCardContext.Provider value={{ forceRenderTabs: this.props.forceRenderTabs }}>
+      <BaseCardContext.Provider value={{ forceRenderTabs: this.props.forceRenderTabs, itemRenderer: this.props.itemRenderer || DEFAULT_ITEM_RENDERER}}>
         {this.props.noCard
           ? <>{body}</>
           : (

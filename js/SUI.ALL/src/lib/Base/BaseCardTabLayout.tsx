@@ -4,24 +4,20 @@ import * as React from 'react';
 
 import { OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '../typeWrappers';
 
-import { IBaseCardRowLayout, IBaseFormRowLayout, renderIBaseCardRowLayout } from './BaseCardRowLayout';
+import { IBaseCardRowLayout, renderIBaseCardRowLayout } from './BaseCardRowLayout';
 import { BaseCardTabContext } from './BaseCardTabContext';
 
-export interface IBaseCardTabLayout<T> {
+export interface IBaseCardTabLayout<T, ITEM> {
   icon?: string;
-  rows: OneOrArrayWithNulls<IBaseCardRowLayout<T>>;
+  rows: OneOrArrayWithNulls<IBaseCardRowLayout<T, ITEM>>;
   title: string;
 }
 
-export type IBaseFormTabLayout<T> = Omit<IBaseCardTabLayout<T>, 'rows'> & {
-  rows: OneOrArrayWithNulls<IBaseFormRowLayout<T>>
-}
-
 // tslint:disable-next-line:no-any
-export function renderIBaseCardTabLayout<T>(sourceItem: any, tab: IBaseCardTabLayout<T> | IBaseFormTabLayout<T>, tabIndex: number, forceRenderTabs: boolean): JSX.Element {
+export function renderIBaseCardTabLayout<T, ITEM>(sourceItem: any, tab: IBaseCardTabLayout<T, ITEM>, tabIndex: number, forceRenderTabs: boolean): JSX.Element {
   return (
     <Tabs.TabPane key={tabIndex.toString()} tab={<span>{tab.icon && <Icon type={tab.icon}/>}{tab.title}</span>} forceRender={forceRenderTabs}>
-      {wrapInArrayWithoutNulls(tab.rows as OneOrArrayWithNulls<IBaseCardRowLayout<T> | IBaseFormRowLayout<T>>).map((row, index, arr) => renderIBaseCardRowLayout(sourceItem, row, index, 'tab', arr.length))}
+      {wrapInArrayWithoutNulls(tab.rows).map((row, index, arr) => renderIBaseCardRowLayout(sourceItem, row, index, 'tab', arr.length))}
     </Tabs.TabPane>
   );
 }

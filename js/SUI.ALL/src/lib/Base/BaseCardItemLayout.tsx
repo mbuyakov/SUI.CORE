@@ -64,6 +64,8 @@ class CustomRender<T> extends React.Component<ICustomRenderProps<T>, {
   }
 }
 
+export const DEFAULT_ITEM_RENDERER = renderIBaseCardItem;
+
 // tslint:disable-next-line:no-any
 export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayout<T>, colspan: number): React.ReactNode {
   // console.log(item);

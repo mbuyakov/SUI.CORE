@@ -9,11 +9,10 @@ import { errorNotification } from '../drawUtils';
 import { Observable } from '../Observable';
 import { IObjectWithIndex } from '../other';
 import { SUIReactComponent } from '../SUIReactComponent';
-import { OneOrArrayWithNulls } from '../typeWrappers';
 
 import {BaseCard, IBaseCardProps} from './BaseCard';
-import {IBaseFormRowLayout} from './BaseCardRowLayout';
 import {BaseFormContext} from './BaseFormContext';
+import { IBaseFormItemLayout, renderIBaseFormItemLayout } from './BaseFormItemLayout';
 
 export type ValuesGetter = (fields: string[]) => IObjectWithIndex;
 
@@ -33,13 +32,12 @@ export interface IBaseFormChildrenProps {
 
 export type BaseFormChildrenFn = React.FunctionComponent<IBaseFormChildrenProps>;
 
-export type IBaseFormProps = Omit<IBaseCardProps<any>, 'item' | 'rows' | 'forceRenderTabs'> & {
+export type IBaseFormProps = Omit<IBaseCardProps<any, IBaseFormItemLayout>, 'item' | 'forceRenderTabs' | 'itemRenderer'> & {
   children?: BaseFormChildrenFn;
   customFinalInputNodesProps?: IObjectWithIndex;
   customInputNodesProps?: IObjectWithIndex;
   // tslint:disable-next-line:no-any
   initialValues?: IObjectWithIndex;
-  rows: OneOrArrayWithNulls<IBaseFormRowLayout<any>>;
   uuid: string;
   verticalLabel?: boolean;
   // tslint:disable-next-line:no-any
@@ -246,6 +244,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
         <FormBodyWrapper>
           <BaseCard
             forceRenderTabs={true}
+            itemRenderer={renderIBaseFormItemLayout}
             {...rest}
           />
         </FormBodyWrapper>

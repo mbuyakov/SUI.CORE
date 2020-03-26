@@ -4,20 +4,15 @@ import React from 'react';
 import { BASE_CARD_COLS } from '../styles';
 import { OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '../typeWrappers';
 
-import { IBaseCardItemLayout, renderIBaseCardItem } from './BaseCardItemLayout';
-import { IBaseFormItemLayout, renderIBaseFormItemLayout } from './BaseFormItemLayout';
+import { BaseCardContext } from './BaseCardContext';
 
-export interface IBaseCardColLayout<T> {
+export interface IBaseCardColLayout<T, ITEM> {
   colspan?: number;
-  items: OneOrArrayWithNulls<IBaseCardItemLayout<T>>;
+  items: OneOrArrayWithNulls<ITEM>;
   title?: string;
 }
 
-export type IBaseFormColLayout<T> = Omit<IBaseCardColLayout<T>, 'items'> & {
-  items: OneOrArrayWithNulls<IBaseFormItemLayout>
-}
-
-export function renderIBaseCardColsLayout<T>(sourceItem: any, cols: Array<IBaseCardColLayout<T> | IBaseFormColLayout<T>>): JSX.Element {
+export function renderIBaseCardColsLayout<T, ITEM>(sourceItem: any, cols: Array<IBaseCardColLayout<T, ITEM>>): JSX.Element {
   const anyHasTitle = cols.some(col => col.title);
   const maxRows = Math.max(...cols.map(col => wrapInArrayWithoutNulls<any>(col.items).length));
   const rows: JSX.Element[] = [];
@@ -29,9 +24,17 @@ export function renderIBaseCardColsLayout<T>(sourceItem: any, cols: Array<IBaseC
     for (let colIndex = 0; colIndex < cols.length; colIndex++) {
       const col = cols[colIndex];
       const colspan = col.colspan || 1;
-      const item = wrapInArrayWithoutNulls<IBaseCardItemLayout<T> | IBaseFormItemLayout>(col.items)[curRowIndex];
+      const item = wrapInArrayWithoutNulls(col.items)[curRowIndex];
       // console.log(cols, item);
-      itemsInRow.push(item ? ((item as IBaseFormItemLayout).fieldName ? renderIBaseFormItemLayout(item as IBaseFormItemLayout, colspan) : renderIBaseCardItem(sourceItem, item, colspan)) : (<td colSpan={2}/>));
+      itemsInRow.push(
+        item
+          ? (
+            <BaseCardContext.Consumer>
+              {({ itemRenderer }) => (itemRenderer(sourceItem, item, colspan))}
+            </BaseCardContext.Consumer>)
+          : (
+            <td colSpan={2}/>
+            ));
     }
 
     rows.push(
@@ -46,7 +49,10 @@ export function renderIBaseCardColsLayout<T>(sourceItem: any, cols: Array<IBaseC
       {anyHasTitle && (
         <thead>
         <tr>
-          {cols.map(col => (<><th style={{color: "rgba(0, 0, 0, 0.65)"}}>{col.title}</th><th /></>))}
+          {cols.map(col => (<>
+            <th style={{ color: 'rgba(0, 0, 0, 0.65)' }}>{col.title}</th>
+            <th/>
+          </>))}
         </tr>
         </thead>
       )}
