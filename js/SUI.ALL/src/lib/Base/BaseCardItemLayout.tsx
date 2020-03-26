@@ -5,13 +5,10 @@ import * as React from 'react';
 import { BaseTable, IBaseTableProps } from '../BaseTable';
 import { NO_DATA_TEXT } from '../const';
 import { DataKey, getDataByKey } from '../dataKey';
-import { BASE_CARD_ITEM_LABEL_HORIZONTAL } from '../styles';
 import { defaultIfNotBoolean } from '../typeWrappers';
 
 // tslint:disable-next-line:no-any
 export type CardItemRender<T> = (value: any, item: T) => JSX.Element | string;
-
-export type IBaseCardDescItemLayout<T> = Omit<IBaseCardItemLayout<T>, 'tableProps'>;
 
 export interface IBaseCardItemLayout<T> {
   dataKey?: DataKey;
@@ -19,6 +16,7 @@ export interface IBaseCardItemLayout<T> {
   required?: boolean;
   tableProps?: Omit<IBaseTableProps, 'rows'>;
   title?: React.ReactNode;
+  titleVerticalAlign?: "baseline" | "bottom" | "middle" | "sub" | "super" | "text-bottom" | "text-top" | "top";
 }
 
 interface ICustomRenderProps<T> {
@@ -67,21 +65,21 @@ class CustomRender<T> extends React.Component<ICustomRenderProps<T>, {
 }
 
 // tslint:disable-next-line:no-any
-export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayout<T> | IBaseCardDescItemLayout<T>): React.ReactNode {
+export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayout<T>, colspan: number): React.ReactNode {
   // console.log(item);
   const required = defaultIfNotBoolean(item.required, true);
   let data = (item.dataKey !== null && item.dataKey !== undefined) && getDataByKey(sourceItem, item.dataKey);
 
   if (item.render) {
     data = <CustomRender item={sourceItem} render={item.render} value={data}/>;
-  } else if ((item as IBaseCardItemLayout<T>).tableProps) {
+  } else if (item.tableProps) {
     data = (
       // tslint:disable-next-line:ban-ts-ignore
       // @ts-ignore
       <BaseTable
         cardType="inner"
         paperStyle={{ margin: 0 }}
-        {...(item as IBaseCardItemLayout<T>).tableProps}
+        {...(item.tableProps)}
         rows={data}
       />
     );
@@ -105,16 +103,12 @@ export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayou
     data = NO_DATA_TEXT;
   }
 
-  const title = item.title && (
-    <span className={BASE_CARD_ITEM_LABEL_HORIZONTAL}>
-      {item.title}:
-    </span>
-  );
+  const title = item.title && `${item.title as string}: `;
 
   data = (
     <>
-      {title}
-      {data}
+      {title && <td style={{verticalAlign: item.titleVerticalAlign, paddingRight: 12, color: "rgba(121, 119, 119, 0.65)", wordWrap: "break-word", paddingBottom: 8}}>{title}</td>}
+      <td colSpan={(title ? 1 : 2) + ((colspan - 1) * 2)} style={{paddingBottom: 8}}>{data}</td>
     </>
   );
 

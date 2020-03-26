@@ -46,7 +46,7 @@ export type IBaseFormItemLayout = IBaseFormItemLayoutBase | IBaseFormItemLayoutM
 
 export type IBaseFormDescItemLayout = IBaseFormItemLayout;
 
-export function renderIBaseFormItemLayout<T>(item: IBaseFormItemLayout): JSX.Element {
+export function renderIBaseFormItemLayout<T>(item: IBaseFormItemLayout, colspan: number): JSX.Element {
   return (<BaseFormItem {...mapMaskToBase(item)}/>);
 }
 

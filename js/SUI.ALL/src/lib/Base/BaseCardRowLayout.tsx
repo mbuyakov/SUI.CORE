@@ -1,4 +1,3 @@
-import { Descriptions } from 'antd';
 import Collapse from 'antd/lib/collapse';
 import Divider from 'antd/lib/divider';
 import * as React from 'react';
@@ -6,16 +5,13 @@ import * as React from 'react';
 import { BackendTable } from '../BackendTable';
 import { getDataByKey } from '../dataKey';
 import { addQuotesIfString } from '../stringFormatters';
-import { BASE_CARD_ITEM, BASE_CARD_ROW, BASE_CARD_ROWS, BASE_FORM_ITEM } from '../styles';
 import { OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '../typeWrappers';
 
 import { BaseCard } from './BaseCard';
 import { IBaseCardCollapseLayout, renderIBaseCardCollapseLayout } from './BaseCardCollapseLayout';
-import { IBaseCardColLayout, IBaseFormColLayout } from './BaseCardColLayout';
+import { IBaseCardColLayout, IBaseFormColLayout, renderIBaseCardColsLayout } from './BaseCardColLayout';
 import { BaseCardContext } from './BaseCardContext';
-import { IBaseCardDescItemLayout, IBaseCardItemLayout, renderIBaseCardItem } from './BaseCardItemLayout';
 import { IBaseCardTabLayout, IBaseFormTabLayout, ManagedTabs, renderIBaseCardTabLayout } from './BaseCardTabLayout';
-import { IBaseFormDescItemLayout, IBaseFormItemLayout, renderIBaseFormItemLayout } from './BaseFormItemLayout';
 
 // It's BACKEND props. Mark as MetaTableProps for backward computability in RN
 export interface IMetaTableProps {
@@ -28,7 +24,6 @@ export interface IMetaTableProps {
 export interface IBaseCardRowLayout<T> {
   collapsePanels?: Array<IBaseCardCollapseLayout<T>>;
   cols?: OneOrArrayWithNulls<IBaseCardColLayout<T>>;
-  descriptionItems?: OneOrArrayWithNulls<IBaseCardDescItemLayout<T>>;
   dividerDashed?: boolean;
   dividerText?: string;
   fitCollapsePanel?: boolean;
@@ -40,9 +35,8 @@ export interface IBaseCardRowLayout<T> {
   tabsInCard?: boolean;
 }
 
-export type IBaseFormRowLayout<T> = Omit<IBaseCardRowLayout<T>, 'cols' | 'descriptionItems' | 'tabs'> & {
+export type IBaseFormRowLayout<T> = Omit<IBaseCardRowLayout<T>, 'cols' | 'tabs'> & {
   cols?: OneOrArrayWithNulls<IBaseFormColLayout<T>>
-  descriptionItems?: OneOrArrayWithNulls<IBaseFormDescItemLayout>
   tabs?: OneOrArrayWithNulls<IBaseFormTabLayout<T>>
 }
 
@@ -145,7 +139,7 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
           // tslint:disable-next-line:no-magic-numbers
           marginTop: row.fitCollapsePanel && rowIndex === 0 ? (-24) : undefined,
         }}
-        defaultActiveKey={wrapInArrayWithoutNulls(row.collapsePanels).map((panel, index) => ({defaultOpened: panel.defaultOpened, index})).filter(panel => panel.defaultOpened).map(panel => panel.index.toString())}
+        defaultActiveKey={wrapInArrayWithoutNulls(row.collapsePanels).map((panel, index) => ({ defaultOpened: panel.defaultOpened, index })).filter(panel => panel.defaultOpened).map(panel => panel.index.toString())}
       >
         {wrapInArrayWithoutNulls(row.collapsePanels).map((panel, index) => renderIBaseCardCollapseLayout(sourceItem, panel, index, row.fitCollapsePanel || false, rowsLength))}
       </Collapse>
@@ -153,55 +147,9 @@ export function renderIBaseCardRowLayout<T>(sourceItem: any, row: IBaseCardRowLa
   }
 
   if (row.cols) {
-    // return (
-    //   <Row style={row.style}>
-    //     {wrapInArrayWithoutNulls(row.cols).map((col, _, arr) => renderIBaseCardColLayout(sourceItem, col, arr.length))}
-    //   </Row>
-    // );
-    const rows: JSX.Element[] = [];
-
     const cols = wrapInArrayWithoutNulls<IBaseCardColLayout<T> | IBaseFormColLayout<T>>(row.cols);
-    // tslint:disable-next-line:no-any
-    const maxRows = Math.max(...cols.map(col => wrapInArrayWithoutNulls<any>(col.items).length));
 
-    for (let curRowIndex = 0; curRowIndex < maxRows; curRowIndex++) {
-      const itemsInRow: JSX.Element[] = [];
-
-      // tslint:disable-next-line:prefer-for-of
-      for (let colIndex = 0; colIndex < cols.length; colIndex++) {
-        const col = cols[colIndex];
-        const item = wrapInArrayWithoutNulls<IBaseCardItemLayout<T> | IBaseFormItemLayout>(col.items)[curRowIndex];
-        // console.log(cols, item);
-        itemsInRow.push(
-          <div className={(item && (item as IBaseFormItemLayout).fieldName) ? BASE_FORM_ITEM : BASE_CARD_ITEM}>
-            {item && ((item as IBaseFormItemLayout).fieldName ? renderIBaseFormItemLayout(item as IBaseFormItemLayout) : renderIBaseCardItem(sourceItem, item))}
-          </div>,
-        );
-      }
-
-      rows.push(
-        <div className={BASE_CARD_ROW}>
-          {itemsInRow}
-        </div>,
-      );
-    }
-
-    return (
-      <div className={BASE_CARD_ROWS}>
-        {rows}
-      </div>
-    );
-  }
-
-  if (row.descriptionItems) {
-    // console.log(row.descriptionItems);
-    return (
-      <Descriptions
-        size="small"
-      >
-        {wrapInArrayWithoutNulls<IBaseCardItemLayout<T> | IBaseFormItemLayout>(row.descriptionItems).map(descItem => (descItem as IBaseFormItemLayout).fieldName ? renderIBaseFormItemLayout(descItem as IBaseFormItemLayout) : renderIBaseCardItem(sourceItem, descItem as IBaseCardItemLayout<T>))}
-      </Descriptions>
-    );
+    return renderIBaseCardColsLayout(sourceItem, cols);
   }
 
   // tslint:disable-next-line:jsx-key
