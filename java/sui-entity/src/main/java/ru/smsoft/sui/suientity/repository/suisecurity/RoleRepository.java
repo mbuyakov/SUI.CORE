@@ -11,10 +11,10 @@ import java.util.Optional;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    @EntityGraph(Role.WITH_USERS)
-    Optional<Role> findWithUsersByRoleName(RoleName roleName);
+  @EntityGraph(Role.WITH_USERS)
+  Optional<Role> findWithUsersByRoleName(RoleName roleName);
 
-    @EntityGraph(Role.WITH_USERS)
-    Optional<Role> findWithUsersByName(String name);
+  @EntityGraph(Role.WITH_USERS)
+  Optional<Role> findWithUsersByName(String name);
 
 }

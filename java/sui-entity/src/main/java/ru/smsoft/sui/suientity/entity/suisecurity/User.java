@@ -3,6 +3,7 @@ package ru.smsoft.sui.suientity.entity.suisecurity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -34,10 +35,12 @@ import java.util.Set;
 @DynamicInsert
 public class User implements Serializable {
 
+    public static final long SYSTEM_USER_ID = -1;
     public static final String WITH_ROLES = "userWithRoles";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "lazyIdentityGenerator")
+    @GenericGenerator(name = "lazyIdentityGenerator", strategy = "ru.smsoft.sui.suientity.generator.LazyIdentityGenerator")
     private Long id;
 
     @CreatedDate

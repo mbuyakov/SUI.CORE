@@ -13,15 +13,19 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @Override
-	@EntityGraph(value = User.WITH_ROLES)
-    @NonNull Optional<User> findById(@NonNull Long id);
+    @EntityGraph(value = User.WITH_ROLES)
+    @NonNull
+    Optional<User> findById(@NonNull Long id);
 
-	@EntityGraph(value = User.WITH_ROLES)
-	Optional<User> findByUsernameOrEmail(String username, String email);
+    @EntityGraph(value = User.WITH_ROLES)
+    Optional<User> findByUsernameOrEmail(String username, String email);
 
-	Boolean existsByUsername(String username);
-	Boolean existsByEmail(String email);
-	Boolean existsByUsernameAndIdNot(String username, Long id);
-	Boolean existsByEmailAndIdNot(String email, Long id);
+    Boolean existsByUsername(String username);
+
+    Boolean existsByEmail(String email);
+
+    Boolean existsByUsernameAndIdNot(String username, Long id);
+
+    Boolean existsByEmailAndIdNot(String email, Long id);
 
 }

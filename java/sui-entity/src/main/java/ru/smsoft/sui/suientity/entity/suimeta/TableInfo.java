@@ -68,6 +68,8 @@ public class TableInfo implements Persistable<Long> {
 
     private Boolean isCatalog;
 
+    private Boolean isAudited;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Name name;
 
@@ -79,8 +81,13 @@ public class TableInfo implements Persistable<Long> {
     @JsonIgnore
     private ColumnInfo foreignLinkColumnInfo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private ColumnInfo followColumnInfo;
+
     // Don't change to list
-    @OneToMany(mappedBy = "tableInfo", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    // Don't add orphanRemoval = true (conflict with psql ON DELETE CASCADE)
+    @OneToMany(mappedBy = "tableInfo", cascade = {CascadeType.ALL})
     @Singular
     @JsonBackReference("columnInfos")
     private Set<ColumnInfo> columnInfos;

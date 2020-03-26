@@ -13,9 +13,9 @@ import javax.validation.constraints.NotNull;
 @Builder(toBuilder = true)
 public class Sorting {
 
-    @NotNull
-    private String columnName;
+  @NotNull
+  private String columnName;
 
-    @NotNull
-    private SortingDirection direction;
+  @NotNull
+  private SortingDirection direction;
 }

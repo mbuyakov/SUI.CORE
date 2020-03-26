@@ -18,20 +18,20 @@ import ru.smsoft.sui.suisecurity.security.JwtAuthenticationService;
 @Slf4j
 public class AuthChannelInterceptorAdapter implements ChannelInterceptor {
 
-    @NonNull
-    private JwtAuthenticationService jwtAuthenticationService;
+  @NonNull
+  private JwtAuthenticationService jwtAuthenticationService;
 
-    @Override
-    public Message<?> preSend(@org.springframework.lang.NonNull final Message<?> message, final MessageChannel channel) {
-        StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+  @Override
+  public Message<?> preSend(@org.springframework.lang.NonNull final Message<?> message, final MessageChannel channel) {
+    StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
-        if (accessor != null && StompCommand.CONNECT == accessor.getCommand()) {
-            accessor.setUser(
-                    jwtAuthenticationService.getAuthentication(
-                            accessor.getFirstNativeHeader(HttpHeaders.AUTHORIZATION)));
-        }
-
-        return message;
+    if (accessor != null && StompCommand.CONNECT == accessor.getCommand()) {
+      accessor.setUser(
+        jwtAuthenticationService.getAuthentication(
+          accessor.getFirstNativeHeader(HttpHeaders.AUTHORIZATION)));
     }
+
+    return message;
+  }
 
 }

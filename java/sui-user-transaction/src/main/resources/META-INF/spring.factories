@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.rosneft.antifraud.pilot.usertransactionconfigurier.PostgresSettingAspect
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.smsoft.sui.usertransactionconfigurier.autoconfigure.AutoConfiguration

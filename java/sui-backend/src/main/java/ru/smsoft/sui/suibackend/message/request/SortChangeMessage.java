@@ -14,5 +14,5 @@ import java.util.List;
 @Builder(toBuilder = true)
 public class SortChangeMessage {
 
-    private List<Sorting> sorts;
+  private List<Sorting> sorts;
 }

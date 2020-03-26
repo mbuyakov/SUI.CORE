@@ -11,10 +11,11 @@ import ru.smsoft.sui.suibackend.message.model.filtering.enumeration.FilteringOpe
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class IntervalColumnFiltering extends ColumnFiltering {
 
-    private String[] value;
+  private String[] value;
 
-    public IntervalColumnFiltering(String columnName, boolean raw, String[] value) {
-        super(columnName, FilteringOperation.INTERVAL, raw);
-        this.value = value;
-    }
+  public IntervalColumnFiltering(String columnName, boolean raw, String[] value) {
+    super(columnName, FilteringOperation.INTERVAL, raw);
+    this.value = value;
+  }
+
 }

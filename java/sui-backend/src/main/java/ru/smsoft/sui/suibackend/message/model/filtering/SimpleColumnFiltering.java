@@ -11,10 +11,10 @@ import ru.smsoft.sui.suibackend.message.model.filtering.enumeration.FilteringOpe
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class SimpleColumnFiltering extends ColumnFiltering {
 
-    private String value;
+  private String value;
 
-    public SimpleColumnFiltering(String columnName, FilteringOperation operation, boolean raw, String value) {
-        super(columnName, operation, raw);
-        this.value = value;
-    }
+  public SimpleColumnFiltering(String columnName, FilteringOperation operation, boolean raw, String value) {
+    super(columnName, operation, raw);
+    this.value = value;
+  }
 }

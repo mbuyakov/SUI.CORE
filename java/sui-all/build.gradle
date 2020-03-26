@@ -1,0 +1,16 @@
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+
+dependencies {
+    compile project(":sui-backend")
+    compile project(":sui-entity")
+    compile project(":sui-meta-schema-service")
+    compile project(":sui-security")
+    compile project(":sui-user-transaction")
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}

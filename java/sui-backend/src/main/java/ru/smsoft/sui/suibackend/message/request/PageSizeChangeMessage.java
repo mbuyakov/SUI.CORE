@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class PageSizeChangeMessage {
 
-    private Long pageSize;
+  private Long pageSize;
 }

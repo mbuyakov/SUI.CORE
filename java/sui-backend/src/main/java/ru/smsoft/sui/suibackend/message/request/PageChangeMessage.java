@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class PageChangeMessage {
 
-    private Long currentPage;
+  private Long currentPage;
 }

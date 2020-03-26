@@ -1,4 +1,9 @@
 pipeline {
+  options {
+      buildDiscarder logRotator(numToKeepStr: '3')
+      disableConcurrentBuilds()
+  }
+
   agent any
 
   stages {
@@ -14,9 +19,9 @@ pipeline {
       }
     }
     stage("Parralel"){
-      when {
-        branch "master"
-      }
+//       when {
+//         branch "master"
+//       }
       parallel {
         stage("JVM") {
           steps {
@@ -32,59 +37,59 @@ pipeline {
                 {
                   "files": [
                     {
-                      "pattern": "**/sui-entity/build/libs/sui-entity-${BUILD_NUMBER}.jar",
-                      "target": "sui/ru/smsoft/sui/sui-entity/${BUILD_NUMBER}/sui-entity-${BUILD_NUMBER}.jar"
+                      "pattern": "**/sui-backend/build/libs/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
+                      "target": "sui/ru/smsoft/sui/sui-backend/${BUILD_NUMBER}-${BRANCH_NAME}/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
                     },
                     {
-                      "pattern": "**/sui-entity/build/libs/sui-entity-${BUILD_NUMBER}.pom",
-                      "target": "sui/ru/smsoft/sui/sui-entity/${BUILD_NUMBER}/sui-entity-${BUILD_NUMBER}.pom"
+                      "pattern": "**/sui-backend/build/libs/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
+                      "target": "sui/ru/smsoft/sui/sui-backend/${BUILD_NUMBER}-${BRANCH_NAME}/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     },
                     {
-                      "pattern": "**/sui-security/build/libs/sui-security-${BUILD_NUMBER}.jar",
-                      "target": "sui/ru/smsoft/sui/sui-security/${BUILD_NUMBER}/sui-security-${BUILD_NUMBER}.jar"
+                      "pattern": "**/sui-entity/build/libs/sui-entity-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
+                      "target": "sui/ru/smsoft/sui/sui-entity/${BUILD_NUMBER}-${BRANCH_NAME}/sui-entity-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
                     },
                     {
-                      "pattern": "**/sui-security/build/libs/sui-security-${BUILD_NUMBER}.pom",
-                      "target": "sui/ru/smsoft/sui/sui-security/${BUILD_NUMBER}/sui-security-${BUILD_NUMBER}.pom"
+                      "pattern": "**/sui-entity/build/libs/sui-entity-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
+                      "target": "sui/ru/smsoft/sui/sui-entity/${BUILD_NUMBER}-${BRANCH_NAME}/sui-entity-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     },
                     {
-                      "pattern": "**/sui-meta-schema-service/build/libs/sui-meta-schema-service-${BUILD_NUMBER}.jar",
-                      "target": "sui/ru/smsoft/sui/sui-meta-schema-service/${BUILD_NUMBER}/sui-meta-schema-service-${BUILD_NUMBER}.jar"
+                      "pattern": "**/sui-security/build/libs/sui-security-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
+                      "target": "sui/ru/smsoft/sui/sui-security/${BUILD_NUMBER}-${BRANCH_NAME}/sui-security-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
                     },
                     {
-                      "pattern": "**/sui-meta-schema-service/build/libs/sui-meta-schema-service-${BUILD_NUMBER}.pom",
-                      "target": "sui/ru/smsoft/sui/sui-meta-schema-service/${BUILD_NUMBER}/sui-meta-schema-service-${BUILD_NUMBER}.pom"
+                      "pattern": "**/sui-security/build/libs/sui-security-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
+                      "target": "sui/ru/smsoft/sui/sui-security/${BUILD_NUMBER}-${BRANCH_NAME}/sui-security-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     },
                     {
-                      "pattern": "**/sui-user-transaction/build/libs/sui-user-transaction-${BUILD_NUMBER}.jar",
-                      "target": "sui/ru/smsoft/sui/sui-user-transaction/${BUILD_NUMBER}/sui-user-transaction-${BUILD_NUMBER}.jar"
+                      "pattern": "**/sui-meta-schema-service/build/libs/sui-meta-schema-service-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
+                      "target": "sui/ru/smsoft/sui/sui-meta-schema-service/${BUILD_NUMBER}-${BRANCH_NAME}/sui-meta-schema-service-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
                     },
                     {
-                      "pattern": "**/sui-user-transaction/build/libs/sui-user-transaction-${BUILD_NUMBER}.pom",
-                      "target": "sui/ru/smsoft/sui/sui-user-transaction/${BUILD_NUMBER}/sui-user-transaction-${BUILD_NUMBER}.pom"
+                      "pattern": "**/sui-meta-schema-service/build/libs/sui-meta-schema-service-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
+                      "target": "sui/ru/smsoft/sui/sui-meta-schema-service/${BUILD_NUMBER}-${BRANCH_NAME}/sui-meta-schema-service-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     },
                     {
-                      "pattern": "**/sui-backend/build/libs/sui-backend-${BUILD_NUMBER}.jar",
-                      "target": "sui/ru/smsoft/sui/sui-backend/${BUILD_NUMBER}/sui-backend-${BUILD_NUMBER}.jar"
+                      "pattern": "**/sui-user-transaction/build/libs/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
+                      "target": "sui/ru/smsoft/sui/sui-user-transaction/${BUILD_NUMBER}-${BRANCH_NAME}/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
                     },
                     {
-                      "pattern": "**/sui-backend/build/libs/sui-backend-${BUILD_NUMBER}.pom",
-                      "target": "sui/ru/smsoft/sui/sui-backend/${BUILD_NUMBER}/sui-backend-${BUILD_NUMBER}.pom"
+                      "pattern": "**/sui-user-transaction/build/libs/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
+                      "target": "sui/ru/smsoft/sui/sui-user-transaction/${BUILD_NUMBER}-${BRANCH_NAME}/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     }
                   ]
                 }
               """
-              server.upload(uploadSpec)
+              server.upload spec: uploadSpec, failNoOp: true
             }
           }
         }
         stage("JS") {
           steps {
             sh """
-              git fetch --tags --force
+              cd js/SUI.ALL
               yarn install
               yarn ci
-              yarn publish-all
+              yarn publish --registry http://verdaccio.smp.sm-soft.ru/ --non-interactive --new-version 6.0.${BUILD_NUMBER}-${BRANCH_NAME}
             """
           }
         }

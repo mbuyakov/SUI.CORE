@@ -1,0 +1,35 @@
+@import "~antd/lib/style/color/colorPalette";
+@import "~antd/dist/antd";
+
+@import "row";
+@import "BaseCardCollapse";
+@import "BaseCard";
+@import "BaseTable";
+@import "CustomOdometer";
+@import "DnfForm";
+@import "DraggableRowTable";
+@import "FullScreenModal";
+@import "Report";
+@import "warningPlugin";
+@import "TableRenderSettingsPopover";
+@import "waitData";
+@import "./common";
+@import "./DnDList";
+@import "./ItemSettings";
+@import "./LeftMenu";
+@import "./MainSettings";
+@import "./TabSettings";
+@import "./TreeSelectWithWaitData";
+@import "./utils";
+
+
+:global {
+  g[opacity="0.4"], g[opacity="0.3"] {
+    display: none !important;
+  }
+  .ant-picker-ranges {
+    display: flex;
+    flex-wrap: wrap;
+    width: 560px;
+  }
+}

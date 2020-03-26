@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class Grouping {
 
-    private String columnName;
+  private String columnName;
 }

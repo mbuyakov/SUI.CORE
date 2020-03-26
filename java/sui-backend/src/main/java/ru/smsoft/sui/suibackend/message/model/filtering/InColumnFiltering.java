@@ -13,10 +13,10 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class InColumnFiltering extends ColumnFiltering {
 
-    private List<Object> elements;
+  private List<Object> elements;
 
-    InColumnFiltering(String columnName, FilteringOperation operation, boolean raw, List<Object> elements) {
-        super(columnName, operation, raw);
-        this.elements = elements;
-    }
+  InColumnFiltering(String columnName, FilteringOperation operation, boolean raw, List<Object> elements) {
+    super(columnName, operation, raw);
+    this.elements = elements;
+  }
 }

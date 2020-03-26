@@ -57,11 +57,13 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(web: WebSecurity) {
-        web.ignoring().antMatchers("/v2/api-docs",
+        web.ignoring().antMatchers(
+                "/v2/api-docs",
                 "/swagger-resources/**",
                 "/swagger-ui.html",
                 "/webjars/**",
-                "/table-backend")
+                "/table-backend"
+        )
     }
 
     @Throws(Exception::class)

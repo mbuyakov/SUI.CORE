@@ -14,12 +14,12 @@ import java.util.List;
 @Builder(toBuilder = true)
 public class InitMessage {
 
-    private Long tableInfoId;
+  private Long tableInfoId;
 
-    private Long pageSize;
+  private Long pageSize;
 
-    private List<Filtering> defaultFilters;
+  private List<Filtering> defaultFilters;
 
-    private List<Filtering> globalFilters;
+  private List<Filtering> globalFilters;
 
 }

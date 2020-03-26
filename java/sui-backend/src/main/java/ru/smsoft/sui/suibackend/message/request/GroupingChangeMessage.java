@@ -15,6 +15,6 @@ import java.util.List;
 @Builder(toBuilder = true)
 public class GroupingChangeMessage {
 
-    private List<Grouping> groupings;
+  private List<Grouping> groupings;
 
 }
