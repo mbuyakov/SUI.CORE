@@ -5,7 +5,7 @@ import Input from 'antd/lib/input';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import { IBaseCardRowLayout } from '../Base';
+import { IBaseCardItemLayout, IBaseCardRowLayout } from '../Base';
 import { DeletableSmallCard } from '../DeletableSmallCard';
 import { DnDList, IBaseDnDChildProps } from '../Draggable';
 import { ISerializable, SerializableDnDChild } from '../Draggable/Serializable';
@@ -20,7 +20,7 @@ import { OldVersionWarning } from './OldVersionWarning';
 import { SerializedTabSettings, TabSettings } from './TabSettings';
 
 // tslint:disable-next-line:no-any
-type RowSettingsState = Merge<IBaseCardRowLayout<any>, {
+type RowSettingsState = Merge<IBaseCardRowLayout<any, IBaseCardItemLayout<any>>, {
   collapsePanels?: SerializedCollapseSettings[]
   cols?: SerializedColSettings[]
   tabs?: SerializedTabSettings[]

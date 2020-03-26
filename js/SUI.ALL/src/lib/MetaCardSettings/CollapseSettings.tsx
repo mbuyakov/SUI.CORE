@@ -3,7 +3,7 @@ import Checkbox, {CheckboxChangeEvent} from "antd/lib/checkbox";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import { IBaseCardCollapseLayout } from '../Base';
+import { IBaseCardCollapseLayout, IBaseCardItemLayout } from '../Base';
 import {DeletableSmallCard} from "../DeletableSmallCard";
 import {DnDList} from "../Draggable";
 import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
@@ -14,7 +14,7 @@ import {RowSettings, SerializedRowSettings} from "./RowSettings";
 import {RowsList} from "./RowsList";
 
 // tslint:disable-next-line:no-any
-type CollapseSettingsState = Merge<IBaseCardCollapseLayout<any>, {
+type CollapseSettingsState = Merge<IBaseCardCollapseLayout<any, IBaseCardItemLayout<any>>, {
   rows: SerializedRowSettings[];
 }>;
 

@@ -2,7 +2,7 @@ import autobind from 'autobind-decorator';
 import * as React from 'react';
 import { ContainerOptions } from 'react-smooth-dnd';
 
-import { IBaseCardColLayout } from '../Base';
+import { IBaseCardColLayout, IBaseCardItemLayout } from '../Base';
 import { getDataByKey } from '../dataKey';
 import {DnDList} from "../Draggable";
 import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
@@ -11,7 +11,7 @@ import { Merge } from '../other';
 import {ItemSettings, SerializedItemSettings} from "./ItemSettings";
 
 // tslint:disable-next-line:no-any
-type ColSettingsState = Merge<IBaseCardColLayout<any>, {
+type ColSettingsState = Merge<IBaseCardColLayout<any, IBaseCardItemLayout<any>>, {
   items: SerializedItemSettings[];
 }>;
 

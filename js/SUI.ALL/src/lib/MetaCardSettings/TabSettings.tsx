@@ -5,7 +5,7 @@ import Tooltip from 'antd/lib/tooltip';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import { IBaseCardTabLayout } from '../Base';
+import { IBaseCardItemLayout, IBaseCardTabLayout } from '../Base';
 import {DeletableSmallCard} from "../DeletableSmallCard";
 import { DnDList, IBaseDnDChildProps } from '../Draggable';
 import { ISerializable, SerializableDnDChild } from '../Draggable/Serializable';
@@ -15,7 +15,7 @@ import {RowSettings, SerializedRowSettings} from "./RowSettings";
 import {RowsList} from "./RowsList";
 
 // tslint:disable-next-line:no-any
-type TabSettingsState = Omit<IBaseCardTabLayout<any>, 'rows'> & {
+type TabSettingsState = Omit<IBaseCardTabLayout<any, IBaseCardItemLayout<any>>, 'rows'> & {
   rows: SerializedRowSettings[];
 };
 

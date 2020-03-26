@@ -7,7 +7,7 @@ import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
-import { BaseCard, DATA_KEY_REGEXP, IBaseCardRowLayout } from '../Base';
+import { BaseCard, DATA_KEY_REGEXP, IBaseCardItemLayout, IBaseCardRowLayout } from '../Base';
 import { ColumnInfoManager, NameManager, TableInfoManager } from '../cache';
 import { NO_DATA_TEXT } from '../const';
 import { DataKey, dataKeysToDataTree, getDataByKey, normalizeDataKey } from '../dataKey';
@@ -169,7 +169,7 @@ export class MetaCard extends React.Component<IMetaCardProps, {
           this.setState({ error: `Плагин "${row.__type}" не найден` });
         }
 
-        (row as unknown as IBaseCardRowLayout<any>).cols = {
+        (row as unknown as IBaseCardRowLayout<any, IBaseCardItemLayout<any>>).cols = {
           items: {
             // tslint:disable-next-line:ban-ts-ignore
             // @ts-ignore
