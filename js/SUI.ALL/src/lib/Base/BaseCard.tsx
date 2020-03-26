@@ -39,11 +39,12 @@ export class BaseCard<T> extends React.Component<IBaseCardProps<T>, {
     let tabList;
     let tabBarExtraContent;
     const firstChildrenIsTab = this.isFirstChildrenIsTab();
+    const firstChildrenTabs = wrapInArrayWithoutNulls(rows[0].tabs);
     // Attach tab to card props
     if (firstChildrenIsTab) {
       // tslint:disable-next-line:ban-ts-ignore
       // @ts-ignore
-      tabList = rows[0].tabs.map((tab, i) => ({ key: i.toString(), tab: (<span>{tab.icon && <Icon type={tab.icon}/>}{tab.title}</span>) }));
+      tabList = firstChildrenTabs.map((tab, i) => ({ key: i.toString(), tab: (<span>{tab.icon && <Icon type={tab.icon}/>}{tab.title}</span>) }));
       tabBarExtraContent = rows[0].tabBarExtraContent;
     }
     let body = null;
@@ -51,7 +52,7 @@ export class BaseCard<T> extends React.Component<IBaseCardProps<T>, {
     if (firstChildrenIsTab) {
       // tslint:disable-next-line:ban-ts-ignore
       // @ts-ignore
-      body = rows[0].tabs.map((tab, tabIndex) => renderIBaseCardTabLayout(this.props.item, tab, tabIndex, this.props.forceRenderTabs));
+      body = firstChildrenTabs.map((tab, tabIndex) => renderIBaseCardTabLayout(this.props.item, tab, tabIndex, this.props.forceRenderTabs));
       // this.renderTabPanes(rows[0].tabs)
     } else {
       body = rows.map((row, rowIndex, arr) => renderIBaseCardRowLayout(this.props.item, row, rowIndex, 'card', arr.length, this.isFirstChildrenIsTab()));
