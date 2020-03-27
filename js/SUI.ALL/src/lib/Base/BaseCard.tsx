@@ -26,7 +26,8 @@ export interface IBaseCardProps<T, ITEM> {
   itemRenderer?(sourceItem: any, item: ITEM, colspan: number): React.ReactNode;
 }
 
-export class BaseCard<T, ITEM = IBaseCardItemLayout<T>> extends React.Component<IBaseCardProps<T, ITEM>, {
+// tslint:disable-next-line:no-any
+export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Component<IBaseCardProps<T, ITEM>, {
   tab: string
 }> {
 
