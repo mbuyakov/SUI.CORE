@@ -17,6 +17,7 @@ const renderTabBar = () => <React.Fragment/>;
 export interface IBaseCardProps<T, ITEM> {
   cardStyle?: React.CSSProperties;
   cardTitle?: JSX.Element | string; // only for noCard: false
+  className?: string; // only for noCard: false
   extra?: string | JSX.Element;
   forceRenderTabs?: boolean;
   item?: T;
@@ -75,6 +76,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
               onTabChange={this.onTabChange}
               extra={this.props.extra}
               style={this.props.cardStyle}
+              className={this.props.className}
               bodyStyle={firstChildrenIsTab ? { padding: 0 } : {}}
             >
               {firstChildrenIsTab
