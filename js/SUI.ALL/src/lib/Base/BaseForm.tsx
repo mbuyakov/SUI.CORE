@@ -1,6 +1,7 @@
 /* tslint:disable:no-any */
 import asyncValidator, { RuleItem } from 'async-validator';
 import autobind from 'autobind-decorator';
+import classNames from 'classnames';
 import isEqual from 'lodash/isEqual';
 import moment from 'moment';
 import * as React from 'react';
@@ -8,6 +9,7 @@ import * as React from 'react';
 import { errorNotification } from '../drawUtils';
 import { Observable } from '../Observable';
 import { IObjectWithIndex } from '../other';
+import { BASE_FORM_CLASS } from '../styles';
 import { SUIReactComponent } from '../SUIReactComponent';
 
 import {BaseCard, IBaseCardProps} from './BaseCard';
@@ -245,6 +247,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
           <BaseCard
             forceRenderTabs={true}
             itemRenderer={renderIBaseFormItemLayout}
+            className={classNames(BASE_FORM_CLASS, this.props.className)}
             {...rest}
           />
         </FormBodyWrapper>

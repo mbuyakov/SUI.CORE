@@ -9,6 +9,7 @@ export const COLLAPSE_PANEL_NO_PADDING = "collapsePanelNoPadding";
 export const BASE_CARD_COLS = "baseCardCols";
 export const BASE_CARD_ITEM = "baseCardItem";
 export const BASE_CARD_ITEM_LABEL_HORIZONTAL = "baseCardItemLabelHorizontal";
+export const BASE_FORM_CLASS = "baseForm";
 export const BASE_FORM_ITEM_VERTICAL = "baseFormItemVertical";
 export const SMALL_HEADER_PADDING = "small-header-padding";
 export const PLUS_ODOMETER = "plus-odometer";
