@@ -171,7 +171,9 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
       if (this.props.handleDelete) {
         await (this.props.handleDelete(selection)
           .then(async () => {
-            notification.success({message: "Записи успешно удалены"});
+            if (!!this.props.disableDeleteNotification){
+              notification.success({message: "Записи успешно удалены"});
+            }
             this.tableRef.current.clearSelection();
 
             return this.tableRef.current.refresh();
