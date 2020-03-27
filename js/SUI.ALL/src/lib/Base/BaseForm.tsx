@@ -9,7 +9,7 @@ import { errorNotification } from '../drawUtils';
 import { Observable } from '../Observable';
 import { IObjectWithIndex } from '../other';
 import { SUIReactComponent } from '../SUIReactComponent';
-import { OneOrArrayWithNulls } from '../typeWrappers';
+import {OneOrArray, OneOrArrayWithNulls, wrapInArray} from '../typeWrappers';
 
 import {BaseCard, IBaseCardProps} from './BaseCard';
 import {IBaseFormRowLayout} from './BaseCardRowLayout';
@@ -39,6 +39,7 @@ export type IBaseFormProps = Omit<IBaseCardProps<any>, 'item' | 'rows' | 'forceR
   customInputNodesProps?: IObjectWithIndex;
   // tslint:disable-next-line:no-any
   initialValues?: IObjectWithIndex;
+  momentFields?: OneOrArray<string>;
   rows: OneOrArrayWithNulls<IBaseFormRowLayout<any>>;
   uuid: string;
   verticalLabel?: boolean;
@@ -381,15 +382,17 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
 
   @autobind
   private setFieldsValuesFromRaw(values: IObjectWithIndex): void {
+    const momentsFields = this.props.momentFields && wrapInArray(this.props.momentFields) || []
+
     const parsedValues = Object.keys(values).reduce((prev, curKey) => {
       let fieldValue = values[curKey];
 
       // Magic
       // tslint:disable-next-line:no-magic-numbers
-      if (typeof fieldValue === 'string' && ((fieldValue.match(/-/g) || []).length >= 2 || fieldValue.includes('.'))) {
+      if (typeof fieldValue === 'string' && momentsFields.includes(curKey)) {
         const momentValue = moment(fieldValue);
+
         if (momentValue.isValid()) {
-          // noinspection JSUnfilteredForInLoop
           fieldValue = momentValue;
         }
       }
