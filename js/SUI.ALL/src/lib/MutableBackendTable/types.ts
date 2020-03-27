@@ -32,5 +32,4 @@ export type IMutableBackendTableProps<TValues, TSelection, TEditValues = TValues
   // Others
   mutationRoles?: string[];
   customExtra?(createButton: JSX.Element, deleteButton: JSX.Element): JSX.Element;
-  disableDeleteNotification?: boolean;
 };
