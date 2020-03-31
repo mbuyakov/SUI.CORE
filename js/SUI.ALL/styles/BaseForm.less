@@ -1,0 +1,17 @@
+@import "~antd/lib/style/themes/default";
+
+:global {
+  .ant-form-item-required::before {
+    display: inline-block;
+    margin-right: 4px;
+    color: @error-color;
+    font-size: 14px;
+    font-family: SimSun,sans-serif;
+    line-height: 1;
+    content: '*';
+  }
+
+  .baseForm .baseCardCols {
+    margin-bottom: 0 !important;
+  }
+}
