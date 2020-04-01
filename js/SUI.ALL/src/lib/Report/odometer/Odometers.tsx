@@ -31,10 +31,11 @@ export class Odometers extends React.Component<IOdometersProps> {
         style={this.props.containerStyle}
       >
         {this.props.odometerDefinition.map(definition => {
-          const {containerStyle, ...customOdometerProps} = definition;
+          const {id, containerStyle, ...customOdometerProps} = definition;
 
           return (
             <div
+              key={id}
               style={{
                 ...containerStyle,
                 ...this.props.commonSectionStyle
