@@ -73,7 +73,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
               promise={this.handleDeleteClick}
               popconfirmSettings={{
                 placement: "topRight",
-                title: "Вы уверены что хотите удалить выбранные записи?"
+                title: "Вы уверены, что хотите удалить выбранные записи?"
               }}
             >
               {deleteButtonProps && deleteButtonProps.children || "Удалить"}
