@@ -39,7 +39,7 @@ public class PostgresSettingAspect implements Ordered {
         appendCurrentUserSetting(defaultResolveUserStrategy.getUserId());
     }
 
-    @Before("@annotation(withUser))")
+    @Before("@annotation(ru.smsoft.sui.usertransactionconfigurier.WithUser))")
     public void appendCurrentUserSetting(WithUser withUser) {
         val strategyClass = withUser.strategy();
         val strategyBeanName = withUser.beanName();
