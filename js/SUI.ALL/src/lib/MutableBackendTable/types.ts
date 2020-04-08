@@ -5,6 +5,7 @@ import {BackendTable} from "../BackendTable";
 import {PromisedButton} from "../Inputs";
 import {IPromisedBaseFormModalOnlyModalProps, IPromisedBaseFormModalProps} from "../Modal";
 import {ExtractProps, IObjectWithIndex} from "../other";
+
 import { DEFAULT_MODAL_WIDTH_VARIANT } from './MutableBackendTable';
 
 type IPromisedBaseFormModalPropsBase<T> = Omit<IPromisedBaseFormModalProps<T>, "onSubmit" | "baseFormProps">;
