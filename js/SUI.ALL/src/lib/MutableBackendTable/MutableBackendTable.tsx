@@ -22,6 +22,11 @@ import {IMutableBackendTableProps} from "./types";
 // tslint:disable-next-line:variable-name
 export const MutableBackendTableButtonGap = 32;
 
+export const DEFAULT_MODAL_WIDTH_VARIANT = {
+  small: 550,
+  // tslint:disable-next-line:object-literal-sort-keys
+  large: 1500
+};
 interface IMutableBackendTableState<T> {
   editModalInitialValues?: Partial<T>;
   editRow?: IObjectWithIndex;
@@ -106,6 +111,8 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
               : this.props.editBaseFormProps
             : {...this.props.createBaseFormProps, uuid: `${getDataByKey(this.props.createBaseFormProps, "uuid") || ""}__EDIT`};
 
+          const width = (this.props.width && {width: DEFAULT_MODAL_WIDTH_VARIANT[this.props.width]});
+
           return (
             <>
               <BackendTable<TSelection>
@@ -134,6 +141,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
               />
               {/* Create modal */}
               <PromisedBaseFormModal<TValues>
+                {...width}
                 {...this.props.commonModalProps}
                 {...this.props.createBaseFormModalProps}
                 baseFormProps={this.props.createBaseFormProps}
@@ -143,6 +151,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
               {/* Edit modal */}
               {rowEditable && (
                 <PromisedBaseFormModal<TEditValues>
+                  {...width}
                   {...this.props.commonModalProps}
                   {...editBaseFormModalProps}
                   ref={this.editBaseFormModalRef}

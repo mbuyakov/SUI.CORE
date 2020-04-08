@@ -5,6 +5,7 @@ import {BackendTable} from "../BackendTable";
 import {PromisedButton} from "../Inputs";
 import {IPromisedBaseFormModalOnlyModalProps, IPromisedBaseFormModalProps} from "../Modal";
 import {ExtractProps, IObjectWithIndex} from "../other";
+import { DEFAULT_MODAL_WIDTH_VARIANT } from './MutableBackendTable';
 
 type IPromisedBaseFormModalPropsBase<T> = Omit<IPromisedBaseFormModalProps<T>, "onSubmit" | "baseFormProps">;
 export type BaseFormProps<T> = IPromisedBaseFormModalProps<T>["baseFormProps"];
@@ -13,6 +14,7 @@ export type BaseFormPropsFn<T> = (row: IObjectWithIndex) => BaseFormProps<T>;
 export type IMutableBackendTableProps<TValues, TSelection, TEditValues = TValues> =
   Omit<ExtractProps<BackendTable<TSelection>>, "innerRef" | "extra" | "ref">
   & {
+  width?: keyof (typeof DEFAULT_MODAL_WIDTH_VARIANT),
   // Modal props
   commonModalProps?: Partial<IPromisedBaseFormModalOnlyModalProps>;
   createBaseFormModalProps?: IPromisedBaseFormModalPropsBase<TValues>;
