@@ -23,7 +23,9 @@ import {IMutableBackendTableProps} from "./types";
 export const MutableBackendTableButtonGap = 32;
 
 export const DEFAULT_MODAL_WIDTH_VARIANT = {
-  small: 550,
+  small: 600,
+  // tslint:disable-next-line:object-literal-sort-keys
+  medium: 900,
   // tslint:disable-next-line:object-literal-sort-keys
   large: 1500
 };
