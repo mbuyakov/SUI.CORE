@@ -134,7 +134,7 @@ export class BackendTable<TSelection = defaultSelection>
 
     if (this.props.id) {
       const urlFilters = getFiltersFromUrlParam(this.props.id);
-
+      console.debug("urlFilters", urlFilters);
       if (urlFilters) {
         const shouldMergeFilters = getHrefLocation().searchParams.has(MERGE_URL_PARAM);
 
