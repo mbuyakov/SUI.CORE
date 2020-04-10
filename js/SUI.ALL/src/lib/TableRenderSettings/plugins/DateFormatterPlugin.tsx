@@ -3,11 +3,13 @@ import { Checkbox, Input } from 'antd';
 import moment from 'moment';
 import * as React from 'react';
 
-import {IBaseTableColLayout} from "../BaseTable";
-import {ColumnInfo} from "../cache";
-import {ITableRenderParams, TableRenderSettingsPopover} from "../TableRenderSettings";
-import {TableRenderParamsPlugin} from "../TableRenderSettings/plugins";
-import {IColumnInfoToBaseTableColProps} from "../utils";
+import { IBaseTableColLayout } from '../../BaseTable';
+import { ColumnInfo } from '../../cache';
+import { IColumnInfoToBaseTableColProps } from '../../utils';
+import { TableRenderSettingsPluginManager } from '../TableRenderSettingsPluginManager';
+import { ITableRenderParams, TableRenderSettingsPopover } from '../TableRenderSettingsPopover';
+
+import { TableRenderParamsPlugin } from './TableRenderParamsPlugin';
 
 
 export interface IDateFormatterPluginTRP {
@@ -79,5 +81,6 @@ export class DateFormatterPlugin extends TableRenderParamsPlugin<IDateFormatterP
       </>
     );
   }
-
 }
+
+TableRenderSettingsPluginManager.register(new DateFormatterPlugin());
