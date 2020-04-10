@@ -35,6 +35,7 @@ export type ISUISettings = IInitSUISettings & {
 
 
 export function initSUI(settings: IInitSUISettings): void {
+  const user = getUser();
   window.SUI = {
     ...settings,
     apolloClient: new ApolloClient({
@@ -44,7 +45,7 @@ export function initSUI(settings: IInitSUISettings): void {
         // tslint:disable-next-line
         headers: {
           ...(settings.basicAuthToken ? {authorization: settings.basicAuthToken} : undefined),
-          "user-id": getUser().id
+          "user-id": user && user.id
         }
       }),
     })
