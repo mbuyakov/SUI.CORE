@@ -1,4 +1,4 @@
-import { Color, findColorBetween } from './color';
+import { Color } from './color';
 
 declare let window: Window & {
   SUI_CORE_PTC_CACHE: Map<number, Color> | undefined;

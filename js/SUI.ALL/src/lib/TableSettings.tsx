@@ -18,6 +18,7 @@ import {AdditionalTab} from './additionalTabs';
 import { BaseCard } from './Base';
 import { SortingDirection } from './BaseTable';
 import {ColumnInfo, TableInfo, TableInfoManager} from './cache';
+import { getSUISettings } from './core';
 import { getDataByKey } from './dataKey';
 import { DescriptionItem } from './DescriptionItem';
 import { DraggableRowTable } from './DraggableRowTable';
@@ -31,7 +32,7 @@ import { SUI_ROW, SUI_ROW_GROW_LEFT } from './styles';
 import { TableRenderSettingsPopover } from './TableRenderSettings';
 import { TooltipIcon } from './TooltipIcon';
 import { IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IRole, ISubtotalType, ITableInfo } from './types';
-import { draw, fullReloadTableInfo, getLinkForTable, getMetaInitProps } from './utils';
+import { draw, fullReloadTableInfo, getLinkForTable } from './utils';
 import { WaitData } from './WaitData';
 
 
@@ -57,7 +58,7 @@ export function FullScreenTableSettings(props: {
         </WaitData>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <PromisedMaterialIconButton
-            promise={getMetaInitProps().metaschemaRefreshPromise}
+            promise={getSUISettings().metaschemaRefreshPromise}
             tooltipText="Обновить метасхему"
             progressColor="secondary"
           >
@@ -277,7 +278,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                         icon={<ChevronRightIcon/>}
                                         type="number"
                                         promise={(value: any): any => {
-                                          getMetaInitProps().routerPushFn(getLinkForTable(data.tableInfoById.tableName, 'card', value));
+                                          getSUISettings().routerPushFn(getLinkForTable(data.tableInfoById.tableName, 'card', value));
 
                                           // Stub
                                           return new Promise((resolve): void => resolve());

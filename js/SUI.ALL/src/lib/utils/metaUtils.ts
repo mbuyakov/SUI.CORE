@@ -1,6 +1,6 @@
-
 import { SelectData } from '../BaseTable';
-import {ColumnInfo, ColumnInfoManager, TableInfo, TableInfoManager} from "../cache";
+import { ColumnInfo, ColumnInfoManager, TableInfo, TableInfoManager } from '../cache';
+import { getSUISettings } from '../core';
 import { DataKey, dataKeysToDataTree, getDataByKey } from '../dataKey';
 import { IGqlFilter, query, stringifyGqlFilter } from '../gql';
 import { addPluralEnding, camelCase, capitalize, removePluralEnding } from '../stringFormatters';
@@ -8,7 +8,7 @@ import { wrapInArray } from '../typeWrappers';
 
 import { ActionType, isNumberAction } from './actionType';
 import { FilterType } from './filterType';
-import {getMetaInitProps, IRawRoute} from "./init";
+import { IRawRoute } from './init';
 
 export type RouteType = 'card' | 'table';
 
@@ -20,10 +20,10 @@ export interface IRouteLink {
 
 export const routeLinks: IRouteLink[] = [];
 
-export const ROLE_PREFIX = "ROLE_";
+export const ROLE_PREFIX = 'ROLE_';
 
 export function formatRoleName(roleName: string): string {
-  return roleName.replace(ROLE_PREFIX, "");
+  return roleName.replace(ROLE_PREFIX, '');
 }
 
 /**
@@ -60,14 +60,14 @@ export function parseRoutes(routes: IRawRoute[]): IRouteLink[] {
 export function getLinkForTable(
   tableName: string,
   type: RouteType,
-  id?: string | number
+  id?: string | number,
 ): string | null {
   const link = routeLinks.find(value => value.type === type && value.entity === camelCase(tableName));
   if (link) {
     return id ? link.path.replace(':id', id.toString()) : link.path;
   }
 
-  const metaInitProps = getMetaInitProps();
+  const metaInitProps = getSUISettings();
 
   return (metaInitProps && metaInitProps.defaultGetLinkForTable)
     ? metaInitProps.defaultGetLinkForTable(tableName, type, id)
@@ -87,7 +87,7 @@ export async function generateCatalogDataPromise(tableName: string, valueColumnN
   }`, true);
 
   // tslint:disable-next-line:no-any
-  return (getDataByKey(queryData, "nodes") || []).map((element: any) => ({
+  return (getDataByKey(queryData, 'nodes') || []).map((element: any) => ({
     title: element[selectColumn || 'id'],
     value: element.id,
   }));
@@ -109,7 +109,7 @@ export function isAllowedColumnInfo(columnInfo: ColumnInfo, roles: string[]): bo
 
 export async function getReferenceRenderColumnInfo(
   tableInfo: TableInfo,
-  roles: string[]
+  roles: string[],
 ): Promise<ColumnInfo | null> {
   return __getReferenceRenderColumnInfo(tableInfo, roles, []);
 }
@@ -117,7 +117,7 @@ export async function getReferenceRenderColumnInfo(
 async function __getReferenceRenderColumnInfo(
   tableInfo: TableInfo,
   roles: string[],
-  visitedTableInfoIds: string[]
+  visitedTableInfoIds: string[],
 ): Promise<ColumnInfo | null> {
   if (!visitedTableInfoIds.includes(tableInfo.id)) {
     visitedTableInfoIds.push(tableInfo.id);
@@ -137,7 +137,7 @@ async function __getReferenceRenderColumnInfo(
     if (forwardReferencedForeignLinkColumnInfo != null) {
       return forwardReferencedForeignLinkColumnInfo;
     }
-    if (isAllowedColumnInfo(foreignLinkColumnInfo, roles) && foreignLinkColumnInfo.columnName !== "id") {
+    if (isAllowedColumnInfo(foreignLinkColumnInfo, roles) && foreignLinkColumnInfo.columnName !== 'id') {
       return foreignLinkColumnInfo;
     }
   }
@@ -161,7 +161,7 @@ export interface IDataSet<T = any> {
 }
 
 export function getDataSetRender(dataSet: IDataSet): string {
-  return dataSet.hasOwnProperty("value")
+  return dataSet.hasOwnProperty('value')
     // tslint:disable-next-line:triple-equals
     ? (dataSet.value != null ? String(dataSet.value) : dataSet.value)
     : dataSet.id;
@@ -169,8 +169,8 @@ export function getDataSetRender(dataSet: IDataSet): string {
 
 function __queryFilterString<T>(filter?: IGqlFilter<T>): string {
   return filter
-    ? `(${stringifyGqlFilter({filter})})`
-    : "";
+    ? `(${stringifyGqlFilter({ filter })})`
+    : '';
 }
 
 export async function getDataSet<TValueType = {}, TGroupType = {}>(
@@ -178,7 +178,7 @@ export async function getDataSet<TValueType = {}, TGroupType = {}>(
   valueTableInfo: TableInfo,
   groupTableInfo?: TableInfo,
   valueTableInfoFilter?: IGqlFilter<TValueType>,
-  groupTableInfoFilter?: IGqlFilter<TGroupType>
+  groupTableInfoFilter?: IGqlFilter<TGroupType>,
 ): Promise<IDataSet[]> {
   const queryDataKeys: DataKey[] = [];
   let groupRenderDataKey = null;
@@ -187,8 +187,8 @@ export async function getDataSet<TValueType = {}, TGroupType = {}>(
 
   if (groupTableInfo) {
     // ${__queryFilterString(groupTableInfoFilter)}
-    groupPrefixDataKey.push(toConnectionName(groupTableInfo), "nodes");
-    queryDataKeys.push(groupPrefixDataKey.concat(["id"]));
+    groupPrefixDataKey.push(toConnectionName(groupTableInfo), 'nodes');
+    queryDataKeys.push(groupPrefixDataKey.concat(['id']));
 
     groupRenderDataKey = await generateRenderDataKey(groupTableInfo, roles);
     if (groupRenderDataKey) {
@@ -197,16 +197,16 @@ export async function getDataSet<TValueType = {}, TGroupType = {}>(
 
     valuePrefixDataKey.push(
       ...groupPrefixDataKey,
-      toConnectionName(valueTableInfo, groupTableInfo)
+      toConnectionName(valueTableInfo, groupTableInfo),
     );
   } else {
     valuePrefixDataKey.push(toConnectionName(valueTableInfo));
   }
 
-  valuePrefixDataKey.push("nodes");
+  valuePrefixDataKey.push('nodes');
   const valueRenderDataKey = await generateRenderDataKey(valueTableInfo, roles);
 
-  queryDataKeys.push(valuePrefixDataKey.concat(["id"]));
+  queryDataKeys.push(valuePrefixDataKey.concat(['id']));
   if (valueRenderDataKey) {
     queryDataKeys.push(valuePrefixDataKey.concat(valueRenderDataKey));
   }
@@ -229,9 +229,9 @@ export async function getDataSet<TValueType = {}, TGroupType = {}>(
 
   const queryData = await query(dataKeysToDataTree(queryDataKeys).toString());
 
-  const formatValues = function<T extends {id: string}>(elements: T[], valueDataKey?: DataKey, additional?: (result: IDataSet, element: T) => void): IDataSet[] {
+  const formatValues = function <T extends { id: string }>(elements: T[], valueDataKey?: DataKey, additional?: (result: IDataSet, element: T) => void): IDataSet[] {
     return (elements || []).map(element => {
-      const result: IDataSet = {id: element.id};
+      const result: IDataSet = { id: element.id };
       if (valueDataKey) {
         result.value = getDataByKey(element, valueDataKey);
       }
@@ -261,7 +261,7 @@ export type RenderValue<T = any> = { value: T };
 export async function getRenderValue(
   tableInfo: TableInfo,
   roles: string[],
-  identifier: string | number
+  identifier: string | number,
 ): Promise<RenderValue | null | undefined> {
   const dataKey = await generateRenderDataKey(tableInfo, roles);
 
@@ -285,7 +285,7 @@ export async function getRenderValue(
     }
 
     if (queryResult) {
-      return {value: getDataByKey(queryResult, dataKey)}
+      return { value: getDataByKey(queryResult, dataKey) };
     }
   }
 
@@ -294,7 +294,7 @@ export async function getRenderValue(
 
 export async function generateRenderDataKey(
   tableInfo: TableInfo,
-  roles: string[]
+  roles: string[],
 ): Promise<DataKey> {
   if (tableInfo && roles && roles.length) {
     const referenceRenderColumnInfo = await getReferenceRenderColumnInfo(tableInfo, roles);
@@ -311,7 +311,7 @@ export async function generateRenderDataKey(
         foreignTableInfo = foreignLinkColumnInfo ? await getReferencedTableInfo(foreignLinkColumnInfo) : null;
         if (foreignTableInfo) {
           dataKey.push(
-            `${removePluralEnding(camelCase(foreignTableInfo.tableName))}By${capitalize(camelCase(foreignLinkColumnInfo!.columnName))}`
+            `${removePluralEnding(camelCase(foreignTableInfo.tableName))}By${capitalize(camelCase(foreignLinkColumnInfo!.columnName))}`,
           );
         }
       } while (foreignTableInfo && foreignTableInfo.foreignLinkColumnInfoId);
@@ -346,17 +346,17 @@ export function getFilterType(columnInfo: ColumnInfo, action?: ActionType): Filt
 
   // tslint:disable-next-line:switch-default
   switch (columnInfo && columnInfo.columnType && columnInfo.columnType.toLowerCase()) {
-    case "date":
+    case 'date':
       filterType = FilterType.DATE;
       break;
-    case "timestamp without time zone":
+    case 'timestamp without time zone':
       filterType = FilterType.TIMESTAMP;
       break;
-    case "boolean":
+    case 'boolean':
       filterType = FilterType.BOOLEAN;
       break;
-    case "character varying":
-    case "text":
+    case 'character varying':
+    case 'text':
       filterType = FilterType.STRING;
   }
 

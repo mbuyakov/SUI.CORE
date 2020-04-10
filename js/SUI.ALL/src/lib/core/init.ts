@@ -2,8 +2,9 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 
+import { ColumnInfoManager, NameManager, TableInfoManager } from '../cache';
 import { Color, findColorBetween, IPercentToColorSettings } from '../color';
-import { getUser } from '../utils';
+import { getUser, IRawRoute, parseRoutes, RouteType } from '../utils';
 
 declare let window: Window & {
   SUI: ISUISettings | undefined;
@@ -14,7 +15,15 @@ export interface IInitSUISettings {
   backendUrl: string;
   basicAuthToken?: string;
   graphqlUri: string;
-  percentToColorSettings: IPercentToColorSettings
+  percentToColorSettings: IPercentToColorSettings;
+  routes: IRawRoute[];
+  defaultGetLinkForTable?(tableName: string, type: RouteType, id?: string | number): string | null;
+  metaschemaRefreshPromise(): Promise<void>;
+
+  // tslint:disable-next-line:no-any
+  routerPushFn(link: any): void;
+  // tslint:disable-next-line:no-any
+  routerReplaceFn(link: any): void;
 }
 
 
@@ -39,6 +48,13 @@ export function initSUI(settings: IInitSUISettings): void {
       }),
     })
   };
+
+  parseRoutes(settings.routes);
+  const timeLabel = 'MetaInfoManagers load';
+  console.time(timeLabel);
+  // tslint:disable-next-line:no-floating-promises
+  Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));
+
   window.SUI_CORE_PTC_CACHE = new Map<number, Color>();
   for (let i = 0; i < 100; i++) {
     const left = i >= 50 ? settings.percentToColorSettings.center : settings.percentToColorSettings.left;
