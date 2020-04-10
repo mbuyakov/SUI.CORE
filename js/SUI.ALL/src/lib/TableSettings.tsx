@@ -627,7 +627,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                               value: role.id.toString(),
                                             }))
                                           }
-                                          onFilter={(f, record): boolean => record.columnInfoRolesByColumnInfoId.nodes.some(node => f.includes(node.roleId))}
+                                          onFilter={(f: any, record): boolean => record.columnInfoRolesByColumnInfoId.nodes.some(node => f.includes(node.roleId))}
                                           render={(_, record): JSX.Element => (
                                             <VisibleByRolesPopover
                                               getPopupContainer={this.props.getPopupContainer}
@@ -783,7 +783,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                         render={(_, record): JSX.Element => (
                                           <PromisedInput
                                             type="number"
-                                            defaultValue={record.width as any}
+                                            defaultValue={record.width}
                                             promise={this.updateColFieldFn(record.id, 'width')}
                                           />
                                         )}
