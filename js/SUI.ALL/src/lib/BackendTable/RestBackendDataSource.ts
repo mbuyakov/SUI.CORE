@@ -2,8 +2,9 @@
 import axios from "axios";
 import uuid from 'uuid/v4';
 
+import { getSUISettings } from '../core';
 import {IObjectWithIndex} from "../other";
-import {getBackendUrl, getUser} from "../utils";
+import {getUser} from "../utils";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
 
@@ -42,7 +43,7 @@ export class RestBackendDataSource extends BackendDataSource {
 
   private async __send<T>(body: T, headers?: IObjectWithIndex): Promise<IObjectWithIndex> {
     return axios.post(
-      `${location.protocol}//${getBackendUrl()}-http`,
+      `${location.protocol}//${getSUISettings().backendUrl}-http`,
       body,
       {
         headers: {

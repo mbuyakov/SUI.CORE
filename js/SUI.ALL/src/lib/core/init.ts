@@ -12,6 +12,7 @@ declare let window: Window & {
 };
 
 export interface IInitSUISettings {
+  backendUrl: string;
   basicAuthToken?: string;
   graphqlUri: string;
 }

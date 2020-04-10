@@ -1,23 +1,24 @@
-import {IFrame, StompConfig} from "@stomp/stompjs";
+import { IFrame, StompConfig } from '@stomp/stompjs';
 
-import {IObjectWithIndex, sleep} from "../other";
-import {Socket} from "../Socket";
-import {getBackendUrl, getUser} from "../utils";
+import { getSUISettings } from '../core';
+import { IObjectWithIndex, sleep } from '../other';
+import { Socket } from '../Socket';
+import { getUser } from '../utils';
 
-import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
+import { BackendDataSource, MESSAGE_ID_KEY } from './BackendDataSource';
 
 const SEND_DESTINATION = '/data';
 
 const maximizeLogConfig: Partial<StompConfig> = {
   debug: (msg): void => console.log(msg),
   logRawCommunication: true,
-  onDisconnect: (frame): void => console.log("onDisconnect", frame),
-  onStompError: (frame): void => console.log("onStompError", frame),
-  onUnhandledFrame: (frame): void => console.log("onUnhandledFrame", frame),
-  onUnhandledMessage: (message): void => console.log("onUnhandledMessage", message),
-  onUnhandledReceipt: (frame): void => console.log("onUnhandledReceipt", frame),
-  onWebSocketClose: (closeEvent): void => console.log("onWebSocketClose", closeEvent),
-  onWebSocketError: (event): void => console.log("onWebSocketError", event)
+  onDisconnect: (frame): void => console.log('onDisconnect', frame),
+  onStompError: (frame): void => console.log('onStompError', frame),
+  onUnhandledFrame: (frame): void => console.log('onUnhandledFrame', frame),
+  onUnhandledMessage: (message): void => console.log('onUnhandledMessage', message),
+  onUnhandledReceipt: (frame): void => console.log('onUnhandledReceipt', frame),
+  onWebSocketClose: (closeEvent): void => console.log('onWebSocketClose', closeEvent),
+  onWebSocketError: (event): void => console.log('onWebSocketError', event),
 };
 
 const SUBSCRIBE_DESTINATION_PREFIX = '/user/queue/response/';
@@ -43,13 +44,13 @@ export class WsBackendDataSource extends BackendDataSource {
 
   // tslint:disable-next-line:no-async-without-await
   public async init(): Promise<boolean> {
-    const backendURL = new URL(`ws${location.protocol === "https:" ? "s" : ""}://${getBackendUrl()}`);
+    const backendURL = new URL(`ws${location.protocol === 'https:' ? 's' : ''}://${getSUISettings().backendUrl}`);
     console.log(backendURL);
 
     this.socket = new Socket({
       ...maximizeLogConfig,
       brokerURL: backendURL.toString(),
-      connectHeaders: {Authorization: `Bearer ${getUser().accessToken}`},
+      connectHeaders: { Authorization: `Bearer ${getUser().accessToken}` },
       onConnect: (frame: IFrame): void => {
         const alreadyInitiated = !!this.initialSessionId;
         const client = this.socket.getClient();
@@ -62,7 +63,7 @@ export class WsBackendDataSource extends BackendDataSource {
 
         client.subscribe(
           `${SUBSCRIBE_DESTINATION_PREFIX}${this.initialSessionId}`,
-          (message): void => this.onMessage(JSON.parse(message.body))
+          (message): void => this.onMessage(JSON.parse(message.body)),
         );
 
         if (!alreadyInitiated) {
@@ -70,7 +71,7 @@ export class WsBackendDataSource extends BackendDataSource {
         }
 
         // Add new parameter to connection URL for reconnection
-        backendURL.searchParams.set("previousSessionId", frame.body);
+        backendURL.searchParams.set('previousSessionId', frame.body);
         client.brokerURL = backendURL.toString();
       },
       onWebSocketClose: (config): void => {
@@ -79,7 +80,7 @@ export class WsBackendDataSource extends BackendDataSource {
         }
         this.connectAttempts++;
       },
-      reconnectDelay: RECONNECT_DELAY
+      reconnectDelay: RECONNECT_DELAY,
     });
 
     while (this.connectAttempts < MAX_RECONNECT_ATTEMPTS && !this.socket.isConnected()) {
@@ -96,8 +97,8 @@ export class WsBackendDataSource extends BackendDataSource {
       destination: SEND_DESTINATION,
       headers: {
         ...headers,
-        [MESSAGE_ID_KEY]: messageId
-      }
+        [MESSAGE_ID_KEY]: messageId,
+      },
     });
   }
 
