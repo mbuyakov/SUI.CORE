@@ -1,17 +1,18 @@
 import {DatePicker} from "antd";
 import autobind from "autobind-decorator";
-import moment from "moment";
+import moment, {Moment} from "moment";
 import * as React from 'react';
 
 import {RangePickerValue} from "../../compatibleTypes";
 import {GET_DEFAULT_CALENDAR_RANGES} from "../../const";
+import {getDataByKey} from "../../dataKey";
 import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from "../types";
 
-type DatetimeFilterType = "date" | "datetime";
+type DatetimeType = "date" | "datetime";
 
 interface IBaseDatetimeIntervalColumnFilterProps {
   format?: string;
-  pickerMode: DatetimeFilterType;
+  pickerMode: DatetimeType;
 }
 
 interface IBaseDatetimeIntervalColumnFilterState {
@@ -26,6 +27,30 @@ type FullBaseDatetimeIntervalColumnFilterProps = LazyTableFilterRowCellProps
 
 export class BaseDatetimeIntervalColumnFilter
   extends React.Component<FullBaseDatetimeIntervalColumnFilterProps, IBaseDatetimeIntervalColumnFilterState> {
+
+  private static formatMoment(
+    ts: Moment | null,
+    roundDay: "start" | "end" | null,
+    callUts: boolean = false
+  ): string | null {
+    if (ts) {
+      let result = ts;
+
+      if (roundDay === "start") {
+        result = result.startOf('day');
+      } else if (roundDay === "end") {
+        result = result.endOf('day');
+      }
+
+      if (callUts) {
+        result = result.utc()
+      }
+
+      return result.format(moment.HTML5_FMT.DATETIME_LOCAL_MS);
+    }
+
+    return null
+  }
 
   public constructor(props: FullBaseDatetimeIntervalColumnFilterProps) {
     super(props);
@@ -56,6 +81,12 @@ export class BaseDatetimeIntervalColumnFilter
   }
 
   @autobind
+  // Костыль
+  private getColumnType(): DatetimeType {
+    return getDataByKey(this.props.column, "__SUI_columnInfo", "columnType") === "date" ? "date" : "datetime"
+  }
+
+  @autobind
   private onChange(filterValue: RangePickerValue): void {
     if (!filterValue || !filterValue.length) {
       // clear filter
@@ -82,20 +113,17 @@ export class BaseDatetimeIntervalColumnFilter
 
   @autobind
   private triggerFilter(value: RangePickerValue): void {
-    const format = moment.HTML5_FMT.DATETIME_LOCAL_MS;
-
     this.setState({lastSavedValue: value});
 
     const isDatePickMode = this.props.pickerMode === "date";
-    const start = value && value[0] && value[0].clone();
-    const end = value && value[1] && value[1].clone();
+    const callUtc = this.getColumnType() === "datetime";
 
     this.props.onFilter({
       columnName: this.props.column.name,
       operation: "interval",
       value: [
-        start ? (isDatePickMode ? start.startOf('day') : start).utc().format(format) : null,
-        end ? (isDatePickMode ? end.endOf('day') : end).utc().format(format) : null,
+        BaseDatetimeIntervalColumnFilter.formatMoment(value && value[0] && value[0].clone(), isDatePickMode ? 'start' : null, callUtc),
+        BaseDatetimeIntervalColumnFilter.formatMoment(value && value[1] && value[1].clone(), isDatePickMode ? 'end' : null, callUtc)
         // tslint:disable-next-line:no-any
       ] as any
     });
