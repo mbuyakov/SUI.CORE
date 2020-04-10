@@ -2,10 +2,9 @@ import { ApolloQueryResult } from 'apollo-client';
 import { FetchResult } from 'apollo-link';
 import gql from 'graphql-tag';
 
+import { getSUISettings } from '../core';
 import { loadingErrorNotification } from '../drawUtils';
 import { IObjectWithIndex } from '../other';
-
-import { getGqlClient } from './client';
 
 /**
  * Stub for PostGraphile error format
@@ -69,7 +68,7 @@ export async function query<T>(queryBody: string | any, extractKeysLevel: boolea
   }
 
   let ret = rejectOnError<T>(
-    getGqlClient().query({
+    getSUISettings().apolloClient.query({
       errorPolicy: 'all',
       fetchPolicy: 'no-cache',
       query: queryBody,
@@ -94,7 +93,7 @@ export async function mutate<T>(mutationBody: string | any, extractKeysLevel: bo
   }
 
   let ret = rejectOnError<T>(
-    getGqlClient().mutate({
+    getSUISettings().apolloClient.mutate({
       errorPolicy: 'all',
       fetchPolicy: 'no-cache',
       mutation: mutationBody,
