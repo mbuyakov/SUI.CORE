@@ -4,7 +4,7 @@ import { HttpLink } from 'apollo-link-http';
 
 import { ColumnInfoManager, NameManager, TableInfoManager } from '../cache';
 import { Color, findColorBetween, IPercentToColorSettings } from '../color';
-import { getUser, IRawRoute, parseRoutes, RouteType } from '../utils';
+import { getUser, IRawRoute, parseRoutes, RouteType, runCheckVersionMismatch } from '../utils';
 
 declare let window: Window & {
   SUI: ISUISettings | undefined;
@@ -14,6 +14,7 @@ declare let window: Window & {
 export interface IInitSUISettings {
   backendUrl: string;
   basicAuthToken?: string;
+  checkVersionMismatchUrl: string;
   graphqlUri: string;
   percentToColorSettings: IPercentToColorSettings;
   routes: IRawRoute[];
@@ -61,6 +62,8 @@ export function initSUI(settings: IInitSUISettings): void {
     const right = i >= 50 ? settings.percentToColorSettings.right : settings.percentToColorSettings.center;
     window.SUI_CORE_PTC_CACHE.set(i, findColorBetween(left, right, Math.pow(Math.cos(Math.PI / 100 * (50 - (i >= 50 ? (i - 50) * 2 : i * 2) / 2)), 2)  * 100));
   }
+
+  runCheckVersionMismatch();
 }
 
 export function getSUISettings(): ISUISettings {
