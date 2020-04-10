@@ -86,7 +86,7 @@
     "autobind-decorator": "^2.4.0",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
-    "graphql": "^15.0.0",
+    "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "immutability-helper": "^3.0.2",
     "jsonpack": "^1.1.5",
