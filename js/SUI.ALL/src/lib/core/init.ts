@@ -2,19 +2,19 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 
+import { Color, findColorBetween, IPercentToColorSettings } from '../color';
 import { getUser } from '../utils';
 
 declare let window: Window & {
-  /**
-   * Variable for global client instance
-   */
   SUI: ISUISettings | undefined;
+  SUI_CORE_PTC_CACHE: Map<number, Color> | undefined;
 };
 
 export interface IInitSUISettings {
   backendUrl: string;
   basicAuthToken?: string;
   graphqlUri: string;
+  percentToColorSettings: IPercentToColorSettings
 }
 
 
@@ -39,6 +39,12 @@ export function initSUI(settings: IInitSUISettings): void {
       }),
     })
   };
+  window.SUI_CORE_PTC_CACHE = new Map<number, Color>();
+  for (let i = 0; i < 100; i++) {
+    const left = i >= 50 ? settings.percentToColorSettings.center : settings.percentToColorSettings.left;
+    const right = i >= 50 ? settings.percentToColorSettings.right : settings.percentToColorSettings.center;
+    window.SUI_CORE_PTC_CACHE.set(i, findColorBetween(left, right, Math.pow(Math.cos(Math.PI / 100 * (50 - (i >= 50 ? (i - 50) * 2 : i * 2) / 2)), 2)  * 100));
+  }
 }
 
 export function getSUISettings(): ISUISettings {
