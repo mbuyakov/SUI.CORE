@@ -1,5 +1,5 @@
-/* tslint:disable:cyclomatic-complexity no-any */
-import { Form } from '@ant-design/compatible';
+/* tslint:disable:cyclomatic-complexity no-any no-object-literal-type-assertion */
+import { Form } from 'antd';
 import { FormItemProps } from 'antd/lib/form';
 import { RuleItem } from 'async-validator';
 import autobind from 'autobind-decorator';
@@ -7,10 +7,10 @@ import classNames from 'classnames';
 import * as React from 'react';
 
 import { IObjectWithIndex } from '../other';
-import { BASE_CARD_ITEM_LABEL_HORIZONTAL, BASE_FORM_ITEM_VERTICAL } from '../styles';
 import { SUIMaskedInput } from '../SUIMaskedInput';
 import { SUIReactComponent } from '../SUIReactComponent';
 
+import { DEFAULT_ITEM_RENDERER } from './BaseCardItemLayout';
 import { BaseForm, IFormField, SUBMITTED_FIELD, ValuesGetter } from './BaseForm';
 import { BaseFormContext } from './BaseFormContext';
 
@@ -44,8 +44,12 @@ export type IBaseFormItemLayoutMask = Omit<IBaseFormItemLayoutBase, 'inputNode' 
 
 export type IBaseFormItemLayout = IBaseFormItemLayoutBase | IBaseFormItemLayoutMask;
 
-export function renderIBaseFormItemLayout(sourceItem: any, item: IBaseFormItemLayout, colspan: number): JSX.Element {
-  return (<BaseFormItem {...mapMaskToBase(item)}/>);
+export function renderIBaseFormItemLayout(sourceItem: any, item: IBaseFormItemLayout, colspan: number): React.ReactNode {
+  if (!item.fieldName) {
+    return DEFAULT_ITEM_RENDERER(sourceItem, item, colspan);
+  }
+
+  return (<BaseFormItem {...mapMaskToBase(item)} colspan={colspan}/>);
 }
 
 export function mapMaskToBase(item: IBaseFormItemLayout): IBaseFormItemLayoutBase {
@@ -61,13 +65,16 @@ export function mapMaskToBase(item: IBaseFormItemLayout): IBaseFormItemLayoutBas
   }
 
   if (!(item as IBaseFormItemLayoutMask).mask && !(item as IBaseFormItemLayoutBase).inputNode) {
-    throw new Error('inputNode required');
+    console.warn(item);
+    throw new Error(`inputNode required at ${item.fieldName}`);
   }
 
   return item as IBaseFormItemLayoutBase;
 }
 
-export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
+export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
+  colspan?: number
+}, {
   error?: any
   subscribedFormFieldValues: IObjectWithIndex
   value?: any
@@ -125,7 +132,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
           }
 
           const title = item.title && (
-            <span className={classNames({ [BASE_CARD_ITEM_LABEL_HORIZONTAL]: !verticalLabel, 'ant-form-item-required': !!required })}>
+            <span className={classNames({ /*[BASE_CARD_ITEM_LABEL_HORIZONTAL]: !verticalLabel,*/ 'ant-form-item-required': !!required })}>
              {item.title}:
             </span>
           );
@@ -157,37 +164,41 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase, {
             customInputNodesProps = {};
           }
 
-          let data = (
+          const data = (
             <>
-              {title}
-              <Form.Item {...formItemProps}>
-                {React.cloneElement(item.inputNode, {
-                  [valuePropName]: this.state.value,
-                  ...customInputNodesProps,
-                  ...item.inputNode.props,
-                  onChange: this.onChange,
-                  ...(errors ? {disabled: false} : {}),
-                  ...additionalProps,
-                  ...customFinalInputNodesProps,
-                  style: {
-                    width: '100%',
-                    ...item.inputNode.props.style,
-                    ...customInputNodesProps.style,
-                    ...additionalProps.style,
-                    ...customFinalInputNodesProps.style
-                  },
-                })}
-              </Form.Item>
+              {title && <td style={{verticalAlign: 'top', paddingRight: 12, color: "rgba(121, 119, 119, 0.65)", wordWrap: "break-word", paddingBottom: 8, paddingTop: 6}}>{title}</td>}
+              <td colSpan={(title ? 1 : 2) + ((this.props.colspan - 1) * 2)} style={{verticalAlign: 'top', paddingBottom: 8}}>
+                <Form.Item {...formItemProps}>
+                  {React.cloneElement(item.inputNode, {
+                    [valuePropName]: this.state.value,
+                    ...customInputNodesProps,
+                    ...item.inputNode.props,
+                    onChange: this.onChange,
+                    ...(errors ? {disabled: false} : {}),
+                    ...additionalProps,
+                    ...customFinalInputNodesProps,
+                    style: {
+                      width: '100%',
+                      ...item.inputNode.props.style,
+                      ...customInputNodesProps.style,
+                      ...additionalProps.style,
+                      ...customFinalInputNodesProps.style
+                    },
+                  })}
+                </Form.Item>
+              </td>
             </>
           );
 
-          if (verticalLabel) {
-            data = (
-              <div className={BASE_FORM_ITEM_VERTICAL}>
-                {data}
-              </div>
-            );
-          }
+
+
+          // if (verticalLabel) {
+          //   data = (
+          //     <div className={BASE_FORM_ITEM_VERTICAL}>
+          //       {data}
+          //     </div>
+          //   );
+          // }
 
           return data;
         }}

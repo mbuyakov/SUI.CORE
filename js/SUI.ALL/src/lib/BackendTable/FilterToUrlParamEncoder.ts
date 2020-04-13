@@ -1,8 +1,8 @@
 import jsonpack from "jsonpack";
 import pako from "pako";
 
+import { getSUISettings } from '../core';
 import {OneOrArray, wrapInArray} from "../typeWrappers";
-import {getMetaInitProps} from "../utils";
 
 import {BackendFilter, SimpleBackendFilter} from "./BackendTable";
 
@@ -77,7 +77,7 @@ export function putFiltersToUrlParam(
 
   putFiltersToLocation(location, tableId, filter, merge);
 
-  getMetaInitProps().routerReplaceFn(locationToLink(location));
+  getSUISettings().routerReplaceFn(locationToLink(location));
 }
 
 export function getFiltersFromUrlParam(tableId: string): IArrayFilterDefinition | undefined {

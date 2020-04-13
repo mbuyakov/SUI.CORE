@@ -22,6 +22,8 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
     return !!element && (typeof (element) === 'object' || typeof (element) === 'function') && typeof (element.then) === 'function'
   }
 
+  private ignoreNextOnChange: boolean;
+
   public constructor(props: ICustomSelectFilterProps<T>) {
     super(props);
     this.state = {value: props.filter ? (props.filter.value as T) : undefined}
@@ -55,15 +57,20 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
 
   @autobind
   private onChange(value: T, option: OneOrArray<React.ReactElement>): void {
-    const lazy = !!(option && Array.isArray(option) && option.length); // Don't trigger for option click in multiple mode
+    if (!this.ignoreNextOnChange) {
+      const lazy = !!(option && Array.isArray(option) && option.length); // Don't trigger for option click in multiple mode
 
-    this.triggerFilter(value, lazy);
-    this.setState({value});
+      this.triggerFilter(value, lazy);
+      this.setState({value});
+    } else {
+      this.ignoreNextOnChange = false
+    }
   }
 
   @autobind
   private onInputKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
     if (this.isMultiple() && event.key === 'Enter') {
+      this.ignoreNextOnChange = true;
       this.triggerFilter(this.state.value);
     }
   }

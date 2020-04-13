@@ -4,7 +4,7 @@ import * as React from "react";
 import {TableInfoManager} from "../cache";
 import { NO_DATA_TEXT } from '../const';
 import { getDataByKey } from '../dataKey';
-import {getLinkForTable, getMetaInitProps, getRenderValue, RenderValue} from "../utils";
+import { getLinkForTable, getRenderValue, getUser, RenderValue } from '../utils';
 import { WaitData } from '../WaitData';
 
 import { RouterLink } from './RouterLink';
@@ -87,7 +87,7 @@ export class MetaLink extends React.Component<IMetaLinkProps, IMetaLinkState> {
       link: tableInfo && getLinkForTable(tableInfo.tableName, 'card', this.props.id) || undefined,
       ready: true,
       renderValue: tableInfo
-        && await getRenderValue(tableInfo, (getDataByKey(getMetaInitProps(), "user", "roles") || []), this.props.id)
+        && await getRenderValue(tableInfo, getUser().roles, this.props.id)
         || undefined
     });
   }

@@ -1,3 +1,4 @@
+export * from './DateFormatterPlugin';
 export * from './LinkPlugin';
 export * from './RawPlugin';
 export * from './RoundPlugin';

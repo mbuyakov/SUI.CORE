@@ -12,23 +12,6 @@ export * from "./metaUtils";
 export * from "./TabSyncer";
 export * from "./versionMismatch";
 
-declare let window: Window & {
-  SUI_BACKEND_URL: string | undefined;
-};
-
-
-export function initBackend(backendUrl: string): void {
-  window.SUI_BACKEND_URL = backendUrl;
-}
-
-export function getBackendUrl(): string {
-  if (!window.SUI_BACKEND_URL) {
-    throw new Error("Backend not initialized");
-  }
-
-  return window.SUI_BACKEND_URL;
-}
-
 export function isAdmin(): boolean {
   return (getDataByKey(getUser(), "roles") || []).includes("ADMIN");
 }
@@ -36,5 +19,5 @@ export function isAdmin(): boolean {
 export function getUser(): ICoreUser {
   // tslint:disable-next-line:ban-ts-ignore
   // @ts-ignore
-  return getDataByKey(window.g_app._store.getState(), ["user", "user"]);
+  return window.g_app && getDataByKey(window.g_app._store.getState(), ["user", "user"]);
 }

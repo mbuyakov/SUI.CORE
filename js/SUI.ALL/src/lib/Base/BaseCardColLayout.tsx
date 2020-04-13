@@ -10,6 +10,7 @@ export interface IBaseCardColLayout<T, ITEM> {
   colspan?: number;
   items: OneOrArrayWithNulls<ITEM>;
   title?: string;
+  wideTitle?: boolean;
 }
 
 export function renderIBaseCardColsLayout<T, ITEM>(sourceItem: any, cols: Array<IBaseCardColLayout<T, ITEM>>): JSX.Element {
@@ -50,8 +51,8 @@ export function renderIBaseCardColsLayout<T, ITEM>(sourceItem: any, cols: Array<
         <thead>
         <tr>
           {cols.map(col => (<>
-            <th style={{ color: 'rgba(0, 0, 0, 0.65)' }}>{col.title}</th>
-            <th/>
+            <th style={{ color: 'rgba(0, 0, 0, 0.65)' }} colSpan={col.wideTitle ? 2 : 1}>{col.title}</th>
+            {!col.wideTitle && <th/>}
           </>))}
         </tr>
         </thead>

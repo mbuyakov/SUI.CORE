@@ -4,14 +4,16 @@ import { Button, notification } from 'antd';
 import axios from 'axios';
 import React from 'react';
 
+import { getSUISettings } from '../core';
+
 let notifiedAboutVersionMismatch = false;
 let checkVersionMismatchInterval: NodeJS.Timeout;
 
-export function runCheckVersionMismatch(url: string): void {
+export function runCheckVersionMismatch(): void {
   if (process.env.NODE_ENV === 'production') {
     function checkVersionMismatch(): void {
       // Timestamp to disable chrome disk cache
-      axios.get(`${url}?timestamp=${new Date().getTime()}`).then(lastBuildTime => {
+      axios.get(`${getSUISettings().checkVersionMismatchUrl}?timestamp=${new Date().getTime()}`).then(lastBuildTime => {
         if (lastBuildTime.data !== process.env.BUILD_TIME) {
           if (!notifiedAboutVersionMismatch) {
             notification.warn({

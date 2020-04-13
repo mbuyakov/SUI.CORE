@@ -11,6 +11,7 @@ import { Observable } from '../Observable';
 import { IObjectWithIndex } from '../other';
 import { BASE_FORM_CLASS } from '../styles';
 import { SUIReactComponent } from '../SUIReactComponent';
+import {OneOrArray, OneOrArrayWithNulls, wrapInArray} from '../typeWrappers';
 
 import {BaseCard, IBaseCardProps} from './BaseCard';
 import {BaseFormContext} from './BaseFormContext';
@@ -40,6 +41,7 @@ export type IBaseFormProps = Omit<IBaseCardProps<any, IBaseFormItemLayout>, 'ite
   customInputNodesProps?: IObjectWithIndex;
   // tslint:disable-next-line:no-any
   initialValues?: IObjectWithIndex;
+  momentFields?: OneOrArray<string>;
   uuid: string;
   verticalLabel?: boolean;
   // tslint:disable-next-line:no-any
@@ -383,15 +385,17 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
 
   @autobind
   private setFieldsValuesFromRaw(values: IObjectWithIndex): void {
+    const momentsFields = this.props.momentFields && wrapInArray(this.props.momentFields) || []
+
     const parsedValues = Object.keys(values).reduce((prev, curKey) => {
       let fieldValue = values[curKey];
 
       // Magic
       // tslint:disable-next-line:no-magic-numbers
-      if (typeof fieldValue === 'string' && ((fieldValue.match(/-/g) || []).length >= 2 || fieldValue.includes('.'))) {
+      if (typeof fieldValue === 'string' && momentsFields.includes(curKey)) {
         const momentValue = moment(fieldValue);
+
         if (momentValue.isValid()) {
-          // noinspection JSUnfilteredForInLoop
           fieldValue = momentValue;
         }
       }
