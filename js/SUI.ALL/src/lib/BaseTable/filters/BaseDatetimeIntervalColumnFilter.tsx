@@ -28,34 +28,11 @@ type FullBaseDatetimeIntervalColumnFilterProps = LazyTableFilterRowCellProps
 export class BaseDatetimeIntervalColumnFilter
   extends React.Component<FullBaseDatetimeIntervalColumnFilterProps, IBaseDatetimeIntervalColumnFilterState> {
 
-  private static formatMoment(
-    ts: Moment | null,
-    roundDay: "start" | "end" | null,
-    callUts: boolean = false
-  ): string | null {
-    if (ts) {
-      let result = ts;
-
-      if (roundDay === "start") {
-        result = result.startOf('day');
-      } else if (roundDay === "end") {
-        result = result.endOf('day');
-      }
-
-      if (callUts) {
-        result = result.utc()
-      }
-
-      return result.format(moment.HTML5_FMT.DATETIME_LOCAL_MS);
-    }
-
-    return null
-  }
-
   public constructor(props: FullBaseDatetimeIntervalColumnFilterProps) {
     super(props);
+
     const propsFilterValue = this.props.filter && (this.props.filter.value as unknown as string[]);
-    const filterValue = propsFilterValue && propsFilterValue.map(value => value && moment.utc(value).local()) as RangePickerValue;
+    const filterValue = propsFilterValue && propsFilterValue.map(value => this.formatFilterToMoment(value)) as RangePickerValue;
 
     this.state = {
       filterValue,
@@ -82,8 +59,38 @@ export class BaseDatetimeIntervalColumnFilter
 
   @autobind
   // Костыль
-  private getColumnType(): DatetimeType {
-    return getDataByKey(this.props.column, "__SUI_columnInfo", "columnType") === "date" ? "date" : "datetime"
+  private callUtc(): boolean {
+    return getDataByKey(this.props.column, "__SUI_columnInfo", "columnType") !== "date"
+  }
+
+  @autobind
+  private formatFilterToMoment(value: string | null): Moment | null {
+    return value
+      ? this.callUtc()
+        ? moment.utc(value).local()
+        : moment(value)
+      : null
+  }
+
+  @autobind
+  private formatMomentToFilter(ts: Moment | null, roundDay: "start" | "end" | null): string | null {
+    if (ts) {
+      let result = ts;
+
+      if (roundDay === "start") {
+        result = result.startOf('day');
+      } else if (roundDay === "end") {
+        result = result.endOf('day');
+      }
+
+      if (this.callUtc()) {
+        result = result.utc()
+      }
+
+      return result.format(moment.HTML5_FMT.DATETIME_LOCAL_MS);
+    }
+
+    return null
   }
 
   @autobind
@@ -116,14 +123,13 @@ export class BaseDatetimeIntervalColumnFilter
     this.setState({lastSavedValue: value});
 
     const isDatePickMode = this.props.pickerMode === "date";
-    const callUtc = this.getColumnType() === "datetime";
 
     this.props.onFilter({
       columnName: this.props.column.name,
       operation: "interval",
       value: [
-        BaseDatetimeIntervalColumnFilter.formatMoment(value && value[0] && value[0].clone(), isDatePickMode ? 'start' : null, callUtc),
-        BaseDatetimeIntervalColumnFilter.formatMoment(value && value[1] && value[1].clone(), isDatePickMode ? 'end' : null, callUtc)
+        this.formatMomentToFilter(value && value[0] && value[0].clone(), isDatePickMode ? 'start' : null),
+        this.formatMomentToFilter(value && value[1] && value[1].clone(), isDatePickMode ? 'end' : null)
         // tslint:disable-next-line:no-any
       ] as any
     });
