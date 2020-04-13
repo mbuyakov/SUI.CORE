@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ru.smsoft.sui.suientity.converter.ObjectNodeConverter;
 import ru.smsoft.sui.suientity.entity.suimeta.TableInfo;
 import ru.smsoft.sui.suientity.entity.suisecurity.User;
+import ru.smsoft.sui.suientity.enums.AuditOperationType;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,7 +26,8 @@ public class AuditLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String operationType;
+    @Enumerated(EnumType.STRING)
+    private AuditOperationType operationType;
     private String rowId;
     private String dbUser;
 
