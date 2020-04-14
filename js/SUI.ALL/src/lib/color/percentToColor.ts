@@ -1,3 +1,5 @@
+import {createColorMap} from "../core";
+
 import { Color } from './color';
 
 declare let window: Window & {
@@ -28,5 +30,16 @@ export function getLevelColor(level: number): Color {
     throw new Error("PercentToColor not initialized");
   }
 
-  return window.SUI_CORE_PTC_CACHE.get(Math.min(99, Math.max(0, Math.floor(level))));
+  return window.SUI_CORE_PTC_CACHE.get(cutNumberToPercentRange(level));
+}
+
+export function getHeatColorator(percentToColorSettings: IPercentToColorSettings): (percent: number) => Color {
+  const colorMap = createColorMap(percentToColorSettings);
+
+  return (percent: number) => colorMap.get(cutNumberToPercentRange(percent));
+}
+
+// Returns number between 0 and 99.
+function cutNumberToPercentRange(value: number): number {
+  return Math.min(99, Math.max(0, Math.floor(value)));
 }
