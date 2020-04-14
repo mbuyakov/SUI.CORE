@@ -57,14 +57,20 @@ export function initSUI(settings: IInitSUISettings): void {
   // tslint:disable-next-line:no-floating-promises
   Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));
 
-  window.SUI_CORE_PTC_CACHE = new Map<number, Color>();
-  for (let i = 0; i < 100; i++) {
-    const left = i >= 50 ? settings.percentToColorSettings.center : settings.percentToColorSettings.left;
-    const right = i >= 50 ? settings.percentToColorSettings.right : settings.percentToColorSettings.center;
-    window.SUI_CORE_PTC_CACHE.set(i, findColorBetween(left, right, Math.pow(Math.cos(Math.PI / 100 * (50 - (i >= 50 ? (i - 50) * 2 : i * 2) / 2)), 2)  * 100));
-  }
+  window.SUI_CORE_PTC_CACHE = createColorMap(settings.percentToColorSettings);
 
   runCheckVersionMismatch();
+}
+
+export function createColorMap(percentToColorSettings: IPercentToColorSettings): Map<number, Color> {
+  const colorMap = new Map<number, Color>();
+  for (let i = 0; i < 100; i++) {
+    const left = i >= 50 ? percentToColorSettings.center : percentToColorSettings.left;
+    const right = i >= 50 ? percentToColorSettings.right : percentToColorSettings.center;
+    colorMap.set(i, findColorBetween(left, right, Math.pow(Math.cos(Math.PI / 100 * (50 - (i >= 50 ? (i - 50) * 2 : i * 2) / 2)), 2)  * 100));
+  }
+
+  return colorMap;
 }
 
 export function getSUISettings(): ISUISettings {
