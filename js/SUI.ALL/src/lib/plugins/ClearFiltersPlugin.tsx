@@ -15,7 +15,7 @@ export class ClearFiltersPlugin extends React.Component<{
           <TemplateConnector>
             {(): JSX.Element => (
               <Tooltip
-                title="Очистить все"
+                title="Очистить фильтры"
                 placement='bottom'
                 // tslint:disable-next-line:no-magic-numbers
                 enterDelay={300}
