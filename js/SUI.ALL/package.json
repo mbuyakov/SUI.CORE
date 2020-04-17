@@ -81,6 +81,7 @@
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link": "^1.2.14",
+    "apollo-link-context": "^1.0.20",
     "apollo-link-http": "^1.5.17",
     "async-validator": "^3.2.4",
     "autobind-decorator": "^2.4.0",

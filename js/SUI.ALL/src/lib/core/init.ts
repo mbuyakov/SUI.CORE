@@ -1,5 +1,6 @@
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-client';
+import { setContext } from 'apollo-link-context';
 import { HttpLink } from 'apollo-link-http';
 
 import { ColumnInfoManager, NameManager, TableInfoManager } from '../cache';
@@ -32,22 +33,29 @@ export type ISUISettings = IInitSUISettings & {
   apolloClient: ApolloClient<{}>;
 }
 
+const authLink = setContext((_, { headers }) => {
+  const user = getUser();
 
+  return {
+    headers: {
+      ...headers,
+      ...(user ? {"user-id": user.id} : {}),
+    }
+  }
+});
 
 export function initSUI(settings: IInitSUISettings): void {
-  const user = getUser();
   window.SUI = {
     ...settings,
     apolloClient: new ApolloClient({
       cache: new InMemoryCache(),
-      link: new HttpLink({
+      link: authLink.concat(new HttpLink({
         uri: settings.graphqlUri,
         // tslint:disable-next-line
         headers: {
-          ...(settings.basicAuthToken ? {authorization: settings.basicAuthToken} : undefined),
-          "user-id": user && user.id
+          ...(settings.basicAuthToken ? {authorization: settings.basicAuthToken} : undefined)
         }
-      }),
+      })),
     })
   };
 
