@@ -4,12 +4,12 @@ import { setContext } from 'apollo-link-context';
 import { HttpLink } from 'apollo-link-http';
 
 import { ColumnInfoManager, NameManager, TableInfoManager } from '../cache';
-import { Color, findColorBetween, IPercentToColorSettings } from '../color';
+import { ColorHeatMap, IColorHeatMapSettings } from '../color';
 import { getUser, IRawRoute, parseRoutes, RouteType, runCheckVersionMismatch } from '../utils';
 
 declare let window: Window & {
   SUI: ISUISettings | undefined;
-  SUI_CORE_PTC_CACHE: Map<number, Color> | undefined;
+  SUI_CORE_PTC_CACHE: ColorHeatMap;
 };
 
 export interface IInitSUISettings {
@@ -17,13 +17,16 @@ export interface IInitSUISettings {
   basicAuthToken?: string;
   checkVersionMismatchUrl: string;
   graphqlUri: string;
-  percentToColorSettings: IPercentToColorSettings;
+  percentToColorSettings: IColorHeatMapSettings;
   routes: IRawRoute[];
+
   defaultGetLinkForTable?(tableName: string, type: RouteType, id?: string | number): string | null;
+
   metaschemaRefreshPromise(): Promise<void>;
 
   // tslint:disable-next-line:no-any
   routerPushFn(link: any): void;
+
   // tslint:disable-next-line:no-any
   routerReplaceFn(link: any): void;
 }
@@ -39,11 +42,12 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      ...(user ? {"user-id": user.id} : {}),
-    }
-  }
+      ...(user ? { 'user-id': user.id } : {}),
+    },
+  };
 });
 
+// noinspection JSUnusedGlobalSymbols
 export function initSUI(settings: IInitSUISettings): void {
   window.SUI = {
     ...settings,
@@ -53,10 +57,10 @@ export function initSUI(settings: IInitSUISettings): void {
         uri: settings.graphqlUri,
         // tslint:disable-next-line
         headers: {
-          ...(settings.basicAuthToken ? {authorization: settings.basicAuthToken} : undefined)
-        }
+          ...(settings.basicAuthToken ? { authorization: settings.basicAuthToken } : undefined),
+        },
       })),
-    })
+    }),
   };
 
   parseRoutes(settings.routes);
@@ -65,26 +69,15 @@ export function initSUI(settings: IInitSUISettings): void {
   // tslint:disable-next-line:no-floating-promises
   Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));
 
-  window.SUI_CORE_PTC_CACHE = createColorMap(settings.percentToColorSettings);
+  window.SUI_CORE_PTC_CACHE = new ColorHeatMap(settings.percentToColorSettings);
 
   runCheckVersionMismatch();
 }
 
-export function createColorMap(percentToColorSettings: IPercentToColorSettings): Map<number, Color> {
-  const colorMap = new Map<number, Color>();
-  for (let i = 0; i < 100; i++) {
-    const left = i >= 50 ? percentToColorSettings.center : percentToColorSettings.left;
-    const right = i >= 50 ? percentToColorSettings.right : percentToColorSettings.center;
-    colorMap.set(i, findColorBetween(left, right, Math.pow(Math.cos(Math.PI / 100 * (50 - (i >= 50 ? (i - 50) * 2 : i * 2) / 2)), 2)  * 100));
-  }
-
-  return colorMap;
-}
-
 export function getSUISettings(): ISUISettings {
   const settings = window.SUI;
-  if(!settings) {
-    throw new Error("SUI not initialized");
+  if (!settings) {
+    throw new Error('SUI not initialized');
   }
 
   return settings;

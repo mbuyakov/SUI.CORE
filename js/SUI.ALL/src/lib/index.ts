@@ -41,6 +41,7 @@ export * from "./DraggableRowTable";
 export * from "./drawUtils";
 export * from "./EditableEntityField";
 export * from "./FullScreenModal";
+export * from "./math";
 export * from "./Modal";
 export * from "./MutableBackendTable";
 export * from "./ReportTopBarChart";
