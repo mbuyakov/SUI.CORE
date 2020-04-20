@@ -26,7 +26,9 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
 
   public constructor(props: ICustomSelectFilterProps<T>) {
     super(props);
-    this.state = {value: props.filter ? (props.filter.value as T) : undefined}
+    // tslint:disable-next-line:ban-ts-ignore
+    // @ts-ignore
+    this.state = {value: props.filter ? (props.filter.value || props.filter.elements as T) : undefined}
   }
 
   public render(): JSX.Element {
@@ -86,8 +88,7 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
           elements: value as any,
           lazy,
           operation: "in",
-          raw: true,
-          value: value as any
+          raw: true
         };
       } else {
         filter = null;
