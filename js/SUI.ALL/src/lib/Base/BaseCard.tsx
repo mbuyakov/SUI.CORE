@@ -3,7 +3,7 @@ import Icon from 'antd/lib/icon';
 import Tabs from 'antd/lib/tabs';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-
+import classNames from 'classnames';
 import { OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '../typeWrappers';
 
 import { BaseCardContext } from './BaseCardContext';
@@ -62,11 +62,11 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
     } else {
       body = rows.map((row, rowIndex, arr) => renderIBaseCardRowLayout(this.props.item, row, rowIndex, 'card', arr.length, this.isFirstChildrenIsTab()));
     }
-
+    const className = classNames("baseCard",this.props.className);
     return (
       <BaseCardContext.Provider value={{ forceRenderTabs: this.props.forceRenderTabs, itemRenderer: this.props.itemRenderer || DEFAULT_ITEM_RENDERER}}>
         {this.props.noCard
-          ? <>{body}</>
+          ? <div className={className}>{body}</div>
           : (
             <Card
               title={this.props.cardTitle}
@@ -76,7 +76,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
               onTabChange={this.onTabChange}
               extra={this.props.extra}
               style={this.props.cardStyle}
-              className={this.props.className}
+              className={className}
               bodyStyle={firstChildrenIsTab ? { padding: 0 } : {}}
             >
               {firstChildrenIsTab
