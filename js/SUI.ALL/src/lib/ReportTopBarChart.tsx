@@ -12,11 +12,11 @@ const labelStyle: React.CSSProperties = {
   textAlign: 'right'
 };
 
-const KOSTYL = (value: number) => `
+const KOSTYL = (value: number, color: string) => `
   <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 41.1 28.6" style="enable-background:new 0 0 41.1 28.6;" xml:space="preserve">
   <style type="text/css">
     .st0{fill:#FFFFFF;}
-    .st1{fill:none;stroke:${getLevelColor(value).toRgba()};}
+    .st1{fill:none;stroke: ${color};}
     .st3{font-size:13px;}
   </style>
   <g id="Group_125" transform="translate(-519.5 -423)">
@@ -169,23 +169,22 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
 
   private mapData(data: IObjectWithIndex[], maxValue: number): IObjectWithIndex[] {
     return data.map((element) => {
-      let value = element[this.props.valueDataField];
-
-      if (this.props.type === "relative") {
-        value = value / (maxValue || 1) * 100;
-      }
+      const value = element[this.props.valueDataField];
+      const relativeValue = value / (maxValue || 1) * 100;
+      const color = getLevelColor(relativeValue).toRgba();
 
       return {
         ...element,
-        color: am4core.color(getLevelColor(value).toRgba()),
+        [this.props.valueDataField]: this.props.type === "relative" ? relativeValue : value,
+        color:  am4core.color(color),
         ...(
-          (value > 85)
+          (relativeValue > 85)
             ? { dx: 6, horizontalCenter: "right" }
-            : (value < 15)
+            : (relativeValue < 15)
             ? { dx: -6, horizontalCenter: "left" }
             : { dx: 0, horizontalCenter: "middle" }
         ),
-        svg: `data:image/svg+xml;charset=utf-8;base64,${btoa(KOSTYL(value))}`
+        svg: `data:image/svg+xml;charset=utf-8;base64,${btoa(KOSTYL(value, color))}`
       }
     });
   }
@@ -193,12 +192,7 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
   private updateState(): void {
     const data = this.props.data || [];
     const valueDataField = this.props.valueDataField;
-
-    let maxValue: number | undefined;
-
-    if (this.props.type === "relative") {
-      maxValue = Math.max(...data.map(element => element[valueDataField]), 0);
-    }
+    const maxValue = Math.max(...data.map(element => element[valueDataField]), 0);
 
     this.setState({mappedData: this.mapData(data, maxValue).reverse(), maxValue});
   }
