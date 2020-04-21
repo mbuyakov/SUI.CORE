@@ -61,6 +61,7 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
   mappedData?: any[];
   maxValue?: number;
 }> {
+
   public constructor(props: ITopBarChartProps) {
     super(props);
     this.state = {};
@@ -170,7 +171,7 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
     return data.map((element) => {
       let value = element[this.props.valueDataField];
 
-      if (this.props.type === "absolute") {
+      if (this.props.type === "relative") {
         value = value / (maxValue || 1) * 100;
       }
 
