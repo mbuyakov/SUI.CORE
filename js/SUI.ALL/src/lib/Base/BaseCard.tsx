@@ -62,7 +62,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
     } else {
       body = rows.map((row, rowIndex, arr) => renderIBaseCardRowLayout(this.props.item, row, rowIndex, 'card', arr.length, this.isFirstChildrenIsTab()));
     }
-    const className = classNames("baseCard",this.props.className);
+    const className = classNames("baseCard", this.props.className);
     return (
       <BaseCardContext.Provider value={{ forceRenderTabs: this.props.forceRenderTabs, itemRenderer: this.props.itemRenderer || DEFAULT_ITEM_RENDERER}}>
         {this.props.noCard

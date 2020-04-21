@@ -249,8 +249,8 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
           <BaseCard
             forceRenderTabs={true}
             itemRenderer={renderIBaseFormItemLayout}
-            className={classNames(BASE_FORM_CLASS, this.props.className)}
             {...rest}
+            className={classNames(BASE_FORM_CLASS, this.props.className)}
           />
         </FormBodyWrapper>
       </BaseFormContext.Provider>
