@@ -3340,6 +3340,11 @@ buffer@^4.3.0:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
+builtin-modules@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
+  integrity sha1-Jw8HbFpywC9bZaR9+Uxf46J4iS8=
+
 builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
@@ -4996,6 +5001,15 @@ eslint-module-utils@^2.4.1:
   dependencies:
     debug "^2.6.9"
     pkg-dir "^2.0.0"
+
+eslint-plugin-import-order@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-import-order/-/eslint-plugin-import-order-2.1.4.tgz#8357a395d2d8c3c3f109d8b26c4f618cb52c5243"
+  integrity sha1-g1ejldLYw8PxCdiybE9hjLUsUkM=
+  dependencies:
+    builtin-modules "^1.1.1"
+    lodash.cond "^4.2.0"
+    lodash.find "^4.2.0"
 
 eslint-plugin-import@^2.20.2:
   version "2.20.2"
@@ -7288,10 +7302,20 @@ lodash.camelcase@^4.3.0:
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
   integrity sha1-soqmKIorn8ZRA1x3EfZathkDMaY=
 
+lodash.cond@^4.2.0:
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/lodash.cond/-/lodash.cond-4.5.2.tgz#f471a1da486be60f6ab955d17115523dd1d255d5"
+  integrity sha1-9HGh2khr5g9quVXRcRVSPdHSVdU=
+
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
+
+lodash.find@^4.2.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.find/-/lodash.find-4.6.0.tgz#cb0704d47ab71789ffa0de8b97dd926fb88b13b1"
+  integrity sha1-ywcE1Hq3F4n/oN6Ll92Sb7iLE7E=
 
 lodash.memoize@^4.1.2:
   version "4.1.2"
