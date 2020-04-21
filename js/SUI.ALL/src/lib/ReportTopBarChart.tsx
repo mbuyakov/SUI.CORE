@@ -195,7 +195,8 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
     const valueDataField = this.props.valueDataField;
 
     let maxValue: number | undefined;
-    if (this.props.type === "absolute") {
+
+    if (this.props.type === "relative") {
       maxValue = Math.max(...data.map(element => element[valueDataField]), 0);
     }
 
