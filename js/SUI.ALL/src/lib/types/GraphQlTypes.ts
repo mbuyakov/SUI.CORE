@@ -1,5 +1,3 @@
-// tslint:disable:member-ordering no-any
-
 export interface IGraphQLConnection<T> {
   // noinspection SpellCheckingInspection
   nodes: T[];

@@ -1,5 +1,3 @@
-/* tslint:disable:no-any */
-
 /**
  * If type of value is number - return value.
  * Otherwise return default value

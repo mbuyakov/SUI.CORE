@@ -13,7 +13,6 @@ export interface IBaseCardTabLayout<T, ITEM> {
   title: string;
 }
 
-// tslint:disable-next-line:no-any
 export function renderIBaseCardTabLayout<T, ITEM>(sourceItem: any, tab: IBaseCardTabLayout<T, ITEM>, tabIndex: number, forceRenderTabs: boolean): JSX.Element {
   return (
     <Tabs.TabPane key={tabIndex.toString()} tab={<span>{tab.icon && <Icon type={tab.icon}/>}{tab.title}</span>} forceRender={forceRenderTabs}>
@@ -24,7 +23,6 @@ export function renderIBaseCardTabLayout<T, ITEM>(sourceItem: any, tab: IBaseCar
 
 type ManagedTabsProps = Omit<TabsProps, 'onChange' | 'activeKey'>;
 
-// tslint:disable-next-line:variable-name
 const ManagedTabsInner: React.FC<ManagedTabsProps> = (props): JSX.Element => {
   const [activeTab, setTab] = React.useState(props.defaultActiveKey);
 
@@ -39,5 +37,4 @@ const ManagedTabsInner: React.FC<ManagedTabsProps> = (props): JSX.Element => {
   );
 };
 
-// tslint:disable-next-line:variable-name
 export const ManagedTabs = ManagedTabsInner;

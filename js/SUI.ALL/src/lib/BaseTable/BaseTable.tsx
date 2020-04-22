@@ -1,6 +1,3 @@
-/* tslint:disable:no-magic-numbers */
-/* tslint:disable:variable-name */
-/* tslint:disable:no-any */
 import { Icon as LegacyIcon } from '@ant-design/compatible';
 import {Getter, Getters} from '@devexpress/dx-react-core';
 import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSelection, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
@@ -43,10 +40,8 @@ export class BaseTable<TSelection = defaultSelection>
     { selection?: TSelection[]; }>
   implements ISelectionTable<TSelection> {
 
-  // tslint:disable-next-line:no-any
-  private static getRowId(row: any): any {
-    // tslint:disable-next-line:triple-equals
-    const id = (row.id != null) ? row.id : row.compoundKey;
+private static getRowId(row: any): any {
+const id = (row.id != null) ? row.id : row.compoundKey;
 
     if (id === null || id === undefined) {
       console.error('ROW DOESN\'T HAVE ID!');
@@ -96,8 +91,7 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   // TODO cyclomatic-complexity
-  // tslint:disable-next-line:cyclomatic-complexity
-  public render(): JSX.Element {
+public render(): JSX.Element {
     const rowDetail = this.props.rowDetailComponent;
     const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
     const groupingEnabled = defaultIfNotBoolean(this.props.groupingEnabled, true);
@@ -500,20 +494,17 @@ export class BaseTable<TSelection = defaultSelection>
     const cols = this.mapCols()
       .filter(col => defaultIfNotBoolean(col.exportable, true))
       .filter(col => !hiddenColumnNames.includes(col.id));
-    // tslint:disable-next-line:ban-ts-ignore
-    // @ts-ignore
+// @ts-ignore
     const formattedData = this.exportData.map(row => {
       const ret = {};
       cols.forEach(col => {
-        // tslint:disable-next-line:ban-ts-ignore
-        // @ts-ignore
+// @ts-ignore
         ret[col.title] = col.getCellValue(row);
       });
 
       return ret;
     });
-    // tslint:disable-next-line:ban-ts-ignore
-    // @ts-ignore
+// @ts-ignore
     console.log(formattedData);
     const ws = XLSX.utils.json_to_sheet(formattedData, {
       header: cols.map(col => col.title)

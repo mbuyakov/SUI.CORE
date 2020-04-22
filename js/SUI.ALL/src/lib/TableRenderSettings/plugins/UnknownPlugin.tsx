@@ -15,8 +15,7 @@ export class UnknownPlugin extends TableRenderParamsPlugin<{}> {
     super('unk', '-- Неизвестно --', false, true);
   }
 
-  // tslint:disable-next-line:prefer-function-over-method variable-name
-  public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): Promise<void> {
+public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): Promise<void> {
     result.render = (): JSX.Element => (
       <Tooltip
         title={`Неизвестный режим ${tableRenderParams.renderType}`}
@@ -31,8 +30,7 @@ export class UnknownPlugin extends TableRenderParamsPlugin<{}> {
     );
   }
 
-  // tslint:disable-next-line:prefer-function-over-method variable-name
-  public extraActivationKostyl(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): boolean {
+public extraActivationKostyl(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): boolean {
     return tableRenderParams && !!tableRenderParams.renderType && !TableRenderSettingsPluginManager.plugins.has(tableRenderParams.renderType);
   }
 }

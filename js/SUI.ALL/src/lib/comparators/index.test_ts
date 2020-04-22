@@ -1,5 +1,3 @@
-/* tslint:disable:typedef no-null-keyword */
-
 import * as comparators from "./index";
 
 test("[number] Compare null null", () => {

@@ -1,4 +1,3 @@
-/* tslint:disable:jsx-no-lambda no-magic-numbers no-any object-literal-sort-keys no-floating-promises promise-function-async */
 import { Icon } from '@ant-design/compatible';
 import { ThemeProvider, useTheme, withTheme } from '@material-ui/core';
 import { Cached } from '@material-ui/icons';
@@ -70,7 +69,6 @@ export function FullScreenTableSettings(props: {
     >
       {getPopupContainer => (
         <TableSettings
-          // tslint:disable-next-line:no-magic-numbers
           startTimeout={200}
           popupMode={true}
           getPopupContainer={getPopupContainer}
@@ -97,7 +95,6 @@ interface ITableSettingsState {
   tableInfoById?: ITableInfo;
 }
 
-// tslint:disable-next-line:class-name
 class _TableSettings extends React.Component<ITableSettingsProps, ITableSettingsState> {
 
   private static getElementBySortType<T>(sorting: SortingDirection, ascElement: T, descElement: T, emptyElement: T): T {
@@ -549,8 +546,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                   generateUpdate('columnInfo', record.id, 'nameId', newId)
                                                     .then<IName>(__ => {
                                                       if (newId === null) {
-                                                        // tslint:disable-next-line:no-object-literal-type-assertion
-                                                        return {} as IName;
+return {} as IName;
                                                       }
 
                                                       return query(`{
@@ -561,8 +557,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                       }`, true);
                                                     })
                                                     .then(newName => {
-                                                      // tslint:disable-next-line:no-object-literal-type-assertion
-                                                      const name = {
+const name = {
                                                         id: newId,
                                                         name: newName.name,
                                                         description: newName.description,
@@ -609,8 +604,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                         }
                                                       }
                                                     }`, true))))
-                                                    // tslint:disable-next-line:no-shadowed-variable
-                                                    .then(columnInfoTags => this.updateColField(record.id, 'columnInfoTagsByColumnInfoId', { nodes: columnInfoTags.map(value => value.columnInfoTag) }, false, true))
+.then(columnInfoTags => this.updateColField(record.id, 'columnInfoTagsByColumnInfoId', { nodes: columnInfoTags.map(value => value.columnInfoTag) }, false, true))
                                                 }
                                               />
                                             </div>
@@ -850,7 +844,6 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                 <MainSettings
                                   getPopupContainer={this.props.getPopupContainer}
                                   tableId={item.id}
-                                  // tslint:disable-next-line:jsx-no-lambda
                                   onSave={settings => Promise.all([
                                     generateUpdate('tableInfo', item.id, 'cardRenderParams', JSON.stringify(JSON.stringify(settings)).slice(1, -1)),
                                     sleep(SAVE_SLEEP_DELAY),
@@ -905,8 +898,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
         .then(_ => {
           const tableInfoById = this.state.tableInfoById;
           tableInfoById.isAudited = value;
-          // tslint:disable-next-line:no-unnecessary-callback-wrapper
-          this.setState({ tableInfoById }, () => resolve());
+this.setState({ tableInfoById }, () => resolve());
         })
         .catch(_ => reject(`Ошибка при ${value ? 'включении' : 'выключении'} аудита`));
     });
@@ -962,5 +954,4 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
   }
 }
 
-// tslint:disable-next-line:variable-name
 export const TableSettings = withTheme(_TableSettings);

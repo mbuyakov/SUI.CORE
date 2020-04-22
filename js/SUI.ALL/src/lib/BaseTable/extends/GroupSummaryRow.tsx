@@ -42,12 +42,10 @@ export class GroupSummaryRow extends React.Component<IGroupSummaryRowProps> {
       <Plugin>
         <Getter
           name="tableBodyRows"
-          // tslint:disable-next-line:no-any
           computed={GroupSummaryRow.tableBodyRowsComputed as any}
         />
         <Template
           name="tableCell"
-          // tslint:disable-next-line:no-any
           predicate={GroupSummaryRow.isSummaryRow as any}
         >
           {(cellProps: Table.DataCellProps) => {
@@ -74,8 +72,7 @@ export class GroupSummaryRow extends React.Component<IGroupSummaryRowProps> {
     const groupSubtotals = this.props.subtotalData && this.props.subtotalData.get(rowKey);
     const result = groupSubtotals
       && groupSubtotals.data
-      // tslint:disable-next-line:ban-ts-ignore
-      // @ts-ignore
+// @ts-ignore
       && groupSubtotals.data[column.id];
     const roundCount = getDataByKey(column, "__tableRenderParams", "roundCount");
 

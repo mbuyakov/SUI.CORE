@@ -33,7 +33,6 @@ export class PromisedSelect<T extends SelectValue> extends PromisedBase<Promised
     const withPopover: JSX.Element = this.wrapInValidationPopover(
         <Select<T>
           // Typescript goes crazy. Mark as any to ignore
-          // tslint:disable-next-line:no-any
           {...selectProps as SelectProps<T> as any}
           disabled={this.props.disabled || this.props.loading || this.state.loading || false}
           onChange={this.onChange}

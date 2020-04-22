@@ -1,4 +1,3 @@
-/* tslint:disable:object-literal-sort-keys no-any unnecessary-else newline-before-return prefer-function-over-method no-floating-promises prefer-readonly promise-function-async*/
 import { Filter, Grouping, GroupKey, Sorting, TableFilterRow } from '@devexpress/dx-react-grid';
 import IconButton from '@material-ui/core/IconButton';
 import LinkIcon from '@material-ui/icons/Link';
@@ -80,7 +79,6 @@ interface IExpandedGroup {
 
 type IBackendTableState<T> = {
   cols?: IBaseTableColLayout[];
-  // tslint:disable-next-line:no-any
   data?: any[];
   defaultFilter?: SimpleBackendFilter[];
   error?: string;
@@ -154,7 +152,6 @@ export class BackendTable<TSelection = defaultSelection>
       filters: [],
       lastSendSelection: [],
       paginationEnabled,
-      // tslint:disable-next-line:no-magic-numbers
       pageSize: paginationEnabled ? (this.props.pageSize || 10) : 1000000000,
     };
   }
@@ -181,7 +178,6 @@ export class BackendTable<TSelection = defaultSelection>
 
   public componentDidUpdate(prevProps: IBackendTableProps): void {
     if (this.props.watchFilters) {
-      // tslint:disable-next-line:ban-ts-ignore
       // @ts-ignore
       const isEquals = (first, second): boolean => JSON.stringify(first) === JSON.stringify(second);
 
@@ -285,7 +281,6 @@ export class BackendTable<TSelection = defaultSelection>
           ].filter(Boolean)}
           rowStyler={this.generateRowStyler()}
           warnings={admin ? this.state.warnings : undefined}
-          // tslint:disable-next-line:no-magic-numbers
           pageSizes={[10, 25, 50]}
           // remote functions
           getChildGroups={this.getChildGroups}
@@ -635,7 +630,6 @@ export class BackendTable<TSelection = defaultSelection>
       // TODO: Сейчас надо как-то дождатьзя загрузки инфы колонок что бы получить возможность тыкаться в directGetById. Куда ещё положить - не придумал
       await ColumnInfoManager.getAllValues();
       const content = {
-        // tslint:disable-next-line:no-magic-numbers
         pageSize: this.state.pageSize,
         currentPage: 0,
       };
@@ -719,7 +713,6 @@ export class BackendTable<TSelection = defaultSelection>
   @autobind
   private setInnerRefValue(value?: BackendTable<TSelection>): void {
     if (this.props.innerRef) {
-      // tslint:disable-next-line:ban-ts-ignore
       // @ts-ignore
       this.props.innerRef.current = value;
     }
@@ -818,7 +811,6 @@ export class BackendTable<TSelection = defaultSelection>
         }
       }
 
-      // tslint:disable-next-line:variable-name
       const _serviceColumns = (this.props.serviceColumns ? wrapInArray(this.props.serviceColumns) : []);
 
       if (this.props.cardLinkFn) {
@@ -832,7 +824,6 @@ export class BackendTable<TSelection = defaultSelection>
       }
 
       const serviceColumns = _serviceColumns
-        // tslint:disable-next-line:no-object-literal-type-assertion
         .map(serviceColumn => ({
           ...serviceColumn,
           exportable: false,

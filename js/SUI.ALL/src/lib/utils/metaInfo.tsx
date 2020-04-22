@@ -18,8 +18,7 @@ export async function colToBaseTableCol(
     defaultGrouping: columnInfo.defaultGrouping,
     defaultSorting: columnInfo.defaultSorting as SortingDirection,
     defaultVisible: columnInfo.defaultVisible,
-    // tslint:disable-next-line:no-any
-    groupingCriteria: (value: any) => value,
+groupingCriteria: (value: any) => value,
     id: columnInfo.columnName,
     subtotal: columnInfo.subtotalTypeBySubtotalTypeId,
     title: `${columnName}${rawMode ? ` (${columnInfo.columnName})` : ''}`,
@@ -72,20 +71,17 @@ export async function colToBaseTableCol(
   const trp = TableRenderSettingsPopover.parseTableRenderParams(props.columnInfo.tableRenderParams);
 
   if (!props.rawMode) {
-    // tslint:disable-next-line:ban-ts-ignore
-    // @ts-ignore
+// @ts-ignore
     let selectedPlugin = Array.from(TableRenderSettingsPluginManager.plugins.values()).find(plugin => plugin.extraActivationKostyl(result, renderColumnInfo, props, trp));
 
     if (!selectedPlugin && trp && trp.renderType) {
       selectedPlugin = TableRenderSettingsPluginManager.plugins.get(trp.renderType); // || new UnknownPlugin();
     }
 
-    // tslint:disable-next-line:ban-ts-ignore
-    // @ts-ignore
+// @ts-ignore
     await selectedPlugin.baseTableColGenerator(result, renderColumnInfo, props, trp);
 
-    // tslint:disable-next-line:ban-ts-ignore
-    // @ts-ignore
+// @ts-ignore
     result.__tableRenderParams = trp; // Костыль для округления подытогов
   }
 

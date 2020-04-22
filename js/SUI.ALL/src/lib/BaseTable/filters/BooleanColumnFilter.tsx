@@ -23,11 +23,9 @@ export class BooleanColumnFilter extends React.Component<BooleanColumnFilterProp
         data={[
           {
             title: <LegacyIcon type="check" theme="outlined"/>,
-            // tslint:disable-next-line:triple-equals
             value: this.props.trueValue != null ? this.props.trueValue.toString() : 'true'
           }, {
             title: <LegacyIcon type="close" theme="outlined"/>,
-            // tslint:disable-next-line:triple-equals
             value: this.props.falseValue != null ? this.props.falseValue.toString() : 'false'
           }
         ]}
@@ -48,7 +46,6 @@ export class BooleanColumnFilter extends React.Component<BooleanColumnFilterProp
     }
 
     event
-      // tslint:disable-next-line:no-any
       ? this.props.onFilter({columnName: this.props.column.name, value: value as any, operation: 'equal'})
       : this.props.onFilter(null);
   }

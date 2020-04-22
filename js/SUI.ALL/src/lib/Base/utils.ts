@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import {BaseForm} from "./BaseForm";
 
 interface IClearField {

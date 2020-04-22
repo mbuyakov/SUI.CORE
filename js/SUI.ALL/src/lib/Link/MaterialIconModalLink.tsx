@@ -1,4 +1,3 @@
-// tslint:disable:max-classes-per-file class-name variable-name
 import { IconButton } from '@material-ui/core';
 import LinkIcon  from '@material-ui/icons/Link';
 import autobind from 'autobind-decorator';
@@ -9,8 +8,7 @@ import { draw } from '../utils';
 
 
 export interface IMaterialIconModalLinkProps {
-  // tslint:disable-next-line:no-any
-  icon?: any,
+icon?: any,
   modal: JSX.Element,
 }
 

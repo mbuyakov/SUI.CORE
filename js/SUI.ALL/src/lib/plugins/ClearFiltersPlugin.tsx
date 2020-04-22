@@ -17,7 +17,6 @@ export class ClearFiltersPlugin extends React.Component<{
               <Tooltip
                 title="Очистить фильтры"
                 placement='bottom'
-                // tslint:disable-next-line:no-magic-numbers
                 enterDelay={300}
               >
                 <IconButton

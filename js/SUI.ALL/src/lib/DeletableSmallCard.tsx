@@ -8,7 +8,6 @@ import { DnDDragHandler } from './Draggable';
 import { GetPopupContainerContext, OldVersionWarning } from './MetaCardSettings';
 
 
-// tslint:disable-next-line:variable-name
 export const DeletableSmallCard: React.FC<Omit<CardProps, 'size' | 'type'> & {
   draggable?: boolean
   isVersionNotLast?: false | [number, number]

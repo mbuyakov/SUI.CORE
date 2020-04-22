@@ -1,4 +1,3 @@
-/* tslint:disable:no-floating-promises */
 import { Icon } from '@ant-design/compatible';
 import { Chip } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -29,7 +28,6 @@ import {OldVersionWarning} from "./OldVersionWarning";
 
 export type ItemSettingsFormatType = null | 'ts' | 'date' | 'time';
 
-// tslint:disable-next-line:no-any
 type ItemSettingsState = Merge<IBaseCardItemLayout<any>, {
   colId?: string
   formatType: ItemSettingsFormatType

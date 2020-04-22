@@ -49,8 +49,7 @@ export class ColumnInfo {
     this.roles = (getDataByKey<IColumnInfoRole[]>(item, "columnInfoRolesByColumnInfoId", "nodes") || [])
       .map(value => getDataByKey(value, "roleByRoleId", "name"))
       .filter(Boolean)
-      // tslint:disable-next-line:no-unnecessary-callback-wrapper
-      .map(roleName => formatRoleName(roleName));
+.map(roleName => formatRoleName(roleName));
     this.foreignColumnInfo = (getDataByKey<IColumnInfoReference[]>(item, "columnInfoReferencesByColumnInfoId", "nodes") || []).map(value => value.foreignColumnInfoId);
 
     // private
@@ -64,7 +63,6 @@ export class ColumnInfo {
   }
 }
 
-// tslint:disable-next-line:max-classes-per-file class-name
 class _ColumnInfoManager extends GqlCacheManager<IColumnInfo, ColumnInfo> {
 
   protected getFields(): string {
@@ -128,5 +126,4 @@ class _ColumnInfoManager extends GqlCacheManager<IColumnInfo, ColumnInfo> {
   }
 }
 
-// tslint:disable-next-line:variable-name
 export const ColumnInfoManager = new _ColumnInfoManager();

@@ -29,8 +29,7 @@ export class NamePopover extends React.Component<INamePopoverProps, {
   visible?: boolean;
 }> {
 
-  // tslint:disable-next-line:no-any
-  private static filterOption(inputValue: string, option: any): boolean {
+private static filterOption(inputValue: string, option: any): boolean {
     return option.props.children.toString().toLowerCase().indexOf(inputValue.toLowerCase()) >= 0;
   }
 
@@ -200,8 +199,7 @@ export class NamePopover extends React.Component<INamePopoverProps, {
     }`)
       .then(value => {
         if (value.allNames.totalCount > 0) {
-          // tslint:disable-next-line:no-string-throw
-          throw 'Запись с таким именем уже существует';
+throw 'Запись с таким именем уже существует';
         }
       })
       .then(() => mutate<{ createName: { name: { id: string } } }>(gql`mutation {

@@ -1,5 +1,3 @@
-// tslint:disable:no-any prefer-function-over-method
-
 export interface ITabSyncerHandler<T> {
   cb: ITabSyncerHandlerCb<T>;
   id: number;
@@ -10,8 +8,7 @@ export type ITabSyncerHandlerCb<T> = (key: string, value?: T | null) => any;
 export class TabSyncer<T> {
 
   private readonly handlers: Array<ITabSyncerHandler<T>> = [];
-  // tslint:disable-next-line:no-inferrable-types
-  private idCounter: number = 1;
+private idCounter: number = 1;
   private readonly keyPrefix: string;
 
   public constructor(keyPrefix: string) {

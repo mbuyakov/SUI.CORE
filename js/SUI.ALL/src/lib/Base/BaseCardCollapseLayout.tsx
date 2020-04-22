@@ -13,7 +13,6 @@ export interface IBaseCardCollapseLayout<T, ITEM> {
   title: string;
 }
 
-// tslint:disable-next-line:no-any
 export function renderIBaseCardCollapseLayout<T, ITEM>(sourceItem: any, panel: IBaseCardCollapseLayout<T, ITEM>, index: number, fitCollapsePanel: boolean, rowsCount: number): JSX.Element {
   const padding = defaultIfNotBoolean(panel.padding, true);
 

@@ -17,7 +17,6 @@ export class RefreshMetaTablePlugin extends React.Component<{
               <Tooltip
                 title='Обновить данные'
                 placement='bottom'
-                // tslint:disable-next-line:no-magic-numbers
                 enterDelay={300}
               >
                 <IconButton

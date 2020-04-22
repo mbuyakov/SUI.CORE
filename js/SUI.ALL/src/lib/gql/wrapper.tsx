@@ -16,8 +16,7 @@ async function rejectOnError<T>(promise: Promise<ApolloQueryResult<T> | FetchRes
       promise
         .then(value => {
           if (value.errors) {
-            // tslint:disable-next-line:no-any
-            value.errors.forEach((error: any) => {
+value.errors.forEach((error: any) => {
               console.error('PostGraphile error', error);
             });
             reject(value.errors[0].message);
@@ -33,10 +32,8 @@ async function rejectOnError<T>(promise: Promise<ApolloQueryResult<T> | FetchRes
 /**
  * Extract keys from object if it has only one key
  */
-// tslint:disable-next-line:no-any
 function extractKeys(obj: IObjectWithIndex, extractKeysLevel: number | boolean): any {
-  // tslint:disable-next-line:no-parameter-reassignment
-  extractKeysLevel = typeof extractKeysLevel === 'boolean' ? 1 : extractKeysLevel;
+extractKeysLevel = typeof extractKeysLevel === 'boolean' ? 1 : extractKeysLevel;
 
   let ret = obj;
   for (let i = 1; i <= extractKeysLevel; i++) {
@@ -60,11 +57,9 @@ function extractKeys(obj: IObjectWithIndex, extractKeysLevel: number | boolean):
  * any - query after gql tag
  * For backward compatibility extractKeysLevel=true equals to extractKeysLevel=1
  */
-// tslint:disable-next-line:no-any
 export async function query<T>(queryBody: string | any, extractKeysLevel: boolean | number = false): Promise<T> {
   if (typeof queryBody === 'string') {
-    // tslint:disable-next-line:no-parameter-reassignment
-    queryBody = gql(queryBody);
+queryBody = gql(queryBody);
   }
 
   let ret = rejectOnError<T>(
@@ -85,11 +80,9 @@ export async function query<T>(queryBody: string | any, extractKeysLevel: boolea
  * Gql mutate
  * any - mutate after gql tag
  */
-// tslint:disable-next-line:no-any
 export async function mutate<T>(mutationBody: string | any, extractKeysLevel: boolean | number = false): Promise<T> {
   if (typeof mutationBody === 'string') {
-    // tslint:disable-next-line:no-parameter-reassignment
-    mutationBody = gql(mutationBody);
+mutationBody = gql(mutationBody);
   }
 
   let ret = rejectOnError<T>(

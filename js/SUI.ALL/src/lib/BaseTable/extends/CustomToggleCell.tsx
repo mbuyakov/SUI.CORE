@@ -14,7 +14,6 @@ interface ITableDetailToggleCellBaseProps extends TableRowDetail.ToggleCellProps
   style?: React.CSSProperties;
 }
 
-// tslint:disable-next-line:no-any
 const styles = (theme: any): any => ({
   toggleCell: {
     paddingBottom: 0,
@@ -44,7 +43,6 @@ class TableDetailToggleCellBase extends React.Component<ITableDetailToggleCellBa
       >
         <IconButton
           className={classes.toggleCellButton}
-          // tslint:disable-next-line:jsx-no-lambda
           onClick={(e): void => {
             e.stopPropagation();
             onToggle();
@@ -62,5 +60,4 @@ class TableDetailToggleCellBase extends React.Component<ITableDetailToggleCellBa
 
 }
 
-// tslint:disable-next-line:variable-name
 export const CustomToggleCell = withStyles(styles, { name: "TableDetailToggleCell" })(TableDetailToggleCellBase);

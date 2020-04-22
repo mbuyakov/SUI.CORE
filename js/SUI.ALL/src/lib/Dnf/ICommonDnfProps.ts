@@ -11,8 +11,7 @@ export interface IDnfFormRowElementProps<T = {}> {
 
 export interface IFormItemWrapperProps {
   formItems: React.ReactNode;
-  // tslint:disable-next-line:no-any
-  formValues: { [field: string]: any };
+formValues: { [field: string]: any };
   hasErrors?: boolean;
   loading?: boolean;
 }
@@ -43,8 +42,7 @@ export interface ICommonDnfProps<V> extends ISupportingWrapperFormProps {
 }
 
 export interface IClearDnfFromValues {
-  // tslint:disable-next-line:no-any
-  [field: string]: any;
+[field: string]: any;
 }
 
 export interface IResultDnfFormValues<TElements> extends IClearDnfFromValues {

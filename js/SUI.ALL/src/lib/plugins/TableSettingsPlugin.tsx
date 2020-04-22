@@ -21,8 +21,7 @@ export class TableSettingsDialog extends React.Component<ITableSettingsDialogPro
   public render(): JSX.Element {
     return (
       <div style={this.props.style}>
-        {/* tslint:disable-next-line:no-magic-numbers */}
-        <Tooltip title='Редактировать права и видимость колонок' placement='bottom' enterDelay={300}>
+<Tooltip title='Редактировать права и видимость колонок' placement='bottom' enterDelay={300}>
           <IconButton style={this.props.buttonStyle} onClick={this.handleClickOpen} color="primary">
             <Build style={{color: '#56CBF8'}}/>
           </IconButton>
@@ -43,7 +42,6 @@ export class TableSettingsDialog extends React.Component<ITableSettingsDialogPro
   }
 }
 
-// tslint:disable-next-line:max-classes-per-file
 export class TableSettingsPlugin extends React.Component<{
   id: string;
 }> {

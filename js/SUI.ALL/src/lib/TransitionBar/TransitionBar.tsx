@@ -1,4 +1,3 @@
-// tslint:disable:unnecessary-else
 import { Icon as LegacyIcon } from '@ant-design/compatible';
 import { Button, Dropdown, Menu, Modal } from 'antd';
 import {ButtonGroupProps} from "antd/lib/button";

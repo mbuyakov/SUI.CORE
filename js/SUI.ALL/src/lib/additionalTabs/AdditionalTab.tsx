@@ -1,4 +1,3 @@
-/* tslint:disable:jsx-no-lambda no-any */
 import { Form } from '@ant-design/compatible';
 import {WrappedFormUtils} from "@ant-design/compatible/lib/form/Form";
 import { Card, Input } from "antd";
@@ -13,7 +12,6 @@ import { formatRawForGraphQL } from '../stringFormatters';
 import { FilterType, getFilterType } from '../utils';
 import { WaitData } from '../WaitData';
 
-// tslint:disable-next-line:no-import-side-effect
 
 interface IAdditionalTabProps {
   columnInfos: ColumnInfo[];
@@ -89,7 +87,6 @@ export class AdditionalTab extends React.Component<IAdditionalTabProps, IAdditio
   }
 
   @autobind
-  // tslint:disable-next-line:prefer-function-over-method
   private additionalFormItems(form: WrappedFormUtils): JSX.Element {
     return (
       <Form.Item style={{marginBottom: 0}}>

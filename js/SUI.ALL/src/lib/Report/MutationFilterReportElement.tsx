@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import autobind from "autobind-decorator";
 import React from "react";
 
@@ -14,8 +13,7 @@ export async function jsonMutationDataFetcher<TRaw = any, TData = any>(
 ): Promise<TData> {
   const formattedParams = Object
     .keys(params)
-    // tslint:disable-next-line:triple-equals
-    .filter(key => params[key] != null)
+.filter(key => params[key] != null)
     .reduce((result, key) => {
       result[key] = params[key];
 

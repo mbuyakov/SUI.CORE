@@ -1,4 +1,3 @@
-/* tslint:disable:jsx-no-lambda */
 import { Icon as LegacyIcon } from '@ant-design/compatible';
 import { Button, Popover, Select, Tooltip } from 'antd';
 import autobind from 'autobind-decorator';
@@ -20,8 +19,7 @@ const popoverContentStyle: React.CSSProperties = {
 
 export type ITableRenderParams<T extends {} = {}> = Omit<T, 'renderType'> & {
   renderType?: string;
-  // tslint:disable-next-line:no-any
-  [index: string]: any;
+[index: string]: any;
 }
 
 export interface ITableRenderSettingsPopoverProps {
@@ -39,7 +37,6 @@ export interface ITableRenderSettingsPopoverState<T> {
   savingInProcess?: boolean;
   selectOpened?: boolean;
   tableRenderParams: ITableRenderParams<T>;
-  // tslint:disable-next-line:no-any
 }
 
 export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderSettingsPopoverProps, ITableRenderSettingsPopoverState<T>> {
@@ -54,8 +51,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
     let tableRenderParams: ITableRenderParams = {};
 
     try {
-      // tslint:disable-next-line:no-any
-      tableRenderParams = chain<ITableRenderParams<any>, string>(
+tableRenderParams = chain<ITableRenderParams<any>, string>(
         params,
         trp => JSON.parse(trp ? trp.replace(/\\"/g, '"') : '{}'),
         ...Array.from(TableRenderSettingsPluginManager.plugins.values()).map(plugin => plugin.parseParams),
@@ -143,13 +139,11 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
   }
 
   @autobind
-  // tslint:disable-next-line:no-any
-  public updateField(field: string, save: boolean = false): (value: any) => Promise<any> {
+public updateField(field: string, save: boolean = false): (value: any) => Promise<any> {
     return async value => {
       // console.log(field, value);
       const tableRenderParams = this.state.tableRenderParams;
-      // tslint:disable-next-line:ban-ts-ignore
-      // @ts-ignore
+// @ts-ignore
       tableRenderParams[field] = value;
       this.setState({ tableRenderParams: { ...tableRenderParams }, changed: true });
 

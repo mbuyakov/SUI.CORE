@@ -1,7 +1,22 @@
+/*eslint sort-exports/sort-exports: 2*/
 const TRANSLATE_MAP = new Map<string, string>();
 let customPostProcessor: CustomPostProcessor | undefined;
 
 export type CustomPostProcessor = (key: string, returnNull: boolean) => string | null;
+
+/**
+ * Add translate key
+ */
+export function addTranslate(key: string, text: string): void {
+  TRANSLATE_MAP.set(key.toLowerCase(), text);
+}
+
+/**
+ * Set post processor for not founded key
+ */
+export function setCustomPostProcessor(processor: CustomPostProcessor): void {
+  customPostProcessor = processor;
+}
 
 /**
  * Translate test
@@ -24,18 +39,4 @@ export function translate(text: string, returnNull: boolean = false): string | n
   console.error(`Can't translate "${text}"`);
 
   return text;
-}
-
-/**
- * Add translate key
- */
-export function addTranslate(key: string, text: string): void {
-  TRANSLATE_MAP.set(key.toLowerCase(), text);
-}
-
-/**
- * Set post processor for not founded key
- */
-export function setCustomPostProcessor(processor: CustomPostProcessor): void {
-  customPostProcessor = processor;
 }

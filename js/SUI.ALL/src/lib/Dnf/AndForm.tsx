@@ -7,8 +7,7 @@ interface IAndFormProps<T> {
   cardStyle?: React.CSSProperties;
   initialState?: IResultAndFormValues<T>;
 
-  // tslint:disable-next-line:no-any
-  dnfValidator?(value: T[], callback: any): void;
+dnfValidator?(value: T[], callback: any): void;
 }
 
 export class AndForm<TElement>
@@ -29,8 +28,7 @@ export class AndForm<TElement>
         {...this.props}
         initialState={{
           ...this.props.initialState,
-          // tslint:disable-next-line:no-any
-          forms: (forms ? [forms] : undefined) as any,
+forms: (forms ? [forms] : undefined) as any,
         }}
         defaultSubmitButtonTitle={this.props.defaultSubmitButtonTitle || 'Создать'}
         orBehaviorDisabled={true}

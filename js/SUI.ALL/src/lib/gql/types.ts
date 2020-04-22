@@ -1,5 +1,3 @@
-/* tslint:disable:member-ordering completed-docs */
-
 export interface ISimpleGqlFilterValue<TType> {
   isNull?: boolean;
   equalTo?: TType;

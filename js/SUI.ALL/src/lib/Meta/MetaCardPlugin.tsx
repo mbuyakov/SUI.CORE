@@ -5,7 +5,6 @@ import { Rendered } from '../other';
 
 export type DEFAULT_ROOT_TYPES = 'root' | 'row' | string;
 
-// tslint:disable-next-line:no-any
 export interface IMetaCardRenderParams<TProps, TItem = any> {
   item: TItem;
   props: TProps;

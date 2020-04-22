@@ -23,11 +23,9 @@ export interface IBaseCardProps<T, ITEM> {
   item?: T;
   noCard?: boolean; // Paradox mode
   rows: OneOrArrayWithNulls<IBaseCardRowLayout<T, ITEM>>;
-  // tslint:disable-next-line:no-any
-  itemRenderer?(sourceItem: any, item: ITEM, colspan: number): React.ReactNode;
+itemRenderer?(sourceItem: any, item: ITEM, colspan: number): React.ReactNode;
 }
 
-// tslint:disable-next-line:no-any
 export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Component<IBaseCardProps<T, ITEM>, {
   tab: string
 }> {
@@ -47,16 +45,13 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
     const firstChildrenTabs = wrapInArrayWithoutNulls(rows[0].tabs);
     // Attach tab to card props
     if (firstChildrenIsTab) {
-      // tslint:disable-next-line:ban-ts-ignore
-      // @ts-ignore
+// @ts-ignore
       tabList = firstChildrenTabs.map((tab, i) => ({ key: i.toString(), tab: (<span>{tab.icon && <Icon type={tab.icon}/>}{tab.title}</span>) }));
       tabBarExtraContent = rows[0].tabBarExtraContent;
     }
     let body = null;
-    // tslint:disable-next-line:prefer-conditional-expression
-    if (firstChildrenIsTab) {
-      // tslint:disable-next-line:ban-ts-ignore
-      // @ts-ignore
+if (firstChildrenIsTab) {
+// @ts-ignore
       body = firstChildrenTabs.map((tab, tabIndex) => renderIBaseCardTabLayout(this.props.item, tab, tabIndex, this.props.forceRenderTabs));
       // this.renderTabPanes(rows[0].tabs)
     } else {

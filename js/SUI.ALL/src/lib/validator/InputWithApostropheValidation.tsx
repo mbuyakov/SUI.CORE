@@ -1,4 +1,3 @@
-/* tslint:disable:triple-equals */
 import {Button, Popover} from 'antd';
 import {InputProps} from "antd/lib/input/Input";
 import autobind from 'autobind-decorator';
@@ -21,7 +20,6 @@ export function apostropheValidator(value: string | null): string {
   return '';
 }
 
-// tslint:disable-next-line:typedef
 export function wrapWithApostropheValidator(validator: ValidatorFunc) {
   return (value: string | null) =>
     apostropheValidator(value) || validator(value);
@@ -82,8 +80,7 @@ export class InputWithApostropheValidation extends React.Component<InputWithApos
   }
 
   @autobind
-  // tslint:disable-next-line:typedef
-  private getAcceptDeclineButtons() {
+private getAcceptDeclineButtons() {
     return (
       <span>
         <Button type="danger" size="small" onClick={ this.onDeclineBtnClickHandler }>
@@ -97,8 +94,7 @@ export class InputWithApostropheValidation extends React.Component<InputWithApos
   }
 
   @autobind
-  // tslint:disable-next-line:typedef
-  private getNewAcceptStateOnChange(apostrophesCount: number) {
+private getNewAcceptStateOnChange(apostrophesCount: number) {
     if (apostrophesCount === 0) {
       return AcceptState.START;
     }
@@ -110,8 +106,7 @@ export class InputWithApostropheValidation extends React.Component<InputWithApos
   }
 
   @autobind
-  // tslint:disable-next-line:typedef
-  private onAcceptBtnClickHandler() {
+private onAcceptBtnClickHandler() {
     this.setState({acceptState: AcceptState.ACCEPTED});
   }
 
@@ -136,8 +131,7 @@ export class InputWithApostropheValidation extends React.Component<InputWithApos
   }
 
   @autobind
-  // tslint:disable-next-line:typedef
-  private onDeclineBtnClickHandler() {
+private onDeclineBtnClickHandler() {
     this.setState({acceptState: AcceptState.NOT_ACCEPTED});
   }
 
@@ -162,8 +156,7 @@ function getAcceptStateFromPrefix(s: string): AcceptState | null  {
   if(s) {
     const matches = s.match(PREFIX_REGEX);
     if(matches !== null) {
-      // tslint:disable-next-line:ban-ts-ignore
-      // @ts-ignore
+// @ts-ignore
       return AcceptState[matches[0]];
     }
   }
@@ -202,14 +195,11 @@ function dropPrefix(s: string): string {
   return s;
 }
 
-// tslint:disable-next-line:typedef
 function countApostrophes(s: string) {
-  // tslint:disable-next-line:variable-name
-  const ap_match = s.match(APOSTROPHE_REGEX);
+const ap_match = s.match(APOSTROPHE_REGEX);
   if (ap_match === null) {
     return 0;
-    // tslint:disable-next-line:unnecessary-else
-  } else {
+} else {
     return ap_match.length;
   }
 }

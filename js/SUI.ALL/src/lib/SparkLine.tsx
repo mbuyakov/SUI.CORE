@@ -1,4 +1,3 @@
-/* tslint:disable:no-magic-numbers */
 import * as React from "react";
 
 import { Color, getLevelColor } from './color';

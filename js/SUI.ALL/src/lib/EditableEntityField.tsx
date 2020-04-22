@@ -1,4 +1,3 @@
-/* tslint:disable:jsx-no-lambda typedef no-any */
 import { notification } from 'antd';
 import * as React from 'react';
 
@@ -54,15 +53,13 @@ export class EditableEntityField<T = any> extends React.Component<IEditableEntit
                 defaultValue: this.props.customDefaultValue ? this.props.customDefaultValue(this.props.customQuery ? data : data[this.props.field]) : data[this.props.field],
                 promise: async (newValue: any) => {
                   if (this.props.valuePreSaveConverter) {
-                    // tslint:disable-next-line:no-parameter-reassignment
-                    newValue = this.props.valuePreSaveConverter(newValue);
+newValue = this.props.valuePreSaveConverter(newValue);
                   }
 
                   let update = generateUpdate(this.props.entity, this.props.id, this.props.field, typeof (newValue) === 'string' ? newValue.replace(/"/g, '\\"') : newValue === undefined ? null : newValue).then((): void => {
                     notification.success({ message: this.props.successMessage });
                     if (this.waitDataRef.current) {
-                      // tslint:disable-next-line:no-floating-promises
-                      this.waitDataRef.current.updateData();
+this.waitDataRef.current.updateData();
                     }
                   }).catch(reason => {
                     errorNotification(this.props.failMessage, reason.stack);

@@ -54,7 +54,6 @@ export class PromisedModal
       <PromisedButton
         type="primary"
         {...okButtonProps}
-        // tslint:disable-next-line:jsx-no-lambda
         promise={async (): Promise<void> => {
           if (this.props.promise) {
             const result = await this.props.promise();

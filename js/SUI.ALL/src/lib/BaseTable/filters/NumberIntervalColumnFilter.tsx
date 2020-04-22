@@ -1,4 +1,3 @@
-/* tslint:disable:no-any */
 import InputNumber from 'antd/lib/input-number';
 import autobind from "autobind-decorator";
 import * as React from 'react';
@@ -66,8 +65,7 @@ export class NumberIntervalColumnFilter
     return (value): void => {
       let numberValue = null;
 
-      // tslint:disable-next-line:switch-default
-      switch (typeof(value)) {
+switch (typeof(value)) {
         case "number":
           numberValue = value;
           break;

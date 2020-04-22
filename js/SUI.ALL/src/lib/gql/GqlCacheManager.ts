@@ -1,4 +1,3 @@
-/* tslint:disable:file-name-casing */
 import { CacheManager, ICacheEntry } from "../cacheManager";
 import { addPluralEnding, addQuotesIfString, camelCase, capitalize } from "../stringFormatters";
 
@@ -12,8 +11,7 @@ export abstract class GqlCacheManager<GQL_T, T = GQL_T, ID = string> extends Cac
    * Load all entries
    */
   protected async __loadAll(): Promise<Array<ICacheEntry<T, ID>>> {
-    // tslint:disable-next-line:completed-docs
-    const nodes = (await query<{ nodes: GQL_T[] }>(
+const nodes = (await query<{ nodes: GQL_T[] }>(
       `{
       all${capitalize(addPluralEnding(camelCase(this.getTableName())))} {
         nodes {

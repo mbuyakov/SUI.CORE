@@ -1,4 +1,3 @@
-// tslint:disable:member-ordering
 import {ButtonProps} from "antd/lib/button";
 
 import {BackendTable} from "../BackendTable";

@@ -1,4 +1,3 @@
-/* tslint:disable */
 import capitalize from 'lodash/capitalize';
 
 export const NAME_REGEXP = /^(?=(([А-Яа-яA-Za-z0-9().]+[\-']?|\s)+))\1$/;

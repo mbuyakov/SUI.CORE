@@ -1,4 +1,3 @@
-/* tslint:disable:ban-ts-ignore */
 import { Icon as LegacyIcon } from '@ant-design/compatible';
 import { Spin } from 'antd';
 import autobind from 'autobind-decorator';
@@ -27,17 +26,14 @@ export interface IWaitDataProps<T> {
   extractFirstKey?: boolean;
   extractKeysLevel?: number;
   hideChildren?: boolean;
-  // tslint:disable-next-line:no-any
-  mutation?: string | any;
+mutation?: string | any;
   promise?: Promise<T>;
-  // tslint:disable-next-line:no-any
-  query?: string | any;
+query?: string | any;
   spinning?: boolean;
 }
 
 const errorIcon = (<LegacyIcon type="close-circle" theme="twoTone" twoToneColor="#d6083f" style={{fontSize: 24}}/>);
 
-// tslint:disable-next-line:no-any
 export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
   data?: T | null | undefined | "__NULL__";
   error?: boolean;
@@ -49,8 +45,7 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
   }
 
   public componentDidMount(): void {
-    // tslint:disable-next-line:no-floating-promises
-    this.updateData();
+this.updateData();
   }
 
   public render(): JSX.Element {
@@ -72,7 +67,6 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
         delay={typeof this.props.delay === 'number' ? this.props.delay : SPIN_DELAY}
         spinning={spinning}
         indicator={hasErrors ? errorIcon : undefined}
-        // tslint:disable-next-line:no-any
         tip={hasErrors && (<span style={{color: "red"}}>{this.props.errorTip}</span> as any)}
       >
         {(data || !defaultIfNotBoolean(this.props.hideChildren, true))
@@ -85,16 +79,14 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
 
   public shouldComponentUpdate(nextProps: Readonly<IWaitDataProps<T>>): boolean {
     // console.log(nextProps, nextState);
-    // tslint:disable-next-line:triple-equals
-    if (this.props.query != nextProps.query) {
+if (this.props.query != nextProps.query) {
       if (this.state) {
         // @ts-ignore
         this.state.data = false;
       }
       // @ts-ignore
       this.props = nextProps;
-      // tslint:disable-next-line:no-floating-promises
-      this.updateData();
+this.updateData();
 
       return true;
     }
@@ -109,8 +101,7 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
     }
     let promise = this.props.promise;
     if (this.props.query) {
-      // tslint:disable-next-line:no-promise-as-boolean
-      if (promise) {
+if (promise) {
         console.error('[WaitData]Props conflict! Defined promise and query. Props:', this.props);
         this.setState({error: true});
 
@@ -119,8 +110,7 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
       promise = queryWrapper(query(this.props.query, this.props.extractFirstKey || this.props.extractKeysLevel));
     }
     if (this.props.mutation) {
-      // tslint:disable-next-line:no-promise-as-boolean
-      if (promise) {
+if (promise) {
         console.error('[WaitData]Props conflict! Defined promise and mutation. Props:', this.props);
         this.setState({error: true});
 
@@ -128,15 +118,13 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
       }
       promise = queryWrapper(mutate(this.props.mutation, this.props.extractFirstKey || this.props.extractKeysLevel));
     }
-    // tslint:disable-next-line:no-promise-as-boolean
-    if (promise) {
+if (promise) {
       return promise
         .then(data => {
           // Workaround. Null in data are ok
           if (data === null) {
             // @ts-ignore
-            // tslint:disable-next-line:no-parameter-reassignment
-            data = '__NULL__';
+data = '__NULL__';
           }
           if (typeof data === 'object') {
             // Magic. May have false-positive error

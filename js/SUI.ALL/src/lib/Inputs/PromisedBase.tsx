@@ -38,7 +38,6 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
 
   public constructor(props: IPromisedBaseProps<V> & P) {
     super(props);
-    // tslint:disable-next-line:ban-ts-ignore
     // @ts-ignore
     this.state = {
       validatorText: ''
@@ -56,7 +55,6 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     }
 
     if (this.props.popconfirmSettings) {
-      // tslint:disable-next-line:strict-type-predicates
       this.setState({popconfirmVisible: true, value: (value == null ? this.state.value : value)});
     } else {
       this.onConfirm(value);
@@ -139,7 +137,6 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   @autobind
   protected onChange(value: V): void {
     this.setState({value});
-    // tslint:disable-next-line:no-floating-promises
     this.validate(value);
   }
 
@@ -176,11 +173,9 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
 
   @autobind
   private onConfirm(value?: V): void {
-    // tslint:disable-next-line:triple-equals
     const promise = this.props
       .promise(value == null ? this.state.value : value)
       .then(_ => {
-        // tslint:disable-next-line:triple-equals
         this.setState({loading: false, savedValue: (value == null ? this.state.value : value)});
       })
       .catch(reason => {

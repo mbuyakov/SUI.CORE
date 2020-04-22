@@ -1,4 +1,3 @@
-/* tslint:disable:jsx-no-lambda */
 import { InputNumber } from 'antd';
 import * as React from 'react';
 
@@ -21,13 +20,11 @@ export class RoundPlugin extends TableRenderParamsPlugin<IRoundPluginTRP> {
     super('round', 'Округление', true);
   }
 
-  // tslint:disable-next-line:prefer-function-over-method variable-name no-async-without-await
-  public async baseTableColGenerator(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, _trp: ITableRenderParams<IRoundPluginTRP>): Promise<void> {
+public async baseTableColGenerator(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, _trp: ITableRenderParams<IRoundPluginTRP>): Promise<void> {
     return;
   }
 
-  // tslint:disable-next-line:prefer-function-over-method
-  public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<IRoundPluginTRP>): React.ReactNode {
+public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<IRoundPluginTRP>): React.ReactNode {
     return (
       <>
         <span>Число знаков:</span>

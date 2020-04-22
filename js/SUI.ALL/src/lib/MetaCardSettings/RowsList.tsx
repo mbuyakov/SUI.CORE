@@ -58,7 +58,6 @@ export class RowsList extends React.Component<{
           </Menu.Item>),
           ...Array.from(MetaCardConfigurator.plugins.values()).map(plugin => (
             <Menu.Item
-              // tslint:disable-next-line:jsx-no-lambda no-any
               onClick={() => this.props.listRef.current.addItem(React.cloneElement(plugin.getNewSettingsInstance(false), {__type: plugin.id}) as unknown as any)}
             >
               {plugin.addText}

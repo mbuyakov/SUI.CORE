@@ -1,4 +1,3 @@
-// tslint:disable:max-classes-per-file class-name variable-name
 import Button, {ButtonType} from 'antd/lib/button/button';
 import autobind from 'autobind-decorator';
 import * as React from 'react';

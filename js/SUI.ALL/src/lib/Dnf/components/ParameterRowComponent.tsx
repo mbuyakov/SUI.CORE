@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import { Form } from '@ant-design/compatible';
 import {GetFieldDecoratorOptions} from "@ant-design/compatible/lib/form/Form";
 import { Switch, Tooltip } from "antd";
@@ -10,8 +9,6 @@ import * as React from "react";
 import {ActionType, emptyFilter, FilterType, isListAction} from "../../utils";
 import {AbstractDnfFormRowElement} from "../AbstractDnfFormRowElement";
 import {generateActionSelectFormItem, getInputElement, getValuePropName} from "../utils";
-
-// tslint:disable-next-line:no-import-side-effect
 
 export interface IFilterProps {
   actions: ActionType[];
@@ -102,8 +99,7 @@ export abstract class ParameterRowComponent<TElement extends IParameterRowElemen
       if (isListAction(parameterAction) && (!value || (value as any[]).length === 0)) {
         callback("Список не заполнен");
       }
-      // tslint:disable-next-line:triple-equals
-      if (value == null && !emptyFilter(parameterAction)) {
+if (value == null && !emptyFilter(parameterAction)) {
         callback("Поле не заполнено");
       }
 

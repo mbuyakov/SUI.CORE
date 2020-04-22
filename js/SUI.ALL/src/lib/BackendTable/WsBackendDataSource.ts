@@ -42,7 +42,6 @@ export class WsBackendDataSource extends BackendDataSource {
     }
   }
 
-  // tslint:disable-next-line:no-async-without-await
   public async init(): Promise<boolean> {
     const backendURL = new URL(`ws${location.protocol === 'https:' ? 's' : ''}://${getSUISettings().backendUrl}`);
     console.log(backendURL);
@@ -84,7 +83,6 @@ export class WsBackendDataSource extends BackendDataSource {
     });
 
     while (this.connectAttempts < MAX_RECONNECT_ATTEMPTS && !this.socket.isConnected()) {
-      // tslint:disable-next-line:no-magic-numbers
       await sleep(25);
     }
 

@@ -11,5 +11,4 @@ export interface IBaseFormContext {
   verticalLabel: boolean
 }
 
-// tslint:disable-next-line:no-any variable-name
 export const BaseFormContext = React.createContext<IBaseFormContext>(null as any);

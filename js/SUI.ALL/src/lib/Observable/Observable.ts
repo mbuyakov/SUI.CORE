@@ -3,7 +3,6 @@ import uuid from 'uuid/v4';
 
 export type ObservableHandler<T> = (newValue: T, oldValue?:T) => void;
 
-// tslint:disable-next-line:interface-name
 export interface ObservableHandlerStub {
   unsubscribe(): void
 }

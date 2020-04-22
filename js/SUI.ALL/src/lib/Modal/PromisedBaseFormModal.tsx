@@ -21,8 +21,7 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
   public readonly modalRef: React.RefObject<PromisedModal> = React.createRef();
 
   public render(): JSX.Element {
-    // tslint:disable-next-line:ban-ts-ignore
-    // @ts-ignore
+// @ts-ignore
     const hasErrors = this.formRef.current && this.formRef.current.hasErrors;
 
     return (
@@ -30,7 +29,6 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
         {...this.props}
         ref={this.modalRef}
         promise={this.modalPromise}
-        // tslint:disable-next-line:jsx-no-lambda
         customFooter={(okButton, cancelButton): JSX.Element => defaultModalFooter(
           hasErrors
             ? (

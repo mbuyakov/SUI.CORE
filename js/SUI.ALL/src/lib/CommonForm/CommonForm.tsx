@@ -22,7 +22,6 @@ const tailFormItemLayout = {
   }
 };
 
-// tslint:disable-next-line:no-any
 export function hasErrors(fieldsError: any): boolean {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
@@ -86,7 +85,6 @@ class CommonFormImpl<TValues> extends React.Component<FormComponentProps & IComm
   private onSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
-    // tslint:disable-next-line:no-any
     this.props.form.validateFields((err: any, values: TValues) => {
       if (!err) {
         this.setState({loading: true});
@@ -107,10 +105,8 @@ class CommonFormImpl<TValues> extends React.Component<FormComponentProps & IComm
 
 }
 
-// tslint:disable-next-line:variable-name
 const __CommonFormImpl = Form.create()(CommonFormImpl);
 
-// tslint:disable-next-line:max-classes-per-file
 export class CommonForm<TValues> extends React.Component<ICommonFormProps<TValues>> {
 
   public render(): JSX.Element {

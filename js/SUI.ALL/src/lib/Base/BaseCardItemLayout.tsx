@@ -7,7 +7,6 @@ import { NO_DATA_TEXT } from '../const';
 import { DataKey, getDataByKey } from '../dataKey';
 import { defaultIfNotBoolean } from '../typeWrappers';
 
-// tslint:disable-next-line:no-any
 export type CardItemRender<T> = (value: any, item: T) => JSX.Element | string;
 
 export interface IBaseCardItemLayout<T> {
@@ -22,7 +21,6 @@ export interface IBaseCardItemLayout<T> {
 interface ICustomRenderProps<T> {
   item: T
   render: CardItemRender<T>;
-  // tslint:disable-next-line:no-any
   value: any;
 }
 
@@ -66,7 +64,6 @@ class CustomRender<T> extends React.Component<ICustomRenderProps<T>, {
 
 export const DEFAULT_ITEM_RENDERER = renderIBaseCardItem;
 
-// tslint:disable-next-line:no-any
 export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayout<T>, colspan: number): React.ReactNode {
   // console.log(item);
   const required = defaultIfNotBoolean(item.required, true);
@@ -76,7 +73,6 @@ export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayou
     data = <CustomRender item={sourceItem} render={item.render} value={data}/>;
   } else if (item.tableProps) {
     data = (
-      // tslint:disable-next-line:ban-ts-ignore
       // @ts-ignore
       <BaseTable
         cardType="inner"

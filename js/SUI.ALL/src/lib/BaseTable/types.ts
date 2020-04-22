@@ -1,4 +1,3 @@
-/* tslint:disable:no-any */
 import {Filter, FilterOperation, Grouping, GroupKey, Sorting, TableBandHeader as TableBandHeaderBase, TableFilterRow, TableRowDetail} from '@devexpress/dx-react-grid';
 import {CardType} from 'antd/lib/card';
 import * as React from 'react';
@@ -38,7 +37,6 @@ export interface ICommonColumnSearchProps {
 
 export type SelectData = Array<{title?: string | JSX.Element, value: string | number}>;
 
-// tslint:disable-next-line:interface-over-type-literal
 export type INewSearchProps = ICommonColumnSearchProps & {
   format?: string; // for datetime and date
   multiple?: boolean; // for customSelect

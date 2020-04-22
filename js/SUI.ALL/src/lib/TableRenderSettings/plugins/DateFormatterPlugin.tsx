@@ -1,4 +1,3 @@
-/* tslint:disable:jsx-no-lambda */
 import { Checkbox, Input } from 'antd';
 import moment from 'moment';
 import * as React from 'react';
@@ -25,8 +24,7 @@ export class DateFormatterPlugin extends TableRenderParamsPlugin<IDateFormatterP
     super('dateFormatter', 'Форматирование даты/времени', true);
   }
 
-  // tslint:disable-next-line:prefer-function-over-method variable-name no-async-without-await
-  public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams<IDateFormatterPluginTRP>): Promise<void> {
+public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams<IDateFormatterPluginTRP>): Promise<void> {
     const {convertFromUtc, filterFormat, sourceFormat, targetFormat} = trp;
 
     result.render = (value: string): React.ReactNode => {
@@ -54,8 +52,7 @@ export class DateFormatterPlugin extends TableRenderParamsPlugin<IDateFormatterP
     return;
   }
 
-  // tslint:disable-next-line:prefer-function-over-method
-  public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<IDateFormatterPluginTRP>): React.ReactNode {
+public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<IDateFormatterPluginTRP>): React.ReactNode {
     return (
       <>
         <span>Исходный формат:</span>

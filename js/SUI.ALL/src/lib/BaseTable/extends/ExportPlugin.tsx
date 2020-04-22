@@ -9,7 +9,6 @@ export function ExportPlugin(props: { onClick(getters: Getters): void; }): JSX.E
     const onClick = () => props.onClick(getters);
 
     return (
-      // tslint:disable-next-line:no-magic-numbers
       <Tooltip title='Выгрузка в Excel' placement='bottom' enterDelay={300}>
         <IconButton onClick={onClick}>
           <CloudDownload/>

@@ -1,4 +1,3 @@
-/* tslint:disable:no-any object-literal-sort-keys prefer-function-over-method no-floating-promises*/
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Cached } from '@material-ui/icons';
@@ -38,8 +37,7 @@ function getIdDataKey(dataKey: DataKey): DataKey {
 
 export class MetaCard extends React.Component<IMetaCardProps, {
   error?: string;
-  // tslint:disable-next-line:no-any
-  item?: any;
+item?: any;
   ready?: boolean;
   schema?: SerializedCardSettings;
   tableInfoId?: string;
@@ -81,9 +79,7 @@ export class MetaCard extends React.Component<IMetaCardProps, {
             }
 
             const data = getDataByKey(this.state.item && this.state.item.nodes[0], (title as SerializedItemSettings).dataKey);
-            // tslint:disable-next-line:triple-equals
-
-            return data == null ? NO_DATA_TEXT : data;
+return data == null ? NO_DATA_TEXT : data;
           }).join(' ')
         }
         extra={
@@ -95,7 +91,6 @@ export class MetaCard extends React.Component<IMetaCardProps, {
             <Tooltip
               title='Обновить данные'
               placement='bottom'
-              // tslint:disable-next-line:no-magic-numbers
               enterDelay={300}
             >
               <IconButton
@@ -146,15 +141,13 @@ export class MetaCard extends React.Component<IMetaCardProps, {
 
   @autobind
   public async updateData(clearState: boolean = true): Promise<void> {
-    // tslint:disable-next-line:no-unused-expression
-    clearState && this.setState({ ready: false, item: null, schema: null });
+clearState && this.setState({ ready: false, item: null, schema: null });
     const object = await TableInfoManager.getById(this.props.tableId);
     this.setState({ tableInfoId: object.id });
 
     const schema: SerializedCardSettings = object.cardRenderParams && JSON.parse(object.cardRenderParams);
 
-    // tslint:disable-next-line:triple-equals
-    if (schema == null || !((schema.rows && schema.rows.length) || (schema.title && schema.title.length))) {
+if (schema == null || !((schema.rows && schema.rows.length) || (schema.title && schema.title.length))) {
       this.setState({ error: 'Схема не настроена' });
 
       return;
@@ -171,8 +164,7 @@ export class MetaCard extends React.Component<IMetaCardProps, {
 
         (row as unknown as IBaseCardRowLayout<any, IBaseCardItemLayout<any>>).cols = {
           items: {
-            // tslint:disable-next-line:ban-ts-ignore
-            // @ts-ignore
+// @ts-ignore
             dataKey: row.field,
             render: (item: any) => plugin.render({
               props: row,
@@ -270,8 +262,7 @@ export class MetaCard extends React.Component<IMetaCardProps, {
             if (typeof filter === 'string') {
               const regexp = new RegExp(DATA_KEY_REGEXP);
               let result;
-              // tslint:disable-next-line:no-conditional-assignment
-              while (result = regexp.exec(filter)) { // All ok, use assign here. Not typo
+while (result = regexp.exec(filter)) { // All ok, use assign here. Not typo
                 ret.push(result[1].split('|'));
               }
             }

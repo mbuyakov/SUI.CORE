@@ -30,8 +30,7 @@ export interface IDnDListProps<T extends React.Component> extends IBaseDnDChildP
   title?: string
   type: string
 
-  // tslint:disable-next-line:no-any
-  shouldAcceptDrop?(sourceContainerOptions: ContainerOptions, payload: any): boolean;
+shouldAcceptDrop?(sourceContainerOptions: ContainerOptions, payload: any): boolean;
 }
 
 export interface IDnDListState<T extends React.Component> {
@@ -162,8 +161,7 @@ export class DnDList<T extends DnDChild> extends DnDChild<IDnDListProps<T>, IDnD
   @autobind
   private __internalProcessItem(item: Rendered<T>): Rendered<T> {
     let id = item.props.id;
-    // tslint:disable-next-line:triple-equals
-    if (id == null) {
+if (id == null) {
       id = uuidv4();
     }
 

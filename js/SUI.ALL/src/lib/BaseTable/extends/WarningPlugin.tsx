@@ -50,7 +50,6 @@ export class WarningPlugin extends React.Component<IWarningPluginProps, {
               <Tooltip
                 title='Предупреждения'
                 placement='bottom'
-                // tslint:disable-next-line:no-magic-numbers
                 enterDelay={300}
               >
                 {button}

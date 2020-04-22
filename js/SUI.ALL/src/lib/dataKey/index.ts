@@ -19,7 +19,6 @@ export function concatDataKey(...keys: DataKey[]): Array<number | string> {
 /**
  * Get data from object by DataKeys
  */
-// tslint:disable-next-line:no-any
 export function getDataByKey<T = any>(obj: any, ...keys: DataKey[]): T {
   const key = concatDataKey(...keys);
   if (key.length === 0) {
@@ -84,12 +83,10 @@ export class DataKeyNode {
  * Map DataKeys to tree (use to generate gql query)
  */
 export function dataKeysToDataTree(dataKeys: DataKey[], rootKey: string = ""): DataKeyNode {
-  // tslint:disable-next-line:completed-docs
-  function appendKey(node: DataKeyNode, key: string[] | string): void {
+function appendKey(node: DataKeyNode, key: string[] | string): void {
     if (Array.isArray(key)) {
       if (key.length === 1) {
-        // tslint:disable-next-line:no-parameter-reassignment
-        key = key[0];
+key = key[0];
       }
       if (key.length === 0) {
         return;

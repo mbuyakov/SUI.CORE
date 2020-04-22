@@ -1,4 +1,3 @@
-/* tslint:disable:no-any */
 import {Select} from 'antd';
 import {SelectProps, SelectValue} from "antd/lib/select";
 import autobind from 'autobind-decorator';
@@ -52,7 +51,6 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
         placeholder={<span style={{fontWeight: 400}}>{this.props.placeholder || 'Фильтр...'}</span>}
         {...restProps}
         value={
-          // tslint:disable-next-line:triple-equals
           filterValue != null
             ? (Array.isArray(filterValue) ? filterValue : filterValue.toString())
             : undefined

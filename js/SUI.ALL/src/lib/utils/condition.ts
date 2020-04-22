@@ -1,15 +1,12 @@
-// tslint:disable:no-any ban-ts-ignore
 import {ActionType} from "./actionType";
 import {FilterType} from "./filterType";
 
-// tslint:disable-next-line:cyclomatic-complexity
 export function checkCondition(
   action: ActionType,
   filterType: FilterType,
   fieldValue: any,
   filterValue: any
 ): boolean {
-  // tslint:disable-next-line:triple-equals
   const hasFieldValue = fieldValue != null;
   let formattedFieldValue = hasFieldValue && (typeof(filterValue) === "string" || (Array.isArray(filterValue) && typeof(filterValue[0]) === "string"))
     ? String(fieldValue)
@@ -24,7 +21,6 @@ export function checkCondition(
   let inverse = false;
   let result: boolean | null = null;
 
-  // tslint:disable-next-line:switch-default
   switch (action) {
     // @ts-ignore
     case ActionType.NOT_EQUAL:
@@ -36,7 +32,6 @@ export function checkCondition(
     case ActionType.NOT_FILLED:
       inverse = true;
     case ActionType.FILLED:
-      // tslint:disable-next-line:triple-equals
       result = hasFieldValue;
       break;
     case ActionType.LESS:
@@ -55,7 +50,6 @@ export function checkCondition(
     case ActionType.NOT_LIKE:
       inverse = true;
     case ActionType.LIKE:
-      // tslint:disable-next-line:triple-equals
       result = hasFieldValue && formattedFieldValue.search(filterValue) !== -1;
       break;
     // @ts-ignore

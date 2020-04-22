@@ -1,4 +1,3 @@
-// tslint:disable:no-async-without-await
 import axios from "axios";
 import uuid from 'uuid/v4';
 
@@ -34,8 +33,7 @@ export class RestBackendDataSource extends BackendDataSource {
 
   public async send<T>(messageId: string, body: T, headers?: IObjectWithIndex): Promise<void> {
     // do not await;
-    // tslint:disable-next-line:no-floating-promises
-    this.__send(body, headers).then(data => this.onMessage({
+this.__send(body, headers).then(data => this.onMessage({
       ...data,
       [MESSAGE_ID_KEY]: messageId
     }));

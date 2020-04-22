@@ -1,4 +1,3 @@
-/* tslint:disable:no-return-await */
 import autobind from "autobind-decorator";
 import * as React from "react";
 
@@ -217,7 +216,6 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
       const currentActionResolutions = actionResolutionsMap.get(action.id) || [];
       const [fromId, toId] = [actionStatusFromStatusId, actionStatusToStatusId].map(field => actionStatus[field]);
 
-      // tslint:disable-next-line:no-object-literal-type-assertion
       transitions.push({
         disabled: !isAllowed,
         fromId,

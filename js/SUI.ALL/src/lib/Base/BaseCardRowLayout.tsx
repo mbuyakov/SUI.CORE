@@ -37,7 +37,6 @@ export interface IBaseCardRowLayout<T, ITEM> {
 
 export const DATA_KEY_REGEXP = /@([a-zA-z0-9\|]+)/g;
 
-// tslint:disable-next-line:no-any
 export function mapFilters(filters: string, sourceItem: any): string | null {
   let result = filters;
 
@@ -59,9 +58,7 @@ export function mapFilters(filters: string, sourceItem: any): string | null {
   return result || null;
 }
 
-// tslint:disable-next-line:ban-ts-ignore
 // @ts-ignore
-// tslint:disable-next-line:cyclomatic-complexity no-any
 export function renderIBaseCardRowLayout<T, ITEM>(sourceItem: any, row: IBaseCardRowLayout<T, ITEM>, rowIndex: number, parent: 'card' | 'collapse' | 'tab', rowsLength: number, firstChildrenIsTab: boolean = false): JSX.Element {
   if (row.isDivider) {
     return (
@@ -125,14 +122,10 @@ export function renderIBaseCardRowLayout<T, ITEM>(sourceItem: any, row: IBaseCar
           borderBottom: row.fitCollapsePanel && rowIndex === (rowsLength - 1) ? 0 : undefined,
           borderLeft: row.fitCollapsePanel ? 0 : undefined,
           borderRight: row.fitCollapsePanel ? 0 : undefined,
-          // tslint:disable-next-line:no-magic-numbers
-          marginBottom: row.fitCollapsePanel && rowIndex === (rowsLength - 1) ? (-24) : undefined,
-          // tslint:disable-next-line:no-magic-numbers
-          marginLeft: row.fitCollapsePanel ? (-24) : undefined,
-          // tslint:disable-next-line:no-magic-numbers
-          marginRight: row.fitCollapsePanel ? (-24) : undefined,
-          // tslint:disable-next-line:no-magic-numbers
-          marginTop: row.fitCollapsePanel && rowIndex === 0 ? (-24) : undefined,
+marginBottom: row.fitCollapsePanel && rowIndex === (rowsLength - 1) ? (-24) : undefined,
+marginLeft: row.fitCollapsePanel ? (-24) : undefined,
+marginRight: row.fitCollapsePanel ? (-24) : undefined,
+marginTop: row.fitCollapsePanel && rowIndex === 0 ? (-24) : undefined,
         }}
         defaultActiveKey={wrapInArrayWithoutNulls(row.collapsePanels).map((panel, index) => ({ defaultOpened: panel.defaultOpened, index })).filter(panel => panel.defaultOpened).map(panel => panel.index.toString())}
       >
@@ -147,6 +140,5 @@ export function renderIBaseCardRowLayout<T, ITEM>(sourceItem: any, row: IBaseCar
     return renderIBaseCardColsLayout(sourceItem, cols);
   }
 
-  // tslint:disable-next-line:jsx-key
-  return (<h3>UNKNOWN ROW TYPE</h3>);
+return (<h3>UNKNOWN ROW TYPE</h3>);
 }

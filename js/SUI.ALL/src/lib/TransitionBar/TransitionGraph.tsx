@@ -1,4 +1,3 @@
-/* tslint:disable:no-magic-numbers */
 import autobind from "autobind-decorator";
 import * as React from "react";
 

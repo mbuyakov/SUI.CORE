@@ -57,12 +57,10 @@ export class EditablePromisedComponent<T>
     );
   }
 
-  // tslint:disable-next-line:ban-ts-ignore
   // @ts-ignore
   private readonly DEFAULT_RENDERER = (value: T) => (value != null ? value.toString() : "");
 
   @autobind
-  // tslint:disable-next-line:no-any
   private async getPromise(value: any): Promise<void> {
     // noinspection ES6MissingAwait
     const promise = this.props.children.props.promise(value);

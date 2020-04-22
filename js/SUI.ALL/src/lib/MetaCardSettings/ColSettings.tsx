@@ -10,7 +10,6 @@ import { Merge } from '../other';
 
 import {ItemSettings, SerializedItemSettings} from "./ItemSettings";
 
-// tslint:disable-next-line:no-any
 type ColSettingsState = Merge<IBaseCardColLayout<any, IBaseCardItemLayout<any>>, {
   items: SerializedItemSettings[];
 }>;
@@ -73,7 +72,6 @@ export class ColSettings extends SerializableDnDChild<SerializedColSettings> {
   }
 
   @autobind
-  // tslint:disable-next-line:no-any
   private shouldAcceptDrop(sourceContainerOptions: ContainerOptions, payload: any): boolean {
     console.log(this, sourceContainerOptions, payload);
     const payloadId = getDataByKey(payload, 'props', 'id');

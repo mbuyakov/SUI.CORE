@@ -1,4 +1,3 @@
-// tslint:disable:cyclomatic-complexity
 import Icon from '@ant-design/icons';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import CreateIcon from '@material-ui/icons/CreateOutlined';
@@ -19,14 +18,11 @@ import {defaultIfNotBoolean} from "../typeWrappers";
 
 import {IMutableBackendTableProps} from "./types";
 
-// tslint:disable-next-line:variable-name
 export const MutableBackendTableButtonGap = 32;
 
 export const DEFAULT_MODAL_WIDTH_VARIANT = {
   small: 600,
-  // tslint:disable-next-line:object-literal-sort-keys
   medium: 900,
-  // tslint:disable-next-line:object-literal-sort-keys
   large: 1500
 };
 interface IMutableBackendTableState<T> {
@@ -134,10 +130,8 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
                       />
                     ),
                     title: " ",
-                    // tslint:disable-next-line:no-magic-numbers
                     width: defaultIfNotBoolean(this.props.selectionEnabled, true) ? 80 : (80 + 32),
                   }]
-                    // tslint:disable-next-line:no-any
                     .concat((serviceColumns || []) as any[])
                 }
               />
@@ -219,7 +213,6 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
           },
           this.showBaseModalFn(this.editBaseFormModalRef)
         );
-        // tslint:disable-next-line:no-magic-numbers
         await sleep(500);
         this.setState({initEditLoading: false});
       } else {
@@ -246,7 +239,6 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
         const result = await propsSubmitFn(values);
 
         if (result && this.tableRef.current) {
-          // tslint:disable-next-line:no-floating-promises
           this.tableRef.current.refresh();
         }
 

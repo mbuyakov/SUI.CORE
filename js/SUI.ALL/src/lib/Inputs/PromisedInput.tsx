@@ -120,10 +120,8 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
   @autobind
   private handleNewValue(newValue: React.ChangeEvent<HTMLInputElement> | string): void {
     const value = typeof newValue === 'string' ? newValue : newValue.target.value;
-    // tslint:disable-next-line:no-floating-promises
-    this.validate(value as unknown as V);
-    // tslint:disable-next-line:no-any
-    if (this.props.type === 'number' && !((!Number.isNaN(value as any) && NUMBER_REGEX.test(value)) || value === '' || value === '-')) {
+this.validate(value as unknown as V);
+if (this.props.type === 'number' && !((!Number.isNaN(value as any) && NUMBER_REGEX.test(value)) || value === '' || value === '-')) {
       return;
     }
     this.setState({value: this.props.type === 'number' ? (value ? (value === '-' ? '-' : Number(value)) : undefined) : value} as unknown as V);

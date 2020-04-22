@@ -130,7 +130,6 @@ export class BaseDatetimeIntervalColumnFilter
       value: [
         this.formatMomentToFilter(value && value[0] && value[0].clone(), isDatePickMode ? 'start' : null),
         this.formatMomentToFilter(value && value[1] && value[1].clone(), isDatePickMode ? 'end' : null)
-        // tslint:disable-next-line:no-any
       ] as any
     });
   }

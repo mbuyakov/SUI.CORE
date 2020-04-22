@@ -29,8 +29,7 @@ export class TagsPopover extends React.Component<ITagsPopoverProps, {
   visible?: boolean;
 }> {
 
-  // tslint:disable-next-line:no-any
-  private static filterOption(inputValue: string, option: any): boolean {
+private static filterOption(inputValue: string, option: any): boolean {
     return option.props.children.toString().toLowerCase().indexOf(inputValue.toLowerCase()) >= 0;
   }
 
@@ -213,8 +212,7 @@ export class TagsPopover extends React.Component<ITagsPopoverProps, {
     }`, true)
       .then(value => {
         if (value.totalCount > 0) {
-          // tslint:disable-next-line:no-string-throw
-          throw 'Запись с таким кодом уже существует';
+throw 'Запись с таким кодом уже существует';
         }
       })
       .then(_ => mutate<{ createTag: { tag: { id: string } } }>(`mutation {

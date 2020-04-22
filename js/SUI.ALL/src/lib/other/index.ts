@@ -1,4 +1,3 @@
-/* tslint:disable:no-any no-shadowed-variable completed-docs */
 import {WrappedFormUtils} from "@ant-design/compatible/lib/form/Form";
 import { CustomIconComponentProps } from '@ant-design/icons/lib/components/Icon';
 import * as H from "history";
@@ -15,7 +14,6 @@ export type Rendered<T extends React.Component> = React.ReactElement<T["props"]>
 
 export type ExtractProps<T> = T extends React.Component<infer TProps, any> ? TProps : T;
 
-// tslint:disable-next-line:completed-docs
 export type FormCreateKostyl<T extends React.Component<{form?: WrappedFormUtils}>> = Omit<ExtractProps<T>, 'form'>;
 
 /**
@@ -123,10 +121,8 @@ export function findByValue<T, V>(array: T[], valueExtractor: (element: T) => V,
 /**
  * React router location type
  */
-// tslint:disable-next-line
 export interface location<QueryParams extends { [K in keyof QueryParams]?: string } = {}, S = any> extends H.Location<S> {
-  // tslint:disable-next-line:completed-docs
-  query: QueryParams;
+query: QueryParams;
 }
 
 /**

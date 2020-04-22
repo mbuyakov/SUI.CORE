@@ -1,4 +1,3 @@
-/* tslint:disable:switch-default */
 
 export enum ActionType {
   EQUAL = 'EQUAL',
@@ -76,7 +75,6 @@ export function getRussianName(action?: ActionType): string | undefined {
 }
 
 // Возвращает sql фильтр
-// tslint:disable-next-line:no-any
 export function getSqlFilter(field?: string, action?: ActionType, filter?: any): string | undefined {
   switch (action) {
     case ActionType.EQUAL:

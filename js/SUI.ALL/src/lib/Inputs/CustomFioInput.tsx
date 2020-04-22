@@ -1,4 +1,3 @@
-/* tslint:disable */
 import {Input} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import autobind from "autobind-decorator";

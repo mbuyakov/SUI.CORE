@@ -7,24 +7,19 @@ import * as am4wordCloud from "@amcharts/amcharts4/plugins/wordCloud";
 import * as React from 'react';
 
 export abstract class ChartWrapper<T> extends React.Component<{
-  // tslint:disable-next-line:no-any
-  data: any[];
+data: any[];
   style?: React.CSSProperties;
-  // tslint:disable-next-line:no-any
-  type: any;
+type: any;
   onChartCreated?(chart: T): void;
 }> {
-  // tslint:disable-next-line:no-any
-  public chart: any;
+public chart: any;
 
   // Math.random should be unique because of its seeding algorithm.
   // Convert it to base 36 (numbers + letters), and grab the first 9 characters
   // after the decimal.
-  // tslint:disable-next-line:no-magic-numbers
-  private readonly id: string = Math.random().toString(36).substr(2, 9);
+private readonly id: string = Math.random().toString(36).substr(2, 9);
 
-  // tslint:disable-next-line:no-any
-  public componentDidMount(data?: any): void {
+public componentDidMount(data?: any): void {
     this.chart = am4core.create(`chartdiv_${this.id}`, this.props.type);
     // noinspection JSPrimitiveTypeWrapperUsage
     this.chart.language.locale = am4lang_ru_RU;
@@ -43,8 +38,7 @@ export abstract class ChartWrapper<T> extends React.Component<{
     }
   }
 
-  // tslint:disable-next-line:no-any
-  public componentWillUpdate(nextProps: any): void {
+public componentWillUpdate(nextProps: any): void {
     if (this.chart.data !== nextProps.data) {
       this.chart.data = nextProps.data;
       this.chart.invalidateData();
@@ -68,7 +62,6 @@ export abstract class ChartWrapper<T> extends React.Component<{
   }
 }
 
-/* tslint:disable:max-classes-per-file */
 export abstract class XYChartWrapper extends ChartWrapper<am4charts.XYChart> {}
 export abstract class XYChart3DWrapper extends ChartWrapper<am4charts.XYChart3D> {}
 export abstract class SlicedChartWrapper extends ChartWrapper<am4charts.SlicedChart> {}

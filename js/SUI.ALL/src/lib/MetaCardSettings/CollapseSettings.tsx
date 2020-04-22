@@ -13,7 +13,6 @@ import {COMMON__GRID} from "../styles";
 import {RowSettings, SerializedRowSettings} from "./RowSettings";
 import {RowsList} from "./RowsList";
 
-// tslint:disable-next-line:no-any
 type CollapseSettingsState = Merge<IBaseCardCollapseLayout<any, IBaseCardItemLayout<any>>, {
   rows: SerializedRowSettings[];
 }>;

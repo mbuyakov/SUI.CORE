@@ -14,7 +14,6 @@ export class Name {
   }
 }
 
-// tslint:disable-next-line:max-classes-per-file class-name
 class _NameManager extends GqlCacheManager<IName, Name> {
 
   protected getFields(): string {
@@ -37,5 +36,4 @@ class _NameManager extends GqlCacheManager<IName, Name> {
   }
 }
 
-// tslint:disable-next-line:variable-name
 export const NameManager = new _NameManager();

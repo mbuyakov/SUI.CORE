@@ -5,7 +5,6 @@ export type RangePickerValue = [Moment | null, Moment | null];
 
 export declare type RawValueType = string | number;
 
-// tslint:disable-next-line:interface-name
 export interface LabelValueType {
   halfChecked?: boolean;
   key?: string | number;

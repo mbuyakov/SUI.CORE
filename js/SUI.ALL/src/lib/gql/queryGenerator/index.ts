@@ -109,7 +109,6 @@ function format(fields: object, excludeNulls: boolean): string {
     .map(key => {
       const value = (fields as IObjectWithIndex)[key];
       const valueStr = Array.isArray(value)
-        // tslint:disable-next-line
         ? `[${value.map(element => addQuotesIfString(element))}]`
         : addQuotesIfString(value);
 
@@ -168,7 +167,6 @@ export function generateDeleteFn(entity: string): (id: PossibleId) => Promise<vo
 /**
  * Stringify GraphQL filter for query
  */
-// tslint:disable-next-line:completed-docs
 export function stringifyGqlFilter<T = {}>(filter: {filter: IGqlFilter<T>}): string {
   return `filter: ${JSON.stringify(filter.filter).replace(/"([^"]+)":/g, "$1:")}`;
 }

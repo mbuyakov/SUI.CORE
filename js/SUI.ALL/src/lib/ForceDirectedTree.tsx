@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import * as am4forceDirected from "@amcharts/amcharts4/plugins/forceDirected";
 import autobind from 'autobind-decorator';
 import React from "react";
@@ -65,8 +64,7 @@ export class ForceDirectedTree<TElement = {}> extends React.Component<IForceDire
     }
 
     series.maxLevels = 2;
-    // tslint:disable-next-line:no-magic-numbers
-    series.fontSize = 10;
+series.fontSize = 10;
 
     if (this.props.additionalSetting) {
       this.props.additionalSetting({

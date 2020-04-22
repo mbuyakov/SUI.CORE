@@ -86,8 +86,7 @@ export async function generateCatalogDataPromise(tableName: string, valueColumnN
     }
   }`, true);
 
-  // tslint:disable-next-line:no-any
-  return (getDataByKey(queryData, 'nodes') || []).map((element: any) => ({
+return (getDataByKey(queryData, 'nodes') || []).map((element: any) => ({
     title: element[selectColumn || 'id'],
     value: element.id,
   }));
@@ -133,8 +132,7 @@ async function __getReferenceRenderColumnInfo(
     const referencedTableInfo = await getReferencedTableInfo(foreignLinkColumnInfo);
     const forwardReferencedForeignLinkColumnInfo = referencedTableInfo && await __getReferenceRenderColumnInfo(referencedTableInfo, roles, visitedTableInfoIds);
 
-    // tslint:disable-next-line:triple-equals
-    if (forwardReferencedForeignLinkColumnInfo != null) {
+if (forwardReferencedForeignLinkColumnInfo != null) {
       return forwardReferencedForeignLinkColumnInfo;
     }
     if (isAllowedColumnInfo(foreignLinkColumnInfo, roles) && foreignLinkColumnInfo.columnName !== 'id') {
@@ -153,7 +151,6 @@ export function toConnectionName(tableInfo: TableInfo, parentTableInfo?: TableIn
     : `all${capitalize(addPluralEnding(camelCasedTableName))}`;
 }
 
-// tslint:disable-next-line:no-any
 export interface IDataSet<T = any> {
   children?: IDataSet[];
   id: string | number;
@@ -162,8 +159,7 @@ export interface IDataSet<T = any> {
 
 export function getDataSetRender(dataSet: IDataSet): string {
   return dataSet.hasOwnProperty('value')
-    // tslint:disable-next-line:triple-equals
-    ? (dataSet.value != null ? String(dataSet.value) : dataSet.value)
+? (dataSet.value != null ? String(dataSet.value) : dataSet.value)
     : dataSet.id;
 }
 
@@ -219,8 +215,7 @@ export async function getDataSet<TValueType = {}, TGroupType = {}>(
     if (groupFilterString) {
       queryDataKey[0] = `${queryDataKey[0]}${groupFilterString}`;
     }
-    // tslint:disable-next-line:triple-equals
-    if (valueFilterString && valuePrefixDataKey.every((value, index) => value != null && value === queryDataKey[index])) {
+if (valueFilterString && valuePrefixDataKey.every((value, index) => value != null && value === queryDataKey[index])) {
       const connectionIndex = valuePrefixDataKey.length - 2;
       queryDataKey[connectionIndex] = `${queryDataKey[connectionIndex]}${valueFilterString}`;
     }
@@ -255,7 +250,6 @@ export async function getDataSet<TValueType = {}, TGroupType = {}>(
   return formatValues(getDataByKey(queryData, valuePrefixDataKey), valueRenderDataKey);
 }
 
-// tslint:disable-next-line:interface-over-type-literal no-any
 export type RenderValue<T = any> = { value: T };
 
 export async function getRenderValue(
@@ -299,8 +293,7 @@ export async function generateRenderDataKey(
   if (tableInfo && roles && roles.length) {
     const referenceRenderColumnInfo = await getReferenceRenderColumnInfo(tableInfo, roles);
 
-    // tslint:disable-next-line:triple-equals
-    if (referenceRenderColumnInfo != null) {
+if (referenceRenderColumnInfo != null) {
       const dataKey = [];
       let foreignTableInfo: TableInfo | null = tableInfo;
 
@@ -344,8 +337,7 @@ export async function fullReloadTableInfo(tableInfoId: string): Promise<void> {
 export function getFilterType(columnInfo: ColumnInfo, action?: ActionType): FilterType {
   let filterType: FilterType | null = null;
 
-  // tslint:disable-next-line:switch-default
-  switch (columnInfo && columnInfo.columnType && columnInfo.columnType.toLowerCase()) {
+switch (columnInfo && columnInfo.columnType && columnInfo.columnType.toLowerCase()) {
     case 'date':
       filterType = FilterType.DATE;
       break;

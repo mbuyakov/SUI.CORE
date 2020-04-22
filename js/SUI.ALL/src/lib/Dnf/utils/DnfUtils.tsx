@@ -118,7 +118,6 @@ export function generateSelectFormItem(
         >
           {selectData.map(optionProps => (
             <Select.Option
-              // tslint:disable-next-line:no-any
               {...optionProps as any}
             />
           ))}

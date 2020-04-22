@@ -58,7 +58,6 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
         allowClear={true}
         showSearch={true}
         {...this.props}
-        // tslint:disable-next-line:triple-equals
         value={(this.props.value != null) ? this.props.value : undefined}
         style={{...this.props.style, ...(!ready && {filter: 'blur(1px)'})}}
         mode={this.props.multiple ? "multiple" : undefined}
@@ -77,7 +76,6 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
       <Select.Option
         key={element.id}
         // TODO: toString is kostyl' for integer PK  tables (remove in future) value={element.id}
-        // tslint:disable-next-line:triple-equals
         value={element.id != null ? String(element.id) : element.id}
       >
         {getDataSetRender(element) || NO_DATA_TEXT}

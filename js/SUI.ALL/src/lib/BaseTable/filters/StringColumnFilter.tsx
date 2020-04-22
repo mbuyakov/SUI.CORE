@@ -31,8 +31,7 @@ export class StringColumnFilter extends React.Component<LazyTableFilterRowCellPr
 
   @autobind
   private onPressEnter(event: React.KeyboardEvent<HTMLInputElement>): void {
-    // tslint:disable-next-line:ban-ts-ignore
-    // @ts-ignore
+// @ts-ignore
     this.triggerFilter(event.target.value)
   }
 

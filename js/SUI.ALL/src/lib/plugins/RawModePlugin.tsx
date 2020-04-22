@@ -15,8 +15,7 @@ export class RawModePlugin extends React.Component<{
           <TemplatePlaceholder/>
           <TemplateConnector>
             {(): JSX.Element => (
-              // tslint:disable-next-line:no-magic-numbers
-              <Tooltip title='"Сырой" режим' placement='bottom' enterDelay={300}>
+<Tooltip title='"Сырой" режим' placement='bottom' enterDelay={300}>
                 <IconButton onClick={this.props.onClick}>
                   <BugReport style={this.props.enabled ? {color: '#ff4d4f'} : {}}/>
                 </IconButton>

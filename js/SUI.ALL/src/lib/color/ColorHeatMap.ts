@@ -12,8 +12,7 @@ export interface IColorHeatMapSettings {
   /**
    * 50%
    */
-  // tslint:disable-next-line:member-ordering
-  center: Color,
+center: Color,
   /**
    * 100%
    */

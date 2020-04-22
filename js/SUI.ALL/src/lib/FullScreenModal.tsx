@@ -15,7 +15,6 @@ import { Z_999 } from './styles';
 
 type ChildrenWithPopupContainer = (getPopupContainer?: () => HTMLElement) => JSX.Element
 
-// tslint:disable-next-line:no-any
 function Transition(props: any): JSX.Element {
   return <Collapse direction="up" {...props} />;
 }
@@ -93,8 +92,7 @@ class FullScreenDialogImpl extends React.Component<IFullScreenModalProps, {
   @autobind
   private handleClose(): void {
     this.setState({open: false});
-    // tslint:disable-next-line:no-magic-numbers no-floating-promises
-    sleep(500).then(() => {
+sleep(500).then(() => {
       if (this.props.onClose) {
         this.props.onClose();
       }
@@ -103,10 +101,8 @@ class FullScreenDialogImpl extends React.Component<IFullScreenModalProps, {
 
 }
 
-// tslint:disable-next-line:variable-name
 const FullScreenDialogImplWithStyles = withStyles({})(FullScreenDialogImpl);
 
-// tslint:disable-next-line:max-classes-per-file
 export class FullScreenModal extends React.Component<IFullScreenModalProps> {
 
   private readonly innerRef: React.RefObject<FullScreenDialogImpl> = React.createRef<FullScreenDialogImpl>();

@@ -12,7 +12,6 @@ import {WaitData} from "../WaitData";
 
 import {ReportElement} from "./ReportElement";
 
-// tslint:disable-next-line:no-any
 export type onChangeFn<T> = (property: keyof T) => (value: any) => void;
 
 export interface IFilterReportElementProps<TData, TFilter>
@@ -102,8 +101,7 @@ export class FilterReportElement<TData, TFilter = {}>
   }
 
   @autobind
-  // tslint:disable-next-line:no-any
-  private onFilterChangeFn(property: keyof TFilter): (value: any) => void {
+private onFilterChangeFn(property: keyof TFilter): (value: any) => void {
     return (value): void => this.setState({
       filter: {
         ...this.state.filter,

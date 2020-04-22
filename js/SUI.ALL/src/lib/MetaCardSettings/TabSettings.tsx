@@ -14,7 +14,6 @@ import {COMMON__GRID, TAB_SETTINGS__UNACTIVE_BUTTON} from "../styles";
 import {RowSettings, SerializedRowSettings} from "./RowSettings";
 import {RowsList} from "./RowsList";
 
-// tslint:disable-next-line:no-any
 type TabSettingsState = Omit<IBaseCardTabLayout<any, IBaseCardItemLayout<any>>, 'rows'> & {
   rows: SerializedRowSettings[];
 };

@@ -1,4 +1,3 @@
-/* tslint:disable:no-any no-unsafe-any*/
 
 /**
  * If type of value is number - return value.
@@ -23,7 +22,6 @@ export function defaultIfNotNumberFn(defaultValue: number): (value: any) => numb
 export function fixIfPossible(value: any, fractionDigits: number = 2): string {
   try {
     if (typeof value !== "number") {
-      // tslint:disable-next-line:no-parameter-reassignment
       value = Number(value);
     }
     if (Number.isFinite(value)) {

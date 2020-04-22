@@ -1,3 +1,4 @@
+/*eslint sort-exports/sort-exports: 2*/
 export * from "./odometer";
 export * from "./FilterReportElement";
 export * from "./MutationFilterReportElement";

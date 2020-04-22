@@ -1,3 +1,4 @@
+/*eslint sort-exports/sort-exports: 2*/
 export * from "./additionalTabs";
 export * from "./Audit";
 export * from "./Base";

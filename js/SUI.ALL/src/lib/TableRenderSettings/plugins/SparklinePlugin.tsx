@@ -1,4 +1,3 @@
-/* tslint:disable:jsx-no-lambda */
 import {InputNumber} from 'antd';
 import Checkbox from 'antd/lib/checkbox';
 import Input from 'antd/lib/input';
@@ -20,10 +19,8 @@ export class SparklinePlugin extends TableRenderParamsPlugin<{}> {
     super('sparkline', 'Спарклайн', false);
   }
 
-  // tslint:disable-next-line:prefer-function-over-method variable-name no-async-without-await
-  public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams): Promise<void> {
-    // tslint:disable-next-line:no-any
-    result.render = (value: any, _: any, col: any): React.ReactNode =>
+public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams): Promise<void> {
+result.render = (value: any, _: any, col: any): React.ReactNode =>
       value != null
         ? (
           <SparkLine

@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import { Icon } from '@ant-design/compatible';
 import { Switch } from 'antd';
 import Tooltip from 'antd/lib/tooltip';
@@ -110,8 +109,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
   }
 
   public async componentDidMount(): Promise<void> {
-    // tslint:disable:no-unnecessary-callback-wrapper
-    const fields = await Promise.all(this.props.fields.map(field => getFieldsForCol(field)));
+const fields = await Promise.all(this.props.fields.map(field => getFieldsForCol(field)));
     this.setState({ fields });
   }
 

@@ -1,4 +1,3 @@
-/* tslint:disable:no-any */
 import React from 'react';
 
 import { BASE_CARD_COLS } from '../styles';
@@ -21,8 +20,7 @@ export function renderIBaseCardColsLayout<T, ITEM>(sourceItem: any, cols: Array<
   for (let curRowIndex = 0; curRowIndex < maxRows; curRowIndex++) {
     const itemsInRow: React.ReactNode[] = [];
 
-    // tslint:disable-next-line:prefer-for-of
-    for (let colIndex = 0; colIndex < cols.length; colIndex++) {
+for (let colIndex = 0; colIndex < cols.length; colIndex++) {
       const col = cols[colIndex];
       const colspan = col.colspan || 1;
       const item = wrapInArrayWithoutNulls(col.items)[curRowIndex];

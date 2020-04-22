@@ -22,8 +22,7 @@ interface IMetaLinkState {
 }
 
 export function metaLinkRender(table: string, withLink: boolean = false): (id: string | number | null | undefined) => JSX.Element | string {
-  // tslint:disable-next-line:triple-equals
-  return id => (id != null)
+return id => (id != null)
     ? <MetaLink tableInfoIdentifier={table} withLink={withLink} id={id}/>
     : NO_DATA_TEXT;
 }
@@ -65,8 +64,7 @@ export class MetaLink extends React.Component<IMetaLinkProps, IMetaLinkState> {
           alwaysUpdate={true}
         >
           {() => {
-            // tslint:disable-next-line:triple-equals
-            const renderValue = (this.state.renderValue != null)
+const renderValue = (this.state.renderValue != null)
               ? this.state.renderValue.value
               : this.props.id;
 

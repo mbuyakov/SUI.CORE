@@ -1,4 +1,3 @@
-// tslint:disable:no-magic-numbers
 import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4core from "@amcharts/amcharts4/core";
 import autobind from "autobind-decorator";
@@ -23,8 +22,7 @@ export interface IAdditionalSettingProps {
 
 interface ICategoryColumnChartProps {
   categoryX: string;
-  // tslint:disable-next-line:no-any
-  data: Array<{[field: string]: any}>;
+data: Array<{[field: string]: any}>;
   series: ICategoryColumnChartSeries[];
   style?: React.CSSProperties;
   title?: string;

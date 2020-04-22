@@ -35,8 +35,7 @@ interface IDnfFormProps<T, V = IResultDnfFormValues<T>> {
   initialState?: IResultDnfFormValues<T>;
   orBehaviorDisabled?: boolean;
 
-  // tslint:disable-next-line:no-any
-  orElementValidator?(value: T[] | undefined, callback: any): void;
+orElementValidator?(value: T[] | undefined, callback: any): void;
   valuesMapper?(values: IResultDnfFormValues<T>): V;
 }
 
@@ -69,8 +68,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
 
   private static hasErrors(fieldsError: Record<string, string[] | undefined> | string[]): boolean {
     return fieldsError && Object.keys(fieldsError).some(fieldName => {
-      // tslint:disable-next-line:ban-ts-ignore
-      // @ts-ignore
+// @ts-ignore
       const field = fieldsError[fieldName];
       if (Array.isArray(field)) {
         return field.some(InnerDnfForm.hasErrors);
@@ -140,8 +138,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
     if (this.state && this.state.initialForms && this.state.initialElements) {
       this.state.initialElements.forEach((value, index) => {
         const result: IObjectWithIndex = {};
-        // tslint:disable-next-line:ban-ts-ignore
-        // @ts-ignore
+// @ts-ignore
         Object.keys(value || {}).forEach(key => result[`elements[${index}].${key}`] = value && value[key]);
         this.props.form.setFieldsValue(result);
       });
@@ -151,8 +148,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
   }
 
   public componentDidUpdate(): void {
-    // tslint:disable-next-line:no-any
-    const values = this.getDnfFormValues();
+const values = this.getDnfFormValues();
 
     if (!isEqual(values, this.state && this.state.lastFormValues)) {
       this.setState({lastFormValues: values});
@@ -190,8 +186,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
             >
               {getFieldDecorator(`formValidator[${formIndex}]`, { // Wrapper for field validating
                 rules: [{
-                  // tslint:disable-next-line:no-any
-                  validator: (_: any, __: any, callback: any): void => {
+validator: (_: any, __: any, callback: any): void => {
                     const values = this.getDnfFormValues();
 
                     this.props.orElementValidator
@@ -257,8 +252,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
-                  // tslint:disable-next-line:no-magic-numbers
-                  marginLeft: disableDisjunctionSwap ? 5 : -57,
+marginLeft: disableDisjunctionSwap ? 5 : -57,
                   marginRight: 5
                 }}
               >
@@ -348,22 +342,19 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
 
   @autobind
   private getDnfFormValues(): IDnfFromValues<TElement> {
-    // tslint:disable-next-line:no-any
-    return this.props.form.getFieldsValue() as any;
+return this.props.form.getFieldsValue() as any;
   }
 
   private getResultFormValues(): TValues {
     const formattedFormValues = InnerDnfForm.formatFormValues(this.getDnfFormValues());
 
-    // tslint:disable-next-line:no-any
-    return this.props.valuesMapper ? this.props.valuesMapper(formattedFormValues) : (formattedFormValues as any);
+return this.props.valuesMapper ? this.props.valuesMapper(formattedFormValues) : (formattedFormValues as any);
   }
 
   private handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
-    // tslint:disable-next-line:no-any
-    this.props.form.validateFields((err: any) => {
+this.props.form.validateFields((err: any) => {
       if (!err) {
         if (this.props.onSubmit) {
           this.props.onSubmit(this.getResultFormValues());
@@ -385,7 +376,6 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
 
 }
 
-// tslint:disable-next-line:max-classes-per-file
 export class  DnfForm<T, S> extends React.Component<FormCreateKostyl<InnerDnfForm<T,S>>> {
 
   private element: JSX.Element | null = null;

@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import autobind from "autobind-decorator";
 import * as React from "react";
 
@@ -26,7 +25,6 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
 
   public constructor(props: ICustomSelectFilterProps<T>) {
     super(props);
-    // tslint:disable-next-line:ban-ts-ignore
     // @ts-ignore
     this.state = {value: props.filter ? (props.filter.value || props.filter.elements as T) : undefined}
   }

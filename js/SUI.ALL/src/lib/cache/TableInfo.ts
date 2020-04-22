@@ -1,4 +1,3 @@
-// tslint:disable:prefer-function-over-method variable-name
 import autobind from "autobind-decorator";
 
 import { ICacheEntry } from '../cacheManager';
@@ -74,7 +73,6 @@ export class TableInfo {
   }
 }
 
-// tslint:disable-next-line:max-classes-per-file class-name
 class _TableInfoManager extends GqlCacheManager<ITableInfo, TableInfo> {
 
   @autobind
@@ -94,8 +92,7 @@ class _TableInfoManager extends GqlCacheManager<ITableInfo, TableInfo> {
           true,
         ), "nodes", 0, "id");
 
-      // tslint:disable-next-line:triple-equals
-      if (id == null) {
+if (id == null) {
         throw new Error(`TableInfoManager: couldn't find TableInfo with tableName = ${id}`);
       }
     }
@@ -138,5 +135,4 @@ class _TableInfoManager extends GqlCacheManager<ITableInfo, TableInfo> {
   }
 }
 
-// tslint:disable-next-line:variable-name
 export const TableInfoManager = new _TableInfoManager();

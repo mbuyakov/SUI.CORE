@@ -1,4 +1,3 @@
-/* tslint:disable:no-any */
 import asyncValidator, { RuleItem } from 'async-validator';
 import autobind from 'autobind-decorator';
 import classNames from 'classnames';
@@ -39,16 +38,13 @@ export type IBaseFormProps = Omit<IBaseCardProps<any, IBaseFormItemLayout>, 'ite
   children?: BaseFormChildrenFn;
   customFinalInputNodesProps?: IObjectWithIndex;
   customInputNodesProps?: IObjectWithIndex;
-  // tslint:disable-next-line:no-any
-  initialValues?: IObjectWithIndex;
+initialValues?: IObjectWithIndex;
   momentFields?: OneOrArray<string>;
   uuid: string;
   verticalLabel?: boolean;
-  // tslint:disable-next-line:no-any
-  customFieldValues?(get: ValuesGetter): IObjectWithIndex;
+customFieldValues?(get: ValuesGetter): IObjectWithIndex;
   onInitialized?(form: BaseForm): void;
-  // tslint:disable-next-line:no-any
-  onSubmit(fields: any): Promise<boolean>;
+onSubmit(fields: any): Promise<boolean>;
 }
 
 export interface IFormField {
@@ -117,12 +113,10 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
     }
 
     // To disabled submit button at the beginning
-    // tslint:disable-next-line:no-floating-promises
-    this.validateFields();
+this.validateFields();
   }
 
-  // tslint:disable-next-line:no-any
-  public componentDidUpdate(prevProps: IBaseFormProps): void {
+public componentDidUpdate(prevProps: IBaseFormProps): void {
     // Very strange use-case
     if (!isEqual(prevProps.initialValues, this.props.initialValues) && this.props.initialValues) {
       this.setFieldsValues(this.props.initialValues);
@@ -193,10 +187,8 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
 
   @autobind
   public isFieldsTouched(fields?: string[]): boolean {
-    // tslint:disable-next-line:triple-equals
-    if (fields == null) {
-      // tslint:disable-next-line:no-parameter-reassignment
-      fields = Array.from(this.formFields.keys());
+if (fields == null) {
+fields = Array.from(this.formFields.keys());
     }
 
     return fields.some(field => this.isFieldTouched(field));
@@ -391,8 +383,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
       let fieldValue = values[curKey];
 
       // Magic
-      // tslint:disable-next-line:no-magic-numbers
-      if (typeof fieldValue === 'string' && momentsFields.includes(curKey)) {
+if (typeof fieldValue === 'string' && momentsFields.includes(curKey)) {
         const momentValue = moment(fieldValue);
 
         if (momentValue.isValid()) {
@@ -409,7 +400,6 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   }
 }
 
-// tslint:disable-next-line:max-classes-per-file
 class FormBodyWrapper extends React.Component {
 
   public render(): React.ReactNode {

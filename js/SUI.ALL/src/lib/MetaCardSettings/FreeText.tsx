@@ -31,7 +31,6 @@ export class FreeText extends SerializableDnDChild<SerializedFreeText> {
     }
   }
 
-  // tslint:disable-next-line:prefer-function-over-method
   public getCurrentVersion(): number {
     return LAST_FREE_TEXT_VERSION;
   }

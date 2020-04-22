@@ -31,8 +31,7 @@ const KOSTYL = (value: number, color: string) => `
 
 interface ITopBarChartProps {
   categoryDataField: string;
-  // tslint:disable-next-line:no-any
-  data?: any[];
+data?: any[];
   decimalValues?: boolean;
   labelPanelWidth?: number;
   labelTemplate?: string;
@@ -47,8 +46,7 @@ interface ITopBarChartProps {
 
   categoryAxisLabelGenerator(element: IObjectWithIndex): string | JSX.Element;
 
-  // tslint:disable-next-line:no-any
-  onSeriesClick?(event: any): void;
+onSeriesClick?(event: any): void;
 }
 
 export interface IReportTopBarChartSettingProps {
@@ -57,8 +55,7 @@ export interface IReportTopBarChartSettingProps {
 }
 
 export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
-  // tslint:disable-next-line:no-any
-  mappedData?: any[];
+mappedData?: any[];
   maxValue?: number;
 }> {
 
@@ -100,7 +97,6 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
             style={{flexGrow: 1, height: 300}}
             type={am4charts.XYChart}
             data={this.state.mappedData as IObjectWithIndex[]}
-            // tslint:disable-next-line:jsx-no-lambda
             onChartCreated={(chart): void => {
               chart.paddingLeft = 0;
 
@@ -133,8 +129,7 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
 
               if (this.props.tooltipTemplate) {
                 series.columns.template.tooltipText = this.props.tooltipTemplate;
-                // tslint:disable-next-line:ban-ts-ignore
-                // @ts-ignore
+// @ts-ignore
                 series.tooltip.pointerOrientation = "vertical";
               }
 

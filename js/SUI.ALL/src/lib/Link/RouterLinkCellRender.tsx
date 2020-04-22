@@ -6,15 +6,12 @@ import { RouterLink, RouterLinkType } from './RouterLink';
 
 interface IRouterLinkCellRenderRet {
   dataKey?: DataKey
-  // tslint:disable-next-line:no-any
-  groupingCriteria(value: any): any;
-  // tslint:disable-next-line:no-any
-  render?(value: any, row: any): React.ReactNode;
+groupingCriteria(value: any): any;
+render?(value: any, row: any): React.ReactNode;
 }
 
 export function routerLinkCellRender(
-  // tslint:disable-next-line:no-any
-  link: (id: any) => string,
+link: (id: any) => string,
   params?: {
     baseKey?: DataKey,
     idKey?: DataKey,
@@ -27,10 +24,8 @@ export function routerLinkCellRender(
   const renderKey = params && (params.renderKey || params.valueKey);
   const textKey = params && renderKey && [params.baseKey, renderKey];
   const ret: IRouterLinkCellRenderRet = {
-    // tslint:disable-next-line:no-any
-    groupingCriteria: (value: any): any => value,
-    // tslint:disable-next-line:no-any
-    render: (value: any, row: any): React.ReactNode => {
+groupingCriteria: (value: any): any => value,
+render: (value: any, row: any): React.ReactNode => {
       const id = getDataByKey(row, ...idKey);
       if (!id) {
         return null;

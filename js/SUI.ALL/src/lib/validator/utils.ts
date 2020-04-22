@@ -7,8 +7,7 @@ export function dateDisabler(bound: string, type: "greater" | "greaterOrEqual" |
   return (current: Moment): boolean => {
     const boundMoment = moment(bound);
 
-    // tslint:disable-next-line:switch-default
-    switch (type) {
+switch (type) {
       case "greater":
         return boundMoment.endOf("day") < current;
       case "greaterOrEqual":

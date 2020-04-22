@@ -1,4 +1,3 @@
-/* tslint:disable:no-any */
 import { Table } from 'antd';
 import { TableProps } from 'antd/lib/table';
 import autobind from 'autobind-decorator';
@@ -77,7 +76,6 @@ const rowTarget = {
   },
 };
 
-// tslint:disable-next-line:variable-name
 const DragableBodyRow = DropTarget(
   'row',
   rowTarget,
@@ -95,7 +93,6 @@ const DragableBodyRow = DropTarget(
   )(BodyRow),
 );
 
-// tslint:disable-next-line:max-classes-per-file
 class DraggableRowTableClass<T extends IObjectWithIndex> extends React.Component<Omit<TableProps<T>, 'onRow'> & {
   onOrderChanged(sortedDataSource: T[]): Promise<any>
 }, {
@@ -147,8 +144,7 @@ class DraggableRowTableClass<T extends IObjectWithIndex> extends React.Component
       },
     });
     this.setState({ loading: true });
-    // tslint:disable-next-line:no-floating-promises
-    this.props.onOrderChanged(newState.data)
+this.props.onOrderChanged(newState.data)
       .then(_ => this.setState({ ...newState, loading: false }));
   }
 
@@ -161,7 +157,6 @@ class DraggableRowTableClass<T extends IObjectWithIndex> extends React.Component
   }
 }
 
-// tslint:disable-next-line:max-classes-per-file
 export class DraggableRowTable<T> extends React.Component<ExtractProps<DraggableRowTableClass<T>> & {
   onOrderChanged(sortedDataSource: T[]): Promise<any>
 }> {

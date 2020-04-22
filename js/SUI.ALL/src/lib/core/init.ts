@@ -24,11 +24,9 @@ export interface IInitSUISettings {
 
   metaschemaRefreshPromise(): Promise<void>;
 
-  // tslint:disable-next-line:no-any
-  routerPushFn(link: any): void;
+routerPushFn(link: any): void;
 
-  // tslint:disable-next-line:no-any
-  routerReplaceFn(link: any): void;
+routerReplaceFn(link: any): void;
 }
 
 
@@ -55,8 +53,7 @@ export function initSUI(settings: IInitSUISettings): void {
       cache: new InMemoryCache(),
       link: authLink.concat(new HttpLink({
         uri: settings.graphqlUri,
-        // tslint:disable-next-line
-        headers: {
+headers: {
           ...(settings.basicAuthToken ? { authorization: settings.basicAuthToken } : undefined),
         },
       })),
@@ -66,8 +63,7 @@ export function initSUI(settings: IInitSUISettings): void {
   parseRoutes(settings.routes);
   const timeLabel = 'MetaInfoManagers load';
   console.time(timeLabel);
-  // tslint:disable-next-line:no-floating-promises
-  Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));
+Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));
 
   window.SUI_CORE_PTC_CACHE = new ColorHeatMap(settings.percentToColorSettings);
 

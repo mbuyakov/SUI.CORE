@@ -17,8 +17,7 @@ export interface IRawRoute {
   breadcrumb: string;
   breadcrumbFn: Promise<string>;
   cardForEntity?: string[];
-  // tslint:disable-next-line:no-any
-  component: any;
+component: any;
   group: true;
   icon: string;
   name: string;

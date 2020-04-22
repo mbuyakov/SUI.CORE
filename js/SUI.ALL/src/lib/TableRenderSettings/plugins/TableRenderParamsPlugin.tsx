@@ -29,28 +29,21 @@ export abstract class TableRenderParamsPlugin<T> {
   ): Promise<void>
 
   // For link
-  // tslint:disable-next-line:prefer-function-over-method ban-ts-ignore
-  public extraActivationKostyl(
-    // tslint:disable-next-line:ban-ts-ignore
-    // @ts-ignore
+public extraActivationKostyl(
+// @ts-ignore
     result: IBaseTableColLayout,
-    // tslint:disable-next-line:ban-ts-ignore
-    // @ts-ignore
+// @ts-ignore
     renderColumnInfo: ColumnInfo | null,
-    // tslint:disable-next-line:ban-ts-ignore
-    // @ts-ignore
+// @ts-ignore
     props: IColumnInfoToBaseTableColProps,
-    // tslint:disable-next-line:ban-ts-ignore
-    // @ts-ignore
+// @ts-ignore
     tableRenderParams: ITableRenderParams<T>,
   ): boolean {
     return false;
   }
 
-  // tslint:disable-next-line:ban-ts-ignore
-  // @ts-ignore
-  // tslint:disable-next-line:prefer-function-over-method
-  public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<T>): React.ReactNode {
+// @ts-ignore
+public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<T>): React.ReactNode {
     return (
       <Tooltip
         title="Для данного режима нет настроек"
@@ -65,8 +58,7 @@ export abstract class TableRenderParamsPlugin<T> {
     );
   }
 
-  // tslint:disable-next-line:prefer-function-over-method
-  public parseParams(tableRenderParams: ITableRenderParams<T>): ITableRenderParams<T> {
+public parseParams(tableRenderParams: ITableRenderParams<T>): ITableRenderParams<T> {
     return tableRenderParams;
   }
 }

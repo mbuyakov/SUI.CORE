@@ -1,4 +1,3 @@
-/* tslint:disable:deprecation */
 
 import { Button, notification } from 'antd';
 import axios from 'axios';
@@ -39,7 +38,6 @@ export function runCheckVersionMismatch(): void {
       }).catch(() => {/* Бывает, пофиг */});
     }
 
-    // tslint:disable-next-line:no-magic-numbers
     checkVersionMismatchInterval = setInterval(checkVersionMismatch, 60000);
     checkVersionMismatch();
   }

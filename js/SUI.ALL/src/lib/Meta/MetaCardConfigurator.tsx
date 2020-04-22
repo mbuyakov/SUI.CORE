@@ -1,8 +1,6 @@
-/* tslint:disable:no-any */
 import {MetaCardPlugin} from "./MetaCardPlugin";
 import {ChartPlugin} from "./plugins/chart";
 
-// tslint:disable-next-line:no-unnecessary-class
 export class MetaCardConfigurator {
   public static plugins: Map<string, MetaCardPlugin<any>> = new Map();
 

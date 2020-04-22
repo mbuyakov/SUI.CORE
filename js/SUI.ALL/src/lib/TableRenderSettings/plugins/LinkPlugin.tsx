@@ -20,8 +20,7 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
     super('link', 'Ссылка', true);
   }
 
-  // tslint:disable-next-line:prefer-function-over-method variable-name
-  public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams<ILinkPluginTRP>): Promise<void> {
+public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams<ILinkPluginTRP>): Promise<void> {
 
     // console.warn(await ColumnInfoManager.getById(tableRenderParams.customColumnInfoId));
 
@@ -40,8 +39,7 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
 
     const link = getLinkForTable(referencedTableInfo.tableName, 'card', ':id');
     if (link) {
-      // tslint:disable-next-line:no-any
-      result.render = (value: any, row: any): JSX.Element => value && (
+result.render = (value: any, row: any): JSX.Element => value && (
         <RouterLink
           to={link.replace(
             ':id',
@@ -61,8 +59,7 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
     }
   }
 
-  // tslint:disable-next-line:prefer-function-over-method variable-name
-  public extraActivationKostyl(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams<ILinkPluginTRP>): boolean {
+public extraActivationKostyl(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams<ILinkPluginTRP>): boolean {
     const isLinkCol = props.isLinkCol;
     const renderType = getDataByKey<string>(tableRenderParams, "renderType");
 

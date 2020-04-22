@@ -1,4 +1,3 @@
-/* tslint:disable:cyclomatic-complexity no-any no-object-literal-type-assertion */
 import { Form } from 'antd';
 import { FormItemProps } from 'antd/lib/form';
 import { RuleItem } from 'async-validator';
@@ -13,8 +12,6 @@ import { SUIReactComponent } from '../SUIReactComponent';
 import { DEFAULT_ITEM_RENDERER } from './BaseCardItemLayout';
 import { BaseForm, IFormField, SUBMITTED_FIELD, ValuesGetter } from './BaseForm';
 import { BaseFormContext } from './BaseFormContext';
-
-// tslint:disable-next-line:no-import-side-effect
 
 const FILL_FIELD_TEXT = 'Заполните поле';
 
@@ -104,8 +101,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
             this.formField = baseForm.getOrCreateFormField(item.fieldName);
             this.registerObservableHandler(this.formField.value.subscribe(value => this.setState({ value })));
             this.registerObservableHandler(this.formField.error.subscribe(error => this.setState({ error })));
-            // tslint:disable-next-line:triple-equals
-            if (item.initialValue != null) {
+if (item.initialValue != null) {
               this.formField.value.setValue(item.initialValue);
             }
           }
@@ -117,8 +113,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
           if (required) {
             if (this.formField.rules.findIndex(rule => rule.required || false) < 0) {
               this.formField.rules.unshift({ required: true, message: FILL_FIELD_TEXT });
-              // tslint:disable-next-line:no-floating-promises
-              this.baseForm.validateField(item.fieldName);
+this.baseForm.validateField(item.fieldName);
             }
           }
 
@@ -126,8 +121,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
             const index = this.formField.rules.findIndex(rule => rule.required || false);
             if (index >= 0) {
               this.formField.rules.splice(index, 1);
-              // tslint:disable-next-line:no-floating-promises
-              this.baseForm.validateField(item.fieldName);
+this.baseForm.validateField(item.fieldName);
             }
           }
 
@@ -138,8 +132,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
           );
 
           const isSubmitted = baseForm.getFieldValue(SUBMITTED_FIELD);
-          // tslint:disable-next-line:triple-equals
-          const fieldHasValue = baseForm.getFieldValue(item.fieldName) != null;
+const fieldHasValue = baseForm.getFieldValue(item.fieldName) != null;
           const isTouched = fieldHasValue || baseForm.isFieldTouched(item.fieldName);
           const errors = this.state.error;
 
@@ -155,13 +148,11 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
           }
 
           if (!customFinalInputNodesProps) {
-            // tslint:disable-next-line:no-parameter-reassignment
-            customFinalInputNodesProps = {};
+customFinalInputNodesProps = {};
           }
 
           if (!customInputNodesProps) {
-            // tslint:disable-next-line:no-parameter-reassignment
-            customInputNodesProps = {};
+customInputNodesProps = {};
           }
 
           const data = (
@@ -208,8 +199,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
 
   @autobind
   private onChange(e: any): void {
-    // tslint:disable-next-line:variable-name
-    const _getValueFromEvent = this.props.getValueFromEvent || getValueFromEvent;
+const _getValueFromEvent = this.props.getValueFromEvent || getValueFromEvent;
     const value = _getValueFromEvent(e);
 
     this.formField.value.setValue(value);

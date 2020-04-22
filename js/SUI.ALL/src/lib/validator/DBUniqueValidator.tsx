@@ -60,7 +60,6 @@ function fieldsToFilterStrings(fields: IObjectWithIndex, comparator: gqlCompareO
     .map(key => getFilterExpression(key, comparator, fields[key]));
 }
 
-// tslint:disable-next-line:no-any
 function getFilterExpression(field: string, comparator: gqlCompareOperations, value: any): string {
   return `{${field}: {${comparator}: ${addQuotesIfString(value)}}}`;
 }

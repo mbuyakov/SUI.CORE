@@ -1,11 +1,9 @@
-/* tslint:disable:ban-ts-ignore */
 import * as React from "react";
 
 import { getDataByKey } from '../dataKey';
 
 declare let window: Window & {
   DnDChildData: {
-    // tslint:disable-next-line:no-any
     [id: string]: any;
   };
 };
@@ -32,16 +30,13 @@ export abstract class DnDChild<P extends IBaseDnDChildProps = IBaseDnDChildProps
       const savedState = getDataByKey<S>(window, 'DnDChildData', props.id);
       if (savedState) {
         this.state = savedState;
-        // tslint:disable-next-line:ban-ts-ignore
         // @ts-ignore
-        // tslint:disable-next-line:no-dynamic-delete
         delete window.DnDChildData[props.id];
       }
     }
   }
 
   public saveState(): void {
-    // tslint:disable-next-line:triple-equals
     if(this.props.id == null) {
       throw new Error("No ID");
     }

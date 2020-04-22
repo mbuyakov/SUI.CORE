@@ -9,8 +9,7 @@ import {IPromisedBaseFormModalProps, PromisedBaseFormModal} from "./PromisedBase
 export async function inputBoxModal<T>(title: string,
                                        formProps: IPromisedBaseFormModalProps<T> = null,
                                        inputProps: TextAreaProps = null,
-                                       // tslint:disable-next-line:no-any
-                                       validator: any = null,
+validator: any = null,
                                        onSubmitCallback: (value: string) => Promise<boolean> = null): Promise<string> {
   return new Promise<string>(resolve => {
     const {TextArea} = Input;

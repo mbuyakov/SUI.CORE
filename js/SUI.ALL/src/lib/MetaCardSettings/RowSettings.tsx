@@ -1,4 +1,3 @@
-/* tslint:disable:no-any */
 import { Button, Mentions, Menu } from 'antd';
 import Checkbox, { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import Input from 'antd/lib/input';
@@ -19,7 +18,6 @@ import { FieldsContext } from './FieldsContext';
 import { OldVersionWarning } from './OldVersionWarning';
 import { SerializedTabSettings, TabSettings } from './TabSettings';
 
-// tslint:disable-next-line:no-any
 type RowSettingsState = Merge<IBaseCardRowLayout<any, IBaseCardItemLayout<any>>, {
   collapsePanels?: SerializedCollapseSettings[]
   cols?: SerializedColSettings[]
@@ -58,8 +56,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
             preState.tabs = [];
             break;
           case 'metatable':
-            // tslint:disable-next-line:ban-ts-ignore
-            // @ts-ignore
+// @ts-ignore
             preState.metaTableProps = {};
             break;
           case 'collapse':
@@ -154,8 +151,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
                   {fields => (
                     <Mentions
                       // defaultSuggestions={fields}
-                      // tslint:disable-next-line:ban-ts-ignore
-                      // @ts-ignore
+// @ts-ignore
                       defaultValue={this.state.metaTableProps[setting.field]}
                       onChange={this.onFilterChanged(setting.field)}
                     >
