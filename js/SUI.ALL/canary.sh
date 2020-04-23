@@ -1,3 +1,5 @@
+set -e
+yarn ci
 cp package.json package.json.bkp
 yarn publish --registry http://verdaccio.smp.sm-soft.ru/ --non-interactive --no-git-tag-version --new-version 7.0.$(date +"%Y%m%d%I%M%S")-CANARY
 rm package.json

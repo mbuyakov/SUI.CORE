@@ -13,11 +13,11 @@
     "type-check:watch": "yarn type-check -- --watch",
     "lint": "TIMING=1 eslint 'src/lib/**/*.{js,ts,tsx}' --quiet",
     "lint-fix": "TIMING=1 eslint 'src/lib/**/*.{js,ts,tsx}' --quiet --fix",
-    "build": "rimraf dist && yarn build:types && yarn build:js",
-    "build:types": "tsc --emitDeclarationOnly --skipLibCheck",
-    "build:js": "babel src/lib --out-dir dist --extensions \".ts,.tsx\" --source-maps inline",
+    "build": "rimraf dist && concurrently \"yarn:build-types\" \"yarn:build-js\"",
+    "build-types": "tsc --emitDeclarationOnly --skipLibCheck",
+    "build-js": "babel src/lib --out-dir dist --extensions \".ts,.tsx\" --source-maps inline",
     "storybook": "NODE_OPTIONS=--max_old_space_size=4096 start-storybook -p 6006",
-    "ci": "yarn lint && yarn build",
+    "ci": "concurrently \"yarn:lint\" \"yarn:build\"",
     "build-storybook": "build-storybook"
   },
   "prettier": {
