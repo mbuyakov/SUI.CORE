@@ -2,6 +2,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-client';
 import { setContext } from 'apollo-link-context';
 import { HttpLink } from 'apollo-link-http';
+import { Container } from 'typescript-ioc';
 
 import { ColumnInfoManager, NameManager, TableInfoManager } from '../cache';
 import { ColorHeatMap, IColorHeatMapSettings } from '../color';
@@ -13,6 +14,7 @@ declare let window: Window & {
 };
 
 export interface IInitSUISettings {
+  projectKey: string;
   backendUrl: string;
   basicAuthToken?: string;
   checkVersionMismatchUrl: string;
@@ -60,10 +62,12 @@ headers: {
     }),
   };
 
+  Container.bindName('authorizationToken').to(settings.basicAuthToken);
+
   parseRoutes(settings.routes);
   const timeLabel = 'MetaInfoManagers load';
   console.time(timeLabel);
-Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));
+  Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));
 
   window.SUI_CORE_PTC_CACHE = new ColorHeatMap(settings.percentToColorSettings);
 

@@ -20,7 +20,6 @@
     "react",
     "@typescript-eslint",
 //    "prettier",
-    "import-order",
     "sort-exports"
   ],
   "extends": [
@@ -51,7 +50,6 @@
 //    "@typescript-eslint/prefer-readonly": 2,
     "sort-exports/sort-exports": [0],
     "@typescript-eslint/explicit-function-return-type": 1,
-    "import-order/import-order": 2,
     "quotes": [0],
     "@typescript-eslint/interface-name-prefix": [0],
     "@typescript-eslint/no-use-before-define": [0],
