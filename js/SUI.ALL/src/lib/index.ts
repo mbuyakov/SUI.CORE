@@ -57,4 +57,3 @@ export * from "./TooltipIcon";
 export * from "./TransitionBar";
 export * from "./user";
 export * from "./WaitData";
-export * from "./color/ColorHeatMap";
