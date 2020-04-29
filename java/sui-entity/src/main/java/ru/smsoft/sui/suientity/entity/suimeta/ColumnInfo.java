@@ -57,12 +57,17 @@ public class ColumnInfo implements Persistable<Long> {
     @Setter(AccessLevel.NONE)
     private ObjectNode parsedTableRenderParams;
 
-    private Boolean visible;
-    private Boolean defaultVisible;
-    private Boolean defaultGrouping;
-    private Boolean isNullable;
+    @Builder.Default
+    private Boolean visible = false;
+    @Builder.Default
+    private Boolean defaultVisible = false;
+    @Builder.Default
+    private Boolean defaultGrouping = false;
+    @Builder.Default
+    private Boolean isNullable = false;
 
-    private Integer width;
+    @Builder.Default
+    private Integer width = 200;
 
     @Column(name = "\"order\"") // keyword
     private Integer order;
