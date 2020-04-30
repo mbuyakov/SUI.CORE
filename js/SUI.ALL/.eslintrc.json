@@ -153,7 +153,8 @@
     "jsx-a11y/control-has-associated-label": [0],
     "no-case-declarations": [0],
     "no-eval": [0],
-    "no-control-regex": [0]
+    "no-control-regex": [0],
+    "no-trailing-spaces": [0]
   },
   "settings": {
     "import/resolver": {
