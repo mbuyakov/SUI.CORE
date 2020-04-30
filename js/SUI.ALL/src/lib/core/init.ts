@@ -26,9 +26,9 @@ export interface IInitSUISettings {
 
   metaschemaRefreshPromise(): Promise<void>;
 
-routerPushFn(link: any): void;
+  routerPushFn(link: any): void;
 
-routerReplaceFn(link: any): void;
+  routerReplaceFn(link: any): void;
 }
 
 
@@ -62,7 +62,8 @@ headers: {
     }),
   };
 
-  Container.bindName('authorizationToken').to(settings.basicAuthToken);
+
+  Container.bindName('sui').to(settings);
 
   parseRoutes(settings.routes);
   const timeLabel = 'MetaInfoManagers load';
