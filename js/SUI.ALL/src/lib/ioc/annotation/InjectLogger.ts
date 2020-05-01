@@ -1,7 +1,6 @@
-// Please, don't touch. Magic from typescript-ioc
-
 import { Logger } from "../utils";
 
+// Please, don't touch. Magic from typescript-ioc
 export function InjectLogger(...args: any[]): any {
   const target = args[0] as Function;
   const key = args[1] as string;

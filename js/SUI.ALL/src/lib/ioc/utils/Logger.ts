@@ -25,7 +25,7 @@ export class Logger {
     }
   }
 
-  public warn(e: Error, msg: TOrCallback<OneOrArray<any>>): void {
+  public warn(msg: TOrCallback<OneOrArray<any>>): void {
     if (this.logLevelService.isLevelEnabled(this.name, LoggerLevel.ERROR)) {
       console.warn(this.prefix, ...wrapInArray(getTOrCall(msg)));
     }
