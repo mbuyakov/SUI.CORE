@@ -20,7 +20,7 @@ export function InjectLocalStorageValue(localStorageKey: string) {
       get: function() {
         if(!this[propKeyInit]) {
           const newValue = localStorageService.getItem(localStorageKey);
-          log.info(`[${localStorageKey}]  Init. Readed value: ${newValue}`);
+          log.info(`[${localStorageKey}] Init. Readed value: ${newValue}`);
           this[propKey] = newValue;
           this[propKeyInit] = true;
         }
