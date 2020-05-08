@@ -8,7 +8,8 @@ import moment from 'moment';
 import * as React from 'react';
 import uuid from 'uuid';
 
-import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFilterType, getHrefLocation, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
+import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFilterType, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
+import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 
 import { BackendDataSource, MESSAGE_ID_KEY } from './BackendDataSource';
 import { RestBackendDataSource } from './RestBackendDataSource';
@@ -153,6 +154,9 @@ export class BackendTable<TSelection = defaultSelection>
       }
     }
 
+    const defaultCurrentPage = paginationEnabled ? pageNumber : 0;
+    const resultPageSize = paginationEnabled ? (pageSize || 10) : 1000000000;
+
     this.state = {
       defaultFilter,
       filter,
@@ -160,8 +164,9 @@ export class BackendTable<TSelection = defaultSelection>
       lastSendSelection: [],
       paginationEnabled,
       // tslint:disable-next-line:no-magic-numbers
-      defaultCurrentPage: paginationEnabled ? pageNumber : 0,
-      pageSize: paginationEnabled ? (pageSize || 10) : 1000000000
+      defaultCurrentPage,
+      pageSize: resultPageSize,
+      totalCount: (defaultCurrentPage * resultPageSize) + 1
     };
   }
 
@@ -284,7 +289,7 @@ export class BackendTable<TSelection = defaultSelection>
             )
           }
           toolbarButtons={[
-            // (<ClearFiltersPlugin handleClick={this.clearFilters}/>),
+            (<ClearFiltersPlugin handleClick={this.clearFilters}/>),
             (<RefreshMetaTablePlugin handleClick={this.refresh}/>),
             // admin && (<RawModePlugin enabled={this.state.rawMode} onClick={this.changeRaw}/>),
             admin && (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
