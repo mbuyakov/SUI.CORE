@@ -1,8 +1,8 @@
 import jsonpack from "jsonpack";
 import pako from "pako";
+import {getSUISettings} from "../core";
 
 import {OneOrArray, wrapInArray} from "../typeWrappers";
-import {getMetaInitProps} from "../utils";
 
 import {BackendFilter, SimpleBackendFilter} from "./BackendTable";
 
@@ -79,7 +79,7 @@ export function putTableStateToUrlParam(
 
   putTableStateToLocation(location, tableId, state);
 
-  getMetaInitProps().routerReplaceFn(locationToLink(location));
+  getSUISettings().routerReplaceFn(locationToLink(location));
 }
 
 export function getStateFromUrlParam(tableId: string): IInnerTableStateDefinition | undefined {
