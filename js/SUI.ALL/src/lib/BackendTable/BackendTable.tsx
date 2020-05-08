@@ -9,7 +9,6 @@ import * as React from 'react';
 import uuid from 'uuid';
 
 import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFilterType, getHrefLocation, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
-import { ClearFiltersPlugin } from '../plugins/ClearFiltersPlugin';
 
 import { BackendDataSource, MESSAGE_ID_KEY } from './BackendDataSource';
 import { RestBackendDataSource } from './RestBackendDataSource';
@@ -82,6 +81,7 @@ type IBackendTableState<T> = {
   cols?: IBaseTableColLayout[];
   // tslint:disable-next-line:no-any
   data?: any[];
+  defaultCurrentPage?: number;
   defaultFilter?: SimpleBackendFilter[];
   error?: string;
   filter?: BackendFilter[];
@@ -118,7 +118,7 @@ function calculateParentExpandedGroups(realExpandedGroupKeys: IExpandedGroup[], 
 }
 
 export class BackendTable<TSelection = defaultSelection>
-  extends React.Component<Omit<IBaseTableProps<TSelection>, 'rows' | 'cols' | 'defaultFilters' | 'customFilterComponent'> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable<TSelection>> }, IBackendTableState<TSelection>>
+  extends React.Component<Omit<IBaseTableProps<TSelection>, 'rows' | 'cols' | 'defaultFilters' | 'defaultCurrentPage' | 'customFilterComponent'> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable<TSelection>> }, IBackendTableState<TSelection>>
   implements ISelectionTable<TSelection> {
 
   private additionalStateMap: Map<string, IBackendTableState<TSelection>> = new Map<string, IBackendTableState<TSelection>>();
@@ -134,10 +134,9 @@ export class BackendTable<TSelection = defaultSelection>
     let pageNumber = 0;
     let pageSize = this.props.pageSize;
 
+
     if (this.props.id) {
       const urlState = getStateFromUrlParam(this.props.id);
-
-      console.debug("urlState", urlState);
 
       if (urlState) {
         const shouldMergeFilters = urlState.mergeFilters;
@@ -161,7 +160,7 @@ export class BackendTable<TSelection = defaultSelection>
       lastSendSelection: [],
       paginationEnabled,
       // tslint:disable-next-line:no-magic-numbers
-      currentPage: paginationEnabled ? pageNumber : 0,
+      defaultCurrentPage: paginationEnabled ? pageNumber : 0,
       pageSize: paginationEnabled ? (pageSize || 10) : 1000000000
     };
   }
@@ -285,7 +284,7 @@ export class BackendTable<TSelection = defaultSelection>
             )
           }
           toolbarButtons={[
-            (<ClearFiltersPlugin handleClick={this.clearFilters}/>),
+            // (<ClearFiltersPlugin handleClick={this.clearFilters}/>),
             (<RefreshMetaTablePlugin handleClick={this.refresh}/>),
             // admin && (<RawModePlugin enabled={this.state.rawMode} onClick={this.changeRaw}/>),
             admin && (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
@@ -294,6 +293,7 @@ export class BackendTable<TSelection = defaultSelection>
           warnings={admin ? this.state.warnings : undefined}
           // tslint:disable-next-line:no-magic-numbers
           pageSizes={[10, 25, 50]}
+          defaultCurrentPage={this.state.defaultCurrentPage}
           // remote functions
           getChildGroups={this.getChildGroups}
           onCurrentPageChange={this.onCurrentPageChange}
@@ -448,9 +448,11 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private onCurrentPageChange(currentPage: number): void {
-    const content = { currentPage };
-    // noinspection JSIgnoredPromiseFromCall
-    this.sendMessage('PAGE_CHANGE', content, content);
+    if (currentPage !== this.state.currentPage) {
+      const content = { currentPage };
+      // noinspection JSIgnoredPromiseFromCall
+      this.sendMessage('PAGE_CHANGE', content, content);
+    }
   }
 
   @autobind
@@ -512,8 +514,6 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private onFiltersChange(filters: SimpleBackendFilter[]): void {
-    const { currentPage, pageSize } = this.state;
-
     const stateFiltersAsString = (this.state.filters || []).map(filter => JSON.stringify(filter));
     const newFilters = filters.filter(filter => !stateFiltersAsString.includes(JSON.stringify(filter)));
 
@@ -650,7 +650,7 @@ export class BackendTable<TSelection = defaultSelection>
       const content = {
         // tslint:disable-next-line:no-magic-numbers
         pageSize: this.state.pageSize,
-        currentPage: resetPage ? 0 : this.state.currentPage,
+        currentPage: resetPage ? 0 : (this.state.currentPage || this.state.defaultCurrentPage),
       };
       const sortedColumns = await getAllowedColumnInfos(tableInfo, getUser().roles);
       let defaultFilter = this.mapFilters(this.state.defaultFilter || [], true);
@@ -730,7 +730,7 @@ export class BackendTable<TSelection = defaultSelection>
       { loading: true, ...newState, ...(selection ? { lastSendSelection: selection } : null) },
       // Плохое место, но лучше не нашел
       () => {
-        if (this.props.id) {
+        if (this.props.id && type !== "INIT") {
           putTableStateToUrlParam(
             this.props.id,
             {
@@ -857,7 +857,7 @@ export class BackendTable<TSelection = defaultSelection>
           title: ' ',
           width: 80,
           dataKey: 'id',
-          render: (value: any, row: IObjectWithIndex) => (<RouterLink to={this.props.cardLinkFn(value, row)} type="link" text={<IconButton><LinkIcon/></IconButton>}/>),
+          render: (value: any, row: IObjectWithIndex): JSX.Element => (<RouterLink to={this.props.cardLinkFn(value, row)} type="link" text={<IconButton><LinkIcon/></IconButton>}/>),
         });
       }
 

@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom';
 
 import {appendStateToLink, ITableStateDefinition} from "../BackendTable";
 import {ROUTER_LINK_BTN} from '../styles';
-import {defaultIfNotBoolean} from "../typeWrappers";
 
 export type RouterLinkType = 'button' | 'button-primary' | 'link';
 
