@@ -75,7 +75,7 @@ public class MessageHandlerService {
 
           orderSortedColumnInfos.addAll(MetaSchemaUtils.getAllowedColumnInfos(tableInfo, user.getRoles()));
 
-          val pageNumber = Optional.ofNullable(initMessage.getPageNumber()).orElse(0L);
+          val pageNumber = Optional.ofNullable(initMessage.getCurrentPage()).orElse(0L);
 
           userState.clear();
           userState.setMetaData(metaData);

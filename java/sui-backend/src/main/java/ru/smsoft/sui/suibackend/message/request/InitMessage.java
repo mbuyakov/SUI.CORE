@@ -16,7 +16,7 @@ public class InitMessage {
 
   private Long tableInfoId;
 
-  private Long pageNumber;
+  private Long currentPage;
 
   private Long pageSize;
 
