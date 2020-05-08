@@ -3,9 +3,8 @@ import { SizeType } from 'antd/lib/config-provider/SizeContext';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 
-import {appendFiltersToLink, IOneOrArrayFilterDefinition} from "../BackendTable";
+import {appendStateToLink, ITableStateDefinition} from "../BackendTable";
 import {ROUTER_LINK_BTN} from '../styles';
-import {defaultIfNotBoolean} from "../typeWrappers";
 
 export type RouterLinkType = 'button' | 'button-primary' | 'link';
 
@@ -17,8 +16,7 @@ export interface IRouterLinkProps {
   monospace?: boolean;
   size?: SizeType;
   style?: React.CSSProperties;
-  tableFilters?: {[tableId: string]: IOneOrArrayFilterDefinition};
-  tableFiltersMerge?: boolean,
+  tableStates?: {[tableId: string]: ITableStateDefinition};
   text?: React.ReactNode;
   to: string;
   type?: RouterLinkType;
@@ -30,8 +28,8 @@ export class RouterLink extends React.Component<IRouterLinkProps> {
     return (
       <Link
         style={{...(this.props.monospace ? {fontFamily: 'monospace'} : {}), ...(this.props.style || {})}}
-        to={this.props.tableFilters
-          ? appendFiltersToLink(this.props.to, this.props.tableFilters, defaultIfNotBoolean(this.props.tableFiltersMerge, true))
+        to={this.props.tableStates
+          ? appendStateToLink(this.props.to, this.props.tableStates)
           : this.props.to
         }
       >

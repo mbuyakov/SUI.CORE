@@ -109,6 +109,7 @@ export interface IBaseTableProps<TSelection = any> {
   cardType?: CardType;
   cols: IBaseTableColLayout[];
   columnBands?: TableBandHeaderBase.ColumnBands[];
+  defaultCurrentPage?: number;
   defaultFilters?: Filter[];
   defaultSortings?: Sorting[];
   defaultWidth?: number;

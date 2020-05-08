@@ -75,9 +75,11 @@ public class MessageHandlerService {
 
           orderSortedColumnInfos.addAll(MetaSchemaUtils.getAllowedColumnInfos(tableInfo, user.getRoles()));
 
+          val pageNumber = Optional.ofNullable(initMessage.getCurrentPage()).orElse(0L);
+
           userState.clear();
           userState.setMetaData(metaData);
-          userState.setOffset(0L);
+          userState.setOffset(pageNumber * initMessage.getPageSize());
           userState.setPageSize(initMessage.getPageSize());
           userState.setFilters(initMessage.getDefaultFilters());
           userState.setGlobalFilters(initMessage.getGlobalFilters());
