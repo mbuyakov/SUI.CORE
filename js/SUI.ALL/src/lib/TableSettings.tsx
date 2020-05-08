@@ -626,7 +626,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                               value: role.id.toString(),
                                             }))
                                           }
-                                          onFilter={(f, record): boolean => record.columnInfoRolesByColumnInfoId.nodes.some(node => (f as any).includes(node.roleId))}
+                                          onFilter={(f, record): boolean => record.columnInfoRolesByColumnInfoId.nodes.some(node => f.includes(node.roleId))}
                                           render={(_, record): JSX.Element => (
                                             <VisibleByRolesPopover
                                               getPopupContainer={this.props.getPopupContainer}
