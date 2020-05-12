@@ -8,7 +8,7 @@ import moment from 'moment';
 import * as React from 'react';
 import uuid from 'uuid';
 
-import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFilterType, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
+import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, errorNotification, generateCreate, getAllowedColumnInfos, getDataByKey, getFilterType, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 
 import { BackendDataSource, MESSAGE_ID_KEY } from './BackendDataSource';
@@ -307,9 +307,38 @@ export class BackendTable<TSelection = defaultSelection>
           onGroupingChange={this.onGroupingChange}
           onPageSizeChange={this.onPageSizeChange}
           onSortingChange={this.onSortingChange}
+          // other
+          beforeExport={this.beforeExport}
         />
       </WaitData>
     );
+  }
+
+  @autobind
+  private async beforeExport(): Promise<boolean> {
+    let beforeExportResult: boolean;
+
+    beforeExportResult = await generateCreate(
+      'table_export_log',
+      {
+        tableInfoId: this.state.tableInfo.id,
+        userId: getUser().id,
+        rowCount: this.state.pageSize // Костыль, ломается на последней странице и при группировке
+      }
+    )
+      .then(() => true)
+      .catch(reason => {
+        console.error("Export log creation error", reason);
+        errorNotification("Ошибка при экспорте списка", "Подробное описание ошибки смотрите в консоли Вашего браузера");
+
+        return false;
+      });
+
+    if (beforeExportResult && this.props.beforeExport) {
+      beforeExportResult = await this.props.beforeExport()
+    }
+
+    return beforeExportResult;
   }
 
   @autobind
