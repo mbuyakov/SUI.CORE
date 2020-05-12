@@ -20,7 +20,7 @@ export class TableExportLogTable extends React.Component<ITableExportLogTablePro
 
   @autobind
   private getTableName(): string {
-    return this.props.table || "table_export_log";
+    return this.props.table || "table_export_log_ui";
   }
 
 }

@@ -322,8 +322,8 @@ export class BackendTable<TSelection = defaultSelection>
       'table_export_log',
       {
         tableInfoId: this.state.tableInfo.id,
-        userId: getUser().id,
-        rowCount: this.state.pageSize // Костыль, ломается на последней странице и при группировке
+        userId: `${getUser().id}`,
+        rowCount: `${this.state.pageSize}` // Костыль, ломается на последней странице и при группировке
       }
     )
       .then(() => true)
