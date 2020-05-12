@@ -1,6 +1,5 @@
 /*eslint sort-exports/sort-exports: 2*/
 export * from "./additionalTabs";
-export * from "./Audit";
 export * from "./Base";
 export * from "./BaseTable";
 export * from "./BackendTable";
@@ -17,6 +16,7 @@ export * from "./ForceDirectedTree";
 export * from "./gql";
 export * from "./Inputs";
 export * from "./Link";
+export * from "./Log";
 export * from "./Meta";
 export * from "./MetaCardSettings";
 export * from "./Observable";

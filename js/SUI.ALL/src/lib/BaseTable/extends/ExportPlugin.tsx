@@ -4,9 +4,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import CloudDownload from '@material-ui/icons/CloudDownload';
 import React from 'react';
 
-export function ExportPlugin(props: { onClick(getters: Getters): void; }): JSX.Element {
+
+export function ExportPlugin(props: { onClick(getters: Getters): Promise<void>; }): JSX.Element {
   function tooltipFn(getters: Getters): JSX.Element {
-    const onClick = () => props.onClick(getters);
+    const onClick = async () => props.onClick(getters);
 
     return (
       <Tooltip title='Выгрузка в Excel' placement='bottom' enterDelay={300}>
