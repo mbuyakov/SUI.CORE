@@ -1,14 +1,12 @@
 package ru.smsoft.sui.suisecurity.session.redis
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
-import org.springframework.stereotype.Service
 import ru.smsoft.sui.suisecurity.session.Session
 import ru.smsoft.sui.suisecurity.session.SessionService
 import java.util.*
 
 
 @ConditionalOnBean(RedisSessionRepository::class)
-@Service
 class RedisSessionService(
     private val redisSessionRepository: RedisSessionRepository
 ) : SessionService {
