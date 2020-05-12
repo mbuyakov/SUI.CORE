@@ -33,7 +33,7 @@ class Session internal constructor(
         val now = Date()
 
         return this.active
-                && this.expiryDate < now
+                && this.expiryDate > now
                 && (now.time - lastUserActivity.time) <= activityThreshold
     }
 

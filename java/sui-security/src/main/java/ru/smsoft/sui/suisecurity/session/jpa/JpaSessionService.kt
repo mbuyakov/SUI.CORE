@@ -1,12 +1,10 @@
 package ru.smsoft.sui.suisecurity.session.jpa
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import ru.smsoft.sui.suisecurity.session.Session
 import ru.smsoft.sui.suisecurity.session.SessionService
 import java.util.*
 
 
-@ConditionalOnMissingBean(SessionService::class)
 class JpaSessionService(
     private val jpaSessionRepository: JpaSessionRepository
 ) : SessionService {
