@@ -8,13 +8,16 @@ import java.io.IOException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+
+private val log = KotlinLogging.logger {  }
+
 @Component
 class JwtAuthenticationEntryPoint : AuthenticationEntryPoint {
-    private val log = KotlinLogging.logger {  }
 
     @Throws(IOException::class)
     override fun commence(httpServletRequest: HttpServletRequest, httpServletResponse: HttpServletResponse, e: AuthenticationException) {
         log.error("Responding with unauthorized error. Message - {}", e.message)
         httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.message)
     }
+
 }

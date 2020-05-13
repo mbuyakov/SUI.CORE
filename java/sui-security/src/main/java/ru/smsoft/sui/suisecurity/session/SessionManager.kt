@@ -15,12 +15,11 @@ class SessionManager(
     private val sessionTimeout: Long = 0
 
     fun createSession(session: Session) {
-        sessionService
-            .findAllActiveByUserId(session.userId)
-            .forEach {
-                it.disable()
-                sessionService.save(it)
-            }
+        val activeUserSessions = sessionService.findAllActiveByUserId(session.userId)
+
+        if (activeUserSessions.isNotEmpty()) {
+            throw SessionException("Данный пользователь уже работает в системе. Для выполнения входа в систему необходимо выйти из системы на другом ПК (${activeUserSessions[0].clientInfo})")
+        }
 
         sessionService.save(session)
     }

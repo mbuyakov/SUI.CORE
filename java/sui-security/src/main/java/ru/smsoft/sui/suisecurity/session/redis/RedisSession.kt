@@ -17,6 +17,8 @@ class RedisSession(
     @Indexed
     val userId: Long,
     val expiryDate: Date,
+    val clientInfo: String? = null,
+    val created: Date,
     val lastUserActivity: Date,
     @Indexed
     val active: Boolean,
@@ -28,6 +30,8 @@ class RedisSession(
             id = session.id,
             userId = session.userId,
             expiryDate = session.expiryDate,
+            clientInfo = session.clientInfo,
+            created = session.created,
             lastUserActivity = session.lastUserActivity,
             active = session.active,
             disablingDate = session.disablingDate
@@ -38,6 +42,8 @@ class RedisSession(
         id = this.id,
         userId = this.userId,
         expiryDate = this.expiryDate,
+        clientInfo = this.clientInfo,
+        created = this.created,
         lastUserActivity = this.lastUserActivity,
         active = this.active,
         disablingDate = this.disablingDate

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.security.core.Authentication
+import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.stereotype.Component
 import ru.smsoft.sui.suisecurity.exception.SessionException
 import ru.smsoft.sui.suisecurity.session.Session
@@ -30,14 +31,18 @@ class JwtTokenProvider {
     fun generateToken(authentication: Authentication): String {
         val userPrincipal = authentication.principal as UserPrincipal
         val now = Date()
+        val details = authentication.details
+
         val expiryDate = Date(now.time + jwtExpiration)
         val sessionId = UUID.randomUUID()
         val userId = userPrincipal.user.id!!
+        val clientInfo = if (details is WebAuthenticationDetails) details.remoteAddress else null
 
         sessionManager.createSession(Session(
             id = sessionId,
             userId = userId,
-            expiryDate = expiryDate
+            expiryDate = expiryDate,
+            clientInfo = clientInfo
         ))
 
         return Jwts.builder()
