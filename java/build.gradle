@@ -27,7 +27,7 @@ subprojects {
     springBootVersion = '2.2.3.RELEASE'
     springBootGradlePluginVersion = '2.1.6.RELEASE'
     springJpaVerison = '2.2.3.RELEASE'
-    jacksonVersion = '2.6.5' // Spark SQL. Don't update
+    jacksonVersion = '2.9.10'
     javaxPersistenceApiVersion = '2.2'
     hibernateVersion = '5.4.1.Final'
     javaxValidationVersion = '2.0.1.Final'

@@ -8,6 +8,7 @@ import org.springframework.security.authentication.DisabledException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import ru.smsoft.sui.suientity.entity.log.AuthenticationLog
 import ru.smsoft.sui.suientity.enums.AuthenticationOperation
 import ru.smsoft.sui.suientity.repository.log.AuthenticationLogRepository
@@ -81,7 +82,7 @@ class AuthenticationService(
         } catch (exception: TooManyAttemptsException) {
             loginResultCode = FAILURE_TOO_MANY_ATTEMPTS_AUTH_RESULT_CODE
         } catch (exception: Exception) {
-            log.error(exception) { "Exception in login method" }
+            // log.error(exception) { "Exception in login method" }
             loginResultCode = ERROR_RESULT_CODE
         }
 
@@ -95,7 +96,7 @@ class AuthenticationService(
                     this.formLogin = formLogin
                     this.remoteAddress = remoteAddress
                     // this.clientInfo = ...
-                    this.user = principal?.user
+                    this.user = principal?.user ?: userRepository.findByUsernameOrEmail(formLogin, formLogin).orElse(null)
                     this.result = result
                 })
             } catch (exception: Exception) {
