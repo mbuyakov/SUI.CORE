@@ -9,6 +9,8 @@ interface SessionService {
 
     fun save(session: Session)
 
+    fun findAllActive(): List<Session>
+
     fun findAllActiveByUserId(userId: Long): List<Session>
 
 }

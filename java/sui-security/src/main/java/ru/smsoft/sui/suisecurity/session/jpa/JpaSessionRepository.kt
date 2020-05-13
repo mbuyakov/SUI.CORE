@@ -8,6 +8,8 @@ import java.util.*
 @Repository
 interface JpaSessionRepository : JpaRepository<JpaSession, UUID> {
 
-    fun findAllByActiveIsTrueAndUserId(userId: Long): List<JpaSession>
+  fun findAllByActiveIsTrue(): List<JpaSession>
+
+  fun findAllByActiveIsTrueAndUserId(userId: Long): List<JpaSession>
 
 }

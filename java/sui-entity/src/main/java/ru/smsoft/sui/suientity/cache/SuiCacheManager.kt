@@ -7,7 +7,11 @@ import org.springframework.cache.caffeine.CaffeineCache
 import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 
+
+private val REGISTER_LOCK = ReentrantLock()
 
 @Primary
 @Component
@@ -24,11 +28,11 @@ class SuiCacheManager : CacheManager {
     }
 
     fun registerCache(name: String, setting: SuiCacheSetting) {
-        synchronized(name.intern()) {
+        REGISTER_LOCK.withLock {
             cacheMap[name] = CaffeineCache(
-                name,
-                Caffeine.newBuilder().let { setting.apply(it) }.build(),
-                setting.allowNullValues
+              name,
+              Caffeine.newBuilder().let { setting.apply(it) }.build(),
+              setting.allowNullValues
             )
         }
     }

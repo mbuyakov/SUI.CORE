@@ -25,6 +25,7 @@ public class AuthenticationLog {
     private Long id;
 
     private String formLogin;
+    private String remoteAddress;
     private String clientInfo;
 
     @Enumerated(EnumType.STRING)

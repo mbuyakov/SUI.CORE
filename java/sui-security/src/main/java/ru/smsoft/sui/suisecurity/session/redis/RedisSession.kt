@@ -17,7 +17,8 @@ class RedisSession(
     @Indexed
     val userId: Long,
     val expiryDate: Date,
-    val clientInfo: String? = null,
+    @Indexed
+    val remoteAddress: String?,
     val created: Date,
     val lastUserActivity: Date,
     @Indexed
@@ -30,7 +31,7 @@ class RedisSession(
             id = session.id,
             userId = session.userId,
             expiryDate = session.expiryDate,
-            clientInfo = session.clientInfo,
+            remoteAddress = session.remoteAddress,
             created = session.created,
             lastUserActivity = session.lastUserActivity,
             active = session.active,
@@ -42,7 +43,7 @@ class RedisSession(
         id = this.id,
         userId = this.userId,
         expiryDate = this.expiryDate,
-        clientInfo = this.clientInfo,
+        remoteAddress = this.remoteAddress,
         created = this.created,
         lastUserActivity = this.lastUserActivity,
         active = this.active,
@@ -54,6 +55,8 @@ class RedisSession(
 @Repository
 interface RedisSessionRepository : CrudRepository<RedisSession, UUID> {
 
-    fun findAllByActiveIsTrueAndUserId(userId: Long): List<JpaSession>
+    fun findAllByActiveIsTrue(): List<RedisSession>
+
+    fun findAllByActiveIsTrueAndUserId(userId: Long): List<RedisSession>
 
 }

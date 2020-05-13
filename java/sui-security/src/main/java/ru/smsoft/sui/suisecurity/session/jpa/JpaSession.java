@@ -22,7 +22,7 @@ public class JpaSession {
     private UUID id;
     private Long userId;
     private Date expiryDate;
-    private String clientInfo;
+    private String remoteAddress;
     private Date created;
     private Date lastUserActivity;
     private Boolean active;
@@ -33,7 +33,7 @@ public class JpaSession {
             session.getId(),
             session.getUserId(),
             session.getExpiryDate(),
-            session.getClientInfo(),
+            session.getRemoteAddress(),
             session.getCreated(),
             session.getLastUserActivity(),
             session.getActive(),
@@ -42,7 +42,7 @@ public class JpaSession {
     }
 
     public Session toSession() {
-        return new Session(id, userId, expiryDate, clientInfo, created, lastUserActivity, active, disablingDate);
+        return new Session(id, userId, expiryDate, remoteAddress, created, lastUserActivity, active, disablingDate);
     }
 
 }

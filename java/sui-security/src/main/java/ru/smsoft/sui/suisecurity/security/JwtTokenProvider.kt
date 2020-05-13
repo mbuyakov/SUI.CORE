@@ -36,13 +36,13 @@ class JwtTokenProvider {
         val expiryDate = Date(now.time + jwtExpiration)
         val sessionId = UUID.randomUUID()
         val userId = userPrincipal.user.id!!
-        val clientInfo = if (details is WebAuthenticationDetails) details.remoteAddress else null
+        val remoteAddress = if (details is WebAuthenticationDetails) details.remoteAddress else null
 
         sessionManager.createSession(Session(
             id = sessionId,
             userId = userId,
             expiryDate = expiryDate,
-            clientInfo = clientInfo
+            remoteAddress = remoteAddress
         ))
 
         return Jwts.builder()

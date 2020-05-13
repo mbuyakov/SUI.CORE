@@ -15,6 +15,8 @@ class JpaSessionService(
         jpaSessionRepository.save(JpaSession.fromSession(session))
     }
 
+  override fun findAllActive() = jpaSessionRepository.findAllByActiveIsTrue().map { it.toSession() }
+
   override fun findAllActiveByUserId(userId: Long) = jpaSessionRepository.findAllByActiveIsTrueAndUserId(userId).map { it.toSession() }
 
 }

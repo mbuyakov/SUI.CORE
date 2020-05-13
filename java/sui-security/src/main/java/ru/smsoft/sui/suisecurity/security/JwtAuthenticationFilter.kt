@@ -6,6 +6,7 @@ import org.springframework.lang.NonNull
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.web.filter.OncePerRequestFilter
+import ru.smsoft.sui.suisecurity.utils.postAuthenticateActions
 
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
@@ -25,11 +26,9 @@ class JwtAuthenticationFilter : OncePerRequestFilter() {
             @NonNull filterChain: FilterChain
     ) {
         try {
-            val authentication = jwtAuthenticationService.getAuthentication(request.getHeader("Authorization"))
-            if (authentication != null) {
-                authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
-                SecurityContextHolder.getContext().authentication = authentication
-            }
+            jwtAuthenticationService
+                    .getAuthentication(request.getHeader("Authorization"))
+                    ?.postAuthenticateActions()
         } catch (e: Exception) {
             log.error("Could not set user authentication in security context", e)
         }

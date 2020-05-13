@@ -6,7 +6,7 @@ class Session internal constructor(
     val id: UUID,
     val userId: Long,
     val expiryDate: Date,
-    val clientInfo: String? = null,
+    val remoteAddress: String?,
     val created: Date,
     var lastUserActivity: Date,
     active: Boolean,
@@ -18,11 +18,11 @@ class Session internal constructor(
     var disablingDate = disablingDate
         private set
 
-    constructor(id: UUID, userId: Long, expiryDate: Date, clientInfo: String? = null) : this(
+    constructor(id: UUID, userId: Long, expiryDate: Date, remoteAddress: String? = null) : this(
         id = id,
         userId = userId,
         expiryDate = expiryDate,
-        clientInfo = clientInfo,
+        remoteAddress = remoteAddress,
         created = Date(),
         active = true,
         lastUserActivity = Date()

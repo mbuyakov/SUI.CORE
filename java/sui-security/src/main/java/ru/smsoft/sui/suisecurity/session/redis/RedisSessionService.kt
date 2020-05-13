@@ -15,6 +15,8 @@ class RedisSessionService(
         redisSessionRepository.save(RedisSession.fromSession(session))
     }
 
+  override fun findAllActive() = redisSessionRepository.findAllByActiveIsTrue().map { it.toSession() }
+
   override fun findAllActiveByUserId(userId: Long) = redisSessionRepository.findAllByActiveIsTrueAndUserId(userId).map { it.toSession() }
 
 }
