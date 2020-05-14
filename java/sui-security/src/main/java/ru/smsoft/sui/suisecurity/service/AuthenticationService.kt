@@ -6,14 +6,13 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.DisabledException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import ru.smsoft.sui.suientity.entity.log.AuthenticationLog
 import ru.smsoft.sui.suientity.enums.AuthenticationOperation
 import ru.smsoft.sui.suientity.repository.log.AuthenticationLogRepository
 import ru.smsoft.sui.suientity.repository.suisecurity.UserRepository
 import ru.smsoft.sui.suisecurity.exception.TooManyAttemptsException
+import ru.smsoft.sui.suisecurity.extension.jwtToken
 import ru.smsoft.sui.suisecurity.model.LoginResult
 import ru.smsoft.sui.suisecurity.security.JwtTokenProvider
 import ru.smsoft.sui.suisecurity.security.UserPrincipal
@@ -114,24 +113,30 @@ class AuthenticationService(
     }
 
     fun logout() {
-        val userId = (SecurityContextHolder.getContext().authentication.principal as UserPrincipal).user.id
+        val sessionId = getRequest().jwtToken()?.let { tokenProvider.getSessionIdFromJWT(it) }
 
-        sessionManager.disableUserSessions(userId)
+        if (sessionId != null) {
+            kotlin.runCatching { sessionManager.getSession(sessionId) }.onSuccess { session ->
+                if (session.active) {
+                    sessionManager.disableSession(session)
 
-        val result = authenticationResultProvider.resultByCode(SUCCESS_LOGOUT_COMMAND_RESULT_CODE)
+                    try {
+                        val result = authenticationResultProvider.resultByCode(SUCCESS_LOGOUT_COMMAND_RESULT_CODE)
 
-        try {
-            userRepository.findById(userId).ifPresent { user ->
-                // generate log
-                authenticationLogRepository.save(AuthenticationLog().apply {
-                    this.operation = AuthenticationOperation.LOGOUT
-                    this.user = user
-                    this.remoteAddress = getRequest().remoteAddr
-                    this.result = result
-                })
+                        userRepository.findById(session.userId).ifPresent { user ->
+                            // generate log
+                            authenticationLogRepository.save(AuthenticationLog().apply {
+                                this.operation = AuthenticationOperation.LOGOUT
+                                this.user = user
+                                this.remoteAddress = getRequest().remoteAddr
+                                this.result = result
+                            })
+                        }
+                    } catch (exception: Exception) {
+                        log.error(exception) { "Couldn't create AuthenticationLog" }
+                    }
+                }
             }
-        } catch (exception: Exception) {
-            log.error(exception) { "Couldn't create AuthenticationLog" }
         }
     }
 

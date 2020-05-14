@@ -18,7 +18,6 @@ import kotlin.concurrent.withLock
 
 private const val HACK_PERIOD = 10000
 
-private val DISABLE_LOCK = ReentrantLock()
 private val TIMEOUT_DISABLE_LOCK = ReentrantLock()
 
 private val log = KotlinLogging.logger {  }
@@ -32,17 +31,21 @@ class SessionManager(
         private val userRepository: UserRepository
 ) {
 
-    @Value("\${security.session.timeout:1800000}") // Default 30m
-    private val sessionTimeout: Long = 0
     @Value("\${security.session.enable-disabling-scheduler:false}")
     private val enableDisablingScheduler: Boolean = false
+    @Value("\${security.session.allow-concurrent-sessions:false}")
+    private val allowConcurrentSessions: Boolean = false
+    @Value("\${security.session.timeout:1800000}") // Default 30m
+    private val sessionTimeout: Long = 0
 
     fun createSession(session: Session) {
         synchronized(session.userId.toString().intern()) { // Костыль
-            val activeUserSessions = sessionService.findAllActiveByUserId(session.userId)
+            if (!allowConcurrentSessions) {
+                val activeUserSessions = sessionService.findAllActiveByUserId(session.userId)
 
-            if (activeUserSessions.isNotEmpty()) {
-              throw SessionException("Данный пользователь уже работает в системе. Для выполнения входа в систему необходимо выйти из системы на другом ПК (${activeUserSessions[0].remoteAddress})")
+                if (activeUserSessions.isNotEmpty()) {
+                  throw SessionException("Данный пользователь уже работает в системе. Для выполнения входа в систему необходимо выйти из системы на другом ПК (${activeUserSessions[0].remoteAddress})")
+                }
             }
 
             sessionService.save(session)
@@ -50,7 +53,7 @@ class SessionManager(
     }
 
     @Throws(SessionException::class)
-    fun getSession(sessionId: UUID?) {
+    fun getSession(sessionId: UUID?) : Session {
         if (sessionId != null) {
             try {
                 val session = sessionService.findById(sessionId)
@@ -58,7 +61,7 @@ class SessionManager(
 
                 if (!session.isValid(sessionTimeout)) {
                     if (session.active) {
-                        timeoutDisableUserSessions(session.userId)
+                        timeoutDisableSession(session)
                     }
 
                     throw SessionException("Invalid session")
@@ -66,6 +69,8 @@ class SessionManager(
                     session.lastUserActivity = Date()
                     sessionService.save(session)
                 }
+
+                return session
             } catch (exception: SessionException) {
                 throw exception
             } catch (exception: Throwable) {
@@ -76,25 +81,22 @@ class SessionManager(
         }
     }
 
-    fun disableUserSessions(userId: Long) {
-        DISABLE_LOCK.withLock {
-            sessionService.findAllActiveByUserId(userId).forEach {
-                it.disable()
-                sessionService.save(it)
-            }
-        }
+    fun disableSession(session: Session) {
+        session.disable()
+        sessionService.save(session)
     }
 
-    fun timeoutDisableUserSessions(userId: Long) {
+    fun timeoutDisableSession(session: Session) {
         TIMEOUT_DISABLE_LOCK.withLock {
-            disableUserSessions(userId)
+            disableSession(session)
 
             try {
-                userRepository.findById(userId).ifPresent { user ->
+                userRepository.findById(session.userId).ifPresent { user ->
                     // generate log
                     val log = authenticationLogRepository.save(AuthenticationLog().apply {
                         this.operation = AuthenticationOperation.LOGOUT
                         this.user = user
+                        this.remoteAddress = session.remoteAddress
                         this.result = authenticationResultProvider.resultByCode(SUCCESS_LOGOUT_TIMEOUT_RESULT_CODE)
                     })
 
@@ -121,10 +123,10 @@ class SessionManager(
             sessionService
                     .findAllActive()
                     .filter { !it.isValid(sessionTimeout) }
-                    .map { it.userId }
-                    .distinct()
-                    .forEach { timeoutDisableUserSessions(it) }
+                    .forEach { timeoutDisableSession(it) }
         }
     }
+
+
 
 }

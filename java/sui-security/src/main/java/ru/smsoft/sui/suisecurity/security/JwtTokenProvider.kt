@@ -14,6 +14,7 @@ import ru.smsoft.sui.suisecurity.session.SessionManager
 import ru.smsoft.sui.suisecurity.utils.VALIDATE_TOKEN_CACHE
 import java.util.*
 
+
 private const val SESSION_KEY = "__sui_session"
 private val log = KotlinLogging.logger {  }
 
@@ -63,13 +64,16 @@ class JwtTokenProvider {
                 .toLong()
     }
 
+    fun getSessionIdFromJWT(token: String): UUID {
+        return UUID.fromString(Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).body[SESSION_KEY] as String)
+    }
+
     @Cacheable(VALIDATE_TOKEN_CACHE)
     fun validateToken(authToken: String): Boolean {
         log.debug { "Call validateToken with token $authToken" }
 
         try {
-            val sessionId = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken).body[SESSION_KEY] as String?
-            val session = sessionManager.getSession(sessionId?.let { UUID.fromString(it) })
+            val session = sessionManager.getSession(getSessionIdFromJWT(authToken))
 
             return true
         } catch (ex: SignatureException) {

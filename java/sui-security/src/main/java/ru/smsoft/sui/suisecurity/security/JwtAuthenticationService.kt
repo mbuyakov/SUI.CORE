@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Service
 import org.springframework.util.StringUtils
+import ru.smsoft.sui.suisecurity.extension.extractJwtToken
+
 
 @Service
 class JwtAuthenticationService {
 
     @Autowired
     private lateinit var tokenProvider: JwtTokenProvider
-
     @Autowired
     private lateinit var customUserDetailsService: CustomUserDetailsService
 
@@ -29,12 +30,4 @@ class JwtAuthenticationService {
         return null
     }
 
-    private fun extractJwtToken(authorizationHeader: String?): String? {
-        // Bearer case insensitive
-        return if (authorizationHeader != null && authorizationHeader.toLowerCase().startsWith("bearer ")) {
-            authorizationHeader.substring("bearer ".length)
-        } else {
-            authorizationHeader
-        }
-    }
 }
