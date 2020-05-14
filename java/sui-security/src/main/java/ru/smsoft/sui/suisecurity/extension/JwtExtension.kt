@@ -11,7 +11,4 @@ fun extractJwtToken(authorizationHeader: String?): String? {
     }
 }
 
-val HttpServletRequest.authorizationHeader
-    get() = this.getHeader("Authorization")
-
 fun HttpServletRequest.jwtToken() = extractJwtToken(this.authorizationHeader)

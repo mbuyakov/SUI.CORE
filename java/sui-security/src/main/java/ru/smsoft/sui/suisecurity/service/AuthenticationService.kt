@@ -12,6 +12,7 @@ import ru.smsoft.sui.suientity.enums.AuthenticationOperation
 import ru.smsoft.sui.suientity.repository.log.AuthenticationLogRepository
 import ru.smsoft.sui.suientity.repository.suisecurity.UserRepository
 import ru.smsoft.sui.suisecurity.exception.TooManyAttemptsException
+import ru.smsoft.sui.suisecurity.extension.clientIp
 import ru.smsoft.sui.suisecurity.extension.jwtToken
 import ru.smsoft.sui.suisecurity.model.LoginResult
 import ru.smsoft.sui.suisecurity.security.JwtTokenProvider
@@ -52,7 +53,7 @@ class AuthenticationService(
         try {
             try {
                 formLogin = token.principal as String
-                remoteAddress = getRequest().remoteAddr
+                remoteAddress = getRequest().clientIp
 
                 val attempts = authenticationLogRepository.countByOperationAndRemoteAddressAndFormLoginAndCreatedIsGreaterThanEqual(
                         AuthenticationOperation.LOGIN,
@@ -130,7 +131,7 @@ class AuthenticationService(
                                 this.operation = AuthenticationOperation.LOGOUT
                                 this.sessionId = sessionId
                                 this.user = user
-                                this.remoteAddress = getRequest().remoteAddr
+                                this.remoteAddress = getRequest().clientIp
                                 this.result = result
                             })
                         }

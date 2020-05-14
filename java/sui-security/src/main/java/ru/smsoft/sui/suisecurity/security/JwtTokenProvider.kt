@@ -9,9 +9,11 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.stereotype.Component
 import ru.smsoft.sui.suisecurity.exception.SessionException
+import ru.smsoft.sui.suisecurity.extension.clientIp
 import ru.smsoft.sui.suisecurity.session.Session
 import ru.smsoft.sui.suisecurity.session.SessionManager
 import ru.smsoft.sui.suisecurity.utils.VALIDATE_TOKEN_CACHE
+import ru.smsoft.sui.suisecurity.utils.getRequest
 import java.util.*
 
 
@@ -32,12 +34,11 @@ class JwtTokenProvider {
     fun generateToken(authentication: Authentication): String {
         val userPrincipal = authentication.principal as UserPrincipal
         val now = Date()
-        val details = authentication.details
 
         val expiryDate = Date(now.time + jwtExpiration)
         val sessionId = UUID.randomUUID()
         val userId = userPrincipal.user.id!!
-        val remoteAddress = if (details is WebAuthenticationDetails) details.remoteAddress else null
+        val remoteAddress = kotlin.runCatching { getRequest().clientIp }.getOrNull()
 
         sessionManager.createSession(Session(
             id = sessionId,
