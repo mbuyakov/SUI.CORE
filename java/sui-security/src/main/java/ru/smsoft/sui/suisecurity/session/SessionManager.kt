@@ -6,6 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import ru.smsoft.sui.suientity.entity.log.AuthenticationLog
 import ru.smsoft.sui.suientity.enums.AuthenticationOperation
+import ru.smsoft.sui.suientity.enums.RoleName
 import ru.smsoft.sui.suientity.repository.log.AuthenticationLogRepository
 import ru.smsoft.sui.suientity.repository.suisecurity.UserRepository
 import ru.smsoft.sui.suisecurity.exception.SessionException
@@ -39,12 +40,17 @@ class SessionManager(
     private val sessionTimeout: Long = 0
 
     fun createSession(session: Session) {
-        synchronized(session.userId.toString().intern()) { // Костыль
+        synchronized("SESSION_${session.userId}".intern()) { // Костыль, неразрешающий создавать сессии для 1 пользователя параллельно
             if (!allowConcurrentSessions) {
-                val activeUserSessions = sessionService.findAllActiveByUserId(session.userId)
+                val user = userRepository.findById(session.userId).get()
 
-                if (activeUserSessions.isNotEmpty()) {
-                  throw SessionException("Данный пользователь уже работает в системе. Для выполнения входа в систему необходимо выйти из системы на другом ПК (${activeUserSessions[0].remoteAddress})")
+                // IF - Admin kostyl
+                if (user.roles.none { it.roleName == RoleName.ROLE_ADMIN }) {
+                    val activeUserSessions = sessionService.findAllActiveByUserId(session.userId)
+
+                    if (activeUserSessions.isNotEmpty()) {
+                      throw SessionException("Данный пользователь уже работает в системе. Для выполнения входа в систему необходимо выйти из системы на другом ПК (${activeUserSessions[0].remoteAddress})")
+                    }
                 }
             }
 
@@ -127,7 +133,5 @@ class SessionManager(
                     .forEach { timeoutDisableSession(it) }
         }
     }
-
-
 
 }
