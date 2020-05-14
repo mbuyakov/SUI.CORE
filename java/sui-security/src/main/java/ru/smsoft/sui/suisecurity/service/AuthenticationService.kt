@@ -92,6 +92,7 @@ class AuthenticationService(
                 // generate log
                 authenticationLogRepository.save(AuthenticationLog().apply {
                     this.operation = AuthenticationOperation.LOGIN
+                    this.sessionId = jwt?.let { tokenProvider.getSessionIdFromJWT(it) }
                     this.formLogin = formLogin
                     this.remoteAddress = remoteAddress
                     // this.clientInfo = ...
@@ -127,6 +128,7 @@ class AuthenticationService(
                             // generate log
                             authenticationLogRepository.save(AuthenticationLog().apply {
                                 this.operation = AuthenticationOperation.LOGOUT
+                                this.sessionId = sessionId
                                 this.user = user
                                 this.remoteAddress = getRequest().remoteAddr
                                 this.result = result

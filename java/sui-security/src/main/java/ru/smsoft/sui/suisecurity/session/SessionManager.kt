@@ -98,6 +98,7 @@ class SessionManager(
                         this.user = user
                         this.remoteAddress = session.remoteAddress
                         this.result = authenticationResultProvider.resultByCode(SUCCESS_LOGOUT_TIMEOUT_RESULT_CODE)
+                        this.sessionId = sessionId
                     })
 
                     // Костыль, для уменьшения кол-ва логов

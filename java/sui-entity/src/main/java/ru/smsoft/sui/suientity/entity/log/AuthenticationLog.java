@@ -8,6 +8,7 @@ import ru.smsoft.sui.suientity.enums.AuthenticationOperation;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 
 @Getter
@@ -23,6 +24,8 @@ public class AuthenticationLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private UUID sessionId;
 
     private String formLogin;
     private String remoteAddress;
