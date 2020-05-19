@@ -37,7 +37,10 @@ export interface ICommonColumnSearchProps {
 
 export type SelectData = Array<{title?: string | JSX.Element, value: string | number}>;
 
+export type CompoundFormat = {format?: string, targetFormat?: string, sourceFormat?: string};
+
 export type INewSearchProps = ICommonColumnSearchProps & {
+  allFormats?: CompoundFormat;
   format?: string; // for datetime and date
   multiple?: boolean; // for customSelect
   selectData?: SelectData | Promise<SelectData>; // for customSelect

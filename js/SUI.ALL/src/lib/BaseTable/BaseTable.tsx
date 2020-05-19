@@ -8,6 +8,7 @@ import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import * as React from 'react';
 import * as XLSX from 'xlsx';
+import moment from 'moment';
 
 import {getDataByKey} from '../dataKey';
 import { BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER } from '../styles';
@@ -502,16 +503,7 @@ public render(): JSX.Element {
     const cols = this.mapCols()
       .filter(col => defaultIfNotBoolean(col.exportable, true))
       .filter(col => !hiddenColumnNames.includes(col.id));
-// @ts-ignore
-    const formattedData = this.exportData.map(row => {
-      const ret = {};
-      cols.forEach(col => {
-// @ts-ignore
-        ret[col.title] = col.getCellValue(row);
-      });
-
-      return ret;
-    });
+    const formattedData = this.getFormattedExportData(cols);
 // @ts-ignore
     console.log(formattedData);
     const ws = XLSX.utils.json_to_sheet(formattedData, {
@@ -520,6 +512,13 @@ public render(): JSX.Element {
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, '1');
     XLSX.writeFile(wb, 'table.xlsx');
+  }
+
+  @autobind
+  private getFormattedExportData(cols: (IBaseTableColLayout & {name: string, title: string, getCellValue(row: any): any})[]): any {
+    return this.exportData.map(row =>
+      Object.fromEntries(
+        cols.map(col => [col.title, getCellValueForExport(row, col)])));
   }
 
   @autobind
@@ -547,4 +546,13 @@ public render(): JSX.Element {
     );
   }
 
+}
+
+function getCellValueForExport(row: any, col: IBaseTableColLayout & { name: string, title: string, getCellValue(row: any): any }): any {
+  let value = col.getCellValue(row);
+  const isDateColumn = col.search && col.search.type === 'date' || false;
+  if(isDateColumn && col.search.allFormats.targetFormat) {
+    value = moment(value).format(col.search.allFormats.targetFormat);
+  }
+  return value;
 }
