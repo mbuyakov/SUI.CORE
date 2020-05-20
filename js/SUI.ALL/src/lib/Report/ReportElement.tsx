@@ -12,7 +12,7 @@ import { PrintModeContext } from './PrintModeContext';
 interface IReportElement {
   cardBodyStyle?: React.CSSProperties;
   cardStyle?: React.CSSProperties;
-  header: JSX.Element | string;
+  header?: JSX.Element | string;
   minHeight?: number;
   print?: boolean
   type?: CardType;
@@ -22,7 +22,8 @@ export class ReportElement extends React.Component<IReportElement, {
   printMode: boolean
 }> {
 
-private readonly printContentRef: React.RefObject<any> = React.createRef();
+  // tslint:disable-next-line:no-any
+  private readonly printContentRef: React.RefObject<any> = React.createRef();
 
   public constructor(props: IReportElement) {
     super(props);
@@ -50,12 +51,10 @@ private readonly printContentRef: React.RefObject<any> = React.createRef();
           padding: 10,
           ...this.props.cardBodyStyle,
         }}
-        title={<span>{this.props.header}</span>}
+        title={this.props.header}
         extra={this.props.print ? (
           <ReactToPrint
-            trigger={() => (
-              <Button icon={<Icon type={"printer"} />}/>
-            )}
+            trigger={() => (<Button icon={<Icon type={"printer"} />}/>)}
             content={() => this.printContentRef.current}
             onBeforeGetContent={async () => new Promise(resolve => this.setState({printMode: true}, resolve))}
             onAfterPrint={() => this.setState({printMode: false})}
@@ -80,4 +79,3 @@ private readonly printContentRef: React.RefObject<any> = React.createRef();
     );
   }
 }
-
