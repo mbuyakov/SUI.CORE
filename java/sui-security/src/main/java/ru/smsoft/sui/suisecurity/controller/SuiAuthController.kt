@@ -9,21 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.smsoft.sui.suisecurity.model.LoginRequest
 import ru.smsoft.sui.suisecurity.model.toResponseEntity
-import ru.smsoft.sui.suisecurity.security.JwtTokenProvider
 import ru.smsoft.sui.suisecurity.service.AuthenticationService
-import java.lang.Exception
 import javax.validation.Valid
 
 
 private val log = KotlinLogging.logger { }
 
-@Suppress("MVCPathVariableInspection")
 @RestController
-@RequestMapping("\${security.controller.auth-path:/api/auth}")
-class SuiAuthController(
-        private val authenticationService: AuthenticationService,
-        private val tokenProvider: JwtTokenProvider
-) {
+@RequestMapping("/api/auth")
+class SuiAuthController(private val authenticationService: AuthenticationService) {
 
     @PostMapping("/signin")
     fun signin(@Valid @RequestBody req: LoginRequest) : ResponseEntity<*> {
@@ -39,8 +33,5 @@ class SuiAuthController(
     fun signout() {
         authenticationService.logout()
     }
-
-    @PostMapping("/checkToken")
-    fun checkToken(@Valid @RequestBody token: String): ResponseEntity<Boolean> = ResponseEntity.ok(tokenProvider.validateToken(token))
 
 }

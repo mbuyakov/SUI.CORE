@@ -7,21 +7,20 @@ import ru.smsoft.sui.suisecurity.utils.LOAD_USER_BY_ID_CACHE
 import ru.smsoft.sui.suisecurity.utils.LOAD_USER_BY_USERNAME_CACHE
 import ru.smsoft.sui.suisecurity.utils.TABLE_INFO_BY_CAMEL_CASE_NAME_CACHE
 import ru.smsoft.sui.suisecurity.utils.VALIDATE_TOKEN_CACHE
+import ru.smsoft.sui.suisecurity.utils.VALIDATE_TOKEN_CACHE_TIMEOUT
 import java.time.Duration
 import javax.annotation.PostConstruct
 
 
 @Configuration
-class CacheConfig(
-    private val suiCacheManager: SuiCacheManager
-) {
+class CacheConfig(private val suiCacheManager: SuiCacheManager) {
 
     @PostConstruct
     private fun postConstruct() {
         suiCacheManager.registerCache(
             VALIDATE_TOKEN_CACHE,
             SuiCacheSetting().apply {
-                this.expireAfterWrite = Duration.ofMillis(2500)
+                this.expireAfterWrite = Duration.ofMillis(VALIDATE_TOKEN_CACHE_TIMEOUT)
                 this.allowNullValues = false
             }
         )

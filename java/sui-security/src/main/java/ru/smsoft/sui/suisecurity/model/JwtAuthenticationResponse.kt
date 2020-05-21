@@ -3,7 +3,10 @@ package ru.smsoft.sui.suisecurity.model
 import org.springframework.http.ResponseEntity
 import ru.smsoft.sui.suisecurity.security.UserPrincipal
 
-fun LoginResult.toResponseEntity() = ResponseEntity.ok(JwtAuthenticationResponse(this.jwt, this.principal))
+
+fun LoginResult.toResponseEntity(): ResponseEntity<JwtAuthenticationResponse> {
+    return ResponseEntity.ok(JwtAuthenticationResponse(this.jwt, this.principal))
+}
 
 class JwtAuthenticationResponse(
     val accessToken: String,

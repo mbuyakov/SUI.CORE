@@ -1,6 +1,5 @@
 package ru.smsoft.sui.suisecurity.config
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -22,13 +21,10 @@ import ru.smsoft.sui.suisecurity.security.JwtAuthenticationFilter
 import javax.annotation.PostConstruct
 
 @Configuration
-class SecurityConfig : WebSecurityConfigurerAdapter() {
-
-    @Autowired
-    private lateinit var customUserDetailsService: CustomUserDetailsService
-
-    @Autowired
-    private lateinit var unauthorizedHandler: JwtAuthenticationEntryPoint
+class SecurityConfig(
+        private val customUserDetailsService: CustomUserDetailsService,
+        private val unauthorizedHandler: JwtAuthenticationEntryPoint
+) : WebSecurityConfigurerAdapter() {
 
     @PostConstruct
     fun postConstruct() {
@@ -96,6 +92,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 .antMatchers("/table-backend/**")
                 .permitAll()
                 .antMatchers("/api/auth/**")
+                .permitAll()
+                .antMatchers("/api/token/**")
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/api/or2/**")
                 .permitAll()

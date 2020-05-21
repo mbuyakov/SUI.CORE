@@ -74,7 +74,7 @@ class JwtTokenProvider {
         log.debug { "Call validateToken with token $authToken" }
 
         try {
-            val session = sessionManager.getSession(getSessionIdFromJWT(authToken))
+            sessionManager.checkSession(getSessionIdFromJWT(authToken))
 
             return true
         } catch (ex: SignatureException) {
@@ -87,7 +87,7 @@ class JwtTokenProvider {
             log.error("Unsupported JWT token")
         } catch (ex: IllegalArgumentException) {
             log.error("JWT claims string is empty.")
-        } catch (ex: SessionException) {
+        } catch (ex: Exception) {
             log.error(ex.message)
         }
 

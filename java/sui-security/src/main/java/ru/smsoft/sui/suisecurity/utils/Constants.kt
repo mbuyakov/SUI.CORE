@@ -1,6 +1,9 @@
 package ru.smsoft.sui.suisecurity.utils
 
 const val USER_ID_SETTING_NAME = "user.id"
+internal const val VALIDATE_TOKEN_CACHE_TIMEOUT = 1500L
+internal const val CREATE_SESSION_LOCK_GROUP = "create_session" // key - user.id
+internal const val SESSION_LOCK_GROUP = "session" // key - session.id
 
 // Caches
 

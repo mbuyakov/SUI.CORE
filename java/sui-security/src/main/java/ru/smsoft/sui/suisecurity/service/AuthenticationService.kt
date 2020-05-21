@@ -7,12 +7,13 @@ import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.DisabledException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Service
-import ru.smsoft.sui.suientity.entity.log.AuthenticationLog
 import ru.smsoft.sui.suientity.enums.AuthenticationOperation
 import ru.smsoft.sui.suientity.repository.log.AuthenticationLogRepository
+import ru.smsoft.sui.suientity.repository.log.AuthenticationResultRepository
 import ru.smsoft.sui.suientity.repository.suisecurity.UserRepository
 import ru.smsoft.sui.suisecurity.exception.TooManyAttemptsException
 import ru.smsoft.sui.suisecurity.extension.clientIp
+import ru.smsoft.sui.suisecurity.extension.get
 import ru.smsoft.sui.suisecurity.extension.jwtToken
 import ru.smsoft.sui.suisecurity.model.LoginResult
 import ru.smsoft.sui.suisecurity.security.JwtTokenProvider
@@ -30,7 +31,9 @@ class AuthenticationService(
         private val authenticationManager: AuthenticationManager,
         private val tokenProvider: JwtTokenProvider,
         private val sessionManager: SessionManager,
-        private val authenticationResultProvider: AuthenticationResultProvider,
+        private val authenticationLogService: AuthenticationLogService,
+        // repos
+        private val authenticationResultRepository: AuthenticationResultRepository,
         private val authenticationLogRepository: AuthenticationLogRepository,
         private val userRepository: UserRepository
 ) {
@@ -86,24 +89,19 @@ class AuthenticationService(
             loginResultCode = ERROR_RESULT_CODE
         }
 
-        val result = authenticationResultProvider.resultByCode(loginResultCode)
+        val result = authenticationResultRepository.get(loginResultCode)
 
         if (formLogin != null) {
-            try {
-                // generate log
-                authenticationLogRepository.save(AuthenticationLog().apply {
-                    this.operation = AuthenticationOperation.LOGIN
-                    this.sessionId = jwt?.let { tokenProvider.getSessionIdFromJWT(it) }
-                    this.formLogin = formLogin
-                    this.remoteAddress = remoteAddress
-                    // this.clientInfo = ...
-                    this.user = principal?.user ?: userRepository.findByUsernameOrEmail(formLogin, formLogin).orElse(null)
-                    this.result = result
-                })
-            } catch (exception: Exception) {
-                log.error(exception) { "Couldn't create AuthenticationLog" }
-            }
-        } else { // FATAL LOGIC ERROR
+            // TODO: add clientInfo
+            authenticationLogService.create(
+                    operation = AuthenticationOperation.LOGIN,
+                    result = result,
+                    sessionId = jwt?.let { tokenProvider.getSessionIdFromJWT(it) },
+                    user = principal?.user ?: kotlin.runCatching { userRepository.findByUsernameOrEmail(formLogin, formLogin).orElse(null) }.getOrNull(),
+                    remoteAddress = remoteAddress,
+                    formLogin = formLogin
+            )
+        } else {
             log.error(loginException) { "[FATAL LOGIC ERROR] formLogin is null" }
         }
 
@@ -115,30 +113,22 @@ class AuthenticationService(
     }
 
     fun logout() {
-        val sessionId = getRequest().jwtToken()?.let { tokenProvider.getSessionIdFromJWT(it) }
+        val jwtToken = getRequest().jwtToken()
+
+        val sessionId = jwtToken?.let { tokenProvider.getSessionIdFromJWT(it) }
+        val userId = jwtToken?.let { tokenProvider.getUserIdFromJWT(it) }
 
         if (sessionId != null) {
-            kotlin.runCatching { sessionManager.getSession(sessionId) }.onSuccess { session ->
-                if (session.active) {
-                    sessionManager.disableSession(session)
+            sessionManager.disableBySessionId(sessionId)
 
-                    try {
-                        val result = authenticationResultProvider.resultByCode(SUCCESS_LOGOUT_COMMAND_RESULT_CODE)
-
-                        userRepository.findById(session.userId).ifPresent { user ->
-                            // generate log
-                            authenticationLogRepository.save(AuthenticationLog().apply {
-                                this.operation = AuthenticationOperation.LOGOUT
-                                this.sessionId = sessionId
-                                this.user = user
-                                this.remoteAddress = getRequest().clientIp
-                                this.result = result
-                            })
-                        }
-                    } catch (exception: Exception) {
-                        log.error(exception) { "Couldn't create AuthenticationLog" }
-                    }
-                }
+            userId?.let { userRepository.findById(it) }?.ifPresent {
+                authenticationLogService.create(
+                        operation = AuthenticationOperation.LOGOUT,
+                        resultCode = SUCCESS_LOGOUT_COMMAND_RESULT_CODE,
+                        sessionId = sessionId,
+                        user = it,
+                        remoteAddress = getRequest().clientIp
+                )
             }
         }
     }
