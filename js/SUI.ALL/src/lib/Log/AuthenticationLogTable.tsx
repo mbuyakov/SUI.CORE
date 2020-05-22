@@ -4,9 +4,10 @@ import React from 'react';
 import {BackendTable} from "../BackendTable";
 import {ExtractProps} from "../other";
 
-export type ITableExportLogTableProps = Omit<ExtractProps<BackendTable>, "table"> & { table?: string };
 
-export class TableExportLogTable extends React.Component<ITableExportLogTableProps> {
+export type IAuthenticationLogTableProps = Omit<ExtractProps<BackendTable>, "table"> & { table?: string };
+
+export class AuthenticationLogTable extends React.Component<IAuthenticationLogTableProps> {
 
   public render(): React.ReactNode {
     return (
@@ -19,7 +20,7 @@ export class TableExportLogTable extends React.Component<ITableExportLogTablePro
 
   @autobind
   private getTableName(): string {
-    return this.props.table || "table_export_log_ui";
+    return this.props.table || "authentication_log_ui";
   }
 
 }
