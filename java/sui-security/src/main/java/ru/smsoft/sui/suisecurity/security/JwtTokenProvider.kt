@@ -70,11 +70,11 @@ class JwtTokenProvider {
     }
 
     @Cacheable(VALIDATE_TOKEN_CACHE)
-    fun validateToken(authToken: String): Boolean {
+    fun validateToken(authToken: String, updateActivity: Boolean = true): Boolean {
         log.debug { "Call validateToken with token $authToken" }
 
         try {
-            sessionManager.checkSession(getSessionIdFromJWT(authToken))
+            sessionManager.checkSession(getSessionIdFromJWT(authToken), updateActivity)
 
             return true
         } catch (ex: SignatureException) {

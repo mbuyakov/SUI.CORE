@@ -18,7 +18,7 @@ class JwtAuthenticationService {
     fun getAuthentication(authorizationHeader: String?): UsernamePasswordAuthenticationToken? {
         val token = extractJwtToken(authorizationHeader)
 
-        if (StringUtils.hasText(token) && tokenProvider.validateToken(token!!)) {
+        if (StringUtils.hasText(token) && tokenProvider.validateToken(token!!, false)) {
             val userId = tokenProvider.getUserIdFromJWT(token)
 
             // Note that you could also encode the user's username and roles inside JWT claims and fromUser the UserDetails object by parsing those claims from the JWT

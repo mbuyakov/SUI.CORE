@@ -53,7 +53,7 @@ class SessionManager(
     }
 
     @Throws(SessionException::class)
-    fun checkSession(sessionId: UUID) {
+    fun checkSession(sessionId: UUID, updateActivity: Boolean = true) {
         try {
             val session = sessionService.getById(sessionId)
 
@@ -61,7 +61,7 @@ class SessionManager(
                 disableBySessionId(sessionId, true)
 
                 throw SessionException("Invalid session")
-            } else {
+            } else if (updateActivity) {
                 lockSessionAndThenIfActive(sessionId) {
                     session.lastUserActivity = Date()
                     sessionService.save(session)
