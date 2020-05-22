@@ -134,7 +134,7 @@ function putTableStateToLocation(
     }),
     filter: state.filter && wrapInArray(state.filter),
     mergeFilters: typeof(state.mergeFilters) === "boolean" ? state.mergeFilters : false,
-    pageInfo: state.pageInfo || { pageNumber: 1 }
+    pageInfo: state.pageInfo || { pageNumber: 0 }
   };
 
   location.searchParams.set(STATE_URL_PARAM, encodeState(urlStateDefinition));
