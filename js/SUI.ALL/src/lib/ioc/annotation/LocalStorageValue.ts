@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container } from 'typescript-ioc';
 import { Logger } from '../utils';
-import { LocalStorageService } from '../service';
+// Don't touch import
+// noinspection ES6PreferShortImport
+import { LocalStorageService } from '../service/LocalStorageService';
 
 // Please, don't touch. Magic from typescript-ioc
-export function InjectLocalStorageValue(localStorageKey: string) {
+export function LocalStorageValue(localStorageKey: string) {
   return (...args: any[]) => {
     const localStorageService = Container.get(LocalStorageService);
-    const log = new Logger("InjectLocalStorageValue");
+    const log = new Logger("LocalStorageValue");
 
     const target = args[0] as Function;
     const key = args[1] as string;

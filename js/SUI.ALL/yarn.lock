@@ -11179,10 +11179,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript-ioc@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/typescript-ioc/-/typescript-ioc-3.2.1.tgz#ea25c68fc96ec89f4aff6c1e8d85042837b5c0e5"
-  integrity sha512-axLxt+HwFXYi2ilqlMuzWTrMF1Kk/VFkZPlUUOhGtdubvYJTChH3bG2g1mRFgW/3UxBoC/Pi6F/7ySkP4mcWSQ==
+typescript-ioc@3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/typescript-ioc/-/typescript-ioc-3.2.2.tgz#5250a3691ea1d9425cbac22a44e8d6efb9584204"
+  integrity sha512-NI09BFj213x8vqOboOgrQt94MdNfKuXi68pnp4obT9a3uRk5cVjTPagLwkvZJXpSN4iV3sbSGhlQgY2uHEBhoA==
   dependencies:
     lodash.get "^4.4.2"
     lodash.set "^4.3.2"

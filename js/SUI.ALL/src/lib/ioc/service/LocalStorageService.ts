@@ -1,10 +1,8 @@
-import { OnlyInstantiableByContainer, Singleton } from 'typescript-ioc';
-import { InjectValue } from 'typescript-ioc/dist/decorators';
+import { Value } from '../annotation/Value';
 
-@OnlyInstantiableByContainer
-@Singleton
 export class LocalStorageService {
-  @InjectValue('sui.projectKey')
+
+  @Value('sui.projectKey')
   private projectKey: string;
 
   public getItem(key: string): string {

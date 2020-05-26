@@ -154,7 +154,8 @@
     "no-case-declarations": [0],
     "no-eval": [0],
     "no-control-regex": [0],
-    "no-trailing-spaces": [0]
+    "no-trailing-spaces": [0],
+    "arrow-body-style": [0]
   },
   "settings": {
     "import/resolver": {

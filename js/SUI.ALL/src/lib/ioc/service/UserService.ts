@@ -1,33 +1,32 @@
-import { Inject, OnlyInstantiableByContainer, Singleton } from 'typescript-ioc';
-import { getUser } from '../../utils';
-import { LocalStorageService } from './LocalStorageService';
+import { OnlyInstantiableByContainer, Singleton } from 'typescript-ioc';
 import { Nullable } from '../../other';
+import { ICoreUser } from '../../user';
+// Don't touch import
+// noinspection ES6PreferShortImport
+import { LocalStorageValue } from '../annotation/LocalStorageValue';
 
 @OnlyInstantiableByContainer
 @Singleton
-class UserService {
+export class UserService {
 
-  @Inject
-  private localStorageService: LocalStorageService;
+  @LocalStorageValue("token")
+  private token: Nullable<string>;
+
+  private user: Nullable<ICoreUser>;
 
   public getToken(): Nullable<string> {
-    return this.localStorageService.getItem('token');
+    return this.token;
   }
 
-  public setToken(token: string): void {
-    this.localStorageService.setItem('token', token);
+  public getUser(): ICoreUser {
+    if (this.user == null) {
+      throw new Error("User not initialized");
+    }
+    return this.user;
   }
 
-  public getId(): string {
-    getUser()
+  public setUser(user: ICoreUser): void {
+    this.token = user.accessToken;
+    this.user = user;
   }
-
-  public login() {
-
-  }
-
-  public logout() {
-
-  }
-
 }

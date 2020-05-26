@@ -111,6 +111,6 @@
     "react-router-dom": "^5.1.2",
     "react-smooth-dnd": "^0.11.1",
     "react-to-print": "^2.6.3",
-    "typescript-ioc": "^3.2.1"
+    "typescript-ioc": "3.2.2"
   }
 }
