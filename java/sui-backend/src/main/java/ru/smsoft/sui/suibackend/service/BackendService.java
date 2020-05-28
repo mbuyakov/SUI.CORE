@@ -89,7 +89,7 @@ public class BackendService {
       withStatements.put(
         OFFSET_WITH_NAME,
         String.format(
-          "SELECT %s, LEAST(FLOOR(%1$s / %d) * %2$d, %d) AS %s" +
+          "SELECT %s, LEAST(FLOOR((%1$s - 1) / %d) * %2$d, %d) AS %s" +
             " FROM (SELECT COALESCE(COUNT(*), 0) AS %1$s FROM %s) __total",
           TOTAL_COUNT_COLUMN_NAME,
           userState.getPageSize(),
