@@ -15,6 +15,7 @@ export * from "./Draggable";
 export * from "./ForceDirectedTree";
 export * from "./gql";
 export * from "./Inputs";
+export * from "./ioc";
 export * from "./Link";
 export * from "./Log";
 export * from "./Meta";

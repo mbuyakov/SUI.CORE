@@ -1,5 +1,4 @@
 /* eslint-disable no-console,@typescript-eslint/no-explicit-any */
-// Can't use @Inject in this class. Problem from @InjectLogger
 import { Container } from 'typescript-ioc';
 import { getTOrCall, TOrCallback } from '../../other';
 import { OneOrArray, wrapInArray } from '../../typeWrappers';
@@ -7,8 +6,12 @@ import { OneOrArray, wrapInArray } from '../../typeWrappers';
 // noinspection ES6PreferShortImport
 import { LogLevelService } from '../service/LogLevelService';
 import { LoggerLevel } from '../enum';
-import { Autowired } from '../annotation';
+// Don't touch import
+// noinspection ES6PreferShortImport
+import { Autowired } from '../annotation/Autowired';
 
+
+// Can't use @Autowired due to @InjectLogger
 export class Logger {
 
   private readonly name: string;
@@ -19,8 +22,7 @@ export class Logger {
     this.prefix = `[${name}]`;
   }
 
-  @Autowired
-  private logLevelService: LogLevelService
+  private logLevelService: LogLevelService = Container.get(LogLevelService)
 
   public error(e: Error, msg: TOrCallback<OneOrArray<any>>): void {
     if (this.logLevelService.isLevelEnabled(this.name, LoggerLevel.ERROR)) {

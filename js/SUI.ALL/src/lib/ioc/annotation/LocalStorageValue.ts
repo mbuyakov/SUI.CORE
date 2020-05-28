@@ -8,6 +8,7 @@ import { LocalStorageService } from '../service/LocalStorageService';
 // Please, don't touch. Magic from typescript-ioc
 export function LocalStorageValue(localStorageKey: string) {
   return (...args: any[]) => {
+    console.debug('@LocalStorageValue', localStorageKey, args);
     const localStorageService = Container.get(LocalStorageService);
     const log = new Logger("LocalStorageValue");
 
@@ -16,7 +17,7 @@ export function LocalStorageValue(localStorageKey: string) {
 
     const propKey = `__${key}`;
     const propKeyInit = `${propKey}__init`;
-    Object.defineProperty(target.constructor.prototype, key, {
+    Object.defineProperty(target, key, {
       enumerable: true,
       // eslint-disable-next-line object-shorthand,func-names
       get: function() {

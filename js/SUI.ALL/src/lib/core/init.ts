@@ -19,6 +19,7 @@ export interface IInitSUISettings {
   basicAuthToken?: string;
   checkVersionMismatchUrl: string;
   graphqlUri: string;
+  restUri: string;
   percentToColorSettings: IColorHeatMapSettings;
   routes: IRawRoute[];
 
