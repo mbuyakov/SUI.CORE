@@ -763,7 +763,8 @@ export class BackendTable<TSelection = defaultSelection>
           putTableStateToUrlParam(
             this.props.id,
             {
-              defaultFilter: this.state.filters,
+              defaultFilter: this.state.defaultFilter,
+              filter: this.state.filter,
               pageInfo: {
                 pageNumber: this.state.currentPage,
                 pageSize: this.state.pageSize
