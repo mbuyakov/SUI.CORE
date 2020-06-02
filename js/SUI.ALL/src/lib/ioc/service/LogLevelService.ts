@@ -1,9 +1,8 @@
-import { OnlyInstantiableByContainer, Singleton } from 'typescript-ioc';
+import { Singleton } from 'typescript-ioc';
 import { Nullable } from '../../other';
 import { LoggerLevel } from '../enum';
 import { ROOT_LOGGER_KEY } from '../const';
 
-@OnlyInstantiableByContainer
 @Singleton
 export class LogLevelService {
 

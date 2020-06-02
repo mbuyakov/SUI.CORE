@@ -1,6 +1,8 @@
 /*eslint sort-exports/sort-exports: 2*/
+import { Container } from 'typescript-ioc';
 import { getDataByKey } from '../dataKey';
 import { ICoreUser } from '../user';
+import { UserService } from '../ioc/service';
 
 export * from "./actionType";
 export * from "./condition";
@@ -14,8 +16,7 @@ export * from "./TabSyncer";
 export * from "./versionMismatch";
 
 export function getUser(): ICoreUser {
-// @ts-ignore
-  return window.g_app && window.g_app._store && getDataByKey(window.g_app._store.getState(), ["user", "user"]);
+  return Container.get(UserService).getUser();
 }
 
 export function isAdmin(): boolean {

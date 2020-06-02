@@ -7,6 +7,7 @@ import { Container } from 'typescript-ioc';
 import { ColumnInfoManager, NameManager, TableInfoManager } from '../cache';
 import { ColorHeatMap, IColorHeatMapSettings } from '../color';
 import { getUser, IRawRoute, parseRoutes, RouteType, runCheckVersionMismatch } from '../utils';
+import { UserService } from '../ioc/service';
 
 declare let window: Window & {
   SUI: ISUISettings | undefined;
@@ -38,7 +39,8 @@ export type ISUISettings = IInitSUISettings & {
 }
 
 const authLink = setContext((_, { headers }) => {
-  const user = getUser();
+  const userService = Container.get(UserService);
+  const user = userService.isLoggedIn() && userService.getUser();
 
   return {
     headers: {

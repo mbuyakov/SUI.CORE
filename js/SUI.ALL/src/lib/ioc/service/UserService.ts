@@ -1,31 +1,37 @@
-import { OnlyInstantiableByContainer, Singleton } from 'typescript-ioc';
+import { Container, Singleton } from 'typescript-ioc';
 import axios from 'axios';
 import { notification } from 'antd';
-import { Nullable } from '../../other';
+import { Nullable, sleep } from '../../other';
 import { ICoreUser } from '../../user';
 // Don't touch import
 // noinspection ES6PreferShortImport
-import { LocalStorageValue } from '../annotation/LocalStorageValue';
-import { InjectLogger, Value } from '../annotation';
+import { _LocalStorageValue } from '../annotation/LocalStorageValue';
 import { Logger } from '../utils';
+import { getSUISettings } from '../../core';
 
-@OnlyInstantiableByContainer
+
+export const USER_FORCIBLY_LOGOUT_MSG = 'Ваш сеанс был автоматически завершен.';
+const NOTIFICATION_KEY_USER_FORCIBLY_LOGOUT = 'connect__USER_FORCIBLYLOGOUT_BY_IDLE_TIME';
+
 @Singleton
 export class UserService {
 
-  @LocalStorageValue('token')
-  private token: Nullable<string>;
+  private token = _LocalStorageValue('token', this);
 
-  @Value("sui.restUri")
-  private restUri: string;
+  private restUri: string = Container.getValue('sui.restUri');
 
-  @InjectLogger
-  private log: Logger;
+  private log = new Logger('UserService');
 
   private user: Nullable<ICoreUser>;
 
+  private tokenCheckerRunning = true;
+
+  public setTokenCheckerRunning(value: boolean) {
+    this.tokenCheckerRunning = value;
+  }
+
   public getToken(): Nullable<string> {
-    return this.token;
+    return this.token.get();
   }
 
   public getUser(): ICoreUser {
@@ -35,9 +41,45 @@ export class UserService {
     return this.user;
   }
 
+  public isLoggedIn(): boolean {
+    return !!this.user;
+  }
+
   public login(user: ICoreUser): void {
-    this.token = user.accessToken;
+    this.token.set(user.accessToken);
     this.user = user;
+
+    // noinspection JSIgnoredPromiseFromCall
+    this.runTokenChecker();
+  }
+
+  private async runTokenChecker(): Promise<void> {
+    this.log.info('Start token checker');
+
+    while (this.isLoggedIn()) {
+      notification.close(NOTIFICATION_KEY_USER_FORCIBLY_LOGOUT);
+
+      if(this.tokenCheckerRunning) {
+        try {
+          const result = await axios.post<boolean>(
+            `${this.restUri}/api/token/check`,
+            this.token.get(),
+          );
+          if (!result.data && this.isLoggedIn()) {
+            // noinspection ES6MissingAwait
+            this.logout(false);
+
+            notification.warn({ key: NOTIFICATION_KEY_USER_FORCIBLY_LOGOUT, message: USER_FORCIBLY_LOGOUT_MSG, duration: 0 });
+          }
+        } catch (reason) {
+          this.log.error(reason, 'Token check error');
+          notification.warn({ message: 'Ошибка при проверке токена' });
+        }
+      } else {
+        await sleep(1000);
+      }
+    }
+    this.log.info('Token checker stopped due to logout');
   }
 
   public async logout(userCommand: boolean): Promise<void> {
@@ -46,17 +88,19 @@ export class UserService {
         await axios.post<boolean>(
           `${this.restUri}/api/auth/signout`,
           null,
-          { headers: { Authorization: `Bearer ${this.token}` } },
+          { headers: { Authorization: `Bearer ${this.token.get()}` } },
         );
-        this.token = null;
+        this.token.set(null);
         this.user = null;
+        getSUISettings().routerPushFn("/");
       } catch (e) {
         this.log.error(e, 'Logout error');
         notification.warn({ message: 'В процессе выхода произошла ошибка' });
       }
     } else {
-      this.token = null;
+      this.token.set(null);
       this.user = null;
+      getSUISettings().routerPushFn("/");
     }
   }
 }
