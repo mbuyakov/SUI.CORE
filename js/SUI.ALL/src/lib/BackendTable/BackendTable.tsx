@@ -764,6 +764,7 @@ export class BackendTable<TSelection = defaultSelection>
             this.props.id,
             {
               defaultFilter: this.state.filters,
+              filter: this.state.filter,
               pageInfo: {
                 pageNumber: this.state.currentPage,
                 pageSize: this.state.pageSize
