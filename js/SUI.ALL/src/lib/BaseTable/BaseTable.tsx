@@ -6,15 +6,16 @@ import {TableRow} from '@material-ui/core';
 import { Card, Result, Spin } from 'antd';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
+import moment from 'moment';
 import * as React from 'react';
 import * as XLSX from 'xlsx';
-import moment from 'moment';
 
 import {getDataByKey} from '../dataKey';
 import { BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER } from '../styles';
 import {translate} from '../translate';
 import {defaultIfNotBoolean} from '../typeWrappers';
 
+import { NO_DATA_TEXT } from '../const';
 import {EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, WarningPlugin} from './extends';
 import {CustomToggleCell} from "./extends/CustomToggleCell";
 import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter} from './filters';
@@ -550,6 +551,9 @@ public render(): JSX.Element {
 
 function getCellValueForExport(row: any, col: IBaseTableColLayout & { name: string, title: string, getCellValue(row: any): any }): any {
   let value = col.getCellValue(row);
+  if (value == null){
+    return NO_DATA_TEXT;
+  }
   const isDateColumn = col.search && col.search.type === 'date' || false;
   if(isDateColumn && col.search.allFormats.targetFormat) {
     value = moment(value).format(col.search.allFormats.targetFormat);
