@@ -319,7 +319,7 @@ export class BackendTable<TSelection = defaultSelection>
       {
         tableInfoId: this.state.tableInfo.id,
         userId: `${getUser().id}`,
-        rowCount: `${this.state.pageSize}` // Костыль, ломается на последней странице и при группировке
+        rowCount: `${this.state.data?.length || 0}` // Ломается при группировке
       }
     )
       .then(() => true)
