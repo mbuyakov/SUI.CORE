@@ -22,7 +22,6 @@ dependencies {
   compile "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
   // Other
   compileOnly "org.projectlombok:lombok" // TODO: Delete
-  compile "org.flywaydb:flyway-core:${flywayVersion}"
   compile "com.github.ben-manes.caffeine:caffeine:2.8.2"
 }
 
