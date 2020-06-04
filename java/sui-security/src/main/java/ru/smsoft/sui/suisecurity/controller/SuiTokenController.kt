@@ -39,6 +39,9 @@ class SuiTokenController(private val tokenProvider: JwtTokenProvider) {
 
             if (!tokenProvider.validateToken(token)) {
                 result.setResult(false)
+            }
+
+            if (result.isSetOrExpired) {
                 resultMap.remove(index)
             }
         }
