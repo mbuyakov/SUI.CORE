@@ -58,7 +58,7 @@ class SessionManager(
             val session = sessionService.getById(sessionId)
 
             if (!session.isValid(sessionTimeout)) {
-                disableBySessionId(sessionId, true)
+                disableBySessionId(sessionId, SUCCESS_LOGOUT_TIMEOUT_RESULT_CODE)
 
                 throw SessionException("Invalid session")
             } else if (updateActivity) {
@@ -74,7 +74,7 @@ class SessionManager(
         }
     }
 
-    fun disableBySessionId(sessionId: UUID, timeout: Boolean = false) {
+    fun disableBySessionId(sessionId: UUID, resultCode: String? = null) {
         var wasDisabled = false
 
         var userId: Long? = null
@@ -89,10 +89,10 @@ class SessionManager(
             remoteAddress = session.remoteAddress
         }
 
-        if (wasDisabled && timeout) {
+        if (wasDisabled && resultCode != null) {
             authenticationLogService.create(
                     operation = AuthenticationOperation.LOGOUT,
-                    resultCode = SUCCESS_LOGOUT_TIMEOUT_RESULT_CODE,
+                    resultCode = resultCode,
                     user = userRepository.findById(userId!!).get(),
                     remoteAddress = remoteAddress,
                     sessionId = sessionId
@@ -106,7 +106,7 @@ class SessionManager(
             sessionService
                     .findAllActive()
                     .filter { !it.isValid(sessionTimeout) }
-                    .forEach { disableBySessionId(it.id, true) }
+                    .forEach { disableBySessionId(it.id, SUCCESS_LOGOUT_TIMEOUT_RESULT_CODE) }
         }
     }
 
