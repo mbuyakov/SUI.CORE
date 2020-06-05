@@ -293,7 +293,7 @@ export class BackendTable<TSelection = defaultSelection>
           ].filter(Boolean)}
           rowStyler={this.generateRowStyler()}
           warnings={admin ? this.state.warnings : undefined}
-          pageSizes={[10, 25, 50]}
+          pageSizes={[10, 25, 50, 100, 250, 500, 1000]}
           defaultCurrentPage={this.state.defaultCurrentPage}
           // remote functions
           getChildGroups={this.getChildGroups}
@@ -319,7 +319,7 @@ export class BackendTable<TSelection = defaultSelection>
       {
         tableInfoId: this.state.tableInfo.id,
         userId: `${getUser().id}`,
-        rowCount: `${this.state.pageSize}` // Костыль, ломается на последней странице и при группировке
+        rowCount: `${this.state.data?.length || 0}` // Ломается при группировке
       }
     )
       .then(() => true)

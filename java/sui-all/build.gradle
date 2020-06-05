@@ -5,6 +5,7 @@ dependencies {
     compile project(":sui-backend")
     compile project(":sui-entity")
     compile project(":sui-meta-schema-service")
+    compile project(":sui-migration")
     compile project(":sui-security")
     compile project(":sui-user-transaction")
 }

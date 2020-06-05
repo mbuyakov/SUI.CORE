@@ -1,0 +1,21 @@
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+
+dependencies {
+  // Kotlin
+  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+  compile "org.jetbrains.kotlin:kotlin-reflect"
+  // Spring
+  compile "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
+  compile ("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}") {
+    exclude module: "spring-boot-starter"
+  }
+  // Other
+  compile "org.flywaydb:flyway-core:${flywayVersion}"
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+}

@@ -75,6 +75,14 @@ pipeline {
                     {
                       "pattern": "**/sui-user-transaction/build/libs/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
                       "target": "sui/ru/smsoft/sui/sui-user-transaction/${BUILD_NUMBER}-${BRANCH_NAME}/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
+                    },
+                    {
+                      "pattern": "**/sui-migration/build/libs/sui-migration-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
+                      "target": "sui/ru/smsoft/sui/sui-migration/${BUILD_NUMBER}-${BRANCH_NAME}/sui-migration-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
+                    },
+                    {
+                      "pattern": "**/sui-migration/build/libs/sui-migration-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
+                      "target": "sui/ru/smsoft/sui/sui-migration/${BUILD_NUMBER}-${BRANCH_NAME}/sui-migration-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     }
                   ]
                 }
