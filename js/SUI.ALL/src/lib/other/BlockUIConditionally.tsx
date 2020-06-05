@@ -17,8 +17,8 @@ interface IBlockUIConditionallyState {
 }
 
 const MIN_INTERVAL_TO_CHECK = 500;
-const DEFAULT_INTERVAL_TO_CHECK_IN_BLOCK_MODE = 60_000;
-const DEFAULT_INTERVAL_TO_CHECK_IN_FREE_MODE = 20_000;
+const DEFAULT_INTERVAL_TO_CHECK_IN_BLOCK_MODE = 60000;
+const DEFAULT_INTERVAL_TO_CHECK_IN_FREE_MODE = 20000;
 const DEFAULT_HEADER = "Работа системы заблокирована администратором";
 const DEFAULT_MSG = "Пожалуйста, попробуйте зайти попозже"
 
@@ -103,23 +103,34 @@ export class BlockUIConditionally extends React.Component<IBlockUIConditionallyP
       this.currentTimerId = setInterval(this.check, this.freeInterval);
     }
   }
-
 }
 
 export async function checkBlockUIFile(): Promise<string> {
+  if (isLocalServer()) {
+    return null;
+  }
+  const BLOCK_FILE_URL = '/static/block_ui.txt';
+  return getFileText(BLOCK_FILE_URL);
+}
+
+export async function getFileText(filename: string): Promise<string> {
   return new Promise<string>((resolve: (message: string) => void,
-                              reject: (err: any) => void): Promise<void> => {
-      const BLOCK_FILE_URL = '/static/block_ui.txt';
-      return axios.get(BLOCK_FILE_URL)
-        .then(response => {
-          const successStatusCode = 200;
-          if (response.status === successStatusCode) {
-            resolve(response.data);
-          } else {
-            reject(null);
-          }
-        })
-        .catch(reject)
-    }
+                              reject: (err: any) => void): Promise<void> =>
+    axios.get(filename)
+      .then(response => {
+        const successStatusCode = 200;
+        if (response.status === successStatusCode) {
+          resolve(response.data);
+        } else {
+          reject(null);
+        }
+      })
+      .catch(reject)
   );
+}
+
+function isLocalServer(): boolean {
+  return location.hostname === 'localhost'
+    || location.hostname === '127.0.0.1'
+    || Boolean(process.env.IS_APP);
 }
