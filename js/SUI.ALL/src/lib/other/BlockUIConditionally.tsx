@@ -110,19 +110,20 @@ export async function checkBlockUIFile(): Promise<string> {
     return null;
   }
   const BLOCK_FILE_URL = '/static/block_ui.txt';
+
   return getFileText(BLOCK_FILE_URL);
 }
 
 export async function getFileText(filename: string): Promise<string> {
   return new Promise<string>((resolve: (message: string) => void,
-                              reject: (err: any) => void): Promise<void> =>
+                              reject: () => void): Promise<void> =>
     axios.get(filename)
       .then(response => {
         const successStatusCode = 200;
         if (response.status === successStatusCode) {
           resolve(response.data);
         } else {
-          reject(null);
+          reject();
         }
       })
       .catch(reject)
