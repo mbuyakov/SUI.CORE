@@ -24,6 +24,8 @@ export async function colToBaseTableCol(
     subtotal: columnInfo.subtotalTypeBySubtotalTypeId,
     title: `${columnName}${rawMode ? ` (${columnInfo.columnName})` : ''}`,
     width: columnInfo.width,
+    // Костыль (имя для легкого поиска)
+    ...{__SUI_columnInfo: columnInfo}
   };
 
   if (columnInfo.filterTypeByFilterTypeId) {

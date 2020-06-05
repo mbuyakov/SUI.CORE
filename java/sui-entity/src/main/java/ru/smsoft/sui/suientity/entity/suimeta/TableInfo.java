@@ -59,16 +59,14 @@ public class TableInfo implements Persistable<Long> {
     private Long id;
 
     private Long engineId;
-
     private String tableName;
-
     private String schemaName;
-
     private String type;
 
-    private Boolean isCatalog;
-
-    private Boolean isAudited;
+    @Builder.Default
+    private Boolean isCatalog = false;
+    @Builder.Default
+    private Boolean isAudited = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Name name;

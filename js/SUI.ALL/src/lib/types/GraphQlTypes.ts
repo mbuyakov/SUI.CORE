@@ -232,3 +232,22 @@ export interface ITag {
   // noinspection SpellCheckingInspection
   columnInfoTagsByTagId: IGraphQLConnection<IColumnInfoTag>;
 }
+
+export interface ITableExportLog {
+  // noinspection SpellCheckingInspection
+  nodeId: number;
+  // noinspection SpellCheckingInspection
+  id: string;
+  // noinspection SpellCheckingInspection
+  tableInfoId: string;
+  // noinspection SpellCheckingInspection
+  tableInfoByTableInfoId?: ITableInfo;
+  // noinspection SpellCheckingInspection
+  userId: string;
+  // noinspection SpellCheckingInspection
+  userByUserId?: IUser;
+  // noinspection SpellCheckingInspection
+  ts: any /*Datetime*/;
+  // noinspection SpellCheckingInspection
+  rowCount: number;
+}

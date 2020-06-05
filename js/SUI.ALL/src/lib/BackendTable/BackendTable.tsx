@@ -8,8 +8,8 @@ import moment from 'moment';
 import * as React from 'react';
 import uuid from 'uuid';
 
-import { asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, getAllowedColumnInfos, getDataByKey, getFiltersFromUrlParam, getFilterType, getHrefLocation, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, MERGE_URL_PARAM, putFiltersToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray } from '../index';
-import { ClearFiltersPlugin } from '../plugins/ClearFiltersPlugin';
+import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, errorNotification, generateCreate, getAllowedColumnInfos, getDataByKey, getFilterType, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
+import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 
 import { BackendDataSource, MESSAGE_ID_KEY } from './BackendDataSource';
 import { RestBackendDataSource } from './RestBackendDataSource';
@@ -82,6 +82,7 @@ type IBackendTableState<T> = {
   cols?: IBaseTableColLayout[];
   // tslint:disable-next-line:no-any
   data?: any[];
+  defaultCurrentPage?: number;
   defaultFilter?: SimpleBackendFilter[];
   error?: string;
   filter?: BackendFilter[];
@@ -118,7 +119,7 @@ function calculateParentExpandedGroups(realExpandedGroupKeys: IExpandedGroup[], 
 }
 
 export class BackendTable<TSelection = defaultSelection>
-  extends React.Component<Omit<IBaseTableProps<TSelection>, 'rows' | 'cols' | 'defaultFilters' | 'customFilterComponent'> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable<TSelection>> }, IBackendTableState<TSelection>>
+  extends React.Component<Omit<IBaseTableProps<TSelection>, 'rows' | 'cols' | 'defaultFilters' | 'defaultCurrentPage' | 'customFilterComponent'> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable<TSelection>> }, IBackendTableState<TSelection>>
   implements ISelectionTable<TSelection> {
 
   private additionalStateMap: Map<string, IBackendTableState<TSelection>> = new Map<string, IBackendTableState<TSelection>>();
@@ -131,22 +132,30 @@ export class BackendTable<TSelection = defaultSelection>
 
     let defaultFilter = (this.props.defaultFilter && wrapInArray(this.props.defaultFilter)) || undefined;
     let filter = (this.props.filter && wrapInArray(this.props.filter)) || undefined;
+    let pageNumber = 0;
+    let pageSize = this.props.pageSize;
+
 
     if (this.props.id) {
-      const urlFilters = getFiltersFromUrlParam(this.props.id);
-      console.debug("urlFilters", urlFilters);
-      if (urlFilters) {
-        const shouldMergeFilters = getHrefLocation().searchParams.has(MERGE_URL_PARAM);
+      const urlState = getStateFromUrlParam(this.props.id);
+
+      if (urlState) {
+        const shouldMergeFilters = urlState.mergeFilters;
 
         defaultFilter = shouldMergeFilters
-          ? mergeDefaultFilters(defaultFilter, urlFilters.defaultFilter)
-          : urlFilters.defaultFilter;
+          ? mergeDefaultFilters(defaultFilter, urlState.defaultFilter)
+          : urlState.defaultFilter;
 
         filter = shouldMergeFilters
-          ? (urlFilters.filter || filter ? (urlFilters.filter || []).concat(filter || []) : undefined)
-          : urlFilters.filter;
+          ? (urlState.filter || filter ? (urlState.filter || []).concat(filter || []) : undefined)
+          : urlState.filter;
+        pageNumber = urlState.pageInfo.pageNumber;
+        pageSize = urlState.pageInfo.pageSize;
       }
     }
+
+    const defaultCurrentPage = paginationEnabled ? pageNumber : 0;
+    const resultPageSize = paginationEnabled ? (pageSize || 10) : 1000000000;
 
     this.state = {
       defaultFilter,
@@ -155,7 +164,9 @@ export class BackendTable<TSelection = defaultSelection>
       lastSendSelection: [],
       paginationEnabled,
       // tslint:disable-next-line:no-magic-numbers
-      pageSize: paginationEnabled ? (this.props.pageSize || 10) : 1000000000,
+      defaultCurrentPage,
+      pageSize: resultPageSize,
+      totalCount: (defaultCurrentPage * resultPageSize) + 1
     };
   }
 
@@ -287,6 +298,7 @@ export class BackendTable<TSelection = defaultSelection>
           warnings={admin ? this.state.warnings : undefined}
           // tslint:disable-next-line:no-magic-numbers
           pageSizes={[10, 25, 50]}
+          defaultCurrentPage={this.state.defaultCurrentPage}
           // remote functions
           getChildGroups={this.getChildGroups}
           onCurrentPageChange={this.onCurrentPageChange}
@@ -295,9 +307,38 @@ export class BackendTable<TSelection = defaultSelection>
           onGroupingChange={this.onGroupingChange}
           onPageSizeChange={this.onPageSizeChange}
           onSortingChange={this.onSortingChange}
+          // other
+          beforeExport={this.beforeExport}
         />
       </WaitData>
     );
+  }
+
+  @autobind
+  private async beforeExport(): Promise<boolean> {
+    let beforeExportResult: boolean;
+
+    beforeExportResult = await generateCreate(
+      'table_export_log',
+      {
+        tableInfoId: this.state.tableInfo.id,
+        userId: `${getUser().id}`,
+        rowCount: `${this.state.pageSize}` // Костыль, ломается на последней странице и при группировке
+      }
+    )
+      .then(() => true)
+      .catch(reason => {
+        console.error("Export log creation error", reason);
+        errorNotification("Ошибка при экспорте списка", "Подробное описание ошибки смотрите в консоли Вашего браузера");
+
+        return false;
+      });
+
+    if (beforeExportResult && this.props.beforeExport) {
+      beforeExportResult = await this.props.beforeExport()
+    }
+
+    return beforeExportResult;
   }
 
   @autobind
@@ -441,9 +482,11 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private onCurrentPageChange(currentPage: number): void {
-    const content = { currentPage };
-    // noinspection JSIgnoredPromiseFromCall
-    this.sendMessage('PAGE_CHANGE', content, content);
+    if (currentPage !== this.state.currentPage) {
+      const content = { currentPage };
+      // noinspection JSIgnoredPromiseFromCall
+      this.sendMessage('PAGE_CHANGE', content, content);
+    }
   }
 
   @autobind
@@ -509,10 +552,6 @@ export class BackendTable<TSelection = defaultSelection>
     const newFilters = filters.filter(filter => !stateFiltersAsString.includes(JSON.stringify(filter)));
 
     if (filters.length < stateFiltersAsString.length || newFilters.some(filter => !filter.lazy)) {
-      if (this.props.id) {
-        putFiltersToUrlParam(this.props.id, { defaultFilter: filters });
-      }
-
       // noinspection JSIgnoredPromiseFromCall
       this.sendMessage(
         'FILTER_CHANGE',
@@ -621,23 +660,31 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private async resendInitMessage(): Promise<void> {
-    return this.sendInitMessage(this.state.tableInfo, {
-      data: [],
-      expandedGroups: [],
-      filters: this.mapFilters(this.state.defaultFilter || []),
-      groupSubtotalData: new Map<GroupKey, IGroupSubtotalData>(),
-    });
+    return this.sendInitMessage(
+      this.state.tableInfo,
+      {
+        data: [],
+        expandedGroups: [],
+        filters: this.mapFilters(this.state.defaultFilter || []),
+        groupSubtotalData: new Map<GroupKey, IGroupSubtotalData>(),
+      },
+      true
+    );
   }
 
   @autobind
-  private async sendInitMessage(tableInfo: TableInfo, additionalState?: IBackendTableState<TSelection>): Promise<void> {
+  private async sendInitMessage(
+    tableInfo: TableInfo,
+    additionalState?: IBackendTableState<TSelection>,
+    resetPage: boolean = false
+  ): Promise<void> {
     if (tableInfo) {
       // TODO: Сейчас надо как-то дождатьзя загрузки инфы колонок что бы получить возможность тыкаться в directGetById. Куда ещё положить - не придумал
       await ColumnInfoManager.getAllValues();
       const content = {
         // tslint:disable-next-line:no-magic-numbers
         pageSize: this.state.pageSize,
-        currentPage: 0,
+        currentPage: resetPage ? 0 : (this.state.currentPage || this.state.defaultCurrentPage),
       };
       const sortedColumns = await getAllowedColumnInfos(tableInfo, getUser().roles);
       let defaultFilter = this.mapFilters(this.state.defaultFilter || [], true);
@@ -713,7 +760,24 @@ export class BackendTable<TSelection = defaultSelection>
       await this.backendDataSource.send(messageId, messageContent);
     }
 
-    this.setState({ loading: true, ...newState, ...(selection ? { lastSendSelection: selection } : null) });
+    this.setState(
+      { loading: true, ...newState, ...(selection ? { lastSendSelection: selection } : null) },
+      // Плохое место, но лучше не нашел
+      () => {
+        if (this.props.id && type !== "INIT") {
+          putTableStateToUrlParam(
+            this.props.id,
+            {
+              defaultFilter: this.state.filters,
+              pageInfo: {
+                pageNumber: this.state.currentPage,
+                pageSize: this.state.pageSize
+              }
+            }
+          )
+        }
+      }
+    );
   }
 
   @autobind
@@ -827,7 +891,7 @@ export class BackendTable<TSelection = defaultSelection>
           title: ' ',
           width: 80,
           dataKey: 'id',
-          render: (value: any, row: IObjectWithIndex) => (<RouterLink to={this.props.cardLinkFn(value, row)} type="link" text={<IconButton><LinkIcon/></IconButton>}/>),
+          render: (value: any, row: IObjectWithIndex): JSX.Element => (<RouterLink to={this.props.cardLinkFn(value, row)} type="link" text={<IconButton><LinkIcon/></IconButton>}/>),
         });
       }
 

@@ -16,6 +16,8 @@ public class InitMessage {
 
   private Long tableInfoId;
 
+  private Long currentPage;
+
   private Long pageSize;
 
   private List<Filtering> defaultFilters;

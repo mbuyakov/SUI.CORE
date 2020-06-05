@@ -1,17 +1,18 @@
 import {DatePicker} from "antd";
 import autobind from "autobind-decorator";
-import moment from "moment";
+import moment, {Moment} from "moment";
 import * as React from 'react';
 
 import {RangePickerValue} from "../../compatibleTypes";
 import {GET_DEFAULT_CALENDAR_RANGES} from "../../const";
+import {getDataByKey} from "../../dataKey";
 import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from "../types";
 
-type DatetimeFilterType = "date" | "datetime";
+type DatetimeType = "date" | "datetime";
 
 interface IBaseDatetimeIntervalColumnFilterProps {
   format?: string;
-  pickerMode: DatetimeFilterType;
+  pickerMode: DatetimeType;
 }
 
 interface IBaseDatetimeIntervalColumnFilterState {
@@ -29,8 +30,9 @@ export class BaseDatetimeIntervalColumnFilter
 
   public constructor(props: FullBaseDatetimeIntervalColumnFilterProps) {
     super(props);
+
     const propsFilterValue = this.props.filter && (this.props.filter.value as unknown as string[]);
-    const filterValue = propsFilterValue && propsFilterValue.map(value => value && moment.utc(value).local()) as RangePickerValue;
+    const filterValue = propsFilterValue && propsFilterValue.map(value => this.formatFilterToMoment(value)) as RangePickerValue;
 
     this.state = {
       filterValue,
@@ -53,6 +55,42 @@ export class BaseDatetimeIntervalColumnFilter
         open={this.state.open}
       />
     );
+  }
+
+  @autobind
+  // Костыль
+  private callUtc(): boolean {
+    return getDataByKey(this.props.column, "__SUI_columnInfo", "columnType") !== "date"
+  }
+
+  @autobind
+  private formatFilterToMoment(value: string | null): Moment | null {
+    return value
+      ? this.callUtc()
+        ? moment.utc(value).local()
+        : moment(value)
+      : null
+  }
+
+  @autobind
+  private formatMomentToFilter(ts: Moment | null, roundDay: "start" | "end" | null): string | null {
+    if (ts) {
+      let result = ts;
+
+      if (roundDay === "start") {
+        result = result.startOf('day');
+      } else if (roundDay === "end") {
+        result = result.endOf('day');
+      }
+
+      if (this.callUtc()) {
+        result = result.utc()
+      }
+
+      return result.format(moment.HTML5_FMT.DATETIME_LOCAL_MS);
+    }
+
+    return null
   }
 
   @autobind
@@ -82,20 +120,16 @@ export class BaseDatetimeIntervalColumnFilter
 
   @autobind
   private triggerFilter(value: RangePickerValue): void {
-    const format = moment.HTML5_FMT.DATETIME_LOCAL_MS;
-
     this.setState({lastSavedValue: value});
 
     const isDatePickMode = this.props.pickerMode === "date";
-    const start = value && value[0] && value[0].clone();
-    const end = value && value[1] && value[1].clone();
 
     this.props.onFilter({
       columnName: this.props.column.name,
       operation: "interval",
       value: [
-        start ? (isDatePickMode ? start.startOf('day') : start).utc().format(format) : null,
-        end ? (isDatePickMode ? end.endOf('day') : end).utc().format(format) : null,
+        this.formatMomentToFilter(value && value[0] && value[0].clone(), isDatePickMode ? 'start' : null),
+        this.formatMomentToFilter(value && value[1] && value[1].clone(), isDatePickMode ? 'end' : null)
         // tslint:disable-next-line:no-any
       ] as any
     });

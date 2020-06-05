@@ -348,7 +348,7 @@ export class BaseTable<TSelection = defaultSelection>
           )}
           {paginationEnabled && (
             <PagingState
-              defaultCurrentPage={0}
+              defaultCurrentPage={this.props.defaultCurrentPage || 10}
               defaultPageSize={virtual ? 0 : 10}
               currentPage={this.props.currentPage}
               pageSize={this.props.pageSize}
@@ -495,7 +495,15 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private onExport(getters: Getters): void {
+  private async onExport(getters: Getters): Promise<void> {
+    if (this.props.beforeExport) {
+      const beforeExportResult = await this.props.beforeExport();
+
+      if (!beforeExportResult) {
+        return;
+      }
+    }
+
     const hiddenColumnNames = getters.hiddenColumnNames || [];
     const cols = this.mapCols()
       .filter(col => defaultIfNotBoolean(col.exportable, true))

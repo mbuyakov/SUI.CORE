@@ -111,6 +111,7 @@ export interface IBaseTableProps<TSelection = any> {
   cardType?: CardType;
   cols: IBaseTableColLayout[];
   columnBands?: TableBandHeaderBase.ColumnBands[];
+  defaultCurrentPage?: number;
   defaultFilters?: Filter[];
   defaultSortings?: Sorting[];
   defaultWidth?: number;
@@ -144,6 +145,7 @@ export interface IBaseTableProps<TSelection = any> {
   visibilityEnabled?: boolean;
   warnings?: Array<JSX.Element | string>;
 
+  beforeExport?(): Promise<boolean>; // TODO: Костыль, удалить при переводе экспорта на бек
   cellStyler?(row: any, value: any, column: IBaseTableColLayout): React.CSSProperties;
   customFilterComponent?(props: TableFilterRow.CellProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
   expandableFilter?(row: any): boolean;
