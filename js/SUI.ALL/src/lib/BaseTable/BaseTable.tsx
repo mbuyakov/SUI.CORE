@@ -344,7 +344,7 @@ public render(): JSX.Element {
           )}
           {paginationEnabled && (
             <PagingState
-              defaultCurrentPage={this.props.defaultCurrentPage || 10}
+              defaultCurrentPage={this.props.defaultCurrentPage}
               defaultPageSize={virtual ? 0 : 10}
               currentPage={this.props.currentPage}
               pageSize={this.props.pageSize}
