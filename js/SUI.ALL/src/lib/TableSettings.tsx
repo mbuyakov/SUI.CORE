@@ -788,7 +788,7 @@ const name = {
                                         width={120}
                                         render={(_, record): JSX.Element => (
                                           <PromisedSwitch
-                                            defaultValue={record.wordWrapEnabled}
+                                            defaultChecked={record.wordWrapEnabled}
                                             promise={this.updateColFieldFn(record.id, 'wordWrapEnabled')}
                                           />
                                         )}
