@@ -25,6 +25,7 @@ export class ColumnInfo {
   public tags: string[];
   public visible: boolean;
   public width?: number;
+  public wordWrapEnabled?: boolean;
 
   private readonly name?: Name;
 
@@ -40,6 +41,7 @@ export class ColumnInfo {
     this.defaultSorting = item.defaultSorting;
     this.defaultGrouping = item.defaultGrouping;
     this.width = item.width;
+    this.wordWrapEnabled = item.wordWrapEnabled;
     this.order = item.order;
     this.tableRenderParams = item.tableRenderParams;
     this.subtotalTypeBySubtotalTypeId = item.subtotalTypeBySubtotalTypeId;
@@ -77,6 +79,7 @@ class _ColumnInfoManager extends GqlCacheManager<IColumnInfo, ColumnInfo> {
       defaultSorting
       defaultGrouping
       width
+      wordWrapEnabled
       order
       tableRenderParams
       nameByNameId {

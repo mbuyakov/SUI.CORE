@@ -23,6 +23,7 @@ groupingCriteria: (value: any) => value,
     subtotal: columnInfo.subtotalTypeBySubtotalTypeId,
     title: `${columnName}${rawMode ? ` (${columnInfo.columnName})` : ''}`,
     width: columnInfo.width,
+    wordWrapEnabled: columnInfo.wordWrapEnabled,
     // Костыль (имя для легкого поиска)
     ...{__SUI_columnInfo: columnInfo}
   };

@@ -72,6 +72,7 @@ export interface IBaseTableColLayout {
 
   title?: string;
   width?: number;
+  wordWrapEnabled?: boolean;
 
   comparator?(a: any, b: any): number;
 

@@ -162,6 +162,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
               columnType
               visible
               width
+              wordWrapEnabled
               order
               defaultVisible
               defaultValue
@@ -779,6 +780,16 @@ const name = {
                                             type="number"
                                             defaultValue={record.width}
                                             promise={this.updateColFieldFn(record.id, 'width')}
+                                          />
+                                        )}
+                                      />
+                                      <Column<IColumnInfo>
+                                        title="Перенос слов"
+                                        width={120}
+                                        render={(_, record): JSX.Element => (
+                                          <PromisedSwitch
+                                            defaultValue={record.wordWrapEnabled}
+                                            promise={this.updateColFieldFn(record.id, 'wordWrapEnabled')}
                                           />
                                         )}
                                       />

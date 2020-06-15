@@ -1,6 +1,6 @@
 import { Icon as LegacyIcon } from '@ant-design/compatible';
 import {Getter, Getters} from '@devexpress/dx-react-core';
-import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSelection, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
+import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSelection, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo, VirtualTable as VirtualTableBase} from '@devexpress/dx-react-grid';
 import {ColumnChooser, DragDropProvider, Grid, GroupingPanel, PagingPanel, Table, TableBandHeader, TableColumnReordering, TableColumnResizing, TableColumnVisibility, TableFilterRow, TableGroupRow, TableHeaderRow, TableRowDetail, TableSelection, Toolbar, VirtualTable} from '@devexpress/dx-react-grid-material-ui';
 import {TableRow} from '@material-ui/core';
 import { Card, Result, Spin } from 'antd';
@@ -157,6 +157,12 @@ public render(): JSX.Element {
         criteria: (value: any, row?: any): { key: any } => ({
           key: col.groupingCriteria ? col.groupingCriteria(value) : (col as any).render(value, row),
         }),
+      }));
+
+    const enableWordWrap = this.props.cols
+      .map(col => ({
+        columnName: col.id,
+        wordWrapEnabled: defaultIfNotBoolean(col.wordWrapEnabled, false),
       }));
 
     const defaultWidth = this.props.cols
@@ -380,11 +386,13 @@ public render(): JSX.Element {
               cellComponent={cellComponent}
               noDataCellComponent={TableNoDataCell}
               rowComponent={rowComponent}
+              columnExtensions={enableWordWrap}
             />
             : <Table
               cellComponent={cellComponent}
               noDataCellComponent={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? TableNoDataCell : TableNoDataCellSmall}
               rowComponent={rowComponent}
+              columnExtensions={enableWordWrap}
             />}
           {rowDetail && <TableRowDetail
             contentComponent={rowDetail}

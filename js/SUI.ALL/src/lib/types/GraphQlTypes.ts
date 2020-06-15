@@ -58,6 +58,8 @@ export interface IColumnInfo {
   // noinspection SpellCheckingInspection
   width?: number;
   // noinspection SpellCheckingInspection
+  wordWrapEnabled?: boolean;
+  // noinspection SpellCheckingInspection
   columnType?: string;
   // noinspection SpellCheckingInspection
   defaultValue?: string;
