@@ -159,7 +159,7 @@ public render(): JSX.Element {
         }),
       }));
 
-    const enableWordWrap = this.props.cols
+    const wordWrapExtension = this.props.cols
       .map(col => ({
         columnName: col.id,
         wordWrapEnabled: defaultIfNotBoolean(col.wordWrapEnabled, false),
@@ -386,13 +386,13 @@ public render(): JSX.Element {
               cellComponent={cellComponent}
               noDataCellComponent={TableNoDataCell}
               rowComponent={rowComponent}
-              columnExtensions={enableWordWrap}
+              columnExtensions={wordWrapExtension}
             />
             : <Table
               cellComponent={cellComponent}
               noDataCellComponent={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? TableNoDataCell : TableNoDataCellSmall}
               rowComponent={rowComponent}
-              columnExtensions={enableWordWrap}
+              columnExtensions={wordWrapExtension}
             />}
           {rowDetail && <TableRowDetail
             contentComponent={rowDetail}
