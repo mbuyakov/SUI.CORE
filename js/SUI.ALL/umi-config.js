@@ -28,7 +28,7 @@ module.exports =  {
       exclude: ['@sui/sui-all', "@material-ui/icons"],
     },
     ...(!process.env.NOT_BUILD ? {
-      chunks: ['vendors', 'smsoft', 'umi']
+      chunks: ['vendors', 'sui', 'umi']
     } : {})
   },
 
@@ -92,8 +92,8 @@ module.exports =  {
                 },
                 priority: 10,
               },
-              smsoft: {
-                name: 'smsoft',
+              sui: {
+                name: 'sui',
                 test({resource}) {
                   return /[\\/]node_modules[\\/]@sui/.test(resource);
                 },
