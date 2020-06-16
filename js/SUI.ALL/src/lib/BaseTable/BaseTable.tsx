@@ -408,7 +408,7 @@ public render(): JSX.Element {
           {filteringEnabled && <TableFilterRow cellComponent={filterCell}/>}
           {paginationEnabled && <PagingPanel
             containerComponent={pagingContainerComponent}
-            pageSizes={this.props.pageSizes || (virtual ? undefined : [10, 25, 50, 0])}
+            pageSizes={this.props.pageSizes || (virtual ? undefined : [10, 25, 50, 100, 0])}
             messages={{
               info: virtual ? BaseTable.virtualPageInfo : BaseTable.pageInfo,
               rowsPerPage: 'Записей на страницу',
