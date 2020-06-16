@@ -1,5 +1,5 @@
 {
-  "name": "@smsoft/sui-all",
+  "name": "@sui/sui-all",
   "version": "7.0.20200528081240-CANARY",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
