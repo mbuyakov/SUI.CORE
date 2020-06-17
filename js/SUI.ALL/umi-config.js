@@ -25,10 +25,10 @@ module.exports =  {
     // },
     dll: {
       //TODO: Umi bug, check update
-      exclude: ['@smsoft/sui-all', "@material-ui/icons"],
+      exclude: ['@sui/sui-all', "@material-ui/icons"],
     },
     ...(!process.env.NOT_BUILD ? {
-      chunks: ['vendors', 'smsoft', 'umi']
+      chunks: ['vendors', 'sui', 'umi']
     } : {})
   },
 
@@ -88,14 +88,14 @@ module.exports =  {
               vendor: {
                 name: 'vendors',
                 test({resource}) {
-                  return /[\\/]node_modules[\\/]/.test(resource) && !/[\\/]node_modules[\\/]@smsoft/.test(resource);
+                  return /[\\/]node_modules[\\/]/.test(resource) && !/[\\/]node_modules[\\/]@sui/.test(resource);
                 },
                 priority: 10,
               },
-              smsoft: {
-                name: 'smsoft',
+              sui: {
+                name: 'sui',
                 test({resource}) {
-                  return /[\\/]node_modules[\\/]@smsoft/.test(resource);
+                  return /[\\/]node_modules[\\/]@sui/.test(resource);
                 },
                 priority: 10,
               },

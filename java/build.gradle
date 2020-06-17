@@ -9,7 +9,7 @@ apply plugin: 'maven'
 apply plugin: 'idea'
 
 allprojects {
-  group = 'ru.smsoft.sui'
+  group = 'ru.sui'
   version = "$System.env.BUILD_NUMBER-$System.env.BRANCH_NAME"
 }
 

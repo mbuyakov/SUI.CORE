@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.smsoft.sui.suibackend.config.Autoconfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.sui.suibackend.config.Autoconfiguration

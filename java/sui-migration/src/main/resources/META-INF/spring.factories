@@ -1,6 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  ru.smsoft.sui.migration.SuiMigrationAutoConfiguration,\
+  ru.sui.migration.SuiMigrationAutoConfiguration,\
   org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 
 org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=\
-  ru.smsoft.sui.migration.SuiMigrationAutoConfigurationImportFilter
+  ru.sui.migration.SuiMigrationAutoConfigurationImportFilter
