@@ -58,15 +58,17 @@ class AuthenticationService(
                 formLogin = token.principal as String
                 remoteAddress = getRequest().clientIp
 
-                val attempts = authenticationLogRepository.countByOperationAndRemoteAddressAndFormLoginAndCreatedIsGreaterThanEqual(
-                        AuthenticationOperation.LOGIN,
-                        remoteAddress,
-                        formLogin,
-                        Date(Date().time - maxAttemptsPeriod)
-                )
+                if (maxAttemptsCount != -1L) {
+                    val attempts = authenticationLogRepository.countByOperationAndRemoteAddressAndFormLoginAndCreatedIsGreaterThanEqual(
+                            AuthenticationOperation.LOGIN,
+                            remoteAddress,
+                            formLogin,
+                            Date(Date().time - maxAttemptsPeriod)
+                    )
 
-                if (attempts >= maxAttemptsCount) {
-                    throw TooManyAttemptsException()
+                    if (attempts >= maxAttemptsCount) {
+                        throw TooManyAttemptsException()
+                    }
                 }
 
                 val authentication = authenticationManager.authenticate(token) as UsernamePasswordAuthenticationToken
