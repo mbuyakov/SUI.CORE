@@ -3,13 +3,19 @@ import autobind from "autobind-decorator";
 import { ICacheEntry } from '../cacheManager';
 import { getDataByKey } from '../dataKey';
 import { GqlCacheManager, query } from '../gql';
+import { Logger } from "../ioc/utils";
 import { asyncMap } from '../other';
 import { IColumnInfo, IGraphQLConnection, ITableInfo } from '../types';
 
 import {ColumnInfo, ColumnInfoManager} from "./ColumnInfo";
 import {Name} from "./Name";
 
+export const DEFAULT_PAGE_SIZES = [10, 25, 50, 100, 250, 500, 1000];
+
+const log = new Logger("TableInfo");
+
 export class TableInfo {
+
   public cardRenderParams?: string;
   public colorSettings?: string;
   public foreignLinkColumnInfoId?: string;
@@ -17,13 +23,13 @@ export class TableInfo {
   public isCatalog: boolean;
   public linkColumnInfoId?: string;
   public nameId?: string;
+  public pageSizes: number[];
   public schemaName: string | undefined;
   public tableName: string;
   public type: string | undefined;
 
   private colIds: string[];
   private readonly name?: Name;
-
 
   public constructor(item: ITableInfo) {
     // public
@@ -37,6 +43,13 @@ export class TableInfo {
     this.colorSettings = item.colorSettings;
     this.nameId = getDataByKey(item, "nameByNameId", "id");
     this.type = item.type;
+
+    try {
+      this.pageSizes = item.pageSizes.split(",").map(e => e.trim()).map(e => Number(e));
+    } catch (error) {
+      log.error(error, "Couldn't parse ITableInfo.pageSizes");
+      this.pageSizes = DEFAULT_PAGE_SIZES;
+    }
 
     // private
     this.colIds = (getDataByKey<IColumnInfo[]>(item, "columnInfosByTableInfoId", "nodes") || []).map(columnInfo => columnInfo.id);
@@ -108,6 +121,7 @@ if (id == null) {
       linkColumnInfoId
       foreignLinkColumnInfoId
       isCatalog
+      pageSizes
       cardRenderParams
       colorSettings
       nameByNameId {

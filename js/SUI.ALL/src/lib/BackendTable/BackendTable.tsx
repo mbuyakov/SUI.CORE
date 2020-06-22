@@ -7,7 +7,7 @@ import moment from 'moment';
 import * as React from 'react';
 import uuid from 'uuid';
 
-import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, defaultIfNotBoolean, defaultSelection, errorNotification, generateCreate, getAllowedColumnInfos, getDataByKey, getFilterType, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
+import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, defaultSelection, errorNotification, generateCreate, getAllowedColumnInfos, getDataByKey, getFilterType, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 
 import { BackendDataSource, MESSAGE_ID_KEY } from './BackendDataSource';
@@ -293,7 +293,7 @@ export class BackendTable<TSelection = defaultSelection>
           ].filter(Boolean)}
           rowStyler={this.generateRowStyler()}
           warnings={admin ? this.state.warnings : undefined}
-          pageSizes={[10, 25, 50, 100, 250, 500, 1000]}
+          pageSizes={this.state.tableInfo?.pageSizes || DEFAULT_PAGE_SIZES}
           defaultCurrentPage={this.state.defaultCurrentPage}
           // remote functions
           getChildGroups={this.getChildGroups}

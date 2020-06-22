@@ -1,8 +1,8 @@
-import { Icon } from '@ant-design/compatible';
-import { ThemeProvider, useTheme, withTheme } from '@material-ui/core';
-import { Cached } from '@material-ui/icons';
+import {Icon} from '@ant-design/compatible';
+import {ThemeProvider, withTheme} from '@material-ui/core';
+import {Cached} from '@material-ui/icons';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { Table } from 'antd';
+import {Table} from 'antd';
 import Button from 'antd/lib/button';
 import Card from 'antd/lib/card';
 import Empty from 'antd/lib/empty';
@@ -11,28 +11,28 @@ import Select from 'antd/lib/select';
 import Column from 'antd/lib/table/Column';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import {AdditionalTab} from './additionalTabs';
-import { BaseCard } from './Base';
-import { SortingDirection } from './BaseTable';
+import {BaseCard} from './Base';
+import {SortingDirection} from './BaseTable';
 import {ColumnInfo, TableInfo, TableInfoManager} from './cache';
-import { getSUISettings } from './core';
-import { getDataByKey } from './dataKey';
-import { DescriptionItem } from './DescriptionItem';
-import { DraggableRowTable } from './DraggableRowTable';
-import { FullScreenModal } from './FullScreenModal';
-import { generateUpdate, generateUpdateFn, mutate, query } from './gql';
-import { PromisedInput, PromisedMaterialIconButton, PromisedSelect, PromisedSwitch } from './Inputs';
-import { MainSettings } from './MetaCardSettings';
-import { IObjectWithIndex, sleep } from './other';
-import { NamePopover, TagsPopover, VisibleByRolesPopover } from './Popover';
-import { SUI_ROW, SUI_ROW_GROW_LEFT } from './styles';
-import { TableRenderSettingsPopover } from './TableRenderSettings';
-import { TooltipIcon } from './TooltipIcon';
-import { IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IRole, ISubtotalType, ITableInfo } from './types';
-import { draw, fullReloadTableInfo, getLinkForTable } from './utils';
-import { WaitData } from './WaitData';
+import {getSUISettings} from './core';
+import {getDataByKey} from './dataKey';
+import {DescriptionItem} from './DescriptionItem';
+import {DraggableRowTable} from './DraggableRowTable';
+import {FullScreenModal} from './FullScreenModal';
+import {generateUpdate, generateUpdateFn, mutate, query} from './gql';
+import {PromisedInput, PromisedMaterialIconButton, PromisedSelect, PromisedSwitch} from './Inputs';
+import {MainSettings} from './MetaCardSettings';
+import {IObjectWithIndex, sleep} from './other';
+import {NamePopover, TagsPopover, VisibleByRolesPopover} from './Popover';
+import {SUI_ROW, SUI_ROW_GROW_LEFT} from './styles';
+import {TableRenderSettingsPopover} from './TableRenderSettings';
+import {TooltipIcon} from './TooltipIcon';
+import {IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IRole, ISubtotalType, ITableInfo} from './types';
+import {draw, fullReloadTableInfo, getLinkForTable} from './utils';
+import {WaitData} from './WaitData';
 
 
 const SPIN_DELAY = 500;
@@ -242,6 +242,8 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
             return <div style={{ height: 300 }}/>;
           }
 
+          const auditable = (getDataByKey(data, 'tableInfoById', 'type') !== 'BASE TABLE' || ['audit', 'meta'].includes(getDataByKey(data, 'tableInfoById', 'schemaName')));
+
           return (
             <BaseCard<ITableInfo>
               item={data.tableInfoById}
@@ -426,9 +428,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                             />
                           ),
                         },
-                      ].concat((getDataByKey(data, 'tableInfoById', 'type') !== 'BASE TABLE' || ['audit', 'meta'].includes(getDataByKey(data, 'tableInfoById', 'schemaName')))
-                        ? []
-                        : [{
+                        auditable && {
                           title: 'Вести аудит',
                           dataKey: 'isAudited',
                           render: (value: boolean): JSX.Element => (
@@ -437,8 +437,24 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                               promise={this.onIsAuditedChangeFn}
                             />
                           ),
-                        }],
-                      ),
+                        },
+                        {
+                          title: 'Разбиение на страницы',
+                          dataKey: 'pageSizes',
+                          render: (value: string): JSX.Element => (
+                            <PromisedInput<string>
+                              defaultValue={value}
+                              validator={[
+                                {
+                                  message: "Некорректный формат. Пример: 10,25,100",
+                                  pattern: /^\d+(,\d+)+$/
+                                }
+                              ]}
+                              promise={generateUpdateFn('tableInfo', this.props.id, "pageSizes")}
+                            />
+                          ),
+                        }
+                      ]
                     },
                   ],
                 },
