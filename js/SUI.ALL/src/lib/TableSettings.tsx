@@ -1,6 +1,7 @@
 import {Icon} from '@ant-design/compatible';
 import {ThemeProvider, withTheme} from '@material-ui/core';
-import {Cached} from '@material-ui/icons';
+import IconButton from "@material-ui/core/IconButton";
+import {Cached, Edit} from '@material-ui/icons';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {Table} from 'antd';
 import Button from 'antd/lib/button';
@@ -241,7 +242,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
             return <div style={{ height: 300 }}/>;
           }
 
-          const auditable = (getDataByKey(data, 'tableInfoById', 'type') !== 'BASE TABLE' || ['audit', 'meta'].includes(getDataByKey(data, 'tableInfoById', 'schemaName')));
+          const auditable = (getDataByKey(data, 'tableInfoById', 'type') === 'BASE TABLE' && !['audit', 'meta'].includes(getDataByKey(data, 'tableInfoById', 'schemaName')));
 
           return (
             <BaseCard<ITableInfo>
@@ -368,6 +369,14 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                 id={value && value.id}
                                 onChanged={this.onNameChanged}
                                 getPopupContainer={this.props.getPopupContainer}
+                                render={(): JSX.Element => (
+                                  <IconButton
+                                    style={{marginLeft: 6}}
+                                    size="small"
+                                  >
+                                    <Edit/>
+                                  </IconButton>
+                                )}
                               />
                             </div>
                           )

@@ -13,10 +13,13 @@ import { SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT } from '../sty
 import { IGraphQLConnection, IName } from '../types';
 import { WaitData } from '../WaitData';
 
+export type NamePopoverRenderType = "choose" | "edit";
+
 interface INamePopoverProps {
   id?: string;
   getPopupContainer(): HTMLElement;
   onChanged(newId: string): Promise<void> | void;
+  render?(type: NamePopoverRenderType): JSX.Element;
 }
 
 export class NamePopover extends React.Component<INamePopoverProps, {
@@ -45,6 +48,8 @@ private static filterOption(inputValue: string, option: any): boolean {
   }
 
   public render(): JSX.Element {
+    const renderType: NamePopoverRenderType = this.props.id ? "edit" : "choose";
+
     return (
       <Popover
         visible={this.state.visible}
@@ -53,11 +58,13 @@ private static filterOption(inputValue: string, option: any): boolean {
         trigger="click"
         getPopupContainer={this.props.getPopupContainer}
         content={<div className={SUI_ROW_CONTAINER}>
-          {this.state.errorText && <Alert
-            message={this.state.errorText}
-            type="error"
-            showIcon={true}
-          />}
+          {this.state.errorText && (
+            <Alert
+              message={this.state.errorText}
+              type="error"
+              showIcon={true}
+            />
+          )}
           {this.state.createMode
             ? <>
               <Input
@@ -145,11 +152,16 @@ private static filterOption(inputValue: string, option: any): boolean {
             </>}
         </div>}
       >
-        <Button
-          type={!this.props.id ? 'primary' : 'default'}
-        >
-          {this.props.id ? 'Изменить' : 'Выбрать'}
-        </Button>
+        {this.props.render
+          ? this.props.render(renderType)
+          : (
+            <Button
+              type={renderType === "choose" ? 'primary' : 'default'}
+            >
+              {renderType === "choose" ? 'Выбрать' : 'Изменить'}
+            </Button>
+          )
+        }
       </Popover>
     );
   }
