@@ -4,8 +4,6 @@ import {Cached} from '@material-ui/icons';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {Table} from 'antd';
 import Button from 'antd/lib/button';
-import Card from 'antd/lib/card';
-import Empty from 'antd/lib/empty';
 import Popover from 'antd/lib/popover';
 import Select from 'antd/lib/select';
 import Column from 'antd/lib/table/Column';
@@ -19,7 +17,6 @@ import {SortingDirection} from './BaseTable';
 import {ColumnInfo, TableInfo, TableInfoManager} from './cache';
 import {getSUISettings} from './core';
 import {getDataByKey} from './dataKey';
-import {DescriptionItem} from './DescriptionItem';
 import {DraggableRowTable} from './DraggableRowTable';
 import {FullScreenModal} from './FullScreenModal';
 import {generateUpdate, generateUpdateFn, mutate, query} from './gql';
@@ -35,6 +32,7 @@ import {draw, fullReloadTableInfo, getLinkForTable} from './utils';
 import {WaitData} from './WaitData';
 
 
+const PAGE_SIZE_REGEXP = /^\d+(,\d+)*$/;
 const SPIN_DELAY = 500;
 const SAVE_SLEEP_DELAY = 1000;
 
@@ -148,6 +146,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
           foreignLinkColumnInfoId
           followColumnInfoId
           colorSettings
+          pageSizes
           nameByNameId {
             id
             name
@@ -353,34 +352,37 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                           dataKey: 'tableName',
                         },
                         {
+                          title: 'Имя таблицы в интерфейсе',
                           dataKey: ['nameByNameId'],
-                          render: (value: any): JSX.Element => (
-                            <Card
-                              size="small"
-                              type="inner"
-                              title="Имя таблицы в интерфейсе"
-                              extra={
-                                <NamePopover
-                                  id={value && value.id}
-                                  onChanged={this.onNameChanged}
-                                  getPopupContainer={this.props.getPopupContainer}
-                                />
-                              }
-                              style={{ maxWidth: 500, marginBottom: 8 }}
+                          render: (value: IName): JSX.Element => (
+                            <div
+                              style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(3, max-content)",
+                                alignItems: "center"
+                              }}
                             >
-                              {value
-                              && <>
-                                <DescriptionItem title="Имя">
-                                  {value.name}
-                                </DescriptionItem>
-                                <DescriptionItem title="Описание">
-                                  {value.description}
-                                </DescriptionItem>
-                              </>
-                              || <Empty/>}
-                            </Card>
-                          ),
+                              {value.name}
+                              {value.description && (<TooltipIcon>{value.description}</TooltipIcon>)}
+                              <NamePopover
+                                id={value && value.id}
+                                onChanged={this.onNameChanged}
+                                getPopupContainer={this.props.getPopupContainer}
+                              />
+                            </div>
+                          )
                         },
+                        {
+                          title: 'Разбиение на страницы',
+                          dataKey: 'pageSizes',
+                          render: (value: string): JSX.Element => (
+                            <PromisedInput<string>
+                              defaultValue={value}
+                              validator={value => PAGE_SIZE_REGEXP.test(value) ? undefined : "Некорректный формат. Пример: 10,25,100" }
+                              promise={generateUpdateFn('tableInfo', this.props.id, "pageSizes")}
+                            />
+                          ),
+                        }
                       ],
                     },
                     {
@@ -438,22 +440,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                             />
                           ),
                         },
-                        {
-                          title: 'Разбиение на страницы',
-                          dataKey: 'pageSizes',
-                          render: (value: string): JSX.Element => (
-                            <PromisedInput<string>
-                              defaultValue={value}
-                              validator={[
-                                {
-                                  message: "Некорректный формат. Пример: 10,25,100",
-                                  pattern: /^\d+(,\d+)+$/
-                                }
-                              ]}
-                              promise={generateUpdateFn('tableInfo', this.props.id, "pageSizes")}
-                            />
-                          ),
-                        }
+                        { render: () => "" }
                       ]
                     },
                   ],
@@ -563,7 +550,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                   generateUpdate('columnInfo', record.id, 'nameId', newId)
                                                     .then<IName>(__ => {
                                                       if (newId === null) {
-return {} as IName;
+                                                        return {} as IName;
                                                       }
 
                                                       return query(`{
@@ -574,7 +561,7 @@ return {} as IName;
                                                       }`, true);
                                                     })
                                                     .then(newName => {
-const name = {
+                                                      const name = {
                                                         id: newId,
                                                         name: newName.name,
                                                         description: newName.description,
@@ -621,7 +608,7 @@ const name = {
                                                         }
                                                       }
                                                     }`, true))))
-.then(columnInfoTags => this.updateColField(record.id, 'columnInfoTagsByColumnInfoId', { nodes: columnInfoTags.map(value => value.columnInfoTag) }, false, true))
+                                                    .then(columnInfoTags => this.updateColField(record.id, 'columnInfoTagsByColumnInfoId', { nodes: columnInfoTags.map(value => value.columnInfoTag) }, false, true))
                                                 }
                                               />
                                             </div>
@@ -925,7 +912,7 @@ const name = {
         .then(_ => {
           const tableInfoById = this.state.tableInfoById;
           tableInfoById.isAudited = value;
-this.setState({ tableInfoById }, () => resolve());
+          this.setState({ tableInfoById }, () => resolve());
         })
         .catch(_ => reject(`Ошибка при ${value ? 'включении' : 'выключении'} аудита`));
     });
@@ -935,7 +922,7 @@ this.setState({ tableInfoById }, () => resolve());
   private onNameChanged(newId: string): Promise<any> {
     return new Promise((resolve, reject): void => {
       mutate(`mutation {
-        updateTableInfoById(input: {id: "${this.props.id}", tableInfoPatch: {nameId: "${newId}"}}) {
+        updateTableInfoById(input: {id: "${this.props.id}", tableInfoPatch: {nameId: ${newId ? `"${newId}"` : null}}}) {
           clientMutationId
         }
       }`)
