@@ -8,7 +8,7 @@ services:
     networks:
       - traefik_proxy
     labels:
-      - "traefik.frontend.rule=Host:verdaccio.smp.sm-soft.ru"
+      - "traefik.frontend.rule=Host:verdaccio.smp.cloudcom.ru"
       - "traefik.docker.network=traefik_proxy"
 
 networks:
