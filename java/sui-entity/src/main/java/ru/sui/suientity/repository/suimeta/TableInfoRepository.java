@@ -1,5 +1,7 @@
 package ru.sui.suientity.repository.suimeta;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -18,14 +20,17 @@ public interface TableInfoRepository extends JpaRepository<TableInfo, Long>, Cus
 
   @EntityGraph(
     value = TableInfo.WITH_COLUMN_INFOS_AND_REFERENCES,
-    type = EntityGraph.EntityGraphType.FETCH)
+    type = EntityGraph.EntityGraphType.FETCH
+  )
   @Query("SELECT tableInfo FROM TableInfo tableInfo")
   List<TableInfo> findAllWithColumnInfoAndReferences();
 
   @EntityGraph(
     value = TableInfo.FULL_SCHEMA,
-    type = EntityGraph.EntityGraphType.FETCH)
+    type = EntityGraph.EntityGraphType.LOAD
+  )
   @Query("SELECT tableInfo FROM TableInfo tableInfo WHERE tableInfo.id = :id")
+  @Fetch(FetchMode.JOIN)
   Optional<TableInfo> findByIdWithColumnInfoAndRolesAndReferencesAndSubtotalTypesAndFilterTypes(@Param("id") Long id);
 
   Optional<TableInfo> findBySchemaNameAndTableName(String schemaName, String tableName);
