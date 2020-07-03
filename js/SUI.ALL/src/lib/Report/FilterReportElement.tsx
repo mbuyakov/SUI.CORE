@@ -51,7 +51,7 @@ export class FilterReportElement<TData, TFilter = {}>
 
   public render(): JSX.Element {
     const {children, ...restProps} = this.props;
-    const {data, filter, loading, popoverOpened} = this.state;
+    const {data, filter, lastFetchedFilter, loading, popoverOpened} = this.state;
 
     const hasHeader = !!restProps.header;
 
@@ -102,7 +102,7 @@ export class FilterReportElement<TData, TFilter = {}>
             alwaysUpdate={true}
             disableUnwrapOnReady={true}
           >
-            {() => children(data, filter)}
+            {() => children(data, lastFetchedFilter)}
           </WaitData>
           {!hasHeader && (
             <span
