@@ -101,6 +101,7 @@ public render(): JSX.Element {
     const filteringEnabled = defaultIfNotBoolean(this.props.filteringEnabled, true);
     const virtual = defaultIfNotBoolean(this.props.virtual, false);
     const visibilityEnabled = defaultIfNotBoolean(this.props.visibilityEnabled, true);
+    const highlightEnabled = defaultIfNotBoolean(this.props.highlightRow, false);
     const selectionEnabled = defaultIfNotBoolean(this.props.selectionEnabled, false);
     const resizingEnabled = defaultIfNotBoolean(this.props.resizingEnabled, true);
     const allowExport = defaultIfNotBoolean(this.props.allowExport, true);
@@ -358,7 +359,7 @@ public render(): JSX.Element {
               onPageSizeChange={this.props.onPageSizeChange}
             />
           )}
-          {selectionEnabled && <SelectionState
+          {(selectionEnabled || highlightEnabled) && <SelectionState
             selection={(this.state && this.state.selection) as any}
             onSelectionChange={this.onSelectionChange as any}
           />}
@@ -379,7 +380,7 @@ public render(): JSX.Element {
               ? <CustomPaging totalCount={this.props.totalCount}/>
               : <IntegratedPaging/>
           )}
-          {selectionEnabled && <IntegratedSelection/>}
+          {(selectionEnabled || highlightEnabled) && <IntegratedSelection/>}
           <DragDropProvider/>
           {virtual
             ? <VirtualTable
@@ -415,10 +416,13 @@ public render(): JSX.Element {
               showAll: 'Все',
             }}
           />}
-          {selectionEnabled && (
+          {(selectionEnabled || highlightEnabled) && (
             <TableSelection
+              highlightRow={highlightEnabled}
+              selectByRowClick={highlightEnabled}
+              showSelectionColumn={!highlightEnabled}
               cellComponent={selectionCellComponent}
-              showSelectAll={!this.props.selectionFilter}
+              showSelectAll={!this.props.selectionFilter && !highlightEnabled}
             />
           )}
           {groupingEnabled && <TableGroupRow contentComponent={tableGroupRowContentComponent}/>}
@@ -532,7 +536,7 @@ public render(): JSX.Element {
 
   @autobind
   private onSelectionChange(selection: TSelection[]): void {
-    const newSelection = this.props.singleSelection
+    const newSelection = (this.props.singleSelection || this.props.highlightRow)
       ? selection.filter(element => !this.state.selection.includes(element))
       : selection;
 
