@@ -1,19 +1,29 @@
-import { Form } from 'antd';
-import { FormItemProps } from 'antd/lib/form';
-import { RuleItem } from 'async-validator';
+import {Form} from 'antd';
+import {FormItemProps} from 'antd/lib/form';
+import {RuleItem} from 'async-validator';
 import autobind from 'autobind-decorator';
 import classNames from 'classnames';
 import * as React from 'react';
 
-import { IObjectWithIndex } from '../other';
-import { SUIMaskedInput } from '../SUIMaskedInput';
-import { SUIReactComponent } from '../SUIReactComponent';
+import {IObjectWithIndex} from '../other';
+import {SUIMaskedInput} from '../SUIMaskedInput';
+import {SUIReactComponent} from '../SUIReactComponent';
 
-import { DEFAULT_ITEM_RENDERER } from './BaseCardItemLayout';
-import { BaseForm, IFormField, SUBMITTED_FIELD, ValuesGetter } from './BaseForm';
-import { BaseFormContext } from './BaseFormContext';
+import {DEFAULT_ITEM_RENDERER} from './BaseCardItemLayout';
+import {BaseForm, IFormField, SUBMITTED_FIELD, ValuesGetter} from './BaseForm';
+import {BaseFormContext} from './BaseFormContext';
+import {BASE_CARD_ITEM_LABEL_HORIZONTAL} from "../styles";
 
 const FILL_FIELD_TEXT = 'Заполните поле';
+
+const TITLE_STYLE: React.CSSProperties = {
+  verticalAlign: 'top',
+  paddingRight: 12,
+  color: "rgba(121, 119, 119, 0.65)",
+  wordWrap: "break-word",
+  paddingBottom: 8,
+  paddingTop: 6
+};
 
 export type FixedRuleItem = Omit<RuleItem, 'pattern'> & {
   pattern?: string | RegExp
@@ -29,8 +39,11 @@ export interface IBaseFormItemLayoutBase {
   valuePropName?: string;
 
   afterChange?(value: any, form: BaseForm): void,
+
   getValueFromEvent?(...args: any[]): any;
+
   mapFormValuesToInputNodeProps?(get: ValuesGetter): IObjectWithIndex;
+
   mapFormValuesToRequired?(get: ValuesGetter): boolean;
 }
 
@@ -91,7 +104,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
   public render(): React.ReactNode {
     return (
       <BaseFormContext.Consumer>
-        {({ baseForm, verticalLabel, customInputNodesProps, customFinalInputNodesProps }): React.ReactNode => {
+        {({baseForm, verticalLabel, customInputNodesProps, customFinalInputNodesProps}): React.ReactNode => {
           this.baseForm = baseForm;
           const item = this.props;
           const valuePropName = item.valuePropName || 'value';
@@ -99,9 +112,9 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
 
           if (!this.formField) {
             this.formField = baseForm.getOrCreateFormField(item.fieldName);
-            this.registerObservableHandler(this.formField.value.subscribe(value => this.setState({ value })));
-            this.registerObservableHandler(this.formField.error.subscribe(error => this.setState({ error })));
-if (item.initialValue != null) {
+            this.registerObservableHandler(this.formField.value.subscribe(value => this.setState({value})));
+            this.registerObservableHandler(this.formField.error.subscribe(error => this.setState({error})));
+            if (item.initialValue != null) {
               this.formField.value.setValue(item.initialValue);
             }
           }
@@ -112,8 +125,8 @@ if (item.initialValue != null) {
 
           if (required) {
             if (this.formField.rules.findIndex(rule => rule.required || false) < 0) {
-              this.formField.rules.unshift({ required: true, message: FILL_FIELD_TEXT });
-this.baseForm.validateField(item.fieldName);
+              this.formField.rules.unshift({required: true, message: FILL_FIELD_TEXT});
+              this.baseForm.validateField(item.fieldName);
             }
           }
 
@@ -121,18 +134,18 @@ this.baseForm.validateField(item.fieldName);
             const index = this.formField.rules.findIndex(rule => rule.required || false);
             if (index >= 0) {
               this.formField.rules.splice(index, 1);
-this.baseForm.validateField(item.fieldName);
+              this.baseForm.validateField(item.fieldName);
             }
           }
 
           const title = item.title && (
-            <span className={classNames({ /*[BASE_CARD_ITEM_LABEL_HORIZONTAL]: !verticalLabel,*/ 'ant-form-item-required': !!required })}>
+            <span className={classNames({[BASE_CARD_ITEM_LABEL_HORIZONTAL]: !verticalLabel, 'ant-form-item-required': !!required})}>
              {item.title}:
             </span>
           );
 
           const isSubmitted = baseForm.getFieldValue(SUBMITTED_FIELD);
-const fieldHasValue = baseForm.getFieldValue(item.fieldName) != null;
+          const fieldHasValue = baseForm.getFieldValue(item.fieldName) != null;
           const isTouched = fieldHasValue || baseForm.isFieldTouched(item.fieldName);
           const errors = this.state.error;
 
@@ -148,39 +161,49 @@ const fieldHasValue = baseForm.getFieldValue(item.fieldName) != null;
           }
 
           if (!customFinalInputNodesProps) {
-customFinalInputNodesProps = {};
+            customFinalInputNodesProps = {};
           }
 
           if (!customInputNodesProps) {
-customInputNodesProps = {};
+            customInputNodesProps = {};
           }
 
-          const data = (
-            <>
-              {title && <td style={{verticalAlign: 'top', paddingRight: 12, color: "rgba(121, 119, 119, 0.65)", wordWrap: "break-word", paddingBottom: 8, paddingTop: 6}}>{title}</td>}
-              <td colSpan={(title ? 1 : 2) + ((this.props.colspan - 1) * 2)} style={{verticalAlign: 'top', paddingBottom: 8}}>
-                <Form.Item {...formItemProps}>
-                  {React.cloneElement(item.inputNode, {
-                    [valuePropName]: this.state.value,
-                    ...customInputNodesProps,
-                    ...item.inputNode.props,
-                    onChange: this.onChange,
-                    ...(errors ? {disabled: false} : {}),
-                    ...additionalProps,
-                    ...customFinalInputNodesProps,
-                    style: {
-                      width: '100%',
-                      ...item.inputNode.props.style,
-                      ...customInputNodesProps.style,
-                      ...additionalProps.style,
-                      ...customFinalInputNodesProps.style
-                    },
-                  })}
-                </Form.Item>
-              </td>
-            </>
+          const formItem = (
+            <Form.Item {...formItemProps}>
+              {React.cloneElement(item.inputNode, {
+                [valuePropName]: this.state.value,
+                ...customInputNodesProps,
+                ...item.inputNode.props,
+                onChange: this.onChange,
+                ...(errors ? {disabled: false} : {}),
+                ...additionalProps,
+                ...customFinalInputNodesProps,
+                style: {
+                  width: '100%',
+                  ...item.inputNode.props.style,
+                  ...customInputNodesProps.style,
+                  ...additionalProps.style,
+                  ...customFinalInputNodesProps.style
+                },
+              })}
+            </Form.Item>
           );
 
+          const data = verticalLabel
+            ? (
+              <td colSpan={2 + (this.props.colspan - 1) * 2}>
+                {title && (<div style={TITLE_STYLE}>{title}</div>)}
+                <div>{formItem}</div>
+              </td>
+            )
+            : (
+              <>
+                {title && <td style={TITLE_STYLE}>{title}</td>}
+                <td colSpan={(title ? 1 : 2) + ((this.props.colspan - 1) * 2)} style={{verticalAlign: 'top', paddingBottom: 8}}>
+                  {formItem}
+                </td>
+              </>
+            );
 
 
           // if (verticalLabel) {
@@ -199,7 +222,7 @@ customInputNodesProps = {};
 
   @autobind
   private onChange(e: any): void {
-const _getValueFromEvent = this.props.getValueFromEvent || getValueFromEvent;
+    const _getValueFromEvent = this.props.getValueFromEvent || getValueFromEvent;
     const value = _getValueFromEvent(e);
 
     this.formField.value.setValue(value);
@@ -218,7 +241,7 @@ const _getValueFromEvent = this.props.getValueFromEvent || getValueFromEvent;
         const formField = this.baseForm.getOrCreateFormField(field);
         this.registerObservableHandler(formField.value.subscribe(newValue => {
           this.state.subscribedFormFieldValues[field] = newValue;
-          this.setState({ subscribedFormFieldValues: this.state.subscribedFormFieldValues });
+          this.setState({subscribedFormFieldValues: this.state.subscribedFormFieldValues});
         }));
         this.subscribedFields.push(field);
         const value = formField.value.getValue();
@@ -243,7 +266,7 @@ function getValueFromEvent(e: any): any {
   } else {
     console.warn('Unknown event type', e);
   }
-  const { target } = e;
+  const {target} = e;
 
   return target.type === 'checkbox' ? target.checked : target.value;
 }
