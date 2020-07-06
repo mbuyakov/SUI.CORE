@@ -201,7 +201,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
   }
 
   @autobind
-  private onDropdownMenuItemClickHandler(transition: ITransition<TID>): (event: { key: string }) => Promise<void> {
+  private onDropdownMenuItemClickHandler(transition: ITransition<TID>): (event: { key: any }) => Promise<void> {
     return (event): Promise<void> => this.onTransitFn(transition, event.key)();
   }
 
