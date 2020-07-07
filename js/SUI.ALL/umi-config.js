@@ -2,6 +2,55 @@ const fs = require('fs');
 const buildTime = new Date().toISOString();
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+function webpackPluginConfig(config) {
+  if (!process.env.NOT_ANALYZE) {
+    config.plugin('BundleAnalyzerPlugin').use(BundleAnalyzerPlugin, [{
+      openAnalyzer: false,
+      analyzerMode: 'static'
+    }]);
+  }
+  config.plugin('define').tap(definitions => {
+    definitions[0] = {
+      ...definitions[0],
+      'process.env': {
+        ...definitions[0]['process.env'],
+        BUILD_TIME: `"${buildTime}"`
+      }
+    };
+    fs.writeFileSync('./build_time.txt', buildTime);
+    return definitions;
+  });
+  if (!process.env.NOT_BUILD) {
+    config.merge({
+      optimization: {
+        minimize: true,
+        splitChunks: {
+          chunks: 'all',
+          minSize: 1,
+          minChunks: 1,
+          automaticNameDelimiter: '.',
+          cacheGroups: {
+            vendor: {
+              name: 'vendors',
+              test({resource}) {
+                return /[\\/]node_modules[\\/]/.test(resource) && !/[\\/]node_modules[\\/]@sui/.test(resource);
+              },
+              priority: 10,
+            },
+            sui: {
+              name: 'sui',
+              test({resource}) {
+                return /[\\/]node_modules[\\/]@sui/.test(resource);
+              },
+              priority: 10,
+            },
+          },
+        },
+      }
+    });
+  }
+}
+
 module.exports =  {
   // ref: https://umijs.org/plugin/umi-plugin-react.html
   umiPluginReact: {
@@ -56,53 +105,7 @@ module.exports =  {
     manifest: {
       basePath: '/',
     },
+    chainWebpack: webpackPluginConfig
   },
-  webpackPluginConfig: (config) => {
-    if (!process.env.NOT_ANALYZE) {
-      config.plugin('BundleAnalyzerPlugin').use(BundleAnalyzerPlugin, [{
-        openAnalyzer: false,
-        analyzerMode: 'static'
-      }]);
-    }
-    config.plugin('define').tap(definitions => {
-      definitions[0] = {
-        ...definitions[0],
-        'process.env': {
-          ...definitions[0]['process.env'],
-          BUILD_TIME: `"${buildTime}"`
-        }
-      };
-      fs.writeFileSync('./build_time.txt', buildTime);
-      return definitions;
-    });
-    if (!process.env.NOT_BUILD) {
-      config.merge({
-        optimization: {
-          minimize: true,
-          splitChunks: {
-            chunks: 'all',
-            minSize: 1,
-            minChunks: 1,
-            automaticNameDelimiter: '.',
-            cacheGroups: {
-              vendor: {
-                name: 'vendors',
-                test({resource}) {
-                  return /[\\/]node_modules[\\/]/.test(resource) && !/[\\/]node_modules[\\/]@sui/.test(resource);
-                },
-                priority: 10,
-              },
-              sui: {
-                name: 'sui',
-                test({resource}) {
-                  return /[\\/]node_modules[\\/]@sui/.test(resource);
-                },
-                priority: 10,
-              },
-            },
-          },
-        }
-      });
-    }
-  }
+  webpackPluginConfig
 };
