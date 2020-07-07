@@ -6,17 +6,6 @@ function webpackPluginConfig(config) {
   // Used in copy-webpack-plugin
   fs.writeFileSync('./build_time.txt', buildTime);
 
-  config.plugin('define').tap(definitions => {
-    definitions[0] = {
-      ...definitions[0],
-      'process.env': {
-        ...definitions[0]['process.env'],
-        BUILD_TIME: `"${buildTime}"`
-      }
-    };
-    return definitions;
-  });
-
   // If analyze
   if (!process.env.NOT_ANALYZE) {
     config.plugin('BundleAnalyzerPlugin').use(BundleAnalyzerPlugin, [{
@@ -77,6 +66,9 @@ module.exports =  {
       "btn-font-size-sm": "14px", // as text
       "border-color-base":"rgba(217, 217, 217, 0.6)",
       "btn-shadow": "none"
+    },
+    define: {
+      "process.env.BUILD_TIME": buildTime,
     },
     treeShaking: true,
     history: 'hash',
