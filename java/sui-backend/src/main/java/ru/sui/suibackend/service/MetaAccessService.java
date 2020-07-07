@@ -2,7 +2,6 @@ package ru.sui.suibackend.service;
 
 import lombok.*;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.sui.suibackend.model.query.*;
 import ru.sui.suientity.entity.suimeta.ColumnInfo;
 import ru.sui.suientity.entity.suimeta.TableInfo;
@@ -48,7 +47,6 @@ public class MetaAccessService {
 
   }
 
-  @Transactional
   public MetaData getMetaData(Long tableInfoId, User user) {
     val tableInfo = metaSchemaService.getTableInfo(tableInfoId);
 
