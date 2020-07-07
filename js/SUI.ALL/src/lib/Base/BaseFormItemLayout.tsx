@@ -148,11 +148,11 @@ const fieldHasValue = baseForm.getFieldValue(item.fieldName) != null;
           }
 
           if (!customFinalInputNodesProps) {
-customFinalInputNodesProps = {};
+            customFinalInputNodesProps = {};
           }
 
           if (!customInputNodesProps) {
-customInputNodesProps = {};
+            customInputNodesProps = {};
           }
 
           const data = (
