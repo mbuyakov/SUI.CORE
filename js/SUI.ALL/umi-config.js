@@ -3,12 +3,9 @@ const buildTime = new Date().toISOString();
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 function webpackPluginConfig(config) {
-  if (!process.env.NOT_ANALYZE) {
-    config.plugin('BundleAnalyzerPlugin').use(BundleAnalyzerPlugin, [{
-      openAnalyzer: false,
-      analyzerMode: 'static'
-    }]);
-  }
+  // Used in copy-webpack-plugin
+  fs.writeFileSync('./build_time.txt', buildTime);
+
   config.plugin('define').tap(definitions => {
     definitions[0] = {
       ...definitions[0],
@@ -17,9 +14,18 @@ function webpackPluginConfig(config) {
         BUILD_TIME: `"${buildTime}"`
       }
     };
-    fs.writeFileSync('./build_time.txt', buildTime);
     return definitions;
   });
+
+  // If analyze
+  if (!process.env.NOT_ANALYZE) {
+    config.plugin('BundleAnalyzerPlugin').use(BundleAnalyzerPlugin, [{
+      openAnalyzer: false,
+      analyzerMode: 'static'
+    }]);
+  }
+
+  // If build
   if (!process.env.NOT_BUILD) {
     config.merge({
       optimization: {
@@ -52,35 +58,7 @@ function webpackPluginConfig(config) {
 }
 
 module.exports =  {
-  // ref: https://umijs.org/plugin/umi-plugin-react.html
-  umiPluginReact: {
-    antd: true,
-    dva: true,
-    locale: {
-      enable: true,
-      default: 'ru-RU',
-      baseNavigator: true, // default true, when it is true, will use `navigator.language` overwrite default
-      antd: true,
-    },
-    pwa: {
-      // workboxPluginMode: 'InjectManifest',
-      workboxOptions: {
-        importWorkboxFrom: 'local',
-      },
-    },
-    // dynamicImport: {
-    //   loadingComponent: './components/PageLoading/index',
-    //   webpackChunkName: true,
-    // },
-    dll: {
-      //TODO: Umi bug, check update
-      exclude: ['@sui/sui-all', "@material-ui/icons"],
-    },
-    ...(!process.env.NOT_BUILD ? {
-      chunks: ['vendors', 'sui', 'umi']
-    } : {})
-  },
-
+  // ref: https://v2.umijs.org/config/
   umiConfig: {
     publicPath: "/",
     theme: {
@@ -105,7 +83,44 @@ module.exports =  {
     manifest: {
       basePath: '/',
     },
+    copy: [
+      {
+        "from": "build_time.txt",
+        // to - default = compiler.options.output
+        // "to": "dist/build_time.txt"
+      }
+    ],
     chainWebpack: webpackPluginConfig
+  },
+
+  // ref: https://umijs.org/plugin/umi-plugin-react.html
+  umiPluginReact: {
+    antd: true,
+    dva: true,
+    locale: {
+      enable: true,
+      default: 'ru-RU',
+      baseNavigator: true, // default true, when it is true, will use `navigator.language` overwrite default
+      antd: true,
+    },
+    pwa: {
+      // workboxPluginMode: 'InjectManifest',
+      workboxOptions: {
+        importWorkboxFrom: 'local',
+      },
+    },
+    // dynamicImport: {
+    //   loadingComponent: './components/PageLoading/index',
+    //   webpackChunkName: true,
+    // },
+    dll: {
+      //TODO: Umi bug, check update
+      exclude: ['@sui/sui-all', "@material-ui/icons"],
+    },
+    // If build
+    ...(!process.env.NOT_BUILD ? {
+      chunks: ['vendors', 'sui', 'umi']
+    } : {})
   },
   webpackPluginConfig
 };
