@@ -10,6 +10,7 @@ export * from "./draggable";
 export * from "./draw";
 export * from "./filterType";
 export * from "./init";
+export * from "./location";
 export * from "./metaInfo";
 export * from "./metaUtils";
 export * from "./TabSyncer";
