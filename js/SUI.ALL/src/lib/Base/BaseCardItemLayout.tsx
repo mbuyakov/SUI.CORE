@@ -11,6 +11,7 @@ export type CardItemRender<T> = (value: any, item: T) => JSX.Element | string;
 
 export interface IBaseCardItemLayout<T> {
   dataKey?: DataKey;
+  dataVerticalAlign?: "baseline" | "bottom" | "middle" | "sub" | "super" | "text-bottom" | "text-top" | "top";
   render?: CardItemRender<T>;
   required?: boolean;
   tableProps?: Omit<IBaseTableProps, 'rows'>;
@@ -106,7 +107,7 @@ export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayou
   data = (
     <>
       {title && <td style={{verticalAlign: item.titleVerticalAlign, paddingRight: 12, color: "rgba(121, 119, 119, 0.65)", wordWrap: "break-word", paddingBottom: 8}}>{title}</td>}
-      <td colSpan={(title ? 1 : 2) + ((colspan - 1) * 2)} style={{paddingBottom: 8}}>{data}</td>
+      <td colSpan={(title ? 1 : 2) + ((colspan - 1) * 2)} style={{verticalAlign: item.dataVerticalAlign, paddingBottom: 8}}>{data}</td>
     </>
   );
 
