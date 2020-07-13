@@ -88,7 +88,7 @@ class JwtTokenProvider {
         } catch (ex: IllegalArgumentException) {
             log.error("JWT claims string is empty.")
         } catch (ex: Exception) {
-            log.error(ex.message)
+            log.error(ex.message, ex)
         }
 
         return false
