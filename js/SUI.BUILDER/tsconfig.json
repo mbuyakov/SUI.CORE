@@ -12,14 +12,16 @@
     "baseUrl": "./",
 //    "strict": true,
     "paths": {
-      "@/*": ["src/*"],
-      "@@/*": ["src/.umi/*"]
+      // ./node_modules/@sui/sui-builder/src -> ./src
+      "@/*": ["../../../src/*"],
+      "@@/*": ["../../../src/.umi/*"]
     },
     "allowSyntheticDefaultImports": true
   },
   "include": [
-    "src/**/*",
-    ".umirc.ts",
-    "typings.d.ts"
+    // ./node_modules/@sui/sui-builder/src -> ./src
+    "../../../src/**/*",
+    "../../../.umirc.ts",
+    "../../../typings.d.ts"
   ]
 }
