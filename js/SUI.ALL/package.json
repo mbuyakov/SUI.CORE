@@ -16,7 +16,7 @@
     "build": "rimraf dist && concurrently \"yarn:build-types\" \"yarn:build-js\"",
     "build-types": "tsc --emitDeclarationOnly --skipLibCheck",
     "build-js": "babel src/lib --out-dir dist --extensions \".ts,.tsx\" --source-maps inline",
-    "storybook": "NODE_OPTIONS=--max_old_space_size=4096 start-storybook -p 6006",
+    "storybook": "NODE_OPTIONS=A--max_old_space_size=4096 start-storybook -p 6006",
     "ci": "concurrently \"yarn:lint\" \"yarn:build\"",
     "build-storybook": "build-storybook"
   },
@@ -54,6 +54,7 @@
     "@types/webpack-env": "^1.15.1",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
+    "antd": "^4.4.2",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "8.1.0",
     "concurrently": "^5.1.0",
