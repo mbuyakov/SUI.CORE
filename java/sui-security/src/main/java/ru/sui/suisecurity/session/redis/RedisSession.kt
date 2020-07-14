@@ -13,8 +13,11 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import ru.sui.suisecurity.session.Session
+import java.security.MessageDigest
 import java.util.*
 
+
+private val sha1Digest = MessageDigest.getInstance("SHA-1")
 
 private fun RedisConverter.toBytes(source: Any?) = this.conversionService.convert(source, ByteArray::class.java)
 private fun RedisConverter.toString(source: Any?) = this.conversionService.convert(source, String::class.java)
@@ -102,8 +105,15 @@ internal class TransactionalSaveRedisSessionRepositoryImpl(
             val sessionIndexKey = keyValueAdapter.createKey(converter.toString(fullSessionKey), "idx")
 
             // Remove old indexes
-            connection.eval<Any>(
-                    converter.toBytes("for i, key in ipairs(redis.call('SMEMBERS', KEYS[1])) do redis.call('SREM', key, KEYS[2]) end"),
+            // eval -> evalSha (skip isQueueing kostyl)
+            val removeOldIndexesScript = """
+                for i, key in ipairs(redis.call('SMEMBERS', KEYS[1])) do
+                    redis.call('SREM', key, KEYS[2])
+                end
+            """.trimIndent()
+
+            connection.evalSha<Any>(
+                    sha1Digest.digest(converter.toBytes(removeOldIndexesScript)),
                     ReturnType.STATUS, // stub
                     2,
                     sessionIndexKey,
