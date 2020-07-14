@@ -13,9 +13,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.core.env.Environment
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
-import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
-import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories
 import ru.sui.suisecurity.lock.LocalLockProvider
 import ru.sui.suisecurity.lock.RedissonLockProvider
@@ -23,6 +21,7 @@ import ru.sui.suisecurity.session.jpa.JpaSessionRepository
 import ru.sui.suisecurity.session.jpa.JpaSessionService
 import ru.sui.suisecurity.session.redis.RedisSessionRepository
 import ru.sui.suisecurity.session.redis.RedisSessionService
+import javax.annotation.PostConstruct
 
 
 private const val REDIS_ENABLE_FLAG = "spring.redis.host"
@@ -37,23 +36,13 @@ private val DISABLE_REDIS_MAPPER: (String?) -> Boolean = {
 @EnableRedisRepositories("ru.sui.suisecurity.session.redis")
 class RedisEnabledConfig(
         private val redisSessionRepository: RedisSessionRepository,
+        private val redisTemplates: List<RedisTemplate<Any, Any>>,
         private val redisson: RedissonClient
 ) {
 
-    @Bean
-    fun redisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<Any, Any> {
-        return RedisTemplate<Any, Any>().apply {
-            this.connectionFactory = redisConnectionFactory
-            this.setEnableTransactionSupport(true)
-        }
-    }
-
-    @Bean
-    fun stringRedisTemplate(redisConnectionFactory: RedisConnectionFactory): StringRedisTemplate {
-        return StringRedisTemplate().apply {
-            this.connectionFactory = redisConnectionFactory
-            this.setEnableTransactionSupport(true)
-        }
+    @PostConstruct
+    fun postConstruct() {
+        redisTemplates.forEach { it.setEnableTransactionSupport(true) }
     }
 
     @Bean
