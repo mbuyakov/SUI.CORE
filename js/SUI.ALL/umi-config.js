@@ -1,18 +1,9 @@
 const fs = require('fs');
 const buildTime = new Date().toISOString();
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 function webpackPluginConfig(config) {
   // Used in copy-webpack-plugin
   fs.writeFileSync('./build_time.txt', buildTime);
-
-  // If analyze
-  if (!process.env.NOT_ANALYZE) {
-    config.plugin('BundleAnalyzerPlugin').use(BundleAnalyzerPlugin, [{
-      openAnalyzer: false,
-      analyzerMode: 'static'
-    }]);
-  }
 
   // If build
   if (!process.env.NOT_BUILD) {
