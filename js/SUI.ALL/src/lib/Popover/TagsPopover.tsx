@@ -123,7 +123,7 @@ private static filterOption(inputValue: string, option: any): boolean {
                     <Button
                       disabled={!(data && this.state.selectedTags && this.state.selectedTags.length > 0)}
                       icon={<Icon type={"close"} />}
-                      type="danger"
+                      danger={true}
                       onClick={this.clearSelect}
                     />
                   </div>

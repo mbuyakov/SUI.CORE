@@ -1,9 +1,8 @@
-import { Value } from '../annotation/Value';
+import {Container} from "typescript-ioc";
 
 export class LocalStorageService {
 
-  @Value('sui.projectKey')
-  private projectKey: string;
+  private projectKey = Container.getValue("sui.projectKey");
 
   public getItem(key: string): string {
     return localStorage.getItem(`${this.projectKey}_${key}`);

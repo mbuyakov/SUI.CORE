@@ -243,7 +243,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
         return (
           <Button
             href={null}
-            type="danger"
+            danger={true}
             onClick={this.props.onDelete}
           >
             Удалить "{type}"

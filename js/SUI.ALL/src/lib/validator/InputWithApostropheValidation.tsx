@@ -83,7 +83,7 @@ export class InputWithApostropheValidation extends React.Component<InputWithApos
 private getAcceptDeclineButtons() {
     return (
       <span>
-        <Button type="danger" size="small" onClick={ this.onDeclineBtnClickHandler }>
+        <Button danger={true} size="small" onClick={ this.onDeclineBtnClickHandler }>
           Отказаться
         </Button>&nbsp;
         <Button type="primary" size="small" onClick={ this.onAcceptBtnClickHandler }>
