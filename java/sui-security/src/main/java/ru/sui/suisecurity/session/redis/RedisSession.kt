@@ -5,8 +5,8 @@ import org.springframework.data.redis.core.RedisHash
 import org.springframework.data.redis.core.index.Indexed
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
 import ru.sui.suisecurity.session.Session
-import ru.sui.suisecurity.session.jpa.JpaSession
 import java.util.*
 
 
@@ -55,8 +55,11 @@ class RedisSession(
 @Repository
 interface RedisSessionRepository : CrudRepository<RedisSession, UUID> {
 
-    fun findAllByActiveIsTrue(): List<RedisSession>
+  @Transactional
+  override fun <S : RedisSession?> save(entity: S): S
 
-    fun findAllByActiveIsTrueAndUserId(userId: Long): List<RedisSession>
+  fun findAllByActiveIsTrue(): List<RedisSession>
+
+  fun findAllByActiveIsTrueAndUserId(userId: Long): List<RedisSession>
 
 }
