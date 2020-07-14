@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "files": [
     "bin",
-    "tsconfig.json"
+    "tsconfig.json",
+    "umi"
   ],
   "bin": {
     "sui-builder": "bin/sui-builder.js"
@@ -11,6 +12,8 @@
   "dependencies": {
     "@umijs/plugin-webpack-5": "^0.1.3",
     "@umijs/preset-react": "^1.5.17",
+    "create-file-webpack": "^1.0.2",
+    "cross-env": "^7.0.2",
     "umi": "3.2.9"
   }
 }
