@@ -355,7 +355,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                         {
                           title: 'Имя таблицы в интерфейсе',
                           dataKey: ['nameByNameId'],
-                          render: (value: IName): JSX.Element => (
+                          render: (value: IName | undefined): JSX.Element => (
                             <div
                               style={{
                                 display: "grid",
@@ -363,8 +363,8 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                 alignItems: "center"
                               }}
                             >
-                              {value.name}
-                              {value.description && (<TooltipIcon>{value.description}</TooltipIcon>)}
+                              {value && value.name || "Отсутствует"}
+                              {value && value.description && (<TooltipIcon>{value.description}</TooltipIcon>)}
                               <NamePopover
                                 id={value && value.id}
                                 onChanged={this.onNameChanged}
