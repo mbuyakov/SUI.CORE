@@ -14,6 +14,7 @@
     "@umijs/preset-react": "^1.5.17",
     "create-file-webpack": "^1.0.2",
     "cross-env": "^7.0.2",
+    "typescript": "^3.9.6",
     "umi": "3.2.9"
   }
 }

@@ -5,8 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = api => {
   api.modifyDefaultConfig(config => {
     config.nodeModulesTransform = {
-      type: 'none',
-      ...config.nodeModulesTransform
+      type: 'none'
     };
     return config;
   });
