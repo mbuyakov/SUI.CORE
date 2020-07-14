@@ -16,8 +16,6 @@ import ru.sui.suisecurity.session.Session
 import java.util.*
 
 
-private val TRANSACTION_SAFE_SUPPORTED_INDEXES = setOf("userId", "remoteAddress", "active")
-
 private fun RedisConverter.toBytes(source: Any?) = this.conversionService.convert(source, ByteArray::class.java)
 private fun RedisConverter.toString(source: Any?) = this.conversionService.convert(source, String::class.java)
 
@@ -92,13 +90,6 @@ internal class TransactionalSaveRedisSessionRepositoryImpl(
     @Transactional
     override fun saveInTransaction(session: RedisSession): RedisSession {
         val redisData = RedisData().apply { converter.write(session, this) }
-
-        // Check indexes
-        redisData.indexedData.forEach {
-            if (!TRANSACTION_SAFE_SUPPORTED_INDEXES.contains(it.indexName)) {
-                error("Unsupported index '${it.indexName}'")
-            }
-        }
 
         redisTemplate.execute { connection ->
             val sessionKey = converter.toBytes(redisData.id!!)
