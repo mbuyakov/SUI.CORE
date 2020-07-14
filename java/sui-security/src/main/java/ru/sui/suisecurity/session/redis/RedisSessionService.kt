@@ -10,7 +10,7 @@ class RedisSessionService(private val redisSessionRepository: RedisSessionReposi
     override fun findById(id: UUID) = redisSessionRepository.findById(id).orElse(null)?.toSession()
 
     override fun save(session: Session) {
-        redisSessionRepository.save(RedisSession.fromSession(session))
+        redisSessionRepository.saveInTransaction(RedisSession.fromSession(session))
     }
 
     override fun findAllActive() = redisSessionRepository.findAllByActiveIsTrue().map { it.toSession() }

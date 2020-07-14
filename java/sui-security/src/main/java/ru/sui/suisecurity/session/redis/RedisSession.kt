@@ -1,7 +1,13 @@
 package ru.sui.suisecurity.session.redis
 
 import org.springframework.data.annotation.Id
+import org.springframework.data.redis.connection.ReturnType
 import org.springframework.data.redis.core.RedisHash
+import org.springframework.data.redis.core.RedisKeyValueAdapter
+import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.data.redis.core.convert.RedisConverter
+import org.springframework.data.redis.core.convert.RedisData
+import org.springframework.data.redis.core.convert.SimpleIndexedPropertyValue
 import org.springframework.data.redis.core.index.Indexed
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
@@ -9,6 +15,11 @@ import org.springframework.transaction.annotation.Transactional
 import ru.sui.suisecurity.session.Session
 import java.util.*
 
+
+private val TRANSACTION_SAFE_SUPPORTED_INDEXES = setOf("userId", "remoteAddress", "active")
+
+private fun RedisConverter.toBytes(source: Any?) = this.conversionService.convert(source, ByteArray::class.java)
+private fun RedisConverter.toString(source: Any?) = this.conversionService.convert(source, String::class.java)
 
 @RedisHash("session")
 class RedisSession(
@@ -53,13 +64,81 @@ class RedisSession(
 }
 
 @Repository
-interface RedisSessionRepository : CrudRepository<RedisSession, UUID> {
+interface RedisSessionRepository : CrudRepository<RedisSession, UUID>, TransactionalSaveRedisSessionRepository {
 
-  @Transactional
-  override fun <S : RedisSession?> save(entity: S): S
+    fun findAllByActiveIsTrue(): List<RedisSession>
 
-  fun findAllByActiveIsTrue(): List<RedisSession>
+    fun findAllByActiveIsTrueAndUserId(userId: Long): List<RedisSession>
 
-  fun findAllByActiveIsTrueAndUserId(userId: Long): List<RedisSession>
+}
+
+interface TransactionalSaveRedisSessionRepository {
+
+    @Transactional
+    fun saveInTransaction(session: RedisSession): RedisSession
+
+}
+
+
+@Repository
+@Suppress("SpringJavaInjectionPointsAutowiringInspection")
+internal class TransactionalSaveRedisSessionRepositoryImpl(
+        private val redisTemplate: RedisTemplate<Any, Any>,
+        private val keyValueAdapter: RedisKeyValueAdapter
+) : TransactionalSaveRedisSessionRepository {
+
+    private val converter = keyValueAdapter.converter
+
+    @Transactional
+    override fun saveInTransaction(session: RedisSession): RedisSession {
+        val redisData = RedisData().apply { converter.write(session, this) }
+
+        // Check indexes
+        redisData.indexedData.forEach {
+            if (!TRANSACTION_SAFE_SUPPORTED_INDEXES.contains(it.indexName)) {
+                error("Unsupported index '${it.indexName}'")
+            }
+        }
+
+        redisTemplate.execute { connection ->
+            val sessionKey = converter.toBytes(redisData.id!!)
+            val fullSessionKey = keyValueAdapter.createKey(redisData.keyspace!!, redisData.id!!)
+
+            connection.del(fullSessionKey)
+            connection.hMSet(fullSessionKey, redisData.bucket.rawMap())
+            connection.sAdd(converter.toBytes(redisData.keyspace!!), fullSessionKey)
+
+            val sessionIndexKey = keyValueAdapter.createKey(converter.toString(fullSessionKey), "idx")
+
+            // Remove old indexes
+            connection.eval<Any>(
+                    converter.toBytes("for i, key in ipairs(redis.call('SMEMBERS', KEYS[1])) do redis.call('SREM', key, KEYS[2]) end"),
+                    ReturnType.STATUS, // stub
+                    2,
+                    sessionIndexKey,
+                    sessionKey
+            )
+            connection.del(sessionIndexKey)
+
+            // Add new indexes
+            redisData.indexedData.forEach {
+                @Suppress("SENSELESS_COMPARISON")
+                if ((it as SimpleIndexedPropertyValue).value != null) {
+                    val indexKey = toIndexKey(it)
+                    connection.sAdd(indexKey, sessionKey)
+                    connection.sAdd(sessionIndexKey, indexKey)
+                }
+            }
+        }
+
+        return session
+    }
+
+    private fun toIndexKey(indexedData: SimpleIndexedPropertyValue): ByteArray {
+        return keyValueAdapter.createKey(
+            converter.toString(keyValueAdapter.createKey(indexedData.keyspace, indexedData.indexName)),
+            converter.toString(converter.toBytes(indexedData.value))
+        )
+    }
 
 }
