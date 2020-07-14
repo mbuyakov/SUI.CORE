@@ -29,8 +29,7 @@
   "peerDependencies": {
     "antd": "^4.4.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "webpack-bundle-analyzer": "^3.6.1"
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
