@@ -1,5 +1,8 @@
 package ru.sui.suisecurity.session.redis
 
+import org.redisson.client.codec.StringCodec
+import org.redisson.client.protocol.RedisCommand
+import org.redisson.spring.data.connection.RedissonConnection
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.connection.ReturnType
 import org.springframework.data.redis.core.RedisHash
@@ -13,14 +16,30 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import ru.sui.suisecurity.session.Session
-import java.security.MessageDigest
 import java.util.*
 
 
-private val sha1Digest = MessageDigest.getInstance("SHA-1")
-
 private fun RedisConverter.toBytes(source: Any?) = this.conversionService.convert(source, ByteArray::class.java)
 private fun RedisConverter.toString(source: Any?) = this.conversionService.convert(source, String::class.java)
+
+// eval isQueueing kostyl
+@Suppress("SameParameterValue", "UNCHECKED_CAST")
+private fun <T> RedissonConnection.saveEval(
+        script: ByteArray,
+        returnType: ReturnType,
+        numKeys: Int,
+        vararg keysAndArgs: ByteArray
+): T {
+    val command = RedisCommand(org.redisson.api.RScript.ReturnType.STATUS.command, "EVAL")
+    val params = mutableListOf<Any>().apply {
+        this.add(script)
+        this.add(numKeys)
+        this.addAll(keysAndArgs)
+    }
+    val writeMethod = RedissonConnection::class.java.declaredMethods.first { it.name == "write" }
+    writeMethod.isAccessible = true
+    return writeMethod.invoke(this, null, StringCodec.INSTANCE, command, params.toTypedArray()) as T
+}
 
 @RedisHash("session")
 class RedisSession(
@@ -90,12 +109,17 @@ internal class TransactionalSaveRedisSessionRepositoryImpl(
 
     private val converter = keyValueAdapter.converter
 
+    init {
+        // Костыль для saveEval
+        redisTemplate.isExposeConnection = true
+    }
+
     @Transactional
     override fun saveInTransaction(session: RedisSession): RedisSession {
         val redisData = RedisData().apply { converter.write(session, this) }
 
         redisTemplate.execute { connection ->
-            val sessionKey = converter.toBytes(redisData.id!!)
+            val sessionKey = converter.toBytes(redisData.id)!!
             val fullSessionKey = keyValueAdapter.createKey(redisData.keyspace!!, redisData.id!!)
 
             connection.del(fullSessionKey)
@@ -105,15 +129,14 @@ internal class TransactionalSaveRedisSessionRepositoryImpl(
             val sessionIndexKey = keyValueAdapter.createKey(converter.toString(fullSessionKey), "idx")
 
             // Remove old indexes
-            // eval -> evalSha (skip isQueueing kostyl)
             val removeOldIndexesScript = """
                 for i, key in ipairs(redis.call('SMEMBERS', KEYS[1])) do
                     redis.call('SREM', key, KEYS[2])
                 end
             """.trimIndent()
 
-            connection.evalSha<Any>(
-                    sha1Digest.digest(converter.toBytes(removeOldIndexesScript)),
+            (connection as RedissonConnection).saveEval<Any>(
+                    converter.toBytes(removeOldIndexesScript),
                     ReturnType.STATUS, // stub
                     2,
                     sessionIndexKey,
