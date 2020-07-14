@@ -94,7 +94,9 @@ pipeline {
         stage("JS") {
           steps {
             sh """
-              cd js/SUI.ALL
+              cd js/SUI.BUILDER
+              yarn publish --registry http://verdaccio.smp.cloudcom.ru/ --non-interactive --new-version 0.0.${BUILD_NUMBER}-${BRANCH_NAME}
+              cd ../SUI.ALL
               yarn install
               yarn ci
               yarn publish --registry http://verdaccio.smp.cloudcom.ru/ --non-interactive --new-version 7.0.${BUILD_NUMBER}-${BRANCH_NAME}
