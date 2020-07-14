@@ -2,7 +2,8 @@
   "name": "@sui/sui-builder",
   "version": "0.0.1",
   "files": [
-    "bin"
+    "bin",
+    "tsconfig.json"
   ],
   "bin": {
     "sui-builder": "bin/sui-builder.js"
