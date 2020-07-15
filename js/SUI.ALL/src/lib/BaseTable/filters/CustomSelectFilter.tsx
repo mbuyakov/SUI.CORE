@@ -39,6 +39,8 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
       >
         {(selectData): JSX.Element => (
           <BaseSelectFilter<T>
+            // Multiple render issue
+            maxTagCount={5}
             {...this.props}
             filter={{ ...this.props.filter, value: this.state.value as any }}
             data={selectData}
