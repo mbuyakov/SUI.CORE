@@ -1,7 +1,5 @@
 package ru.sui.suisecurity.session.redis
 
-import org.redisson.client.codec.StringCodec
-import org.redisson.client.protocol.RedisCommand
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.connection.ReturnType
 import org.springframework.data.redis.core.RedisHash
@@ -16,29 +14,11 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import ru.sui.suisecurity.session.Session
 import java.util.*
+import javax.annotation.PostConstruct
 
 
 private fun RedisConverter.toBytes(source: Any?) = this.conversionService.convert(source, ByteArray::class.java)
 private fun RedisConverter.toString(source: Any?) = this.conversionService.convert(source, String::class.java)
-
-// eval isQueueing kostyl
-@Suppress("SameParameterValue", "UNCHECKED_CAST")
-private fun <T> Any.saveEval(
-        script: ByteArray,
-        returnType: ReturnType,
-        numKeys: Int,
-        vararg keysAndArgs: ByteArray
-): T {
-    val command = RedisCommand(org.redisson.api.RScript.ReturnType.STATUS.command, "EVAL")
-    val params = mutableListOf<Any>().apply {
-        this.add(script)
-        this.add(numKeys)
-        this.addAll(keysAndArgs)
-    }
-    val writeMethod = this::class.java.declaredMethods.first { it.name == "write" }
-    writeMethod.isAccessible = true
-    return writeMethod.invoke(this, null, StringCodec.INSTANCE, command, params.toTypedArray()) as T
-}
 
 @RedisHash("session")
 class RedisSession(
@@ -107,6 +87,23 @@ internal class TransactionalSaveRedisSessionRepositoryImpl(
 ) : TransactionalSaveRedisSessionRepository {
 
     private val converter = keyValueAdapter.converter
+    private lateinit var removeIndexesScriptSha: String
+
+    @PostConstruct
+    fun postConstruct() {
+        // load remove indexes script to server
+        // (reason: eval -> evalSha)
+        // P.S. in evalSha(ByteArray) missed isQueueing check
+        removeIndexesScriptSha = redisTemplate.execute {
+            it.scriptLoad(
+                converter.toBytes("""
+                    for i, key in ipairs(redis.call('SMEMBERS', KEYS[1])) do
+                        redis.call('SREM', key, KEYS[2])
+                    end
+                """.trimIndent())
+            )
+        }!!
+    }
 
     @Transactional
     override fun saveInTransaction(session: RedisSession): RedisSession {
@@ -124,14 +121,8 @@ internal class TransactionalSaveRedisSessionRepositoryImpl(
                 val sessionIndexKey = keyValueAdapter.createKey(converter.toString(fullSessionKey), "idx")
 
                 // Remove old indexes
-                val removeOldIndexesScript = """
-                    for i, key in ipairs(redis.call('SMEMBERS', KEYS[1])) do
-                        redis.call('SREM', key, KEYS[2])
-                    end
-                """.trimIndent()
-
-                connection.saveEval<Any>(
-                        converter.toBytes(removeOldIndexesScript),
+                connection.evalSha<Any>(
+                        converter.toBytes(removeIndexesScriptSha),
                         ReturnType.STATUS, // stub
                         2,
                         sessionIndexKey,
