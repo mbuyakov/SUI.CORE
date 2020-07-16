@@ -2,7 +2,6 @@ package ru.sui.suisecurity.session.redis
 
 import org.redisson.client.codec.StringCodec
 import org.redisson.client.protocol.RedisCommand
-import org.redisson.spring.data.connection.RedissonConnection
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.connection.ReturnType
 import org.springframework.data.redis.core.RedisHash
@@ -36,7 +35,7 @@ private fun <T> Any.saveEval(
         this.add(numKeys)
         this.addAll(keysAndArgs)
     }
-    val writeMethod = RedissonConnection::class.java.declaredMethods.first { it.name == "write" }
+    val writeMethod = this::class.java.declaredMethods.first { it.name == "write" }
     writeMethod.isAccessible = true
     return writeMethod.invoke(this, null, StringCodec.INSTANCE, command, params.toTypedArray()) as T
 }
