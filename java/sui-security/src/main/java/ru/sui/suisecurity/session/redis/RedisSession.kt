@@ -109,51 +109,49 @@ internal class TransactionalSaveRedisSessionRepositoryImpl(
 
     private val converter = keyValueAdapter.converter
 
-    init {
-        // Костыль для saveEval
-        redisTemplate.isExposeConnection = true
-    }
-
     @Transactional
     override fun saveInTransaction(session: RedisSession): RedisSession {
         val redisData = RedisData().apply { converter.write(session, this) }
 
-        redisTemplate.execute { connection ->
-            val sessionKey = converter.toBytes(redisData.id)!!
-            val fullSessionKey = keyValueAdapter.createKey(redisData.keyspace!!, redisData.id!!)
+        redisTemplate.execute(
+            { connection ->
+                val sessionKey = converter.toBytes(redisData.id)!!
+                val fullSessionKey = keyValueAdapter.createKey(redisData.keyspace!!, redisData.id!!)
 
-            connection.del(fullSessionKey)
-            connection.hMSet(fullSessionKey, redisData.bucket.rawMap())
-            connection.sAdd(converter.toBytes(redisData.keyspace!!), fullSessionKey)
+                connection.del(fullSessionKey)
+                connection.hMSet(fullSessionKey, redisData.bucket.rawMap())
+                connection.sAdd(converter.toBytes(redisData.keyspace!!), fullSessionKey)
 
-            val sessionIndexKey = keyValueAdapter.createKey(converter.toString(fullSessionKey), "idx")
+                val sessionIndexKey = keyValueAdapter.createKey(converter.toString(fullSessionKey), "idx")
 
-            // Remove old indexes
-            val removeOldIndexesScript = """
-                for i, key in ipairs(redis.call('SMEMBERS', KEYS[1])) do
-                    redis.call('SREM', key, KEYS[2])
-                end
-            """.trimIndent()
+                // Remove old indexes
+                val removeOldIndexesScript = """
+                    for i, key in ipairs(redis.call('SMEMBERS', KEYS[1])) do
+                        redis.call('SREM', key, KEYS[2])
+                    end
+                """.trimIndent()
 
-            (connection as RedissonConnection).saveEval<Any>(
-                    converter.toBytes(removeOldIndexesScript),
-                    ReturnType.STATUS, // stub
-                    2,
-                    sessionIndexKey,
-                    sessionKey
-            )
-            connection.del(sessionIndexKey)
+                (connection as RedissonConnection).saveEval<Any>(
+                        converter.toBytes(removeOldIndexesScript),
+                        ReturnType.STATUS, // stub
+                        2,
+                        sessionIndexKey,
+                        sessionKey
+                )
+                connection.del(sessionIndexKey)
 
-            // Add new indexes
-            redisData.indexedData.forEach {
-                @Suppress("SENSELESS_COMPARISON")
-                if ((it as SimpleIndexedPropertyValue).value != null) {
-                    val indexKey = toIndexKey(it)
-                    connection.sAdd(indexKey, sessionKey)
-                    connection.sAdd(sessionIndexKey, indexKey)
+                // Add new indexes
+                redisData.indexedData.forEach {
+                    @Suppress("SENSELESS_COMPARISON")
+                    if ((it as SimpleIndexedPropertyValue).value != null) {
+                        val indexKey = toIndexKey(it)
+                        connection.sAdd(indexKey, sessionKey)
+                        connection.sAdd(sessionIndexKey, indexKey)
+                    }
                 }
-            }
-        }
+            },
+            true
+        )
 
         return session
     }
