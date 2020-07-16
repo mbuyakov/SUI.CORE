@@ -1,40 +1,39 @@
-import { Icon } from '@ant-design/compatible';
-import { ThemeProvider, useTheme, withTheme } from '@material-ui/core';
-import { Cached } from '@material-ui/icons';
+import {Icon} from '@ant-design/compatible';
+import {ThemeProvider, withTheme} from '@material-ui/core';
+import IconButton from "@material-ui/core/IconButton";
+import {Cached, Edit} from '@material-ui/icons';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { Table } from 'antd';
+import {Table} from 'antd';
 import Button from 'antd/lib/button';
-import Card from 'antd/lib/card';
-import Empty from 'antd/lib/empty';
 import Popover from 'antd/lib/popover';
 import Select from 'antd/lib/select';
 import Column from 'antd/lib/table/Column';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import {AdditionalTab} from './additionalTabs';
-import { BaseCard } from './Base';
-import { SortingDirection } from './BaseTable';
+import {BaseCard} from './Base';
+import {SortingDirection} from './BaseTable';
 import {ColumnInfo, TableInfo, TableInfoManager} from './cache';
-import { getSUISettings } from './core';
-import { getDataByKey } from './dataKey';
-import { DescriptionItem } from './DescriptionItem';
-import { DraggableRowTable } from './DraggableRowTable';
-import { FullScreenModal } from './FullScreenModal';
-import { generateUpdate, generateUpdateFn, mutate, query } from './gql';
-import { PromisedInput, PromisedMaterialIconButton, PromisedSelect, PromisedSwitch } from './Inputs';
-import { MainSettings } from './MetaCardSettings';
-import { IObjectWithIndex, sleep } from './other';
-import { NamePopover, TagsPopover, VisibleByRolesPopover } from './Popover';
-import { SUI_ROW, SUI_ROW_GROW_LEFT } from './styles';
-import { TableRenderSettingsPopover } from './TableRenderSettings';
-import { TooltipIcon } from './TooltipIcon';
-import { IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IRole, ISubtotalType, ITableInfo } from './types';
-import { draw, fullReloadTableInfo, getLinkForTable } from './utils';
-import { WaitData } from './WaitData';
+import {getSUISettings} from './core';
+import {getDataByKey} from './dataKey';
+import {DraggableRowTable} from './DraggableRowTable';
+import {FullScreenModal} from './FullScreenModal';
+import {generateUpdate, generateUpdateFn, mutate, query} from './gql';
+import {PromisedInput, PromisedMaterialIconButton, PromisedSelect, PromisedSwitch} from './Inputs';
+import {MainSettings} from './MetaCardSettings';
+import {IObjectWithIndex, sleep} from './other';
+import {NamePopover, TagsPopover, VisibleByRolesPopover} from './Popover';
+import {SUI_ROW, SUI_ROW_GROW_LEFT} from './styles';
+import {TableRenderSettingsPopover} from './TableRenderSettings';
+import {TooltipIcon} from './TooltipIcon';
+import {IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IRole, ISubtotalType, ITableInfo} from './types';
+import {draw, fullReloadTableInfo, getLinkForTable} from './utils';
+import {WaitData} from './WaitData';
 
 
+const PAGE_SIZE_REGEXP = /^\d+(,\d+)*$/;
 const SPIN_DELAY = 500;
 const SAVE_SLEEP_DELAY = 1000;
 
@@ -148,6 +147,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
           foreignLinkColumnInfoId
           followColumnInfoId
           colorSettings
+          pageSizes
           nameByNameId {
             id
             name
@@ -241,6 +241,8 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
           if (!data) {
             return <div style={{ height: 300 }}/>;
           }
+
+          const auditable = (getDataByKey(data, 'tableInfoById', 'type') === 'BASE TABLE' && !['audit', 'meta'].includes(getDataByKey(data, 'tableInfoById', 'schemaName')));
 
           return (
             <BaseCard<ITableInfo>
@@ -351,34 +353,45 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                           dataKey: 'tableName',
                         },
                         {
+                          title: 'Имя таблицы в интерфейсе',
                           dataKey: ['nameByNameId'],
-                          render: (value: any): JSX.Element => (
-                            <Card
-                              size="small"
-                              type="inner"
-                              title="Имя таблицы в интерфейсе"
-                              extra={
-                                <NamePopover
-                                  id={value && value.id}
-                                  onChanged={this.onNameChanged}
-                                  getPopupContainer={this.props.getPopupContainer}
-                                />
-                              }
-                              style={{ maxWidth: 500, marginBottom: 8 }}
+                          render: (value: IName | undefined): JSX.Element => (
+                            <div
+                              style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(3, max-content)",
+                                alignItems: "center"
+                              }}
                             >
-                              {value
-                              && <>
-                                <DescriptionItem title="Имя">
-                                  {value.name}
-                                </DescriptionItem>
-                                <DescriptionItem title="Описание">
-                                  {value.description}
-                                </DescriptionItem>
-                              </>
-                              || <Empty/>}
-                            </Card>
-                          ),
+                              {value && value.name || "Отсутствует"}
+                              {value && value.description && (<TooltipIcon>{value.description}</TooltipIcon>)}
+                              <NamePopover
+                                id={value && value.id}
+                                onChanged={this.onNameChanged}
+                                getPopupContainer={this.props.getPopupContainer}
+                                render={(): JSX.Element => (
+                                  <IconButton
+                                    style={{marginLeft: 6}}
+                                    size="small"
+                                  >
+                                    <Edit/>
+                                  </IconButton>
+                                )}
+                              />
+                            </div>
+                          )
                         },
+                        {
+                          title: 'Разбиение на страницы',
+                          dataKey: 'pageSizes',
+                          render: (value: string): JSX.Element => (
+                            <PromisedInput<string>
+                              defaultValue={value}
+                              validator={value => PAGE_SIZE_REGEXP.test(value) ? undefined : "Некорректный формат. Пример: 10,25,100" }
+                              promise={generateUpdateFn('tableInfo', this.props.id, "pageSizes")}
+                            />
+                          ),
+                        }
                       ],
                     },
                     {
@@ -426,9 +439,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                             />
                           ),
                         },
-                      ].concat((getDataByKey(data, 'tableInfoById', 'type') !== 'BASE TABLE' || ['audit', 'meta'].includes(getDataByKey(data, 'tableInfoById', 'schemaName')))
-                        ? []
-                        : [{
+                        auditable && {
                           title: 'Вести аудит',
                           dataKey: 'isAudited',
                           render: (value: boolean): JSX.Element => (
@@ -437,8 +448,9 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                               promise={this.onIsAuditedChangeFn}
                             />
                           ),
-                        }],
-                      ),
+                        },
+                        { render: () => "" }
+                      ]
                     },
                   ],
                 },
@@ -547,7 +559,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                   generateUpdate('columnInfo', record.id, 'nameId', newId)
                                                     .then<IName>(__ => {
                                                       if (newId === null) {
-return {} as IName;
+                                                        return {} as IName;
                                                       }
 
                                                       return query(`{
@@ -558,7 +570,7 @@ return {} as IName;
                                                       }`, true);
                                                     })
                                                     .then(newName => {
-const name = {
+                                                      const name = {
                                                         id: newId,
                                                         name: newName.name,
                                                         description: newName.description,
@@ -605,7 +617,7 @@ const name = {
                                                         }
                                                       }
                                                     }`, true))))
-.then(columnInfoTags => this.updateColField(record.id, 'columnInfoTagsByColumnInfoId', { nodes: columnInfoTags.map(value => value.columnInfoTag) }, false, true))
+                                                    .then(columnInfoTags => this.updateColField(record.id, 'columnInfoTagsByColumnInfoId', { nodes: columnInfoTags.map(value => value.columnInfoTag) }, false, true))
                                                 }
                                               />
                                             </div>
@@ -909,7 +921,7 @@ const name = {
         .then(_ => {
           const tableInfoById = this.state.tableInfoById;
           tableInfoById.isAudited = value;
-this.setState({ tableInfoById }, () => resolve());
+          this.setState({ tableInfoById }, () => resolve());
         })
         .catch(_ => reject(`Ошибка при ${value ? 'включении' : 'выключении'} аудита`));
     });
@@ -919,7 +931,7 @@ this.setState({ tableInfoById }, () => resolve());
   private onNameChanged(newId: string): Promise<any> {
     return new Promise((resolve, reject): void => {
       mutate(`mutation {
-        updateTableInfoById(input: {id: "${this.props.id}", tableInfoPatch: {nameId: "${newId}"}}) {
+        updateTableInfoById(input: {id: "${this.props.id}", tableInfoPatch: {nameId: ${newId ? `"${newId}"` : null}}}) {
           clientMutationId
         }
       }`)

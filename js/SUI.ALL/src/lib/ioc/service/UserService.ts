@@ -74,6 +74,7 @@ export class UserService {
         } catch (reason) {
           this.log.error(reason, 'Token check error');
           notification.warn({ message: 'Ошибка при проверке токена' });
+          await sleep(1000);
         }
       } else {
         await sleep(1000);

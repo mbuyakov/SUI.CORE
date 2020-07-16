@@ -13,7 +13,7 @@ import {WaitData} from "../WaitData";
 
 import {ReportElement} from "./ReportElement";
 
-export type onChangeFn<T> = (property: keyof T) => (value: any) => void;
+export type FilterChangeHandler<T extends {}> = (filter: T) => void;
 
 export interface IFilterReportElementProps<TData, TFilter>
   extends Omit<ExtractProps<ReportElement>, "children"> {
@@ -21,7 +21,7 @@ export interface IFilterReportElementProps<TData, TFilter>
   popoverProps?: Omit<PopoverProps, "children" | "content" | "trigger">;
   children(data: TData, filter: TFilter): JSX.Element;
   fetchData(filter: TFilter): Promise<TData>;
-  popoverContent(filter: TFilter, onChangeFn: onChangeFn<TFilter>): JSX.Element;
+  popoverContent(filter: TFilter, filterChangeHandler: FilterChangeHandler<TFilter>): JSX.Element;
 }
 
 export interface IFilterReportElementState<TData, TFilter> {
@@ -51,7 +51,7 @@ export class FilterReportElement<TData, TFilter = {}>
 
   public render(): JSX.Element {
     const {children, ...restProps} = this.props;
-    const {data, filter, loading, popoverOpened} = this.state;
+    const {data, filter, lastFetchedFilter, loading, popoverOpened} = this.state;
 
     const hasHeader = !!restProps.header;
 
@@ -65,7 +65,7 @@ export class FilterReportElement<TData, TFilter = {}>
         {...restProps.popoverProps}
         trigger="click"
         visible={popoverOpened}
-        content={restProps.popoverContent(filter, this.onFilterChangeFn)}
+        content={restProps.popoverContent(filter, this.filterChangeHandler)}
         onVisibleChange={this.onPopoverVisibleChange}
       >
         <IconButton
@@ -102,7 +102,7 @@ export class FilterReportElement<TData, TFilter = {}>
             alwaysUpdate={true}
             disableUnwrapOnReady={true}
           >
-            {() => children(data, filter)}
+            {() => children(data, lastFetchedFilter)}
           </WaitData>
           {!hasHeader && (
             <span
@@ -126,13 +126,8 @@ export class FilterReportElement<TData, TFilter = {}>
   }
 
   @autobind
-  private onFilterChangeFn(property: keyof TFilter): (value: any) => void {
-    return (value): void => this.setState({
-      filter: {
-        ...this.state.filter,
-        [property]: value
-      }
-    })
+  private filterChangeHandler(filter: TFilter) {
+    return this.setState({filter});
   }
 
   @autobind

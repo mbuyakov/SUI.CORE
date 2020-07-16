@@ -187,7 +187,11 @@ mappedData?: any[];
   private updateState(): void {
     const data = this.props.data || [];
     const valueDataField = this.props.valueDataField;
-    const maxValue = Math.max(...data.map(element => element[valueDataField]), 0);
+    const maxValue = typeof (this.props.maxValue) === "number"
+      ? this.props.maxValue
+      : this.props.type === "relative"
+        ? 100
+        : Math.max(...data.map(element => element[valueDataField]), 0);
 
     this.setState({mappedData: this.mapData(data, maxValue).reverse(), maxValue});
   }

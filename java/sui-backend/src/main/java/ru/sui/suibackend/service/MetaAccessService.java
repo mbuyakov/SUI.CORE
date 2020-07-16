@@ -48,7 +48,7 @@ public class MetaAccessService {
 
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
   public MetaData getMetaData(Long tableInfoId, User user) {
     val tableInfo = metaSchemaService.getTableInfo(tableInfoId);
 

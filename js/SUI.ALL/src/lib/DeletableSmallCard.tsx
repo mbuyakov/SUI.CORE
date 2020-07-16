@@ -50,7 +50,7 @@ export const DeletableSmallCard: React.FC<Omit<CardProps, 'size' | 'type'> & {
         <Button
           href={null}
           size="small"
-          type="danger"
+          danger={true}
           icon={<Icon type={"close"} />}
           onClick={onDelete}
         />}

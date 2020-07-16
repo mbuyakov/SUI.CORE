@@ -33,6 +33,8 @@ export interface ITableInfo {
   // noinspection SpellCheckingInspection
   type?: string;
   // noinspection SpellCheckingInspection
+  pageSizes: string;
+  // noinspection SpellCheckingInspection
   nameByNameId?: IName;
   // noinspection SpellCheckingInspection
   columnInfoByLinkColumnInfoId?: IColumnInfo;

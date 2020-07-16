@@ -61,6 +61,7 @@ export class TreeSelectWithWaitData<TValue = DefaultValueType, TValueType = {}, 
         showSearch={true}
         showCheckedStrategy="SHOW_PARENT"
         {...this.props}
+        value={ready ? this.props.value : undefined}
         style={{...this.props.style, ...(!ready && {filter: 'blur(0.5px)'})}}
         treeData={this.state.treeData}
         disabled={(this.state.treeData && !ready) || this.props.disabled}

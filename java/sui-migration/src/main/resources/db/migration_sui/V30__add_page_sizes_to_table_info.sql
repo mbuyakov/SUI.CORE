@@ -1,0 +1,1 @@
+ALTER TABLE sui_meta.table_info ADD page_sizes TEXT NOT NULL DEFAULT '10,25,50,100,250,500,1000';

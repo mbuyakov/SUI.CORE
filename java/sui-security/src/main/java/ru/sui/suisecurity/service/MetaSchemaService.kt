@@ -9,7 +9,6 @@ import ru.sui.suisecurity.utils.TABLE_INFO_BY_CAMEL_CASE_NAME_CACHE
 
 
 @Service
-@EnableScheduling
 class MetaSchemaService(private val tableInfoRepository: TableInfoRepository) {
 
     fun getTableInfo(id: Long): TableInfo? {
