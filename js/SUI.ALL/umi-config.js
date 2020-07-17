@@ -1,10 +1,4 @@
-const fs = require('fs');
-const buildTime = new Date().toISOString();
-
 function webpackPluginConfig(config) {
-  // Used in copy-webpack-plugin
-  fs.writeFileSync('./build_time.txt', buildTime);
-
   // If build
   if (!process.env.NOT_BUILD) {
     config.merge({
@@ -41,21 +35,11 @@ module.exports =  {
   // ref: https://v2.umijs.org/config/
   umiConfig: {
     publicPath: "/",
-    define: {
-      "process.env.BUILD_TIME": buildTime,
-    },
     treeShaking: true,
     history: 'hash',
     manifest: {
       basePath: '/',
     },
-    copy: [
-      {
-        "from": "build_time.txt",
-        // to - default = compiler.options.output
-        // "to": "dist/build_time.txt"
-      }
-    ],
     chainWebpack: webpackPluginConfig
   },
 
