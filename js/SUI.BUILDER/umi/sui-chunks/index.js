@@ -1,6 +1,14 @@
-function webpackPluginConfig(config) {
-  // If build
-  if (!process.env.NOT_BUILD) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = api => {
+  api.modifyDefaultConfig(config => {
+    config.chunks = ['vendors', 'sui', 'umi'];
+    return config;
+  });
+
+  api.chainWebpack((config, {webpack, env, createCSSRule}) => {
     config.merge({
       optimization: {
         minimize: true,
@@ -28,26 +36,7 @@ function webpackPluginConfig(config) {
         },
       }
     });
-  }
-}
 
-module.exports =  {
-  // ref: https://v2.umijs.org/config/
-  umiConfig: {
-    publicPath: "/",
-    treeShaking: true,
-    manifest: {
-      basePath: '/',
-    },
-    chainWebpack: webpackPluginConfig
-  },
-
-  // ref: https://umijs.org/plugin/umi-plugin-react.html
-  umiPluginReact: {
-    // If build
-    ...(!process.env.NOT_BUILD ? {
-      chunks: ['vendors', 'sui', 'umi']
-    } : {})
-  },
-  webpackPluginConfig
+    return config;
+  });
 };
