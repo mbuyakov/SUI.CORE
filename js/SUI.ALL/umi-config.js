@@ -36,7 +36,6 @@ module.exports =  {
   umiConfig: {
     publicPath: "/",
     treeShaking: true,
-    history: 'hash',
     manifest: {
       basePath: '/',
     },
