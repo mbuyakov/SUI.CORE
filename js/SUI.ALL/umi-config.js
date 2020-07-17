@@ -45,28 +45,6 @@ module.exports =  {
 
   // ref: https://umijs.org/plugin/umi-plugin-react.html
   umiPluginReact: {
-    antd: true,
-    dva: true,
-    locale: {
-      enable: true,
-      default: 'ru-RU',
-      baseNavigator: true, // default true, when it is true, will use `navigator.language` overwrite default
-      antd: true,
-    },
-    pwa: {
-      // workboxPluginMode: 'InjectManifest',
-      workboxOptions: {
-        importWorkboxFrom: 'local',
-      },
-    },
-    // dynamicImport: {
-    //   loadingComponent: './components/PageLoading/index',
-    //   webpackChunkName: true,
-    // },
-    dll: {
-      //TODO: Umi bug, check update
-      exclude: ['@sui/sui-all', "@material-ui/icons"],
-    },
     // If build
     ...(!process.env.NOT_BUILD ? {
       chunks: ['vendors', 'sui', 'umi']
