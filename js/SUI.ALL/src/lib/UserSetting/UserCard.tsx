@@ -130,7 +130,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                     }
                   }
                 },
-                ...(this.props.additionalMainInfoRows ? wrapInArrayWithoutNulls(this.props.additionalMainInfoRows) : undefined),
+                ...(this.props.additionalMainInfoRows ? wrapInArrayWithoutNulls(this.props.additionalMainInfoRows) : []),
                 {
                   isDivider: true,
                   dividerText: "Пароль"
@@ -187,7 +187,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                     }
                   }
                 },
-                ...(this.props.additionalRows ? wrapInArrayWithoutNulls(this.props.additionalRows) : undefined)
+                ...(this.props.additionalRows ? wrapInArrayWithoutNulls(this.props.additionalRows) : [])
               ]}
             />
           </Card>
