@@ -1,9 +1,8 @@
-import {AxiosPromise, AxiosResponse} from "axios";
+import axios, {AxiosPromise, AxiosResponse} from "axios";
 import * as React from "react";
 import {errorNotification} from "../drawUtils";
 import {IObjectWithIndex} from "../other";
 import {getUser} from "../utils";
-import axios from "axios";
 
 
 export function doHandledUserRestRequest<T, R = void>(
