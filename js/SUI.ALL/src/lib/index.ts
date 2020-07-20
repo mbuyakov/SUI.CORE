@@ -57,5 +57,5 @@ export * from "./TableSettings";
 export * from "./TooltipIcon";
 export * from "./TransitionBar";
 export * from "./user";
-export * from "./User";
+export * from "./UserSetting";
 export * from "./WaitData";
