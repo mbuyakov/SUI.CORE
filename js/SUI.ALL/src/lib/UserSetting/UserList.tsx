@@ -12,7 +12,7 @@ import {MAX_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH_MESSAGE, MIN_PASSWORD_LENGTH, M
 import {ICreateUserFormValues} from "./types";
 
 const TABLE_NAME = "user_ui";
-const isDeleted = (user: { deleted?: boolean }) => !user.deleted;
+const isDeleted = (user: { deleted?: boolean }) => !!user.deleted;
 
 interface IUserListProps<T> {
   additionalRows?: OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseFormItemLayout>>;
