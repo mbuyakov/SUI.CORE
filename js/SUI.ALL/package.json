@@ -2,9 +2,8 @@
   "name": "@sui/sui-all",
   "version": "7.0.20200528081240-CANARY",
   "main": "lib/index.js",
-  "typings": "dist/index.d.ts",
+  "typings": "lib/index.d.ts",
   "files": [
-    "dist",
     "lib",
     "styles"
   ],
@@ -18,15 +17,7 @@
     "update-linter": "yarn add @sui/sui-linter@file:../SUI.LINTER",
     "dev": "father doc dev",
     "build": "father build",
-    "storybook": "NODE_OPTIONS=A--max_old_space_size=4096 start-storybook -p 6006",
-    "ci": "concurrently \"yarn:lint\" \"yarn:build\"",
-    "build-storybook": "build-storybook"
-  },
-  "prettier": {
-    "printWidth": 8000,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
+    "ci": "concurrently \"yarn:lint\" \"yarn:build\""
   },
   "peerDependencies": {
     "antd": "^4.4.1",
@@ -34,10 +25,6 @@
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^5.3.18",
-    "@storybook/addon-links": "^5.3.18",
-    "@storybook/addons": "^5.3.18",
-    "@storybook/react": "^5.3.18",
     "@sui/sui-linter": "file:../SUI.LINTER",
     "@types/classnames": "^2.2.10",
     "@types/lodash": "^4.14.149",
@@ -45,7 +32,8 @@
     "@types/react-dom": "^16.9.6",
     "@types/react-router-dom": "^5.1.3",
     "@types/uuid": "^8.0.0",
-    "@types/webpack-env": "^1.15.1",
+    "@types/jsonpack": "^1.1.0",
+    "@types/pako": "^1.0.1",
     "antd": "^4.4.2",
     "concurrently": "^5.1.0",
     "father": "^2.29.5",
@@ -62,8 +50,6 @@
     "@material-ui/core": "4.9.9",
     "@material-ui/icons": "4.9.1",
     "@stomp/stompjs": "^5.4.4",
-    "@types/jsonpack": "^1.1.0",
-    "@types/pako": "^1.0.1",
     "antd-mask-input": "^0.1.13",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
