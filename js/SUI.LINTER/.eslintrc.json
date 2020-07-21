@@ -47,6 +47,11 @@
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
     "@typescript-eslint/no-unused-vars": 1,
+    "@typescript-eslint/indent": 0,
+    "@typescript-eslint/array-type": 0,
+    "@typescript-eslint/no-object-literal-type-assertion": 0,
+    "@typescript-eslint/prefer-interface": 0,
+    "@typescript-eslint/no-non-null-assertion": 0,
 //    "@typescript-eslint/prefer-readonly": 2,
     "sort-exports/sort-exports": [0],
     "@typescript-eslint/explicit-function-return-type": 1,
