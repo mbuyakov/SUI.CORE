@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { Button, DatePicker } from 'antd';
 import * as React from 'react';
 
-import { TooltipIcon } from '../src/lib';
+import { TooltipIcon } from '@/index';
 // tslint:disable-next-line:no-import-side-effect
 import '../styles/index.less';
 

@@ -3,7 +3,7 @@
 import * as colors from '@material-ui/core/colors';
 import * as React from 'react';
 
-import { Color, getLevelColor, initPercentToColor } from '../src/lib/color';
+import { Color, getLevelColor, initPercentToColor } from '../src/color';
 // tslint:disable-next-line:no-import-side-effect
 import '../styles/index.less';
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import uuid from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 import { getSUISettings } from '../core';
 import {IObjectWithIndex} from "../other";
@@ -25,7 +25,7 @@ export class RestBackendDataSource extends BackendDataSource {
   }
 
   public async init(): Promise<boolean> {
-    this.initSessionId = uuid();
+    this.initSessionId = uuidv4();
     this.onOpen();
 
     return new Promise<boolean>((resolve): void => resolve(true));

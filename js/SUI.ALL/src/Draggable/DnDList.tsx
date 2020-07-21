@@ -5,7 +5,7 @@ import {MenuItemProps} from "antd/lib/menu/MenuItem";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {Container, ContainerOptions, Draggable, DropResult} from "react-smooth-dnd";
-import uuidv4 from "uuid/v4";
+import { v4 as uuidv4 } from 'uuid';
 
 import {DeletableSmallCard} from "../DeletableSmallCard";
 import { Rendered } from '../other';

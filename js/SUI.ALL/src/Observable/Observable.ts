@@ -1,5 +1,5 @@
 import autobind from "autobind-decorator";
-import uuid from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 export type ObservableHandler<T> = (newValue: T, oldValue?:T) => void;
 
@@ -30,7 +30,7 @@ export class Observable<T> {
 
   @autobind
   public subscribe(cb: ObservableHandler<T>): ObservableHandlerStub {
-    const id = uuid();
+    const id = uuidv4();
 
     this.handlers.set(id, cb);
 
