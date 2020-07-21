@@ -2,4 +2,4 @@
 .idea
 .eslintcache
 .docz
-dist
+lib
