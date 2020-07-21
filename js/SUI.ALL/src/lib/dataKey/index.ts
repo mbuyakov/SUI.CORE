@@ -71,7 +71,7 @@ export class DataKeyNode {
     let ret = this.key;
     if (this.childs.length) {
       ret = `${ret} {
-  ${this.childs.map(child => child.toString()).join(" \n")}
+  ${this.childs.map(child => child.toString()).join("\n")}
 }`;
     }
 
