@@ -5,5 +5,5 @@ cp package.json package.json.bkp
 yarn publish --registry http://verdaccio.smp.cloudcom.ru/ --non-interactive --no-git-tag-version --new-version $VERSION
 rm package.json
 mv package.json.bkp package.json
-printf "yarn add --dev @sui/sui-linter@$VERSION" | pbcopy
+printf "yarn add --dev @sui/sui-devtools@$VERSION" | pbcopy
 echo "New version: $VERSION (command to add dep copied to clipboard)"

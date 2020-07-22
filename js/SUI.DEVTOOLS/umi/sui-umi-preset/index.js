@@ -7,6 +7,7 @@ exports.default = () => {
     plugins: [
       // require.resolve('@umijs/plugin-access'),
       // require.resolve('@umijs/plugin-analytics'),
+      // REPLACED BY plugin-antd-custom require.resolve('@umijs/plugin-antd'),
       require.resolve('@umijs/plugin-antd'),
       // require.resolve('@umijs/plugin-crossorigin'),
       require.resolve('@umijs/plugin-dva'),
@@ -18,6 +19,7 @@ exports.default = () => {
       // require.resolve('@umijs/plugin-test'),
       require.resolve('@umijs/plugin-helmet'),
       ...(process.env.WEBPACK_FIVE ? [require.resolve("@umijs/plugin-webpack-5")] : []),
+      require.resolve("@sui/sui-builder/umi/plugin-antd-custom/lib"),
       require.resolve("@sui/sui-builder/umi/sui-build-time"),
       require.resolve("@sui/sui-builder/umi/sui-chunks"),
       require.resolve("@sui/sui-builder/umi/sui-history-hash"),
