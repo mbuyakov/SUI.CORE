@@ -1,4 +1,3 @@
-/*eslint sort-exports/sort-exports: 2*/
 import { Container } from 'typescript-ioc';
 import { getDataByKey } from '../dataKey';
 import { ICoreUser } from '../user';

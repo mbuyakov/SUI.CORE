@@ -1,4 +1,3 @@
-/*eslint sort-exports/sort-exports: 2*/
 const TRANSLATE_MAP = new Map<string, string>();
 let customPostProcessor: CustomPostProcessor | undefined;
 

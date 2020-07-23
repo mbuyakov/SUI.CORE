@@ -19,8 +19,7 @@ module.exports = {
   "plugins": [
     "react",
     "@typescript-eslint",
-//    "prettier",
-    require.resolve("eslint-plugin-sort-exports")
+//    "prettier"
   ],
   "extends": [
     "plugin:react/recommended",
@@ -53,7 +52,6 @@ module.exports = {
     "@typescript-eslint/prefer-interface": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
 //    "@typescript-eslint/prefer-readonly": 2,
-    "sort-exports/sort-exports": [0],
     "@typescript-eslint/explicit-function-return-type": 1,
     "quotes": [0],
     "@typescript-eslint/interface-name-prefix": [0],

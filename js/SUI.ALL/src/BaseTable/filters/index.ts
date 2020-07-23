@@ -1,4 +1,3 @@
-/*eslint sort-exports/sort-exports: 2*/
 export * from "./BaseDatetimeIntervalColumnFilter";
 export * from "./BaseSelectFilter";
 export * from "./BooleanColumnFilter";

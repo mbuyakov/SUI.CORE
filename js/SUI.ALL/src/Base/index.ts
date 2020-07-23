@@ -1,4 +1,3 @@
-/*eslint sort-exports/sort-exports: 2*/
 export * from "./BaseCard";
 export * from "./BaseCardCollapseLayout";
 export * from "./BaseCardColLayout";

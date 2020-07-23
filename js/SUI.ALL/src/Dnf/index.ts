@@ -1,4 +1,3 @@
-/*eslint sort-exports/sort-exports: 2*/
 export * from "./components";
 export * from "./utils";
 export * from "./AbstractDnfFormRowElement";
