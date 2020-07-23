@@ -1,4 +1,4 @@
-{
+module.exports = {
   "env": {
     "browser": true,
     "es6": true
@@ -20,7 +20,7 @@
     "react",
     "@typescript-eslint",
 //    "prettier",
-    "sort-exports"
+    require.resolve("eslint-plugin-sort-exports")
   ],
   "extends": [
     "plugin:react/recommended",

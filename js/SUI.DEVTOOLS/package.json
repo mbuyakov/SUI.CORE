@@ -2,7 +2,7 @@
   "name": "@sui/sui-devtools",
   "version": "0.0.1",
   "files": [
-    ".eslintrc.json",
+    ".eslintrc.js",
     "bin",
     "tsconfig.json",
     "umi",
