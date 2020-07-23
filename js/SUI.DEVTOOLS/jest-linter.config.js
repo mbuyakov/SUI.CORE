@@ -6,8 +6,8 @@ if (process.env.ROOT_DIR) {
 
 module.exports = {
   rootDir,
-  runner: 'jest-runner-eslint',
+  runner: require.resolve("jest-runner-eslint"),
   displayName: 'lint',
-  watchPlugins: ['jest-runner-eslint/watch-fix'],
+  watchPlugins: [require.resolve("jest-runner-eslint/watch-fix")],
   testMatch: ['<rootDir>/**/*.{js,ts,tsx}'],
 };
