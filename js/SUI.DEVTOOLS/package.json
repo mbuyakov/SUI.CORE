@@ -5,7 +5,7 @@
     "bin",
     "tsconfig.json",
     "umi",
-    "jest.config.js",
+    "jest-linter.config.js",
     "jest-runner-eslint.config.js"
   ],
   "bin": {
