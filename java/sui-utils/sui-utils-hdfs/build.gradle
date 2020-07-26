@@ -6,7 +6,7 @@ configurations {
 }
 
 dependencies {
-  compile project(":sui-utils-kotlin")
+  compile project(":sui-utils:sui-utils-kotlin")
   compile "org.apache.hadoop:hadoop-client:${hadoopVersion}"
   compile "org.apache.hadoop:hadoop-hdfs:${hadoopVersion}"
   compile "org.apache.hadoop:hadoop-hdfs-client:${hadoopVersion}"

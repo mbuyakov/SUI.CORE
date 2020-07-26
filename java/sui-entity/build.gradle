@@ -3,7 +3,7 @@ apply plugin: 'kotlin-spring'
 
 dependencies {
   // Kotlin
-  compile project(":sui-utils-kotlin")
+  compile project(":sui-utils:sui-utils-kotlin")
   compile "io.github.microutils:kotlin-logging:${kotlinLoggingVersion}"
   // Spring
   compile "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"

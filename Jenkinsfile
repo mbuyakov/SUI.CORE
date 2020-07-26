@@ -37,27 +37,27 @@ pipeline {
                 {
                   "files": [
                     {
-                      "pattern": "**/sui-audit/common/build/libs/common-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
+                      "pattern": "**/sui-audit/common/build/libs/sui-audit-common-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
                       "target": "sui/ru/sui/sui-audit-common/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-common-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
                     },
                     {
-                      "pattern": "**/sui-audit/common/build/libs/common-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
+                      "pattern": "**/sui-audit/common/build/libs/sui-audit-common-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
                       "target": "sui/ru/sui/sui-audit-common/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-common-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     },
                     {
-                      "pattern": "**/sui-audit/log-mover/build/libs/log-mover-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
+                      "pattern": "**/sui-audit/log-mover/build/libs/sui-audit-log-mover-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
                       "target": "sui/ru/sui/sui-audit-log-mover/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-log-mover-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
                     },
                     {
-                      "pattern": "**/sui-audit/log-mover/build/libs/log-mover-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
+                      "pattern": "**/sui-audit/log-mover/build/libs/sui-audit-log-mover-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
                       "target": "sui/ru/sui/sui-audit-log-mover/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-log-mover-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     },
                     {
-                      "pattern": "**/sui-audit/manager/build/libs/manager-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
+                      "pattern": "**/sui-audit/manager/build/libs/sui-audit-manager-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
                       "target": "sui/ru/sui/sui-audit-manager/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-manager-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
                     },
                     {
-                      "pattern": "**/sui-audit/manager/build/libs/manager-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
+                      "pattern": "**/sui-audit/manager/build/libs/sui-audit-manager-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
                       "target": "sui/ru/sui/sui-audit-manager/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-manager-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     },
                     {
@@ -109,35 +109,35 @@ pipeline {
                       "target": "sui/ru/sui/sui-migration/${BUILD_NUMBER}-${BRANCH_NAME}/sui-migration-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     },
                     {
-                      "pattern": "**/sui-utils-hbase/build/libs/sui-utils-hbase-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
+                      "pattern": "**/sui-utils/sui-utils-hbase/build/libs/sui-utils-hbase-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
                       "target": "sui/ru/sui/sui-utils-hbase/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-hbase-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
                     },
                     {
-                      "pattern": "**/sui-utils-hbase/build/libs/sui-utils-hbase-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
+                      "pattern": "**/sui-utils/sui-utils-hbase/build/libs/sui-utils-hbase-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
                       "target": "sui/ru/sui/sui-utils-hbase/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-hbase-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     },
                     {
-                      "pattern": "**/sui-utils-hdfs/build/libs/sui-utils-hdfs-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
+                      "pattern": "**/sui-utils/sui-utils-hdfs/build/libs/sui-utils-hdfs-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
                       "target": "sui/ru/sui/sui-utils-hdfs/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-hdfs-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
                     },
                     {
-                      "pattern": "**/sui-utils-hdfs/build/libs/sui-utils-hdfs-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
+                      "pattern": "**/sui-utils/sui-utils-hdfs/build/libs/sui-utils-hdfs-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
                       "target": "sui/ru/sui/sui-utils-hdfs/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-hdfs-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     },
                     {
-                      "pattern": "**/sui-utils-kotlin/build/libs/sui-utils-kotlin-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
+                      "pattern": "**/sui-utils/sui-utils-kotlin/build/libs/sui-utils-kotlin-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
                       "target": "sui/ru/sui/sui-utils-kotlin/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-kotlin-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
                     },
                     {
-                      "pattern": "**/sui-utils-kotlin/build/libs/sui-utils-kotlin-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
+                      "pattern": "**/sui-utils/sui-utils-kotlin/build/libs/sui-utils-kotlin-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
                       "target": "sui/ru/sui/sui-utils-kotlin/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-kotlin-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     },
                     {
-                      "pattern": "**/sui-utils-parquet/build/libs/sui-utils-parquet-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
+                      "pattern": "**/sui-utils/sui-utils-parquet/build/libs/sui-utils-parquet-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
                       "target": "sui/ru/sui/sui-utils-parquet/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-parquet-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
                     },
                     {
-                      "pattern": "**/sui-utils-parquet/build/libs/sui-utils-parquet-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
+                      "pattern": "**/sui-utils/sui-utils-parquet/build/libs/sui-utils-parquet-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
                       "target": "sui/ru/sui/sui-utils-parquet/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-parquet-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
                     }
                   ]

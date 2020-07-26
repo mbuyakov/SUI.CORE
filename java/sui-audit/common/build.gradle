@@ -7,7 +7,7 @@ configurations {
 
 dependencies {
     compile project(":sui-entity")
-    compile project(":sui-utils-hbase")
+    compile project(":sui-utils:sui-utils-hbase")
 }
 
 compileKotlin {
