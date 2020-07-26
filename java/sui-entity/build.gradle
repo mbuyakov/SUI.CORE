@@ -3,8 +3,7 @@ apply plugin: 'kotlin-spring'
 
 dependencies {
   // Kotlin
-  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-  compile "org.jetbrains.kotlin:kotlin-reflect"
+  compile project(":sui-utils-kotlin")
   compile "io.github.microutils:kotlin-logging:${kotlinLoggingVersion}"
   // Spring
   compile "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
