@@ -1,0 +1,17 @@
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+
+configurations {
+    compile.exclude module: "slf4j-log4j12"
+}
+
+dependencies {
+    compile project(":sui-entity")
+    compile project(":sui-utils-hbase")
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
