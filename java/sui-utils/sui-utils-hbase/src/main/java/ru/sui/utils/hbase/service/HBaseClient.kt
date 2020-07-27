@@ -4,19 +4,20 @@ import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.hbase.HBaseConfiguration
 import org.apache.hadoop.hbase.TableName
 import org.apache.hadoop.hbase.client.*
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.net.InetAddress
 import java.util.concurrent.ExecutorService
 
 
 @Service
-class HBaseClient: Connection {
+class HBaseClient(@Value("\${zookeeper.host}") private val zookeeperHost: String): Connection {
 
     private val conf: Configuration = HBaseConfiguration.create()
     private val connection: Connection
 
     init {
-        conf["hbase.zookeeper.quorum"] = InetAddress.getAllByName("zookeeper.service.consul").joinToString(",") { it.hostAddress }
+        conf["hbase.zookeeper.quorum"] = InetAddress.getAllByName(zookeeperHost).joinToString(",") { it.hostAddress }
         conf["hbase.zookeeper.property.clientPort"] = "2181"
         conf["hbase.client.keyvalue.maxsize"] = "0"
         connection = ConnectionFactory.createConnection(conf)
