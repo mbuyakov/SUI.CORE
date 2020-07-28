@@ -22,7 +22,7 @@ export type IAuditLogTableProps = Omit<ExtractProps<BaseTable>, "rows" | "cols" 
   rows: IAuditLogTableRow[];
 }
 
-export default class AuditLogTable extends React.Component<IAuditLogTableProps> {
+export class AuditLogTable extends React.Component<IAuditLogTableProps> {
 
   public render(): React.ReactNode {
     return (

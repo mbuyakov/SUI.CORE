@@ -11,7 +11,7 @@ import {GET_DEFAULT_CALENDAR_RANGES} from "../const";
 import {query} from "../gql";
 import {PromisedButton} from "../Inputs";
 import {ExtractProps} from "../other";
-import AuditLogTable, {IAuditLogTableRow} from "./AuditLogTable";
+import {AuditLogTable, IAuditLogTableRow} from "./AuditLogTable";
 import {fetchAndFormatAuditLog, fetchTablesWithAuditLogs} from "./utils";
 
 type IAuditLogProps = Omit<ExtractProps<BaseTable>, "rows" | "hideRows" | "extra"> & {
@@ -34,7 +34,7 @@ interface IAuditLogState {
   notMovedLogCount: number
 }
 
-export default class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
+export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
 
   public constructor(props: IAuditLogProps) {
     super(props);
