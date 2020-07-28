@@ -4,17 +4,15 @@ import autobind from "autobind-decorator";
 import moment from 'moment';
 import React from 'react';
 import {BaseCard} from "../Base";
-import {BaseTable} from "../BaseTable";
 import {TableInfoManager} from "../cache";
 import {RangePickerValue} from "../compatibleTypes";
 import {GET_DEFAULT_CALENDAR_RANGES} from "../const";
 import {query} from "../gql";
 import {PromisedButton} from "../Inputs";
-import {ExtractProps} from "../other";
-import {AuditLogTable, IAuditLogTableRow} from "./AuditLogTable";
+import {AuditLogTable, IAuditLogTableProps, IAuditLogTableRow} from "./AuditLogTable";
 import {fetchAndFormatAuditLog, fetchTablesWithAuditLogs} from "./utils";
 
-type IAuditLogProps = Omit<ExtractProps<BaseTable>, "rows" | "hideRows" | "extra"> & {
+type IAuditLogProps = Omit<IAuditLogTableProps, "rows" | "hideRows" | "extra"> & {
   auditApiUri: string;
 }
 
@@ -69,6 +67,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
   }
 
   public render(): React.ReactNode {
+    const {auditApiUri, ...tableProps} = this.props;
     const {logByRowIdRows, logByRowIdValues, latestLogRows, latestLogValues} = this.state;
 
     return (
@@ -83,7 +82,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
                   items: {
                     render: () => (
                       <AuditLogTable
-                        {...this.props}
+                        {...tableProps}
                         extra={(
                           <div
                             style={{
@@ -125,7 +124,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
                   items: {
                     render: () => (
                       <AuditLogTable
-                        {...this.props}
+                        {...tableProps}
                         extra={(
                           <div
                             style={{
