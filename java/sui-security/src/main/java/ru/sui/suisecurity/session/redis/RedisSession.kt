@@ -1,5 +1,6 @@
 package ru.sui.suisecurity.session.redis
 
+import org.springframework.context.annotation.Lazy
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.connection.ReturnType
 import org.springframework.data.redis.core.RedisHash
@@ -79,8 +80,9 @@ interface TransactionalSaveRedisSessionRepository {
 }
 
 
-@Repository
 @Suppress("SpringJavaInjectionPointsAutowiringInspection")
+@Repository
+@Lazy
 internal class TransactionalSaveRedisSessionRepositoryImpl(
         private val redisTemplate: RedisTemplate<Any, Any>,
         private val keyValueAdapter: RedisKeyValueAdapter
