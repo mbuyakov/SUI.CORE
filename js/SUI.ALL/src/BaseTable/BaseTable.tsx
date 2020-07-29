@@ -422,7 +422,7 @@ public render(): JSX.Element {
               selectByRowClick={highlightEnabled}
               showSelectionColumn={!highlightEnabled}
               cellComponent={selectionCellComponent}
-              showSelectAll={!this.props.selectionFilter && !highlightEnabled}
+              showSelectAll={!this.props.selectionFilter && !this.props.singleSelection && !highlightEnabled}
             />
           )}
           {groupingEnabled && <TableGroupRow contentComponent={tableGroupRowContentComponent}/>}
