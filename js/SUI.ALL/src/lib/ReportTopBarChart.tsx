@@ -12,26 +12,10 @@ const labelStyle: React.CSSProperties = {
   textAlign: 'right'
 };
 
-const KOSTYL = (value: number, color: string) => `
-  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 41.1 28.6" style="enable-background:new 0 0 41.1 28.6;" xml:space="preserve">
-  <style type="text/css">
-    .st0{fill:#FFFFFF;}
-    .st1{fill:none;stroke: ${color};}
-    .st3{font-size:13px;}
-  </style>
-  <g id="Group_125" transform="translate(-519.5 -423)">
-    <g id="Rectangle_38" transform="translate(519.5 423)">
-      <path class="st0" d="M14.6,0h12.3c7.9,0,14.3,6.4,14.3,14.3l0,0c0,7.9-6.4,14.3-14.3,14.3H14.6c-7.9,0-14.3-6.4-14.3-14.3l0,0    C0.3,6.4,6.7,0,14.6,0z"/>
-      <path class="st1" d="M14.6,0.7h12.3c7.5,0,13.6,6.1,13.6,13.6l0,0c0,7.5-6.1,13.6-13.6,13.6H14.6C7,27.9,0.9,21.8,0.9,14.3l0,0    C0.9,6.8,7,0.7,14.6,0.7z"/>
-    </g>
-  </g>
-  <text class="st2 st3" transform="translate(6, 18)">${(value < 10 ? " " : "") + (value === 100 ? "100.0" : value.toFixed(2))}</text>
-  </svg>
-`;
-
 interface ITopBarChartProps {
   categoryDataField: string;
-data?: any[];
+  customLabelText?: string;
+  data?: any[];
   decimalValues?: boolean;
   labelPanelWidth?: number;
   labelTemplate?: string;
@@ -41,12 +25,9 @@ data?: any[];
   // Relative - 0 to 100
   type: "relative" | "absolute" | string;
   valueDataField: string;
-
   additionalSetting?(props: IReportTopBarChartSettingProps): void;
-
   categoryAxisLabelGenerator(element: IObjectWithIndex): string | JSX.Element;
-
-onSeriesClick?(event: any): void;
+  onSeriesClick?(event: any): void;
 }
 
 export interface IReportTopBarChartSettingProps {
@@ -55,7 +36,7 @@ export interface IReportTopBarChartSettingProps {
 }
 
 export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
-mappedData?: any[];
+  mappedData?: any[];
   maxValue?: number;
 }> {
 
@@ -97,7 +78,7 @@ mappedData?: any[];
             style={{flexGrow: 1, height: 300}}
             type={am4charts.XYChart}
             data={this.state.mappedData as IObjectWithIndex[]}
-            onChartCreated={(chart): void => {
+            onChartCreated={(chart: am4charts.XYChart): void => {
               chart.paddingLeft = 0;
 
               const categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
@@ -129,7 +110,6 @@ mappedData?: any[];
 
               if (this.props.tooltipTemplate) {
                 series.columns.template.tooltipText = this.props.tooltipTemplate;
-// @ts-ignore
                 series.tooltip.pointerOrientation = "vertical";
               }
 
@@ -139,15 +119,27 @@ mappedData?: any[];
 
               series.columns.template.column.cornerRadius(16, 16, 16, 16);
 
-              const bullet = series.bullets.push(new am4charts.Bullet());
-              const image = bullet.createChild(am4core.Image);
-              image.width = 40;
-              image.height = 24;
-              image.dy = 2;
-              image.verticalCenter = "bottom";
-              image.propertyFields.horizontalCenter = "horizontalCenter";
-              image.propertyFields.dx = "dx";
-              image.propertyFields.href = "svg";
+              const bullet = series.bullets.push(new am4charts.LabelBullet());
+              bullet.locationY = 0.1;
+              bullet.label.text = this.props.customLabelText || "{valueX.formatNumber('#.##')}";
+              bullet.label.fontSize = 13;
+              bullet.label.padding(4, 8, 4, 8);
+              bullet.label.propertyFields.horizontalCenter = "horizontalCenter";
+              bullet.label.verticalCenter = "top";
+              bullet.label.propertyFields.dx = "dx";
+              bullet.label.truncate = false;
+              bullet.label.hideOversized = false;
+              bullet.dy = -2;
+
+              const bulletBackground = new am4core.RoundedRectangle();
+              bulletBackground.height = 24;
+              bulletBackground.cornerRadius(12, 12, 12, 12);
+              bulletBackground.fill = am4core.color("#FFFFFF");
+              bulletBackground.strokeOpacity = 1;
+              bulletBackground.strokeWidth = 2;
+              bulletBackground.propertyFields.stroke = "color";
+
+              bullet.label.background = bulletBackground;
 
               if (this.props.additionalSetting) {
                 this.props.additionalSetting({
@@ -178,8 +170,7 @@ mappedData?: any[];
             : (relativeValue < 15)
             ? { dx: -6, horizontalCenter: "left" }
             : { dx: 0, horizontalCenter: "middle" }
-        ),
-        svg: `data:image/svg+xml;charset=utf-8;base64,${btoa(KOSTYL(value, color))}`
+        )
       }
     });
   }
