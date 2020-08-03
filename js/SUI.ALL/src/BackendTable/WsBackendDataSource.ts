@@ -6,19 +6,22 @@ import { Socket } from '../Socket';
 import { getUser } from '../utils';
 
 import { BackendDataSource, MESSAGE_ID_KEY } from './BackendDataSource';
+import {Logger} from "@/ioc";
 
 const SEND_DESTINATION = '/data';
 
+const log = new Logger("WsBackendDataSource");
+
 const maximizeLogConfig: Partial<StompConfig> = {
-  debug: (msg): void => console.log(msg),
+  debug: (msg): void => log.debug(msg),
   logRawCommunication: true,
-  onDisconnect: (frame): void => console.log('onDisconnect', frame),
-  onStompError: (frame): void => console.log('onStompError', frame),
-  onUnhandledFrame: (frame): void => console.log('onUnhandledFrame', frame),
-  onUnhandledMessage: (message): void => console.log('onUnhandledMessage', message),
-  onUnhandledReceipt: (frame): void => console.log('onUnhandledReceipt', frame),
-  onWebSocketClose: (closeEvent): void => console.log('onWebSocketClose', closeEvent),
-  onWebSocketError: (event): void => console.log('onWebSocketError', event),
+  onDisconnect: (frame): void => log.debug(['onDisconnect', frame]),
+  onStompError: (frame): void =>log.debug(['onStompError', frame]),
+  onUnhandledFrame: (frame): void => log.debug(['onUnhandledFrame', frame]),
+  onUnhandledMessage: (message): void => log.debug(['onUnhandledMessage', message]),
+  onUnhandledReceipt: (frame): void => log.debug(['onUnhandledReceipt', frame]),
+  onWebSocketClose: (closeEvent): void => log.debug(['onWebSocketClose', closeEvent]),
+  onWebSocketError: (event): void => log.debug(['onWebSocketError', event]),
 };
 
 const SUBSCRIBE_DESTINATION_PREFIX = '/user/queue/response/';
@@ -44,7 +47,7 @@ export class WsBackendDataSource extends BackendDataSource {
 
   public async init(): Promise<boolean> {
     const backendURL = new URL(`ws${location.protocol === 'https:' ? 's' : ''}://${getSUISettings().backendUrl}`);
-    console.log(backendURL);
+    log.debug(backendURL);
 
     this.socket = new Socket({
       ...maximizeLogConfig,
@@ -54,7 +57,7 @@ export class WsBackendDataSource extends BackendDataSource {
         const alreadyInitiated = !!this.initialSessionId;
         const client = this.socket.getClient();
 
-        console.log(client);
+        log.debug(client);
 
         if (!alreadyInitiated) {
           this.initialSessionId = frame.body;
