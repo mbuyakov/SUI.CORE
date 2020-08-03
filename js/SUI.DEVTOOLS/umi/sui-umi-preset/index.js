@@ -8,7 +8,7 @@ exports.default = () => {
       // require.resolve('@umijs/plugin-access'),
       // require.resolve('@umijs/plugin-analytics'),
       // REPLACED BY plugin-antd-custom require.resolve('@umijs/plugin-antd'),
-      require.resolve('@umijs/plugin-antd'),
+      // require.resolve('@umijs/plugin-antd'),
       // require.resolve('@umijs/plugin-crossorigin'),
       require.resolve('@umijs/plugin-dva'),
       require.resolve('@umijs/plugin-initial-state'),
