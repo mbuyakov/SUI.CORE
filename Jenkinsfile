@@ -32,6 +32,7 @@ pipeline {
               tasks: '--rerun-tasks build'
             )
             sh """
+              cd java
               curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-audit/common/build/libs/sui-audit-common-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-audit-common/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-common-${BUILD_NUMBER}-${BRANCH_NAME}.pom
               curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-audit/common/build/libs/sui-audit-common-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-audit-common/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-common-${BUILD_NUMBER}-${BRANCH_NAME}.jar
               curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-audit/log-mover/build/libs/sui-audit-log-mover-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-audit-log-mover/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-log-mover-${BUILD_NUMBER}-${BRANCH_NAME}.pom
