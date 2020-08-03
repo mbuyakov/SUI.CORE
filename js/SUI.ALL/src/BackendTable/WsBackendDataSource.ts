@@ -6,7 +6,7 @@ import { Socket } from '../Socket';
 import { getUser } from '../utils';
 
 import { BackendDataSource, MESSAGE_ID_KEY } from './BackendDataSource';
-import {Logger} from "@/ioc";
+import {Logger} from "../ioc";
 
 const SEND_DESTINATION = '/data';
 
@@ -16,7 +16,7 @@ const maximizeLogConfig: Partial<StompConfig> = {
   debug: (msg): void => log.debug(msg),
   logRawCommunication: true,
   onDisconnect: (frame): void => log.debug(['onDisconnect', frame]),
-  onStompError: (frame): void =>log.debug(['onStompError', frame]),
+  onStompError: (frame): void => log.debug(['onStompError', frame]),
   onUnhandledFrame: (frame): void => log.debug(['onUnhandledFrame', frame]),
   onUnhandledMessage: (message): void => log.debug(['onUnhandledMessage', message]),
   onUnhandledReceipt: (frame): void => log.debug(['onUnhandledReceipt', frame]),

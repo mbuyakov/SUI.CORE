@@ -1,8 +1,8 @@
 import { Singleton } from 'typescript-ioc';
+import autobind from "autobind-decorator";
 import { Nullable } from '../../other';
 import { LoggerLevel } from '../enum';
 import { ROOT_LOGGER_KEY } from '../const';
-import autobind from "autobind-decorator";
 
 @Singleton
 export class LogLevelService {
