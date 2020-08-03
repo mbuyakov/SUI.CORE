@@ -2,6 +2,7 @@ import { Singleton } from 'typescript-ioc';
 import { Nullable } from '../../other';
 import { LoggerLevel } from '../enum';
 import { ROOT_LOGGER_KEY } from '../const';
+import autobind from "autobind-decorator";
 
 @Singleton
 export class LogLevelService {
@@ -16,14 +17,17 @@ export class LogLevelService {
     window.getLogLevel = this.getLogLevel;
   }
 
+  @autobind
   public setLogLevel(key: string, level: LoggerLevel): void {
     this.logLevels.set(key, level);
   }
 
+  @autobind
   public getLogLevel(key: string): LoggerLevel {
     return this.logLevels.get(key) || this.logLevels.get(ROOT_LOGGER_KEY);
   }
 
+  @autobind
   public isLevelEnabled(key: Nullable<string>, level: LoggerLevel): boolean {
     return this.getLogLevel(key) >= level;
   }
