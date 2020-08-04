@@ -25,6 +25,7 @@ exports.default = () => {
       require.resolve("@sui/sui-devtools/umi/sui-history-hash"),
       require.resolve("@sui/sui-devtools/umi/sui-kludges"),
       require.resolve("@sui/sui-devtools/umi/sui-theme"),
+      ...(process.env.WEBPACK_PROFILING ? [require.resolve("@sui/sui-devtools/umi/sui-webpack-profiling")] : []),
       require.resolve("@sui/sui-devtools/umi/sui-webpack-progress"),
     ]
   };
