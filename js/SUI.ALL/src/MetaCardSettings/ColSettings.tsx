@@ -57,7 +57,7 @@ export class ColSettings extends SerializableDnDChild<SerializedColSettings> {
     );
   }
 
-  @autobind
+  // DON'T BIND WITH DECORATOR OR IN CONSTRUCTOR
   public saveState(): void {
     super.saveState();
     this.itemsRef.current.saveState();

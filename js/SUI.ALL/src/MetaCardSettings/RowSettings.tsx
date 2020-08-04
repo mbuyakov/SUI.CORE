@@ -252,7 +252,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
     }
   }
 
-  @autobind
+  // DON'T BIND WITH DECORATOR OR IN CONSTRUCTOR
   public saveState(): void {
     super.saveState();
     if (this.colSettingsRef.current) {
