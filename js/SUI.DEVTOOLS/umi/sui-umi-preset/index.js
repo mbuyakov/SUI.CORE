@@ -25,6 +25,7 @@ exports.default = () => {
       require.resolve("@sui/sui-devtools/umi/sui-history-hash"),
       require.resolve("@sui/sui-devtools/umi/sui-kludges"),
       require.resolve("@sui/sui-devtools/umi/sui-theme"),
+      require.resolve("@sui/sui-devtools/umi/sui-webpack-progress"),
     ]
   };
 }
