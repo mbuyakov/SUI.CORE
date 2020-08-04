@@ -1,7 +1,7 @@
 import {WrappedFormUtils} from "@ant-design/compatible/lib/form/Form";
-import { CustomIconComponentProps } from '@ant-design/icons/lib/components/Icon';
 import * as H from "history";
 import * as React from "react";
+import { IconProps } from '@ant-design/compatible/lib/icon';
 
 export * from "./AddressFlag";
 
@@ -163,7 +163,7 @@ export function isValidUuid(uuid: string): boolean {
 }
 
 
-export type IAntIconComponent = React.ComponentType<CustomIconComponentProps | React.SVGProps<SVGSVGElement>>;
+export type IAntIconComponent = React.ComponentType<IconProps>;
 
 export type TOrCallback<T> = NotFunction<T> | (() => T)
 

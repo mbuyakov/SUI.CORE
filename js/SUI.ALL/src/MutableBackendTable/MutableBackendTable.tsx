@@ -1,4 +1,4 @@
-import Icon from '@ant-design/icons';
+import { Icon } from '@ant-design/compatible';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import CreateIcon from '@material-ui/icons/CreateOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
