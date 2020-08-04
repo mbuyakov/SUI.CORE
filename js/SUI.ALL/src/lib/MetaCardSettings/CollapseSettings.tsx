@@ -74,7 +74,7 @@ export class CollapseSettings extends SerializableDnDChild<SerializedCollapseSet
     );
   }
 
-  @autobind
+  // DON'T BIND WITH DECORATOR OR IN CONSTRUCTOR
   public saveState(): void {
     super.saveState();
     this.rowsRef.current.saveState();
