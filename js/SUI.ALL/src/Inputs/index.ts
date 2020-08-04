@@ -6,6 +6,7 @@ export * from "./PromisedErrorPopover";
 export * from "./PromisedInput";
 export * from "./PromisedMaterialIconButton";
 export * from "./PromisedSelect";
+export * from "./PromisedSlider";
 export * from "./PromisedSwitch";
 export * from "./PromisedTextArea";
 export * from "./SelectWithWaitData";

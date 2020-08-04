@@ -41,7 +41,7 @@ class RedisEnabledConfig(
 ) {
 
     @PostConstruct
-    fun pc() {
+    fun postConstruct() {
         redisTemplates.forEach { it.setEnableTransactionSupport(true) }
     }
 

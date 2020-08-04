@@ -17,6 +17,7 @@ export type ISelectWithWaitDataProps<TValueType, TGroupType> = Omit<SelectProps<
   valueTableFilter?: IGqlFilter<TValueType>;
   valueTableIdentifier: string;
   watchFilter?: boolean;
+  customOptionRender?(element: IDataSet): React.ReactNode;
 }
 
 export interface ISelectWithWaitDataState {
@@ -72,13 +73,15 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
 
   @autobind
   private generateOptions(data: IDataSet[]): JSX.Element[] {
+    const optionRender = this.props.customOptionRender || getDataSetRender;
+
     return (data || []).map(element => (
       <Select.Option
         key={element.id}
         // TODO: toString is kostyl' for integer PK  tables (remove in future) value={element.id}
         value={element.id != null ? String(element.id) : element.id}
       >
-        {getDataSetRender(element) || NO_DATA_TEXT}
+        {optionRender(element) || NO_DATA_TEXT}
       </Select.Option>
     ))
   }
