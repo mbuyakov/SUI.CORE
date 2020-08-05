@@ -109,7 +109,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
   }
 
   public async componentDidMount(): Promise<void> {
-const fields = await Promise.all(this.props.fields.map(field => getFieldsForCol(field)));
+    const fields = await Promise.all(this.props.fields.map(field => getFieldsForCol(field)));
     this.setState({ fields });
   }
 
@@ -177,13 +177,9 @@ const fields = await Promise.all(this.props.fields.map(field => getFieldsForCol(
 
   @autobind
   private async loadData(treeNode: any): Promise<void> {
-    console.log(treeNode);
-    const field: IFieldNode = treeNode.props.data;
+    const field: IFieldNode = treeNode.data;
     field.child = (await getFieldsForCol(field.colInfoIds)).child;
-    console.log(field);
-    this.setState({
-      fields: [...this.state.fields],
-    });
+    this.setState({ fields: [...this.state.fields] });
   }
 
   @autobind
@@ -193,8 +189,7 @@ const fields = await Promise.all(this.props.fields.map(field => getFieldsForCol(
 
   @autobind
   private async onSave(): Promise<any> {
-    // console.log(this.toPlainObject());
-
     return this.props.onSave(this.toPlainObject());
   }
+
 }
