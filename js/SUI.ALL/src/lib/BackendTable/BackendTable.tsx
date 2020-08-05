@@ -161,7 +161,6 @@ export class BackendTable<TSelection = defaultSelection>
       filters: [],
       lastSendSelection: [],
       paginationEnabled,
-      // tslint:disable-next-line:no-magic-numbers
       defaultCurrentPage,
       pageSize: resultPageSize,
       totalCount: (defaultCurrentPage * resultPageSize) + 1
@@ -557,12 +556,7 @@ export class BackendTable<TSelection = defaultSelection>
         { filters },
       );
     } else {
-      // TODO: Высокоуровневый костыль, чтобы не рефрешить state, работает на честном слове
-      // Если что-то сломается, то это первый кандидат
-      while (this.state.filters.length) {
-        this.state.filters.pop();
-      }
-      filters.forEach(filter => this.state.filters.push(filter));
+      this.setState({filters});
     }
   }
 
@@ -650,7 +644,8 @@ export class BackendTable<TSelection = defaultSelection>
             direction: sort.direction.toUpperCase(),
           })),
         },
-        newState);
+        newState
+      );
     }
   }
 

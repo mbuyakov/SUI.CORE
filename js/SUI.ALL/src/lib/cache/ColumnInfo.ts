@@ -1,10 +1,15 @@
-import { ICacheEntry } from '../cacheManager';
-import { getDataByKey } from '../dataKey';
-import { GqlCacheManager } from '../gql';
-import { IColumnInfo, IColumnInfoReference, IColumnInfoRole, IColumnInfoTag, IFilterType, ISubtotalType } from '../types';
+import {ICacheEntry} from '../cacheManager';
+import {getDataByKey} from '../dataKey';
+import {GqlCacheManager} from '../gql';
+import {IColumnInfo, IColumnInfoReference, IColumnInfoRole, IColumnInfoTag, IFilterType, ISubtotalType} from '../types';
 import {formatRoleName} from "../utils";
 
 import {Name} from "./Name";
+
+export type ColumnInfoDependence = {
+  dependsOnColumnInfoId: string;
+  catalogColumnInfoId: string;
+}
 
 export class ColumnInfo {
   public columnName: string;
@@ -12,6 +17,7 @@ export class ColumnInfo {
   public defaultGrouping: boolean;
   public defaultSorting?: string;
   public defaultVisible: boolean;
+  public dependencies?: ColumnInfoDependence[];
   public filterTypeByFilterTypeId?: IFilterType;
   public foreignColumnInfo?: string[];
   public id: string;
@@ -40,6 +46,7 @@ export class ColumnInfo {
     this.defaultVisible = item.defaultVisible;
     this.defaultSorting = item.defaultSorting;
     this.defaultGrouping = item.defaultGrouping;
+    this.dependencies = item.columnInfoDependencesByColumnInfoId.nodes.length ? item.columnInfoDependencesByColumnInfoId.nodes : null;
     this.width = item.width;
     this.wordWrapEnabled = item.wordWrapEnabled;
     this.order = item.order;
@@ -51,7 +58,7 @@ export class ColumnInfo {
     this.roles = (getDataByKey<IColumnInfoRole[]>(item, "columnInfoRolesByColumnInfoId", "nodes") || [])
       .map(value => getDataByKey(value, "roleByRoleId", "name"))
       .filter(Boolean)
-.map(roleName => formatRoleName(roleName));
+      .map(roleName => formatRoleName(roleName));
     this.foreignColumnInfo = (getDataByKey<IColumnInfoReference[]>(item, "columnInfoReferencesByColumnInfoId", "nodes") || []).map(value => value.foreignColumnInfoId);
 
     // private
@@ -112,6 +119,12 @@ class _ColumnInfoManager extends GqlCacheManager<IColumnInfo, ColumnInfo> {
       columnInfoReferencesByColumnInfoId {
         nodes {
           foreignColumnInfoId
+        }
+      }
+      columnInfoDependencesByColumnInfoId {
+        nodes {
+          dependsOnColumnInfoId
+          catalogColumnInfoId
         }
       }
     `;

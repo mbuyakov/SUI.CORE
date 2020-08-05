@@ -3,6 +3,7 @@ import {CardType} from 'antd/lib/card';
 import * as React from 'react';
 
 import { DataKey } from '../dataKey';
+import {IObjectWithIndex} from "../other";
 
 export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode;
 export type TableSearchType = 'select' | 'date' | 'boolean' | 'string' | 'none';
@@ -35,7 +36,7 @@ export interface ICommonColumnSearchProps {
   placeholder?: string | [string, string];
 }
 
-export type SelectData = Array<{title?: string | JSX.Element, value: string | number}>;
+export type SelectData = Array<{title?: string | JSX.Element; value: string | number; src?: IObjectWithIndex; }>;
 
 export type CompoundFormat = {format?: string, targetFormat?: string, sourceFormat?: string};
 

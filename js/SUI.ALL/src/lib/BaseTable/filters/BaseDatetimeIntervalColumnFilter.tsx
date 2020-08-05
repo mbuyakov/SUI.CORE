@@ -25,19 +25,29 @@ type FullBaseDatetimeIntervalColumnFilterProps = LazyTableFilterRowCellProps
   & IBaseDatetimeIntervalColumnFilterProps
   & ICommonColumnSearchProps;
 
-export class BaseDatetimeIntervalColumnFilter
-  extends React.Component<FullBaseDatetimeIntervalColumnFilterProps, IBaseDatetimeIntervalColumnFilterState> {
+const equals = (value1?: RangePickerValue, value2?: RangePickerValue): boolean => (!value1 || !value2)
+  ? (value1 === value2)
+  : (value1[0]?.valueOf() === value2[0]?.valueOf()) && ((value1[1]?.valueOf() === value2[1]?.valueOf()));
+
+export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDatetimeIntervalColumnFilterProps, IBaseDatetimeIntervalColumnFilterState> {
 
   public constructor(props: FullBaseDatetimeIntervalColumnFilterProps) {
     super(props);
 
-    const propsFilterValue = this.props.filter && (this.props.filter.value as unknown as string[]);
-    const filterValue = propsFilterValue && propsFilterValue.map(value => this.formatFilterToMoment(value)) as RangePickerValue;
+    const filterValue = this.propsFilterValueToStateFilterValue(this.props.filter?.value as unknown as string[]);
 
     this.state = {
       filterValue,
       lastSavedValue: filterValue
     };
+  }
+
+  public componentDidUpdate(): void {
+    const value = this.propsFilterValueToStateFilterValue(this.props.filter?.value as unknown as string[]);
+
+    if (!equals(value, this.state.lastSavedValue)) {
+      this.setState({ lastSavedValue: value, filterValue: value });
+    }
   }
 
   public render(): JSX.Element {
@@ -49,7 +59,7 @@ export class BaseDatetimeIntervalColumnFilter
         style={{width: "100%"}}
         showTime={this.props.pickerMode === "datetime"}
         ranges={GET_DEFAULT_CALENDAR_RANGES()}
-        defaultValue={this.state.filterValue}
+        value={this.state.filterValue}
         onChange={this.onChange}
         onOpenChange={this.onOpenChange}
         open={this.state.open}
@@ -109,14 +119,20 @@ export class BaseDatetimeIntervalColumnFilter
       // if closed
       if (!status) {
         const {filterValue, lastSavedValue} = this.state;
-        const isChanged = JSON.stringify(lastSavedValue) !== JSON.stringify(filterValue);
 
-        if (isChanged) {
+        if (!equals(filterValue, lastSavedValue)) {
           this.triggerFilter(this.state.filterValue);
         }
       }
     });
   }
+
+  @autobind
+  private propsFilterValueToStateFilterValue(value?: string[]): RangePickerValue {
+    const formattedValue = (value || []).map(it => this.formatFilterToMoment(it));
+
+    return [formattedValue[0] ?? null, formattedValue[1] ?? null];
+  };
 
   @autobind
   private triggerFilter(value: RangePickerValue): void {

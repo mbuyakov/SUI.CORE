@@ -42,8 +42,8 @@ export class BaseTable<TSelection = defaultSelection>
     { selection?: TSelection[]; }>
   implements ISelectionTable<TSelection> {
 
-private static getRowId(row: any): any {
-const id = (row.id != null) ? row.id : row.compoundKey;
+  private static getRowId(row: any): any {
+    const id = (row.id != null) ? row.id : row.compoundKey;
 
     if (id === null || id === undefined) {
       console.error('ROW DOESN\'T HAVE ID!');
@@ -61,6 +61,50 @@ const id = (row.id != null) ? row.id : row.compoundKey;
   }
 
   private exportData?: any[];
+
+  private CellComponent = (props: any): JSX.Element => {
+    const render: TableCellRender = props.column.render;
+    const value = Array.isArray(props.value) && (props.value[0] ? typeof props.value[0] !== "object" : true)
+      ? props.value.toString()
+      : props.value;
+
+    return (
+      <Table.Cell
+        {...props}
+        style={this.props.cellStyler ? this.props.cellStyler(props.row, props.value, props.column) : undefined}
+      >
+        {render ? render(value, props.row, props.tableColumn) : value}
+      </Table.Cell>
+    );
+  };
+
+  private FilterCell = (props: any) => (
+    <Table.Cell
+      {...props as any}
+    >
+      {this.getSearchComponent(props)}
+    </Table.Cell>
+  );
+
+  private RowComponent = (props: any): JSX.Element => (
+    <TableRow
+      {...props}
+      style={this.props.rowStyler ? this.props.rowStyler(props.row) : undefined}
+    />
+  );
+
+  private ToggleCellComponent = (props: any): JSX.Element => (
+    (this.props.expandableFilter && !this.props.expandableFilter(props.row))
+      ? <Cell {...props} />
+      // customize icons
+      : <CustomToggleCell {...props} />
+  );
+
+  private SelectionCellComponent = (props: any): JSX.Element => (
+    (this.props.selectionFilter && this.props.selectionFilter(props.row))
+      ? <Cell {...props} />
+      : <SelectionCell {...props} />
+  );
 
   public constructor(props: any) {
     super(props);
@@ -93,7 +137,7 @@ const id = (row.id != null) ? row.id : row.compoundKey;
   }
 
   // TODO cyclomatic-complexity
-public render(): JSX.Element {
+  public render(): JSX.Element {
     const rowDetail = this.props.rowDetailComponent;
     const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
     const groupingEnabled = defaultIfNotBoolean(this.props.groupingEnabled, true);
@@ -176,51 +220,6 @@ public render(): JSX.Element {
       .filter(value => !defaultIfNotBoolean(value.defaultVisible, true))
       .map(value => value.id);
 
-    const cellComponent = (props: any): JSX.Element => {
-      const render: TableCellRender = props.column.render;
-      const value = Array.isArray(props.value) && (props.value[0] ? typeof props.value[0] !== "object" : true)
-        ? props.value.toString()
-        : props.value;
-
-      return (
-        <Table.Cell
-          {...props}
-          style={this.props.cellStyler ? this.props.cellStyler(props.row, props.value, props.column) : undefined}
-        >
-          {render ? render(value, props.row, props.tableColumn) : value}
-        </Table.Cell>
-      );
-    };
-
-    const rowComponent = (props: any): JSX.Element =>
-      (
-        <TableRow
-          {...props}
-          style={this.props.rowStyler ? this.props.rowStyler(props.row) : undefined}
-        />
-      );
-
-    const expandableFilter = this.props.expandableFilter;
-
-    function toggleCellComponent(props: any): JSX.Element {
-      return (
-        expandableFilter && !expandableFilter(props.row)
-          ? <Cell {...props} />
-          // customize icons
-          : <CustomToggleCell {...props} />
-      );
-    }
-
-    const selectionFilter = this.props.selectionFilter;
-
-    function selectionCellComponent(props: any): JSX.Element {
-      return (
-        selectionFilter && selectionFilter(props.row)
-          ? <Cell {...props} />
-          : <SelectionCell {...props} />
-      );
-    }
-
     function pagingContainerComponent(props: any): JSX.Element {
       return (
         <PagingPanelContainer
@@ -234,17 +233,6 @@ public render(): JSX.Element {
       || this.props.fitToCardBody
       || this.props.fitToCollapseBody
       || this.props.fitToRowDetailContainer;
-    const getSearchComponent = this.getSearchComponent;
-
-    function filterCell(props: TableFilterRow.CellProps): JSX.Element {
-      return (
-        <Table.Cell
-          {...props as any}
-        >
-          {getSearchComponent(props)}
-        </Table.Cell>
-      );
-    }
 
     const defaultPredicate = (IntegratedFiltering as any).defaultPredicate as (value: any, filter: Filter, row: any) => boolean;
 
@@ -384,20 +372,20 @@ public render(): JSX.Element {
           <DragDropProvider/>
           {virtual
             ? <VirtualTable
-              cellComponent={cellComponent}
+              cellComponent={this.CellComponent}
               noDataCellComponent={TableNoDataCell}
-              rowComponent={rowComponent}
+              rowComponent={this.RowComponent}
               columnExtensions={wordWrapExtension}
             />
             : <Table
-              cellComponent={cellComponent}
+              cellComponent={this.CellComponent}
               noDataCellComponent={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? TableNoDataCell : TableNoDataCellSmall}
-              rowComponent={rowComponent}
+              rowComponent={this.RowComponent}
               columnExtensions={wordWrapExtension}
             />}
           {rowDetail && <TableRowDetail
             contentComponent={rowDetail}
-            toggleCellComponent={toggleCellComponent}
+            toggleCellComponent={this.ToggleCellComponent}
           />}
           {resizingEnabled && (
             <TableColumnResizing
@@ -406,10 +394,10 @@ public render(): JSX.Element {
             />
           )}
           <TableHeaderRow showSortingControls={sortingEnabled}/>
-          {filteringEnabled && <TableFilterRow cellComponent={filterCell}/>}
+          {filteringEnabled && <TableFilterRow cellComponent={this.FilterCell} />}
           {paginationEnabled && <PagingPanel
             containerComponent={pagingContainerComponent}
-            pageSizes={this.props.pageSizes || (virtual ? undefined : [10, 25, 50, 0])}
+            pageSizes={this.props.pageSizes || (virtual ? undefined : [10, 25, 50, 100, 0])}
             messages={{
               info: virtual ? BaseTable.virtualPageInfo : BaseTable.pageInfo,
               rowsPerPage: 'Записей на страницу',
@@ -421,8 +409,8 @@ public render(): JSX.Element {
               highlightRow={highlightEnabled}
               selectByRowClick={highlightEnabled}
               showSelectionColumn={!highlightEnabled}
-              cellComponent={selectionCellComponent}
-              showSelectAll={!this.props.selectionFilter && !highlightEnabled}
+              cellComponent={this.SelectionCellComponent}
+              showSelectAll={!this.props.selectionFilter && !this.props.singleSelection && !highlightEnabled}
             />
           )}
           {groupingEnabled && <TableGroupRow contentComponent={tableGroupRowContentComponent}/>}
@@ -456,7 +444,8 @@ public render(): JSX.Element {
             />
           </div>
         )}
-      </Card>);
+      </Card>
+    );
   }
 
   @autobind
@@ -479,7 +468,7 @@ public render(): JSX.Element {
 
     switch (type) {
       case "customSelect":
-        return (<CustomSelectFilter {...searchProps} mode={searchProps.multiple ? "multiple" : undefined} />);
+        return (<CustomSelectFilter {...searchProps} filters={this.props.filters} mode={searchProps.multiple ? "multiple" : undefined} />);
       case "datetime":
         return (<DatetimeColumnFilter {...searchProps} />);
       case "date":
@@ -517,7 +506,7 @@ public render(): JSX.Element {
       .filter(col => defaultIfNotBoolean(col.exportable, true))
       .filter(col => !hiddenColumnNames.includes(col.id));
     const formattedData = this.getFormattedExportData(cols);
-// @ts-ignore
+    // @ts-ignore
     console.log(formattedData);
     const ws = XLSX.utils.json_to_sheet(formattedData, {
       header: cols.map(col => col.title)
