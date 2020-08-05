@@ -72,6 +72,7 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
 
   public render(): JSX.Element {
     const data: any = this.props.selectData;
+    const value: any = this.state.value ?? (this.isMultiple() ? [] : undefined);
 
     return (
       <WaitData<SelectData>
@@ -83,7 +84,7 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
             // Multiple render issue
             maxTagCount={5}
             {...this.props}
-            filter={{ ...this.props.filter, value: this.state.value as any }}
+            filter={{ ...this.props.filter, value }}
             data={this.filterData(selectData)}
             onChange={this.onChange}
             onInputKeyDown={this.onInputKeyDown}
