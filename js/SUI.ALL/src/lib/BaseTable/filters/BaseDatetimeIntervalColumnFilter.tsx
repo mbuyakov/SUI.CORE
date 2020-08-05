@@ -132,7 +132,7 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
     const formattedValue = (value || []).map(it => this.formatFilterToMoment(it));
 
     return [formattedValue[0] ?? null, formattedValue[1] ?? null];
-  };
+  }
 
   @autobind
   private triggerFilter(value: RangePickerValue): void {
