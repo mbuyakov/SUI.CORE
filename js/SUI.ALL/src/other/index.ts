@@ -4,6 +4,7 @@ import * as React from "react";
 import {CustomIconComponentProps} from '@ant-design/compatible/lib/icon';
 
 export * from "./AddressFlag";
+export * from "./BlockUIConditionally";
 
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
