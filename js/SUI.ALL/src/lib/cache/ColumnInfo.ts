@@ -1,6 +1,7 @@
 import {ICacheEntry} from '../cacheManager';
 import {getDataByKey} from '../dataKey';
 import {GqlCacheManager} from '../gql';
+import {IObjectWithIndex} from "../other";
 import {IColumnInfo, IColumnInfoReference, IColumnInfoRole, IColumnInfoTag, IFilterType, ISubtotalType} from '../types';
 import {formatRoleName} from "../utils";
 
@@ -28,6 +29,7 @@ export class ColumnInfo {
   public subtotalTypeBySubtotalTypeId?: ISubtotalType;
   public tableInfoId: string;
   public tableRenderParams?: string;
+  public parsedTableRenderParams?: IObjectWithIndex;
   public tags: string[];
   public visible: boolean;
   public width?: number;
@@ -51,6 +53,7 @@ export class ColumnInfo {
     this.wordWrapEnabled = item.wordWrapEnabled;
     this.order = item.order;
     this.tableRenderParams = item.tableRenderParams;
+    this.parsedTableRenderParams = item.tableRenderParams ? JSON.parse(item.tableRenderParams) : undefined
     this.subtotalTypeBySubtotalTypeId = item.subtotalTypeBySubtotalTypeId;
     this.filterTypeByFilterTypeId = item.filterTypeByFilterTypeId;
     this.nameId = getDataByKey(item, "nameByNameId", "id");

@@ -1,7 +1,7 @@
 import axios from "axios";
 import uuid from 'uuid/v4';
 
-import { getSUISettings } from '../core';
+import {getSUISettings} from '../core';
 import {IObjectWithIndex} from "../other";
 import {getUser} from "../utils";
 
@@ -24,6 +24,10 @@ export class RestBackendDataSource extends BackendDataSource {
       });
   }
 
+  public getSessionId(): string {
+    return this.initSessionId;
+  }
+
   public async init(): Promise<boolean> {
     this.initSessionId = uuid();
     this.onOpen();
@@ -33,7 +37,7 @@ export class RestBackendDataSource extends BackendDataSource {
 
   public async send<T>(messageId: string, body: T, headers?: IObjectWithIndex): Promise<void> {
     // do not await;
-this.__send(body, headers).then(data => this.onMessage({
+    this.__send(body, headers).then(data => this.onMessage({
       ...data,
       [MESSAGE_ID_KEY]: messageId
     }));

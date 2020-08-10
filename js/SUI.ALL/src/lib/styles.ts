@@ -2,6 +2,7 @@ export const SUI_ROW_CONTAINER = "sui-row-container";
 export const SUI_ROW = "sui-row";
 export const SUI_ROW_GROW_LEFT = "sui-row-grow-left";
 export const SUI_ROW_GROW_RIGHT = "sui-row-grow-right";
+export const SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS = "sui-BackendTable-hideModalButtons";
 export const YELLOW_BLINK = "yellowBlink";
 export const HIDE_BUTTONS = "hideButtons";
 export const LOADING_SPIN_WRAPPER = "loading-spin-wrapper";

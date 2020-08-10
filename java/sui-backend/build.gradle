@@ -14,6 +14,8 @@ dependencies {
   compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:${jacksonVersion}"
   compile "com.google.guava:guava:28.1-jre"
   compile "org.apache.httpcomponents:httpclient:4.5.10"
+  // XSLX
+  compile "org.apache.poi:poi-ooxml:4.1.1"
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {

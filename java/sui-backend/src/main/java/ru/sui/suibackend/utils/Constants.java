@@ -24,6 +24,8 @@ public class Constants {
 
   public static final String COMMON_PREFIX = "__";
 
+  public static final String RENDER_TYPE_KEY = "renderType";
+
   public static final String GROUPED_WITH_PREFIX = COMMON_PREFIX + "grouped_";
   public static final String GROUP_ELEMENTS_SUFFIX = COMMON_PREFIX + "elements";
   public static final String ALIAS_NAME_SUFFIX = COMMON_PREFIX + "name";

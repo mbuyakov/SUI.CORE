@@ -38,10 +38,7 @@ export interface ICommonColumnSearchProps {
 
 export type SelectData = Array<{title?: string | JSX.Element; value: string | number; src?: IObjectWithIndex; }>;
 
-export type CompoundFormat = {format?: string, targetFormat?: string, sourceFormat?: string};
-
 export type INewSearchProps = ICommonColumnSearchProps & {
-  allFormats?: CompoundFormat;
   format?: string; // for datetime and date
   multiple?: boolean; // for customSelect
   selectData?: SelectData | Promise<SelectData>; // for customSelect
@@ -68,17 +65,16 @@ export interface IBaseTableColLayout {
   searchType?: TableSearchType;
 
   sortingEnabled?: boolean;
-
   subtotal?: {expression: string, name: string};
-
   title?: string;
   width?: number;
   wordWrapEnabled?: boolean;
 
   comparator?(a: any, b: any): number;
-
   groupingCriteria?(value: any): any;
 }
+
+export type IFormattedBaseTableColLayout = IBaseTableColLayout & { name: string, title: string, getCellValue(row: any): any };
 
 export interface IGroupSubtotalData {
   data?: object;
@@ -153,8 +149,8 @@ export interface IBaseTableProps<TSelection = any> {
   cellStyler?(row: any, value: any, column: IBaseTableColLayout): React.CSSProperties;
   customFilterComponent?(props: TableFilterRow.CellProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
   expandableFilter?(row: any): boolean;
+  exportValueFormatter?(col: IBaseTableColLayout, value: any, row: IObjectWithIndex): any;
   getRowId?(row: any): any;
-
   onSelectionChange?(selection: TSelection[]): void;
   rowStyler?(row: any): React.CSSProperties;
   selectionFilter?(row: any): boolean;

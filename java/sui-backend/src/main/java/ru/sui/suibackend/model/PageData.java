@@ -12,8 +12,25 @@ import org.json.JSONArray;
 @Builder(toBuilder = true)
 public class PageData {
 
-  private long totalCount;
+    private long totalCount;
 
-  @Builder.Default
-  private JSONArray data = new JSONArray();
+    @Builder.Default
+    private JSONArray data = new JSONArray();
+
+    public long getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(long totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public JSONArray getData() {
+        return data;
+    }
+
+    public void setData(JSONArray data) {
+        this.data = data;
+    }
+
 }

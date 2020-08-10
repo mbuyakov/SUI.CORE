@@ -23,3 +23,11 @@ export function getUser(): ICoreUser {
 export function isAdmin(): boolean {
   return (getDataByKey(getUser(), "roles") || []).includes("ADMIN");
 }
+
+export function downloadFile(file: Blob, fileName: string): void {
+  const element = document.createElement('a');
+  element.href = URL.createObjectURL(file);
+  element.download = fileName;
+  document.body.appendChild(element);
+  element.click();
+}

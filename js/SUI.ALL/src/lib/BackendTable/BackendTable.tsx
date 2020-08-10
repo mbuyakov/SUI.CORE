@@ -1,18 +1,24 @@
-import { Filter, Grouping, GroupKey, Sorting, TableFilterRow } from '@devexpress/dx-react-grid';
+import {Getters} from "@devexpress/dx-react-core";
+import {Filter, Grouping, GroupKey, Sorting, TableFilterRow} from '@devexpress/dx-react-grid';
 import IconButton from '@material-ui/core/IconButton';
+import CloudDownloadOutlined from '@material-ui/icons/CloudDownloadOutlined';
 import LinkIcon from '@material-ui/icons/Link';
+import {Modal} from 'antd';
 import autobind from 'autobind-decorator';
+import axios from 'axios';
+import JSzip from 'jszip';
 import difference from 'lodash/difference';
 import moment from 'moment';
 import * as React from 'react';
 import uuid from 'uuid';
+import {exportToXlsx} from "../BaseTable/utils";
 
-import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, defaultSelection, errorNotification, generateCreate, getAllowedColumnInfos, getDataByKey, getFilterType, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
+import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, defaultSelection, downloadFile, errorNotification, ExportPlugin, generateCreate, getAllowedColumnInfos, getDataByKey, getFilterType, getStateFromUrlParam, getSUISettings, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 
-import { BackendDataSource, MESSAGE_ID_KEY } from './BackendDataSource';
-import { RestBackendDataSource } from './RestBackendDataSource';
-import { WsBackendDataSource } from './WsBackendDataSource';
+import {BackendDataSource, MESSAGE_ID_KEY} from './BackendDataSource';
+import {RestBackendDataSource} from './RestBackendDataSource';
+import {WsBackendDataSource} from './WsBackendDataSource';
 
 const IGNORE_WS_ACTUALITY_HOURS = 3;
 const LOCAL_STORAGE_IGNORE_WS_KEY = '__SUI_BACKEND_IGNORE_WS';
@@ -247,6 +253,9 @@ export class BackendTable<TSelection = defaultSelection>
 
   public render(): JSX.Element {
     const admin = isAdmin();
+    const allowExportAll = getSUISettings().permissions?.exportAll
+      ? getSUISettings().permissions?.exportAll(getUser())
+      : admin;
 
     return (
       <WaitData
@@ -285,6 +294,13 @@ export class BackendTable<TSelection = defaultSelection>
             )
           }
           toolbarButtons={[
+            allowExportAll && (
+              <ExportPlugin
+                onClick={this.exportAll}
+                tooltip="Выгрузка всех строк в Excel"
+                icon={<CloudDownloadOutlined/>}
+              />
+            ),
             (<ClearFiltersPlugin handleClick={this.clearFilters}/>),
             (<RefreshMetaTablePlugin handleClick={this.refresh}/>),
             // admin && (<RawModePlugin enabled={this.state.rawMode} onClick={this.changeRaw}/>),
@@ -294,6 +310,7 @@ export class BackendTable<TSelection = defaultSelection>
           warnings={admin ? this.state.warnings : undefined}
           pageSizes={this.state.tableInfo?.pageSizes || DEFAULT_PAGE_SIZES}
           defaultCurrentPage={this.state.defaultCurrentPage}
+          exportValueFormatter={this.exportValueFormatter}
           // remote functions
           getChildGroups={this.getChildGroups}
           onCurrentPageChange={this.onCurrentPageChange}
@@ -366,6 +383,17 @@ export class BackendTable<TSelection = defaultSelection>
         );
       });
     }
+  }
+
+  @autobind
+  private exportValueFormatter(col: IBaseTableColLayout, value: any, row: IObjectWithIndex): any {
+    const columnInfo = (col as IObjectWithIndex).__SUI_columnInfo as ColumnInfo;
+
+    if (col.render && columnInfo?.parsedTableRenderParams?.renderType === "dateFormatter") {
+      return col.render(value, row, col) as string;
+    }
+
+    return value;
   }
 
   @autobind
@@ -900,6 +928,136 @@ export class BackendTable<TSelection = defaultSelection>
         warnings,
       });
     }
+  }
+
+  @autobind
+  // tslint:disable-next-line:member-ordering
+  private exportAll(getters: Getters): Promise<void> {
+    const exportApiUri = `${location.protocol}//${getSUISettings().backendUrl}/export`;
+    const commonHeaders = {
+      Authorization: `Bearer ${getUser().accessToken}`,
+      initSessionId: this.backendDataSource.getSessionId()
+    };
+
+    const removeExtension = (filename: string): string => filename.replace(/\.[^.]+$/, "");
+
+    const modal = Modal.info({
+      title: "Статус выгрузки",
+      content: "Инициализация выгрузки",
+      className: "sui-backend-hideModalButtons",
+      centered: true
+    });
+
+    const resetIdleTimerIntervalId = setInterval(
+      (): void => IDLE_TIMER_REF.current?.reset(),
+      5000
+    );
+
+    return axios.post(
+      `${exportApiUri}/init`,
+      null,
+      { headers: commonHeaders }
+    )
+      .then((): Promise<void> => new Promise<void>(async (resolve, reject): Promise<void> => {
+        const totalCount = getters.totalCount as number;
+        let processedCount = 0;
+
+        const batchCount = 5;
+        const pageSize = 10000;
+
+        try {
+          while (true) {
+            modal.update({ content: `Обработано ${processedCount} из ${totalCount}` });
+
+            const response = await axios.get<Blob>(
+              `${exportApiUri}/data?batchCount=${batchCount}&pageSize=${pageSize}`,
+              {
+                headers: commonHeaders,
+                responseType: "blob"
+              }
+            );
+
+            const files = (await JSzip.loadAsync(response.data)).files;
+
+            const sortedFilenames = Object.keys(files).sort((file1, file2) => Number(removeExtension(file1)) - Number(removeExtension(file2)));
+
+            if (!sortedFilenames.length) {
+              break;
+            }
+
+            const zip = new JSzip();
+
+            let totalElements = 0;
+
+            for (const filename of sortedFilenames) {
+              const data = JSON.parse(await files[filename].async("string"));
+
+              const xlsx = exportToXlsx(
+                this.state.cols,
+                data,
+                {
+                  exportValueFormatter: this.exportValueFormatter,
+                  hiddenColumnNames: [], // TODO: Брать из плагина
+                  opts: {
+                    type: "binary",
+                    compression: true
+                  }
+                }
+              );
+
+              zip.file(`${filename}.xlsx`, xlsx, { binary: true });
+
+              processedCount += data.length;
+              totalElements += data.length;
+            }
+
+            const body = new FormData();
+            body.append("file", await zip.generateAsync({ type: "blob" }), "part.zip");
+
+            await axios.post(
+              `${exportApiUri}/importParts`,
+              body,
+              {
+                headers: {
+                  ...commonHeaders,
+                  "Content-Type": "multipart/form-data"
+                },
+              }
+            );
+
+            if (totalElements < batchCount * pageSize) {
+              break;
+            }
+          }
+
+          modal.update({ content: `Формирование и скачивание результата` });
+
+          const resultData = await axios.get(
+            `${exportApiUri}/joinParts`,
+            {
+              headers: commonHeaders,
+              responseType: "blob"
+            }
+          );
+
+          downloadFile(resultData.data, "table.zip");
+
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      }))
+      .catch(reason => {
+        console.error("Table export error", reason);
+        errorNotification(
+          "Ошибка при экспорте таблицы",
+          "Подробное описание ошибки смотрите в консоли Вашего браузера"
+        );
+      })
+      .finally(() => {
+        modal.destroy();
+        clearInterval(resetIdleTimerIntervalId);
+      });
   }
 
 }

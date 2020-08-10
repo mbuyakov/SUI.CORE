@@ -1,11 +1,11 @@
-import { IFrame, StompConfig } from '@stomp/stompjs';
+import {IFrame, StompConfig} from '@stomp/stompjs';
 
-import { getSUISettings } from '../core';
-import { IObjectWithIndex, sleep } from '../other';
-import { Socket } from '../Socket';
-import { getUser } from '../utils';
+import {getSUISettings} from '../core';
+import {IObjectWithIndex, sleep} from '../other';
+import {Socket} from '../Socket';
+import {getUser} from '../utils';
 
-import { BackendDataSource, MESSAGE_ID_KEY } from './BackendDataSource';
+import {BackendDataSource, MESSAGE_ID_KEY} from './BackendDataSource';
 
 const SEND_DESTINATION = '/data';
 
@@ -42,6 +42,10 @@ export class WsBackendDataSource extends BackendDataSource {
     }
   }
 
+  public getSessionId(): string {
+    return this.initialSessionId;
+  }
+
   public async init(): Promise<boolean> {
     const backendURL = new URL(`ws${location.protocol === 'https:' ? 's' : ''}://${getSUISettings().backendUrl}`);
     console.log(backendURL);
@@ -49,7 +53,7 @@ export class WsBackendDataSource extends BackendDataSource {
     this.socket = new Socket({
       ...maximizeLogConfig,
       brokerURL: backendURL.toString(),
-      connectHeaders: { Authorization: `Bearer ${getUser().accessToken}` },
+      connectHeaders: {Authorization: `Bearer ${getUser().accessToken}`},
       onConnect: (frame: IFrame): void => {
         const alreadyInitiated = !!this.initialSessionId;
         const client = this.socket.getClient();

@@ -1,26 +1,23 @@
-import { Icon as LegacyIcon } from '@ant-design/compatible';
+import {Icon as LegacyIcon} from '@ant-design/compatible';
 import {Getter, Getters} from '@devexpress/dx-react-core';
 import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSelection, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
 import {ColumnChooser, DragDropProvider, Grid, GroupingPanel, PagingPanel, Table, TableBandHeader, TableColumnReordering, TableColumnResizing, TableColumnVisibility, TableFilterRow, TableGroupRow, TableHeaderRow, TableRowDetail, TableSelection, Toolbar, VirtualTable} from '@devexpress/dx-react-grid-material-ui';
 import {TableRow} from '@material-ui/core';
-import { Card, Result, Spin } from 'antd';
+import CloudDownload from '@material-ui/icons/CloudDownload';
+import {Card, Result, Spin} from 'antd';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
-import moment from 'moment';
 import * as React from 'react';
-import * as XLSX from 'xlsx';
 
 import {getDataByKey} from '../dataKey';
-import { BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER } from '../styles';
-import {translate} from '../translate';
+import {BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '../styles';
 import {defaultIfNotBoolean} from '../typeWrappers';
-
-import { NO_DATA_TEXT } from '../const';
 import {EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, WarningPlugin} from './extends';
 import {CustomToggleCell} from "./extends/CustomToggleCell";
 import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter} from './filters';
 import {defaultSelection, ISelectionTable} from './ISelectionTable';
-import {IBaseTableColLayout, IBaseTableProps, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
+import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
+import {exportToXlsx, mapColumns} from "./utils";
 
 const Cell = Table.Cell;
 const SelectionCell = TableSelection.Cell;
@@ -127,13 +124,8 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   @autobind
-  public mapCols(): Array<IBaseTableColLayout & { name: string, title: string, getCellValue(row: any): any }> {
-    return this.props.cols.map(col => ({
-      ...col,
-      getCellValue: (row: any): any => (col.dataKey && getDataByKey(row, col.dataKey)) || (col.defaultData !== undefined ? col.defaultData : row[col.id]),
-      name: col.id,
-      title: col.title || translate(col.id, true) || translate(col.id.replace(/Id$/, '')),
-    }));
+  public mapCols(): IFormattedBaseTableColLayout[] {
+    return mapColumns(this.props.cols);
   }
 
   // TODO cyclomatic-complexity
@@ -428,7 +420,13 @@ export class BaseTable<TSelection = defaultSelection>
             />
           )}
           {visibilityEnabled && <ColumnChooser messages={{showColumnChooser: 'Отобразить выбор колонок'}}/>}
-          {allowExport && <ExportPlugin onClick={this.onExport}/>}
+          {allowExport && (
+            <ExportPlugin
+              onClick={this.onExport}
+              tooltip="Выгрузка в Excel"
+              icon={<CloudDownload/>}
+            />
+          )}
           {groupingEnabled && <GroupingPanel
             messages={{groupByColumn: 'Перетащите заголовок колонки сюда для группировки'}}
             showGroupingControls={true}
@@ -501,26 +499,15 @@ export class BaseTable<TSelection = defaultSelection>
       }
     }
 
-    const hiddenColumnNames = getters.hiddenColumnNames || [];
-    const cols = this.mapCols()
-      .filter(col => defaultIfNotBoolean(col.exportable, true))
-      .filter(col => !hiddenColumnNames.includes(col.id));
-    const formattedData = this.getFormattedExportData(cols);
-    // @ts-ignore
-    console.log(formattedData);
-    const ws = XLSX.utils.json_to_sheet(formattedData, {
-      header: cols.map(col => col.title)
-    });
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, '1');
-    XLSX.writeFile(wb, 'table.xlsx');
-  }
-
-  @autobind
-  private getFormattedExportData(cols: (IBaseTableColLayout & {name: string, title: string, getCellValue(row: any): any})[]): any {
-    return this.exportData.map(row =>
-      Object.fromEntries(
-        cols.map(col => [col.title, getCellValueForExport(row, col)])));
+    exportToXlsx(
+      this.props.cols,
+      this.exportData,
+      {
+        exportValueFormatter: this.props.exportValueFormatter,
+        file: true,
+        hiddenColumnNames: getters.hiddenColumnNames
+      }
+    );
   }
 
   @autobind
@@ -548,16 +535,4 @@ export class BaseTable<TSelection = defaultSelection>
     );
   }
 
-}
-
-function getCellValueForExport(row: any, col: IBaseTableColLayout & { name: string, title: string, getCellValue(row: any): any }): any {
-  let value = col.getCellValue(row);
-  if (value == null){
-    return NO_DATA_TEXT;
-  }
-  const isDateColumn = col.search && col.search.type === 'date' || false;
-  if(isDateColumn && col.search.allFormats.targetFormat) {
-    value = moment(value).format(col.search.allFormats.targetFormat);
-  }
-  return value;
 }
