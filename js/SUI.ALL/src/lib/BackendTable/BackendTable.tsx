@@ -13,7 +13,7 @@ import * as React from 'react';
 import uuid from 'uuid';
 import {exportToXlsx} from "../BaseTable/utils";
 
-import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, defaultSelection, downloadFile, errorNotification, ExportPlugin, generateCreate, getAllowedColumnInfos, getDataByKey, getFilterType, getStateFromUrlParam, getSUISettings, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
+import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, defaultSelection, downloadFile, errorNotification, ExportPlugin, generateCreate, getAllowedColumnInfos, getDataByKey, getFilterType, getStateFromUrlParam, getSUISettings, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from './BackendDataSource';
@@ -944,7 +944,7 @@ export class BackendTable<TSelection = defaultSelection>
     const modal = Modal.info({
       title: "Статус выгрузки",
       content: "Инициализация выгрузки",
-      className: "sui-backend-hideModalButtons",
+      className: SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS,
       centered: true
     });
 
