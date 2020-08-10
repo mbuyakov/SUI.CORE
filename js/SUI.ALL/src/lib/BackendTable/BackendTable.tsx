@@ -958,6 +958,7 @@ export class BackendTable<TSelection = defaultSelection>
       null,
       { headers: commonHeaders }
     )
+      // eslint-disable-next-line no-async-promise-executor
       .then((): Promise<void> => new Promise<void>(async (resolve, reject): Promise<void> => {
         const totalCount = getters.totalCount as number;
         let processedCount = 0;

@@ -1,10 +1,11 @@
+import * as XLSX from 'xlsx';
+
 import {NO_DATA_TEXT} from "../const";
 import {getDataByKey} from "../dataKey";
 import {IObjectWithIndex} from "../other";
 import {translate} from "../translate";
 import {defaultIfNotBoolean} from "../typeWrappers";
 import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout} from "./types";
-import * as XLSX from 'xlsx';
 
 export function mapColumns(cols: IBaseTableColLayout[]): IFormattedBaseTableColLayout[] {
   return cols.map(col => ({
