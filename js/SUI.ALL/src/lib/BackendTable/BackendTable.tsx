@@ -997,7 +997,7 @@ export class BackendTable<TSelection = defaultSelection>
                 data,
                 {
                   exportValueFormatter: this.exportValueFormatter,
-                  hiddenColumnNames: [], // TODO: Брать из плагина
+                  hiddenColumnNames: getters.hiddenColumnNames,
                   opts: {
                     type: "binary",
                     compression: true
