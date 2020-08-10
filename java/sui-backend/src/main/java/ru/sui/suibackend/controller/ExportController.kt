@@ -26,12 +26,15 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 import javax.servlet.http.HttpServletResponse
+import javax.validation.constraints.Max
+import javax.validation.constraints.Min
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.isAccessible
 
 
 private const val NO_CACHED_SESSION_ERROR_MESSAGE = "Please call /init method first"
+private const val MAX_DB_FETCH_SIZE = 50_000L
 private const val MAX_ROWS_PER_SHEET = 250_000
 
 private fun ZipInputStream.toFileIterator(): Iterator<Pair<String, InputStream>> {
@@ -135,38 +138,41 @@ class ExportController(
     @GetMapping("/data")
     fun rawData(
             @RequestHeader(INIT_SESSION_ID_KEY) sessionId: String,
-            @RequestParam("batchCount") batchCount: Int,
-            @RequestParam("pageSize") pageSize: Long,
+            @RequestParam("fileCount") @Min(1) fileCount: Int,
+            @RequestParam("fileSize") @Min(1) @Max(MAX_DB_FETCH_SIZE) fileSize: Int,
             response: HttpServletResponse
     ) {
-        val userState = exportInfoCache.getIfPresent(sessionId)?.userState
+        val userState = exportInfoCache.getIfPresent(sessionId)?.userState ?: error(NO_CACHED_SESSION_ERROR_MESSAGE)
 
-        if (userState != null) {
-            userState.pageSize = pageSize
+        response.contentType = MediaType.APPLICATION_JSON_VALUE
 
-            response.contentType = MediaType.APPLICATION_JSON_VALUE
+        ZipOutputStream(response.outputStream).use { zipOutputStream ->
+            objectMapper.writer().writeValues(zipOutputStream).use { writer ->
+                var partNumber = 1
 
-            ZipOutputStream(response.outputStream).use { zipOutputStream ->
-                objectMapper.writer().writeValues(zipOutputStream).use { writer ->
-                    for (batchNumber in (1..batchCount)) {
-                        val pageData = backendService.getData(userState)
+                for (chunk in (1..fileCount).chunked((MAX_DB_FETCH_SIZE / fileSize).toInt())) {
+                    userState.pageSize = (chunk.size * fileSize).toLong()
 
-                        if (pageData.totalCount > userState.offset) {
-                            zipOutputStream.putNextEntry(ZipEntry("$batchNumber.json"))
-                            writer.write(pageData.data)
-                            zipOutputStream.closeEntry()
+                    val pageData = backendService.getData(userState)
 
-                            userState.offset += pageSize
-                        }
+                    if (pageData.totalCount > userState.offset) {
+                        pageData.data
+                                .asSequence()
+                                .chunked(fileSize)
+                                .forEach {
+                                    zipOutputStream.putNextEntry(ZipEntry("${partNumber++}.json"))
+                                    writer.write(it)
+                                    zipOutputStream.closeEntry()
+                                }
 
-                        if (pageData.totalCount <= userState.offset) {
-                            break
-                        }
+                        userState.offset += userState.pageSize
+                    }
+
+                    if (pageData.totalCount <= userState.offset) {
+                        break
                     }
                 }
             }
-        } else {
-            error(NO_CACHED_SESSION_ERROR_MESSAGE)
         }
     }
 

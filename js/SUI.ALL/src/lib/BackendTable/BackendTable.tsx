@@ -963,15 +963,15 @@ export class BackendTable<TSelection = defaultSelection>
         const totalCount = getters.totalCount as number;
         let processedCount = 0;
 
-        const batchCount = 5;
-        const pageSize = 10000;
+        const fileSize = 10000;
+        const fileCount = 5;
 
         try {
           while (true) {
             modal.update({ content: `Обработано ${processedCount} из ${totalCount}` });
 
             const response = await axios.get<Blob>(
-              `${exportApiUri}/data?batchCount=${batchCount}&pageSize=${pageSize}`,
+              `${exportApiUri}/data?fileCount=${fileCount}&fileSize=${fileSize}`,
               {
                 headers: commonHeaders,
                 responseType: "blob"
@@ -1026,7 +1026,7 @@ export class BackendTable<TSelection = defaultSelection>
               }
             );
 
-            if (totalElements < batchCount * pageSize) {
+            if (totalElements < (fileCount * fileSize)) {
               break;
             }
           }
