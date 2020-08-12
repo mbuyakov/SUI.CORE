@@ -124,6 +124,10 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
                     id: "__edit",
                     render: (_: null, row: {id: TSelection}): JSX.Element => (
                       <PromisedMaterialIconButton
+                        style={{
+                          marginBottom: -12,
+                          marginTop: -12
+                        }}
                         loading={this.state.initEditLoading}
                         icon={<CreateIcon/>}
                         promise={this.handleEditClickFn(row)}
