@@ -3,7 +3,6 @@ import * as React from "react";
 
 import {BaseForm, IBaseFormProps} from "../Base";
 import {ObservableBinder} from "../Observable";
-import {sleep} from "../other";
 
 import {defaultModalFooter, IPromisedModalProps, PromisedModal} from "./PromisedModal";
 
@@ -21,7 +20,7 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
   public readonly modalRef: React.RefObject<PromisedModal> = React.createRef();
 
   public render(): JSX.Element {
-// @ts-ignore
+    // @ts-ignore
     const hasErrors = this.formRef.current && this.formRef.current.hasErrors;
 
     return (
@@ -38,7 +37,6 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
             ) : okButton,
           cancelButton
         )}
-        onOpen={this.onOpen}
       >
         {this.props.modalHeader}
         <BaseForm
@@ -46,6 +44,7 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
           noCard={true}
           verticalLabel={true}
           {...this.props.baseFormProps}
+          onInitialized={this.onInitialized}
           onSubmit={this.props.onSubmit}
         />
       </PromisedModal>
@@ -62,16 +61,13 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
   }
 
   @autobind
-  private async onOpen(): Promise<void> {
-    while (!this.formRef.current) {
-      await sleep(100);
+  private onInitialized(form: BaseForm): void {
+    if (this.props.baseFormProps?.onInitialized) {
+      this.props.baseFormProps.onInitialized(form);
     }
 
+    // hasErrors rerender
     this.forceUpdate();
-
-    if (this.props.onOpen) {
-      await this.props.onOpen();
-    }
   }
 
 }
