@@ -104,6 +104,7 @@ public render(): JSX.Element {
     const highlightEnabled = defaultIfNotBoolean(this.props.highlightRow, false);
     const selectionEnabled = defaultIfNotBoolean(this.props.selectionEnabled, false);
     const resizingEnabled = defaultIfNotBoolean(this.props.resizingEnabled, true);
+    const headerEnabled = defaultIfNotBoolean(this.props.filteringEnabled, true);
     const allowExport = defaultIfNotBoolean(this.props.allowExport, true);
 
     const cols = this.mapCols();
@@ -405,7 +406,7 @@ public render(): JSX.Element {
               defaultColumnWidths={defaultWidth}
             />
           )}
-          <TableHeaderRow showSortingControls={sortingEnabled}/>
+          {headerEnabled && <TableHeaderRow showSortingControls={sortingEnabled}/>}
           {filteringEnabled && <TableFilterRow cellComponent={filterCell}/>}
           {paginationEnabled && <PagingPanel
             containerComponent={pagingContainerComponent}

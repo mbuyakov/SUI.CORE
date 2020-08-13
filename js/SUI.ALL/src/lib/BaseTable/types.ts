@@ -125,6 +125,7 @@ export interface IBaseTableProps<TSelection = any> {
   fitToRowDetailContainer?: boolean;
   fitToTabPanelBody?: boolean;
   groupingEnabled?: boolean;
+  headerEnabled?: boolean;
   hideRows?: boolean;
   highlightRow?: boolean;
   initialSelection?: TSelection[];
