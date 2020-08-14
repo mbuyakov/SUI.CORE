@@ -11,10 +11,12 @@ export class LogLevelService {
 
   public constructor() {
     this.logLevels.set(ROOT_LOGGER_KEY, LoggerLevel.INFO);
-    // @ts-ignore
-    window.setLogLevel = this.setLogLevel;
-    // @ts-ignore
-    window.getLogLevel = this.getLogLevel;
+    if (window) {
+      // @ts-ignore
+      window.setLogLevel = this.setLogLevel;
+      // @ts-ignore
+      window.getLogLevel = this.getLogLevel;
+    }
   }
 
   @autobind
