@@ -18,6 +18,8 @@ exports.default = () => {
       // require.resolve('@umijs/plugin-request'),
       // require.resolve('@umijs/plugin-test'),
       require.resolve('@umijs/plugin-helmet'),
+      require.resolve('@umijs/plugin-esbuild'),
+      require.resolve("@sui/sui-devtools/umi/sui-esbuild"),
       ...(process.env.WEBPACK_FIVE ? [require.resolve("@umijs/plugin-webpack-5")] : []),
       require.resolve("@sui/sui-devtools/umi/plugin-antd-custom/lib"),
       require.resolve("@sui/sui-devtools/umi/sui-build-time"),
