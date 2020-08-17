@@ -1,4 +1,4 @@
-import WarningTwoTone from '@ant-design/icons/lib/twotone/WarningTwoTone';
+import { WarningTwoTone } from '@ant-design/icons';
 import {Button, Popover, Select, Tooltip} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
@@ -160,13 +160,10 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
           <Tooltip
             title="Неизвестный плагин"
           >
-            <span>
-              {/* @ts-ignore */}
-              <WarningTwoTone
-                style={{transform: 'scale(1.5)'}}
-                twoToneColor="#ad4e00"
-              />
-            </span>
+            <WarningTwoTone
+              style={{transform: 'scale(1.5)'}}
+              twoToneColor="#ad4e00"
+            />
           </Tooltip>
         )}
       </div>
