@@ -21,7 +21,6 @@
     "@umijs/plugin-helmet": "1.0.2",
     "@umijs/plugin-initial-state": "2.2.1",
     "@umijs/plugin-model": "^2.5.3",
-    "@umijs/plugin-webpack-5": "^0.1.3",
     "create-file-webpack": "^1.0.2",
     "cross-env": "^7.0.2",
     "esbuild-webpack-plugin": "^1.0.5",
