@@ -6,22 +6,33 @@ import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 type INumberIntervalColumnFilterProps = LazyTableFilterRowCellProps & INewSearchProps;
 
+type SingleValue = number | null;
+type FilterValue = [SingleValue, SingleValue];
+
 interface INumberIntervalColumnFilterState {
-  fromValue?: number;
-  toValue?: number;
+  lastFilterValue: FilterValue;
+  value: FilterValue;
 }
 
-export class NumberIntervalColumnFilter
-  extends React.Component<INumberIntervalColumnFilterProps, INumberIntervalColumnFilterState> {
+const propsFilterValueToStateFilterValue = (filterValue: FilterValue): FilterValue => [filterValue[0] ?? null, filterValue[1] ?? null];
+const equals = (filterValue1: FilterValue, filterValue2: FilterValue): boolean => (filterValue1[0] === filterValue2[0]) && ((filterValue1[1] === filterValue2[1]));
+
+export class NumberIntervalColumnFilter extends React.Component<INumberIntervalColumnFilterProps, INumberIntervalColumnFilterState> {
 
   public constructor(props: INumberIntervalColumnFilterProps) {
     super(props);
-    const filterValue = (props.filter && (props.filter.value as unknown as number[]) || []);
 
-    this.state = {
-      fromValue: filterValue[0],
-      toValue: filterValue[1]
-    };
+    const value = propsFilterValueToStateFilterValue((props.filter?.value || []) as unknown as FilterValue);
+
+    this.state = { lastFilterValue: value, value };
+  }
+
+  public componentDidUpdate(): void {
+    const value = propsFilterValueToStateFilterValue((this.props.filter?.value || []) as unknown as FilterValue);
+
+    if (!equals(value, this.state.lastFilterValue)) {
+      this.setState({ lastFilterValue: value, value });
+    }
   }
 
   public render(): JSX.Element {
@@ -37,35 +48,36 @@ export class NumberIntervalColumnFilter
         <InputNumber
           placeholder="С"
           style={{width: "100%"}}
-          value={this.state.fromValue}
-          onChange={this.handleChangeFn("fromValue")}
-          onKeyUp={this.enterTriggerFilter}
+          value={this.state.value[0]}
+          onBlur={this.onBlur}
+          onChange={this.onChangeFn(0)}
+          onKeyUp={this.onKeyUp}
         />
         <span>~</span>
         <InputNumber
           placeholder="По"
           style={{width: "100%"}}
-          value={this.state.toValue}
-          onChange={this.handleChangeFn("toValue")}
-          onKeyUp={this.enterTriggerFilter}
+          value={this.state.value[1]}
+          onBlur={this.onBlur}
+          onChange={this.onChangeFn(1)}
+          onKeyUp={this.onKeyUp}
         />
       </div>
     );
   }
 
   @autobind
-  private enterTriggerFilter(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.key === 'Enter') {
-      this.triggerFilter();
-    }
+  private onBlur(): void {
+    this.triggerFilter(true);
   }
 
   @autobind
-  private handleChangeFn(property: keyof INumberIntervalColumnFilterState): (value: number | string | null) => void {
+  private onChangeFn(index: number): (value: number | string | null) => void {
     return (value): void => {
       let numberValue = null;
 
-switch (typeof(value)) {
+      // tslint:disable-next-line:switch-default
+      switch (typeof (value)) {
         case "number":
           numberValue = value;
           break;
@@ -81,26 +93,33 @@ switch (typeof(value)) {
           }
       }
 
-      this.setState({[property]: typeof(numberValue) === "number" ? numberValue : null}, () => this.triggerFilter(true));
+      const stateValue = [...this.state.value] as FilterValue;
+
+      stateValue[index] = numberValue ?? null;
+
+      this.setState({ value: stateValue });
     };
   }
 
   @autobind
-  private triggerFilter(lazy: boolean = false): void {
-    const {
-      fromValue,
-      toValue
-    } = this.state;
+  private onKeyUp(event: React.KeyboardEvent<HTMLInputElement>): void {
+    if (event.key === 'Enter') {
+      this.triggerFilter(false);
+    }
+  }
 
-    this.props.onFilter({
-      columnName: this.props.column.name,
-      lazy,
-      operation: "interval",
-      value: [
-        (fromValue != null) ? fromValue : null,
-        (toValue != null) ? toValue : null
-      ] as any
-    });
+  @autobind
+  private triggerFilter(lazy: boolean): void {
+    const value = this.state.value;
+
+    if (!lazy || !equals(value, this.state.lastFilterValue)) {
+      this.props.onFilter({
+        columnName: this.props.column.name,
+        lazy,
+        operation: "interval",
+        value: value as any
+      });
+    }
   }
 
 }

@@ -5,7 +5,8 @@ import org.json.JSONObject;
 
 import java.util.function.Function;
 
-import static ru.sui.suibackend.utils.Constants.*;
+import static ru.sui.suibackend.utils.Constants.INFINITY;
+import static ru.sui.suibackend.utils.Constants.NEGATIVE_INFINITY;
 
 
 public class JsonUtils {

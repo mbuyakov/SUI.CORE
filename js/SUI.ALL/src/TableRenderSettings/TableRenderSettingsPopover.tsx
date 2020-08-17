@@ -1,14 +1,14 @@
-import { Icon as LegacyIcon } from '@ant-design/compatible';
-import { Button, Popover, Select, Tooltip } from 'antd';
+import {WarningTwoTone} from '@ant-design/icons';
+import {Button, Popover, Select, Tooltip} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import { PromisedButton } from '../Inputs';
-import { chain, sleep } from '../other';
-import { SUI_AUTO_WIDTH, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT } from '../styles';
-import { ITableInfo } from '../types';
+import {PromisedButton} from '../Inputs';
+import {chain, sleep} from '../other';
+import {SUI_AUTO_WIDTH, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT} from '../styles';
+import {ITableInfo} from '../types';
 
-import { TableRenderSettingsPluginManager } from './TableRenderSettingsPluginManager';
+import {TableRenderSettingsPluginManager} from './TableRenderSettingsPluginManager';
 
 const popoverContentStyle: React.CSSProperties = {
   alignItems: 'center',
@@ -19,7 +19,7 @@ const popoverContentStyle: React.CSSProperties = {
 
 export type ITableRenderParams<T extends {} = {}> = Omit<T, 'renderType'> & {
   renderType?: string;
-[index: string]: any;
+  [index: string]: any;
 }
 
 export interface ITableRenderSettingsPopoverProps {
@@ -44,14 +44,14 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
   public static getDerivedStateFromProps(props: ITableRenderSettingsPopoverProps, state: ITableRenderSettingsPopoverState<{}>): ITableRenderSettingsPopoverState<{}> {
     const tableRenderParams: ITableRenderParams = TableRenderSettingsPopover.parseTableRenderParams(props.tableRenderParams);
 
-    return { ...state, tableRenderParams: { ...tableRenderParams, ...state.tableRenderParams } };
+    return {...state, tableRenderParams: {...tableRenderParams, ...state.tableRenderParams}};
   }
 
   public static parseTableRenderParams(params: string): ITableRenderParams {
     let tableRenderParams: ITableRenderParams = {};
 
     try {
-tableRenderParams = chain<ITableRenderParams<any>, string>(
+      tableRenderParams = chain<ITableRenderParams<any>, string>(
         params,
         trp => JSON.parse(trp ? trp.replace(/\\"/g, '"') : '{}'),
         ...Array.from(TableRenderSettingsPluginManager.plugins.values()).map(plugin => plugin.parseParams),
@@ -79,13 +79,13 @@ tableRenderParams = chain<ITableRenderParams<any>, string>(
       // Ignore
       return;
     }
-    this.setState({ popoverVisible: value });
+    this.setState({popoverVisible: value});
   }
 
 
   @autobind
   public openPopover(): void {
-    this.setState({ popoverVisible: true });
+    this.setState({popoverVisible: true});
   }
 
   public render(): JSX.Element {
@@ -119,7 +119,7 @@ tableRenderParams = chain<ITableRenderParams<any>, string>(
                 {this.getPopoverContent(this.state.tableRenderParams.renderType)}
                 <PromisedButton
                   ref={this.saveButtonRef}
-                  style={{ width: '100%' }}
+                  style={{width: '100%'}}
                   promise={() => this.props.promise(JSON.stringify(this.state.tableRenderParams).replace(/"/g, '\\"'))}
                   type="primary"
                   disabled={!this.state.changed}
@@ -129,7 +129,7 @@ tableRenderParams = chain<ITableRenderParams<any>, string>(
               </div>}
           >
             <Button
-              icon={<LegacyIcon type={"experiment"} />}
+              icon="experiment"
               onClick={this.openPopover}
             />
           </Popover>
@@ -139,13 +139,13 @@ tableRenderParams = chain<ITableRenderParams<any>, string>(
   }
 
   @autobind
-public updateField(field: string, save: boolean = false): (value: any) => Promise<any> {
+  public updateField(field: string, save: boolean = false): (value: any) => Promise<any> {
     return async value => {
       // console.log(field, value);
       const tableRenderParams = this.state.tableRenderParams;
-// @ts-ignore
+      // @ts-ignore
       tableRenderParams[field] = value;
-      this.setState({ tableRenderParams: { ...tableRenderParams }, changed: true });
+      this.setState({tableRenderParams: {...tableRenderParams}, changed: true});
 
       return save ? this.props.promise(JSON.stringify(tableRenderParams).replace(/"/g, '\\"')) : sleep(Number.MAX_VALUE);
     };
@@ -161,10 +161,8 @@ public updateField(field: string, save: boolean = false): (value: any) => Promis
           <Tooltip
             title="Неизвестный плагин"
           >
-            <LegacyIcon
-              style={{ transform: 'scale(1.5)' }}
-              type="warning"
-              theme="twoTone"
+            <WarningTwoTone
+              style={{transform: 'scale(1.5)'}}
               twoToneColor="#ad4e00"
             />
           </Tooltip>

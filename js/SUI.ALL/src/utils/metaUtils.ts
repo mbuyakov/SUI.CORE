@@ -1,14 +1,15 @@
-import { SelectData } from '../BaseTable';
-import { ColumnInfo, ColumnInfoManager, TableInfo, TableInfoManager } from '../cache';
-import { getSUISettings } from '../core';
-import { DataKey, dataKeysToDataTree, getDataByKey } from '../dataKey';
-import { IGqlFilter, query, stringifyGqlFilter } from '../gql';
-import { addPluralEnding, camelCase, capitalize, removePluralEnding } from '../stringFormatters';
-import { wrapInArray } from '../typeWrappers';
+import {SelectData} from '../BaseTable';
+import {ColumnInfo, ColumnInfoManager, TableInfo, TableInfoManager} from '../cache';
+import {getSUISettings} from '../core';
+import {DataKey, dataKeysToDataTree, getDataByKey} from '../dataKey';
+import {IGqlFilter, query, stringifyGqlFilter} from '../gql';
+import {IObjectWithIndex} from "../other";
+import {addPluralEnding, camelCase, capitalize, removePluralEnding} from '../stringFormatters';
+import {wrapInArray} from '../typeWrappers';
 
-import { ActionType, isNumberAction } from './actionType';
-import { FilterType } from './filterType';
-import { IRawRoute } from './init';
+import {ActionType, isNumberAction} from './actionType';
+import {FilterType} from './filterType';
+import {IRawRoute} from './init';
 
 export type RouteType = 'card' | 'table';
 
@@ -74,7 +75,11 @@ export function getLinkForTable(
     : null;
 }
 
-export async function generateCatalogDataPromise(tableName: string, valueColumnName?: string): Promise<SelectData> {
+export async function generateCatalogDataPromise(
+  tableName: string,
+  valueColumnName?: string,
+  additionalColumns?: string[]
+): Promise<SelectData> {
   const selectColumn = valueColumnName ? camelCase(valueColumnName) : 'id';
 
   const queryData = await query(`{
@@ -82,13 +87,15 @@ export async function generateCatalogDataPromise(tableName: string, valueColumnN
       nodes {
         id
         ${selectColumn}
+        ${(additionalColumns || []).map(camelCase)}
       }
     }
   }`, true);
 
-return (getDataByKey(queryData, 'nodes') || []).map((element: any) => ({
+  return (getDataByKey(queryData, 'nodes') || []).map((element: IObjectWithIndex) => ({
     title: element[selectColumn || 'id'],
     value: element.id,
+    src: element
   }));
 }
 
@@ -132,7 +139,7 @@ async function __getReferenceRenderColumnInfo(
     const referencedTableInfo = await getReferencedTableInfo(foreignLinkColumnInfo);
     const forwardReferencedForeignLinkColumnInfo = referencedTableInfo && await __getReferenceRenderColumnInfo(referencedTableInfo, roles, visitedTableInfoIds);
 
-if (forwardReferencedForeignLinkColumnInfo != null) {
+    if (forwardReferencedForeignLinkColumnInfo != null) {
       return forwardReferencedForeignLinkColumnInfo;
     }
     if (isAllowedColumnInfo(foreignLinkColumnInfo, roles) && foreignLinkColumnInfo.columnName !== 'id') {
@@ -159,13 +166,13 @@ export interface IDataSet<T = any> {
 
 export function getDataSetRender(dataSet: IDataSet): string {
   return dataSet.hasOwnProperty('value')
-? (dataSet.value != null ? String(dataSet.value) : dataSet.value)
+    ? (dataSet.value != null ? String(dataSet.value) : dataSet.value)
     : dataSet.id;
 }
 
 function __queryFilterString<T>(filter?: IGqlFilter<T>): string {
   return filter
-    ? `(${stringifyGqlFilter({ filter })})`
+    ? `(${stringifyGqlFilter({filter})})`
     : '';
 }
 
@@ -215,7 +222,7 @@ export async function getDataSet<TValueType = {}, TGroupType = {}>(
     if (groupFilterString) {
       queryDataKey[0] = `${queryDataKey[0]}${groupFilterString}`;
     }
-if (valueFilterString && valuePrefixDataKey.every((value, index) => value != null && value === queryDataKey[index])) {
+    if (valueFilterString && valuePrefixDataKey.every((value, index) => value != null && value === queryDataKey[index])) {
       const connectionIndex = valuePrefixDataKey.length - 2;
       queryDataKey[connectionIndex] = `${queryDataKey[connectionIndex]}${valueFilterString}`;
     }
@@ -226,7 +233,7 @@ if (valueFilterString && valuePrefixDataKey.every((value, index) => value != nul
 
   const formatValues = function <T extends { id: string }>(elements: T[], valueDataKey?: DataKey, additional?: (result: IDataSet, element: T) => void): IDataSet[] {
     return (elements || []).map(element => {
-      const result: IDataSet = { id: element.id };
+      const result: IDataSet = {id: element.id};
       if (valueDataKey) {
         result.value = getDataByKey(element, valueDataKey);
       }
@@ -279,7 +286,7 @@ export async function getRenderValue(
     }
 
     if (queryResult) {
-      return { value: getDataByKey(queryResult, dataKey) };
+      return {value: getDataByKey(queryResult, dataKey)};
     }
   }
 
@@ -293,7 +300,7 @@ export async function generateRenderDataKey(
   if (tableInfo && roles && roles.length) {
     const referenceRenderColumnInfo = await getReferenceRenderColumnInfo(tableInfo, roles);
 
-if (referenceRenderColumnInfo != null) {
+    if (referenceRenderColumnInfo != null) {
       const dataKey = [];
       let foreignTableInfo: TableInfo | null = tableInfo;
 
@@ -337,7 +344,7 @@ export async function fullReloadTableInfo(tableInfoId: string): Promise<void> {
 export function getFilterType(columnInfo: ColumnInfo, action?: ActionType): FilterType {
   let filterType: FilterType | null = null;
 
-switch (columnInfo && columnInfo.columnType && columnInfo.columnType.toLowerCase()) {
+  switch (columnInfo && columnInfo.columnType && columnInfo.columnType.toLowerCase()) {
     case 'date':
       filterType = FilterType.DATE;
       break;

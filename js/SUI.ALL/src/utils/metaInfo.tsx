@@ -1,24 +1,25 @@
 import * as React from 'react';
 
-import { booleanRender, IBaseTableColLayout, SortingDirection } from '../BaseTable';
-import { ColumnInfo, ColumnInfoManager, TableInfoManager } from '../cache';
-import { getDataByKey } from '../dataKey';
-import { TableRenderSettingsPluginManager, TableRenderSettingsPopover } from '../TableRenderSettings';
+import {booleanRender, IBaseTableColLayout, SortingDirection} from '../BaseTable';
+import {ColumnInfo, ColumnInfoManager, TableInfoManager} from '../cache';
+import {getDataByKey} from '../dataKey';
+import {asyncMap} from "../other";
+import {TableRenderSettingsPluginManager, TableRenderSettingsPopover} from '../TableRenderSettings';
 
-import { IColumnInfoToBaseTableColProps } from './init';
-import { generateCatalogDataPromise, getReferenceRenderColumnInfo } from './metaUtils';
+import {IColumnInfoToBaseTableColProps} from './init';
+import {generateCatalogDataPromise, getReferenceRenderColumnInfo} from './metaUtils';
 
 export async function colToBaseTableCol(
   props: IColumnInfoToBaseTableColProps,
 ): Promise<IBaseTableColLayout> {
-  const { columnInfo, rawMode, roles } = props;
+  const {columnInfo, rawMode, roles} = props;
   const columnName = columnInfo.getNameOrColumnName();
 
   const result: IBaseTableColLayout = {
     defaultGrouping: columnInfo.defaultGrouping,
     defaultSorting: columnInfo.defaultSorting as SortingDirection,
     defaultVisible: columnInfo.defaultVisible,
-groupingCriteria: (value: any) => value,
+    groupingCriteria: (value: any) => value,
     id: columnInfo.columnName,
     subtotal: columnInfo.subtotalTypeBySubtotalTypeId,
     title: `${columnName}${rawMode ? ` (${columnInfo.columnName})` : ''}`,
@@ -29,7 +30,7 @@ groupingCriteria: (value: any) => value,
   };
 
   if (columnInfo.filterTypeByFilterTypeId) {
-    result.search = { type: columnInfo.filterTypeByFilterTypeId.type };
+    result.search = {type: columnInfo.filterTypeByFilterTypeId.type};
   }
 
   const ref = getDataByKey(columnInfo, 'foreignColumnInfo', 'length')
@@ -55,6 +56,7 @@ groupingCriteria: (value: any) => value,
           selectData: generateCatalogDataPromise(
             renderTableInfo.tableName,
             renderColumnInfo.columnName,
+            (await asyncMap(columnInfo?.dependencies || [], it => ColumnInfoManager.getById(it.catalogColumnInfoId))).map(it => it.columnName)
           ),
           type: 'customSelect'
         };
@@ -72,17 +74,17 @@ groupingCriteria: (value: any) => value,
   const trp = TableRenderSettingsPopover.parseTableRenderParams(props.columnInfo.tableRenderParams);
 
   if (!props.rawMode) {
-// @ts-ignore
+    // @ts-ignore
     let selectedPlugin = Array.from(TableRenderSettingsPluginManager.plugins.values()).find(plugin => plugin.extraActivationKostyl(result, renderColumnInfo, props, trp));
 
     if (!selectedPlugin && trp && trp.renderType) {
       selectedPlugin = TableRenderSettingsPluginManager.plugins.get(trp.renderType); // || new UnknownPlugin();
     }
 
-// @ts-ignore
+    // @ts-ignore
     await selectedPlugin.baseTableColGenerator(result, renderColumnInfo, props, trp);
 
-// @ts-ignore
+    // @ts-ignore
     result.__tableRenderParams = trp; // Костыль для округления подытогов
   }
 

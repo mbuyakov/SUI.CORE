@@ -1,4 +1,5 @@
 import { Container } from 'typescript-ioc';
+
 import { getDataByKey } from '../dataKey';
 import { ICoreUser } from '../user';
 import { UserService } from '../ioc/service';
@@ -14,6 +15,14 @@ export * from "./metaInfo";
 export * from "./metaUtils";
 export * from "./TabSyncer";
 export * from "./versionMismatch";
+
+export function downloadFile(file: Blob, fileName: string): void {
+  const element = document.createElement('a');
+  element.href = URL.createObjectURL(file);
+  element.download = fileName;
+  document.body.appendChild(element);
+  element.click();
+}
 
 export function getUser(): ICoreUser {
   return Container.get(UserService).getUser();

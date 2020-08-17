@@ -1,3 +1,6 @@
+import * as React from 'react';
+import IdleTimer from 'react-idle-timer';
+
 import { ColumnInfo, TableInfo } from '../cache';
 
 export interface IColumnInfoToBaseTableColProps {
@@ -29,3 +32,4 @@ component: any;
   tabs: boolean;
 }
 
+export const IDLE_TIMER_REF = React.createRef<IdleTimer>();

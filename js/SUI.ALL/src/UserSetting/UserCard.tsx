@@ -1,5 +1,4 @@
 // tslint:disable:no-magic-numbers jsx-no-lambda
-import {Icon} from '@ant-design/compatible';
 import {Card, Select, Tooltip} from "antd";
 import * as React from "react";
 import {BaseCard, IBaseCardItemLayout, IBaseCardRowLayout} from "../Base";
@@ -59,7 +58,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                   >
                     <PromisedButton
                       type={userData.deleted ? undefined : "danger" as any}
-                      icon={<Icon type={userData.deleted ? "issues-close" : "delete"}/>}
+                      icon={userData.deleted ? "issues-close" : "delete"}
                       promise={this.props.handleDeleteChange}
                       popconfirmSettings={{
                         placement: "topRight",

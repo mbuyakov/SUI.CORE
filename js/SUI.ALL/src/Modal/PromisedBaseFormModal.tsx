@@ -3,7 +3,6 @@ import * as React from "react";
 
 import {BaseForm, IBaseFormProps} from "../Base";
 import {ObservableBinder} from "../Observable";
-import {sleep} from "../other";
 
 import {defaultModalFooter, IPromisedModalProps, PromisedModal} from "./PromisedModal";
 
@@ -15,13 +14,15 @@ export interface IPromisedBaseFormModalProps<TValues> extends IPromisedBaseFormM
   onSubmit?(values: TValues): Promise<boolean>;
 }
 
+const FAKE_PROMISE = (): Promise<void> => new Promise((resolve): void => resolve());
+
 export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromisedBaseFormModalProps<T>> {
 
-  public readonly formRef: React.RefObject<BaseForm> = React.createRef();
-  public readonly modalRef: React.RefObject<PromisedModal> = React.createRef();
+  public formRef: React.RefObject<BaseForm> = React.createRef();
+  public modalRef: React.RefObject<PromisedModal> = React.createRef();
 
   public render(): JSX.Element {
-// @ts-ignore
+    // @ts-ignore
     const hasErrors = this.formRef.current && this.formRef.current.hasErrors;
 
     return (
@@ -29,6 +30,7 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
         {...this.props}
         ref={this.modalRef}
         promise={this.modalPromise}
+        destroyOnClose={true}
         customFooter={(okButton, cancelButton): JSX.Element => defaultModalFooter(
           hasErrors
             ? (
@@ -38,6 +40,7 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
             ) : okButton,
           cancelButton
         )}
+        onCancel={this.onCancel}
         onOpen={this.onOpen}
       >
         {this.props.modalHeader}
@@ -46,6 +49,7 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
           noCard={true}
           verticalLabel={true}
           {...this.props.baseFormProps}
+          onInitialized={this.onInitialized}
           onSubmit={this.props.onSubmit}
         />
       </PromisedModal>
@@ -62,16 +66,30 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
   }
 
   @autobind
-  private async onOpen(): Promise<void> {
-    while (!this.formRef.current) {
-      await sleep(100);
+  private onCancel(event: React.MouseEvent<HTMLElement>): void {
+    this.formRef = React.createRef();
+
+    if (this.props.onCancel) {
+      this.props.onCancel(event);
+    }
+  }
+
+  @autobind
+  private onInitialized(form: BaseForm): void {
+    if (this.props.baseFormProps?.onInitialized) {
+      // @ts-ignore
+      this.props.baseFormProps.onInitialized(form);
     }
 
+    // hasErrors rerender
     this.forceUpdate();
+  }
 
-    if (this.props.onOpen) {
-      await this.props.onOpen();
-    }
+  @autobind
+  private onOpen(): Promise<void> {
+    const onOpen = this.props.onOpen ?? FAKE_PROMISE;
+
+    return onOpen().then((): void => this.forceUpdate())
   }
 
 }

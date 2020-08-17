@@ -1,18 +1,17 @@
+import CreateIcon from '@material-ui/icons/CreateOutlined';
 import { Icon } from '@ant-design/compatible';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
-import CreateIcon from '@material-ui/icons/CreateOutlined';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import { Button, notification } from 'antd';
+import {Button, notification} from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";
 
 import {BackendTable} from "../BackendTable";
 import {getDataByKey} from "../dataKey";
-import { DisableEditContext } from '../DisableEditContext';
+import {DisableEditContext} from '../DisableEditContext';
 import {errorNotification} from "../drawUtils";
-import { PromisedButton, PromisedMaterialIconButton } from '../Inputs';
+import {PromisedButton, PromisedMaterialIconButton} from '../Inputs';
 import {PromisedBaseFormModal} from "../Modal";
-import { IAntIconComponent, IObjectWithIndex, sleep } from '../other';
+import {IObjectWithIndex, sleep} from '../other';
 import {hasAnyRole} from "../RoleVisibilityWrapper";
 import {defaultIfNotBoolean} from "../typeWrappers";
 
@@ -61,7 +60,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
           const createButton = (
             <Button
-              icon={<Icon component={AddOutlinedIcon as IAntIconComponent} />}
+              icon="add"
               {...createButtonProps}
               onClick={this.showBaseModalFn(this.createBaseFormModalRef)}
             >
@@ -71,7 +70,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
           const deleteButton = (
             <PromisedButton
-              icon={<Icon component={DeleteOutlineIcon as IAntIconComponent} />}
+              icon="delete"
               {...deleteButtonProps}
               promise={this.handleDeleteClick}
               popconfirmSettings={{
@@ -124,6 +123,10 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
                     id: "__edit",
                     render: (_: null, row: {id: TSelection}): JSX.Element => (
                       <PromisedMaterialIconButton
+                        style={{
+                          marginBottom: -12,
+                          marginTop: -12
+                        }}
                         loading={this.state.initEditLoading}
                         icon={<CreateIcon/>}
                         promise={this.handleEditClickFn(row)}

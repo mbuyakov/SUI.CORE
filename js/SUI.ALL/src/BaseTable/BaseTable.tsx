@@ -1,26 +1,23 @@
-import { Icon as LegacyIcon } from '@ant-design/compatible';
+import {Icon as LegacyIcon} from '@ant-design/compatible';
 import {Getter, Getters} from '@devexpress/dx-react-core';
 import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSelection, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
 import {ColumnChooser, DragDropProvider, Grid, GroupingPanel, PagingPanel, Table, TableBandHeader, TableColumnReordering, TableColumnResizing, TableColumnVisibility, TableFilterRow, TableGroupRow, TableHeaderRow, TableRowDetail, TableSelection, Toolbar, VirtualTable} from '@devexpress/dx-react-grid-material-ui';
 import {TableRow} from '@material-ui/core';
-import { Card, Result, Spin } from 'antd';
+import CloudDownload from '@material-ui/icons/CloudDownload';
+import {Card, Result, Spin} from 'antd';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
-import moment from 'moment';
 import * as React from 'react';
-import * as XLSX from 'xlsx';
 
 import {getDataByKey} from '../dataKey';
-import { BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER } from '../styles';
-import {translate} from '../translate';
+import {BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '../styles';
 import {defaultIfNotBoolean} from '../typeWrappers';
-
-import { NO_DATA_TEXT } from '../const';
 import {EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, WarningPlugin} from './extends';
 import {CustomToggleCell} from "./extends/CustomToggleCell";
 import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter} from './filters';
 import {defaultSelection, ISelectionTable} from './ISelectionTable';
-import {IBaseTableColLayout, IBaseTableProps, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
+import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
+import {exportToXlsx, mapColumns} from "./utils";
 
 const Cell = Table.Cell;
 const SelectionCell = TableSelection.Cell;
@@ -42,8 +39,8 @@ export class BaseTable<TSelection = defaultSelection>
     { selection?: TSelection[]; }>
   implements ISelectionTable<TSelection> {
 
-private static getRowId(row: any): any {
-const id = (row.id != null) ? row.id : row.compoundKey;
+  private static getRowId(row: any): any {
+    const id = (row.id != null) ? row.id : row.compoundKey;
 
     if (id === null || id === undefined) {
       console.error('ROW DOESN\'T HAVE ID!');
@@ -61,6 +58,50 @@ const id = (row.id != null) ? row.id : row.compoundKey;
   }
 
   private exportData?: any[];
+
+  private CellComponent = (props: any): JSX.Element => {
+    const render: TableCellRender = props.column.render;
+    const value = Array.isArray(props.value) && (props.value[0] ? typeof props.value[0] !== "object" : true)
+      ? props.value.toString()
+      : props.value;
+
+    return (
+      <Table.Cell
+        {...props}
+        style={this.props.cellStyler ? this.props.cellStyler(props.row, props.value, props.column) : undefined}
+      >
+        {render ? render(value, props.row, props.tableColumn) : value}
+      </Table.Cell>
+    );
+  };
+
+  private FilterCell = (props: any) => (
+    <Table.Cell
+      {...props as any}
+    >
+      {this.getSearchComponent(props)}
+    </Table.Cell>
+  );
+
+  private RowComponent = (props: any): JSX.Element => (
+    <TableRow
+      {...props}
+      style={this.props.rowStyler ? this.props.rowStyler(props.row) : undefined}
+    />
+  );
+
+  private ToggleCellComponent = (props: any): JSX.Element => (
+    (this.props.expandableFilter && !this.props.expandableFilter(props.row))
+      ? <Cell {...props} />
+      // customize icons
+      : <CustomToggleCell {...props} />
+  );
+
+  private SelectionCellComponent = (props: any): JSX.Element => (
+    (this.props.selectionFilter && this.props.selectionFilter(props.row))
+      ? <Cell {...props} />
+      : <SelectionCell {...props} />
+  );
 
   public constructor(props: any) {
     super(props);
@@ -83,17 +124,12 @@ const id = (row.id != null) ? row.id : row.compoundKey;
   }
 
   @autobind
-  public mapCols(): Array<IBaseTableColLayout & { name: string, title: string, getCellValue(row: any): any }> {
-    return this.props.cols.map(col => ({
-      ...col,
-      getCellValue: (row: any): any => (col.dataKey && getDataByKey(row, col.dataKey)) || (col.defaultData !== undefined ? col.defaultData : row[col.id]),
-      name: col.id,
-      title: col.title || translate(col.id, true) || translate(col.id.replace(/Id$/, '')),
-    }));
+  public mapCols(): IFormattedBaseTableColLayout[] {
+    return mapColumns(this.props.cols);
   }
 
   // TODO cyclomatic-complexity
-public render(): JSX.Element {
+  public render(): JSX.Element {
     const rowDetail = this.props.rowDetailComponent;
     const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
     const groupingEnabled = defaultIfNotBoolean(this.props.groupingEnabled, true);
@@ -104,6 +140,7 @@ public render(): JSX.Element {
     const highlightEnabled = defaultIfNotBoolean(this.props.highlightRow, false);
     const selectionEnabled = defaultIfNotBoolean(this.props.selectionEnabled, false);
     const resizingEnabled = defaultIfNotBoolean(this.props.resizingEnabled, true);
+    const headerEnabled = defaultIfNotBoolean(this.props.filteringEnabled, true);
     const allowExport = defaultIfNotBoolean(this.props.allowExport, true);
 
     const cols = this.mapCols();
@@ -176,51 +213,6 @@ public render(): JSX.Element {
       .filter(value => !defaultIfNotBoolean(value.defaultVisible, true))
       .map(value => value.id);
 
-    const cellComponent = (props: any): JSX.Element => {
-      const render: TableCellRender = props.column.render;
-      const value = Array.isArray(props.value) && (props.value[0] ? typeof props.value[0] !== "object" : true)
-        ? props.value.toString()
-        : props.value;
-
-      return (
-        <Table.Cell
-          {...props}
-          style={this.props.cellStyler ? this.props.cellStyler(props.row, props.value, props.column) : undefined}
-        >
-          {render ? render(value, props.row, props.tableColumn) : value}
-        </Table.Cell>
-      );
-    };
-
-    const rowComponent = (props: any): JSX.Element =>
-      (
-        <TableRow
-          {...props}
-          style={this.props.rowStyler ? this.props.rowStyler(props.row) : undefined}
-        />
-      );
-
-    const expandableFilter = this.props.expandableFilter;
-
-    function toggleCellComponent(props: any): JSX.Element {
-      return (
-        expandableFilter && !expandableFilter(props.row)
-          ? <Cell {...props} />
-          // customize icons
-          : <CustomToggleCell {...props} />
-      );
-    }
-
-    const selectionFilter = this.props.selectionFilter;
-
-    function selectionCellComponent(props: any): JSX.Element {
-      return (
-        selectionFilter && selectionFilter(props.row)
-          ? <Cell {...props} />
-          : <SelectionCell {...props} />
-      );
-    }
-
     function pagingContainerComponent(props: any): JSX.Element {
       return (
         <PagingPanelContainer
@@ -234,17 +226,6 @@ public render(): JSX.Element {
       || this.props.fitToCardBody
       || this.props.fitToCollapseBody
       || this.props.fitToRowDetailContainer;
-    const getSearchComponent = this.getSearchComponent;
-
-    function filterCell(props: TableFilterRow.CellProps): JSX.Element {
-      return (
-        <Table.Cell
-          {...props as any}
-        >
-          {getSearchComponent(props)}
-        </Table.Cell>
-      );
-    }
 
     const defaultPredicate = (IntegratedFiltering as any).defaultPredicate as (value: any, filter: Filter, row: any) => boolean;
 
@@ -384,20 +365,20 @@ public render(): JSX.Element {
           <DragDropProvider/>
           {virtual
             ? <VirtualTable
-              cellComponent={cellComponent}
+              cellComponent={this.CellComponent}
               noDataCellComponent={TableNoDataCell}
-              rowComponent={rowComponent}
+              rowComponent={this.RowComponent}
               columnExtensions={wordWrapExtension}
             />
             : <Table
-              cellComponent={cellComponent}
+              cellComponent={this.CellComponent}
               noDataCellComponent={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? TableNoDataCell : TableNoDataCellSmall}
-              rowComponent={rowComponent}
+              rowComponent={this.RowComponent}
               columnExtensions={wordWrapExtension}
             />}
           {rowDetail && <TableRowDetail
             contentComponent={rowDetail}
-            toggleCellComponent={toggleCellComponent}
+            toggleCellComponent={this.ToggleCellComponent}
           />}
           {resizingEnabled && (
             <TableColumnResizing
@@ -405,8 +386,8 @@ public render(): JSX.Element {
               defaultColumnWidths={defaultWidth}
             />
           )}
-          <TableHeaderRow showSortingControls={sortingEnabled}/>
-          {filteringEnabled && <TableFilterRow cellComponent={filterCell}/>}
+          {headerEnabled && <TableHeaderRow showSortingControls={sortingEnabled}/>}
+          {filteringEnabled && <TableFilterRow cellComponent={this.FilterCell} />}
           {paginationEnabled && <PagingPanel
             containerComponent={pagingContainerComponent}
             pageSizes={this.props.pageSizes || (virtual ? undefined : [10, 25, 50, 100, 0])}
@@ -421,7 +402,7 @@ public render(): JSX.Element {
               highlightRow={highlightEnabled}
               selectByRowClick={highlightEnabled}
               showSelectionColumn={!highlightEnabled}
-              cellComponent={selectionCellComponent}
+              cellComponent={this.SelectionCellComponent}
               showSelectAll={!this.props.selectionFilter && !this.props.singleSelection && !highlightEnabled}
             />
           )}
@@ -440,7 +421,13 @@ public render(): JSX.Element {
             />
           )}
           {visibilityEnabled && <ColumnChooser messages={{showColumnChooser: 'Отобразить выбор колонок'}}/>}
-          {allowExport && <ExportPlugin onClick={this.onExport}/>}
+          {allowExport && (
+            <ExportPlugin
+              onClick={this.onExport}
+              tooltip="Выгрузка в Excel"
+              icon={<CloudDownload/>}
+            />
+          )}
           {groupingEnabled && <GroupingPanel
             messages={{groupByColumn: 'Перетащите заголовок колонки сюда для группировки'}}
             showGroupingControls={true}
@@ -456,7 +443,8 @@ public render(): JSX.Element {
             />
           </div>
         )}
-      </Card>);
+      </Card>
+    );
   }
 
   @autobind
@@ -479,7 +467,7 @@ public render(): JSX.Element {
 
     switch (type) {
       case "customSelect":
-        return (<CustomSelectFilter {...searchProps} mode={searchProps.multiple ? "multiple" : undefined} />);
+        return (<CustomSelectFilter {...searchProps} filters={this.props.filters} mode={searchProps.multiple ? "multiple" : undefined} />);
       case "datetime":
         return (<DatetimeColumnFilter {...searchProps} />);
       case "date":
@@ -512,26 +500,15 @@ public render(): JSX.Element {
       }
     }
 
-    const hiddenColumnNames = getters.hiddenColumnNames || [];
-    const cols = this.mapCols()
-      .filter(col => defaultIfNotBoolean(col.exportable, true))
-      .filter(col => !hiddenColumnNames.includes(col.id));
-    const formattedData = this.getFormattedExportData(cols);
-// @ts-ignore
-    console.log(formattedData);
-    const ws = XLSX.utils.json_to_sheet(formattedData, {
-      header: cols.map(col => col.title)
-    });
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, '1');
-    XLSX.writeFile(wb, 'table.xlsx');
-  }
-
-  @autobind
-  private getFormattedExportData(cols: (IBaseTableColLayout & {name: string, title: string, getCellValue(row: any): any})[]): any {
-    return this.exportData.map(row =>
-      Object.fromEntries(
-        cols.map(col => [col.title, getCellValueForExport(row, col)])));
+    exportToXlsx(
+      this.props.cols,
+      this.exportData,
+      {
+        exportValueFormatter: this.props.exportValueFormatter,
+        file: true,
+        hiddenColumnNames: getters.hiddenColumnNames
+      }
+    );
   }
 
   @autobind
@@ -559,16 +536,4 @@ public render(): JSX.Element {
     );
   }
 
-}
-
-function getCellValueForExport(row: any, col: IBaseTableColLayout & { name: string, title: string, getCellValue(row: any): any }): any {
-  let value = col.getCellValue(row);
-  if (value == null){
-    return NO_DATA_TEXT;
-  }
-  const isDateColumn = col.search && col.search.type === 'date' || false;
-  if(isDateColumn && col.search.allFormats.targetFormat) {
-    value = moment(value).format(col.search.allFormats.targetFormat);
-  }
-  return value;
 }
