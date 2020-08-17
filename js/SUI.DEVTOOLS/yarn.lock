@@ -2278,6 +2278,13 @@
   resolved "https://registry.yarnpkg.com/@umijs/plugin-initial-state/-/plugin-initial-state-2.2.1.tgz#cd7592aa90b6b369bd0df297254320088397ff67"
   integrity sha512-qDtWguduISeG+EObgKbImuRX3FyLrNcj3yQtY24HdYkDTGmtsmA4ZKB7Q/N+V/O0Yxep06bCotTK3jFV9KXuEA==
 
+"@umijs/plugin-model@^2.5.3":
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-model/-/plugin-model-2.5.3.tgz#2d932daa67dee78f405b9b9e0aa2a44721305d33"
+  integrity sha512-36bxjWfm4diCkZmZMMY2hMLWCAoZ+hxsQ1g439bS6nNDL1yQz8J7Vh55R8UpTVA2Djm8zKUBjgCsmbBvYpVtMg==
+  dependencies:
+    fast-deep-equal "3.1.1"
+
 "@umijs/plugin-webpack-5@^0.1.3":
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/@umijs/plugin-webpack-5/-/plugin-webpack-5-0.1.3.tgz#4060b0423fd2e862c76124cd6c4db1da07885f00"
@@ -5463,6 +5470,11 @@ extsprintf@^1.2.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
+
+fast-deep-equal@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.1.tgz#545145077c501491e33b15ec408c294376e94ae4"
+  integrity sha512-8UEa58QDLauDNfpbrX55Q9jrGHThw2ZMdOky5Gl1CDtVeJDPVrG4Jxx1N8jw2gkWaff5UUuX1KJd+9zGe2B+ZA==
 
 fast-deep-equal@^3.1.1:
   version "3.1.3"
