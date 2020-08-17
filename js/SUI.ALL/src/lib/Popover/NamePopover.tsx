@@ -1,4 +1,3 @@
-import { Icon } from '@ant-design/compatible';
 import {Button} from 'antd';
 import Input from 'antd/es/input';
 import Alert from 'antd/lib/alert';
@@ -79,7 +78,7 @@ private static filterOption(inputValue: string, option: any): boolean {
               />
               <div className={SUI_ROW_GROW_RIGHT}>
                 <Button
-                  icon={<Icon type={"arrow-left"} />}
+                  icon="arrow-left"
                   onClick={this.disableCreateMode}
                   disabled={this.state.savingInProcess}
                 />
@@ -127,7 +126,7 @@ private static filterOption(inputValue: string, option: any): boolean {
                     </Select>
                     <Button
                       disabled={!(data && this.state.selectedNameId)}
-                      icon={<Icon type={"close"} />}
+                      icon="close"
                       danger={true}
                       onClick={this.clearSelect}
                     />

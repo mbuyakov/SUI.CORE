@@ -30,7 +30,6 @@ import static ru.sui.suibackend.utils.Constants.*;
 // TODO: Набор костылей, переписать
 public class FromWithGenerator {
 
-  private static final String RENDER_TYPE_KEY = "renderType";
   private static final String ROUND_COUNT_KEY = "roundCount";
   private static final String ROUND_RENDER_TYPE = "round";
 

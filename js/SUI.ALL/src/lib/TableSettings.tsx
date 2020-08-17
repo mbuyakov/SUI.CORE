@@ -261,7 +261,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                   <Link to={getLinkForTable(data.tableInfoById.tableName, 'table')}>
                                     <Button
                                       href={null}
-                                      icon={<Icon type={"profile"} />}
+                                      icon="profile"
                                       type="primary"
                                       style={{ marginBottom: 8 }}
                                     >
@@ -288,7 +288,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                   >
                                     <Button
                                       href={null}
-                                      icon={<Icon type={"idcard"} />}
+                                      icon="idcard"
                                       type="primary"
                                       style={{ marginBottom: 8, marginLeft: 8 }}
                                     >
@@ -773,7 +773,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                 'primary',
                                                 undefined,
                                               )}
-                                              icon={<Icon type={_TableSettings.getElementBySortType<string>(record.defaultSorting as SortingDirection, 'sort-ascending', 'sort-descending', 'question')}/>}
+                                              icon={_TableSettings.getElementBySortType<string>(record.defaultSorting as SortingDirection, 'sort-ascending', 'sort-descending', 'question')}
                                               onClick={() => {
                                                 const sequence = [null, 'asc', 'desc'];
                                                 this.updateColFieldFn(record.id, 'defaultSorting')(

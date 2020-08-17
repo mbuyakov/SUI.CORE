@@ -43,13 +43,7 @@ public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInf
     };
 
     if (result.search) {
-      const allFormats = {
-        filterFormat,
-        format: filterFormat || targetFormat,
-        targetFormat,
-      };
       result.search = {
-        allFormats,
         format: filterFormat || targetFormat,
         type: "date"
       }

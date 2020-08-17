@@ -1,18 +1,21 @@
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import {InMemoryCache} from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-client';
-import { setContext } from 'apollo-link-context';
-import { HttpLink } from 'apollo-link-http';
-import { Container } from 'typescript-ioc';
+import {setContext} from 'apollo-link-context';
+import {HttpLink} from 'apollo-link-http';
+import {Container} from 'typescript-ioc';
 
-import { ColumnInfoManager, NameManager, TableInfoManager } from '../cache';
-import { ColorHeatMap, IColorHeatMapSettings } from '../color';
-import { getUser, IRawRoute, parseRoutes, RouteType, runCheckVersionMismatch } from '../utils';
-import { UserService } from '../ioc/service';
+import {ColumnInfoManager, NameManager, TableInfoManager} from '../cache';
+import {ColorHeatMap, IColorHeatMapSettings} from '../color';
+import {ICoreUser} from "../user";
+import {IRawRoute, parseRoutes, RouteType, runCheckVersionMismatch} from '../utils';
+import {UserService} from '../ioc/service';
 
 declare let window: Window & {
   SUI: ISUISettings | undefined;
   SUI_CORE_PTC_CACHE: ColorHeatMap;
 };
+
+export type Permission = (user: ICoreUser) => boolean;
 
 export interface IInitSUISettings {
   projectKey: string;
@@ -22,14 +25,14 @@ export interface IInitSUISettings {
   graphqlUri: string;
   restUri: string;
   percentToColorSettings: IColorHeatMapSettings;
+  permissions?: {
+    exportAll?: Permission
+  },
   routes: IRawRoute[];
 
   defaultGetLinkForTable?(tableName: string, type: RouteType, id?: string | number): string | null;
-
   metaschemaRefreshPromise(): Promise<void>;
-
   routerPushFn(link: any): void;
-
   routerReplaceFn(link: any): void;
 }
 
@@ -38,14 +41,14 @@ export type ISUISettings = IInitSUISettings & {
   apolloClient: ApolloClient<{}>;
 }
 
-const authLink = setContext((_, { headers }) => {
+const authLink = setContext((_, {headers}) => {
   const userService = Container.get(UserService);
   const user = userService.isLoggedIn() && userService.getUser();
 
   return {
     headers: {
       ...headers,
-      ...(user ? { 'user-id': user.id } : {}),
+      ...(user ? {'user-id': user.id} : {}),
     },
   };
 });
@@ -58,8 +61,8 @@ export function initSUI(settings: IInitSUISettings): void {
       cache: new InMemoryCache(),
       link: authLink.concat(new HttpLink({
         uri: settings.graphqlUri,
-headers: {
-          ...(settings.basicAuthToken ? { authorization: settings.basicAuthToken } : undefined),
+        headers: {
+          ...(settings.basicAuthToken ? {authorization: settings.basicAuthToken} : undefined),
         },
       })),
     }),

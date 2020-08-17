@@ -1,4 +1,3 @@
-import { Icon } from '@ant-design/compatible';
 import {Button} from "antd";
 import * as React from "react";
 
@@ -40,7 +39,7 @@ export class AndFormRowElement extends React.Component<IAndFormRowElementProps> 
             {!this.props.disableRowSwap && (
               <Button
                 htmlType="button"
-                icon={<Icon type={"arrow-up"} />}
+                icon="arrow-up"
                 className={DNF_BUTTON}
                 disabled={this.props.isFirst}
                 onClick={this.props.onUpClick}
@@ -48,14 +47,14 @@ export class AndFormRowElement extends React.Component<IAndFormRowElementProps> 
             )}
             <Button
               htmlType="button"
-              icon={<Icon type={"minus-circle-o"} />}
+              icon="minus-circle-o"
               className={DNF_BUTTON}
               onClick={this.props.onDeleteClick}
             />
             {!this.props.disableRowSwap && (
               <Button
                 htmlType="button"
-                icon={<Icon type={"arrow-down"} />}
+                icon="arrow-down"
                 className={DNF_BUTTON}
                 disabled={this.props.isLast}
                 onClick={this.props.onDownClick}

@@ -13,6 +13,7 @@ export abstract class BackendDataSource {
   }
 
   public abstract disconnect(): void;
+  public abstract getSessionId(): string
   public abstract init(): Promise<boolean>;
   public abstract send<T>(messageId: string, body?: T, headers?: IObjectWithIndex): Promise<void>;
 

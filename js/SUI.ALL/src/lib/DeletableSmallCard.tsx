@@ -1,11 +1,10 @@
-import { Icon } from '@ant-design/compatible';
-import { Button } from 'antd';
-import Card, { CardProps } from 'antd/lib/card';
+import {Button} from 'antd';
+import Card, {CardProps} from 'antd/lib/card';
 import Popover from 'antd/lib/popover';
 import * as React from 'react';
 
-import { DnDDragHandler } from './Draggable';
-import { GetPopupContainerContext, OldVersionWarning } from './MetaCardSettings';
+import {DnDDragHandler} from './Draggable';
+import {GetPopupContainerContext, OldVersionWarning} from './MetaCardSettings';
 
 
 export const DeletableSmallCard: React.FC<Omit<CardProps, 'size' | 'type'> & {
@@ -39,7 +38,7 @@ export const DeletableSmallCard: React.FC<Omit<CardProps, 'size' | 'type'> & {
               <Button
                 href={null}
                 size="small"
-                icon={<Icon type={"setting"} />}
+                icon="setting"
                 style={{ marginRight: 8 }}
               />
             </Popover>
@@ -51,7 +50,7 @@ export const DeletableSmallCard: React.FC<Omit<CardProps, 'size' | 'type'> & {
           href={null}
           size="small"
           danger={true}
-          icon={<Icon type={"close"} />}
+          icon="close"
           onClick={onDelete}
         />}
       </>
