@@ -3,9 +3,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = api => {
-  api.modifyDefaultConfig(config => {
-    config.esbuild = {};
-    return config;
+  api.modifyBundleConfig(memo => {
+    if (memo.optimization) {
+      memo.optimization.minimizer = [
+        new (require('esbuild-webpack-plugin').default)(),
+      ];
+    }
+    return memo;
   });
 };
 

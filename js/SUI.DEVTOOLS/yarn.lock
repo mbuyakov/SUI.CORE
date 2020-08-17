@@ -2258,13 +2258,6 @@
     dva-immer "^0.4.19"
     dva-loading "^3.0.20"
 
-"@umijs/plugin-esbuild@^1.0.0-beta.2":
-  version "1.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-esbuild/-/plugin-esbuild-1.0.0-beta.2.tgz#7940a22bac2a30a0f3a121329a591f4e3f612339"
-  integrity sha512-0D47/zwF9iZhsVlQgP/OpnLPHQGNg0rkP3/eAtadICH7pP6vzawc87YB1+nz3Qxp9ywX4pjznhWKnuZ0zD/kvg==
-  dependencies:
-    esbuild-webpack-plugin "^1.0.0-beta.3"
-
 "@umijs/plugin-helmet@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@umijs/plugin-helmet/-/plugin-helmet-1.0.2.tgz#9db9d1d257778f94d12587dd6b717af91970e4c9"
@@ -5008,7 +5001,7 @@ es6-weak-map@^2.0.2:
     es6-iterator "^2.0.3"
     es6-symbol "^3.1.1"
 
-esbuild-webpack-plugin@^1.0.0-beta.3:
+esbuild-webpack-plugin@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/esbuild-webpack-plugin/-/esbuild-webpack-plugin-1.0.5.tgz#68a6a377a84c991da1a0fc302830f514c9d47472"
   integrity sha512-X/ektio8dxHD/bYk1BhT7XZw7U1ZJDu8VRjhc81W12Mizw0Fti+Wp4W4u1e9PiMdeDz/SXAO3U0A37wV7XT0wA==
