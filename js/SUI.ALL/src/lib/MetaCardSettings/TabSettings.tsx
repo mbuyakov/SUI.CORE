@@ -1,4 +1,3 @@
-import { Icon } from '@ant-design/compatible';
 import { Input } from 'antd';
 import Button from 'antd/lib/button';
 import Tooltip from 'antd/lib/tooltip';
@@ -68,7 +67,7 @@ export class TabSettings extends SerializableDnDChild<SerializedTabSettings> {
                 title="Предпросмотр иконки"
               >
                 <Button
-                  icon={<Icon type={this.state.icon}/>}
+                  icon={this.state.icon}
                   type={'dashed'}
                   disabled={true}
                   className={TAB_SETTINGS__UNACTIVE_BUTTON}
