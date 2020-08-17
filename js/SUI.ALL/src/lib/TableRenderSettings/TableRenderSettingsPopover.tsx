@@ -1,4 +1,4 @@
-import {ExperimentOutlined, WarningTwoTone} from '@ant-design/icons';
+import {WarningTwoTone} from '@ant-design/icons';
 import {Button, Popover, Select, Tooltip} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
@@ -129,7 +129,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
               </div>}
           >
             <Button
-              icon={<ExperimentOutlined/>}
+              icon="experiment"
               onClick={this.openPopover}
             />
           </Popover>
