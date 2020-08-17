@@ -5,7 +5,8 @@
   "typings": "lib/index.d.ts",
   "files": [
     "lib",
-    "styles"
+    "styles",
+    "umi-config.js"
   ],
   "scripts": {
     "type-check": "tsc --noEmit",
