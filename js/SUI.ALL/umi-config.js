@@ -107,7 +107,7 @@ module.exports =  {
     // },
     dll: {
       //TODO: Umi bug, check update
-      exclude: ['@sui/sui-all', "@material-ui/icons"],
+      exclude: ['@sui/sui-all', "@material-ui/icons", "@amcharts/amcharts4"],
     },
     // If build
     ...(!process.env.NOT_BUILD ? {
