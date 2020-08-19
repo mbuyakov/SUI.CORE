@@ -14,6 +14,7 @@ import {BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '../styles';
 import {defaultIfNotBoolean} from '../typeWrappers';
 import {EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, WarningPlugin} from './extends';
 import {CustomToggleCell} from "./extends/CustomToggleCell";
+import {UserSettingsPlugin} from "./extends/UserSettingsPlugin";
 import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter} from './filters';
 import {defaultSelection, ISelectionTable} from './ISelectionTable';
 import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
@@ -434,6 +435,7 @@ export class BaseTable<TSelection = defaultSelection>
           />}
           {this.props.columnBands && (<TableBandHeader columnBands={this.props.columnBands}/>)}
           {this.props.toolbarButtons}
+          {this.props.onSettingsChange && (<UserSettingsPlugin onSettingsChange={this.props.onSettingsChange} />)}
         </Grid>}
         {this.props.loading && (
           <div className={LOADING_SPIN_WRAPPER}>

@@ -276,3 +276,20 @@ export interface ITableExportLog {
   // noinspection SpellCheckingInspection
   rowCount: number;
 }
+
+export interface IUserSetting {
+  // noinspection SpellCheckingInspection
+  nodeId: number;
+  // noinspection SpellCheckingInspection
+  id: string;
+  // noinspection SpellCheckingInspection
+  userId: string;
+  // noinspection SpellCheckingInspection
+  tableInfoId: string;
+  // noinspection SpellCheckingInspection
+  content: any /*JSON*/;
+  // noinspection SpellCheckingInspection
+  userByUserId?: IUser;
+  // noinspection SpellCheckingInspection
+  tableInfoByTableInfoId?: ITableInfo;
+}

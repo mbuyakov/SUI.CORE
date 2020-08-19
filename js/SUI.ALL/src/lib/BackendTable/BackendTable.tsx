@@ -3,7 +3,7 @@ import {Filter, Grouping, GroupKey, Sorting, TableFilterRow} from '@devexpress/d
 import IconButton from '@material-ui/core/IconButton';
 import CloudDownloadOutlined from '@material-ui/icons/CloudDownloadOutlined';
 import LinkIcon from '@material-ui/icons/Link';
-import {Modal} from 'antd';
+import {Modal, notification} from 'antd';
 import autobind from 'autobind-decorator';
 import axios from 'axios';
 import JSzip from 'jszip';
@@ -11,10 +11,12 @@ import difference from 'lodash/difference';
 import moment from 'moment';
 import * as React from 'react';
 import uuid from 'uuid';
+import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
 import {exportToXlsx} from "../BaseTable/utils";
 
-import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, defaultSelection, downloadFile, errorNotification, ExportPlugin, generateCreate, getAllowedColumnInfos, getDataByKey, getFilterType, getStateFromUrlParam, getSUISettings, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
+import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, defaultSelection, downloadFile, errorNotification, ExportPlugin, formatRawForGraphQL, generateCreate, getAllowedColumnInfos, getDataByKey, getFilterType, getStateFromUrlParam, getSUISettings, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, IUserSetting, mergeDefaultFilters, mutate, putTableStateToUrlParam, query, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
+import {ResetUserSettingsPlugin} from "../plugins/ResetUserSettingsPlugin";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from './BackendDataSource';
 import {RestBackendDataSource} from './RestBackendDataSource';
@@ -303,6 +305,7 @@ export class BackendTable<TSelection = defaultSelection>
             ),
             (<ClearFiltersPlugin handleClick={this.clearFilters}/>),
             (<RefreshMetaTablePlugin handleClick={this.refresh}/>),
+            (<ResetUserSettingsPlugin onClick={this.resetUserSettings}/>),
             // admin && (<RawModePlugin enabled={this.state.rawMode} onClick={this.changeRaw}/>),
             admin && (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
           ].filter(Boolean)}
@@ -321,6 +324,7 @@ export class BackendTable<TSelection = defaultSelection>
           onSortingChange={this.onSortingChange}
           // other
           beforeExport={this.beforeExport}
+          onSettingsChange={this.onSettingsChange}
         />
       </WaitData>
     );
@@ -451,6 +455,22 @@ export class BackendTable<TSelection = defaultSelection>
     }
 
     return groupRowField;
+  }
+
+  @autobind
+  private getUserSettings(tableInfo: TableInfo): Promise<IUserSetting | undefined> {
+    return query<IUserSetting[]>(`{
+      allUserSettings(filter: {
+        userId: { equalTo: "${getUser().id}" }
+        tableInfoId: { equalTo: "${tableInfo.id}" }
+      }) {
+        nodes {
+          id
+          content
+        }
+      }
+    }`, 2)
+      .then(data => data.length ? data[0] : undefined);
   }
 
   @autobind
@@ -649,6 +669,19 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
+  private onSettingsChange(settings: IBaseTableUserSettings): Promise<void> {
+    return mutate(`mutation {
+      createOrUpdateUserSettings(input: {
+        userId: "${getUser().id}"
+        tableInfoId: "${this.state.tableInfo.id}"
+        content: "${formatRawForGraphQL(JSON.stringify(settings))}"
+      }) {
+        clientMutationId
+      }
+    }`);
+  }
+
+  @autobind
   private onSortingChange(sorting: Sorting[]): void {
     const newState = { sorting };
     const prevSorting = this.state.sorting || [];
@@ -689,6 +722,29 @@ export class BackendTable<TSelection = defaultSelection>
       },
       true
     );
+  }
+
+  @autobind
+  private resetUserSettings(): Promise<void> {
+    return this.getUserSettings(this.state.tableInfo)
+      .then((userSettings): Promise<void> => {
+        if (userSettings) {
+          return mutate(`mutation {
+            deleteUserSettingById(input: {id: "${userSettings.id}"}) {
+              clientMutationId
+            }
+          }`);
+        }
+
+        return new Promise<void>((resolve): void => resolve());
+      })
+      .then(() => {
+        notification.info({
+          message: "Таблица успешно сброшена к виду по умолчанию",
+          description: "Пожалуйста, обновите страницу",
+          duration: 0
+        });
+      });
   }
 
   @autobind
@@ -912,17 +968,61 @@ export class BackendTable<TSelection = defaultSelection>
         });
       }
 
-      const serviceColumns = _serviceColumns
-        .map(serviceColumn => ({
-          ...serviceColumn,
-          exportable: false,
-          groupingEnabled: false,
-          sortingEnabled: false,
-          search: { type: 'none' },
-        } as IBaseTableColLayout));
+      const serviceColumns = _serviceColumns.map(serviceColumn => ({
+        ...serviceColumn,
+        exportable: false,
+        groupingEnabled: false,
+        sortingEnabled: false,
+        search: {type: 'none'},
+      } as IBaseTableColLayout));
+
+      let allColumns = serviceColumns.concat(allowedCols);
+
+      const userSettings: IBaseTableUserSettings = await this.getUserSettings(tableInfo).then(it => it ? JSON.parse(it.content) : undefined);
+
+      if (userSettings) {
+        const columnByName = (columnName: string): IBaseTableColLayout => allColumns.find(it => it.id === columnName);
+
+        // Apply columnWidths
+        userSettings.columnWidths.forEach(columnWidth => {
+          const column = columnByName(columnWidth.columnName);
+
+          if (column && columnWidth.width) {
+            column.width = Number(columnWidth.width)
+          }
+        });
+
+        // Apply hiddenColumnNames
+        userSettings.hiddenColumnNames.forEach(hiddenColumnNames => {
+          const column = columnByName(hiddenColumnNames);
+
+          if (column) {
+            column.defaultVisible = false;
+          }
+        });
+
+        // Apply order
+        const reorderedColumns: IBaseTableColLayout[] = [];
+
+        userSettings.order.forEach(columnName => {
+          const column = columnByName(columnName);
+
+          if (column) {
+            reorderedColumns.push(column);
+          }
+        });
+
+        allColumns.forEach(column => {
+          if (!userSettings.order.includes(column.id)) {
+            reorderedColumns.push(column);
+          }
+        });
+
+        allColumns = reorderedColumns;
+      }
 
       this.setState({
-        cols: serviceColumns.concat(allowedCols),
+        cols: allColumns,
         tableInfo,
         colorSettingsRowStyler,
         warnings,
