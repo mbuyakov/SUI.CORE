@@ -992,15 +992,6 @@ export class BackendTable<TSelection = defaultSelection>
           }
         });
 
-        // Apply hiddenColumnNames
-        userSettings.hiddenColumnNames.forEach(hiddenColumnNames => {
-          const column = columnByName(hiddenColumnNames);
-
-          if (column) {
-            column.defaultVisible = false;
-          }
-        });
-
         // Apply order
         const reorderedColumns: IBaseTableColLayout[] = [];
 
@@ -1019,6 +1010,15 @@ export class BackendTable<TSelection = defaultSelection>
         });
 
         allColumns = reorderedColumns;
+
+        // Apply hiddenColumnNames
+        allColumns.forEach(column => {
+          if (userSettings.hiddenColumnNames.includes(column.id)) {
+            column.defaultVisible = false;
+          } else if (userSettings.order.includes(column.id)) {
+            column.defaultVisible = true;
+          }
+        });
       }
 
       this.setState({
