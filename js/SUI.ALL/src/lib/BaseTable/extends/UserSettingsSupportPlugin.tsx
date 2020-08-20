@@ -1,9 +1,9 @@
 import {Getter, Getters, Plugin} from '@devexpress/dx-react-core';
-import {TableColumnWidthInfo} from '@devexpress/dx-react-grid';
+import {TableColumn, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
 import React from "react";
 
-const fullOrderComputed = (getters: Getters): string[] => getters.tableColumns.map(it => it.column.name);
-const fullColumnWidthsComputed = (getters: Getters): TableColumnWidthInfo[] => getters.tableColumns.map(it => ({columnName: it.column.name, width: it.width}));
+const fullOrderComputed = (getters: Getters): string[] => (getters.tableColumns as TableColumn[]).map(it => it.column.name);
+const fullColumnWidthsComputed = (getters: Getters): TableColumnWidthInfo[] => (getters.tableColumns as TableColumn[]).map(it => ({columnName: it.column.name, width: it.width}));
 
 // Плагин, помогающий UserSettingsPlugin, не потерять информацию о скрытых колонках
 // (т.к. он применяется до TableColumnVisibility)
