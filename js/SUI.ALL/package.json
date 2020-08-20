@@ -27,7 +27,7 @@
     "trailingComma": "es5"
   },
   "peerDependencies": {
-    "antd": "^4.4.0",
+    "antd": "^4.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "webpack-bundle-analyzer": "^3.6.1"
