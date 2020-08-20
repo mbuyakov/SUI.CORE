@@ -1,6 +1,6 @@
 /* tslint:disable:no-magic-numbers */
 import {ComputedFn, Getter, Getters, Plugin} from '@devexpress/dx-react-core';
-import {TableColumn, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
+import {TableColumnWidthInfo} from '@devexpress/dx-react-grid';
 import autobind from "autobind-decorator";
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
@@ -17,12 +17,10 @@ export interface IUserSettingsPluginProps {
 }
 
 function generateUserSettings(getters: Getters): IBaseTableUserSettings {
-  const tableColumns: TableColumn[] = getters.tableColumns;
-
   return {
-    columnWidths: tableColumns.map(it => ({columnName: it.column.name, width: it.width})),
+    columnWidths: getters.fullColumnWidths,
     hiddenColumnNames: getters.hiddenColumnNames || [],
-    order: tableColumns.map(it => it.column.name),
+    order: getters.fullOrder,
   }
 }
 
