@@ -1,4 +1,4 @@
-CREATE FUNCTION sui_utils.jsonb_unidirectional_difference(first JSONB, second JSONB)
+CREATE OR REPLACE FUNCTION sui_utils.jsonb_unidirectional_difference(first JSONB, second JSONB)
     RETURNS JSONB
     LANGUAGE plpgsql
 AS $$
