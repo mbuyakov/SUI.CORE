@@ -14,6 +14,8 @@ import {BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '../styles';
 import {defaultIfNotBoolean} from '../typeWrappers';
 import {EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, WarningPlugin} from './extends';
 import {CustomToggleCell} from "./extends/CustomToggleCell";
+import {UserSettingsPlugin} from "./extends/UserSettingsPlugin";
+import {UserSettingsSupportPlugin} from "./extends/UserSettingsSupportPlugin";
 import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter} from './filters';
 import {defaultSelection, ISelectionTable} from './ISelectionTable';
 import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
@@ -142,6 +144,7 @@ export class BaseTable<TSelection = defaultSelection>
     const resizingEnabled = defaultIfNotBoolean(this.props.resizingEnabled, true);
     const headerEnabled = defaultIfNotBoolean(this.props.filteringEnabled, true);
     const allowExport = defaultIfNotBoolean(this.props.allowExport, true);
+    const userSettingsEnabled = !!this.props.onSettingsChange;
 
     const cols = this.mapCols();
 
@@ -409,6 +412,7 @@ export class BaseTable<TSelection = defaultSelection>
           {groupingEnabled && <TableGroupRow contentComponent={tableGroupRowContentComponent}/>}
           {groupingEnabled && this.props.groupSubtotalData && hasSubtotals && <GroupSummaryRow subtotalData={this.props.groupSubtotalData}/>}
           <TableColumnReordering defaultOrder={this.props.cols.map(value => value.id)}/>
+          {userSettingsEnabled && (<UserSettingsSupportPlugin/>)}
           {visibilityEnabled && (
             <TableColumnVisibility
               defaultHiddenColumnNames={defaultHidden}
@@ -435,6 +439,7 @@ export class BaseTable<TSelection = defaultSelection>
           />}
           {this.props.columnBands && (<TableBandHeader columnBands={this.props.columnBands}/>)}
           {this.props.toolbarButtons}
+          {userSettingsEnabled && (<UserSettingsPlugin onSettingsChange={this.props.onSettingsChange}/>)}
         </Grid>}
         {this.props.loading && (
           <div className={LOADING_SPIN_WRAPPER}>

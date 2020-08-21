@@ -2,8 +2,9 @@ import {Filter, FilterOperation, Grouping, GroupKey, Sorting, TableBandHeader as
 import {CardType} from 'antd/lib/card';
 import * as React from 'react';
 
-import { DataKey } from '../dataKey';
+import {DataKey} from '../dataKey';
 import {IObjectWithIndex} from "../other";
+import {IBaseTableUserSettings} from "./extends/UserSettingsPlugin";
 
 export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode;
 export type TableSearchType = 'select' | 'date' | 'boolean' | 'string' | 'none';
@@ -15,8 +16,7 @@ export type LazyTableFilterRowCellProps = Omit<TableFilterRow.CellProps, "filter
   onFilter(filter: LazyFilter | null): void;
 }
 
-export interface ISearchProps /*extends TableFilterRow.CellProps*/
-{
+export interface ISearchProps /*extends TableFilterRow.CellProps*/ {
   data?: any[];
   dataKey?: DataKey;
   nameProperty?: string;
@@ -25,7 +25,6 @@ export interface ISearchProps /*extends TableFilterRow.CellProps*/
   placeholder?: string;
   query?: string;
   valueProperty?: string;
-
   optionFilter?(option: any): boolean;
 }
 
@@ -36,7 +35,7 @@ export interface ICommonColumnSearchProps {
   placeholder?: string | [string, string];
 }
 
-export type SelectData = Array<{title?: string | JSX.Element; value: string | number; src?: IObjectWithIndex; }>;
+export type SelectData = Array<{ src?: IObjectWithIndex; title?: string | JSX.Element; value: string | number; }>;
 
 export type INewSearchProps = ICommonColumnSearchProps & {
   format?: string; // for datetime and date
@@ -65,7 +64,7 @@ export interface IBaseTableColLayout {
   searchType?: TableSearchType;
 
   sortingEnabled?: boolean;
-  subtotal?: {expression: string, name: string};
+  subtotal?: { expression: string, name: string };
   title?: string;
   width?: number;
   wordWrapEnabled?: boolean;
@@ -153,6 +152,7 @@ export interface IBaseTableProps<TSelection = any> {
   exportValueFormatter?(col: IBaseTableColLayout, value: any, row: IObjectWithIndex): any;
   getRowId?(row: any): any;
   onSelectionChange?(selection: TSelection[]): void;
+  onSettingsChange?(settings: IBaseTableUserSettings): void;
   rowStyler?(row: any): React.CSSProperties;
   selectionFilter?(row: any): boolean;
 }
