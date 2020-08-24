@@ -10,7 +10,7 @@ import JSzip from 'jszip';
 import difference from 'lodash/difference';
 import moment from 'moment';
 import * as React from 'react';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
 import {exportToXlsx} from "../BaseTable/utils";
 
@@ -810,7 +810,7 @@ export class BackendTable<TSelection = defaultSelection>
     newState: IBackendTableState<TSelection>,
     additionalState?: IBackendTableState<TSelection>,
   ): Promise<void> {
-    const messageId = uuid.v4();
+    const messageId = uuidv4();
     if (additionalState) {
       this.additionalStateMap.set(messageId, additionalState);
     }
