@@ -1,3 +1,4 @@
+import {DeleteOutlined, PlusCircleOutlined} from "@ant-design/icons/lib";
 import CreateIcon from '@material-ui/icons/CreateOutlined';
 import { Icon } from '@ant-design/compatible';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
@@ -60,7 +61,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
           const createButton = (
             <Button
-              icon="add"
+              icon={<PlusCircleOutlined/>}
               {...createButtonProps}
               onClick={this.showBaseModalFn(this.createBaseFormModalRef)}
             >
@@ -70,7 +71,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
           const deleteButton = (
             <PromisedButton
-              icon="delete"
+              icon={<DeleteOutlined/>}
               {...deleteButtonProps}
               promise={this.handleDeleteClick}
               popconfirmSettings={{

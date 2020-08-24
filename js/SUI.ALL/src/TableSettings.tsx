@@ -1,4 +1,5 @@
 import {Icon} from '@ant-design/compatible';
+import {IdcardOutlined, ProfileOutlined, QuestionOutlined, SortAscendingOutlined, SortDescendingOutlined} from "@ant-design/icons/lib";
 import {ThemeProvider, withTheme} from '@material-ui/core';
 import IconButton from "@material-ui/core/IconButton";
 import {Cached, Edit} from '@material-ui/icons';
@@ -261,7 +262,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                   <Link to={getLinkForTable(data.tableInfoById.tableName, 'table')}>
                                     <Button
                                       href={null}
-                                      icon="profile"
+                                      icon={<ProfileOutlined/>}
                                       type="primary"
                                       style={{ marginBottom: 8 }}
                                     >
@@ -288,7 +289,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                   >
                                     <Button
                                       href={null}
-                                      icon="idcard"
+                                      icon={<IdcardOutlined/>}
                                       type="primary"
                                       style={{ marginBottom: 8, marginLeft: 8 }}
                                     >
@@ -773,7 +774,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                 'primary',
                                                 undefined,
                                               )}
-                                              icon={_TableSettings.getElementBySortType<string>(record.defaultSorting as SortingDirection, 'sort-ascending', 'sort-descending', 'question')}
+                                              icon={_TableSettings.getElementBySortType<React.ReactNode>(record.defaultSorting as SortingDirection, (<SortAscendingOutlined/>), (<SortDescendingOutlined/>), (<QuestionOutlined/>))}
                                               onClick={() => {
                                                 const sequence = [null, 'asc', 'desc'];
                                                 this.updateColFieldFn(record.id, 'defaultSorting')(

@@ -1,3 +1,4 @@
+import {CloseOutlined, SettingOutlined} from '@ant-design/icons';
 import {Button} from 'antd';
 import Card, {CardProps} from 'antd/lib/card';
 import Popover from 'antd/lib/popover';
@@ -38,7 +39,7 @@ export const DeletableSmallCard: React.FC<Omit<CardProps, 'size' | 'type'> & {
               <Button
                 href={null}
                 size="small"
-                icon="setting"
+                icon={<SettingOutlined/>}
                 style={{ marginRight: 8 }}
               />
             </Popover>
@@ -50,7 +51,7 @@ export const DeletableSmallCard: React.FC<Omit<CardProps, 'size' | 'type'> & {
           href={null}
           size="small"
           danger={true}
-          icon="close"
+          icon={<CloseOutlined/>}
           onClick={onDelete}
         />}
       </>

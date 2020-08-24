@@ -1,3 +1,4 @@
+import {PlusCircleOutlined} from "@ant-design/icons/lib";
 import {Dropdown, Menu} from "antd";
 import Button from "antd/lib/button";
 import {MenuItemProps} from "antd/lib/menu/MenuItem";
@@ -143,7 +144,7 @@ export class DnDList<T extends DnDChild> extends DnDChild<IDnDListProps<T>, IDnD
                       className={DND_LIST__PLUS_BTN}
                       type="dashed"
                       block={direction === 'vertical'}
-                      icon={direction === 'horizontal' ? "plus" : null}
+                      icon={direction === 'horizontal' ? <PlusCircleOutlined/> : null}
                     >
                       {direction === 'vertical' && "Добавить"}
                     </Button>
