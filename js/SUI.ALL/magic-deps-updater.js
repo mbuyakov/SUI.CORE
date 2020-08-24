@@ -4,7 +4,7 @@ const magicDeps = require("./magic-deps.json");
 const curPackageJsonPath = process.cwd() + "/package.json"
 const curPackageJson = require(curPackageJsonPath);
 
-if(process.env.SUI) {
+if(process.cwd().includes('SUI.ALL')) {
   curPackageJson.peerDependencies = Object.assign(curPackageJson.peerDependencies, magicDeps);
   curPackageJson.devDependencies = Object.assign(curPackageJson.devDependencies, magicDeps);
 } else {
