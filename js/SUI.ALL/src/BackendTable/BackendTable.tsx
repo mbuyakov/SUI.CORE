@@ -17,6 +17,7 @@ import {exportToXlsx} from "../BaseTable/utils";
 import {asyncMap, BaseTable, camelCase, checkCondition, colToBaseTableCol, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, defaultSelection, downloadFile, errorNotification, ExportPlugin, formatRawForGraphQL, generateCreate, getAllowedColumnInfos, getDataByKey, getFilterType, getStateFromUrlParam, getSUISettings, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IObjectWithIndex, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, IUserSetting, mergeDefaultFilters, mutate, putTableStateToUrlParam, query, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableInfo, TableInfoManager, TableSettingsDialog, TableSettingsPlugin, WaitData, wrapInArray} from '../index';
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 import {ResetUserSettingsPlugin} from "../plugins/ResetUserSettingsPlugin";
+import {LazyFilter} from "../BaseTable/types";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from './BackendDataSource';
 import {RestBackendDataSource} from './RestBackendDataSource';
