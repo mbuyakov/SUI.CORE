@@ -1,3 +1,4 @@
+import { PrinterOutlined } from '@ant-design/icons';
 import { Button, Card } from 'antd';
 import { CardType } from 'antd/lib/card';
 import * as React from 'react';
@@ -53,7 +54,7 @@ export class ReportElement extends React.Component<IReportElement, {
         title={this.props.header}
         extra={this.props.print ? (
           <ReactToPrint
-            trigger={() => (<Button icon="printer"/>)}
+            trigger={() => (<Button icon={<PrinterOutlined/>}/>)}
             content={() => this.printContentRef.current}
             onBeforeGetContent={async () => new Promise(resolve => this.setState({printMode: true}, resolve))}
             onAfterPrint={() => this.setState({printMode: false})}

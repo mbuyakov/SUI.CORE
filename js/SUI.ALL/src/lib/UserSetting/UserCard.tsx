@@ -1,4 +1,5 @@
 // tslint:disable:no-magic-numbers jsx-no-lambda
+import {DeleteOutlined, IssuesCloseOutlined} from "@ant-design/icons/lib";
 import {Card, Select, Tooltip} from "antd";
 import * as React from "react";
 import {BaseCard, IBaseCardItemLayout, IBaseCardRowLayout} from "../Base";
@@ -58,7 +59,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                   >
                     <PromisedButton
                       type={userData.deleted ? undefined : "danger" as any}
-                      icon={userData.deleted ? "issues-close" : "delete"}
+                      icon={userData.deleted ? (<IssuesCloseOutlined/>) : (<DeleteOutlined/>)}
                       promise={this.props.handleDeleteChange}
                       popconfirmSettings={{
                         placement: "topRight",

@@ -1,11 +1,12 @@
-import { Form, Icon as LegacyIcon } from '@ant-design/compatible';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
-import { Button, Card, Divider } from "antd";
+import {Form} from '@ant-design/compatible';
+import {FormComponentProps} from '@ant-design/compatible/lib/form';
+import {ArrowLeftOutlined, ArrowRightOutlined, MinusCircleOutlined, PlusCircleOutlined} from '@ant-design/icons';
+import {Button, Card, Divider} from "antd";
 import autobind from "autobind-decorator";
 import isEqual from "lodash/isEqual";
 import * as React from "react";
 
-import { FormCreateKostyl, IObjectWithIndex } from '../other';
+import {FormCreateKostyl, IObjectWithIndex} from '../other';
 import {DNF_BUTTON} from "../styles";
 
 import {AndFormRowElement, formItemLayoutWithOutLabel} from "./AndFormRowElement";
@@ -20,7 +21,7 @@ const formItemLayout = {
   }
 };
 const excludeFromValues = ["forms", "elements", "formValidator"];
-const divider = (<Divider style={{marginTop: 4, marginBottom: 2}} />);
+const divider = (<Divider style={{marginTop: 4, marginBottom: 2}}/>);
 const orDivider = (<div style={{display: 'flex', justifyContent: 'center', fontSize: 'large'}}>ИЛИ</div>);
 
 interface IDnfFromValues<TElements> extends IClearDnfFromValues {
@@ -35,7 +36,8 @@ interface IDnfFormProps<T, V = IResultDnfFormValues<T>> {
   initialState?: IResultDnfFormValues<T>;
   orBehaviorDisabled?: boolean;
 
-orElementValidator?(value: T[] | undefined, callback: any): void;
+  orElementValidator?(value: T[] | undefined, callback: any): void;
+
   valuesMapper?(values: IResultDnfFormValues<T>): V;
 }
 
@@ -148,7 +150,7 @@ class InnerDnfForm<TElement, TValues> extends React.Component<FormComponentProps
   }
 
   public componentDidUpdate(): void {
-const values = this.getDnfFormValues();
+    const values = this.getDnfFormValues();
 
     if (!isEqual(values, this.state && this.state.lastFormValues)) {
       this.setState({lastFormValues: values});
@@ -186,7 +188,7 @@ const values = this.getDnfFormValues();
             >
               {getFieldDecorator(`formValidator[${formIndex}]`, { // Wrapper for field validating
                 rules: [{
-validator: (_: any, __: any, callback: any): void => {
+                  validator: (_: any, __: any, callback: any): void => {
                     const values = this.getDnfFormValues();
 
                     this.props.orElementValidator
@@ -239,7 +241,7 @@ validator: (_: any, __: any, callback: any): void => {
                       onClick={(): void => this.updateFormProps(dnfForms => dnfForms[formIndex] && dnfForms[formIndex].push(this.id++))}
                       style={{width: "100%"}}
                     >
-                      <LegacyIcon type="plus"/> {this.props.addConjunctionButtonTitle || "Добавить Конъюнкцию"}
+                      <PlusCircleOutlined/> {this.props.addConjunctionButtonTitle || "Добавить Конъюнкцию"}
                     </Button>
                   </Form.Item>
                 </Card>
@@ -252,7 +254,7 @@ validator: (_: any, __: any, callback: any): void => {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
-marginLeft: disableDisjunctionSwap ? 5 : -57,
+                  marginLeft: disableDisjunctionSwap ? 5 : -57,
                   marginRight: 5
                 }}
               >
@@ -260,7 +262,7 @@ marginLeft: disableDisjunctionSwap ? 5 : -57,
                   {!disableDisjunctionSwap && <Button
                     size="small"
                     htmlType="button"
-                    icon={<LegacyIcon type={"arrow-left"} />}
+                    icon={<ArrowLeftOutlined/>}
                     className={DNF_BUTTON}
                     disabled={formIndex === 0}
                     onClick={(): void => this.updateFormProps(dnfForms => InnerDnfForm.swapElements(dnfForms, formIndex, formIndex - 1))}
@@ -268,7 +270,7 @@ marginLeft: disableDisjunctionSwap ? 5 : -57,
                   <Button
                     size="small"
                     htmlType="button"
-                    icon={<LegacyIcon type={"minus-circle"} />}
+                    icon={<MinusCircleOutlined/>}
                     className={DNF_BUTTON}
                     style={{transform: "rotate(90deg)"}}
                     onClick={(): void => this.updateFormProps(dnfForms => {
@@ -283,7 +285,7 @@ marginLeft: disableDisjunctionSwap ? 5 : -57,
                       size="small"
                       className={DNF_BUTTON}
                       htmlType="button"
-                      icon={<LegacyIcon type={"arrow-right"} />}
+                      icon={<ArrowRightOutlined/>}
                       disabled={formIndex === forms.length - 1}
                       onClick={(): void => this.updateFormProps(dnfForms => InnerDnfForm.swapElements(dnfForms, formIndex, formIndex + 1))}
                     />
@@ -309,7 +311,7 @@ marginLeft: disableDisjunctionSwap ? 5 : -57,
             onClick={(): void => this.updateFormProps(dnfForms => dnfForms.push([this.id++]))}
             style={{width: "100%"}}
           >
-            <LegacyIcon type="plus"/> {this.props.addDisjunctionButtonTitle || "Добавить Дизъюнкцию"}
+            <PlusCircleOutlined/> {this.props.addDisjunctionButtonTitle || "Добавить Дизъюнкцию"}
           </Button>
         </Form.Item>}
         {!this.props.disableDefaultSubmitButton && <Form.Item {...formItemLayout}>
@@ -342,19 +344,19 @@ marginLeft: disableDisjunctionSwap ? 5 : -57,
 
   @autobind
   private getDnfFormValues(): IDnfFromValues<TElement> {
-return this.props.form.getFieldsValue() as any;
+    return this.props.form.getFieldsValue() as any;
   }
 
   private getResultFormValues(): TValues {
     const formattedFormValues = InnerDnfForm.formatFormValues(this.getDnfFormValues());
 
-return this.props.valuesMapper ? this.props.valuesMapper(formattedFormValues) : (formattedFormValues as any);
+    return this.props.valuesMapper ? this.props.valuesMapper(formattedFormValues) : (formattedFormValues as any);
   }
 
   private handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
-this.props.form.validateFields((err: any) => {
+    this.props.form.validateFields((err: any) => {
       if (!err) {
         if (this.props.onSubmit) {
           this.props.onSubmit(this.getResultFormValues());
@@ -376,7 +378,7 @@ this.props.form.validateFields((err: any) => {
 
 }
 
-export class  DnfForm<T, S> extends React.Component<FormCreateKostyl<InnerDnfForm<T,S>>> {
+export class DnfForm<T, S> extends React.Component<FormCreateKostyl<InnerDnfForm<T, S>>> {
 
   private element: JSX.Element | null = null;
 

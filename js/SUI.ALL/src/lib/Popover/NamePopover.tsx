@@ -1,3 +1,4 @@
+import {ArrowLeftOutlined, CloseOutlined} from "@ant-design/icons/lib";
 import {Button} from 'antd';
 import Input from 'antd/es/input';
 import Alert from 'antd/lib/alert';
@@ -78,7 +79,7 @@ private static filterOption(inputValue: string, option: any): boolean {
               />
               <div className={SUI_ROW_GROW_RIGHT}>
                 <Button
-                  icon="arrow-left"
+                  icon={<ArrowLeftOutlined/>}
                   onClick={this.disableCreateMode}
                   disabled={this.state.savingInProcess}
                 />
@@ -126,7 +127,7 @@ private static filterOption(inputValue: string, option: any): boolean {
                     </Select>
                     <Button
                       disabled={!(data && this.state.selectedNameId)}
-                      icon="close"
+                      icon={<CloseOutlined/>}
                       danger={true}
                       onClick={this.clearSelect}
                     />

@@ -1,3 +1,4 @@
+import {SaveOutlined} from "@ant-design/icons/lib";
 import { Switch } from 'antd';
 import Tooltip from 'antd/lib/tooltip';
 import Tree from 'antd/lib/tree';
@@ -160,7 +161,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
         <PromisedButton
           block={true}
           promise={this.onSave}
-          icon="save"
+          icon={<SaveOutlined/>}
           type="primary"
         >
           Сохранить
