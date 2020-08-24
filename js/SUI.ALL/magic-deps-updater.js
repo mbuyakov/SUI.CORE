@@ -9,7 +9,7 @@ if(process.cwd().includes('SUI.ALL')) {
   curPackageJson.devDependencies = Object.assign(curPackageJson.devDependencies, magicDeps.magic);
 } else {
   curPackageJson.dependencies = Object.assign(curPackageJson.dependencies, magicDeps.magic);
-  curPackageJson.devDependencies = Object.assign(curPackageJson.dependencies, magicDeps.dev);
+  curPackageJson.devDependencies = Object.assign(curPackageJson.devDependencies, magicDeps.dev);
 }
 
 fs.writeFile(curPackageJsonPath, JSON.stringify(curPackageJson, null, 2), 'utf8', function(err) {
