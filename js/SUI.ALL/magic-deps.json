@@ -9,6 +9,6 @@
     "@material-ui/icons": "4.9.1"
   },
   "dev": {
-    "webpack-bundle-analyzer ": "3.6.1"
+    "webpack-bundle-analyzer": "3.6.1"
   }
 }
