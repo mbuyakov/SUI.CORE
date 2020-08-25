@@ -39,6 +39,11 @@ export function disableBirthdayDateWithDeathDate(deathDate: string): (current: M
     || dateDisabler(new Date().toISOString(), "greaterOrEqual")(current)
 }
 
+export function disableFutureDateAndDateLessThanBirthday(birthday: string): (current: Moment) => boolean {
+  return (current: Moment): boolean => disableFutureDate(current)
+    || (birthday != null ? dateDisabler(new Date(birthday).toISOString(), "less")(current) : undefined)
+}
+
 // Return:
 //  -1 if date < (current date - from year);
 //  +1 if date > (current date + to year);
