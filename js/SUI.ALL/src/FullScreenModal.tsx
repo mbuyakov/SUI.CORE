@@ -1,4 +1,4 @@
-import { Collapse } from '@material-ui/core';
+import {Collapse} from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar/AppBar';
 import Dialog, {DialogProps} from '@material-ui/core/Dialog/Dialog';
 import IconButton from '@material-ui/core/IconButton/IconButton';
@@ -10,8 +10,8 @@ import autobind from 'autobind-decorator';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { sleep } from './other';
-import { Z_999 } from './styles';
+import {sleep} from './other';
+import {Z_999} from './styles';
 
 type ChildrenWithPopupContainer = (getPopupContainer?: () => HTMLElement) => JSX.Element
 
@@ -74,7 +74,7 @@ class FullScreenDialogImpl extends React.Component<IFullScreenModalProps, {
             }}
           >
             {
-              typeof(this.props.children) === "function"
+              typeof (this.props.children) === "function"
                 ? this.props.children(this.getPopupContainer)
                 : this.props.children
             }
@@ -90,9 +90,9 @@ class FullScreenDialogImpl extends React.Component<IFullScreenModalProps, {
   }
 
   @autobind
-  private handleClose(): void {
+  public handleClose(): void {
     this.setState({open: false});
-sleep(500).then(() => {
+    sleep(500).then(() => {
       if (this.props.onClose) {
         this.props.onClose();
       }
@@ -110,6 +110,12 @@ export class FullScreenModal extends React.Component<IFullScreenModalProps> {
   public open(): void {
     if (this.innerRef.current) {
       this.innerRef.current.open();
+    }
+  }
+
+  public close(): void {
+    if (this.innerRef.current) {
+      this.innerRef.current.handleClose();
     }
   }
 
