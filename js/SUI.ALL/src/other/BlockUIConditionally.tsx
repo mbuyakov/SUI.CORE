@@ -2,6 +2,7 @@ import {Result} from "antd";
 import autobind from "autobind-decorator";
 import axios from 'axios';
 import React, {ReactNode} from "react";
+import { isLocalServer } from '@/utils/location';
 
 export interface IBlockUIConditionallyProps {
   header?: string | ReactNode;
@@ -128,10 +129,4 @@ export async function getFileText(filename: string): Promise<string> {
       })
       .catch(reject)
   );
-}
-
-function isLocalServer(): boolean {
-  return location.hostname === 'localhost'
-    || location.hostname === '127.0.0.1'
-    || Boolean(process.env.IS_APP);
 }
