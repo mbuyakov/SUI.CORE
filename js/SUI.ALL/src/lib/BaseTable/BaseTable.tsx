@@ -7,6 +7,7 @@ import CloudDownload from '@material-ui/icons/CloudDownload';
 import {Card, Result, Spin} from 'antd';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
+import isEqual from "lodash/isEqual";
 import * as React from 'react';
 
 import {getDataByKey} from '../dataKey';
@@ -99,11 +100,15 @@ export class BaseTable<TSelection = defaultSelection>
       : <CustomToggleCell {...props} />
   );
 
-  private SelectionCellComponent = (props: any): JSX.Element => (
-    (this.props.selectionFilter && this.props.selectionFilter(props.row))
-      ? <Cell {...props} />
-      : <SelectionCell {...props} />
-  );
+  private SelectionCellComponent = (props: any): JSX.Element => {
+    const disabled = props.disabled || !!this.props.forceSelection?.length;
+
+    return (
+      (this.props.selectionFilter && this.props.selectionFilter(props.row))
+        ? <Cell {...props} />
+        : <SelectionCell {...props} onToggle={disabled ? () => null : props.onToggle}/>
+    );
+  };
 
   public constructor(props: any) {
     super(props);
@@ -117,12 +122,18 @@ export class BaseTable<TSelection = defaultSelection>
     };
   }
 
+  public componentDidUpdate(prevProps: {forceSelection?: TSelection[]}): void {
+    if (this.props.forceSelection && !isEqual(this.props.forceSelection, prevProps.forceSelection)) {
+      this.setState({selection: this.props.forceSelection});
+    }
+  }
+
   public clearSelection(): void {
     return this.setState({selection: []});
   }
 
   public getSelection(): TSelection[] {
-    return this.state && this.state.selection || [];
+    return this.state?.selection ?? [];
   }
 
   @autobind
@@ -342,10 +353,12 @@ export class BaseTable<TSelection = defaultSelection>
               onPageSizeChange={this.props.onPageSizeChange}
             />
           )}
-          {(selectionEnabled || highlightEnabled) && <SelectionState
-            selection={(this.state && this.state.selection) as any}
-            onSelectionChange={this.onSelectionChange as any}
-          />}
+          {(selectionEnabled || highlightEnabled) && (
+            <SelectionState
+              selection={this.getSelection() as any[]}
+              onSelectionChange={this.onSelectionChange as any}
+            />
+          )}
           {groupingEnabled && (this.props.getChildGroups
             ? <CustomGrouping
               getChildGroups={this.props.getChildGroups}
@@ -517,8 +530,10 @@ export class BaseTable<TSelection = defaultSelection>
 
   @autobind
   private onSelectionChange(selection: TSelection[]): void {
+    const oldSelection = this.getSelection();
+
     const newSelection = (this.props.singleSelection || this.props.highlightRow)
-      ? selection.filter(element => !this.state.selection.includes(element))
+      ? selection.filter(element => !oldSelection.includes(element))
       : selection;
 
     this.setState(
