@@ -6,7 +6,7 @@ import moment from 'moment';
 import * as React from 'react';
 
 import {errorNotification} from '../drawUtils';
-import {Observable} from '../Observable';
+import {Observable, ObservableHandlerStub} from '../Observable';
 import {IObjectWithIndex} from '../other';
 import {BASE_FORM_CLASS} from '../styles';
 import {SUIReactComponent} from '../SUIReactComponent';
@@ -48,9 +48,11 @@ export type IBaseFormProps = Omit<IBaseCardProps<any, IBaseFormItemLayout>, 'ite
 
 export interface IFormField {
   error: Observable<string | null>
+  errorObservableHandlerStub: ObservableHandlerStub
   rules: RuleItem[]
   validatorId?: number
   value: Observable<any>
+  valueObservableHandlerStub: ObservableHandlerStub
 }
 
 export class BaseForm extends SUIReactComponent<IBaseFormProps, {
@@ -165,19 +167,33 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   }
 
   @autobind
+  public removeField(field: string) {
+    const formField = this.formFields.get(field);
+    formField.error.setValue(null);
+    formField.valueObservableHandlerStub.unsubscribe();
+    formField.errorObservableHandlerStub.unsubscribe();
+    this.formFields.delete(field);
+  }
+
+  @autobind
   public getOrCreateFormField(field: string): IFormField {
     if (!this.formFields.has(field)) {
-      const newFormField: IFormField = {
-        error: new Observable<string | null | undefined>(),
-        rules: [],
-        value: new Observable<any>(),
-      };
-
-      newFormField.value.subscribe(() => this.validateField(field));
-      newFormField.error.subscribe(newError => {
+      const error = new Observable<string | null | undefined>();
+      const errorObservableHandlerStub = error.subscribe(newError => {
         this.fieldErrors[field] = newError;
         this.__checkHasErrors();
       });
+
+      const value = new Observable<any>();
+      const valueObservableHandlerStub = value.subscribe(() => this.validateField(field));
+      const newFormField: IFormField = {
+        error,
+        errorObservableHandlerStub,
+        rules: [],
+        value,
+        valueObservableHandlerStub
+      };
+
       this.formFields.set(field, newFormField);
     }
 

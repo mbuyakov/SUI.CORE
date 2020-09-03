@@ -91,6 +91,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
 }> {
 
   private baseForm: BaseForm;
+  private formFieldName?: string;
   private formField?: IFormField;
   private readonly subscribedFields: string[] = [];
 
@@ -111,7 +112,8 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
           const required = item.required || (item.mapFormValuesToRequired && item.mapFormValuesToRequired(this.valueGetter));
 
           if (!this.formField) {
-            this.formField = baseForm.getOrCreateFormField(item.fieldName);
+            this.formFieldName = item.fieldName;
+            this.formField = baseForm.getOrCreateFormField(this.formFieldName);
             this.registerObservableHandler(this.formField.value.subscribe(value => this.setState({value})));
             this.registerObservableHandler(this.formField.error.subscribe(error => this.setState({error})));
             if (item.initialValue != null) {
@@ -218,6 +220,11 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
         }}
       </BaseFormContext.Consumer>
     );
+  }
+
+  public componentWillUnmount() {
+    this.baseForm.removeField(this.formFieldName);
+    super.componentWillUnmount();
   }
 
   @autobind
