@@ -42,6 +42,19 @@ class AuditService(
         private val objectMapper: ObjectMapper
 ) {
 
+    private val resultToAuditLogDtoMapper: (Result) -> AuditLogDto = mapper@{ result ->
+        val dto = result.toLatestVersionDto(result.cols(AUDIT_COLUMN_CF))!!
+
+        return@mapper AuditLogDto(
+                rowId = dto.getAsString(ROW_ID_KEY)!!,
+                operationType = dto.getAsString(OPERATION_TYPE_KEY)!!,
+                userId = dto.getAsLong(USER_ID_KEY),
+                dbUser = dto.getAsString(DB_USER_KEY)!!,
+                created = dto.getAsString(CREATED_KEY)!!,
+                content = objectMapper.readTree(dto.getAsString(CONTENT_KEY)!!) as ObjectNode
+        )
+    }
+
     private fun getTableInfo(tableInfoId: Long) = tableInfoRepository
             .findById(tableInfoId)
             .orElseThrow { EntityNotFoundException("TableInfo with id = $tableInfoId") }
@@ -100,19 +113,18 @@ class AuditService(
         return hBaseClient.admin.listTableNames().mapNotNull { it.extractAuditTableInfoId() }.toSet()
     }
 
-    fun getLastModifiedRows(tableInfoId: Long, start: Date, end: Date, limit: Int = 1000): List<AuditLogDto> {
+    fun getLogsInPeriod(tableInfoId: Long, start: Date, end: Date, scanConfigurator: (Scan) -> Unit = {}): Iterable<AuditLogDto> {
         val tableInfo = getTableInfo(tableInfoId)
 
         return hBaseClient
                 .getTableIfExists(tableInfo.toHbaseTableName())
                 ?.getScanner(Scan().apply {
+                    scanConfigurator(this)
                     this.setTimeRange(start.nanos(), end.nanos())
-                    this.limit = limit
-                    this.isReversed = true
                 })
-                ?.toList()
-                ?.let { resultsToAuditLogDtos(it) }
-                ?.sortedByDescending { it.created }
+                ?.asSequence()
+                ?.map(resultToAuditLogDtoMapper)
+                ?.asIterable()
                 ?: emptyList()
     }
 
@@ -131,24 +143,22 @@ class AuditService(
                 .getTableIfExists(tableInfo.toHbaseTableName())
                 ?.get(logIgs.map { Get(Bytes.toBytes(it)) })
                 ?.toList()
-                ?.let { resultsToAuditLogDtos(it) }
+                ?.map(resultToAuditLogDtoMapper)
                 ?.sortedByDescending { it.created }
                 ?: emptyList()
     }
 
-    private fun resultsToAuditLogDtos(results: List<Result>): List<AuditLogDto> {
-        return results.map { result ->
-            val dto = result.toLatestVersionDto(result.cols(AUDIT_COLUMN_CF))!!
-
-            return@map AuditLogDto(
-                    rowId = dto.getAsString(ROW_ID_KEY)!!,
-                    operationType = dto.getAsString(OPERATION_TYPE_KEY)!!,
-                    userId = dto.getAsLong(USER_ID_KEY),
-                    dbUser = dto.getAsString(DB_USER_KEY)!!,
-                    created = dto.getAsString(CREATED_KEY)!!,
-                    content = objectMapper.readTree(dto.getAsString(CONTENT_KEY)!!) as ObjectNode
-            )
+    fun getLastModifiedRows(tableInfoId: Long, start: Date, end: Date, limit: Int = 1000): List<AuditLogDto> {
+        val logs = getLogsInPeriod(tableInfoId, start, end) {
+            it.isReversed = true
+            it.limit = limit
         }
+
+        return logs.asSequence().toList()
+    }
+
+    fun hasChanges(tableInfoId: Long, start: Date, end: Date): Boolean {
+        return getLastModifiedRows(tableInfoId, start, end, 1).isNotEmpty()
     }
 
 }
