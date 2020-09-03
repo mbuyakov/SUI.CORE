@@ -170,10 +170,12 @@ public componentDidUpdate(prevProps: IBaseFormProps): void {
   @autobind
   public removeField(field: string) {
     const formField = this.formFields.get(field);
-    formField.error.setValue(null);
-    formField.valueObservableHandlerStub.unsubscribe();
-    formField.errorObservableHandlerStub.unsubscribe();
-    this.formFields.delete(field);
+    if (formField) {
+      formField.error.setValue(null);
+      formField.valueObservableHandlerStub.unsubscribe();
+      formField.errorObservableHandlerStub.unsubscribe();
+      this.formFields.delete(field);
+    }
   }
 
   @autobind
