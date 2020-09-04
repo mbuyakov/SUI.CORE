@@ -111,7 +111,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
           const valuePropName = item.valuePropName || 'value';
           const required = item.required || (item.mapFormValuesToRequired && item.mapFormValuesToRequired(this.valueGetter));
 
-          if (!this.formField) {
+          if (!this.formField || this.formFieldName != item.fieldName) {
             this.formFieldName = item.fieldName;
             this.formField = baseForm.getOrCreateFormField(this.formFieldName);
             this.registerObservableHandler(this.formField.value.subscribe(value => this.setState({value})));
