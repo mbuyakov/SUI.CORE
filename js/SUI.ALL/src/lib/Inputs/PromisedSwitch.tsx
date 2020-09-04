@@ -3,7 +3,6 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
-import { DisableEditContext } from "../DisableEditContext";
 
 export type PromisedSwitchProps = Omit<IPromisedBaseProps<boolean>, "validator"> & Omit<SwitchProps, "checked" | "loading" | "onChange">;
 
@@ -27,19 +26,12 @@ export class PromisedSwitch extends PromisedBase<PromisedSwitchProps, IPromisedB
     const {promise, popconfirmSettings, ...switchProps} = this.props;
 
     return this.wrapConfirmAndError(
-      <DisableEditContext.Consumer>
-        {(disableEdit): JSX.Element => {
-          return (
-            <Switch
-              {...switchProps}
-              checked={this.state.savedValue}
-              loading={this.state.loading}
-              onChange={this.save}
-              disabled={disableEdit || this.props.disabled}
-            />
-          );
-        }}
-      </DisableEditContext.Consumer>
+      <Switch
+        {...switchProps}
+        checked={this.state.savedValue}
+        loading={this.state.loading}
+        onChange={this.save}
+      />
     );
   }
 
