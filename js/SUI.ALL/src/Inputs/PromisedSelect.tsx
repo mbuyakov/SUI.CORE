@@ -6,6 +6,7 @@ import * as React from "react";
 import { SUI_ROW_GROW_LEFT } from '../styles';
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
+import {DisableEditContext} from "../DisableEditContext";
 
 export type PromisedSelectProps<T> = IPromisedBaseProps<T> & Omit<SelectProps<T>, "onChange" | "value">
 
@@ -30,15 +31,21 @@ export class PromisedSelect<T extends SelectValue> extends PromisedBase<Promised
         {this.state.loading ? (<CircularProgress size={16} />) : (<SaveOutlinedIcon/>)}
       </IconButton>
       );
-    const withPopover: JSX.Element = this.wrapInValidationPopover(
-        <Select<T>
-          // Typescript goes crazy. Mark as any to ignore
-          {...selectProps as SelectProps<T> as any}
-          disabled={this.props.disabled || this.props.loading || this.state.loading || false}
-          onChange={this.onChange}
-          value={this.state.value}
-        />
-      );
+    const withPopover: JSX.Element = (
+      <DisableEditContext.Consumer>
+        {(disableEdit): JSX.Element => {
+          return this.wrapInValidationPopover(
+            <Select<T>
+              // Typescript goes crazy. Mark as any to ignore
+              {...selectProps as SelectProps<T> as any}
+              disabled={disableEdit || this.props.disabled || this.props.loading || this.state.loading || false}
+              onChange={this.onChange}
+              value={this.state.value}
+            />
+          )
+        }}
+      </DisableEditContext.Consumer>
+    );
 
     return (
       <div className={SUI_ROW_GROW_LEFT}>
