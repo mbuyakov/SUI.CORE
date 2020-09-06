@@ -35,7 +35,11 @@ export function _LocalStorageValue(localStorageKey: string, target: any, key: st
       }
       const oldValue = _this[propKey];
       log.info(`[${localStorageKey}] ${oldValue} -> ${newValue}`);
-      localStorageService.setItem(localStorageKey, newValue);
+      if(newValue == null) {
+        localStorageService.removeItem(localStorageKey);
+      } else {
+        localStorageService.setItem(localStorageKey, newValue);
+      }
       _this[propKey] = newValue;
     },
   };
