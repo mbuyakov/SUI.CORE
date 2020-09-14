@@ -24,6 +24,7 @@ export interface IInitSUISettings {
   checkVersionMismatchUrl: string;
   graphqlUri: string;
   restUri: string;
+  rusName: string;
   percentToColorSettings: IColorHeatMapSettings;
   permissions?: {
     exportAll?: Permission
