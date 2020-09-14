@@ -14,11 +14,13 @@
     "babel-eslint": "^9.0.0",
     "cross-env": "^5.2.0",
     "react-test-renderer": "^16.7.0",
+    "storyboard": "^3.2.1",
+    "storyboard-listener-console": "^3.1.4",
     "tslint": "^5.12.0",
     "tslint-config-prettier": "^1.17.0",
     "tslint-react": "^3.6.0",
-    "umi": "^2.7.0-beta.2",
-    "umi-plugin-react": "^1.15.2",
-    "webpack-bundle-analyzer": "^3.6.1"
+    "umi": "2.13.13",
+    "umi-plugin-react": "1.15.8",
+    "webpack-bundle-analyzer": "3.6.1"
   }
 }
