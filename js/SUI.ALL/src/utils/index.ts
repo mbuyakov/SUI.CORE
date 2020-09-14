@@ -9,6 +9,7 @@ export * from "./condition";
 export * from "./draggable";
 export * from "./draw";
 export * from "./filterType";
+export * from "./formUtils";
 export * from "./init";
 export * from "./location";
 export * from "./metaInfo";

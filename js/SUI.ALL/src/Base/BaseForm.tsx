@@ -15,6 +15,7 @@ import {OneOrArray, OneOrArrayWithNulls, wrapInArray} from '../typeWrappers';
 import {BaseCard, IBaseCardProps} from './BaseCard';
 import {BaseFormContext} from './BaseFormContext';
 import {IBaseFormItemLayout, renderIBaseFormItemLayout} from './BaseFormItemLayout';
+import { hasErrors } from '../utils/formUtils';
 
 export type ValuesGetter = (fields: string[]) => IObjectWithIndex;
 
@@ -325,9 +326,9 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   @autobind
   private __checkHasErrors(): void {
     const prevHasErrors = this.hasErrors.getValue();
-    const hasErrors = Object.keys(this.fieldErrors).some(key => !!this.fieldErrors[key]);
-    if (prevHasErrors !== hasErrors) {
-      this.hasErrors.setValue(hasErrors);
+    const curHasErrors = hasErrors(this.fieldErrors);
+    if (prevHasErrors !== curHasErrors) {
+      this.hasErrors.setValue(curHasErrors);
     }
   }
 

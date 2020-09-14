@@ -5,6 +5,7 @@ import { Button } from "antd";
 import {ButtonProps} from "antd/lib/button";
 import autobind from "autobind-decorator";
 import * as React from "react";
+import {hasErrors} from "../../lib/CommonForm";
 
 const tailFormItemLayout = {
   style: {
@@ -22,9 +23,6 @@ const tailFormItemLayout = {
   }
 };
 
-export function hasErrors(fieldsError: any): boolean {
-  return Object.keys(fieldsError).some(field => fieldsError[field]);
-}
 
 export type CommonFormChildrenType = (form: WrappedFormUtils) => JSX.Element;
 
