@@ -12,6 +12,7 @@ export * from "./filterType";
 export * from "./formUtils";
 export * from "./init";
 export * from "./location";
+export * from "./array";
 export * from "./metaInfo";
 export * from "./metaUtils";
 export * from "./TabSyncer";

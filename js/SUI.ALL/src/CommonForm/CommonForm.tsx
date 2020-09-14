@@ -5,7 +5,7 @@ import { Button } from "antd";
 import {ButtonProps} from "antd/lib/button";
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {hasErrors} from "../../lib/CommonForm";
+import {hasErrors} from "../utils/formUtils";
 
 const tailFormItemLayout = {
   style: {
