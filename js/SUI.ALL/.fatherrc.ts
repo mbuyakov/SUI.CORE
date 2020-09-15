@@ -1,8 +1,7 @@
-import {IBundleOptions} from 'father';
+import {IBundleOptions} from 'father-build/src/types';
 
 const options: IBundleOptions = {
-  cjs: {type: 'babel'},
-  doc: {typescript: true},
+  cjs: {type: 'babel'}
 };
 
 export default options;
