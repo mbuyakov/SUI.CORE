@@ -17,21 +17,25 @@
     "lint": "cross-env ROOT_DIR=src sui-linter",
     "lint-watch": "cross-env ROOT_DIR=src sui-linter --watch",
     "lint-timing": "cross-env TIMING=1 ROOT_DIR=src sui-linter",
-    "dev": "father doc dev",
-    "build": "father build",
+    "doc-dev": "typedoc",
+    "build": "father-build",
     "ci": "run-p lint build"
   },
   "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "antd": "4.6.1",
     "@amcharts/amcharts4": "4.9.22",
+    "@ant-design/icons": "4.2.2",
     "@material-ui/core": "4.9.9",
     "@material-ui/icons": "4.9.1",
-    "@ant-design/icons": "4.2.2"
+    "antd": "4.6.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
-    "@sui/sui-devtools": "0.0.11-builder",
+    "@amcharts/amcharts4": "4.9.22",
+    "@ant-design/icons": "4.2.2",
+    "@material-ui/core": "4.9.9",
+    "@material-ui/icons": "4.9.1",
+    "@sui/sui-devtools": "0.0.52-builder",
     "@types/classnames": "^2.2.10",
     "@types/jsonpack": "^1.1.0",
     "@types/lodash": "^4.14.149",
@@ -40,14 +44,10 @@
     "@types/react-dom": "^16.9.6",
     "@types/react-router-dom": "^5.1.3",
     "@types/uuid": "^8.0.0",
-    "father": "^2.29.5",
     "antd": "4.6.1",
-    "@amcharts/amcharts4": "4.9.22",
-    "@material-ui/core": "4.9.9",
-    "@material-ui/icons": "4.9.1",
+    "father-build": "1.18.5",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "@ant-design/icons": "4.2.2"
+    "react-dom": "^16.13.1"
   },
   "dependencies": {
     "@ant-design/compatible": "^1.0.2",
