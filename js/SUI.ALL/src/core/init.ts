@@ -4,11 +4,11 @@ import {setContext} from 'apollo-link-context';
 import {HttpLink} from 'apollo-link-http';
 import {Container} from 'typescript-ioc';
 
+import {ICoreUser} from "@/user";
+import {UserService} from '@/ioc';
 import {ColumnInfoManager, NameManager, TableInfoManager} from '../cache';
 import {ColorHeatMap, IColorHeatMapSettings} from '../color';
-import {ICoreUser} from "../user";
 import {IRawRoute, parseRoutes, RouteType, runCheckVersionMismatch} from '../utils';
-import {UserService} from '../ioc/service';
 
 declare let window: Window & {
   SUI: ISUISettings | undefined;

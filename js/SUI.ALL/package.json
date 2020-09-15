@@ -19,7 +19,7 @@
     "lint-watch": "cross-env ROOT_DIR=src sui-linter --watch",
     "lint-timing": "cross-env TIMING=1 ROOT_DIR=src sui-linter",
     "doc-dev": "typedoc",
-    "build": "father-build",
+    "build": "father-build && npx tsc-alias -p tsconfig.json",
     "ci": "run-p lint build"
   },
   "peerDependencies": {
@@ -36,7 +36,7 @@
     "@ant-design/icons": "4.2.2",
     "@material-ui/core": "4.9.9",
     "@material-ui/icons": "4.9.1",
-    "@sui/sui-devtools": "0.0.52-builder",
+    "@sui/sui-devtools": "0.0.20200915122355-CANARY",
     "@types/classnames": "^2.2.10",
     "@types/jsonpack": "^1.1.0",
     "@types/lodash": "^4.14.149",
@@ -82,6 +82,7 @@
     "react-router-dom": "^5.1.2",
     "react-smooth-dnd": "^0.11.1",
     "react-to-print": "^2.6.3",
+    "tsc-alias": "^1.1.1",
     "typescript-ioc": "3.2.2",
     "uuid": "^8.2.0"
   }
