@@ -3,6 +3,8 @@
 .DS_Store
 build
 node_modules
+lib
+.eslintcache
 *.log*
 *.log
 .rts2_cache_cjs

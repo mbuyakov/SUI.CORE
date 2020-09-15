@@ -1,25 +1,22 @@
 {
-  "name": "@sui/sui-all",
-  "version": "7.0.20200528081240-CANARY",
+  "name": "@sui/core",
+  "version": "8.0.0",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
     "lib",
     "styles",
-    "umi-config.js",
     "magic-deps-updater.js",
     "magic-deps.json"
   ],
   "scripts": {
-    "type-check": "tsc --noEmit",
     "test": "jest",
     "test-watch": "jest --watch",
     "lint": "cross-env ROOT_DIR=src sui-linter",
     "lint-fix": "cross-env ROOT_DIR=src FIX=1 sui-linter",
     "lint-watch": "cross-env ROOT_DIR=src sui-linter --watch",
     "lint-timing": "cross-env TIMING=1 ROOT_DIR=src sui-linter",
-    "doc-dev": "typedoc",
-    "build": "father-build && npx tsc-alias -p tsconfig.json",
+    "post-build": "npx tsc-alias -p tsconfig.json",
     "ci": "run-p lint build"
   },
   "peerDependencies": {
@@ -36,7 +33,6 @@
     "@ant-design/icons": "4.2.2",
     "@material-ui/core": "4.9.9",
     "@material-ui/icons": "4.9.1",
-    "@sui/sui-devtools": "0.0.56-builder",
     "@types/classnames": "^2.2.10",
     "@types/jsonpack": "^1.1.0",
     "@types/lodash": "^4.14.149",
@@ -82,7 +78,6 @@
     "react-router-dom": "^5.1.2",
     "react-smooth-dnd": "^0.11.1",
     "react-to-print": "^2.6.3",
-    "tsc-alias": "^1.1.1",
     "typescript-ioc": "3.2.2",
     "uuid": "^8.2.0"
   }
