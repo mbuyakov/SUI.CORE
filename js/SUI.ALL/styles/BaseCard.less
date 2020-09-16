@@ -75,4 +75,53 @@
     align-items: stretch;
     max-width: 100%;
   }
+
+  .ant-modal-body .baseCard {
+    margin-top: 32px;
+  }
+
+  .ant-form-item-children .baseCard {
+    margin-top: 0 !important;
+  }
+}
+
+.baseCardCols {
+  /*border: 1px solid black;*/
+  width: 100%;
+  table-layout: fixed;
+
+  &:not(:first-of-type) {
+    margin-bottom: 24px;
+  }
+
+  & > thead > tr {
+    & > th {
+      text-align: right;
+      padding-right: 12px;
+      padding-bottom: 6px;
+      padding-top: 30px;
+
+      &:not(:first-child):not(:empty) {
+        /*border-left: red 10px solid;*/
+      }
+    }
+    & > th[colspan="2"] {
+      padding-right: 0!important;
+    }
+  }
+
+  & > tbody > tr > td:nth-child(2n-1):not([colspan="2"]) {
+    text-align: right;
+
+    & div.sui-base-table {
+      text-align: initial;
+    }
+  }
+
+  &:first-of-type > tbody > tr:first-child > td:first-child:last-child > div.sui-base-table:first-child:last-child {
+    border: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin: -24px -25px -33px !important;
+  }
 }

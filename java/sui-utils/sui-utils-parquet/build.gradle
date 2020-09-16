@@ -1,0 +1,13 @@
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+
+dependencies {
+  compile project(":sui-utils:sui-utils-hdfs")
+  compile "org.apache.parquet:parquet-hadoop:${parquetHadoopVersion}"
+}
+
+compileKotlin {
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+}

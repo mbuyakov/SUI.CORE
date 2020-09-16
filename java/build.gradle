@@ -9,7 +9,7 @@ apply plugin: 'maven'
 apply plugin: 'idea'
 
 allprojects {
-  group = 'ru.smsoft.sui'
+  group = 'ru.sui'
   version = "$System.env.BUILD_NUMBER-$System.env.BRANCH_NAME"
 }
 
@@ -27,7 +27,7 @@ subprojects {
     springBootVersion = '2.2.3.RELEASE'
     springBootGradlePluginVersion = '2.1.6.RELEASE'
     springJpaVerison = '2.2.3.RELEASE'
-    jacksonVersion = '2.9.10'
+    jacksonVersion = '2.9.9'
     javaxPersistenceApiVersion = '2.2'
     hibernateVersion = '5.4.1.Final'
     javaxValidationVersion = '2.0.1.Final'
@@ -36,11 +36,25 @@ subprojects {
     kotlinLoggingVersion = '1.6.24'
     flywayVersion = '5.2.4'
     postgresVersion = '42.2.5'
+    redissonVersion = '3.12.5'
+    muLoggerVersion = '1.7.7'
+    // CDH
+    cdhVersion = '6.3.1'
+    sparkShortVersion = '2.4.0'
+    hadoopShortVersion = '3.0.0'
+    hbaseShortVersion = '2.1.0'
+    hadoopVersion = "${hadoopShortVersion}-cdh${cdhVersion}"
+    sparkVersion = "${sparkShortVersion}-cdh${cdhVersion}"
+    hbaseVersion = "${hbaseShortVersion}-cdh${cdhVersion}"
+    parquetHadoopVersion = '1.10.1'
   }
 
   repositories {
     mavenCentral()
     jcenter()
+    maven {
+      url 'https://repository.cloudera.com/artifactory/cloudera-repos/'
+    }
     maven {
       url = 'https://repo.spring.io/milestone/'
     }

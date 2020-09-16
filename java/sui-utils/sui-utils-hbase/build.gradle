@@ -1,0 +1,17 @@
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+
+dependencies {
+  compile project(":sui-utils:sui-utils-kotlin")
+  compile "org.apache.hbase:hbase-client:${hbaseVersion}"
+  compile "org.springframework:spring-beans:${springVersion}"
+  compile "org.springframework:spring-context:${springVersion}"
+  compile "javax.persistence:javax.persistence-api:${javaxPersistenceApiVersion}"
+}
+
+
+compileKotlin {
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+}

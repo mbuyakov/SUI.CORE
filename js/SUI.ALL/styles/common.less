@@ -1,6 +1,14 @@
 @import "~antd/lib/style/themes/default";
 
 :global {
+  html, body, #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+  }
+
   .sui-backend-grid {
     display: grid;
     grid-gap: @padding-xs;
@@ -47,7 +55,6 @@
     font-size: 1.2rem;
   }
 
-
   .ant-btn {
     display: inline-flex !important;
     align-items: center;
@@ -60,10 +67,6 @@
 
   .ant-btn-sm {
     min-width: 24px;
-  }
-
-  .ant-select-selection-item {
-    width: 100%;
   }
 
   .ant-input-number {
@@ -103,5 +106,33 @@
 
   .ant-tabs-extra-content > .MuiIconButton-root {
     margin-bottom: 6px;
+  }
+
+  .ant-checkbox-inner {
+    border-radius: 4px!important;
+  }
+
+  .ant-form-item-explain, .ant-form-item-extra {
+    font-size: 13px !important;
+  }
+
+  .ant-form-item-has-error .ant-radio-inner {
+    border-color: @error-color !important;
+  }
+
+  .ant-popover-inner-content {
+    width: 400px !important;
+  }
+
+  .ant-switch {
+    flex-grow: 0 !important;
+  }
+
+  .ant-select-selection-placeholder {
+    width: 100%;
+  }
+
+  .ant-btn span {
+    line-height: normal !important;
   }
 }

@@ -3,8 +3,7 @@ apply plugin: 'kotlin-spring'
 
 dependencies {
   // Kotlin
-  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-  compile "org.jetbrains.kotlin:kotlin-reflect"
+  compile project(":sui-utils:sui-utils-kotlin")
   compile "io.github.microutils:kotlin-logging:${kotlinLoggingVersion}"
   // Spring
   compile "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
@@ -20,10 +19,8 @@ dependencies {
   // Jackson
   compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
   compile "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
-  compile "com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}"
   // Other
   compileOnly "org.projectlombok:lombok" // TODO: Delete
-  compile "org.flywaydb:flyway-core:${flywayVersion}"
   compile "com.github.ben-manes.caffeine:caffeine:2.8.2"
 }
 

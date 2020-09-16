@@ -1,1 +1,2 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.smsoft.sui.suisecurity.config.Autoconfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.sui.suisecurity.config.Autoconfiguration
+org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=ru.sui.suisecurity.config.RedisAutoConfigurationImportFilter

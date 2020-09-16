@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.sui.utils.parquet.autoconfigure.AutoConfiguration
