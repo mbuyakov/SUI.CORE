@@ -5,10 +5,7 @@ build
 node_modules
 lib
 .eslintcache
+package-bkp.json
+lerna-bkp.json
 *.log*
 *.log
-.rts2_cache_cjs
-.rts2_cache_esm
-.rts2_cache_umd
-dist
-out
