@@ -159,7 +159,8 @@ module.exports = {
     "no-control-regex": [0],
     "no-trailing-spaces": [0],
     "arrow-body-style": [0],
-    "react/require-default-props": [0]
+    "react/require-default-props": [0],
+    "linebreak-style": 0
   },
   "settings": {
     "import/resolver": {
