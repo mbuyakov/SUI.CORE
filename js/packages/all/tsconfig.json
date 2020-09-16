@@ -14,9 +14,9 @@
     "sourceMap": true,
     "baseUrl": "./src",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      // ./node_modules/@sui/all/src -> ./src
+      "@/*": ["../../../src/*"],
+      "@@/*": ["../../../src/.umi/*"]
     },
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
