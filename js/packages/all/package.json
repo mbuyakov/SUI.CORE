@@ -5,6 +5,7 @@
   "typings": "lib/index.d.ts",
   "files": [
     "lib",
+    "styles",
     "tsconfig-common.json",
     "umi-config.js"
   ],
