@@ -12,7 +12,7 @@ const sortKeys = (unordered) => {
   return ordered;
 }
 
-if(process.cwd().includes('SUI.ALL')) {
+if(curPackageJson.name == "@sui/core") {
   curPackageJson.peerDependencies = sortKeys(Object.assign(curPackageJson.peerDependencies, magicDeps.magic));
   curPackageJson.devDependencies = sortKeys(Object.assign(curPackageJson.devDependencies, magicDeps.magic));
 } else {

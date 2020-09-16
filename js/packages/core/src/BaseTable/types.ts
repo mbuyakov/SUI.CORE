@@ -120,7 +120,6 @@ export interface IBaseTableProps<TSelection = any> {
   fitToCollapseBody?: boolean;
   fitToRowDetailContainer?: boolean;
   fitToTabPanelBody?: boolean;
-  forceSelection?: TSelection[];
   groupingEnabled?: boolean;
   headerEnabled?: boolean;
   hideRows?: boolean;

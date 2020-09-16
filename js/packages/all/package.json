@@ -1,0 +1,14 @@
+{
+  "name": "@sui/all",
+  "version": "8.0.0",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "tsconfig-common.json",
+    "umi-config.js"
+  ],
+  "dependencies": {
+    "@sui/core": "8.0.0"
+  }
+}

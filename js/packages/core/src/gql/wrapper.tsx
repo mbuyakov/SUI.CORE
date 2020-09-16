@@ -33,12 +33,10 @@ value.errors.forEach((error: any) => {
  * Extract keys from object if it has only one key
  */
 function extractKeys(obj: IObjectWithIndex, extractKeysLevel: number | boolean): any {
-  extractKeysLevel = typeof extractKeysLevel === 'boolean' ? 1 : extractKeysLevel;
+extractKeysLevel = typeof extractKeysLevel === 'boolean' ? 1 : extractKeysLevel;
+
   let ret = obj;
   for (let i = 1; i <= extractKeysLevel; i++) {
-    if (!ret) {
-      throw new Error(`Value is null at level ${i-1}`);
-    }
     const keys = Object.keys(ret).filter(key => key !== "__typename");
     if (keys.length > 1) {
       throw new Error(`Multiple key in query answer at level ${i}`);
@@ -47,8 +45,10 @@ function extractKeys(obj: IObjectWithIndex, extractKeysLevel: number | boolean):
     if (keys.length === 0) {
       throw new Error(`No keys in query answer at level ${i}`);
     }
+
     ret = ret[keys[0]];
   }
+
   return ret;
 }
 

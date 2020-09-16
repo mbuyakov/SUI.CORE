@@ -65,13 +65,10 @@ pipeline {
         stage("JS") {
           steps {
             sh """
-              cd js/SUI.DEVTOOLS
-              yarn publish --registry http://verdaccio.smp.cloudcom.ru/ --non-interactive --new-version 0.0.${BUILD_NUMBER}-${BRANCH_NAME}
-              cd ../SUI.ALL
-              yarn add --dev @sui/sui-devtools@0.0.${BUILD_NUMBER}-${BRANCH_NAME}
-              yarn install
+              cd js
+              npx lerna bootstrap
               yarn ci
-              yarn publish --registry http://verdaccio.smp.cloudcom.ru/ --non-interactive --new-version 7.0.${BUILD_NUMBER}-${BRANCH_NAME}
+              node ./publish.js 8.0.${BUILD_NUMBER}-${BRANCH_NAME}
             """
           }
         }

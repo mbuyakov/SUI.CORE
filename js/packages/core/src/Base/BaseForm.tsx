@@ -1,23 +1,23 @@
-import asyncValidator, { RuleItem } from 'async-validator';
+import asyncValidator, {RuleItem} from 'async-validator';
 import autobind from 'autobind-decorator';
 import classNames from 'classnames';
 import isEqual from 'lodash/isEqual';
 import moment from 'moment';
 import * as React from 'react';
 
-import { errorNotification } from '../drawUtils';
-import { Observable , ObservableHandlerStub} from '../Observable';
-import { IObjectWithIndex } from '../other';
-import { BASE_FORM_CLASS } from '../styles';
-import { SUIReactComponent } from '../SUIReactComponent';
+import {errorNotification} from '../drawUtils';
+import {Observable, ObservableHandlerStub} from '../Observable';
+import {IObjectWithIndex} from '../other';
+import {BASE_FORM_CLASS} from '../styles';
+import {SUIReactComponent} from '../SUIReactComponent';
 import {OneOrArray, OneOrArrayWithNulls, wrapInArray} from '../typeWrappers';
 
 import {BaseCard, IBaseCardProps} from './BaseCard';
 import {BaseFormContext} from './BaseFormContext';
-import { IBaseFormItemLayout, renderIBaseFormItemLayout } from './BaseFormItemLayout';
+import {IBaseFormItemLayout, renderIBaseFormItemLayout} from './BaseFormItemLayout';
+import { hasErrors } from '../utils/formUtils';
 
 export type ValuesGetter = (fields: string[]) => IObjectWithIndex;
-
 
 export const SUBMITTED_FIELD = '___SUBMITTED___';
 export const FORM_LOCALSTORAGE_KEY = '__SUI_FORM_';
@@ -38,13 +38,13 @@ export type IBaseFormProps = Omit<IBaseCardProps<any, IBaseFormItemLayout>, 'ite
   children?: BaseFormChildrenFn;
   customFinalInputNodesProps?: IObjectWithIndex;
   customInputNodesProps?: IObjectWithIndex;
-initialValues?: IObjectWithIndex;
+  initialValues?: IObjectWithIndex;
   momentFields?: OneOrArray<string>;
   uuid: string;
   verticalLabel?: boolean;
-customFieldValues?(get: ValuesGetter): IObjectWithIndex;
+  customFieldValues?(get: ValuesGetter): IObjectWithIndex;
   onInitialized?(form: BaseForm): void;
-onSubmit(fields: any): Promise<boolean>;
+  onSubmit(fields: any): Promise<boolean>;
 }
 
 export interface IFormField {
@@ -115,10 +115,10 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
     }
 
     // To disabled submit button at the beginning
-this.validateFields();
+    this.validateFields();
   }
 
-public componentDidUpdate(prevProps: IBaseFormProps): void {
+  public componentDidUpdate(prevProps: IBaseFormProps): void {
     // Very strange use-case
     if (!isEqual(prevProps.initialValues, this.props.initialValues) && this.props.initialValues) {
       this.setFieldsValues(this.props.initialValues);
@@ -205,8 +205,8 @@ public componentDidUpdate(prevProps: IBaseFormProps): void {
 
   @autobind
   public isFieldsTouched(fields?: string[]): boolean {
-if (fields == null) {
-fields = Array.from(this.formFields.keys());
+    if (fields == null) {
+      fields = Array.from(this.formFields.keys());
     }
 
     return fields.some(field => this.isFieldTouched(field));
@@ -302,7 +302,7 @@ fields = Array.from(this.formFields.keys());
     return validator.validate({
       [field]: formField.value.getValue()
     }, {first: true}, errors => {
-      if (formField.validatorId === timestamp ) {
+      if (formField.validatorId === timestamp) {
         let error = null;
 
         if (errors && errors.length > 0) {
@@ -326,9 +326,9 @@ fields = Array.from(this.formFields.keys());
   @autobind
   private __checkHasErrors(): void {
     const prevHasErrors = this.hasErrors.getValue();
-    const hasErrors = Object.keys(this.fieldErrors).some(key => !!this.fieldErrors[key]);
-    if(prevHasErrors !== hasErrors) {
-      this.hasErrors.setValue(hasErrors);
+    const curHasErrors = hasErrors(this.fieldErrors);
+    if (prevHasErrors !== curHasErrors) {
+      this.hasErrors.setValue(curHasErrors);
     }
   }
 
@@ -395,13 +395,13 @@ fields = Array.from(this.formFields.keys());
 
   @autobind
   private setFieldsValuesFromRaw(values: IObjectWithIndex): void {
-    const momentsFields = this.props.momentFields && wrapInArray(this.props.momentFields) || []
+    const momentsFields = this.props.momentFields && wrapInArray(this.props.momentFields) || [];
 
     const parsedValues = Object.keys(values).reduce((prev, curKey) => {
       let fieldValue = values[curKey];
 
       // Magic
-if (typeof fieldValue === 'string' && momentsFields.includes(curKey)) {
+      if (typeof fieldValue === 'string' && momentsFields.includes(curKey)) {
         const momentValue = moment(fieldValue);
 
         if (momentValue.isValid()) {

@@ -1,0 +1,9 @@
+{
+  "name": "@sui/test",
+  "version": "8.0.0",
+  "dependencies": {
+    "@types/jest": "^26.0.5",
+    "jest": "^26.1.0",
+    "jest-cli": "^26.1.0"
+  }
+}
