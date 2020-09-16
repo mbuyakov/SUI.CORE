@@ -66,7 +66,8 @@ pipeline {
           steps {
             sh """
               cd js
-              npx lerna bootstrap
+              yarn
+              yarn bootstrap
               yarn ci
               node ./publish.js 8.0.${BUILD_NUMBER}-${BRANCH_NAME}
             """
