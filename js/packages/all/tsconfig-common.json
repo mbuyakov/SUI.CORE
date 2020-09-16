@@ -16,9 +16,9 @@
     "emitDecoratorMetadata": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      // ./node_modules/@sui/all/src -> ./src
+      "@/*": ["../../../src/*"],
+      "@@/*": ["../../../src/.umi/*"]
     },
     "allowSyntheticDefaultImports": true
   }
