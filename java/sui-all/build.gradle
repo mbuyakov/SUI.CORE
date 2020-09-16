@@ -2,12 +2,19 @@ apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
 
 dependencies {
+    compile project(":sui-audit:sui-audit-common")
+    compile project(":sui-audit:sui-audit-log-mover")
+    compile project(":sui-audit:sui-audit-manager")
     compile project(":sui-backend")
     compile project(":sui-entity")
     compile project(":sui-meta-schema-service")
     compile project(":sui-migration")
     compile project(":sui-security")
     compile project(":sui-user-transaction")
+    compile project(":sui-utils:sui-utils-hbase")
+    compile project(":sui-utils:sui-utils-hdfs")
+    compile project(":sui-utils:sui-utils-kotlin")
+    compile project(":sui-utils:sui-utils-parquet")
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {

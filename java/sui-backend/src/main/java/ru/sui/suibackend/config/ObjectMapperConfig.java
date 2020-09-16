@@ -11,6 +11,7 @@ import ru.sui.suibackend.jackson.BackendJacksonModule;
 
 import javax.annotation.PostConstruct;
 
+
 @Configuration
 @RequiredArgsConstructor
 public class ObjectMapperConfig {
@@ -23,6 +24,7 @@ public class ObjectMapperConfig {
     objectMapper.registerModule(new JsonOrgModule());
     objectMapper.registerModule(new BackendJacksonModule());
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    // Don't change to JsonWriteFeature (2.9.9 projects issue, cause JsonWriteFeature since 2.10)
     objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
   }
 

@@ -31,70 +31,44 @@ pipeline {
               buildFile: 'build.gradle',
               tasks: '--rerun-tasks build'
             )
-            script {
-              def server = Artifactory.server 'artifactory1'
-              def uploadSpec = """
-                {
-                  "files": [
-                    {
-                      "pattern": "**/sui-backend/build/libs/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
-                      "target": "sui/ru/sui/sui-backend/${BUILD_NUMBER}-${BRANCH_NAME}/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
-                    },
-                    {
-                      "pattern": "**/sui-backend/build/libs/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
-                      "target": "sui/ru/sui/sui-backend/${BUILD_NUMBER}-${BRANCH_NAME}/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
-                    },
-                    {
-                      "pattern": "**/sui-entity/build/libs/sui-entity-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
-                      "target": "sui/ru/sui/sui-entity/${BUILD_NUMBER}-${BRANCH_NAME}/sui-entity-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
-                    },
-                    {
-                      "pattern": "**/sui-entity/build/libs/sui-entity-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
-                      "target": "sui/ru/sui/sui-entity/${BUILD_NUMBER}-${BRANCH_NAME}/sui-entity-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
-                    },
-                    {
-                      "pattern": "**/sui-security/build/libs/sui-security-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
-                      "target": "sui/ru/sui/sui-security/${BUILD_NUMBER}-${BRANCH_NAME}/sui-security-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
-                    },
-                    {
-                      "pattern": "**/sui-security/build/libs/sui-security-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
-                      "target": "sui/ru/sui/sui-security/${BUILD_NUMBER}-${BRANCH_NAME}/sui-security-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
-                    },
-                    {
-                      "pattern": "**/sui-meta-schema-service/build/libs/sui-meta-schema-service-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
-                      "target": "sui/ru/sui/sui-meta-schema-service/${BUILD_NUMBER}-${BRANCH_NAME}/sui-meta-schema-service-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
-                    },
-                    {
-                      "pattern": "**/sui-meta-schema-service/build/libs/sui-meta-schema-service-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
-                      "target": "sui/ru/sui/sui-meta-schema-service/${BUILD_NUMBER}-${BRANCH_NAME}/sui-meta-schema-service-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
-                    },
-                    {
-                      "pattern": "**/sui-user-transaction/build/libs/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
-                      "target": "sui/ru/sui/sui-user-transaction/${BUILD_NUMBER}-${BRANCH_NAME}/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
-                    },
-                    {
-                      "pattern": "**/sui-user-transaction/build/libs/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
-                      "target": "sui/ru/sui/sui-user-transaction/${BUILD_NUMBER}-${BRANCH_NAME}/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
-                    },
-                    {
-                      "pattern": "**/sui-migration/build/libs/sui-migration-${BUILD_NUMBER}-${BRANCH_NAME}.pom",
-                      "target": "sui/ru/sui/sui-migration/${BUILD_NUMBER}-${BRANCH_NAME}/sui-migration-${BUILD_NUMBER}-${BRANCH_NAME}.pom"
-                    },
-                    {
-                      "pattern": "**/sui-migration/build/libs/sui-migration-${BUILD_NUMBER}-${BRANCH_NAME}.jar",
-                      "target": "sui/ru/sui/sui-migration/${BUILD_NUMBER}-${BRANCH_NAME}/sui-migration-${BUILD_NUMBER}-${BRANCH_NAME}.jar"
-                    }
-                  ]
-                }
-              """
-              server.upload spec: uploadSpec, failNoOp: true
-            }
+            sh """
+              cd java
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-audit/common/build/libs/sui-audit-common-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-audit-common/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-common-${BUILD_NUMBER}-${BRANCH_NAME}.pom
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-audit/common/build/libs/sui-audit-common-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-audit-common/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-common-${BUILD_NUMBER}-${BRANCH_NAME}.jar
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-audit/log-mover/build/libs/sui-audit-log-mover-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-audit-log-mover/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-log-mover-${BUILD_NUMBER}-${BRANCH_NAME}.pom
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-audit/log-mover/build/libs/sui-audit-log-mover-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-audit-log-mover/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-log-mover-${BUILD_NUMBER}-${BRANCH_NAME}.jar
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-audit/manager/build/libs/sui-audit-manager-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-audit-manager/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-manager-${BUILD_NUMBER}-${BRANCH_NAME}.pom
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-audit/manager/build/libs/sui-audit-manager-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-audit-manager/${BUILD_NUMBER}-${BRANCH_NAME}/sui-audit-manager-${BUILD_NUMBER}-${BRANCH_NAME}.jar
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-backend/build/libs/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-backend/${BUILD_NUMBER}-${BRANCH_NAME}/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.pom
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-backend/build/libs/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-backend/${BUILD_NUMBER}-${BRANCH_NAME}/sui-backend-${BUILD_NUMBER}-${BRANCH_NAME}.jar
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-entity/build/libs/sui-entity-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-entity/${BUILD_NUMBER}-${BRANCH_NAME}/sui-entity-${BUILD_NUMBER}-${BRANCH_NAME}.pom
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-entity/build/libs/sui-entity-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-entity/${BUILD_NUMBER}-${BRANCH_NAME}/sui-entity-${BUILD_NUMBER}-${BRANCH_NAME}.jar
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-security/build/libs/sui-security-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-security/${BUILD_NUMBER}-${BRANCH_NAME}/sui-security-${BUILD_NUMBER}-${BRANCH_NAME}.pom
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-security/build/libs/sui-security-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-security/${BUILD_NUMBER}-${BRANCH_NAME}/sui-security-${BUILD_NUMBER}-${BRANCH_NAME}.jar
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-meta-schema-service/build/libs/sui-meta-schema-service-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-meta-schema-service/${BUILD_NUMBER}-${BRANCH_NAME}/sui-meta-schema-service-${BUILD_NUMBER}-${BRANCH_NAME}.pom
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-meta-schema-service/build/libs/sui-meta-schema-service-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-meta-schema-service/${BUILD_NUMBER}-${BRANCH_NAME}/sui-meta-schema-service-${BUILD_NUMBER}-${BRANCH_NAME}.jar
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-user-transaction/build/libs/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-user-transaction/${BUILD_NUMBER}-${BRANCH_NAME}/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.pom
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-user-transaction/build/libs/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-user-transaction/${BUILD_NUMBER}-${BRANCH_NAME}/sui-user-transaction-${BUILD_NUMBER}-${BRANCH_NAME}.jar
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-migration/build/libs/sui-migration-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-migration/${BUILD_NUMBER}-${BRANCH_NAME}/sui-migration-${BUILD_NUMBER}-${BRANCH_NAME}.pom
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-migration/build/libs/sui-migration-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-migration/${BUILD_NUMBER}-${BRANCH_NAME}/sui-migration-${BUILD_NUMBER}-${BRANCH_NAME}.jar
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-utils/sui-utils-hbase/build/libs/sui-utils-hbase-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-utils-hbase/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-hbase-${BUILD_NUMBER}-${BRANCH_NAME}.pom
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-utils/sui-utils-hbase/build/libs/sui-utils-hbase-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-utils-hbase/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-hbase-${BUILD_NUMBER}-${BRANCH_NAME}.jar
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-utils/sui-utils-hdfs/build/libs/sui-utils-hdfs-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-utils-hdfs/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-hdfs-${BUILD_NUMBER}-${BRANCH_NAME}.pom
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-utils/sui-utils-hdfs/build/libs/sui-utils-hdfs-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-utils-hdfs/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-hdfs-${BUILD_NUMBER}-${BRANCH_NAME}.jar
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-utils/sui-utils-kotlin/build/libs/sui-utils-kotlin-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-utils-kotlin/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-kotlin-${BUILD_NUMBER}-${BRANCH_NAME}.pom
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-utils/sui-utils-kotlin/build/libs/sui-utils-kotlin-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-utils-kotlin/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-kotlin-${BUILD_NUMBER}-${BRANCH_NAME}.jar
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-utils/sui-utils-parquet/build/libs/sui-utils-parquet-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-utils-parquet/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-parquet-${BUILD_NUMBER}-${BRANCH_NAME}.pom
+              curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./sui-utils/sui-utils-parquet/build/libs/sui-utils-parquet-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/sui-utils-parquet/${BUILD_NUMBER}-${BRANCH_NAME}/sui-utils-parquet-${BUILD_NUMBER}-${BRANCH_NAME}.jar
+            """
           }
         }
         stage("JS") {
           steps {
             sh """
-              cd js/SUI.ALL
+              cd js/SUI.DEVTOOLS
+              yarn publish --registry http://verdaccio.smp.cloudcom.ru/ --non-interactive --new-version 0.0.${BUILD_NUMBER}-${BRANCH_NAME}
+              cd ../SUI.ALL
+              yarn add --dev @sui/sui-devtools@0.0.${BUILD_NUMBER}-${BRANCH_NAME}
               yarn install
               yarn ci
               yarn publish --registry http://verdaccio.smp.cloudcom.ru/ --non-interactive --new-version 7.0.${BUILD_NUMBER}-${BRANCH_NAME}

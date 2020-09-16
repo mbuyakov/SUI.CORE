@@ -1,9 +1,20 @@
-rootProject.name = 'sui'
-
 include(':sui-all')
+include(':sui-audit:common')
+include(':sui-audit:log-mover')
+include(':sui-audit:manager')
 include(':sui-backend')
 include(':sui-entity')
 include(':sui-meta-schema-service')
 include(':sui-migration')
 include(':sui-security')
 include(':sui-user-transaction')
+include(':sui-utils:sui-utils-hbase')
+include(':sui-utils:sui-utils-hdfs')
+include(':sui-utils:sui-utils-kotlin')
+include(':sui-utils:sui-utils-parquet')
+
+rootProject.name = 'sui'
+
+project(":sui-audit:common").name = "sui-audit-common"
+project(":sui-audit:log-mover").name = "sui-audit-log-mover"
+project(":sui-audit:manager").name = "sui-audit-manager"
