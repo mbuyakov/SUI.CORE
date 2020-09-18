@@ -83,6 +83,7 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
           <BaseSelectFilter<T>
             // Multiple render issue
             maxTagCount={5}
+            virtual={false}
             {...this.props}
             filter={{ ...this.props.filter, value }}
             data={this.filterData(selectData)}
