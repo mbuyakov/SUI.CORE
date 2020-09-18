@@ -1,4 +1,4 @@
-import {IObjectWithIndex} from "../other";
+import { IObjectWithIndex } from '@sui/core';
 
 export const MESSAGE_ID_KEY = '__messageId';
 

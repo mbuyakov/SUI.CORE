@@ -5,7 +5,7 @@ import Tooltip from "antd/lib/tooltip";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import {trimIfString} from '../stringFormatters';
+import {trimIfString} from '@sui/core';
 import {SUI_ROW_GROW_LEFT} from '../styles';
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";

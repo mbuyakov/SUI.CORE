@@ -3,11 +3,11 @@ import {DatePicker, Input, InputNumber, Select} from "antd";
 import autobind from "autobind-decorator";
 import moment from 'moment';
 import React from 'react';
+import {TableInfoManager,query,GET_DEFAULT_CALENDAR_RANGES} from "@sui/core";
 import {BaseCard} from "../Base";
-import {TableInfoManager} from "../cache";
 import {RangePickerValue} from "../compatibleTypes";
-import {GET_DEFAULT_CALENDAR_RANGES} from "../const";
-import {query} from "../gql";
+
+
 import {PromisedButton} from "../Inputs";
 import {AuditLogTable, IAuditLogTableProps, IAuditLogTableRow} from "./AuditLogTable";
 import {fetchAndFormatAuditLog, fetchTablesWithAuditLogs} from "./utils";

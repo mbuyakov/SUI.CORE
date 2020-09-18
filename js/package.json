@@ -6,8 +6,8 @@
     "packages/*"
   ],
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "build": "father-build && lerna run post-build --stream",
+    "bootstrap": "lerna bootstrap && lerna link",
+    "build": "lerna run build",
     "lint": "lerna run lint",
     "ci": "run-p lint build",
     "canary": "run-s ci && node ./canary.js"

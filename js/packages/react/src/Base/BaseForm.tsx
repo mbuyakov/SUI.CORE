@@ -5,12 +5,11 @@ import isEqual from 'lodash/isEqual';
 import moment from 'moment';
 import * as React from 'react';
 
+import {OneOrArray, OneOrArrayWithNulls, wrapInArray, IObjectWithIndex} from '@sui/core';
 import {errorNotification} from '../drawUtils';
 import {Observable, ObservableHandlerStub} from '../Observable';
-import {IObjectWithIndex} from '../other';
 import {BASE_FORM_CLASS} from '../styles';
 import {SUIReactComponent} from '../SUIReactComponent';
-import {OneOrArray, OneOrArrayWithNulls, wrapInArray} from '../typeWrappers';
 
 import {BaseCard, IBaseCardProps} from './BaseCard';
 import {BaseFormContext} from './BaseFormContext';

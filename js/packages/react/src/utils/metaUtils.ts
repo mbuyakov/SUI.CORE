@@ -1,17 +1,9 @@
-import {SelectData} from '../BaseTable';
-import {ColumnInfo, ColumnInfoManager, TableInfo, TableInfoManager} from '../cache';
-import {getSUISettings} from '../core';
-import {DataKey, dataKeysToDataTree, getDataByKey} from '../dataKey';
-import {IGqlFilter, query, stringifyGqlFilter} from '../gql';
-import {IObjectWithIndex} from "../other";
-import {addPluralEnding, camelCase, capitalize, removePluralEnding} from '../stringFormatters';
-import {wrapInArray} from '../typeWrappers';
+import {addPluralEnding, camelCase, capitalize, ColumnInfo, ColumnInfoManager, DataKey, dataKeysToDataTree, getDataByKey, getSUISettings, IGqlFilter, IObjectWithIndex, IRawRoute, query, removePluralEnding, RouteType, stringifyGqlFilter, TableInfo, TableInfoManager, wrapInArray} from "@sui/core";
 
+import {SelectData} from '../BaseTable';
 import {ActionType, isNumberAction} from './actionType';
 import {FilterType} from './filterType';
-import {IRawRoute} from './init';
 
-export type RouteType = 'card' | 'table';
 
 export interface IRouteLink {
   entity: string;
@@ -20,12 +12,6 @@ export interface IRouteLink {
 }
 
 export const routeLinks: IRouteLink[] = [];
-
-export const ROLE_PREFIX = 'ROLE_';
-
-export function formatRoleName(roleName: string): string {
-  return roleName.replace(ROLE_PREFIX, '');
-}
 
 /**
  * Generate route links from raw route data

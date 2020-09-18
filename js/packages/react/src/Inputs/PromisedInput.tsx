@@ -5,8 +5,8 @@ import Tooltip from 'antd/lib/tooltip';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
+import {trimIfString} from '@sui/core';
 import {Rendered} from "../other";
-import {trimIfString} from '../stringFormatters';
 import {SUI_ROW_GROW_LEFT} from '../styles';
 import {SUIMaskedInput} from '../SUIMaskedInput';
 

@@ -1,13 +1,12 @@
 import {notification} from 'antd';
 import * as React from 'react';
 
-import {NO_DATA_TEXT} from './const';
+import {NO_DATA_TEXT, generateUpdate, PossibleId, PossibleValue, formatRawForGraphQL, IObjectWithIndex} from '@sui/core';
 import {errorNotification} from './drawUtils';
-import {generateUpdate, PossibleId, PossibleValue} from './gql/queryGenerator';
+
 import {EditablePromisedComponent, IEditablePromisedComponentProps, IPromisedBaseProps} from './Inputs';
-import {ExtractProps, IObjectWithIndex} from './other';
 import {WaitData} from './WaitData';
-import {formatRawForGraphQL} from "./stringFormatters";
+
 
 export interface IEditableEntityFieldProps<T> extends Omit<IEditablePromisedComponentProps<T>, "children"> {
   children: React.ReactElement<Omit<IPromisedBaseProps<T>, 'promise'>>;

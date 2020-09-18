@@ -5,8 +5,8 @@ import TableCell from '@material-ui/core/TableCell';
 import {ExpandMore, KeyboardArrowRight} from '@material-ui/icons';
 import classNames from 'clsx';
 import * as React from 'react';
+import {IObjectWithIndex} from "@sui/core";
 
-import {IObjectWithIndex} from "../../other";
 
 interface ITableDetailToggleCellBaseProps extends TableRowDetail.ToggleCellProps {
   classes: IObjectWithIndex;

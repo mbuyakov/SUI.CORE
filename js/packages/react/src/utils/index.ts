@@ -1,8 +1,6 @@
 import { Container } from 'typescript-ioc';
+import { ICoreUser, UserService, getDataByKey } from '@sui/core';
 
-import { getDataByKey } from '../dataKey';
-import { ICoreUser } from '../user';
-import { UserService } from '../ioc/service';
 
 export * from "./actionType";
 export * from "./condition";

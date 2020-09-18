@@ -2,9 +2,8 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as React from "react";
 
+import {getLevelColor, IObjectWithIndex} from '@sui/core';
 import {XYChartWrapper} from "./ChartWrapper";
-import {getLevelColor} from "./color";
-import {IObjectWithIndex} from "./other";
 
 const defaultLabelPanelWidth = 150;
 

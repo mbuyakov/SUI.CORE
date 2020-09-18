@@ -2,8 +2,8 @@
 import { Button, notification } from 'antd';
 import axios from 'axios';
 import React from 'react';
+import { getSUISettings } from '@sui/core';
 
-import { getSUISettings } from '../core';
 
 let notifiedAboutVersionMismatch = false;
 let checkVersionMismatchInterval: NodeJS.Timeout;
@@ -42,3 +42,7 @@ export function runCheckVersionMismatch(): void {
     checkVersionMismatch();
   }
 }
+
+//Костыль для вызова этой балалайки в init из core
+// @ts-ignore
+window.runCheckVersionMismatch = runCheckVersionMismatch;

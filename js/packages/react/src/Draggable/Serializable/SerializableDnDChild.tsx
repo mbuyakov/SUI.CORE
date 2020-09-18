@@ -1,4 +1,4 @@
-import { defaultIfNotNumber } from '../../typeWrappers';
+import { defaultIfNotNumber } from '@sui/core';
 import {DnDChild, IBaseDnDChildProps} from "../DnDChild";
 
 import {ISerializable, ISerializableComponent} from "./ISerializable";

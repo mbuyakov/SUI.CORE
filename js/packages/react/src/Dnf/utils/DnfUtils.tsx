@@ -4,8 +4,8 @@ import { DatePicker, Input, InputNumber, Select, Switch } from 'antd';
 import {FormItemProps} from "antd/lib/form";
 import {SelectProps} from "antd/lib/select";
 import * as React from 'react';
+import {IObjectWithIndex} from "@sui/core";
 
-import {IObjectWithIndex} from "../../other";
 import {ActionType, FilterType, getRussianName, isListAction, isMomentType} from '../../utils';
 
 export function getActions(filterType?: FilterType, constant?: boolean): ActionType[] {

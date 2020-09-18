@@ -3,8 +3,8 @@ import {InputProps} from "antd/lib/input/Input";
 import autobind from 'autobind-decorator';
 import React, {ChangeEvent} from 'react';
 
-import {CustomFioInput} from "../Inputs";
-import {ExtractProps} from "../other";
+import {CustomFioInput} from "@/Inputs";
+import {ExtractProps} from "@/other";
 
 
 export type ValidatorFunc = (name: string | null) => string;

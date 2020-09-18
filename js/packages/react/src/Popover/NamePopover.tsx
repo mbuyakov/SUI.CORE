@@ -8,9 +8,9 @@ import autobind from 'autobind-decorator';
 import gql from 'graphql-tag';
 import * as React from 'react';
 
-import { mutate, query } from '../gql';
+import { IGraphQLConnection, IName , mutate, query } from '@sui/core';
+
 import { SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT } from '../styles';
-import { IGraphQLConnection, IName } from '../types';
 import { WaitData } from '../WaitData';
 
 export type NamePopoverRenderType = "choose" | "edit";

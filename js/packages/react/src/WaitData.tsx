@@ -3,10 +3,11 @@ import { Spin } from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
+import { defaultIfNotBoolean , mutate, query } from "@sui/core";
+import {queryWrapper} from "@/tmp";
 import { loadingErrorNotification } from './drawUtils';
-import { mutate, query, queryWrapper } from './gql';
+
 import { SPIN_WRAPPER } from './styles';
-import { defaultIfNotBoolean } from './typeWrappers';
 
 const SPIN_DELAY = 300;
 

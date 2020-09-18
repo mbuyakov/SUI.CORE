@@ -4,10 +4,10 @@ import autobind from "autobind-decorator";
 import classNames from "classnames";
 import * as React from "react";
 
-import {TableInfoManager} from "../cache";
+import {TableInfoManager,getDataByKey,IGqlFilter} from "@sui/core";
 import {DefaultValueType} from "../compatibleTypes";
-import {getDataByKey} from "../dataKey";
-import {IGqlFilter} from "../gql";
+
+
 import {TREE_SELECT_DISABLE_GROUP_SELECTION} from "../styles";
 import {getDataSet, getDataSetRender, getUser, IDataSet} from "../utils";
 

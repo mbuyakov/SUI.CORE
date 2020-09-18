@@ -1,10 +1,10 @@
 import jsonpack from "jsonpack";
 import pako from "pako";
-import {getSUISettings} from "../core";
+import {OneOrArray, wrapInArray, getSUISettings } from "@sui/core";
 
-import {OneOrArray, wrapInArray} from "../typeWrappers";
 
 import {BackendFilter, SimpleBackendFilter} from "./BackendTable";
+
 
 // Interfaces
 

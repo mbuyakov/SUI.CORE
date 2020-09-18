@@ -2,8 +2,7 @@ import {Filter, FilterOperation, Grouping, GroupKey, Sorting, TableBandHeader as
 import {CardType} from 'antd/lib/card';
 import * as React from 'react';
 
-import {DataKey} from '../dataKey';
-import {IObjectWithIndex} from "../other";
+import {DataKey, IObjectWithIndex} from '@sui/core';
 import {IBaseTableUserSettings} from "./extends/UserSettingsPlugin";
 
 export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode;

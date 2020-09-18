@@ -1,8 +1,7 @@
 import axios, {AxiosRequestConfig} from "axios";
+import {IObjectWithIndex, IUser, query, toMap} from "@sui/core";
+
 import {errorNotification} from "../drawUtils";
-import {query} from "../gql";
-import {IObjectWithIndex, toMap} from "../other";
-import {IUser} from "../types";
 import {getUser} from "../utils";
 import {IAuditLogTableRow} from "./AuditLogTable";
 

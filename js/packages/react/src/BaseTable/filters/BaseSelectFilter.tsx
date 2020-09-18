@@ -4,10 +4,9 @@ import autobind from 'autobind-decorator';
 import isEqual from 'lodash/isEqual';
 import * as React from 'react';
 
-import {getDataByKey} from "../../dataKey";
-import {Omit} from "../../other";
-import {OneOrArray} from "../../typeWrappers";
-import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from "../types";
+import {OneOrArray,getDataByKey} from "@sui/core";
+import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from '../types';
+
 
 export interface ISelectColumnFilterData {
   title?: string | JSX.Element;

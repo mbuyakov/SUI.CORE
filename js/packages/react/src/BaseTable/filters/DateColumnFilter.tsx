@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 import {BaseDatetimeIntervalColumnFilter} from "./BaseDatetimeIntervalColumnFilter";
+import {INewSearchProps, LazyTableFilterRowCellProps} from '../types';
 
 export class DateColumnFilter extends React.Component<LazyTableFilterRowCellProps & INewSearchProps> {
 

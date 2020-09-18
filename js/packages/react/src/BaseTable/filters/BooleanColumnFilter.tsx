@@ -2,9 +2,9 @@ import { Icon as LegacyIcon } from '@ant-design/compatible';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import {INewSearchProps, LazyTableFilterRowCellProps} from '../types';
 
 import {BaseSelectFilter} from './BaseSelectFilter';
+import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 export type BooleanColumnFilterProps = LazyTableFilterRowCellProps
   & INewSearchProps & {

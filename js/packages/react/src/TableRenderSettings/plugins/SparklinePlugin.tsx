@@ -2,10 +2,9 @@ import {InputNumber} from 'antd';
 import Checkbox from 'antd/lib/checkbox';
 import Input from 'antd/lib/input';
 import * as React from 'react';
+import { ColumnInfo } from '@sui/core';
 
 import {IBaseTableColLayout} from '../../BaseTable';
-import {ColumnInfo} from '../../cache';
-import {getLevelColor} from '../../color';
 import {SparkLine} from '../../SparkLine';
 import {IColumnInfoToBaseTableColProps} from '../../utils';
 import {TableRenderSettingsPluginManager} from '../TableRenderSettingsPluginManager';

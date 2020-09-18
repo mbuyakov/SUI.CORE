@@ -6,10 +6,10 @@ import Select from 'antd/lib/select';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import { mutate } from '../gql';
+import { IColumnInfo, IColumnInfoRole, IRole , mutate } from '@sui/core';
+
 import { PromisedButton, PromisedSwitch } from '../Inputs';
 import { SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT } from '../styles';
-import { IColumnInfo, IColumnInfoRole, IRole } from '../types';
 
 export interface IVisibleByRolesPopoverProps {
   columnInfo?: IColumnInfo;

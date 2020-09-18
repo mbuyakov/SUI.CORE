@@ -1,12 +1,11 @@
 import {IFrame, StompConfig} from '@stomp/stompjs';
+import {getSUISettings, IObjectWithIndex, Logger, sleep } from "@sui/core";
 
-import {getSUISettings} from '../core';
-import {IObjectWithIndex, sleep} from '../other';
 import {Socket} from '../Socket';
 import {getUser} from '../utils';
 
 import {BackendDataSource, MESSAGE_ID_KEY} from './BackendDataSource';
-import {Logger} from "../ioc";
+
 
 const SEND_DESTINATION = '/data';
 

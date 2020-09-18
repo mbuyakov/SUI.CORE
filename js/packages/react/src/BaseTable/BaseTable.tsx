@@ -8,10 +8,10 @@ import {Card, Result, Spin} from 'antd';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import * as React from 'react';
+import {defaultIfNotBoolean, getDataByKey} from "@sui/core";
 
-import {getDataByKey} from '../dataKey';
+
 import {BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '../styles';
-import {defaultIfNotBoolean} from '../typeWrappers';
 import {EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, WarningPlugin} from './extends';
 import {CustomToggleCell} from "./extends/CustomToggleCell";
 import {UserSettingsPlugin} from "./extends/UserSettingsPlugin";

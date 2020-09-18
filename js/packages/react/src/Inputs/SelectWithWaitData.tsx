@@ -3,10 +3,10 @@ import {SelectProps, SelectValue} from 'antd/lib/select';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import {TableInfoManager} from "../cache";
-import {NO_DATA_TEXT} from "../const";
-import {getDataByKey} from "../dataKey";
-import {IGqlFilter} from "../gql";
+import {TableInfoManager,getDataByKey,IGqlFilter,NO_DATA_TEXT} from "@sui/core";
+
+
+
 import {ExtractProps} from "../other";
 import {getDataSet, getDataSetRender, getUser, IDataSet} from "../utils";
 

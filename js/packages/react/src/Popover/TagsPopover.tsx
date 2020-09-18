@@ -6,9 +6,9 @@ import Popover from 'antd/lib/popover';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import { mutate, query } from '../gql';
+import { IColumnInfoTag, IGraphQLConnection, ITag , mutate, query } from '@sui/core';
+
 import { SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT } from '../styles';
-import { IColumnInfoTag, IGraphQLConnection, ITag } from '../types';
 import { WaitData } from '../WaitData';
 
 export interface ITagsPopoverProps {

@@ -4,11 +4,10 @@ import {GroupKey, TableRow as TableRowProps} from "@devexpress/dx-react-grid";
 import {Table} from "@devexpress/dx-react-grid-material-ui";
 import autobind from "autobind-decorator";
 import * as React from "react";
+import {stringSymbolEquals, getDataByKey, NO_DATA_TEXT} from '@sui/core';
+import { IGroupSubtotalData, IBaseTableColLayout } from '../types';
 
-import { NO_DATA_TEXT } from '../../const';
-import { getDataByKey } from '../../dataKey';
-import { stringSymbolEquals } from '../../other';
-import {IBaseTableColLayout, IGroupSubtotalData} from "../types";
+
 
 const SUMMARY_KEY_PREFIX = "summary__";
 

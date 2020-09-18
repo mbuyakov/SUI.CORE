@@ -1,9 +1,7 @@
 import * as React from 'react';
+import {asyncMap, ColumnInfo, ColumnInfoManager, getDataByKey, TableInfoManager} from "@sui/core";
 
 import {booleanRender, IBaseTableColLayout, SortingDirection} from '../BaseTable';
-import {ColumnInfo, ColumnInfoManager, TableInfoManager} from '../cache';
-import {getDataByKey} from '../dataKey';
-import {asyncMap} from "../other";
 import {TableRenderSettingsPluginManager, TableRenderSettingsPopover} from '../TableRenderSettings';
 
 import {IColumnInfoToBaseTableColProps} from './init';

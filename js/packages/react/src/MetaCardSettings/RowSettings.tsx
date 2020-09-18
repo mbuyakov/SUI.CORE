@@ -4,12 +4,11 @@ import Input from 'antd/lib/input';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
+import { camelCase , Merge } from '@sui/core';
 import { IBaseCardItemLayout, IBaseCardRowLayout } from '../Base';
 import { DeletableSmallCard } from '../DeletableSmallCard';
 import { DnDList, IBaseDnDChildProps } from '../Draggable';
 import { ISerializable, SerializableDnDChild } from '../Draggable/Serializable';
-import { Merge } from '../other';
-import { camelCase } from '../stringFormatters';
 import { COMMON__GRID } from '../styles';
 
 import { CollapseSettings, SerializedCollapseSettings } from './CollapseSettings';
@@ -17,6 +16,7 @@ import { ColSettings, SerializedColSettings } from './ColSettings';
 import { FieldsContext } from './FieldsContext';
 import { OldVersionWarning } from './OldVersionWarning';
 import { SerializedTabSettings, TabSettings } from './TabSettings';
+
 
 type RowSettingsState = Merge<IBaseCardRowLayout<any, IBaseCardItemLayout<any>>, {
   collapsePanels?: SerializedCollapseSettings[]
@@ -156,7 +156,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
                       onChange={this.onFilterChanged(setting.field)}
                     >
                       {(fields || []).map(camelCase).map(field => (
-                        <Mentions.Option value={field}>{field}</Mentions.Option>))}
+                        <Mentions.Option value={field as string}>{field}</Mentions.Option>))}
                     </Mentions>
                   )}
                 </FieldsContext.Consumer>),

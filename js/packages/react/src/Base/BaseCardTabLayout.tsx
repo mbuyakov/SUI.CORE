@@ -2,7 +2,7 @@ import { Icon } from '@ant-design/compatible';
 import Tabs, { TabsProps } from 'antd/lib/tabs';
 import * as React from 'react';
 
-import { OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '../typeWrappers';
+import { OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '@sui/core';
 
 import { IBaseCardRowLayout, renderIBaseCardRowLayout } from './BaseCardRowLayout';
 import { BaseCardTabContext } from './BaseCardTabContext';

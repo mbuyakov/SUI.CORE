@@ -1,8 +1,8 @@
 import { InputNumber } from 'antd';
 import * as React from 'react';
+import {ColumnInfo} from "@sui/core";
 
 import { IBaseTableColLayout } from '../../BaseTable';
-import { ColumnInfo } from '../../cache';
 import { IColumnInfoToBaseTableColProps } from '../../utils';
 import { TableRenderSettingsPluginManager } from '../TableRenderSettingsPluginManager';
 import { ITableRenderParams, TableRenderSettingsPopover } from '../TableRenderSettingsPopover';

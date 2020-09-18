@@ -2,10 +2,10 @@ import Collapse from 'antd/lib/collapse';
 import Divider from 'antd/lib/divider';
 import * as React from 'react';
 
+import { getDataByKey , addQuotesIfString , OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '@sui/core';
+
+
 import { BackendTable } from '../BackendTable';
-import { getDataByKey } from '../dataKey';
-import { addQuotesIfString } from '../stringFormatters';
-import { OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '../typeWrappers';
 
 import { BaseCard } from './BaseCard';
 import { IBaseCardCollapseLayout, renderIBaseCardCollapseLayout } from './BaseCardCollapseLayout';

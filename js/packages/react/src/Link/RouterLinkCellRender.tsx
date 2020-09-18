@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { concatDataKey, DataKey, getDataByKey } from '../dataKey';
+import { concatDataKey, DataKey, getDataByKey } from '@sui/core';
 
 import { RouterLink, RouterLinkType } from './RouterLink';
 

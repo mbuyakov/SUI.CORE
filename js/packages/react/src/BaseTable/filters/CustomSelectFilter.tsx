@@ -1,14 +1,15 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
+import { ColumnInfoDependence, IObjectWithIndex, asyncMap, ColumnInfoManager, camelCase } from '@sui/core';
 import {SimpleBackendFilter} from "../../BackendTable";
-import {ColumnInfoDependence, ColumnInfoManager} from "../../cache";
-import {asyncMap, IObjectWithIndex} from "../../other";
-import {camelCase} from "../../stringFormatters";
+
+
+
 import {WaitData} from '../../WaitData';
-import {INewSearchProps, LazyFilter, SelectData} from "../types";
 
 import {BaseSelectFilter, IBaseSelectFilterProps} from "./BaseSelectFilter";
+import { LazyFilter, INewSearchProps, SelectData } from '../types';
 
 type ICustomSelectFilterProps<T> = Omit<IBaseSelectFilterProps<T>, "data" | "onChange"> & INewSearchProps & { filters?: LazyFilter[] };
 

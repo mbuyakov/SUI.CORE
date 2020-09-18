@@ -2,13 +2,13 @@ import autobind from 'autobind-decorator';
 import * as React from 'react';
 import { ContainerOptions } from 'react-smooth-dnd';
 
+import { getDataByKey , Merge } from '@sui/core';
 import { IBaseCardColLayout, IBaseCardItemLayout } from '../Base';
-import { getDataByKey } from '../dataKey';
 import {DnDList} from "../Draggable";
 import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
-import { Merge } from '../other';
 
 import {ItemSettings, SerializedItemSettings} from "./ItemSettings";
+
 
 type ColSettingsState = Merge<IBaseCardColLayout<any, IBaseCardItemLayout<any>>, {
   items: SerializedItemSettings[];

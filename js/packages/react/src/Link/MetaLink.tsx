@@ -1,9 +1,9 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import {TableInfoManager} from "../cache";
-import { NO_DATA_TEXT } from '../const';
-import { getDataByKey } from '../dataKey';
+import { getDataByKey ,TableInfoManager, NO_DATA_TEXT } from '@sui/core';
+
+
 import { getLinkForTable, getRenderValue, getUser, RenderValue } from '../utils';
 import { WaitData } from '../WaitData';
 

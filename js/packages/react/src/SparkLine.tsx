@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { Color, getLevelColor } from './color';
-import { defaultIfNotNumber } from './typeWrappers';
+import { Color, getLevelColor , defaultIfNotNumber } from "@sui/core";
+
 
 export class SparkLine extends React.Component<{
   value: number;

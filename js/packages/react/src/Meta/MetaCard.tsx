@@ -5,18 +5,12 @@ import Card from 'antd/lib/card';
 import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
+import {ColumnInfoManager, DataKey, getDataByKey, NameManager, NO_DATA_TEXT, normalizeDataKey, TableInfoManager, wrapInArray, addPluralEnding, capitalize, query, addQuotesIfString, dataKeysToDataTree, wrapInArrayWithoutNulls, isValidUuid} from "@sui/core";
 
 import { BaseCard, DATA_KEY_REGEXP, IBaseCardItemLayout, IBaseCardRowLayout } from '../Base';
-import { ColumnInfoManager, NameManager, TableInfoManager } from '../cache';
-import { NO_DATA_TEXT } from '../const';
-import { DataKey, dataKeysToDataTree, getDataByKey, normalizeDataKey } from '../dataKey';
-import { query } from '../gql';
 import { RouterLink } from '../Link';
 import {SerializedCardSettings, SerializedFreeText, SerializedItemSettings, SerializedRowSettings} from "../MetaCardSettings";
-import { isValidUuid } from '../other';
 import { TableSettingsDialog } from '../plugins';
-import { addPluralEnding, addQuotesIfString, capitalize } from '../stringFormatters';
-import { wrapInArray, wrapInArrayWithoutNulls } from '../typeWrappers';
 import { getLinkForTable, getReferencedTableInfo, isAdmin } from '../utils';
 import { WaitData } from '../WaitData';
 

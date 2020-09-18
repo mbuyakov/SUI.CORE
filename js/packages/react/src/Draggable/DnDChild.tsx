@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { getDataByKey } from '../dataKey';
+import { getDataByKey } from '@sui/core';
 
 declare let window: Window & {
   DnDChildData: {

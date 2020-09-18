@@ -8,8 +8,8 @@ import autobind from "autobind-decorator";
 import classNames from "classnames";
 import * as React from "react";
 
+import {defaultIfNotBoolean} from "@sui/core";
 import {INFO_MODAL_FIX, NO_BORDER_MODAL} from "../styles";
-import {defaultIfNotBoolean} from "../typeWrappers";
 
 import {TransitionGraph} from "./TransitionGraph";
 import {IResolution, ITransition, ITransitionStatus, TransitionButtonProps} from "./types";

@@ -5,8 +5,9 @@ import update from 'immutability-helper';
 import * as React from 'react';
 import { DndProvider, DragSource, DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { IObjectWithIndex } from '@sui/core';
 
-import {ExtractProps, IObjectWithIndex, Omit} from './other';
+import {ExtractProps} from './other';
 import { WaitData } from './WaitData';
 
 let dragingIndex = -1;

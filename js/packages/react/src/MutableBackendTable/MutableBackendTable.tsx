@@ -5,18 +5,18 @@ import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import {Button, notification} from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";
+import {defaultIfNotBoolean, getDataByKey, sleep, IObjectWithIndex } from "@sui/core";
+
 
 import {BackendTable} from "../BackendTable";
-import {getDataByKey} from "../dataKey";
 import {DisableEditContext} from '../DisableEditContext';
 import {errorNotification} from "../drawUtils";
 import {PromisedButton, PromisedMaterialIconButton} from '../Inputs';
 import {PromisedBaseFormModal} from "../Modal";
-import {IObjectWithIndex, sleep} from '../other';
 import {hasAnyRole} from "../RoleVisibilityWrapper";
-import {defaultIfNotBoolean} from "../typeWrappers";
 
 import {IMutableBackendTableProps} from "./types";
+
 
 export const MutableBackendTableButtonGap = 32;
 

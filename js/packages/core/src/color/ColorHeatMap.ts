@@ -1,8 +1,7 @@
 import autobind from 'autobind-decorator';
 
-import { clamp } from '../math';
-
-import { Color, findColorBetween } from './color';
+import { clamp } from '@/math';
+import { Color, findColorBetween } from '@/color';
 
 export interface IColorHeatMapSettings {
   /**

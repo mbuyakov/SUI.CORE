@@ -2,11 +2,10 @@ import {ExperimentOutlined, WarningTwoTone} from '@ant-design/icons';
 import {Button, Popover, Select, Tooltip} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
+import { ITableInfo, chain, sleep } from '@sui/core';
 
 import {PromisedButton} from '../Inputs';
-import {chain, sleep} from '../other';
 import {SUI_AUTO_WIDTH, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT} from '../styles';
-import {ITableInfo} from '../types';
 
 import {TableRenderSettingsPluginManager} from './TableRenderSettingsPluginManager';
 

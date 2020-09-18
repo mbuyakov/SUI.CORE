@@ -5,7 +5,7 @@ import Tree from 'antd/lib/tree';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import { ColumnInfoManager, TableInfoManager } from '../cache';
+import { ColumnInfoManager, TableInfoManager } from '@sui/core';
 import { DeletableSmallCard } from '../DeletableSmallCard';
 import { DnDList } from '../Draggable';
 import { ISerializableComponent } from '../Draggable/Serializable';

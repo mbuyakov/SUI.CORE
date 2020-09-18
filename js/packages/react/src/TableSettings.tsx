@@ -12,24 +12,19 @@ import Column from 'antd/lib/table/Column';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
+import {ColumnInfo, generateUpdate, generateUpdateFn, getDataByKey, getSUISettings, IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IObjectWithIndex, IRole, ISubtotalType, ITableInfo, mutate, query, sleep, TableInfo, TableInfoManager} from "@sui/core";
 
 import {AdditionalTab} from './additionalTabs';
 import {BaseCard} from './Base';
 import {SortingDirection} from './BaseTable';
-import {ColumnInfo, TableInfo, TableInfoManager} from './cache';
-import {getSUISettings} from './core';
-import {getDataByKey} from './dataKey';
 import {DraggableRowTable} from './DraggableRowTable';
 import {FullScreenModal} from './FullScreenModal';
-import {generateUpdate, generateUpdateFn, mutate, query} from './gql';
 import {PromisedInput, PromisedMaterialIconButton, PromisedSelect, PromisedSwitch} from './Inputs';
 import {MainSettings} from './MetaCardSettings';
-import {IObjectWithIndex, sleep} from './other';
 import {NamePopover, TagsPopover, VisibleByRolesPopover} from './Popover';
 import {SUI_ROW, SUI_ROW_GROW_LEFT} from './styles';
 import {TableRenderSettingsPopover} from './TableRenderSettings';
 import {TooltipIcon} from './TooltipIcon';
-import {IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IRole, ISubtotalType, ITableInfo} from './types';
 import {draw, fullReloadTableInfo, getLinkForTable} from './utils';
 import {WaitData} from './WaitData';
 

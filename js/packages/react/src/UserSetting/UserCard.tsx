@@ -2,13 +2,13 @@
 import {DeleteOutlined, IssuesCloseOutlined} from "@ant-design/icons/lib";
 import {Card, Select, Tooltip} from "antd";
 import * as React from "react";
+import {IRole, IUser, IUserRole,OneOrArrayWithNulls, wrapInArrayWithoutNulls,EMAIL_REGEXP,NO_DATA_TEXT} from "@sui/core";
 import {BaseCard, IBaseCardItemLayout, IBaseCardRowLayout} from "../Base";
-import {NO_DATA_TEXT} from "../const";
+
 import {EditablePromisedComponent, PromisedButton, PromisedInput, PromisedSelect} from "../Inputs";
-import {IRole, IUser, IUserRole} from "../types";
-import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "../typeWrappers";
+
 import {isAdmin} from "../utils";
-import {EMAIL_REGEXP} from "../validator";
+
 import {WaitData} from "../WaitData";
 import {MAX_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH_MESSAGE, MIN_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH_MESSAGE, MIN_USERNAME_LENGTH, MIN_USERNAME_LENGTH_MESSAGE} from "./const";
 

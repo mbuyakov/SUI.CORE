@@ -1,7 +1,5 @@
-import {ColumnInfo, TableInfo, TableInfoManager} from "../cache";
-import {query} from "../gql";
-import {IObjectWithIndex} from "../other";
-import {addPluralEnding, camelCase, capitalize} from "../stringFormatters";
+import {ColumnInfo, TableInfo, TableInfoManager,query,addPluralEnding, camelCase, capitalize, IObjectWithIndex} from "@sui/core";
+
 import {getReferencedTableInfo} from "../utils";
 
 export async function fetchAllRows<T = IObjectWithIndex>(tableInfo: TableInfo): Promise<T[]> {

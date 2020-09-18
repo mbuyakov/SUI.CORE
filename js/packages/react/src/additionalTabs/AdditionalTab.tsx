@@ -5,10 +5,9 @@ import autobind from 'autobind-decorator';
 import moment from "moment";
 import * as React from "react";
 
-import {ColumnInfo, ColumnInfoManager, TableInfo} from "../cache";
+import { formatRawForGraphQL ,ColumnInfo, ColumnInfoManager, TableInfo, generateUpdate} from '@sui/core';
+
 import { DnfForm, IDnfFormRowElementProps, IMetaSettingTableRowColorRowElement, IResultDnfFormValues, MetaSettingTableRowColorRowComponent } from '../Dnf';
-import { generateUpdate } from '../gql/queryGenerator';
-import { formatRawForGraphQL } from '../stringFormatters';
 import { FilterType, getFilterType } from '../utils';
 import { WaitData } from '../WaitData';
 

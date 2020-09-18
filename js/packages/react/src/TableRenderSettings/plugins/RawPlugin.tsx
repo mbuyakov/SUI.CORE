@@ -1,5 +1,6 @@
+import {ColumnInfo} from "@sui/core";
+
 import { IBaseTableColLayout } from '../../BaseTable';
-import { ColumnInfo } from '../../cache';
 import { IColumnInfoToBaseTableColProps } from '../../utils';
 import { TableRenderSettingsPluginManager } from '../TableRenderSettingsPluginManager';
 import { ITableRenderParams } from '../TableRenderSettingsPopover';

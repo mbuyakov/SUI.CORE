@@ -3,7 +3,7 @@ import { Select } from "antd";
 import autobind from 'autobind-decorator';
 import * as React from "react";
 
-import { ColumnInfo } from '../../cache';
+import { ColumnInfo } from '@sui/core';
 import { getFilterType } from '../../utils';
 import { getActions } from '../utils';
 

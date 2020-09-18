@@ -2,8 +2,7 @@
 import autobind from "autobind-decorator";
 import React from "react";
 
-import {mutate} from "../gql";
-import {IObjectWithIndex} from "../other";
+import {mutate, IObjectWithIndex} from "@sui/core";
 
 import {FilterReportElement, IFilterReportElementProps} from "./FilterReportElement";
 

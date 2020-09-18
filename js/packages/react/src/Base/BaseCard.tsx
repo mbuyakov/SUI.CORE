@@ -4,13 +4,14 @@ import Tabs from 'antd/lib/tabs';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import classNames from 'classnames';
-import { OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '../typeWrappers';
+import {OneOrArrayWithNulls, wrapInArrayWithoutNulls } from "@sui/core";
 
 import { BaseCardContext } from './BaseCardContext';
 import { DEFAULT_ITEM_RENDERER, IBaseCardItemLayout } from './BaseCardItemLayout';
 import { IBaseCardRowLayout, renderIBaseCardRowLayout } from './BaseCardRowLayout';
 import { BaseCardTabContext } from './BaseCardTabContext';
 import { renderIBaseCardTabLayout } from './BaseCardTabLayout';
+
 
 const renderTabBar = () => <React.Fragment/>;
 

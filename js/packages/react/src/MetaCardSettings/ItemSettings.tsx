@@ -11,15 +11,14 @@ import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
+import {Merge, NameManager, ColumnInfoManager, ColumnInfo, TableInfoManager, capitalize, IName} from "@sui/core";
 import { IBaseCardItemLayout } from '../Base';
-import { ColumnInfo, ColumnInfoManager, NameManager, TableInfoManager } from '../cache';
 import {DnDDragHandler} from "../Draggable";
 import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
-import { Merge } from '../other';
 import { NamePopover } from '../Popover';
-import { capitalize } from '../stringFormatters';
+
 import {COMMON__GRID, ITEM_SETTINGS__DELETE_ICON, ITEM_SETTINGS__SETTINGS_ICON} from "../styles";
-import { IName } from '../types';
+
 import { WaitData } from '../WaitData';
 
 import {DebugModeContext} from "./DebugModeContext";

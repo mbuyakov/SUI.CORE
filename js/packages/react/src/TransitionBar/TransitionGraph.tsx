@@ -1,8 +1,8 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
+import { toMap } from '@sui/core';
 import {ForceDirectedTree, IForceDirectedTreeAdditionalSettingProps} from "../ForceDirectedTree";
-import {toMap} from "../other";
 
 import {ITransition, ITransitionStatus} from "./types";
 

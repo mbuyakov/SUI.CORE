@@ -1,8 +1,7 @@
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
+import { IObjectWithIndex, getSUISettings } from '@sui/core';
 
-import {getSUISettings} from '../core';
-import {IObjectWithIndex} from "../other";
 import {getUser} from "../utils";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";

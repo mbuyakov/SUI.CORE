@@ -1,9 +1,9 @@
 import { Icon as LegacyIcon } from '@ant-design/compatible';
 import { Tooltip } from 'antd';
 import * as React from 'react';
+import { ColumnInfo } from '@sui/core';
 
 import { IBaseTableColLayout } from '../../BaseTable';
-import { ColumnInfo } from '../../cache';
 import { IColumnInfoToBaseTableColProps } from '../../utils';
 import { ITableRenderParams, TableRenderSettingsPopover } from '../TableRenderSettingsPopover';
 

@@ -2,9 +2,10 @@
 import autobind from "autobind-decorator";
 import moment from 'moment';
 import React from 'react';
+import { IObjectWithIndex } from '@sui/core';
 import {BaseTable} from "../BaseTable";
 import {RouterLink} from "../Link";
-import {ExtractProps, IObjectWithIndex} from "../other";
+import {ExtractProps} from "../other";
 import {getLinkForTable} from "../utils";
 
 export interface IAuditLogTableRow {

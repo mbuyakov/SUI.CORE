@@ -5,8 +5,10 @@ import {Button, Card, Divider} from "antd";
 import autobind from "autobind-decorator";
 import isEqual from "lodash/isEqual";
 import * as React from "react";
+import { IObjectWithIndex } from '@sui/core';
 
-import {FormCreateKostyl, IObjectWithIndex} from '../other';
+
+import {FormCreateKostyl} from '../other';
 import {DNF_BUTTON} from "../styles";
 
 import {AndFormRowElement, formItemLayoutWithOutLabel} from "./AndFormRowElement";

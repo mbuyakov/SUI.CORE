@@ -1,7 +1,7 @@
 import axios, {AxiosPromise, AxiosResponse} from "axios";
 import * as React from "react";
+import {IObjectWithIndex} from "@sui/core";
 import {errorNotification} from "../drawUtils";
-import {IObjectWithIndex} from "../other";
 import {getUser} from "../utils";
 
 

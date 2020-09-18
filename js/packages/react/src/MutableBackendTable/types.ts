@@ -1,9 +1,10 @@
 import {ButtonProps} from "antd/lib/button";
 
+import {IObjectWithIndex} from "@sui/core";
 import {BackendTable} from "../BackendTable";
 import {PromisedButton} from "../Inputs";
 import {IPromisedBaseFormModalOnlyModalProps, IPromisedBaseFormModalProps} from "../Modal";
-import {ExtractProps, IObjectWithIndex} from "../other";
+import {ExtractProps} from "../other";
 
 import { DEFAULT_MODAL_WIDTH_VARIANT } from './MutableBackendTable';
 

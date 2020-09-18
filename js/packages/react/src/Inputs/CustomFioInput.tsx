@@ -3,7 +3,7 @@ import {InputProps} from 'antd/lib/input';
 import autobind from "autobind-decorator";
 import React from "react";
 
-import {fioConverterWithoutTrim} from "../validator";
+import {fioConverterWithoutTrim} from "@sui/core";
 
 function convertValue(value?: string): string | null | undefined {
   return value && fioConverterWithoutTrim(value);

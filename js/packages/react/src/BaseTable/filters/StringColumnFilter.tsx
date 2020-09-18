@@ -2,7 +2,7 @@ import Input from 'antd/lib/input/Input';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
+import {INewSearchProps, LazyTableFilterRowCellProps} from '../types';
 
 export type StringColumnFilterProps = LazyTableFilterRowCellProps & INewSearchProps;
 

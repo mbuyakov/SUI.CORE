@@ -4,8 +4,8 @@ import {RuleItem} from 'async-validator';
 import autobind from 'autobind-decorator';
 import classNames from 'classnames';
 import * as React from 'react';
+import {IObjectWithIndex} from "@sui/core";
 
-import {IObjectWithIndex} from '../other';
 import {SUIMaskedInput} from '../SUIMaskedInput';
 import {SUIReactComponent} from '../SUIReactComponent';
 

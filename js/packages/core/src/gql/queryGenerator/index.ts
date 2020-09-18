@@ -1,5 +1,5 @@
-import {IObjectWithIndex} from "../../other";
-import {addQuotesIfString, camelCase, capitalize} from "../../stringFormatters";
+import {IObjectWithIndex} from "@/other";
+import {addQuotesIfString, camelCase, capitalize} from "@/stringFormatters";
 import {IGqlFilter} from "../types";
 import { mutate, query } from '../wrapper';
 

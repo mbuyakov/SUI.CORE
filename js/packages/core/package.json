@@ -13,7 +13,7 @@
     "lint-fix": "cross-env ROOT_DIR=src FIX=1 sui-linter",
     "lint-watch": "cross-env ROOT_DIR=src sui-linter --watch",
     "lint-timing": "cross-env TIMING=1 ROOT_DIR=src sui-linter",
-    "post-build": "npx tsc-alias -p tsconfig.json"
+    "build": "cd ../.. && PACKAGE=core father-build && cd ./packages/core && npx tsc-alias -p tsconfig.json"
   },
   "devDependencies": {
     "@types/jsonpack": "^1.1.0",

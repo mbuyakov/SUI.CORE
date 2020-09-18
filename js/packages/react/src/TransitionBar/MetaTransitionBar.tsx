@@ -1,11 +1,10 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import {ColumnInfo, TableInfoManager} from "../cache";
-import {asyncMap, groupBy, IObjectWithIndex, toMap} from "../other";
-import {camelCase} from "../stringFormatters";
-import {IRole} from "../types";
-import {formatRoleName, getDataSet, getDataSetRender, getUser} from "../utils";
+import {IRole,ColumnInfo, TableInfoManager,camelCase, asyncMap, groupBy, IObjectWithIndex, toMap, formatRoleName} from "@sui/core";
+
+
+import {getDataSet, getDataSetRender, getUser} from "../utils";
 
 import {ITransitionBarProps, TransitionBar} from "./TransitionBar";
 import {IResolution, ITransition, ITransitionStatus} from "./types";

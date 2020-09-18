@@ -2,12 +2,12 @@
 import {Input} from "antd";
 import autobind from "autobind-decorator";
 import React from "react";
+import {OneOrArrayWithNulls, wrapInArrayWithoutNulls,EMAIL_REGEXP, IObjectWithIndex} from "@sui/core";
 import {BaseForm, IBaseCardRowLayout, IBaseFormItemLayout} from "../Base";
 import {SelectWithWaitData} from "../Inputs";
 import {MutableBackendTable} from "../MutableBackendTable";
-import {ExtractProps, IObjectWithIndex} from "../other";
-import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "../typeWrappers";
-import {EMAIL_REGEXP} from "../validator";
+import {ExtractProps} from "../other";
+
 import {MAX_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH_MESSAGE, MIN_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH_MESSAGE, MIN_USERNAME_LENGTH, MIN_USERNAME_LENGTH_MESSAGE} from "./const";
 import {ICreateUserFormValues} from "./types";
 

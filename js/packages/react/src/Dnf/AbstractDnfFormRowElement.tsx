@@ -1,7 +1,7 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import { IObjectWithIndex } from '../other';
+import { IObjectWithIndex } from '@sui/core';
 
 import {IDnfFormRowElementProps} from "./ICommonDnfProps";
 

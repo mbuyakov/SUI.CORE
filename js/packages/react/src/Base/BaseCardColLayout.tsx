@@ -1,7 +1,7 @@
 import React from 'react';
+import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 
 import { BASE_CARD_COLS } from '../styles';
-import { OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '../typeWrappers';
 
 import { BaseCardContext } from './BaseCardContext';
 

@@ -1,9 +1,8 @@
 import {Select} from "antd";
 import * as React from 'react';
+import {ColumnInfo, ColumnInfoManager, getDataByKey} from "@sui/core";
 
 import { IBaseTableColLayout } from '../../BaseTable';
-import {ColumnInfo, ColumnInfoManager} from '../../cache';
-import { getDataByKey } from '../../dataKey';
 import { RouterLink } from '../../Link';
 import {getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps} from '../../utils';
 import {TableRenderSettingsPluginManager} from "../TableRenderSettingsPluginManager";

@@ -1,9 +1,8 @@
 import autobind from "autobind-decorator";
 import React from "react";
 
+import {IObjectWithIndex, mutate} from "@sui/core";
 import {errorNotification} from "../../drawUtils";
-import {mutate} from "../../gql";
-import {IObjectWithIndex} from "../../other";
 
 import {ICustomOdometerData} from "./CustomOdometer";
 import {IOdometersProps, Odometers} from "./Odometers";
