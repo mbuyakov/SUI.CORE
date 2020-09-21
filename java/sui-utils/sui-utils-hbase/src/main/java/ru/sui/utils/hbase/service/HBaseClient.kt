@@ -17,7 +17,7 @@ class HBaseClient(@Value("\${zookeeper.host}") private val zookeeperHost: String
     private val connection: Connection
 
     init {
-        conf["hbase.zookeeper.quorum"] = InetAddress.getAllByName(zookeeperHost).joinToString(",") { it.hostAddress }
+        conf["hbase.zookeeper.quorum"] = zookeeperHost.split(',').flatMap { InetAddress.getAllByName(it.trim()).toList() }.map { it.hostAddress }.distinct().joinToString(",")
         conf["hbase.zookeeper.property.clientPort"] = "2181"
         conf["hbase.client.keyvalue.maxsize"] = "0"
         connection = ConnectionFactory.createConnection(conf)
