@@ -27,6 +27,9 @@ pipeline {
       parallel {
         stage("JVM") {
           steps {
+            sh """
+              asdasdasd
+            """
             rtGradleRun (
               tool: "gradle",
               rootDir: "java/",
