@@ -1,5 +1,5 @@
 import {Getters} from "@devexpress/dx-react-core";
-import {Filter, Grouping, GroupKey, Sorting, TableFilterRow} from '@devexpress/dx-react-grid';
+import {Grouping, GroupKey, Sorting, TableColumnWidthInfo, TableFilterRow} from '@devexpress/dx-react-grid';
 import IconButton from '@material-ui/core/IconButton';
 import CloudDownloadOutlined from '@material-ui/icons/CloudDownloadOutlined';
 import LinkIcon from '@material-ui/icons/Link';
@@ -11,7 +11,7 @@ import difference from 'lodash/difference';
 import moment from 'moment';
 import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import {wrapInArray, getSUISettings, DEFAULT_PAGE_SIZES, generateCreate, IObjectWithIndex, ColumnInfo, defaultIfNotBoolean, TableInfo, getDataByKey, camelCase, ColumnInfoManager, TableInfoManager, IUserSetting, query, formatRawForGraphQL, mutate, asyncMap} from "@sui/core";
+import {wrapInArray, getSUISettings, DEFAULT_PAGE_SIZES, generateCreate, IObjectWithIndex, ColumnInfo, defaultIfNotBoolean, TableInfo, getDataByKey, camelCase, ColumnInfoManager, TableInfoManager, IUserSetting, query, formatRawForGraphQL, mutate, asyncMap, toMap} from "@sui/core";
 import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
 import {exportToXlsx} from "../BaseTable/utils";
 
@@ -65,6 +65,10 @@ export type ICustomFilterProps = Omit<TableFilterRow.CellProps, 'filter' | 'onFi
   filter: SimpleBackendFilter | null,
   onFilter(filter: SimpleBackendFilter | null): void
 };
+
+export interface IBackendTableUserSettings extends Omit<IBaseTableUserSettings, "columnWidths"> {
+  columnWidths: Array<TableColumnWidthInfo & { metaWidth?: number }>;
+}
 
 export interface IBackendTableProps {
   defaultFilter?: SimpleBackendFilter | SimpleBackendFilter[];
@@ -672,11 +676,21 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private onSettingsChange(settings: IBaseTableUserSettings): Promise<void> {
+    const columnMap = toMap(this.state.cols, it => it.id);
+
+    const formattedSettings: IBackendTableUserSettings = {
+      ...settings,
+      columnWidths: settings.columnWidths.map(it => ({
+        ...it,
+        metaWidth: columnMap.get(it.columnName)?.width
+      }))
+    };
+
     return mutate(`mutation {
       createOrUpdateUserSettings(input: {
         userId: "${getUser().id}"
         tableInfoId: "${this.state.tableInfo.id}"
-        content: "${formatRawForGraphQL(JSON.stringify(settings))}"
+        content: "${formatRawForGraphQL(JSON.stringify(formattedSettings))}"
       }) {
         clientMutationId
       }
@@ -980,7 +994,7 @@ export class BackendTable<TSelection = defaultSelection>
 
       let allColumns = serviceColumns.concat(allowedCols);
 
-      const userSettings: IBaseTableUserSettings = await this.getUserSettings(tableInfo).then(it => it ? JSON.parse(it.content) : undefined);
+      const userSettings: IBackendTableUserSettings = await this.getUserSettings(tableInfo).then(it => it ? JSON.parse(it.content) : undefined);
 
       if (userSettings) {
         const columnByName = (columnName: string): IBaseTableColLayout => allColumns.find(it => it.id === columnName);
@@ -989,7 +1003,8 @@ export class BackendTable<TSelection = defaultSelection>
         userSettings.columnWidths.forEach(columnWidth => {
           const column = columnByName(columnWidth.columnName);
 
-          if (column && columnWidth.width) {
+          // columnWidth.metaWidth === column.width Мета не изменилась
+          if (column && columnWidth.width && columnWidth.metaWidth === column.width) {
             column.width = Number(columnWidth.width)
           }
         });
