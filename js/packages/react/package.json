@@ -41,11 +41,11 @@
     "react-dom": "^16.13.1"
   },
   "dependencies": {
-    "@sui/core": "8.0.0",
     "@ant-design/compatible": "^1.0.2",
     "@devexpress/dx-react-core": "2.6.1",
     "@devexpress/dx-react-grid": "2.6.1",
     "@devexpress/dx-react-grid-material-ui": "2.6.1",
+    "@sui/core": "8.0.0",
     "antd-mask-input": "^0.1.13",
     "classnames": "^2.2.6",
     "immutability-helper": "^3.0.2",

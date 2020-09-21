@@ -7,9 +7,9 @@
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap && lerna link",
-    "build": "lerna run build",
-    "lint": "lerna run lint",
-    "ci": "run-p lint build",
+    "build": "lerna run build --stream",
+    "lint": "lerna run lint --stream",
+    "ci": "run-s lint build",
     "canary": "run-s ci && node ./canary.js"
   },
   "devDependencies": {

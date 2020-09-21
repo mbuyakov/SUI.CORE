@@ -9,7 +9,11 @@
     "tsconfig-common.json",
     "umi-config.js"
   ],
+  "scripts": {
+    "build": "cd ../.. && PACKAGE=all father-build && cd ./packages/all && npx tsc-alias -p tsconfig.json"
+  },
   "dependencies": {
-    "@sui/core": "8.0.0"
+    "@sui/core": "8.0.0",
+    "@sui/react": "8.0.0"
   }
 }

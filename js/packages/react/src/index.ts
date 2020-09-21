@@ -41,6 +41,7 @@ export * from "./styles";
 export * from "./SUIMaskedInput";
 export * from "./SUIReactComponent";
 export * from "./TableSettings";
+export * from "./tmp";
 export * from "./TooltipIcon";
 export * from "./TransitionBar";
 export * from "./UserSetting";
