@@ -27,9 +27,6 @@ pipeline {
       parallel {
         stage("JVM") {
           steps {
-            sh """
-              asddasdasds
-            """
             rtGradleRun (
               tool: "gradle",
               rootDir: "java/",
@@ -70,7 +67,6 @@ pipeline {
         stage("JS") {
           steps {
             sh """
-              asdasdasd
               cd js
               yarn
               yarn bootstrap
