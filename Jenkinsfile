@@ -1,3 +1,5 @@
+@Library('smsoft-libs')_
+
 pipeline {
   options {
       buildDiscarder logRotator(numToKeepStr: '3')
@@ -74,6 +76,12 @@ pipeline {
           }
         }
       }
+    }
+  }
+
+  post {
+    failure {
+      telegramSendNotificationTest()
     }
   }
 }
