@@ -85,7 +85,7 @@ pipeline {
 
   post {
     failure {
-      telegramSendNotificationTest(maintainer: "@el1191")
+      telegramSendNotificationTest("@el1191")
     }
   }
 }
