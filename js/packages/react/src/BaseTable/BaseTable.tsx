@@ -142,7 +142,7 @@ export class BaseTable<TSelection = defaultSelection>
     const highlightEnabled = defaultIfNotBoolean(this.props.highlightRow, false);
     const selectionEnabled = defaultIfNotBoolean(this.props.selectionEnabled, false);
     const resizingEnabled = defaultIfNotBoolean(this.props.resizingEnabled, true);
-    const headerEnabled = defaultIfNotBoolean(this.props.filteringEnabled, true);
+    const headerEnabled = defaultIfNotBoolean(this.props.headerEnabled, true);
     const allowExport = defaultIfNotBoolean(this.props.allowExport, true);
     const userSettingsEnabled = !!this.props.onSettingsChange;
 
