@@ -28,7 +28,7 @@ pipeline {
         stage("JVM") {
           steps {
             sh """
-              asdasdasds
+              asddasdasds
             """
             rtGradleRun (
               tool: "gradle",
