@@ -1,13 +1,15 @@
 import { Container, Singleton } from 'typescript-ioc';
 import axios from 'axios';
 import { notification } from 'antd';
-import { Nullable, sleep } from '../../other';
-import { ICoreUser } from '../../user';
+import { Nullable, sleep } from '@/other';
+import { ICoreUser } from '@/user';
+import { getSUISettings } from '@/core';
+
 // Don't touch import
 // noinspection ES6PreferShortImport
 import { _LocalStorageValue } from '../annotation/LocalStorageValue';
+// noinspection ES6PreferShortImport
 import { Logger } from '../utils';
-import { getSUISettings } from '../../core';
 
 
 export const USER_FORCIBLY_LOGOUT_MSG = 'Ваш сеанс был автоматически завершен.';

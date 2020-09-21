@@ -1,5 +1,5 @@
-import { CacheManager, ICacheEntry } from "../cacheManager";
-import { addPluralEnding, addQuotesIfString, camelCase, capitalize } from "../stringFormatters";
+import { CacheManager, ICacheEntry } from "@/cacheManager";
+import { addPluralEnding, addQuotesIfString, camelCase, capitalize } from "@/stringFormatters";
 
 import { query } from "./wrapper";
 

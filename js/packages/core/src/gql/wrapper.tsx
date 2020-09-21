@@ -2,9 +2,8 @@ import { ApolloQueryResult } from 'apollo-client';
 import { FetchResult } from 'apollo-link';
 import gql from 'graphql-tag';
 
-import { getSUISettings } from '../core';
-import { loadingErrorNotification } from '../drawUtils';
-import { IObjectWithIndex } from '../other';
+import { getSUISettings } from '@/core';
+import { IObjectWithIndex } from '@/other';
 
 /**
  * Stub for PostGraphile error format
@@ -97,14 +96,4 @@ mutationBody = gql(mutationBody);
   }
 
   return ret;
-}
-
-/**
- * Wrap query to add loadErrorNotification
- */
-export async function queryWrapper<T>(originalQuery: Promise<T>): Promise<T> {
-  return originalQuery.catch(reason => {
-    loadingErrorNotification(reason.stack ? reason.stack.toString() : reason.toString());
-    throw reason;
-  });
 }

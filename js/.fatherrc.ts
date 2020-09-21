@@ -4,6 +4,7 @@ const options: IBundleOptions = {
   cjs: {type: 'babel'},
   pkgs: [
     "core",
+    "react",
     "all"
   ]
 };

@@ -1,12 +1,9 @@
 const fs = require('fs');
 const {execSync} = require('child_process');
 
-const packages = [
-  "test",
-  "linter",
-  "core",
-  "all"
-]
+const packages = fs.readdirSync("./packages", { withFileTypes: true })
+  .filter(dirent => dirent.isDirectory())
+  .map(dirent => dirent.name);
 
 const bkpPackageJson = () => {
   console.log(`====\r\nCreate backup of package.json\r\n====`);
