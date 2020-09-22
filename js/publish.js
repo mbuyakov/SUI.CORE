@@ -28,7 +28,7 @@ function publish(version) {
 
   try {
     console.log(`====\r\nUpdate version\r\n====`);
-    execSync(`npx lerna version ${version} --no-git-tag-version --no-push --yes`, {
+    execSync(`npx lerna version ${version} --no-git-tag-version --no-push --exact --yes`, {
       stdio: "inherit"
     });
     packages.forEach(pkg => {
