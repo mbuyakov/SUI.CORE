@@ -15,17 +15,18 @@ export interface ISelectColumnFilterData {
 
 export type IBaseSelectFilterProps<T> = LazyTableFilterRowCellProps
   & ICommonColumnSearchProps
-  & Omit<SelectProps<T>, "disabled" | "value" | "onChange">
+  & Omit<SelectProps<T>, "disabled" | "value" | "onChange" | "onDropdownVisibleChange">
   & {
     data?: ISelectColumnFilterData[];
-    onChange?(value: T, option: OneOrArray<React.ReactElement>): void
+    onChange?(value: T): void
   };
 
-interface IBaseSelectFilterState {
+interface IBaseSelectFilterState<T> {
   data?: ISelectColumnFilterData[];
+  value?: T;
 }
 
-export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSelectFilterProps<T>, IBaseSelectFilterState> {
+export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSelectFilterProps<T>, IBaseSelectFilterState<T>> {
 
   public componentDidMount(): void {
     this.updateStateData();
@@ -39,7 +40,7 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
 
   public render(): JSX.Element {
     const {defaultValue, ...restProps} = this.props;
-    const filterValue = getDataByKey(this.props.filter, "value");
+    const filterValue = this.props.mode == "multiple" ? this.state?.value : getDataByKey(this.props.filter, "value");
 
     return (
       <Select<any>
@@ -47,6 +48,7 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
         optionFilterProp="children"
         allowClear={true}
         disabled={this.props.disabled}
+        virtual={false}
         placeholder={<span style={{fontWeight: 400}}>{this.props.placeholder || 'Фильтр...'}</span>}
         {...restProps}
         value={
@@ -58,7 +60,9 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
           width: "100%",
           ...this.props.style
         }}
-        onChange={this.onChange as any}
+        onClear={this.onClear}
+        onChange={this.onChange}
+        onDropdownVisibleChange={this.onDropdownVisibleChange}
       >
         {(this.state && this.state.data || [])
           .filter(element => element.value)
@@ -75,15 +79,39 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
   }
 
   @autobind
-  private onChange(value: T, option: React.ReactElement | React.ReactElement[]): void {
+  private onChange(value: T): void {
+    if (this.props.mode == "multiple") {
+      this.setState({value});
+    } else {
+      this._onChange(value);
+    }
+  }
+
+  @autobind
+  private _onChange(value: T): void {
     if (this.props.onChange) {
-      this.props.onChange(value, option);
+      this.props.onChange(value);
     } else {
       this.props.onFilter({
         columnName: this.props.column.name,
         operation: "equal",
         value: value as any
       });
+    }
+  }
+
+  @autobind
+  private onDropdownVisibleChange(opened: boolean): void {
+    if(!opened) {
+      this._onChange(this.state?.value);
+    }
+  }
+
+  @autobind
+  private onClear(): void {
+    if (this.props.mode == "multiple") {
+      this._onChange([] as unknown as T);
+      this.setState({value: undefined});
     }
   }
 

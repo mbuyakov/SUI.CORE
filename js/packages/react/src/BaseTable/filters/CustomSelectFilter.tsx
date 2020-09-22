@@ -30,8 +30,6 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
     return !!element && (typeof (element) === 'object' || typeof (element) === 'function') && typeof (element.then) === 'function'
   }
 
-  private ignoreNextOnChange: boolean;
-
   public constructor(props: ICustomSelectFilterProps<T>) {
     super(props);
 
@@ -84,12 +82,10 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
           <BaseSelectFilter<T>
             // Multiple render issue
             maxTagCount={5}
-            virtual={false}
             {...this.props}
             filter={{ ...this.props.filter, value }}
             data={this.filterData(selectData)}
             onChange={this.onChange}
-            onInputKeyDown={this.onInputKeyDown}
           />
         )}
       </WaitData>
@@ -133,22 +129,9 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
 
   @autobind
   private onChange(value: T): void {
-    if (!this.ignoreNextOnChange) {
-      const lazy = this.isMultiple();
-
-      this.triggerFilter(value, lazy);
-      this.setState({value});
-    } else {
-      this.ignoreNextOnChange = false
-    }
-  }
-
-  @autobind
-  private onInputKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (this.isMultiple() && event.key === 'Enter') {
-      this.ignoreNextOnChange = true;
-      this.triggerFilter(this.state.value);
-    }
+    console.log("CustomSelectFilter", value);
+    this.triggerFilter(value);
+    this.setState({value});
   }
 
   @autobind
