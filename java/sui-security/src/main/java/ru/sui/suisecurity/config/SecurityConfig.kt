@@ -85,7 +85,8 @@ class SecurityConfig(
                         "/**/*.jpg",
                         "/**/*.html",
                         "/**/*.css",
-                        "/**/*.js")
+                        "/**/*.js",
+                        "/**/*.mp3")
                 .permitAll()
                 .antMatchers("/table-backend")
                 .permitAll()
