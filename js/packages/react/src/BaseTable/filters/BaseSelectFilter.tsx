@@ -108,7 +108,7 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
   @autobind
   private onDropdownVisibleChange(opened: boolean): void {
     this.dropdownVisible = opened;
-    if(!opened) {
+    if(!opened && this.props.mode == "multiple") {
       this._onChange(this.state?.value);
     }
   }
