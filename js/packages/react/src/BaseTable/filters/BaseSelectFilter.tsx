@@ -28,6 +28,8 @@ interface IBaseSelectFilterState<T> {
 
 export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSelectFilterProps<T>, IBaseSelectFilterState<T>> {
 
+  private dropdownVisible:boolean = false;
+
   public componentDidMount(): void {
     this.updateStateData();
   }
@@ -82,6 +84,9 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
   private onChange(value: T): void {
     if (this.props.mode == "multiple") {
       this.setState({value});
+      if (!this.dropdownVisible) {
+        this._onChange(value);
+      }
     } else {
       this._onChange(value);
     }
@@ -102,6 +107,7 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
 
   @autobind
   private onDropdownVisibleChange(opened: boolean): void {
+    this.dropdownVisible = opened;
     if(!opened) {
       this._onChange(this.state?.value);
     }
