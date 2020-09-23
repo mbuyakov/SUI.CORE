@@ -42,6 +42,23 @@ export class AuditLogTable extends React.Component<IAuditLogTableProps> {
             id: "operationType",
             title: "Тип операции",
             width: 150,
+            search: {
+              type: "customSelect",
+              selectData: [
+                {
+                  value: "INSERT",
+                  title: "Создание"
+                },
+                {
+                  value: "DELETE",
+                  title: "Удаление"
+                },
+                {
+                  value: "UPDATE",
+                  title: "Изменение"
+                }
+              ]
+            },
             render: (value: string): string => {
               let result: string;
 
