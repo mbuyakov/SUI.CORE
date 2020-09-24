@@ -92,6 +92,8 @@ class SecurityConfig(
                 .permitAll()
                 .antMatchers("/table-backend/**")
                 .permitAll()
+                .antMatchers("/api/tracks/download/**")
+                .permitAll()
                 .antMatchers("/api/auth/**")
                 .permitAll()
                 .antMatchers("/api/token/**")
