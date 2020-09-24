@@ -1,6 +1,7 @@
 import Switch, {SwitchProps} from "antd/lib/switch";
 import autobind from "autobind-decorator";
 import * as React from "react";
+import { AfterChangeContext } from '@/AfterChangeContext';
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 import { DisableEditContext } from "../DisableEditContext";
@@ -8,6 +9,7 @@ import { DisableEditContext } from "../DisableEditContext";
 export type PromisedSwitchProps = Omit<IPromisedBaseProps<boolean>, "validator"> & Omit<SwitchProps, "checked" | "loading" | "onChange">;
 
 export class PromisedSwitch extends PromisedBase<PromisedSwitchProps, IPromisedBaseState<boolean>, boolean> {
+
 
   public constructor(props: PromisedSwitchProps) {
     super(props);
@@ -27,22 +29,26 @@ export class PromisedSwitch extends PromisedBase<PromisedSwitchProps, IPromisedB
     const {promise, popconfirmSettings, ...switchProps} = this.props;
 
     return (
-       <DisableEditContext.Consumer>
-         {(disableEdit): JSX.Element => {
-           return this.wrapConfirmAndError(
-             <Switch
-               {...switchProps}
-               checked={this.state.savedValue}
-               loading={this.state.loading}
-               onChange={this.save}
-               disabled={disableEdit || switchProps?.disabled}
-             />
-           );
-         }}
-       </DisableEditContext.Consumer>
+      <AfterChangeContext.Consumer>
+        {afterChange => {
+          this.setAfterChange(afterChange);
+          return (
+            <DisableEditContext.Consumer>
+              {(disableEdit): JSX.Element => {
+                return this.wrapConfirmAndError(
+                  <Switch
+                    {...switchProps}
+                    checked={this.state.savedValue}
+                    loading={this.state.loading}
+                    onChange={this.save}
+                    disabled={disableEdit || switchProps?.disabled}
+                  />
+                );
+              }}
+            </DisableEditContext.Consumer>
+          );
+        }}
+      </AfterChangeContext.Consumer>
     );
-
-
   }
-
 }

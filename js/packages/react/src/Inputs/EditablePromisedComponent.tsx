@@ -3,6 +3,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import CreateIcon from '@material-ui/icons/CreateOutlined';
 import autobind from "autobind-decorator";
 import * as React from "react";
+import { AfterChangeContext } from '@/AfterChangeContext';
 
 import { DisableEditContext } from "../DisableEditContext";
 import {hasAnyRole} from "../RoleVisibilityWrapper";
@@ -20,6 +21,8 @@ export interface IEditablePromisedComponentProps<T> {
 export class EditablePromisedComponent<T>
   extends React.Component<IEditablePromisedComponentProps<T>, { editMode?: boolean; }> {
 
+  private afterChange: () => void;
+
   public constructor(props: IEditablePromisedComponentProps<T>) {
     super(props);
     this.state = {};
@@ -27,33 +30,40 @@ export class EditablePromisedComponent<T>
 
   public render(): React.ReactNode {
     return (
-      <DisableEditContext.Consumer>
-        {disableEdit => {
-          const editAllowed = !disableEdit && (this.props.editRoles ? hasAnyRole(this.props.editRoles) : true);
-          const editMode = editAllowed && this.state.editMode;
-
+      <AfterChangeContext.Consumer>
+        {afterChange => {
+          this.afterChange = afterChange;
           return (
-            <div
-              style={{
-                alignItems: "center",
-                display: "flex",
+            <DisableEditContext.Consumer>
+              {disableEdit => {
+                const editAllowed = !disableEdit && (this.props.editRoles ? hasAnyRole(this.props.editRoles) : true);
+                const editMode = editAllowed && this.state.editMode;
+
+                return (
+                  <div
+                    style={{
+                      alignItems: "center",
+                      display: "flex",
+                    }}
+                    className={EDITABLE_PROMISED_COMPONENT_CHILDREN}
+                  >
+                    {editMode ? React.cloneElement(this.props.children, {promise: this.getPromise}) : (this.props.nonEditRender || this.DEFAULT_RENDERER).apply(null, [this.props.children.props.defaultValue])}
+                    {editAllowed && (
+                      <IconButton
+                        onClick={this.switchEdit}
+                        style={{marginLeft: 6}}
+                        size="small"
+                      >
+                        {editMode? (<CloseIcon/>) : (<CreateIcon/>)}
+                      </IconButton>
+                    )}
+                  </div>
+                );
               }}
-              className={EDITABLE_PROMISED_COMPONENT_CHILDREN}
-            >
-              {editMode ? React.cloneElement(this.props.children, {promise: this.getPromise}) : (this.props.nonEditRender || this.DEFAULT_RENDERER).apply(null, [this.props.children.props.defaultValue])}
-              {editAllowed && (
-                <IconButton
-                  onClick={this.switchEdit}
-                  style={{marginLeft: 6}}
-                  size="small"
-                >
-                  {editMode? (<CloseIcon/>) : (<CreateIcon/>)}
-                </IconButton>
-              )}
-            </div>
+            </DisableEditContext.Consumer>
           );
         }}
-      </DisableEditContext.Consumer>
+      </AfterChangeContext.Consumer>
     );
   }
 
@@ -66,7 +76,10 @@ export class EditablePromisedComponent<T>
     const promise = this.props.children.props.promise(value);
     // noinspection ES6MissingAwait
     promise.then(() => {
-      this.setState({editMode: false})
+      this.setState({editMode: false});
+      if (this.afterChange) {
+        this.afterChange();
+      }
     });
 
     return promise;

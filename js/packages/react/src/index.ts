@@ -21,6 +21,8 @@ export * from "./Report";
 export * from "./TableRenderSettings";
 export * from "./translate";
 export * from "./utils";
+
+export * from "./AfterChangeContext";
 export * from "./CategoryColumnChart";
 export * from "./ChartWrapper";
 export * from "./compatibleTypes";

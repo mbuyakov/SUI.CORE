@@ -35,6 +35,12 @@ type PopconfirmSettings = Omit<PopconfirmProps, 'onConfirm' | 'onCancel'>;
 export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extends React.Component<IPromisedBaseProps<V> & P, S> {
 
   private validatorId: number = 0;
+  private afterChange: () => void;
+
+  @autobind
+  protected setAfterChange(afterChange: () => void) {
+    this.afterChange = afterChange;
+  }
 
   public constructor(props: IPromisedBaseProps<V> & P) {
     super(props);
@@ -177,6 +183,10 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
       .promise(value == null ? this.state.value : value)
       .then(_ => {
         this.setState({loading: false, savedValue: (value == null ? this.state.value : value)});
+
+        if (this.afterChange) {
+          this.afterChange();
+        }
       })
       .catch(reason => {
         this.setState({loading: false});
