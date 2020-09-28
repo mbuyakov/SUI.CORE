@@ -15,7 +15,7 @@ export const ONLY_ONE_ALPHABET_MESSAGE = "Введите все буквы в о
 export const HYPHEN_REGEXP_MESSAGE = "Знак \"-\" не может быть последним символом, идти подряд или через пробел";
 export const POINT_REGEXP_SURNAME_MESSAGE = "Точка \".\" в Фамилии не допускается";
 
-export function nameValidator(field: string, allowNulls?: boolean): (name: string | null) => string {
+export function nameValidator(field: "firstName" | "middleName" | "lastName", allowNulls?: boolean): (name: string | null) => string {
 
   return (name: string): string | null => {
     if (!name || !name.trim().length) {
@@ -24,7 +24,7 @@ export function nameValidator(field: string, allowNulls?: boolean): (name: strin
       if (!ONLY_ONE_ALPHABET_REGEXP.test(name)) {
         return ONLY_ONE_ALPHABET_MESSAGE;
       } else {
-        if (field === 'surName') {
+        if (field === 'lastName') {
           return SURNAME_REGEXP.test(name)
             ? allSymbolValidator(name)
             : whiteSpaceAndHyphenValidator(name, field);
