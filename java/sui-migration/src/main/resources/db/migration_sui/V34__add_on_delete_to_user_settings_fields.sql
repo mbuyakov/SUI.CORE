@@ -1,0 +1,11 @@
+ALTER TABLE sui_meta.user_settings
+    DROP CONSTRAINT user_settings_user_id_fkey,
+    DROP CONSTRAINT user_settings_table_info_id_fkey,
+    ADD CONSTRAINT user_settings_user_id_fkey
+        FOREIGN KEY (user_id)
+            REFERENCES sui_security.users (id)
+            ON DELETE CASCADE,
+    ADD CONSTRAINT user_settings_table_info_id_fkey
+        FOREIGN KEY (table_info_id)
+            REFERENCES sui_meta.table_info (id)
+            ON DELETE CASCADE;
