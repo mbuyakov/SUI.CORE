@@ -1,5 +1,5 @@
-import {IObjectWithIndex} from "../../other";
-import {addQuotesIfString, camelCase, capitalize} from "../../stringFormatters";
+import {IObjectWithIndex} from "@/other";
+import {addQuotesIfString, camelCase, capitalize} from "@/stringFormatters";
 import {IGqlFilter} from "../types";
 import { mutate, query } from '../wrapper';
 
@@ -24,6 +24,27 @@ export function generateSelectText(entity: string, id: PossibleId, field: string
  */
 export async function generateSelect<T extends PossibleValue>(entity: string, id: PossibleId, field: string): Promise<T> {
   return query<T>(generateSelectText(entity, id, field), 2);
+}
+
+
+/**
+ * Generate Gql query for select
+ */
+export function generateMultiSelectText(entity: string, id: PossibleId, fields: string[]): string {
+  const camelCaseEntity = camelCase(entity);
+
+  return `{
+  ${camelCaseEntity}ById(id: ${addQuotesIfString(id)}) {
+    ${fields.join("\n    ")}
+  }
+}`;
+}
+
+/**
+ * Generate promise for Gql query
+ */
+export async function generateMultiSelect<T = IObjectWithIndex>(entity: string, id: PossibleId, fields: string[]): Promise<T> {
+  return query<T>(generateMultiSelectText(entity, id, fields), 1);
 }
 
 /**

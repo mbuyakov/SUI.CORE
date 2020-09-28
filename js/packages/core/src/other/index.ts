@@ -1,12 +1,3 @@
-import {WrappedFormUtils} from "@ant-design/compatible/lib/form/Form";
-import * as H from "history";
-import * as React from "react";
-import {CustomIconComponentProps} from '@ant-design/compatible/lib/icon';
-
-export * from "./AddressFlag";
-export * from "./BlockUIConditionally";
-
-
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export type NotFunction<T> = T extends Function ? never : T;
@@ -14,12 +5,6 @@ export type NotFunction<T> = T extends Function ? never : T;
 export type Nullable<T> = T | null | undefined;
 
 export type Merge<T, K> = Pick<T, Exclude<keyof T, keyof K>> & K;
-
-export type Rendered<T extends React.Component> = React.ReactElement<T["props"]>;
-
-export type ExtractProps<T> = T extends React.Component<infer TProps, any> ? TProps : T;
-
-export type FormCreateKostyl<T extends React.Component<{ form?: WrappedFormUtils }>> = Omit<ExtractProps<T>, 'form'>;
 
 /**
  * Return promise, that resolve after given ms
@@ -124,13 +109,6 @@ export function findByValue<T, V>(array: T[], valueExtractor: (element: T) => V,
 }
 
 /**
- * React router location type
- */
-export interface location<QueryParams extends { [K in keyof QueryParams]?: string } = {}, S = any> extends H.Location<S> {
-  query: QueryParams;
-}
-
-/**
  * Chain mapper
  */
 export function chain<OUT, IN = OUT>(src: IN, firstMapper: (src: IN) => OUT, ...mappers: Array<(src: OUT) => OUT>): OUT {
@@ -163,8 +141,6 @@ export function isValidUuid(uuid: string): boolean {
   return UUID_REGEXP.test(uuid);
 }
 
-
-export type IAntIconComponent = React.ComponentType<CustomIconComponentProps | React.SVGProps<SVGSVGElement>>;
 
 export type TOrCallback<T> = NotFunction<T> | (() => T)
 

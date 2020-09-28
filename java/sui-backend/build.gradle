@@ -10,7 +10,7 @@ dependencies {
   compile "org.postgresql:postgresql:${postgresVersion}"
   compile "org.json:json:20180130"
   // query logs
-  compile "com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6"
+  //  compile "com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6"
   compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:${jacksonVersion}"
   compile "com.google.guava:guava:28.1-jre"
   compile "org.apache.httpcomponents:httpclient:4.5.10"

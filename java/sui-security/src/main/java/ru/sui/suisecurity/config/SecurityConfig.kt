@@ -85,11 +85,14 @@ class SecurityConfig(
                         "/**/*.jpg",
                         "/**/*.html",
                         "/**/*.css",
-                        "/**/*.js")
+                        "/**/*.js",
+                        "/**/*.mp3")
                 .permitAll()
                 .antMatchers("/table-backend")
                 .permitAll()
                 .antMatchers("/table-backend/**")
+                .permitAll()
+                .antMatchers("/api/tracks/download/**")
                 .permitAll()
                 .antMatchers("/api/auth/**")
                 .permitAll()

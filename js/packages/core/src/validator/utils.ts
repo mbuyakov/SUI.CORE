@@ -1,7 +1,4 @@
-import InputMask from "antd-mask-input/build/main/lib/inputmask-core";
 import moment, {Moment} from "moment";
-
-import {NO_DATA_TEXT} from "../const";
 
 export function dateDisabler(bound: string, type: "greater" | "greaterOrEqual" | "less" | "lessOrEqual"): (current: Moment) => boolean {
   return (current: Moment): boolean => {
@@ -22,15 +19,3 @@ switch (type) {
   }
 }
 
-export function formatByMaskFn(pattern: string): (value: string | null | undefined) => string {
-  return (value: string | null | undefined): string => {
-    if (!value) {
-      return NO_DATA_TEXT;
-    }
-
-    return new InputMask({
-      pattern,
-      value
-    }).getValue();
-  }
-}

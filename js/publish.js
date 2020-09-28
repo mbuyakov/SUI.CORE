@@ -1,12 +1,9 @@
 const fs = require('fs');
 const {execSync} = require('child_process');
 
-const packages = [
-  "test",
-  "linter",
-  "core",
-  "all"
-]
+const packages = fs.readdirSync("./packages", { withFileTypes: true })
+  .filter(dirent => dirent.isDirectory())
+  .map(dirent => dirent.name);
 
 const bkpPackageJson = () => {
   console.log(`====\r\nCreate backup of package.json\r\n====`);
@@ -31,7 +28,7 @@ function publish(version) {
 
   try {
     console.log(`====\r\nUpdate version\r\n====`);
-    execSync(`npx lerna version ${version} --no-git-tag-version --no-push --yes`, {
+    execSync(`npx lerna version ${version} --no-git-tag-version --no-push --exact --yes`, {
       stdio: "inherit"
     });
     packages.forEach(pkg => {

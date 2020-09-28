@@ -1,9 +1,9 @@
-import {ICacheEntry} from '../cacheManager';
-import {getDataByKey} from '../dataKey';
-import {GqlCacheManager} from '../gql';
-import {IObjectWithIndex} from "../other";
-import {IColumnInfo, IColumnInfoReference, IColumnInfoRole, IColumnInfoTag, IFilterType, ISubtotalType} from '../types';
-import {formatRoleName} from "../utils";
+import {ICacheEntry} from '@/cacheManager';
+import {getDataByKey} from '@/dataKey';
+import {GqlCacheManager} from '@/gql';
+import {IObjectWithIndex} from "@/other";
+import {IColumnInfo, IColumnInfoReference, IColumnInfoRole, IColumnInfoTag, IFilterType, ISubtotalType} from '@/types';
+import { formatRoleName } from '@/tmp';
 
 import {Name} from "./Name";
 

@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container } from 'typescript-ioc';
-import { Logger } from '../utils';
+
 // Don't touch import
 // noinspection ES6PreferShortImport
+import { Logger } from '../utils';
+// noinspection ES6PreferShortImport
 import { LocalStorageService } from '../service/LocalStorageService';
+// noinspection ES6PreferShortImport
 import { Nullable } from '../../other';
 
 export interface LocalStorageValueWrapper {

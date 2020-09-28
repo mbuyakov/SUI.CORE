@@ -1,10 +1,12 @@
 /* eslint-disable no-console,@typescript-eslint/no-explicit-any */
 import { Container } from 'typescript-ioc';
-import { getTOrCall, TOrCallback } from '../../other';
-import { OneOrArray, wrapInArray } from '../../typeWrappers';
+import { getTOrCall, TOrCallback } from '@/other';
+import { OneOrArray, wrapInArray } from '@/typeWrappers';
 // Don't touch import
 // noinspection ES6PreferShortImport
 import { LogLevelService } from '../service/LogLevelService';
+// noinspection ES6PreferShortImport
+
 import { LoggerLevel } from '../enum';
 // Don't touch import
 // noinspection ES6PreferShortImport
