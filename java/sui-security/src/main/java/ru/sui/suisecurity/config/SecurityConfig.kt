@@ -94,6 +94,8 @@ class SecurityConfig(
                 .permitAll()
                 .antMatchers("/api/tracks/download/**")
                 .permitAll()
+                .antMatchers("/api/images/**")
+                .permitAll()
                 .antMatchers("/api/auth/**")
                 .permitAll()
                 .antMatchers("/api/token/**")
