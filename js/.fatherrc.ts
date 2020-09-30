@@ -7,6 +7,7 @@ const options: IBundleOptions = {
   },
   pkgs: [
     "core",
+    "charts",
     "react",
     "all"
   ]

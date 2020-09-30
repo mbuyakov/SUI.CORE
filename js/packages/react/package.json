@@ -20,7 +20,6 @@
     "ci": "run-s lint build"
   },
   "peerDependencies": {
-    "@amcharts/amcharts4": "4.9.22",
     "@ant-design/icons": "4.2.2",
     "@material-ui/core": "4.9.9",
     "@material-ui/icons": "4.9.1",
@@ -30,7 +29,6 @@
   },
   "devDependencies": {
     "@sui/linter": "8.0.0",
-    "@amcharts/amcharts4": "4.9.22",
     "@ant-design/icons": "4.2.2",
     "@material-ui/core": "4.9.9",
     "@material-ui/icons": "4.9.1",
@@ -48,6 +46,7 @@
     "@devexpress/dx-react-grid": "2.6.1",
     "@devexpress/dx-react-grid-material-ui": "2.6.1",
     "@sui/core": "8.0.0",
+    "@sui/charts": "8.0.0",
     "antd-mask-input": "^0.1.13",
     "classnames": "^2.2.6",
     "immutability-helper": "^3.0.2",

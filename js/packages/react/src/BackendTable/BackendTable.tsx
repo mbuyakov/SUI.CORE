@@ -1111,7 +1111,7 @@ export class BackendTable<TSelection = defaultSelection>
             for (const filename of sortedFilenames) {
               const data = JSON.parse(await files[filename].async("string"));
 
-              const xlsx = exportToXlsx(
+              const xlsx = await exportToXlsx(
                 this.state.cols,
                 data,
                 {

@@ -505,7 +505,7 @@ export class BaseTable<TSelection = defaultSelection>
       }
     }
 
-    exportToXlsx(
+    await exportToXlsx(
       this.props.cols,
       this.exportData,
       {

@@ -1,6 +1,5 @@
-import * as XLSX from 'xlsx';
-
 import {defaultIfNotBoolean,getDataByKey,NO_DATA_TEXT, IObjectWithIndex} from "@sui/core";
+import {getXlsx, WritingOptions} from "@sui/charts";
 
 
 import {translate} from "../translate";
@@ -15,16 +14,17 @@ export function mapColumns(cols: IBaseTableColLayout[]): IFormattedBaseTableColL
   }));
 }
 
-export function exportToXlsx(
+export async function exportToXlsx(
   columns: IBaseTableColLayout[],
   data: IObjectWithIndex[],
   options: {
     exportValueFormatter?: IBaseTableProps["exportValueFormatter"],
     file?: boolean
     hiddenColumnNames?: string[],
-    opts?: XLSX.WritingOptions
+    opts?: WritingOptions
   }
-): Blob | undefined {
+): Promise<Blob | undefined> {
+  const xlsx = await getXlsx();
   const hiddenColumnNames = options.hiddenColumnNames || [];
 
   const exportedColumns = (mapColumns(columns))
@@ -45,17 +45,17 @@ export function exportToXlsx(
     }))
   );
 
-  const ws = XLSX.utils.json_to_sheet(formattedData, { header: exportedColumns.map(it => it.title) });
+  const ws = xlsx.utils.json_to_sheet(formattedData, { header: exportedColumns.map(it => it.title) });
 
-  const wb = XLSX.utils.book_new();
+  const wb = xlsx.utils.book_new();
 
-  XLSX.utils.book_append_sheet(wb, ws, '1');
+  xlsx.utils.book_append_sheet(wb, ws, '1');
 
   if (options.file) {
-    XLSX.writeFile(wb, 'table.xlsx', options.opts);
+    xlsx.writeFile(wb, 'table.xlsx', options.opts);
     return undefined;
     // tslint:disable-next-line:unnecessary-else
   } else {
-    return XLSX.write(wb, options.opts);
+    return xlsx.write(wb, options.opts);
   }
 }
