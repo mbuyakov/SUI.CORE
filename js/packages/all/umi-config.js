@@ -1,49 +1,9 @@
 const fs = require('fs');
 const buildTime = new Date().toISOString();
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 function webpackPluginConfig(config) {
   // Used in copy-webpack-plugin
   fs.writeFileSync('./build_time.txt', buildTime);
-
-  // If analyze
-  if (!process.env.NOT_ANALYZE) {
-    config.plugin('BundleAnalyzerPlugin').use(BundleAnalyzerPlugin, [{
-      openAnalyzer: false,
-      analyzerMode: 'static'
-    }]);
-  }
-
-  // If build
-  if (!process.env.NOT_BUILD) {
-    config.merge({
-      optimization: {
-        minimize: true,
-        splitChunks: {
-          chunks: 'all',
-          minSize: 1,
-          minChunks: 1,
-          automaticNameDelimiter: '.',
-          cacheGroups: {
-            vendor: {
-              name: 'vendors',
-              test({resource}) {
-                return /[\\/]node_modules[\\/]/.test(resource) && !/[\\/]node_modules[\\/]@sui/.test(resource);
-              },
-              priority: 10,
-            },
-            sui: {
-              name: 'sui',
-              test({resource}) {
-                return /[\\/]node_modules[\\/]@sui/.test(resource);
-              },
-              priority: 10,
-            },
-          },
-        },
-      }
-    });
-  }
 }
 
 module.exports =  {
@@ -71,6 +31,27 @@ module.exports =  {
       "process.env.BUILD_TIME": buildTime,
     },
     treeShaking: true,
+    minimizer: 'terserjs',
+    extraBabelPlugins: [
+      [
+        'babel-plugin-import',
+        {
+          'libraryName': '@material-ui/core',
+          'libraryDirectory': 'esm',
+          'camel2DashComponentName': false
+        },
+        'core'
+      ],
+      [
+        'babel-plugin-import',
+        {
+          'libraryName': '@material-ui/icons',
+          'libraryDirectory': 'esm',
+          'camel2DashComponentName': false
+        },
+        'icons'
+      ]
+    ],
     history: 'hash',
     manifest: {
       basePath: '/',
@@ -101,18 +82,6 @@ module.exports =  {
         importWorkboxFrom: 'local',
       },
     },
-    // dynamicImport: {
-    //   loadingComponent: './components/PageLoading/index',
-    //   webpackChunkName: true,
-    // },
-    dll: {
-      //TODO: Umi bug, check update
-      exclude: ['@sui/sui-all', "@material-ui/icons", "@amcharts/amcharts4"],
-    },
-    // If build
-    ...(!process.env.NOT_BUILD ? {
-      chunks: ['vendors', 'sui', 'umi']
-    } : {})
   },
   webpackPluginConfig
 };
