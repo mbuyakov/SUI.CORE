@@ -1,10 +1,10 @@
 {
   "name": "@sui/react",
   "version": "8.0.0",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "module": "es/index.js",
+  "typings": "es/index.d.ts",
   "files": [
-    "lib",
+    "es",
     "styles",
     "magic-deps-updater.js",
     "magic-deps.json"
@@ -16,7 +16,8 @@
     "lint-fix": "cross-env ROOT_DIR=src FIX=1 sui-linter",
     "lint-watch": "cross-env ROOT_DIR=src sui-linter --watch",
     "lint-timing": "cross-env TIMING=1 ROOT_DIR=src sui-linter",
-    "build": "cd ../.. && PACKAGE=react father-build && cd ./packages/react && npx tsc-alias -p tsconfig.json"
+    "build": "cd ../.. && PACKAGE=react father-build && cd ./packages/react && npx tsc-alias -p tsconfig.json",
+    "ci": "run-s lint build"
   },
   "peerDependencies": {
     "@amcharts/amcharts4": "4.9.22",

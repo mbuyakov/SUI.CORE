@@ -20,7 +20,6 @@
     "tslint-config-prettier": "^1.17.0",
     "tslint-react": "^3.6.0",
     "umi": "2.13.13",
-    "umi-plugin-react": "1.15.8",
-    "webpack-bundle-analyzer": "3.6.1"
+    "umi-plugin-react": "1.15.8"
   }
 }

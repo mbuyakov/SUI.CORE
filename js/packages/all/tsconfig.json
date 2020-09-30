@@ -3,7 +3,7 @@
     "./src"
   ],
   "compilerOptions": {
-    "outDir": "lib",
+    "outDir": "es",
     "target": "esnext",
     "module": "esnext",
     "declaration": true,

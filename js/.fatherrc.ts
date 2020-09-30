@@ -1,7 +1,10 @@
 import {IBundleOptions} from 'father-build/src/types';
 
 const options: IBundleOptions = {
-  cjs: {type: 'babel'},
+  esm: {
+    type: 'babel',
+    importLibToEs: true
+  },
   pkgs: [
     "core",
     "react",

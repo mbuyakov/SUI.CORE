@@ -1,19 +1,21 @@
 {
   "name": "@sui/all",
   "version": "8.0.0",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "module": "es/index.js",
+  "typings": "es/index.d.ts",
   "files": [
-    "lib",
+    "es",
     "styles",
     "tsconfig-common.json",
     "umi-config.js"
   ],
   "scripts": {
-    "build": "cd ../.. && PACKAGE=all father-build && cd ./packages/all && npx tsc-alias -p tsconfig.json"
+    "build": "cd ../.. && PACKAGE=all father-build && cd ./packages/all && npx tsc-alias -p tsconfig.json",
+    "ci": "run-s build"
   },
   "dependencies": {
     "@sui/core": "8.0.0",
-    "@sui/react": "8.0.0"
+    "@sui/react": "8.0.0",
+    "babel-plugin-import": "^1.13.0"
   }
 }

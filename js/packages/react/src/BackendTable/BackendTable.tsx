@@ -875,6 +875,7 @@ export class BackendTable<TSelection = defaultSelection>
   private setInnerRefValue(value?: BackendTable<TSelection>): void {
     if (this.props.innerRef) {
       // @ts-ignore
+      // noinspection JSConstantReassignment
       this.props.innerRef.current = value;
     }
   }

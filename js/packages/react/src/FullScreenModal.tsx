@@ -1,10 +1,9 @@
-import {Collapse} from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar/AppBar';
-import Dialog, {DialogProps} from '@material-ui/core/Dialog/Dialog';
-import IconButton from '@material-ui/core/IconButton/IconButton';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Toolbar from '@material-ui/core/Toolbar/Toolbar';
-import Typography from '@material-ui/core/Typography/Typography';
+import {Collapse, withStyles} from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import Dialog, {DialogProps} from '@material-ui/core/Dialog';
+import IconButton from '@material-ui/core/IconButton';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import autobind from 'autobind-decorator';
 import React from 'react';

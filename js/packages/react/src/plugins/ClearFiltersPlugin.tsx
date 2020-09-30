@@ -1,6 +1,6 @@
 import {Plugin, Template, TemplateConnector, TemplatePlaceholder} from "@devexpress/dx-react-core";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import Tooltip from "@material-ui/core/Tooltip/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
 import {DeleteForever} from '@material-ui/icons';
 import React from "react";
 
