@@ -1,4 +1,4 @@
-import {PlusCircleOutlined} from "@ant-design/icons/lib";
+import {PlusCircleOutlined} from "@ant-design/icons";
 import {Dropdown, Menu} from "antd";
 import Button from "antd/lib/button";
 import {MenuItemProps} from "antd/lib/menu/MenuItem";

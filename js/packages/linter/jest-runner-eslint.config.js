@@ -3,6 +3,6 @@ module.exports = {
     cache: true,
     quiet: true,
     fix: !!process.env.FIX,
-    config: __dirname + "/.eslintrc.js"
+    config: process.cwd() + "/.eslintrc.js"
   },
 };

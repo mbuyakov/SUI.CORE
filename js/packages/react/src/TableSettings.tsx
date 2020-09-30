@@ -1,5 +1,5 @@
 import {Icon} from '@ant-design/compatible';
-import {IdcardOutlined, ProfileOutlined, QuestionOutlined, SortAscendingOutlined, SortDescendingOutlined} from "@ant-design/icons/lib";
+import {IdcardOutlined, ProfileOutlined, QuestionOutlined, SortAscendingOutlined, SortDescendingOutlined} from "@ant-design/icons";
 import {ThemeProvider, withTheme} from '@material-ui/core';
 import IconButton from "@material-ui/core/IconButton";
 import {Cached, Edit} from '@material-ui/icons';

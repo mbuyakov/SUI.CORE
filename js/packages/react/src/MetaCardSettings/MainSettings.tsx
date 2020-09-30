@@ -1,4 +1,4 @@
-import {SaveOutlined} from "@ant-design/icons/lib";
+import {SaveOutlined} from "@ant-design/icons";
 import { Switch } from 'antd';
 import Tooltip from 'antd/lib/tooltip';
 import Tree from 'antd/lib/tree';

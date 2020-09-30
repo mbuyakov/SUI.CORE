@@ -40,7 +40,7 @@ module.exports =  {
           'libraryDirectory': 'esm',
           'camel2DashComponentName': false
         },
-        'core'
+        'import-material'
       ],
       [
         'babel-plugin-import',
@@ -49,7 +49,25 @@ module.exports =  {
           'libraryDirectory': 'esm',
           'camel2DashComponentName': false
         },
-        'icons'
+        'import-material-icons'
+      ],
+      [
+        "babel-plugin-import",
+        {
+          "libraryName": "antd",
+          "libraryDirectory": "es",
+          "style": true
+        },
+        'import-antd'
+      ],
+      [
+        "babel-plugin-import",
+        {
+          "libraryName": "@ant-design/icons",
+          "libraryDirectory": "es/icons",
+          "camel2DashComponentName": false
+        },
+        "import-antd-icons"
       ]
     ],
     history: 'hash',
@@ -68,7 +86,6 @@ module.exports =  {
 
   // ref: https://umijs.org/plugin/umi-plugin-react.html
   umiPluginReact: {
-    antd: true,
     dva: true,
     locale: {
       enable: true,

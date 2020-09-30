@@ -17,6 +17,7 @@
     "ci": "run-s lint build"
   },
   "devDependencies": {
+    "@sui/linter": "8.0.0",
     "@types/jsonpack": "^1.1.0",
     "@types/lodash": "^4.14.149",
     "@types/node": "^13.11.1",

@@ -164,7 +164,11 @@ module.exports = {
     "no-restricted-imports": [ // for tree-snaking
       "error",
       {
-        "patterns": ["@material-ui/*/*/*", "!@material-ui/core/test-utils/*"]
+        "patterns": [
+          "@material-ui/*/*/*",
+          "!@material-ui/core/test-utils/*",
+          "@ant-design/icons/*"
+        ]
       }
     ]
   },

@@ -1,4 +1,4 @@
-import {ArrowLeftOutlined, CloseOutlined} from "@ant-design/icons/lib";
+import {ArrowLeftOutlined, CloseOutlined} from "@ant-design/icons";
 import {Button} from 'antd';
 import Input from 'antd/es/input';
 import Alert from 'antd/lib/alert';

@@ -1,5 +1,5 @@
 // tslint:disable:no-magic-numbers jsx-no-lambda
-import {DeleteOutlined, IssuesCloseOutlined} from "@ant-design/icons/lib";
+import {DeleteOutlined, IssuesCloseOutlined} from "@ant-design/icons";
 import {Card, Select, Tooltip} from "antd";
 import * as React from "react";
 import {IRole, IUser, IUserRole,OneOrArrayWithNulls, wrapInArrayWithoutNulls,EMAIL_REGEXP,NO_DATA_TEXT} from "@sui/core";
