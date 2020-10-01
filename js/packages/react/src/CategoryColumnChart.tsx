@@ -1,9 +1,7 @@
-import * as am4charts from "@amcharts/amcharts4/charts";
-import * as am4core from "@amcharts/amcharts4/core";
 import autobind from "autobind-decorator";
 import React from "react";
 import { Color } from '@sui/core';
-
+import { AMCHARTS } from '@sui/charts';
 import { XYChartWrapper } from './ChartWrapper';
 
 export interface ICategoryColumnChartSeries {
@@ -14,10 +12,10 @@ export interface ICategoryColumnChartSeries {
 }
 
 export interface IAdditionalSettingProps {
-  categoryAxis: am4charts.CategoryAxis;
-  chart: am4charts.XYChart;
-  seriesMap: Map<string, am4charts.ColumnSeries>;
-  valueAxis: am4charts.ValueAxis;
+  categoryAxis: InstanceType<AMCHARTS["am4charts"]["CategoryAxis"]>;
+  chart: InstanceType<AMCHARTS["am4charts"]["XYChart"]>;
+  seriesMap: Map<string, InstanceType<AMCHARTS["am4charts"]["ColumnSeries"]>>;
+  valueAxis: InstanceType<AMCHARTS["am4charts"]["ValueAxis"]>;
 }
 
 interface ICategoryColumnChartProps {
@@ -34,7 +32,6 @@ export class CategoryColumnChart extends React.Component<ICategoryColumnChartPro
   public render(): JSX.Element {
     return (
       <XYChartWrapper
-        type={am4charts.XYChart}
         style={{
           width: "100%",
           ...this.props.style
@@ -47,28 +44,29 @@ export class CategoryColumnChart extends React.Component<ICategoryColumnChartPro
 
   @autobind
   private createSeries(
-    chart: am4charts.XYChart,
-    seriesProps: ICategoryColumnChartSeries
-  ): am4charts.ColumnSeries {
-    const series = chart.series.push(new am4charts.ColumnSeries());
+    chart: InstanceType<AMCHARTS["am4charts"]["XYChart"]>,
+    seriesProps: ICategoryColumnChartSeries,
+    amcharts: AMCHARTS
+  ): InstanceType<AMCHARTS["am4charts"]["ColumnSeries"]> {
+    const series = chart.series.push(new amcharts.am4charts.ColumnSeries());
 
     series.dataFields.valueY = seriesProps.valueY;
     series.dataFields.categoryX = this.props.categoryX;
     series.name = seriesProps.name;
-    series.columns.template.width = am4core.percent(95);
+    series.columns.template.width = amcharts.am4core.percent(95);
     if (seriesProps.tooltipText) {
       series.columns.template.tooltipText = seriesProps.tooltipText;
     }
     if (seriesProps.color) {
-      series.columns.template.fill = am4core.color(seriesProps.color.toRgba());
+      series.columns.template.fill = amcharts.am4core.color(seriesProps.color.toRgba());
     }
 
     return series;
   }
 
   @autobind
-  private onChartCreated(chart: am4charts.XYChart): void {
-    const categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+  private onChartCreated(chart: InstanceType<AMCHARTS["am4charts"]["XYChart"]>, amcharts: AMCHARTS): void {
+    const categoryAxis = chart.xAxes.push(new amcharts.am4charts.CategoryAxis());
     categoryAxis.dataFields.category = this.props.categoryX;
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.minGridDistance = 20;
@@ -78,7 +76,7 @@ export class CategoryColumnChart extends React.Component<ICategoryColumnChartPro
     categoryAxis.renderer.cellStartLocation = 0.1;
     categoryAxis.renderer.cellEndLocation = 0.9;
 
-    const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    const valueAxis = chart.yAxes.push(new amcharts.am4charts.ValueAxis());
     valueAxis.min = 0;
     valueAxis.maxPrecision = 0;
     if (this.props.title) {
@@ -87,14 +85,14 @@ export class CategoryColumnChart extends React.Component<ICategoryColumnChartPro
 
     const seriesMap = this.props.series.reduce(
       (map, series) => {
-        map.set(series.valueY, this.createSeries(chart, series));
+        map.set(series.valueY, this.createSeries(chart, series, amcharts));
 
         return map;
       },
-      new Map<string, am4charts.ColumnSeries>()
+      new Map<string, InstanceType<AMCHARTS["am4charts"]["ColumnSeries"]>>()
     );
 
-    chart.cursor = new am4charts.XYCursor();
+    chart.cursor = new amcharts.am4charts.XYCursor();
 
     if (this.props.additionalSetting) {
       this.props.additionalSetting({

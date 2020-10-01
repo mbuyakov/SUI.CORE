@@ -1,6 +1,6 @@
-import * as am4forceDirected from "@amcharts/amcharts4/plugins/forceDirected";
 import autobind from 'autobind-decorator';
 import React from "react";
+import {AMCHARTS, getAmcharts} from "@sui/charts";
 
 import { ForceDirectedTreeWrapper } from './ChartWrapper';
 
@@ -12,8 +12,8 @@ export type IForceDirectedTreeDataElement<T extends {} = {}> = T & {
 }
 
 export interface IForceDirectedTreeAdditionalSettingProps {
-  chart: am4forceDirected.ForceDirectedTree;
-  series: am4forceDirected.ForceDirectedSeries;
+  chart: InstanceType<AMCHARTS["am4forceDirected"]["ForceDirectedTree"]>;
+  series: InstanceType<AMCHARTS["am4forceDirected"]["ForceDirectedSeries"]>;
 }
 
 interface IForceDirectedTreeProps<T> {
@@ -29,7 +29,6 @@ export class ForceDirectedTree<TElement = {}> extends React.Component<IForceDire
   public render(): JSX.Element {
     return (
       <ForceDirectedTreeWrapper
-        type={am4forceDirected.ForceDirectedTree}
         data={this.props.data}
         style={{
           width: "100%",
@@ -41,8 +40,8 @@ export class ForceDirectedTree<TElement = {}> extends React.Component<IForceDire
   }
 
   @autobind
-  private onChartCreated(chart: am4forceDirected.ForceDirectedTree): void {
-    const series = chart.series.push(new am4forceDirected.ForceDirectedSeries());
+  private onChartCreated(chart: InstanceType<AMCHARTS["am4forceDirected"]["ForceDirectedTree"]>, amcharts: AMCHARTS): void {
+    const series = chart.series.push(new amcharts.am4forceDirected.ForceDirectedSeries());
 
     console.log("ForceDirectedTree data", chart.data);
 
@@ -64,7 +63,7 @@ export class ForceDirectedTree<TElement = {}> extends React.Component<IForceDire
     }
 
     series.maxLevels = 2;
-series.fontSize = 10;
+    series.fontSize = 10;
 
     if (this.props.additionalSetting) {
       this.props.additionalSetting({

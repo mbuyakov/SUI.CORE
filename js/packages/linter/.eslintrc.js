@@ -169,7 +169,7 @@ module.exports = {
           "!@material-ui/core/test-utils/*",
           "@ant-design/icons/*",
           "xlsx", // Use async kostyl - @sui/charts
-          // "@amcharts/amcharts4"
+          "@amcharts/amcharts4", // Use async kostyl - @sui/charts
         ]
       }
     ]

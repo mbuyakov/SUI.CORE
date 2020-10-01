@@ -1,5 +1,5 @@
 import {MetaCardPlugin} from "./MetaCardPlugin";
-import {ChartPlugin} from "./plugins/chart";
+// import {ChartPlugin} from "./plugins/chart";
 
 export class MetaCardConfigurator {
   public static plugins: Map<string, MetaCardPlugin<any>> = new Map();
@@ -8,10 +8,10 @@ export class MetaCardConfigurator {
     MetaCardConfigurator.plugins.set(plugin.id, plugin);
   }
 
-  public static initStandardPlugins(): void {
-    MetaCardConfigurator.initPlugin(new ChartPlugin());
-  }
+  // public static initStandardPlugins(): void {
+  //   MetaCardConfigurator.initPlugin(new ChartPlugin());
+  // }
 }
 
-MetaCardConfigurator.initStandardPlugins();
+// MetaCardConfigurator.initStandardPlugins();
 

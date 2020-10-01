@@ -1,8 +1,7 @@
-import * as am4charts from "@amcharts/amcharts4/charts";
-import * as am4core from "@amcharts/amcharts4/core";
 import * as React from "react";
 
 import {getLevelColor, IObjectWithIndex} from '@sui/core';
+import {AMCHARTS, getAmcharts} from '@sui/charts';
 import {XYChartWrapper} from "./ChartWrapper";
 
 const defaultLabelPanelWidth = 150;
@@ -24,14 +23,17 @@ interface ITopBarChartProps {
   // Relative - 0 to 100
   type: "relative" | "absolute" | string;
   valueDataField: string;
+
   additionalSetting?(props: IReportTopBarChartSettingProps): void;
+
   categoryAxisLabelGenerator(element: IObjectWithIndex): string | JSX.Element;
+
   onSeriesClick?(event: any): void;
 }
 
 export interface IReportTopBarChartSettingProps {
-  chart: am4charts.XYChart;
-  series: am4charts.ColumnSeries;
+  chart: InstanceType<AMCHARTS["am4charts"]["XYChart"]>;
+  series: InstanceType<AMCHARTS["am4charts"]["ColumnSeries"]>;
 }
 
 export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
@@ -46,11 +48,13 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
 
   public componentDidUpdate(prevProps: ITopBarChartProps): void {
     if (this.props.data !== prevProps.data) {
+      // noinspection JSIgnoredPromiseFromCall
       this.updateState();
     }
   }
 
   public componentWillMount(): void {
+    // noinspection JSIgnoredPromiseFromCall
     this.updateState();
   }
 
@@ -75,17 +79,16 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
         {this.props.data && (
           <XYChartWrapper
             style={{flexGrow: 1, height: 300}}
-            type={am4charts.XYChart}
             data={this.state.mappedData as IObjectWithIndex[]}
-            onChartCreated={(chart: am4charts.XYChart): void => {
+            onChartCreated={(chart: InstanceType<AMCHARTS["am4charts"]["XYChart"]>, amcharts: AMCHARTS): void => {
               chart.paddingLeft = 0;
 
-              const categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+              const categoryAxis = chart.yAxes.push(new amcharts.am4charts.CategoryAxis());
               categoryAxis.dataFields.category = this.props.categoryDataField;
               categoryAxis.fontSize = 0;
               categoryAxis.renderer.grid.template.location = 0;
 
-              const valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+              const valueAxis = chart.xAxes.push(new amcharts.am4charts.ValueAxis());
               valueAxis.renderer.minGridDistance = 40;
               valueAxis.min = 0;
 
@@ -99,12 +102,12 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
                 valueAxis.extraMax = 0.1;
               }
 
-              const series = chart.series.push(new am4charts.ColumnSeries());
+              const series = chart.series.push(new amcharts.am4charts.ColumnSeries());
 
               series.dataFields.valueX = this.props.valueDataField;
               series.dataFields.categoryY = this.props.categoryDataField;
               series.columns.template.propertyFields.fill = "color";
-              series.columns.template.column.stroke = am4core.color("#fff");
+              series.columns.template.column.stroke = amcharts.am4core.color("#fff");
               series.columns.template.column.strokeOpacity = 0.2;
 
               if (this.props.tooltipTemplate) {
@@ -118,7 +121,7 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
 
               series.columns.template.column.cornerRadius(16, 16, 16, 16);
 
-              const bullet = series.bullets.push(new am4charts.LabelBullet());
+              const bullet = series.bullets.push(new amcharts.am4charts.LabelBullet());
               bullet.locationY = 0.1;
               bullet.label.text = this.props.customLabelText || "{valueX.formatNumber('#.##')}";
               bullet.label.fontSize = 13;
@@ -130,10 +133,10 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
               bullet.label.hideOversized = false;
               bullet.dy = -2;
 
-              const bulletBackground = new am4core.RoundedRectangle();
+              const bulletBackground = new amcharts.am4core.RoundedRectangle();
               bulletBackground.height = 24;
               bulletBackground.cornerRadius(12, 12, 12, 12);
-              bulletBackground.fill = am4core.color("#FFFFFF");
+              bulletBackground.fill = amcharts.am4core.color("#FFFFFF");
               bulletBackground.strokeOpacity = 1;
               bulletBackground.strokeWidth = 2;
               bulletBackground.propertyFields.stroke = "color";
@@ -153,7 +156,7 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
     );
   }
 
-  private mapData(data: IObjectWithIndex[], maxValue: number): IObjectWithIndex[] {
+  private mapData(data: IObjectWithIndex[], maxValue: number, amcharts: AMCHARTS): IObjectWithIndex[] {
     return data.map((element) => {
       const value = element[this.props.valueDataField];
       const relativeValue = value / (maxValue || 1) * 100;
@@ -162,19 +165,20 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
       return {
         ...element,
         [this.props.valueDataField]: this.props.type === "relative" ? relativeValue : value,
-        color:  am4core.color(color),
+        color: amcharts.am4core.color(color),
         ...(
           (relativeValue > 85)
-            ? { dx: 6, horizontalCenter: "right" }
+            ? {dx: 6, horizontalCenter: "right"}
             : (relativeValue < 15)
-            ? { dx: -6, horizontalCenter: "left" }
-            : { dx: 0, horizontalCenter: "middle" }
+            ? {dx: -6, horizontalCenter: "left"}
+            : {dx: 0, horizontalCenter: "middle"}
         )
       }
     });
   }
 
-  private updateState(): void {
+  private async updateState(): Promise<void> {
+    const amcharts = await getAmcharts();
     const data = this.props.data || [];
     const valueDataField = this.props.valueDataField;
     const maxValue = typeof (this.props.maxValue) === "number"
@@ -183,7 +187,7 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
         ? 100
         : Math.max(...data.map(element => element[valueDataField]), 0);
 
-    this.setState({mappedData: this.mapData(data, maxValue).reverse(), maxValue});
+    this.setState({mappedData: this.mapData(data, maxValue, amcharts).reverse(), maxValue});
   }
 
 }

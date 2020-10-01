@@ -26,14 +26,14 @@ export async function getXlsx(): Promise<XLSX> {
 
 
 // Original xlsx type - unimportable trash. Clone in here
-import * as CFB from "cfb";
-import * as SSF from "ssf";
-
-/** SSF Formatter Library */
-export { SSF };
-
-/** CFB Library */
-export { CFB };
+// import * as CFB from "cfb";
+// import * as SSF from "ssf";
+//
+// /** SSF Formatter Library */
+// export { SSF };
+//
+// /** CFB Library */
+// export { CFB };
 
 /** Number Format (either a string or an index to the format table) */
 export type NumberFormat = string | number;
