@@ -22,6 +22,7 @@ export interface IInitSUISettings {
   graphqlUri: string;
   restUri: string;
   rusName: string;
+  offlineMode?: boolean;
   percentToColorSettings: IColorHeatMapSettings;
   permissions?: {
     exportAll?: Permission
