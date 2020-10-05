@@ -7,6 +7,7 @@ export abstract class ChartWrapper<T extends { new(): any }> extends React.Compo
   onChartCreated?(chart: InstanceType<T>, amcharts: AMCHARTS): void;
 }> {
   public chart: InstanceType<T>;
+  private nextData: any;
 
   // Math.random should be unique because of its seeding algorithm.
   // Convert it to base 36 (numbers + letters), and grab the first 9 characters
@@ -18,7 +19,12 @@ export abstract class ChartWrapper<T extends { new(): any }> extends React.Compo
     this.chart = amcharts.am4core.create<InstanceType<T>>(`chartdiv_${this.id}`, this.getType(amcharts));
     // noinspection JSPrimitiveTypeWrapperUsage
     this.chart.language.locale = amcharts.am4lang_ru_RU;
-    this.chart.data = data || this.props.data;
+    if(this.nextData) {
+      this.chart.data = this.nextData;
+      this.nextData = null;
+    } else {
+      this.chart.data = data || this.props.data;
+    }
     // if (this.onChartCreated) {
     //   this.onChartCreated(this.chart, amcharts);
     // }
@@ -34,9 +40,13 @@ export abstract class ChartWrapper<T extends { new(): any }> extends React.Compo
   }
 
   public componentWillUpdate(nextProps: any): void {
-    if (this.chart.data !== nextProps.data) {
-      this.chart.data = nextProps.data;
-      this.chart.invalidateData();
+    if (!this.chart) {
+      this.nextData = nextProps.data;
+    } else {
+      if (this.chart.data !== nextProps.data) {
+        this.chart.data = nextProps.data;
+        this.chart.invalidateData();
+      }
     }
   }
 
