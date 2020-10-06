@@ -18,6 +18,7 @@ interface IUserCardProps<TDetail, TAdditional> {
   additionalMainInfoRows?: OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseCardItemLayout<any>>>;
   additionalRows?: OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseCardItemLayout<any>>>;
   allowDeleteOperations?: boolean;
+  extraHeader?: JSX.Element;
   roles?: IRole[];
   userData: IUser<TDetail> & TAdditional;
   handleDeleteChange(): Promise<void>;
@@ -51,23 +52,26 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
               }}
             >
               <h2 style={{width: "100%"}}>{userData.name}</h2>
-              {(typeof this.props.allowDeleteOperations === "boolean" ? this.props.allowDeleteOperations : isAdmin())
-                ? (
-                  <Tooltip
-                    title={userData.deleted ? "Отменить удаление" : "Удалить"}
-                    placement="topLeft"
-                  >
-                    <PromisedButton
-                      type={userData.deleted ? undefined : "danger" as any}
-                      icon={userData.deleted ? (<IssuesCloseOutlined/>) : (<DeleteOutlined/>)}
-                      promise={this.props.handleDeleteChange}
-                      popconfirmSettings={{
-                        placement: "topRight",
-                        title: "Вы уверены, что хотите сделать данную операцию?",
-                      }}
-                    />
-                  </Tooltip>
-                ) : null}
+              <div>
+                {this.props.extraHeader}
+                {(typeof this.props.allowDeleteOperations === "boolean" ? this.props.allowDeleteOperations : isAdmin())
+                  ? (
+                    <Tooltip
+                      title={userData.deleted ? "Отменить удаление" : "Удалить"}
+                      placement="topLeft"
+                    >
+                      <PromisedButton
+                        type={userData.deleted ? undefined : "danger" as any}
+                        icon={userData.deleted ? (<IssuesCloseOutlined/>) : (<DeleteOutlined/>)}
+                        promise={this.props.handleDeleteChange}
+                        popconfirmSettings={{
+                          placement: "topRight",
+                          title: "Вы уверены, что хотите сделать данную операцию?",
+                        }}
+                      />
+                    </Tooltip>
+                  ) : null}
+              </div>
             </div>
             <BaseCard
               noCard={true}
