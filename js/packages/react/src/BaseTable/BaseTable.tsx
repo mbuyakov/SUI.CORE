@@ -20,10 +20,11 @@ import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColum
 import {defaultSelection, ISelectionTable} from './ISelectionTable';
 import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
 import {exportToXlsx, mapColumns} from "./utils";
+import {CustomPagingContainer} from "@/BaseTable/extends/CustomPagingContainer";
 
 const Cell = Table.Cell;
 const SelectionCell = TableSelection.Cell;
-const PagingPanelContainer = PagingPanel.Container;
+const PagingPanelContainer = CustomPagingContainer;
 const ToolbarRoot = Toolbar.Root;
 const TableGroupRowContent = TableGroupRow.Content;
 
