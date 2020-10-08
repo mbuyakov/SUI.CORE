@@ -10,7 +10,7 @@
     "umi-config.js"
   ],
   "scripts": {
-    "build": "cd ../.. && PACKAGE=all father-build && cd ./packages/all && npx tsc-alias -p tsconfig.json",
+    "build": "cd ../.. && cross-env PACKAGE=all father-build && cd ./packages/all && npx tsc-alias -p tsconfig.json",
     "ci": "run-s build"
   },
   "dependencies": {
