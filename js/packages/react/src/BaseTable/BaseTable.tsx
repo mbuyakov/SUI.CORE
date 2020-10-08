@@ -9,6 +9,7 @@ import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import * as React from 'react';
 import {defaultIfNotBoolean, getDataByKey} from "@sui/core";
+import {CustomPagingPanelContainer} from "@/BaseTable/extends/CustomPagingPanelContainer";
 
 
 import {BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '../styles';
@@ -20,11 +21,10 @@ import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColum
 import {defaultSelection, ISelectionTable} from './ISelectionTable';
 import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
 import {exportToXlsx, mapColumns} from "./utils";
-import {CustomPagingContainer} from "@/BaseTable/extends/CustomPagingContainer";
 
 const Cell = Table.Cell;
 const SelectionCell = TableSelection.Cell;
-const PagingPanelContainer = CustomPagingContainer;
+const PagingPanelContainer = CustomPagingPanelContainer;
 const ToolbarRoot = Toolbar.Root;
 const TableGroupRowContent = TableGroupRow.Content;
 
