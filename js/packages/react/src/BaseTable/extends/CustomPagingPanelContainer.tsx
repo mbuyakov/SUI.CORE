@@ -10,6 +10,7 @@ export function CustomPagingPanelContainer(props: ICustomPagingContainer): JSX.E
       <PagingPanel.Container
         {...props}
       />
+      <span>Страница:</span>
       <Select
         onChange={props.onCurrentPageChange}
       >
