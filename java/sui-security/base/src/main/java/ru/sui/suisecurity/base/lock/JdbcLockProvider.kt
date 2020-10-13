@@ -60,7 +60,7 @@ private class JdbcLock(
     }
 
     private fun executeInTransaction(action: (TransactionStatus) -> Unit) {
-        transactionTemplate.executeWithoutResult {
+        transactionTemplate.execute {
             try {
                 action(it)
             } catch (exception: Exception) {
