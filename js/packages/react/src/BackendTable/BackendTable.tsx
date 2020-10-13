@@ -754,10 +754,10 @@ export class BackendTable<TSelection = defaultSelection>
 
         return new Promise<void>((resolve): void => resolve());
       })
+      .then(() => {location.reload()})
       .then(() => {
         notification.info({
           message: "Таблица успешно сброшена к виду по умолчанию",
-          description: "Пожалуйста, обновите страницу",
           duration: 0
         });
       });
