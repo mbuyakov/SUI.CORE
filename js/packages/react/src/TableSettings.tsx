@@ -454,7 +454,6 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                   tabs: [
                     {
                       title: 'Общее',
-                      icon: 'global',
                       rows: [
                         {
                           cols: [
@@ -653,7 +652,6 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                     },
                     {
                       title: 'Табличное представление',
-                      icon: 'profile',
                       rows: [
                         {
                           cols: [
@@ -845,7 +843,6 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                       ],
                     },
                     {
-                      icon: 'card',
                       rows: {
                         cols: {
                           items: {
@@ -878,7 +875,6 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                       title: 'Карточка объекта',
                     },
                     {
-                      icon: 'build',
                       rows: {
                         cols: {
                           items: {

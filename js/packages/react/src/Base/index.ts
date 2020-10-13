@@ -3,7 +3,7 @@ export * from "./BaseCardCollapseLayout";
 export * from "./BaseCardColLayout";
 export * from "./BaseCardContext";
 export * from "./BaseCardItemLayout";
-export * from "./BaseCardRowLayout";
+export * from "./BaseCardRow";
 export * from "./BaseCardTabContext";
 export * from "./BaseCardTabLayout";
 export * from "./BaseForm";

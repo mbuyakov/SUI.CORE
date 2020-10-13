@@ -1,31 +1,48 @@
-import { Button, Mentions, Menu } from 'antd';
-import Checkbox, { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import {Button, Mentions, Menu} from 'antd';
+import Checkbox, {CheckboxChangeEvent} from 'antd/lib/checkbox';
 import Input from 'antd/lib/input';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import { camelCase , Merge } from '@sui/core';
-import { IBaseCardItemLayout, IBaseCardRowLayout } from '../Base';
-import { DeletableSmallCard } from '../DeletableSmallCard';
-import { DnDList, IBaseDnDChildProps } from '../Draggable';
-import { ISerializable, SerializableDnDChild } from '../Draggable/Serializable';
-import { COMMON__GRID } from '../styles';
+import {camelCase, Merge} from '@sui/core';
+import {IBaseCardItemLayout, IBaseCardRowLayout, IBaseCardRowWithCollapseLayout, IBaseCardRowWithColsLayout, IBaseCardRowWithDividerLayout, IBaseCardRowWithMetaTableLayout, IBaseCardRowWithTabsLayout, IMetaTableProps, isRowWithCollapse, isRowWithCols, isRowWithDivider, isRowWithMetaTable, isRowWithTabs} from '../Base';
+import {DeletableSmallCard} from '../DeletableSmallCard';
+import {DnDList, IBaseDnDChildProps} from '../Draggable';
+import {ISerializable, SerializableDnDChild} from '../Draggable/Serializable';
+import {COMMON__GRID} from '../styles';
 
-import { CollapseSettings, SerializedCollapseSettings } from './CollapseSettings';
-import { ColSettings, SerializedColSettings } from './ColSettings';
-import { FieldsContext } from './FieldsContext';
-import { OldVersionWarning } from './OldVersionWarning';
-import { SerializedTabSettings, TabSettings } from './TabSettings';
+import {CollapseSettings, SerializedCollapseSettings} from './CollapseSettings';
+import {ColSettings, SerializedColSettings} from './ColSettings';
+import {FieldsContext} from './FieldsContext';
+import {OldVersionWarning} from './OldVersionWarning';
+import {SerializedTabSettings, TabSettings} from './TabSettings';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type RowWithColsSettings = Merge<IBaseCardRowWithColsLayout<any, IBaseCardItemLayout<any>>, {
+  cols: SerializedColSettings[]
+}>
 
-type RowSettingsState = Merge<IBaseCardRowLayout<any, IBaseCardItemLayout<any>>, {
-  collapsePanels?: SerializedCollapseSettings[]
-  cols?: SerializedColSettings[]
-  tabs?: SerializedTabSettings[]
-}>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type RowWithCollapseSettings = Merge<IBaseCardRowWithCollapseLayout<any, IBaseCardItemLayout<any>>, {
+  collapsePanels: SerializedCollapseSettings[]
+}>
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type RowWithTabsSettings = Merge<IBaseCardRowWithTabsLayout<any, IBaseCardItemLayout<any>>, {
+  tabs: SerializedTabSettings[]
+}>
+
+type RowSettingsState = Partial<RowWithColsSettings &
+  RowWithCollapseSettings &
+  IBaseCardRowWithDividerLayout &
+  IBaseCardRowWithMetaTableLayout &
+  RowWithTabsSettings>;
 
 export type SerializedRowSettings = ISerializable<RowSettingsState>;
 export type RowType = 'row' | 'tabs' | 'divider' | 'metatable' | 'collapse' | 'UNKNOWN';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyBaseCardRow = IBaseCardRowLayout<any, any>;
 
 interface IRowSettingsProps extends IBaseDnDChildProps {
   plain?: SerializedRowSettings
@@ -56,8 +73,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
             preState.tabs = [];
             break;
           case 'metatable':
-// @ts-ignore
-            preState.metaTableProps = {};
+            preState.metaTableProps = {} as IMetaTableProps;
             break;
           case 'collapse':
             preState.collapsePanels = [];
@@ -151,7 +167,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
                   {fields => (
                     <Mentions
                       // defaultSuggestions={fields}
-// @ts-ignore
+                      // @ts-ignore
                       defaultValue={this.state.metaTableProps[setting.field]}
                       onChange={this.onFilterChanged(setting.field)}
                     >
@@ -274,19 +290,19 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
 
   @autobind
   private detectType(): RowType {
-    if (this.state.cols) {
+    if (isRowWithCols(this.state as AnyBaseCardRow)) {
       return 'row';
     }
-    if (this.state.tabs) {
+    if (isRowWithTabs(this.state as AnyBaseCardRow)) {
       return 'tabs';
     }
-    if (this.state.isDivider) {
+    if (isRowWithDivider(this.state as AnyBaseCardRow)) {
       return 'divider';
     }
-    if (this.state.metaTableProps) {
+    if (isRowWithMetaTable(this.state as AnyBaseCardRow)) {
       return 'metatable';
     }
-    if (this.state.collapsePanels) {
+    if (isRowWithCollapse(this.state as AnyBaseCardRow)) {
       return 'collapse';
     }
 
@@ -305,23 +321,23 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
 
   @autobind
   private onDividerDashedChanged(e: CheckboxChangeEvent): void {
-    this.setState({ dividerDashed: e.target.checked });
+    this.setState({dividerDashed: e.target.checked});
   }
 
   @autobind
   private onDividerTextChanged(e: React.ChangeEvent<HTMLInputElement>): void {
-    this.setState({ dividerText: e.target.value });
+    this.setState({dividerText: e.target.value});
   }
 
   @autobind
   private onFilterChanged(fieldName: string): (contentState: any) => void {
     return (contentState: any) =>
-      this.setState({ metaTableProps: { ...this.state.metaTableProps, [fieldName]: contentState } });
+      this.setState({metaTableProps: {...this.state.metaTableProps, [fieldName]: contentState}});
   }
 
   @autobind
   private onFitCollapsePanelChanged(e: CheckboxChangeEvent): void {
-    this.setState({ fitCollapsePanel: e.target.checked });
+    this.setState({fitCollapsePanel: e.target.checked});
   }
 
   @autobind
@@ -331,16 +347,16 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
 
   @autobind
   private onTableChanged(e: React.ChangeEvent<HTMLInputElement>): void {
-    this.setState({ metaTableProps: { ...this.state.metaTableProps, table: e.target.value } });
+    this.setState({metaTableProps: {...this.state.metaTableProps, table: e.target.value}});
   }
 
   @autobind
   private onTabsInCardChanged(e: CheckboxChangeEvent): void {
-    this.setState({ tabsInCard: e.target.checked });
+    this.setState({tabsInCard: e.target.checked});
   }
 
   @autobind
   private onTitleEnabledChanged(e: CheckboxChangeEvent): void {
-    this.setState({ metaTableProps: { ...this.state.metaTableProps, titleEnabled: e.target.checked } });
+    this.setState({metaTableProps: {...this.state.metaTableProps, titleEnabled: e.target.checked}});
   }
 }

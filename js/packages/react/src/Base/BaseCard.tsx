@@ -1,16 +1,15 @@
-import { Card } from 'antd';
-import Icon from 'antd/lib/icon';
+import {Card} from 'antd';
 import Tabs from 'antd/lib/tabs';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import classNames from 'classnames';
-import {OneOrArrayWithNulls, wrapInArrayWithoutNulls } from "@sui/core";
+import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 
-import { BaseCardContext } from './BaseCardContext';
-import { DEFAULT_ITEM_RENDERER, IBaseCardItemLayout } from './BaseCardItemLayout';
-import { IBaseCardRowLayout, renderIBaseCardRowLayout } from './BaseCardRowLayout';
-import { BaseCardTabContext } from './BaseCardTabContext';
-import { renderIBaseCardTabLayout } from './BaseCardTabLayout';
+import {BaseCardContext} from '@/Base/BaseCardContext';
+import {DEFAULT_ITEM_RENDERER, IBaseCardItemLayout} from '@/Base/BaseCardItemLayout';
+import {BaseCardRow, IBaseCardRowLayout, IBaseCardRowWithTabsLayout} from '@/Base/BaseCardRow';
+import {BaseCardTabContext} from '@/Base/BaseCardTabContext';
+import {renderIBaseCardTabLayout} from '@/Base/BaseCardTabLayout';
 
 
 const renderTabBar = () => <React.Fragment/>;
@@ -24,9 +23,11 @@ export interface IBaseCardProps<T, ITEM> {
   item?: T;
   noCard?: boolean; // Paradox mode
   rows: OneOrArrayWithNulls<IBaseCardRowLayout<T, ITEM>>;
-itemRenderer?(sourceItem: any, item: ITEM, colspan: number): React.ReactNode;
+
+  itemRenderer?(sourceItem: T, item: ITEM, colspan: number): React.ReactNode;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Component<IBaseCardProps<T, ITEM>, {
   tab: string
 }> {
@@ -39,28 +40,34 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
   }
 
   public render(): JSX.Element {
-    const rows = wrapInArrayWithoutNulls(this.props.rows).filter(row => row);
+    const rows = wrapInArrayWithoutNulls(this.props.rows);
     let tabList;
     let tabBarExtraContent;
-    const firstChildrenIsTab = this.isFirstChildrenIsTab();
-    const firstChildrenTabs = wrapInArrayWithoutNulls(rows[0].tabs);
-    // Attach tab to card props
-    if (firstChildrenIsTab) {
-// @ts-ignore
-      tabList = firstChildrenTabs.map((tab, i) => ({ key: i.toString(), tab: (<span>{tab.icon && <Icon type={tab.icon}/>}{tab.title}</span>) }));
-      tabBarExtraContent = rows[0].tabBarExtraContent;
-    }
     let body = null;
-if (firstChildrenIsTab) {
-// @ts-ignore
+    let firstChildrenIsTab = false;
+    // Attach tab to card props
+    if (this.isFirstChildrenIsTab(rows)) {
+      firstChildrenIsTab = true;
+      const firstRow = rows[0];
+      const firstChildrenTabs = wrapInArrayWithoutNulls(firstRow.tabs);
+      tabList = firstChildrenTabs.map((tab, i) => ({key: i.toString(), tab: (<span>{tab.title}</span>)}));
+      tabBarExtraContent = firstRow.tabBarExtraContent;
       body = firstChildrenTabs.map((tab, tabIndex) => renderIBaseCardTabLayout(this.props.item, tab, tabIndex, this.props.forceRenderTabs));
-      // this.renderTabPanes(rows[0].tabs)
     } else {
-      body = rows.map((row, rowIndex, arr) => renderIBaseCardRowLayout(this.props.item, row, rowIndex, 'card', arr.length, this.isFirstChildrenIsTab()));
+      body = rows.map((row, rowIndex, arr) => (
+        <BaseCardRow
+          sourceItem={this.props.item}
+          row={row}
+          rowIndex={rowIndex}
+          parent="card"
+          rowsLength={arr.length}
+        />
+      ));
     }
+
     const className = classNames("baseCard", this.props.className);
     return (
-      <BaseCardContext.Provider value={{ forceRenderTabs: this.props.forceRenderTabs, itemRenderer: this.props.itemRenderer || DEFAULT_ITEM_RENDERER}}>
+      <BaseCardContext.Provider value={{forceRenderTabs: this.props.forceRenderTabs, itemRenderer: this.props.itemRenderer || DEFAULT_ITEM_RENDERER}}>
         {this.props.noCard
           ? <div className={className}>{body}</div>
           : (
@@ -73,11 +80,11 @@ if (firstChildrenIsTab) {
               extra={this.props.extra}
               style={this.props.cardStyle}
               className={className}
-              bodyStyle={firstChildrenIsTab ? { padding: 0 } : {}}
+              bodyStyle={firstChildrenIsTab ? {padding: 0} : {}}
             >
               {firstChildrenIsTab
                 ? <BaseCardTabContext.Provider value={this.onTabChange}>
-                  <Tabs style={{ padding: 24 }} renderTabBar={renderTabBar} activeKey={this.state.tab} tabBarExtraContent={tabBarExtraContent} >
+                  <Tabs style={{padding: 24}} renderTabBar={renderTabBar} activeKey={this.state.tab} tabBarExtraContent={tabBarExtraContent}>
                     {body}
                   </Tabs>
                 </BaseCardTabContext.Provider>
@@ -89,14 +96,12 @@ if (firstChildrenIsTab) {
   }
 
   @autobind
-  private isFirstChildrenIsTab(): boolean {
-    const rows = wrapInArrayWithoutNulls(this.props.rows);
-
-    return !!(!this.props.noCard && rows.length === 1 && rows[0] && rows[0].tabs);
+  private isFirstChildrenIsTab(rows: Array<IBaseCardRowLayout<T, ITEM>>): rows is Array<IBaseCardRowWithTabsLayout<T, ITEM>> {
+    return !!(!this.props.noCard && rows.length === 1 && rows[0] && (rows[0] as IBaseCardRowWithTabsLayout<T, ITEM>).tabs);
   }
 
   @autobind
   private onTabChange(key: string): void {
-    this.setState({ tab: key });
+    this.setState({tab: key});
   }
 }

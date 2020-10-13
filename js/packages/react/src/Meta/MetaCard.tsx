@@ -7,7 +7,7 @@ import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 import {ColumnInfoManager, DataKey, getDataByKey, NameManager, NO_DATA_TEXT, normalizeDataKey, TableInfoManager, wrapInArray, addPluralEnding, capitalize, query, addQuotesIfString, dataKeysToDataTree, wrapInArrayWithoutNulls, isValidUuid} from "@sui/core";
 
-import { BaseCard, DATA_KEY_REGEXP, IBaseCardItemLayout, IBaseCardRowLayout } from '../Base';
+import {BaseCard, DATA_KEY_REGEXP, IBaseCardItemLayout, IBaseCardRowLayout, IBaseCardRowWithColsLayout} from '../Base';
 import { RouterLink } from '../Link';
 import {SerializedCardSettings, SerializedFreeText, SerializedItemSettings, SerializedRowSettings} from "../MetaCardSettings";
 import { TableSettingsDialog } from '../plugins';
@@ -118,7 +118,7 @@ return data == null ? NO_DATA_TEXT : data;
           ? <BaseCard
             cardStyle={{ margin: -1 }}
             item={this.state.item && this.state.item.nodes[0]}
-            rows={this.state.schema && this.state.schema.rows}
+            rows={this.state.schema && this.state.schema.rows as IBaseCardRowLayout<any, any>[]}
           />
           : <WaitData
             data={this.state.ready}
@@ -156,7 +156,7 @@ if (schema == null || !((schema.rows && schema.rows.length) || (schema.title && 
           this.setState({ error: `Плагин "${row.__type}" не найден` });
         }
 
-        (row as unknown as IBaseCardRowLayout<any, IBaseCardItemLayout<any>>).cols = {
+        (row as unknown as IBaseCardRowWithColsLayout<any, IBaseCardItemLayout<any>>).cols = {
           items: {
 // @ts-ignore
             dataKey: row.field,
