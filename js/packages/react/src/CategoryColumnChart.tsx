@@ -16,6 +16,7 @@ export interface IAdditionalSettingProps {
   chart: InstanceType<AMCHARTS["am4charts"]["XYChart"]>;
   seriesMap: Map<string, InstanceType<AMCHARTS["am4charts"]["ColumnSeries"]>>;
   valueAxis: InstanceType<AMCHARTS["am4charts"]["ValueAxis"]>;
+  amcharts: AMCHARTS;
 }
 
 interface ICategoryColumnChartProps {
@@ -99,7 +100,8 @@ export class CategoryColumnChart extends React.Component<ICategoryColumnChartPro
         categoryAxis,
         chart,
         seriesMap,
-        valueAxis
+        valueAxis,
+        amcharts
       });
     }
   }
