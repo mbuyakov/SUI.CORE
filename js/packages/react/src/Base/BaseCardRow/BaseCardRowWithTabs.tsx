@@ -13,27 +13,30 @@ export interface IBaseCardRowWithTabsLayout<T, ITEM> {
 
 export const BaseCardRowWithTabs: <T, ITEM>(props: IBaseCardRowWithTabsLayout<T, ITEM> & {
   sourceItem: T
-}) => JSX.Element = props => (
-  props.tabsInCard
-    ? (
-      <BaseCard
-        rows={{
-          tabs: props.tabs,
-        }}
-        item={props.sourceItem}
-      />
-    )
-    : (
-      <BaseCardContext.Consumer>
-        {({forceRenderTabs}): JSX.Element => (
-          <ManagedTabs defaultActiveKey="0">
-            {wrapInArrayWithoutNulls(props.tabs).map((tab, index) => renderIBaseCardTabLayout(props.sourceItem, tab, index, forceRenderTabs))}
-          </ManagedTabs>
-        )}
-      </BaseCardContext.Consumer>
-    )
-);
+}) => JSX.Element = props => {
+  const tabs = wrapInArrayWithoutNulls(props.tabs);
+  return (
+    props.tabsInCard
+      ? (
+        <BaseCard
+          rows={{
+            tabs,
+          }}
+          item={props.sourceItem}
+        />
+      )
+      : (
+        <BaseCardContext.Consumer>
+          {({forceRenderTabs}): JSX.Element => (
+            <ManagedTabs defaultActiveKey="0">
+              {tabs.map((tab, index) => renderIBaseCardTabLayout(props.sourceItem, tab, index, forceRenderTabs))}
+            </ManagedTabs>
+          )}
+        </BaseCardContext.Consumer>
+      )
+  );
+}
 
 export function isRowWithTabs<T, ITEM>(row: IBaseCardRowLayout<T, ITEM>): row is IBaseCardRowWithTabsLayout<T, ITEM> {
-  return "collapsePanels" in row;
+  return "tabs" in row;
 }
