@@ -37,11 +37,14 @@ private class JdbcLock(
 
     override fun lock() {
         while (true) {
+            val now = Date()
+            val expireAt = Date(now.time + Duration.ofSeconds(10).toMillis())
+
+            // Удаляем те, у которых закончился срок действия
+            jdbcTemplate.update("DELETE FROM sui_utils.lock WHERE expire_at <= ?", now)
+
             try {
                 executeInTransaction {
-                    val now = Date()
-                    val expireAt = Date(now.time + Duration.ofSeconds(10).toMillis())
-                    jdbcTemplate.update("DELETE FROM sui_utils.lock WHERE expire_at <= ?", now)
                     jdbcTemplate.update("INSERT INTO sui_utils.lock(group_key, lock_key, expire_at) VALUES(?,?,?)", group, key, expireAt)
                 }
 
