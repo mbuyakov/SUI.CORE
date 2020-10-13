@@ -17,7 +17,8 @@ export type IBaseCardRowLayout<T, ITEM> =
 export const BaseCardRow: <T, ITEM>(props: {
   sourceItem: T,
   row: IBaseCardRowLayout<T, ITEM>,
-  rowIndex: number, parent: 'card' | 'collapse' | 'tab',
+  rowIndex: number,
+  parent: 'card' | 'collapse' | 'tab',
   rowsLength: number,
 }) => JSX.Element = props => {
   const row = props.row;
@@ -25,12 +26,14 @@ export const BaseCardRow: <T, ITEM>(props: {
     return (
       <BaseCardRowWithDivider
         {...row}
+        key={props.rowIndex.toString()}
       />
     );
   } else if (isRowWithTabs(row)) {
     return (
       <BaseCardRowWithTabs
         {...row}
+        key={props.rowIndex.toString()}
         sourceItem={props.sourceItem}
       />
     );
@@ -38,6 +41,7 @@ export const BaseCardRow: <T, ITEM>(props: {
     return (
       <BaseCardRowWithMetaTable
         {...row}
+        key={props.rowIndex.toString()}
         rowIndex={props.rowIndex}
         rowsLength={props.rowsLength}
         parent={props.parent}
@@ -48,6 +52,7 @@ export const BaseCardRow: <T, ITEM>(props: {
     return (
       <BaseCardRowWithCollapse
         {...row}
+        key={props.rowIndex.toString()}
         rowIndex={props.rowIndex}
         rowsLength={props.rowsLength}
         sourceItem={props.sourceItem}
@@ -56,6 +61,7 @@ export const BaseCardRow: <T, ITEM>(props: {
   } else if (isRowWithCols(row)) {
     return <BaseCardRowWithCols
       {...row}
+      key={props.rowIndex.toString()}
       sourceItem={props.sourceItem}
     />;
   } else {

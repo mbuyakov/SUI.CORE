@@ -27,6 +27,7 @@ export function renderIBaseCardCollapseLayout<T, ITEM>(sourceItem: T, panel: IBa
     >
       {wrapInArrayWithoutNulls(panel.rows).map((row, rowIndex, arr) => (
         <BaseCardRow
+          key={rowIndex.toString()}
           sourceItem={sourceItem}
           row={row}
           rowIndex={rowIndex}

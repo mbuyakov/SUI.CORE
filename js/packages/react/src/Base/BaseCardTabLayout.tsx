@@ -15,6 +15,7 @@ export function renderIBaseCardTabLayout<T, ITEM>(sourceItem: T, tab: IBaseCardT
     <Tabs.TabPane key={tabIndex.toString()} tab={<span>{tab.title}</span>} forceRender={forceRenderTabs}>
       {wrapInArrayWithoutNulls(tab.rows).map((row, index, arr) => (
         <BaseCardRow
+          key={index.toString()}
           sourceItem={sourceItem}
           row={row}
           rowIndex={index}

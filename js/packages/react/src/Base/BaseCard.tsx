@@ -56,6 +56,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
     } else {
       body = rows.map((row, rowIndex, arr) => (
         <BaseCardRow
+          key={rowIndex.toString()}
           sourceItem={this.props.item}
           row={row}
           rowIndex={rowIndex}
