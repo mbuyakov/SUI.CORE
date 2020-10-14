@@ -2,7 +2,7 @@ package ru.sui.suibackend.model.query;
 
 import lombok.*;
 import ru.sui.suientity.entity.suimeta.TableInfo;
-import ru.sui.suisecurity.utils.MetaSchemaUtils;
+import ru.sui.suisecurity.base.utils.MetaSchemaUtils;
 
 @Getter
 @AllArgsConstructor

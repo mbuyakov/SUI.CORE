@@ -11,7 +11,7 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.stereotype.Component;
-import ru.sui.suisecurity.security.JwtAuthenticationService;
+import ru.sui.suisecurity.base.security.JwtAuthenticationService;
 
 @Component
 @RequiredArgsConstructor

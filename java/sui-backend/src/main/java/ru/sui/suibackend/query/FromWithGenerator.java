@@ -16,7 +16,7 @@ import ru.sui.suibackend.model.query.OrderNullBehavior;
 import ru.sui.suibackend.model.query.Table;
 import ru.sui.suibackend.utils.QueryUtils;
 import ru.sui.suientity.entity.suimeta.ColumnInfo;
-import ru.sui.suisecurity.utils.MetaSchemaUtils;
+import ru.sui.suisecurity.base.utils.MetaSchemaUtils;
 
 import java.util.*;
 import java.util.function.Function;

@@ -12,7 +12,7 @@ import ru.sui.suientity.enums.RoleName;
 import ru.sui.suientity.repository.suimeta.ColumnInfoRepository;
 import ru.sui.suientity.repository.suimeta.SuiMetaSettingRepository;
 import ru.sui.suientity.repository.suisecurity.RestrictionRepository;
-import ru.sui.suisecurity.utils.MetaSchemaUtils;
+import ru.sui.suisecurity.base.utils.MetaSchemaUtils;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -28,7 +28,7 @@ public class MetaAccessService {
   private static final String FROM_SUB_QUERY_ALIAS = "____from_sub_query__alias";
 
   @NonNull
-  private ru.sui.suisecurity.service.MetaSchemaService metaSchemaService;
+  private ru.sui.suisecurity.base.service.MetaSchemaService metaSchemaService;
   @NonNull
   private ColumnInfoRepository columnInfoRepository;
   @NonNull

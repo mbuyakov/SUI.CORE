@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.sui.suisecurity.base.config.AutoConfiguration
+org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=ru.sui.suisecurity.base.config.RedisAutoConfigurationImportFilter

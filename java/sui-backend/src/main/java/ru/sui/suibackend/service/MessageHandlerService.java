@@ -21,8 +21,8 @@ import ru.sui.suibackend.message.response.ResponseMessageType;
 import ru.sui.suibackend.model.ResponseMessage;
 import ru.sui.suibackend.model.UserState;
 import ru.sui.suientity.entity.suimeta.ColumnInfo;
-import ru.sui.suisecurity.security.UserPrincipal;
-import ru.sui.suisecurity.utils.MetaSchemaUtils;
+import ru.sui.suisecurity.base.security.UserPrincipal;
+import ru.sui.suisecurity.base.utils.MetaSchemaUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
