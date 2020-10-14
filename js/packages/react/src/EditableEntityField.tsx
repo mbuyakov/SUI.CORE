@@ -17,7 +17,7 @@ export interface IEditableEntityFieldProps<T> extends Omit<IEditablePromisedComp
   id: PossibleId;
   successMessage: string;
 
-  afterSave?(): Promise<void>;
+  afterSave?(value: T): Promise<void>;
 
   customDefaultValue?(value: T): any;
 
@@ -77,7 +77,7 @@ export class EditableEntityField<T = any> extends React.Component<IEditableEntit
                     });
 
                   if (this.props.afterSave) {
-                    update = update.then(this.props.afterSave);
+                    update = update.then(() => this.props.afterSave(valueForUpdate));
                   }
 
                   return update;
