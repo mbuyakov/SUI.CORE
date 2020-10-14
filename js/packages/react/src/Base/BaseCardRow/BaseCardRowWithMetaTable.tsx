@@ -50,7 +50,7 @@ export const BaseCardRowWithMetaTable: <T>(props: IBaseCardRowWithMetaTableLayou
     cardType="inner"
     {...props.metaTableProps}
     paperStyle={props.rowIndex !== 0 || props.rowsLength !== 1 ? {marginLeft: 0, marginRight: 0} : {}}
-    fitToCardBody={props.parent === 'card' && props.rowIndex === 0 && props.rowsLength === 1}
+    fitToCardBody={(props.parent === 'card' || props.parent === 'block') && props.rowIndex === 0 && props.rowsLength === 1}
     fitToCollapseBody={props.parent === 'collapse' && props.rowIndex === 0 && props.rowsLength === 1}
     filter={JSON.parse(mapFilters(props.metaTableProps.globalFilter as string, props.sourceItem))}
     defaultFilter={JSON.parse(mapFilters(props.metaTableProps.filter as string, props.sourceItem))}

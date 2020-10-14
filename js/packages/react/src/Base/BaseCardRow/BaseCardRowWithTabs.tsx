@@ -2,7 +2,7 @@ import React from "react";
 import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 import {BaseCard} from "@/Base/BaseCard";
 import {BaseCardContext} from "@/Base/BaseCardContext";
-import {IBaseCardTabLayout, ManagedTabs, renderIBaseCardTabLayout} from "@/Base/BaseCardTabLayout";
+import {IBaseCardTabLayout, ManagedTabs, renderIBaseCardTabLayout} from "@/Base/BaseCardTab";
 import {IBaseCardRowLayout} from "@/Base/BaseCardRow/BaseCardRow";
 
 export interface IBaseCardRowWithTabsLayout<T, ITEM> {

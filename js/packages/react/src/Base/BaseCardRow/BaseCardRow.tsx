@@ -5,6 +5,7 @@ import {BaseCardRowWithTabs, IBaseCardRowWithTabsLayout, isRowWithTabs} from '@/
 import {BaseCardRowWithMetaTable, IBaseCardRowWithMetaTableLayout, isRowWithMetaTable} from '@/Base/BaseCardRow/BaseCardRowWithMetaTable';
 import {BaseCardRowWithCollapse, IBaseCardRowWithCollapseLayout, isRowWithCollapse} from "@/Base/BaseCardRow/BaseCardRowWithCollapse";
 import {BaseCardRowWithCols, IBaseCardRowWithColsLayout, isRowWithCols} from "@/Base/BaseCardRow/BaseCardRowWithCols";
+import {BaseCardRowParent} from "@/Base/BaseCardRow/types";
 
 export type IBaseCardRowLayout<T, ITEM> =
   IBaseCardRowWithColsLayout<T, ITEM> |
@@ -18,7 +19,7 @@ export const BaseCardRow: <T, ITEM>(props: {
   sourceItem: T,
   row: IBaseCardRowLayout<T, ITEM>,
   rowIndex: number,
-  parent: 'card' | 'collapse' | 'tab',
+  parent: BaseCardRowParent,
   rowsLength: number,
 }) => JSX.Element = props => {
   const row = props.row;
