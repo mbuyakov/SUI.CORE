@@ -8,7 +8,7 @@ import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 import {BaseCardContext} from '@/Base/BaseCardContext';
 import {DEFAULT_ITEM_RENDERER, IBaseCardItemLayout} from '@/Base/BaseCardItemLayout';
 import {BaseCardRow, IBaseCardRowLayout, IBaseCardRowWithTabsLayout} from '@/Base/BaseCardRow';
-import {BaseCardTabContext, isTabWithBlocks, renderIBaseCardTabLayout} from '@/Base/BaseCardTab';
+import {BaseCardTabContext, IBaseCardTabLayout, IBaseCardTabWithBlocks, isTabWithBlocks, renderIBaseCardTabLayout} from '@/Base/BaseCardTab';
 import {BaseCardBlock, IBaseCardBlockLayout} from "@/Base/BaseCardBlockLayout";
 
 
@@ -62,8 +62,18 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
       if (this.isFirstChildrenIsTab(rows)) {
         firstChildrenIsTab = true;
         const firstRow = rows[0];
-        const firstChildrenTabs = wrapInArrayWithoutNulls(firstRow.tabs);
+        let firstChildrenTabs = wrapInArrayWithoutNulls(firstRow.tabs);
         hasBlocks = firstChildrenTabs.some(tab => isTabWithBlocks(tab));
+        // If any tab has blocks - map all tabs without blocks to tab with 1 block
+        firstChildrenTabs = firstChildrenTabs.map(tab => {
+          if(!isTabWithBlocks(tab)) {
+            (tab as unknown as IBaseCardTabWithBlocks<T, ITEM>).blocks = {
+              rows: tab.rows
+            };
+            delete tab.rows;
+          }
+          return tab;
+        })
         tabList = firstChildrenTabs.map((tab, i) => ({key: i.toString(), tab: (<span>{tab.title}</span>)}));
         tabBarExtraContent = firstRow.tabBarExtraContent;
         // Body = tabs
