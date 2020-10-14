@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.sui.suimetaschemaservice.config.PropertySourceConfig, ru.sui.suimetaschemaservice.service.MetaSchemaRefresher
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.sui.suimetaschemaservice.config.PropertySourceConfig,ru.sui.suimetaschemaservice.service.MetaSchemaRefresher,ru.sui.suimetaschemaservice.service.MetaSchemaExporter
