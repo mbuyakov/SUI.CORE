@@ -11,29 +11,27 @@ export type IBaseCardTabLayout<T, ITEM> =
   IBaseCardTabWithBlocks<T, ITEM>;
 
 export function renderIBaseCardTabLayout<T, ITEM>(sourceItem: T, tab: IBaseCardTabLayout<T, ITEM>, tabIndex: number, forceRenderTabs: boolean): JSX.Element {
-    if(isTabWithRows(tab)) {
-      return (
-        <BaseCardTabWithRows
-          {...tab}
-          key={tabIndex.toString()}
-          sourceItem={sourceItem}
-          tabIndex={tabIndex}
-          forceRenderTabs={forceRenderTabs}
-        />
-      );
-    } else if (isTabWithBlocks(tab)) {
-      return (
-        <BaseCardTabWithBlocks
-          {...tab}
-          key={tabIndex.toString()}
-          sourceItem={sourceItem}
-          tabIndex={tabIndex}
-          forceRenderTabs={forceRenderTabs}
-        />
-      );
-    } else {
-      return (<h3>UNKNOWN TAB TYPE</h3>);
-    }
+  if (isTabWithRows(tab)) {
+    return (
+      BaseCardTabWithRows({
+        ...tab,
+        sourceItem,
+        tabIndex,
+        forceRenderTabs
+      })
+    );
+  } else if (isTabWithBlocks(tab)) {
+    return (
+      BaseCardTabWithBlocks({
+        ...tab,
+        sourceItem,
+        tabIndex,
+        forceRenderTabs
+      })
+    );
+  } else {
+    return (<h3>UNKNOWN TAB TYPE</h3>);
+  }
 }
 
 type ManagedTabsProps = Omit<TabsProps, 'onChange' | 'activeKey'>;

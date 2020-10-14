@@ -9,6 +9,7 @@ export interface IBaseCardTabWithBlocks<T, ITEM> {
   title: string;
 }
 
+// Don't use as <BaseCardTabWithRows/>. TabPane doesn't work in nested components of <Tabs/>
 export const BaseCardTabWithBlocks: <T, ITEM>(props: IBaseCardTabWithBlocks<T, ITEM> & {
   sourceItem: T
   tabIndex: number,
