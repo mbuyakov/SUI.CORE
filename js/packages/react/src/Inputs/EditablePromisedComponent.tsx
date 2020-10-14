@@ -44,6 +44,7 @@ export class EditablePromisedComponent<T>
                     style={{
                       alignItems: "center",
                       display: "flex",
+                      wordBreak: "break-word"
                     }}
                     className={EDITABLE_PROMISED_COMPONENT_CHILDREN}
                   >
