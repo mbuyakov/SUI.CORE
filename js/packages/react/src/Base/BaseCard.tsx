@@ -69,7 +69,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
         // Body = tabs
         body = (
           <BaseCardTabContext.Provider value={this.onTabChange}>
-            <Tabs style={{padding: 24}} renderTabBar={renderTabBar} activeKey={this.state.tab}>
+            <Tabs style={{padding: hasBlocks ? 0 : 24}} renderTabBar={renderTabBar} activeKey={this.state.tab}>
               {firstChildrenTabs.map((tab, tabIndex) => renderIBaseCardTabLayout(this.props.item, tab, tabIndex, this.props.forceRenderTabs))}
             </Tabs>
           </BaseCardTabContext.Provider>
