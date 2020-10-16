@@ -13,7 +13,7 @@ import {CustomPagingPanelContainer} from "@/BaseTable/extends/CustomPagingPanelC
 
 
 import {BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '../styles';
-import {EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, WarningPlugin} from './extends';
+import {EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, WarningPlugin, ColumnChooserContainer} from './extends';
 import {CustomToggleCell} from "./extends/CustomToggleCell";
 import {UserSettingsPlugin} from "./extends/UserSettingsPlugin";
 import {UserSettingsSupportPlugin} from "./extends/UserSettingsSupportPlugin";
@@ -425,7 +425,7 @@ export class BaseTable<TSelection = defaultSelection>
               rootComponent={this.toolbarRootComponent}
             />
           )}
-          {visibilityEnabled && <ColumnChooser messages={{showColumnChooser: 'Отобразить выбор колонок'}}/>}
+          {visibilityEnabled && <ColumnChooser containerComponent={ColumnChooserContainer} messages={{showColumnChooser: 'Отобразить выбор колонок'}}/>}
           {allowExport && (
             <ExportPlugin
               onClick={this.onExport}

@@ -1,3 +1,4 @@
+export * from "./ColumnChooserContainer";
 export * from "./EmptyMessageComponent";
 export * from "./ExportPlugin";
 export * from "./GroupSummaryRow";
