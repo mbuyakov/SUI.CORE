@@ -1,4 +1,4 @@
-import { Icon as LegacyIcon } from '@ant-design/compatible';
+import {DragOutlined} from '@ant-design/icons';
 import React from 'react';
 
 export const DnDDragHandler: React.FC = () => (
@@ -11,9 +11,6 @@ export const DnDDragHandler: React.FC = () => (
     }}
     className="dragHandle"
   >
-    <LegacyIcon
-      type="drag"
-      style={{marginRight: 8, color: '#888'}}
-    />
+    <DragOutlined style={{marginRight: 8, color: '#888'}} />
   </div>
 );

@@ -1,12 +1,9 @@
 import {DeleteOutlined, PlusCircleOutlined} from "@ant-design/icons";
 import CreateIcon from '@material-ui/icons/CreateOutlined';
-import { Icon } from '@ant-design/compatible';
-import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import {Button, notification} from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {defaultIfNotBoolean, getDataByKey, sleep, IObjectWithIndex } from "@sui/core";
-
 
 import {BackendTable} from "../BackendTable";
 import {DisableEditContext} from '../DisableEditContext';

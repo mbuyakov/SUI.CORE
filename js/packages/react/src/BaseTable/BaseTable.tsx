@@ -1,15 +1,15 @@
-import {Icon as LegacyIcon} from '@ant-design/compatible';
+import {CustomPagingPanelContainer} from "@/BaseTable/extends/CustomPagingPanelContainer";
+import {CheckOutlined, CloseOutlined, QuestionOutlined} from '@ant-design/icons';
 import {Getter, Getters} from '@devexpress/dx-react-core';
 import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSelection, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
 import {ColumnChooser, DragDropProvider, Grid, GroupingPanel, PagingPanel, Table, TableBandHeader, TableColumnReordering, TableColumnResizing, TableColumnVisibility, TableFilterRow, TableGroupRow, TableHeaderRow, TableRowDetail, TableSelection, Toolbar, VirtualTable} from '@devexpress/dx-react-grid-material-ui';
 import {TableRow} from '@material-ui/core';
 import CloudDownload from '@material-ui/icons/CloudDownload';
+import {defaultIfNotBoolean, getDataByKey} from "@sui/core";
 import {Card, Result, Spin} from 'antd';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import * as React from 'react';
-import {defaultIfNotBoolean, getDataByKey} from "@sui/core";
-import {CustomPagingPanelContainer} from "@/BaseTable/extends/CustomPagingPanelContainer";
 
 
 import {BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '../styles';
@@ -32,9 +32,9 @@ const TableGroupRowContent = TableGroupRow.Content;
 export function booleanRender(value: boolean | null | undefined): JSX.Element {
   return (typeof (value) === "boolean")
     ? value
-      ? <LegacyIcon type="check" theme="outlined"/>
-      : <LegacyIcon type="close" theme="outlined"/>
-    : <LegacyIcon type="question" theme="outlined"/>;
+      ? <CheckOutlined/>
+      : <CloseOutlined/>
+    : <QuestionOutlined/>;
 }
 
 export class BaseTable<TSelection = defaultSelection>

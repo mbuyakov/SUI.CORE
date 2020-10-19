@@ -1,10 +1,9 @@
-import { Icon } from '@ant-design/compatible';
-import { Tooltip } from 'antd';
+import {CheckOutlined, CloseOutlined, WarningTwoTone} from '@ant-design/icons';
+import {DataKey, defaultIfNotBoolean, getDataByKey, NO_DATA_TEXT} from '@sui/core';
+import {Tooltip} from 'antd';
 import * as React from 'react';
 
-import { DataKey, getDataByKey , defaultIfNotBoolean , NO_DATA_TEXT } from '@sui/core';
-import { BaseTable, IBaseTableProps } from '../BaseTable';
-
+import {BaseTable, IBaseTableProps} from '../BaseTable';
 
 
 export type CardItemRender<T> = (value: any, item: T) => JSX.Element | string;
@@ -43,9 +42,7 @@ class CustomRender<T> extends React.Component<ICustomRenderProps<T>, {
     if (this.state.error) {
       return (
         <Tooltip title="Произошла ошибка при рендере компонента">
-          <Icon
-            type="warning"
-            theme="twoTone"
+          <WarningTwoTone
             twoToneColor="#cf1322"
             style={{ fontSize: 20 }}
           />
@@ -91,8 +88,8 @@ export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayou
 
   if (typeof (data) === 'boolean') {
     data = data
-      ? <Icon type="check" theme="outlined"/>
-      : <Icon type="close" theme="outlined"/>;
+      ? <CheckOutlined />
+      : <CloseOutlined />;
   }
 
   if (data === null || data === undefined) {

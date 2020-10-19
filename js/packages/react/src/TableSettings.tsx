@@ -1,5 +1,4 @@
-import {Icon} from '@ant-design/compatible';
-import {IdcardOutlined, ProfileOutlined, QuestionOutlined, SortAscendingOutlined, SortDescendingOutlined} from "@ant-design/icons";
+import {CheckOutlined, CloseOutlined, IdcardOutlined, ProfileOutlined, QuestionOutlined, SortAscendingOutlined, SortDescendingOutlined} from "@ant-design/icons";
 import {ThemeProvider, withTheme} from '@material-ui/core';
 import IconButton from "@material-ui/core/IconButton";
 import {Cached, Edit} from '@material-ui/icons';
@@ -527,7 +526,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                         <Column<IColumnInfo>
                                           title="Обязательность"
                                           render={(_, record): JSX.Element => (
-                                            <Icon style={{ fontSize: 18 }} type={record.isNullable ? 'close' : 'check'}/>
+                                            record.isNullable ? <CloseOutlined style={{fontSize: 18}} /> : <CheckOutlined style={{fontSize: 18}}/>
                                           )}
                                         />
                                         <Column<IColumnInfo>
@@ -878,13 +877,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                       rows: {
                         cols: {
                           items: {
-                            render: (_: any, item: ITableInfo): JSX.Element =>
-                              (
-                                <AdditionalTab
-                                  columnInfos={item.columnInfosByTableInfoId.nodes.map(iColumnInfo => new ColumnInfo(iColumnInfo))}
-                                  tableInfo={new TableInfo(item)}
-                                />
-                              ),
+                            render: (_: any, item: ITableInfo): JSX.Element => (<AdditionalTab tableInfo={new TableInfo(item)}/>),
                           },
                         },
                       },

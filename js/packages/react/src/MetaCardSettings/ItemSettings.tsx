@@ -1,8 +1,9 @@
-import { Icon } from '@ant-design/compatible';
-import { Chip } from '@material-ui/core';
+import {EditOutlined, OrderedListOutlined} from '@ant-design/icons';
+import {Chip} from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { Spin, Tooltip } from 'antd';
+import {capitalize, ColumnInfo, ColumnInfoManager, IName, Merge, NameManager, TableInfoManager} from "@sui/core";
+import {Spin, Tooltip} from 'antd';
 import Input from 'antd/lib/input';
 import Popover from 'antd/lib/popover';
 import Select from 'antd/lib/select';
@@ -11,15 +12,12 @@ import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
-import {Merge, NameManager, ColumnInfoManager, ColumnInfo, TableInfoManager, capitalize, IName} from "@sui/core";
-import { IBaseCardItemLayout } from '../Base';
+import {IBaseCardItemLayout} from '../Base';
 import {DnDDragHandler} from "../Draggable";
 import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
-import { NamePopover } from '../Popover';
-
+import {NamePopover} from '../Popover';
 import {COMMON__GRID, ITEM_SETTINGS__DELETE_ICON, ITEM_SETTINGS__SETTINGS_ICON} from "../styles";
-
-import { WaitData } from '../WaitData';
+import {WaitData} from '../WaitData';
 
 import {DebugModeContext} from "./DebugModeContext";
 import {GetPopupContainerContext} from "./GetPopupContainerContext";
@@ -88,8 +86,8 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
                                 </>}
                             >
                               <Switch
-                                unCheckedChildren={<Icon type="ordered-list"/>}
-                                checkedChildren={<Icon type="edit"/>}
+                                unCheckedChildren={<OrderedListOutlined/>}
+                                checkedChildren={<EditOutlined/>}
                                 checked={this.state.freeTitleEnabled}
                                 style={{ marginRight: 8 }}
                                 onChange={this.onFreeTitleEnabledChanged}

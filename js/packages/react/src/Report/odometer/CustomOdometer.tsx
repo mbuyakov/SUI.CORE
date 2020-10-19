@@ -1,4 +1,3 @@
-import '@ant-design/compatible/assets/index.css';
 import "odometer/themes/odometer-theme-default.css";
 import * as React from "react";
 // @ts-ignore

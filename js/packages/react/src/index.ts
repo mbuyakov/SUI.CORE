@@ -2,7 +2,6 @@ export * from "./additionalTabs";
 export * from "./Base";
 export * from "./BaseTable";
 export * from "./BackendTable";
-export * from "./CommonForm";
 export * from "./core";
 export * from "./DisableEditContext";
 export * from "./Dnf";

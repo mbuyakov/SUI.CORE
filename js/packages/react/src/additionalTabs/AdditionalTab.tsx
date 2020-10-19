@@ -1,57 +1,24 @@
-import { Form } from '@ant-design/compatible';
-import {WrappedFormUtils} from "@ant-design/compatible/lib/form/Form";
-import { Card, Input } from "antd";
+import {PromisedButton} from '@/Inputs';
+import {formatRawForGraphQL, generateUpdate, TableInfo} from '@sui/core';
+import {Card, Space} from "antd";
+import Input from "antd/lib/input";
 import autobind from 'autobind-decorator';
-import moment from "moment";
 import * as React from "react";
-
-import { formatRawForGraphQL ,ColumnInfo, ColumnInfoManager, TableInfo, generateUpdate} from '@sui/core';
-
-import { DnfForm, IDnfFormRowElementProps, IMetaSettingTableRowColorRowElement, IResultDnfFormValues, MetaSettingTableRowColorRowComponent } from '../Dnf';
-import { FilterType, getFilterType } from '../utils';
-import { WaitData } from '../WaitData';
-
+import {ChangeEvent} from "react";
 
 interface IAdditionalTabProps {
-  columnInfos: ColumnInfo[];
   tableInfo: TableInfo;
 }
 
-export interface IMetaSettingTableRowColorFormValues extends IResultDnfFormValues<IMetaSettingTableRowColorRowElement> {
-  color: string;
-}
-
 interface IAdditionalTabState {
-  colorSettings?: IMetaSettingTableRowColorFormValues;
-  ready?: boolean;
+  value?: string;
 }
 
 export class AdditionalTab extends React.Component<IAdditionalTabProps, IAdditionalTabState> {
 
   public constructor(props: IAdditionalTabProps) {
     super(props);
-    this.state = {};
-  }
-
-  public async componentDidMount(): Promise<void> {
-    let colorSettings: IMetaSettingTableRowColorFormValues | null = null;
-
-    if (this.props.tableInfo.colorSettings) {
-      colorSettings = JSON.parse(this.props.tableInfo.colorSettings);
-      for (const element of colorSettings.forms.flatMap(form => form)) {
-        if (element.constant && element.simpleFilter) {
-          const filterType = getFilterType(await ColumnInfoManager.getById(element.firstColumnInfoId), element.action);
-          if ([FilterType.DATE, FilterType.TIMESTAMP].includes(filterType)) {
-            element.simpleFilter = moment(element.simpleFilter);
-          }
-        }
-      }
-    }
-
-    this.setState({
-      colorSettings,
-      ready: true
-    });
+    this.state = {value: props.tableInfo.colorSettings ? JSON.parse(props.tableInfo.colorSettings)?.expression : null};
   }
 
   public render(): JSX.Element {
@@ -59,52 +26,37 @@ export class AdditionalTab extends React.Component<IAdditionalTabProps, IAdditio
       <Card
         type="inner"
         title="Покраска строк таблицы"
+        bodyStyle={{
+
+        }}
       >
-        <WaitData
-          data={this.state.ready}
-        >
-          {() => (
-            <DnfForm
-              additionalFormItems={this.additionalFormItems}
-              allowClear={true}
-              buttonAlignment="start"
-              disableRowSwap={true}
-              onSubmit={colorSettings => generateUpdate(
-                'tableInfo',
-                this.props.tableInfo.id,
-                'colorSettings',
-                formatRawForGraphQL(JSON.stringify(colorSettings))
-              )}
-              initialState={this.state.colorSettings}
-              rowComponent={this.rowComponent}
-              wrapperStyle={{ width: '100%' }}
-            />
-          )}
-        </WaitData>
+        <Space direction="vertical" style={{width: "100%"}}>
+          <Input.TextArea
+            {...this.props}
+            onChange={(event: ChangeEvent<HTMLTextAreaElement>) => this.setState({value: event.target.value})}
+            value={this.state?.value}
+            rows={4}
+          />
+          <PromisedButton
+            type="primary"
+            promise={this.save}
+          >
+            Сохранить
+          </PromisedButton>
+        </Space>
       </Card>
     );
   }
 
   @autobind
-  private additionalFormItems(form: WrappedFormUtils): JSX.Element {
-    return (
-      <Form.Item style={{marginBottom: 0}}>
-        {form.getFieldDecorator("color")(
-          <Input placeholder="Введите цвет (#ffffff)"/>
-        )}
-      </Form.Item>
-    );
-  }
+  private save(): Promise<void> {
+    const expression = this.state?.value?.trim();
 
-  @autobind
-  private rowComponent(props: IDnfFormRowElementProps<IMetaSettingTableRowColorRowElement>): JSX.Element {
-    return (
-      // TODO: as any костыль до объединения проектов
-      <MetaSettingTableRowColorRowComponent
-        key={props.id.toString()}
-        columnInfos={this.props.columnInfos as any}
-        {...props}
-      />
+    return generateUpdate(
+      'tableInfo',
+      this.props.tableInfo.id,
+      'colorSettings',
+      expression ? formatRawForGraphQL(JSON.stringify({expression})) : null
     );
   }
 

@@ -1,16 +1,15 @@
-import { Icon as LegacyIcon } from '@ant-design/compatible';
-import { Button, Dropdown, Menu, Modal } from 'antd';
+import {DownOutlined, LoadingOutlined, ShareAltOutlined} from '@ant-design/icons';
+import {defaultIfNotBoolean} from "@sui/core";
+import {Button, Dropdown, Menu, Modal} from 'antd';
 import {ButtonGroupProps} from "antd/lib/button";
 import {ModalFuncProps} from "antd/lib/modal";
 import Popconfirm, {PopconfirmProps} from "antd/lib/popconfirm";
-import Tooltip, { TooltipProps } from 'antd/lib/tooltip';
+import Tooltip, {TooltipProps} from 'antd/lib/tooltip';
 import autobind from "autobind-decorator";
 import classNames from "classnames";
 import * as React from "react";
 
-import {defaultIfNotBoolean} from "@sui/core";
 import {INFO_MODAL_FIX, NO_BORDER_MODAL} from "../styles";
-
 import {TransitionGraph} from "./TransitionGraph";
 import {IResolution, ITransition, ITransitionStatus, TransitionButtonProps} from "./types";
 
@@ -68,7 +67,7 @@ function wrapInPopover(
     ) : element;
 }
 
-const loadingIcon = (loading: boolean): JSX.Element => loading ? <span><LegacyIcon type="loading"/>&nbsp;</span> : null;
+const loadingIcon = (loading: boolean): JSX.Element => loading ? <span><LoadingOutlined/>&nbsp;</span> : null;
 
 // TODO: Popconfirm for resolutions
 export class TransitionBar<TStatus extends { id: TID }, TID = string>
@@ -97,7 +96,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
         // disabled={commonLoading}
         onClick={this.showTransitionGraphModal}
       >
-        <LegacyIcon type={commonLoading ? "loading" : "share-alt"}/>
+        {commonLoading ? <LoadingOutlined/> : <ShareAltOutlined/>}
       </Button>
     );
 
@@ -149,7 +148,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
                 })}
               </Menu>
             );
-            const content = <>{transitionContent} <LegacyIcon type="down"/></>;
+            const content = <>{transitionContent} <DownOutlined/></>;
 
             return (
               <Dropdown

@@ -15,7 +15,7 @@ import {wrapInArray, getSUISettings, DEFAULT_PAGE_SIZES, generateCreate, IObject
 import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
 import {exportToXlsx} from "../BaseTable/utils";
 
-import {BaseTable, checkCondition, colToBaseTableCol, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getFilterType, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IMetaSettingTableRowColorFormValues, IMetaSettingTableRowColorRowElement, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from '../index';
+import {BaseTable, colToBaseTableCol, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from '../index';
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 import {ResetUserSettingsPlugin} from "../plugins/ResetUserSettingsPlugin";
 import {LazyFilter} from "../BaseTable/types";
@@ -933,43 +933,17 @@ export class BackendTable<TSelection = defaultSelection>
       let colorSettingsRowStyler = null;
 
       if (tableInfo.colorSettings) {
-        const colorSettings: IMetaSettingTableRowColorFormValues = JSON.parse(tableInfo.colorSettings);
+        const expression = JSON.parse(tableInfo.colorSettings)?.expression as string;
 
-        if (colorSettings.color) {
-          const checkDnf = colorSettings.forms.map(andSettingBlock => andSettingBlock.map(setting => {
-            const [firstColumnInfoSetting, secondColumnInfoSetting] =
-              (['firstColumnInfoId', 'secondColumnInfoId'] as Array<keyof IMetaSettingTableRowColorRowElement>)
-                .map(name => {
-                  const column = setting[name] && cols.find(col => col.id === setting[name]);
-                  let baseTableColLayout;
-
-                  if (column) {
-                    baseTableColLayout = allowedCols.find(col => col.id === column.columnName);
-                  }
-
-                  return {
-                    column,
-                    baseTableColLayout,
-                  };
-                });
-
-            if (firstColumnInfoSetting.baseTableColLayout && (setting.constant || secondColumnInfoSetting.baseTableColLayout)) {
-              return (row: any): boolean => checkCondition(
-                setting.action,
-                setting.constant ? getFilterType(firstColumnInfoSetting.column, setting.action) : null,
-                getRowValue(row, firstColumnInfoSetting.baseTableColLayout),
-                setting.constant ? setting.simpleFilter : getRowValue(row, secondColumnInfoSetting.baseTableColLayout),
-              );
-            }
-
-            return (): boolean => false;
-          }));
-
+        if (expression) {
           colorSettingsRowStyler = (row: any): React.CSSProperties => {
-            const isValid = checkDnf.some(andChecks => andChecks.every(check => check(row)));
-
-            return isValid ? { backgroundColor: colorSettings.color } : undefined;
-          };
+            try {
+              const result = eval(expression);
+              return typeof(result) === "object" ? result : null;
+            } catch (e) {
+              return null;
+            }
+          }
         }
       }
 

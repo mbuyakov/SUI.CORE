@@ -1,11 +1,11 @@
-import { Icon as LegacyIcon } from '@ant-design/compatible';
-import { Tooltip } from 'antd';
+import {WarningTwoTone} from '@ant-design/icons';
+import {ColumnInfo} from '@sui/core';
+import {Tooltip} from 'antd';
 import * as React from 'react';
-import { ColumnInfo } from '@sui/core';
 
-import { IBaseTableColLayout } from '../../BaseTable';
-import { IColumnInfoToBaseTableColProps } from '../../utils';
-import { ITableRenderParams, TableRenderSettingsPopover } from '../TableRenderSettingsPopover';
+import {IBaseTableColLayout} from '../../BaseTable';
+import {IColumnInfoToBaseTableColProps} from '../../utils';
+import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
 
 export abstract class TableRenderParamsPlugin<T> {
 
@@ -29,36 +29,34 @@ export abstract class TableRenderParamsPlugin<T> {
   ): Promise<void>
 
   // For link
-public extraActivationKostyl(
-// @ts-ignore
+  public extraActivationKostyl(
+    // @ts-ignore
     result: IBaseTableColLayout,
-// @ts-ignore
+    // @ts-ignore
     renderColumnInfo: ColumnInfo | null,
-// @ts-ignore
+    // @ts-ignore
     props: IColumnInfoToBaseTableColProps,
-// @ts-ignore
+    // @ts-ignore
     tableRenderParams: ITableRenderParams<T>,
   ): boolean {
     return false;
   }
 
 // @ts-ignore
-public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<T>): React.ReactNode {
+  public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<T>): React.ReactNode {
     return (
       <Tooltip
         title="Для данного режима нет настроек"
       >
-        <LegacyIcon
-          style={{ transform: 'scale(1.5)' }}
-          type="warning"
-          theme="twoTone"
+        <WarningTwoTone
+          style={{transform: 'scale(1.5)'}}
           twoToneColor="#ad4e00"
         />
       </Tooltip>
     );
   }
 
-public parseParams(tableRenderParams: ITableRenderParams<T>): ITableRenderParams<T> {
+  public parseParams(tableRenderParams: ITableRenderParams<T>): ITableRenderParams<T> {
     return tableRenderParams;
   }
 }

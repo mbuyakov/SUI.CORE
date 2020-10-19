@@ -1,4 +1,4 @@
-import { Icon } from '@ant-design/compatible';
+import Icon from '@ant-design/icons';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { Tooltip } from 'antd';
 import * as React from 'react';

@@ -1,13 +1,12 @@
-import { Icon as LegacyIcon } from '@ant-design/compatible';
-import { Spin } from 'antd';
+import {queryWrapper} from "@/tmp";
+import {CloseCircleTwoTone} from '@ant-design/icons';
+import {defaultIfNotBoolean, mutate, query} from "@sui/core";
+import {Spin} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import { defaultIfNotBoolean , mutate, query } from "@sui/core";
-import {queryWrapper} from "@/tmp";
-import { loadingErrorNotification } from './drawUtils';
-
-import { SPIN_WRAPPER } from './styles';
+import {loadingErrorNotification} from './drawUtils';
+import {SPIN_WRAPPER} from './styles';
 
 const SPIN_DELAY = 300;
 
@@ -27,13 +26,13 @@ export interface IWaitDataProps<T> {
   extractFirstKey?: boolean;
   extractKeysLevel?: number;
   hideChildren?: boolean;
-mutation?: string | any;
+  mutation?: string | any;
   promise?: Promise<T>;
-query?: string | any;
+  query?: string | any;
   spinning?: boolean;
 }
 
-const errorIcon = (<LegacyIcon type="close-circle" theme="twoTone" twoToneColor="#d6083f" style={{fontSize: 24}}/>);
+const errorIcon = (<CloseCircleTwoTone twoToneColor="#d6083f" style={{fontSize: 24}}/>);
 
 export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
   data?: T | null | undefined | "__NULL__";
