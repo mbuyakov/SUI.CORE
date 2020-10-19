@@ -21,8 +21,8 @@ export const ORGANIZATION_INN_MASK_LENGTH = 10;
 export const OGRN_MASK = "1 11 11 1111111 1";
 export const OGRN_MASK_LENGTH = 13;
 
-export const ISSUED_BY_REGEX = "^[А-Яа-я\\s№.\\-]{1,250}$";
-export const ISSUED_BY_DESC = "Разрешены русские буквы и символы \"№ . -\" до 250 знаков";
+export const ISSUED_BY_REGEX = "^[0-9А-Яа-я\\s№.\\-\"\']{1,250}$";
+export const ISSUED_BY_DESC = "Разрешены русские буквы, цифры и символы №.-\"\' до 250 знаков";
 
 export const DEPARTMENT_CODE_REGEX = "^[0-9]{3}\\-[0-9]{3}$";
 export const DEPARTMENT_CODE_DESC = "7 знаков, NNN-NNN, где N - число";
