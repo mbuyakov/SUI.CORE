@@ -779,7 +779,11 @@ export class BackendTable<TSelection = defaultSelection>
       const sortedColumns = await getAllowedColumnInfos(tableInfo, getUser().roles);
       let defaultFilter = this.mapFilters(this.state.defaultFilter || [], true);
 
-      if (!this.props.disableDeletedFilter && sortedColumns.find(column => column.columnName === DELETED_COLUMN)) {
+      const addDeletedFilter = !this.props.disableDeletedFilter
+        && sortedColumns.find(column => column.columnName === DELETED_COLUMN)
+        && (!this.state.defaultFilter || this.state.defaultFilter.every(it => it.columnName !== DELETED_COLUMN));
+
+      if (addDeletedFilter) {
         defaultFilter = [
           ...defaultFilter,
           {
