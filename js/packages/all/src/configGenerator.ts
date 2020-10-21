@@ -208,6 +208,7 @@ function generateUmiConfig(params: UmiConfigParams): any {
   return umiConfig;
 }
 
+exports.getFinalThemes = getFinalThemes;
 exports.generateUmiConfig = generateUmiConfig;
 exports.generateMuiThemes = generateMuiThemes;
 exports.defaultChainWebpack = defaultChainWebpack;

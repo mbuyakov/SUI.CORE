@@ -12,7 +12,11 @@ export default function(
   options
 ) {
   const { cwd, outputPath, absNodeModulesPath } = api.paths;
-  const tempThemeFolder = api.winPath(join(absNodeModulesPath, '.plugin-theme'));
+  const tempThemeFolder = api.winPath(join(absNodeModulesPath, '.dark-theme-plugin'));
+
+  if (!existsSync(api.winPath(tempThemeFolder))) {
+    mkdirSync(api.winPath(tempThemeFolder));
+  }
 
   api.addMiddlewareAhead(() => {
     return serveStatic(tempThemeFolder);
@@ -29,7 +33,7 @@ export default function(
         }
         mkdirSync(api.winPath(join(targetFolder, 'theme')));
       } catch (error) {
-        // console.log(error);
+        console.log(error);
       }
       firstBuild = false;
     }
