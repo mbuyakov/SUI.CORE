@@ -30,10 +30,14 @@ export class Observable<T> {
   }
 
   @autobind
-  public subscribe(cb: ObservableHandler<T>): ObservableHandlerStub {
+  public subscribe(cb: ObservableHandler<T>, triggerOnSubscribe: boolean = false): ObservableHandlerStub {
     const id = uuidv4();
 
     this.handlers.set(id, cb);
+
+    if (triggerOnSubscribe) {
+      cb(this.value);
+    }
 
     return {
       unsubscribe: (): void => {
