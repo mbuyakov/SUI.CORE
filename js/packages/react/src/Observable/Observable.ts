@@ -1,7 +1,8 @@
 import autobind from "autobind-decorator";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
+import {getTOrCall, TOrCallback} from "@sui/core";
 
-export type ObservableHandler<T> = (newValue: T, oldValue?:T) => void;
+export type ObservableHandler<T> = (newValue: T, oldValue?: T) => void;
 
 export interface ObservableHandlerStub {
   unsubscribe(): void
@@ -12,8 +13,8 @@ export class Observable<T> {
   private readonly handlers: Map<string, ObservableHandler<T>> = new Map();
   private value: T;
 
-  public constructor(initialValue?: T) {
-    this.value = initialValue;
+  public constructor(initialValue?: TOrCallback<T>) {
+    this.value = getTOrCall(initialValue);
   }
 
   @autobind
