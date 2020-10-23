@@ -1,0 +1,1 @@
+exports.themesConfigTypeHinter = (themes) => themes;
