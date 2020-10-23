@@ -2,10 +2,7 @@ import { join } from 'path';
 import { existsSync, mkdirSync } from 'fs';
 import serveStatic from 'serve-static';
 import rimraf from 'rimraf';
-import { getThemeVariables } from 'antd/dist/theme';
 import buildCss from 'antd-pro-merge-less';
-
-const darkTheme = getThemeVariables({dark: true});
 
 export default function(
   api,
@@ -42,12 +39,9 @@ export default function(
       cwd,
       [
         {
-          theme: 'dark',
+          // theme: 'dark',
           fileName: api.winPath(join(targetFolder, 'theme', 'dark.css')),
-          modifyVars: {
-            ...darkTheme,
-            ...options
-          },
+          modifyVars: options,
         }
       ],
       {
