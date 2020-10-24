@@ -38,10 +38,13 @@ exports.defaultChainWebpack = defaultChainWebpack;
 function generateUmiConfig(params) {
   const {
     title,
-    routes,
     themes,
     define,
     patchUmiConfig
+  } = params;
+
+  let {
+    routes
   } = params;
 
   const {
@@ -66,6 +69,14 @@ function generateUmiConfig(params) {
       },
     },
   };
+
+  routes = [
+    {
+      path: "/",
+      component: require.resolve("@sui/react/es/GlobalRoutesWrapper"),
+      routes
+    }
+  ];
 
   const plugins = [
     ['umi-plugin-react', umiPluginReactConfig],

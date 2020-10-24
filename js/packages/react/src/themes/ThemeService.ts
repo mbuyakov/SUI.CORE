@@ -23,7 +23,7 @@ export class ThemeService extends ObservableLocalStorageValue<ThemeVariant> {
   }
 
   @autobind
-  private getCurrentTheme(): CompiledTheme {
+  public getCurrentTheme(): CompiledTheme {
     return this.compiledThemes[this.getValue()];
   }
 

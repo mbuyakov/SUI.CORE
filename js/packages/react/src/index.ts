@@ -32,6 +32,7 @@ export * from "./DraggableRowTable";
 export * from "./drawUtils";
 export * from "./EditableEntityField";
 export * from "./FullScreenModal";
+export * from "./GlobalRoutesWrapper";
 export * from "./Modal";
 export * from "./MutableBackendTable";
 export * from "./InputWithApostropheValidation";
