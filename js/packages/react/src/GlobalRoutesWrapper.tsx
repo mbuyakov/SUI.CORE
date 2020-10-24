@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ThemeService, ThemeVariant} from "@/themes";
+import {ThemeService, ThemeVariant, SuiThemeContext} from "@/themes";
 import {Container} from "typescript-ioc"
 import {ThemeProvider} from '@material-ui/core/styles';
 import {ConfigProvider} from 'antd';
@@ -22,12 +22,16 @@ export default class GlobalRoutesWrapper extends React.Component<{}, {
   }
 
   public render(): JSX.Element {
+    const curTheme = this.themeService.getCurrentTheme();
+
     return (
-      <ConfigProvider locale={ru_RU}>
-        <ThemeProvider theme={this.themeService.getCurrentTheme().muiTheme}>
-          {this.props.children}
-        </ThemeProvider>
-      </ConfigProvider>
+      <SuiThemeContext.Provider value={curTheme}>
+        <ConfigProvider locale={ru_RU}>
+          <ThemeProvider theme={curTheme.muiTheme}>
+            {this.props.children}
+          </ThemeProvider>
+        </ConfigProvider>
+      </SuiThemeContext.Provider>
     );
   }
 }
