@@ -17,6 +17,7 @@ export * from "./other";
 export * from "./plugins";
 export * from "./Popover";
 export * from "./Report";
+export * from "./themes";
 export * from "./TableRenderSettings";
 export * from "./translate";
 export * from "./utils";

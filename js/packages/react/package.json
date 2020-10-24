@@ -57,6 +57,7 @@
     "react-odometerjs": "^2.1.1",
     "react-router-dom": "^5.1.2",
     "react-smooth-dnd": "^0.11.1",
-    "react-to-print": "^2.6.3"
+    "react-to-print": "^2.6.3",
+    "theme-switcher": "^1.0.2"
   }
 }

@@ -25,7 +25,7 @@ const fs = require('fs');
 }
 // Во, теперь можно грузиться дальше
 
-const { getFinalThemes } = require('../../react/es/themes/utils');
+const { getMergedThemeConfigs } = require('../../react/es/themes/utils');
 
 const buildTime = new Date().toISOString();
 
@@ -47,7 +47,7 @@ function generateUmiConfig(params) {
   const {
     commonWithLightTheme,
     commonWithDarkTheme
-  } = getFinalThemes(themes);
+  } = getMergedThemeConfigs(themes);
 
 
   const umiPluginReactConfig = {

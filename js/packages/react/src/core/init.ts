@@ -5,15 +5,19 @@ import {Container} from 'typescript-ioc';
 import {authLink, IInitSUISettings, ISUISettings, ColorHeatMap, TableInfoManager, ColumnInfoManager, NameManager} from '@sui/core';
 
 import {parseRoutes, runCheckVersionMismatch} from '@/utils';
+import {ThemesConfig} from "@/themes";
 
 declare let window: Window & {
   SUI: ISUISettings | undefined;
   SUI_CORE_PTC_CACHE: ColorHeatMap;
 };
 
+type _IInitSUISettings = IInitSUISettings & {
+  themes: ThemesConfig
+}
 
 // noinspection JSUnusedGlobalSymbols
-export function initSUI(settings: IInitSUISettings): void {
+export function initSUI(settings: _IInitSUISettings): void {
   window.SUI = {
     ...settings,
     apolloClient: new ApolloClient({
