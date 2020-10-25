@@ -41,5 +41,6 @@ export const ROUTER_LINK_BTN = "sui-router-link-btn";
 export const INFO_MODAL_FIX = "sui-info-modal-fix";
 export const NO_BORDER_MODAL = "sui-no-border-modal";
 export const BASE_TABLE = "sui-base-table";
+export const BASE_TABLE_NO_PAGINATION = "sui-base-table-no-pagination";
 export const FRE_WITH_HEADER_FILTER_BUTTON = "withHeaderFilterButton";
 export const FRE_WITHOUT_HEADER_FILTER_BUTTON = "withoutHeaderFilterButton";

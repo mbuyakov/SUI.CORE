@@ -13,7 +13,7 @@ import * as React from 'react';
 import {SuiThemeContext} from '@/themes';
 
 
-import {BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '../styles';
+import {BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER, BASE_TABLE_NO_PAGINATION} from '../styles';
 import {ColumnChooserContainer, EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, WarningPlugin} from './extends';
 import {CustomToggleCell} from "./extends/CustomToggleCell";
 import {UserSettingsPlugin} from "./extends/UserSettingsPlugin";
@@ -294,7 +294,7 @@ export class BaseTable<TSelection = defaultSelection>
             type={this.props.cardType}
             extra={this.props.extra}
             bordered={!borderless}
-            className={classnames(BASE_TABLE, theme.name)}
+            className={classnames(BASE_TABLE, !paginationEnabled && BASE_TABLE_NO_PAGINATION, theme.name)}
           >
             {cols.length === 0 && <>
               {this.props.noColsContent}
