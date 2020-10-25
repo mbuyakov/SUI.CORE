@@ -1,6 +1,7 @@
 import TableCell from '@material-ui/core/TableCell';
 import Empty from 'antd/lib/empty';
 import * as React from 'react';
+import {TABLE_NO_DATA_CELL_SMALL} from "@/styles";
 
 export const TableNoDataCell = ({colSpan}: { colSpan?: number | undefined }): JSX.Element => (
   <TableCell
@@ -14,9 +15,9 @@ export const TableNoDataCell = ({colSpan}: { colSpan?: number | undefined }): JS
 export const TableNoDataCellSmall = ({colSpan}: { colSpan?: number | undefined }): JSX.Element => (
   <TableCell
     style={{
-      backgroundColor: "#fafafa",
       paddingLeft: 64
     }}
+    className={TABLE_NO_DATA_CELL_SMALL}
     colSpan={colSpan}
   >
     <div>

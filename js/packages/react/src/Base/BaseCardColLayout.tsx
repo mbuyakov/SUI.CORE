@@ -1,7 +1,8 @@
 import React from 'react';
 import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
+import {SuiThemeContext} from "@/themes";
 
-import { BASE_CARD_COLS } from '../styles';
+import { BASE_CARD_COLS, BASE_CARD_COL_TITLE } from '../styles';
 
 import { BaseCardContext } from './BaseCardContext';
 
@@ -44,20 +45,24 @@ for (let colIndex = 0; colIndex < cols.length; colIndex++) {
   }
 
   return (
-    <table className={BASE_CARD_COLS}>
-      {anyHasTitle && (
-        <thead>
-        <tr>
-          {cols.map(col => (<>
-            <th style={{ color: 'rgba(0, 0, 0, 0.65)' }} colSpan={col.wideTitle ? 2 : 1}>{col.title}</th>
-            {!col.wideTitle && <th/>}
-          </>))}
-        </tr>
-        </thead>
+    <SuiThemeContext.Consumer>
+      {theme => (
+        <table className={BASE_CARD_COLS}>
+          {anyHasTitle && (
+            <thead>
+            <tr>
+              {cols.map(col => (<>
+                <th className={BASE_CARD_COL_TITLE} colSpan={col.wideTitle ? 2 : 1}>{col.title}</th>
+                {!col.wideTitle && <th/>}
+              </>))}
+            </tr>
+            </thead>
+          )}
+          <tbody>
+          {rows}
+          </tbody>
+        </table>
       )}
-      <tbody>
-      {rows}
-      </tbody>
-    </table>
+    </SuiThemeContext.Consumer>
   );
 }
