@@ -1,11 +1,11 @@
 {
   "name": "@sui/react",
   "version": "8.0.0",
+  "main": "es/index.js",
   "module": "es/index.js",
   "typings": "es/index.d.ts",
   "files": [
     "es",
-    "styles",
     "magic-deps-updater.js",
     "magic-deps.json"
   ],

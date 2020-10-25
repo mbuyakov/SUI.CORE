@@ -52,7 +52,8 @@ export default function(
       {
         ignoreAntd: false,
         // isModule: false,
-        cache: true
+        cache: true,
+        extraLibraries: ['@sui/react']
       }
     )
       .catch(e => {

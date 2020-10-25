@@ -13,6 +13,16 @@ const fs = require('fs');
   );
   fs.writeFileSync(pathToFile, patched, 'utf8');
 }
+// Либа сначала пытается найти пакеты '@ant-design/pro-layout', '@ant-design/pro-table' и только после этого лезет в extraLibraries. Так как у нас их нету - ничего не рабоает
+{
+  const pathToFile = require.resolve("antd-pro-merge-less/index.js");
+  const original = fs.readFileSync(pathToFile, 'utf8');
+  const patched = original.replace(
+    /const components = \['@ant.+/,
+    'const components = extraLibraries;'
+  );
+  fs.writeFileSync(pathToFile, patched, 'utf8');
+}
 // Какая-то странная строка, похожа на опечатку. Комментим нафиг, без этого кеш не работает
 {
   const pathToFile = require.resolve("antd-pro-merge-less/index.js");
