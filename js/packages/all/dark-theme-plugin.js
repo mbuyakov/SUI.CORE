@@ -9,7 +9,12 @@ export default function(
   options
 ) {
   const { cwd, outputPath, absNodeModulesPath } = api.paths;
+  const tempMergeLessFolder = api.winPath(join(absNodeModulesPath, 'antd-pro-merge-less', '.temp'));
   const tempThemeFolder = api.winPath(join(absNodeModulesPath, '.dark-theme-plugin'));
+
+  if (existsSync(api.winPath(tempMergeLessFolder))) {
+    rimraf.sync(api.winPath(tempMergeLessFolder));
+  }
 
   if (!existsSync(api.winPath(tempThemeFolder))) {
     mkdirSync(api.winPath(tempThemeFolder));
