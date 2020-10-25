@@ -89,9 +89,12 @@ function generateUmiConfig(params) {
   ];
 
   const plugins = [
-    ['umi-plugin-react', umiPluginReactConfig],
-    ['@sui/all/dark-theme-plugin.js', commonWithDarkTheme.lessVars]
+    ['umi-plugin-react', umiPluginReactConfig]
   ];
+
+  if(!process.env.NO_DARK) {
+    plugins.push(['@sui/all/dark-theme-plugin.js', commonWithDarkTheme.lessVars]);
+  }
 
   let umiConfig = {
     publicPath: "/",
