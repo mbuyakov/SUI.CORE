@@ -23,7 +23,7 @@ export class TableSettingsDialog extends React.Component<ITableSettingsDialogPro
       <div style={this.props.style}>
         <Tooltip title='Редактировать права и видимость колонок' placement='bottom' enterDelay={300}>
           <IconButton style={this.props.buttonStyle} onClick={this.handleClickOpen} color="primary">
-            <Build style={{color: '#56CBF8'}}/>
+            <Build/>
           </IconButton>
         </Tooltip>
         <FullScreenTableSettings

@@ -2,21 +2,38 @@ import merge from 'lodash/merge';
 import {createMuiTheme} from '@material-ui/core/styles';
 import {getThemeVariables} from 'antd/dist/theme';
 
-import {CompiledThemes, MergedThemeConfigs, SuiThemeConfig, ThemesConfig} from "@/themes/types";
-import {defaultTheme} from "@/themes/defaultTheme";
+import {CompiledSuiThemeConfig, CompiledThemes, MergedThemeConfigs, SuiThemeConfig, ThemesConfig, CompiledThemesConfig} from "@/themes/types";
+import {defaultMuiTheme, defaultThemesConfig} from "@/themes/defaultThemesConfig";
 
 const lightAntdTheme = getThemeVariables({dark: false});
 const darkAntdTheme = getThemeVariables({dark: true});
 
-export function getMergedThemeConfigs(themes: ThemesConfig): MergedThemeConfigs {
-  const commonTheme: SuiThemeConfig = merge({}, defaultTheme.common, themes.common);
-  const lightTheme: SuiThemeConfig = merge({}, defaultTheme.light, themes.light);
-  const darkTheme: SuiThemeConfig = merge({}, defaultTheme.dark, themes.dark);
+function compileThemeConfig(theme?: SuiThemeConfig): CompiledSuiThemeConfig {
+  if (!theme) {
+    return {};
+  }
 
-  const commonWithLightTheme: SuiThemeConfig = merge({
+  if (typeof theme.materialThemeConfig === 'function') {
+    theme.materialThemeConfig = theme.materialThemeConfig(defaultMuiTheme);
+  }
+
+  return theme as CompiledSuiThemeConfig;
+}
+
+function compileAndMerge(...themes: SuiThemeConfig[]): CompiledSuiThemeConfig {
+  const compiledThemes = themes.map(compileThemeConfig);
+  return merge({}, ...compiledThemes);
+}
+
+export function getMergedThemeConfigs(themes: ThemesConfig): MergedThemeConfigs {
+  const commonTheme = compileAndMerge(defaultThemesConfig.common, themes.common);
+  const lightTheme = compileAndMerge(defaultThemesConfig.light, themes.light);
+  const darkTheme = compileAndMerge(defaultThemesConfig.dark, themes.dark);
+
+  const commonWithLightTheme = merge({
     lessVars: lightAntdTheme
   }, commonTheme, lightTheme);
-  const commonWithDarkTheme: SuiThemeConfig = merge({
+  const commonWithDarkTheme = merge({
     lessVars: darkAntdTheme
   }, commonTheme, darkTheme);
 

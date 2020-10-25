@@ -1,9 +1,14 @@
 import {Theme, ThemeOptions} from "@material-ui/core/styles";
+import {Merge} from "@sui/core";
 
 export interface SuiThemeConfig {
   lessVars?: { [key: string]: string },
-  materialThemeConfig?: ThemeOptions
+  materialThemeConfig?: ThemeOptions | ((muiDefaultTheme: Theme) => ThemeOptions)
 }
+
+export type CompiledSuiThemeConfig  = Merge<SuiThemeConfig, {
+  materialThemeConfig?: ThemeOptions
+}>;
 
 export interface ThemesConfig {
   common?: SuiThemeConfig,
@@ -11,9 +16,13 @@ export interface ThemesConfig {
   dark?: SuiThemeConfig
 }
 
+export type CompiledThemesConfig = {
+  [Name in keyof ThemesConfig]?: CompiledSuiThemeConfig
+}
+
 export interface MergedThemeConfigs {
-  commonWithLightTheme: SuiThemeConfig,
-  commonWithDarkTheme: SuiThemeConfig
+  commonWithLightTheme: CompiledSuiThemeConfig,
+  commonWithDarkTheme: CompiledSuiThemeConfig
 }
 
 export interface CompiledTheme {

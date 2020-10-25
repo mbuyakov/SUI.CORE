@@ -1,4 +1,4 @@
-export * from "./defaultTheme";
+export * from "./defaultThemesConfig";
 export * from "./SuiThemeContext";
 export * from "./ThemeService";
 export * from "./ThemeSwitchButton";

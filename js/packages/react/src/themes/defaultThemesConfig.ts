@@ -1,6 +1,9 @@
 import {ThemesConfig} from "@/themes/types";
+import {createMuiTheme} from "@material-ui/core/styles";
 
-export const defaultTheme: ThemesConfig = {
+export const defaultMuiTheme = createMuiTheme();
+
+export const defaultThemesConfig: ThemesConfig = {
   common: {
     lessVars: {
       'layout-header-height': '48px',
@@ -18,7 +21,25 @@ export const defaultTheme: ThemesConfig = {
       "btn-font-size-sm": "14px",
       "border-color-base": "rgba(217, 217, 217, 0.6)",
       "btn-shadow": "none"
-    }
+    },
+    materialThemeConfig: muiDefaultTheme => ({
+      palette: {
+        primary: {
+          main: "#56CBF8",
+          contrastText: "#FFFFFF"
+        }
+      },
+      overrides: {
+        MuiToolbar: {
+          gutters: {
+            [muiDefaultTheme.breakpoints.up('sm')]: {
+              paddingLeft: muiDefaultTheme.spacing(2), // 3 -> 2
+              paddingRight: muiDefaultTheme.spacing(2)
+            }
+          }
+        }
+      }
+    })
   },
   light: {
     materialThemeConfig: {
