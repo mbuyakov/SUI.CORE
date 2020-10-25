@@ -17,6 +17,7 @@ export interface MergedThemeConfigs {
 }
 
 export interface CompiledTheme {
+  name: ThemeVariant
   lessVars: { [key: string]: string },
   muiTheme: Theme
 }

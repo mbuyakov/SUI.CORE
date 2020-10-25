@@ -17,6 +17,12 @@
     align-items: center;
   }
 
+  .baseCardHeaderOnly {
+    & .ant-card-head, & .ant-tabs-top>.ant-tabs-nav::before {
+      border-bottom: 0 !important;
+    }
+  }
+
   .baseCardRows {
     margin-bottom: @padding-sm;
 

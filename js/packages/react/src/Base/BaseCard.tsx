@@ -8,8 +8,9 @@ import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 import {BaseCardContext} from '@/Base/BaseCardContext';
 import {DEFAULT_ITEM_RENDERER, IBaseCardItemLayout} from '@/Base/BaseCardItemLayout';
 import {BaseCardRow, IBaseCardRowLayout, IBaseCardRowWithTabsLayout} from '@/Base/BaseCardRow';
-import {BaseCardTabContext, IBaseCardTabLayout, IBaseCardTabWithBlocks, isTabWithBlocks, renderIBaseCardTabLayout} from '@/Base/BaseCardTab';
+import {BaseCardTabContext, IBaseCardTabWithBlocks, isTabWithBlocks, renderIBaseCardTabLayout} from '@/Base/BaseCardTab';
 import {BaseCardBlock, IBaseCardBlockLayout} from "@/Base/BaseCardBlockLayout";
+import {BASE_CARD, BASE_CARD_HEADER_ONLY} from "@/styles";
 
 
 const renderTabBar = () => <React.Fragment/>;
@@ -66,7 +67,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
         hasBlocks = firstChildrenTabs.some(tab => isTabWithBlocks(tab));
         // If any tab has blocks - map all tabs without blocks to tab with 1 block
         firstChildrenTabs = firstChildrenTabs.map(tab => {
-          if(!isTabWithBlocks(tab)) {
+          if (!isTabWithBlocks(tab)) {
             (tab as unknown as IBaseCardTabWithBlocks<T, ITEM>).blocks = {
               rows: tab.rows
             };
@@ -99,7 +100,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
       }
     }
 
-    const className = classNames("baseCard", this.props.className);
+    const className = classNames(BASE_CARD, this.props.className);
     if (this.props.noCard) {
       // Body = rows
       body = (<div className={className}>{body}</div>);
@@ -123,7 +124,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
               onTabChange={this.onTabChange}
               extra={this.props.extra}
               style={this.props.cardStyle}
-              className={className}
+              className={classNames(className, BASE_CARD_HEADER_ONLY)}
               bodyStyle={firstChildrenIsTab ? {padding: 0} : {}}
             />}
             {body}

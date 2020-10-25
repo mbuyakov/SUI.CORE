@@ -31,10 +31,12 @@ export function getCompiledThemes(themes: ThemesConfig): CompiledThemes {
 
   return {
     light: {
+      name: "light",
       lessVars: mergedThemes.commonWithLightTheme.lessVars,
       muiTheme: createMuiTheme(mergedThemes.commonWithLightTheme.materialThemeConfig)
     },
     dark: {
+      name: "dark",
       lessVars: mergedThemes.commonWithDarkTheme.lessVars,
       muiTheme: createMuiTheme(mergedThemes.commonWithDarkTheme.materialThemeConfig)
     }
