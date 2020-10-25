@@ -1,138 +1,136 @@
 @import "~antd/lib/style/themes/default";
 
-:global {
-  html, body, #root {
-    height: 100%;
-  }
+html, body, #root {
+  height: 100%;
+}
 
-  body {
-    margin: 0;
-  }
+body {
+  margin: 0;
+}
 
-  .sui-backend-grid {
-    display: grid;
-    grid-gap: @padding-xs;
-    grid-template-columns: auto 1fr;
+.sui-backend-grid {
+  display: grid;
+  grid-gap: @padding-xs;
+  grid-template-columns: auto 1fr;
 
-    & > span {
-      display: inline-flex;
-      align-items: center;
-    }
-
-    &:not(:last-child) {
-      margin-bottom: @padding-sm;
-    }
-  }
-
-  .ant-input-affix-wrapper {
-    background-color: transparent !important;
-  }
-
-
-  .ant-menu-submenu-title .anticon > .MuiSvgIcon-root {
-      margin-bottom: -5px;
-  }
-
-  .ant-btn .anticon > .MuiSvgIcon-root {
-    font-size: 1.6rem;
-  }
-
-  .ant-btn-lg .anticon > .MuiSvgIcon-root {
-    font-size: 2.2rem;
-    height: 0.9em;
-    width: 0.9em;
-  }
-
-  .ant-btn:not(.ant-dropdown-trigger) .anticon {
-    margin: -2px -4px -4px;
-  }
-
-  .ant-btn.ant-dropdown-trigger .anticon {
-    margin: -2px -4px -4px 4px;
-  }
-
-  .ant-btn-sm .anticon > .MuiSvgIcon-root {
-    font-size: 1.2rem;
-  }
-
-  .ant-btn {
-    display: inline-flex !important;
+  & > span {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
   }
 
-  .ant-btn span {
-    line-height: 1;
+  &:not(:last-child) {
+    margin-bottom: @padding-sm;
   }
+}
 
-  .ant-btn-sm {
-    min-width: 24px;
-  }
+.ant-input-affix-wrapper {
+  background-color: transparent !important;
+}
 
-  .ant-input-number {
-    border-radius: @border-radius-base !important;
-  }
 
-  .ant-input-number-handler-wrap {
-    border-top-right-radius: 8px !important;
-    border-bottom-right-radius: 8px !important;
-  }
+.ant-menu-submenu-title .anticon > .MuiSvgIcon-root {
+  margin-bottom: -5px;
+}
 
-  .ant-switch-checked {
-    background-color: @primary-color !important;
-  }
+.ant-btn .anticon > .MuiSvgIcon-root {
+  font-size: 1.6rem;
+}
 
-  pre {
-    font-family: Roboto, Helvetica, Arial, sans-serif;
-  }
+.ant-btn-lg .anticon > .MuiSvgIcon-root {
+  font-size: 2.2rem;
+  height: 0.9em;
+  width: 0.9em;
+}
 
-  .ant-tag-blue {
-    color: @primary-color;
-    background: transparent;
-  }
+.ant-btn:not(.ant-dropdown-trigger) .anticon {
+  margin: -2px -4px -4px;
+}
 
-  .ant-popover-inner {
-    border-radius: @border-radius-base !important;
-  }
+.ant-btn.ant-dropdown-trigger .anticon {
+  margin: -2px -4px -4px 4px;
+}
 
-  .ant-card-extra .MuiButtonBase-root {
-    margin-top: -20px;
-    margin-bottom: -17px;
-  }
+.ant-btn-sm .anticon > .MuiSvgIcon-root {
+  font-size: 1.2rem;
+}
 
-  .ant-card-head {
-    padding: 0 16px;
-  }
+.ant-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+}
 
-  .ant-tabs-extra-content > .MuiIconButton-root {
-    margin-bottom: 6px;
-  }
+.ant-btn span {
+  line-height: 1;
+}
 
-  .ant-checkbox-inner {
-    border-radius: 4px!important;
-  }
+.ant-btn-sm {
+  min-width: 24px;
+}
 
-  .ant-form-item-explain, .ant-form-item-extra {
-    font-size: 13px !important;
-  }
+.ant-input-number {
+  border-radius: @border-radius-base !important;
+}
 
-  .ant-form-item-has-error .ant-radio-inner {
-    border-color: @error-color !important;
-  }
+.ant-input-number-handler-wrap {
+  border-top-right-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+}
 
-  .ant-popover-inner-content {
-    width: 400px !important;
-  }
+.ant-switch-checked {
+  background-color: @primary-color !important;
+}
 
-  .ant-switch {
-    flex-grow: 0 !important;
-  }
+pre {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+}
 
-  .ant-select-selection-placeholder {
-    width: 100%;
-  }
+.ant-tag-blue {
+  color: @primary-color;
+  background: transparent;
+}
 
-  .ant-btn span {
-    line-height: normal !important;
-  }
+.ant-popover-inner {
+  border-radius: @border-radius-base !important;
+}
+
+.ant-card-extra .MuiButtonBase-root {
+  margin-top: -20px;
+  margin-bottom: -17px;
+}
+
+.ant-card-head {
+  padding: 0 16px;
+}
+
+.ant-tabs-extra-content > .MuiIconButton-root {
+  margin-bottom: 6px;
+}
+
+.ant-checkbox-inner {
+  border-radius: 4px !important;
+}
+
+.ant-form-item-explain, .ant-form-item-extra {
+  font-size: 13px !important;
+}
+
+.ant-form-item-has-error .ant-radio-inner {
+  border-color: @error-color !important;
+}
+
+.ant-popover-inner-content {
+  width: 400px !important;
+}
+
+.ant-switch {
+  flex-grow: 0 !important;
+}
+
+.ant-select-selection-placeholder {
+  width: 100%;
+}
+
+.ant-btn span {
+  line-height: normal !important;
 }

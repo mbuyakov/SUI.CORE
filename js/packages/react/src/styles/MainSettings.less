@@ -1,34 +1,32 @@
 @import "~antd/lib/style/themes/default";
 
-:global {
-  .sui-backend-container {
-    display: grid;
-    grid-template-columns: min-content auto;
-    grid-gap: @padding-sm;
-    margin-bottom: @padding-sm;
+.sui-backend-container {
+  display: grid;
+  grid-template-columns: min-content auto;
+  grid-gap: @padding-sm;
+  margin-bottom: @padding-sm;
+}
+
+.sui-backend-ITEM_TREE {
+  * > .ant-tree-node-content-wrapper {
+    height: 100% !important;
+    padding: 0 !important;
+    cursor: auto !important;
   }
 
-  .sui-backend-ITEM_TREE {
-    * > .ant-tree-node-content-wrapper {
-      height: 100% !important;
-      padding: 0 !important;
-      cursor: auto !important;
-    }
+  * > .ant-tree-switcher {
+    margin-top: 2px !important;
+  }
 
-    * > .ant-tree-switcher {
-      margin-top: 2px !important;
-    }
+  * > .ant-tree-node-content-wrapper:hover, * > .ant-tree-node-selected {
+    background-color: transparent !important;
+  }
 
-    * > .ant-tree-node-content-wrapper:hover, * > .ant-tree-node-selected {
-      background-color: transparent !important;
-    }
+  & > li:first-child {
+    padding-top: 0;
+  }
 
-    & > li:first-child {
-      padding-top: 0;
-    }
-
-    & > li:last-child {
-      padding-bottom: 0;
-    }
+  & > li:last-child {
+    padding-bottom: 0;
   }
 }

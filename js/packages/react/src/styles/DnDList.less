@@ -1,52 +1,50 @@
 @import "~antd/lib/style/themes/default";
 @import "utils";
 
-:global {
-  .sui-backend-rows {
-    > *:last-child > * {
-      &:nth-child(1) > *:not(:last-child) {
-        margin-bottom: @padding-sm;
-      }
+.sui-backend-rows {
+  > *:last-child > * {
+    &:nth-child(1) > *:not(:last-child) {
+      margin-bottom: @padding-sm;
+    }
 
-      &:nth-child(2) {
-        margin-top: @padding-sm;
-      }
+    &:nth-child(2) {
+      margin-top: @padding-sm;
     }
   }
+}
 
-  .sui-backend-cols {
-    > *:last-child {
-      .sui-backend-noBeforeAfter();
-      display: grid;
-      grid-template-columns: auto min-content;
-      grid-gap: @padding-sm;
-      //padding-bottom: @padding-sm / 2;
+.sui-backend-cols {
+  > *:last-child {
+    .sui-backend-noBeforeAfter();
+    display: grid;
+    grid-template-columns: auto min-content;
+    grid-gap: @padding-sm;
+    //padding-bottom: @padding-sm / 2;
 
-      > *:nth-child(1) > * {
-        width: 100%;
-        height: 100%;
+    > *:nth-child(1) > * {
+      width: 100%;
+      height: 100%;
 
-        > *:not(:last-child) {
-          padding-right: @padding-sm;
-        }
-      }
-
-      > *:nth-child(2) > * {
-        height: 100%;
-        min-height: @btn-height-base;
+      > *:not(:last-child) {
+        padding-right: @padding-sm;
       }
     }
-  }
 
-  .sui-backend-plusBtn {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
+    > *:nth-child(2) > * {
+      height: 100%;
+      min-height: @btn-height-base;
+    }
   }
+}
 
-  .sui-backend-scrollSemiPadding {
-    padding-bottom: @padding-sm / 2;
-    margin-bottom: -(@padding-sm / 2);
-    overflow-x: auto;
-  }
+.sui-backend-plusBtn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.sui-backend-scrollSemiPadding {
+  padding-bottom: @padding-sm / 2;
+  margin-bottom: -(@padding-sm / 2);
+  overflow-x: auto;
 }

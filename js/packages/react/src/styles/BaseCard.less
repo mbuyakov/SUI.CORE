@@ -1,94 +1,92 @@
 @import "~antd/lib/style/themes/default";
 
-:global {
-  .hideButtons button {
-    visibility: hidden;
-  }
+.hideButtons button {
+  visibility: hidden;
+}
 
-  .loading-spin-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    cursor: not-allowed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.loading-spin-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: not-allowed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .baseCardHeaderOnly {
-    & .ant-card-head, & .ant-tabs-top>.ant-tabs-nav::before {
-      border-bottom: 0 !important;
-    }
+.baseCardHeaderOnly {
+  & .ant-card-head, & .ant-tabs-top > .ant-tabs-nav::before {
+    border-bottom: 0 !important;
   }
+}
 
-  .baseCardRows {
+.baseCardRows {
+  margin-bottom: @padding-sm;
+
+  & > *:not(:last-child) {
     margin-bottom: @padding-sm;
-
-    & > *:not(:last-child) {
-      margin-bottom: @padding-sm;
-    }
   }
+}
 
-  .baseCardRow {
-    display: flex;
+.baseCardRow {
+  display: flex;
 
-    & > *:not(:last-child) {
-      margin-right: @padding-sm;
-    }
+  & > *:not(:last-child) {
+    margin-right: @padding-sm;
   }
+}
 
-  .baseCardColTitle {
-    color: @heading-color !important;
-  }
+.baseCardColTitle {
+  color: @heading-color !important;
+}
 
-  .baseCardItem {
+.baseCardItem {
+  flex-grow: 1;
+  flex-basis: 0;
+  align-items: baseline;
+  min-width: 0;
+
+  & > *:not(.baseCardItemLabelHorizontal) {
     flex-grow: 1;
-    flex-basis: 0;
-    align-items: baseline;
-    min-width: 0;
-
-    & > *:not(.baseCardItemLabelHorizontal) {
-      flex-grow: 1;
-    }
   }
+}
 
-  .baseFormItem {
-    .baseCardItem();
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: -@padding-sm;
+.baseFormItem {
+  .baseCardItem();
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: -@padding-sm;
 
-    & .ant-legacy-form-item-control-wrapper {
-      width: 100%;
-    }
+  & .ant-legacy-form-item-control-wrapper {
+    width: 100%;
   }
+}
 
-  .baseCardItemLabelHorizontal {
-    color: @heading-color;
-    //line-height: 40px;
-  }
+.baseCardItemLabelHorizontal {
+  color: @heading-color;
+  //line-height: 40px;
+}
 
-  .baseCardItemLabelHorizontal::after {
-    white-space: pre;
-    content: " ";
-  }
+.baseCardItemLabelHorizontal::after {
+  white-space: pre;
+  content: " ";
+}
 
-  .baseFormItemVertical {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    max-width: 100%;
-  }
+.baseFormItemVertical {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 100%;
+}
 
-  .ant-modal-body .baseCard {
-    margin-top: 32px;
-  }
+.ant-modal-body .baseCard {
+  margin-top: 32px;
+}
 
-  .ant-form-item-children .baseCard {
-    margin-top: 0 !important;
-  }
+.ant-form-item-children .baseCard {
+  margin-top: 0 !important;
 }
 
 .baseCardCols {
@@ -111,8 +109,9 @@
         /*border-left: red 10px solid;*/
       }
     }
+
     & > th[colspan="2"] {
-      padding-right: 0!important;
+      padding-right: 0 !important;
     }
   }
 
