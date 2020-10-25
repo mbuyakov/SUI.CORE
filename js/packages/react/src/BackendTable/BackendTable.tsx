@@ -282,7 +282,6 @@ export class BackendTable<TSelection = defaultSelection>
           ref={this.baseTableRef}
           title={this.props.title || this.state.title}
           paperStyle={{
-            borderBottom: this.state.paginationEnabled ? undefined : 0,
             ...this.props.paperStyle,
           }}
           noColsContent={
