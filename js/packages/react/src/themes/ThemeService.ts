@@ -15,6 +15,10 @@ export class ThemeService extends ObservableLocalStorageValue<ThemeVariant> {
   private readonly themeSwitcher: ReturnType<typeof themeSwitcher>["switcher"];
 
   private static detectBrowserTheme(): ThemeVariant {
+    if (Container.getValue("sui.noDark")) {
+      return "light";
+    }
+
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return "dark";
     }

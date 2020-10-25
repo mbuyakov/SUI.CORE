@@ -13,7 +13,8 @@ declare let window: Window & {
 };
 
 type _IInitSUISettings = IInitSUISettings & {
-  themes: ThemesConfig
+  themes: ThemesConfig,
+  noDark?: boolean
 }
 
 // noinspection JSUnusedGlobalSymbols

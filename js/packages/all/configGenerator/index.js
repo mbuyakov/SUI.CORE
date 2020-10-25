@@ -101,6 +101,7 @@ function generateUmiConfig(params) {
     theme: commonWithLightTheme.lessVars,
     define: {
       "process.env.BUILD_TIME": buildTime,
+      "process.env.NO_DARK": process.env.NO_DARK,
       ...define
     },
     treeShaking: true,
