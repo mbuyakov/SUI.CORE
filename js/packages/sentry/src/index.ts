@@ -12,7 +12,7 @@ export async function initSentry(dsn: string, release: string): Promise<void> {
     release,
     integrations: [
       new sentryIntegrations.CaptureConsole({
-        levels: ['error', 'warning']
+        levels: ['error', 'warn']
       })
     ],
   });
