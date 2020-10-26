@@ -1,4 +1,4 @@
-export async function initSentry(dsn: string, release: string): Promise<void> {
+export async function initSentry(dsn: string, release: string, environment: string): Promise<void> {
   const [
     sentryBrowser,
     sentryIntegrations
@@ -10,6 +10,7 @@ export async function initSentry(dsn: string, release: string): Promise<void> {
   sentryBrowser.init({
     dsn,
     release,
+    environment,
     integrations: [
       new sentryIntegrations.CaptureConsole({
         levels: ['error', 'warn']
