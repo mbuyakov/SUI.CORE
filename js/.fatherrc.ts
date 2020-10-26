@@ -6,6 +6,7 @@ const options: IBundleOptions = {
     importLibToEs: true
   },
   pkgs: [
+    "sentry",
     "core",
     "charts",
     "react",
