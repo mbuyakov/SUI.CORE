@@ -28,7 +28,7 @@ pipeline {
         stage("JVM") {
           steps {
             rtGradleRun (
-              tool: "gradle",
+              tool: "gradle-6.3",
               rootDir: "java/",
               buildFile: 'build.gradle',
               tasks: '--rerun-tasks build'
