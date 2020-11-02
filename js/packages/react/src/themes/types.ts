@@ -3,11 +3,13 @@ import {Merge} from "@sui/core";
 
 export interface SuiThemeConfig {
   lessVars?: { [key: string]: string },
-  materialThemeConfig?: ThemeOptions | ((muiDefaultTheme: Theme) => ThemeOptions)
+  materialThemeConfig?: ThemeOptions | ((muiDefaultTheme: Theme) => ThemeOptions),
+  baseTableMaterialThemeConfig?: ThemeOptions | ((muiTheme: Theme) => ThemeOptions)
 }
 
 export type CompiledSuiThemeConfig  = Merge<SuiThemeConfig, {
   materialThemeConfig?: ThemeOptions
+  baseTableMaterialThemeConfig?: ThemeOptions
 }>;
 
 export interface ThemesConfig {
@@ -28,7 +30,8 @@ export interface MergedThemeConfigs {
 export interface CompiledTheme {
   name: ThemeVariant
   lessVars: { [key: string]: string },
-  muiTheme: Theme
+  muiTheme: Theme,
+  baseTableMuiTheme: Theme
 }
 
 export interface CompiledThemes {

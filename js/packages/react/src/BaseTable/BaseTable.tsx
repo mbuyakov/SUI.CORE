@@ -4,6 +4,7 @@ import {Getter, Getters} from '@devexpress/dx-react-core';
 import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSelection, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
 import {ColumnChooser, DragDropProvider, Grid, GroupingPanel, PagingPanel, Table, TableBandHeader, TableColumnReordering, TableColumnResizing, TableColumnVisibility, TableFilterRow, TableGroupRow, TableHeaderRow, TableRowDetail, TableSelection, Toolbar, VirtualTable} from '@devexpress/dx-react-grid-material-ui';
 import {TableRow} from '@material-ui/core';
+import {ThemeProvider} from '@material-ui/core/styles';
 import CloudDownload from '@material-ui/icons/CloudDownload';
 import {defaultIfNotBoolean, getDataByKey} from "@sui/core";
 import {Card, Result, Spin} from 'antd';
@@ -280,179 +281,183 @@ export class BaseTable<TSelection = defaultSelection>
     return (
       <SuiThemeContext.Consumer>
         {theme => (
-          <Card
-            style={{
-              ...(borderless ? {} : {margin: 10}),
-              ...(this.props.fitToCardBody ? {margin: -24, marginTop: -23} : {}),
-              ...(this.props.fitToCollapseBody ? {margin: -16, marginBottom: -29} : {}),
-              ...(this.props.fitToRowDetailContainer ? {margin: "-3px -24px"} : {}),
-              ...(this.props.fitToTabPanelBody ? {margin: 0, marginTop: -17} : {}),
-              ...(this.props.paperStyle || {}),
-            }}
-            bodyStyle={{padding: 0, paddingTop: this.props.toolbarEnabled ? 0 : 1}}
-            title={this.props.title}
-            type={this.props.cardType}
-            extra={this.props.extra}
-            bordered={!borderless}
-            className={classnames(BASE_TABLE, !paginationEnabled && BASE_TABLE_NO_PAGINATION, theme.name)}
+          <ThemeProvider
+            theme={theme.baseTableMuiTheme}
           >
-            {cols.length === 0 && <>
-              {this.props.noColsContent}
-              <Result
-                style={{paddingTop: 12, paddingBottom: 12}}
-                status="error"
-                title="Нет доступных колонок"
-              />
-            </>}
-            {cols.length !== 0 && <Grid
-              rows={this.props.hideRows ? [] : this.props.rows}
-              columns={cols}
-              getRowId={this.props.getRowId || (BaseTable.getRowId)}
+            <Card
+              style={{
+                ...(borderless ? {} : {margin: 10}),
+                ...(this.props.fitToCardBody ? {margin: -24, marginTop: -23} : {}),
+                ...(this.props.fitToCollapseBody ? {margin: -16, marginBottom: -29} : {}),
+                ...(this.props.fitToRowDetailContainer ? {margin: "-3px -24px"} : {}),
+                ...(this.props.fitToTabPanelBody ? {margin: 0, marginTop: -17} : {}),
+                ...(this.props.paperStyle || {}),
+              }}
+              bodyStyle={{padding: 0, paddingTop: this.props.toolbarEnabled ? 0 : 1}}
+              title={this.props.title}
+              type={this.props.cardType}
+              extra={this.props.extra}
+              bordered={!borderless}
+              className={classnames(BASE_TABLE, !paginationEnabled && BASE_TABLE_NO_PAGINATION, theme.name)}
             >
-              {filteringEnabled && (
-                <FilteringState
-                  filters={this.props.filters}
-                  onFiltersChange={this.props.onFiltersChange}
-                  defaultFilters={this.props.defaultFilters || []}
-                  columnExtensions={(this.props.disabledFilters || []).map(columnName => ({columnName, filteringEnabled: false}))}
+              {cols.length === 0 && <>
+                {this.props.noColsContent}
+                <Result
+                  style={{paddingTop: 12, paddingBottom: 12}}
+                  status="error"
+                  title="Нет доступных колонок"
                 />
-              )}
-              {rowDetail && <RowDetailState defaultExpandedRowIds={[]}/>}
-              {sortingEnabled && (
-                <SortingState
-                  columnExtensions={enableSorting}
-                  sorting={this.props.sorting}
-                  defaultSorting={defaultSorting}
-                  onSortingChange={this.props.onSortingChange}
-                />
-              )}
-              {groupingEnabled && (
-                <GroupingState
-                  grouping={this.props.grouping}
-                  expandedGroups={this.props.expandedGroups}
-                  onGroupingChange={this.props.onGroupingChange}
-                  onExpandedGroupsChange={this.props.onExpandedGroupsChange}
-                  defaultGrouping={defaultGrouping}
-                  defaultExpandedGroups={defaultExpanded}
-                  columnExtensions={enableGrouping}
-                />
-              )}
-              {paginationEnabled && (
-                <PagingState
-                  defaultCurrentPage={this.props.defaultCurrentPage}
-                  defaultPageSize={virtual ? 0 : 10}
-                  currentPage={this.props.currentPage}
-                  pageSize={this.props.pageSize}
-                  onCurrentPageChange={this.props.onCurrentPageChange}
-                  onPageSizeChange={this.props.onPageSizeChange}
-                />
-              )}
-              {(selectionEnabled || highlightEnabled) && <SelectionState
-                selection={(this.state && this.state.selection) as any}
-                onSelectionChange={this.onSelectionChange as any}
-              />}
-              {groupingEnabled && (this.props.getChildGroups
-                ? <CustomGrouping
-                  getChildGroups={this.props.getChildGroups}
-                  grouping={this.props.customGrouping}
-                  expandedGroups={this.props.customExpandedGroups}
-                />
-                : <IntegratedGrouping columnExtensions={groupingExtension}/>)}
-              {filteringEnabled && !this.props.onFiltersChange && <IntegratedFiltering columnExtensions={filterExtension}/>}
-              {sortingEnabled && !this.props.onSortingChange && <IntegratedSorting columnExtensions={sortingExtension}/>}
-              {allowExport && <Getter
-                name="rows"
-                computed={this.getterComputed}
-              />}
-              {paginationEnabled && (typeof (this.props.totalCount) === "number"
-                  ? <CustomPaging totalCount={this.props.totalCount}/>
-                  : <IntegratedPaging/>
-              )}
-              {(selectionEnabled || highlightEnabled) && <IntegratedSelection/>}
-              <DragDropProvider/>
-              {virtual
-                ? <VirtualTable
-                  cellComponent={this.CellComponent}
-                  noDataCellComponent={TableNoDataCell}
-                  rowComponent={this.RowComponent}
-                  columnExtensions={wordWrapExtension}
-                />
-                : <Table
-                  cellComponent={this.CellComponent}
-                  noDataCellComponent={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? TableNoDataCell : TableNoDataCellSmall}
-                  rowComponent={this.RowComponent}
-                  columnExtensions={wordWrapExtension}
+              </>}
+              {cols.length !== 0 && <Grid
+                rows={this.props.hideRows ? [] : this.props.rows}
+                columns={cols}
+                getRowId={this.props.getRowId || (BaseTable.getRowId)}
+              >
+                {filteringEnabled && (
+                  <FilteringState
+                    filters={this.props.filters}
+                    onFiltersChange={this.props.onFiltersChange}
+                    defaultFilters={this.props.defaultFilters || []}
+                    columnExtensions={(this.props.disabledFilters || []).map(columnName => ({columnName, filteringEnabled: false}))}
+                  />
+                )}
+                {rowDetail && <RowDetailState defaultExpandedRowIds={[]}/>}
+                {sortingEnabled && (
+                  <SortingState
+                    columnExtensions={enableSorting}
+                    sorting={this.props.sorting}
+                    defaultSorting={defaultSorting}
+                    onSortingChange={this.props.onSortingChange}
+                  />
+                )}
+                {groupingEnabled && (
+                  <GroupingState
+                    grouping={this.props.grouping}
+                    expandedGroups={this.props.expandedGroups}
+                    onGroupingChange={this.props.onGroupingChange}
+                    onExpandedGroupsChange={this.props.onExpandedGroupsChange}
+                    defaultGrouping={defaultGrouping}
+                    defaultExpandedGroups={defaultExpanded}
+                    columnExtensions={enableGrouping}
+                  />
+                )}
+                {paginationEnabled && (
+                  <PagingState
+                    defaultCurrentPage={this.props.defaultCurrentPage}
+                    defaultPageSize={virtual ? 0 : 10}
+                    currentPage={this.props.currentPage}
+                    pageSize={this.props.pageSize}
+                    onCurrentPageChange={this.props.onCurrentPageChange}
+                    onPageSizeChange={this.props.onPageSizeChange}
+                  />
+                )}
+                {(selectionEnabled || highlightEnabled) && <SelectionState
+                  selection={(this.state && this.state.selection) as any}
+                  onSelectionChange={this.onSelectionChange as any}
                 />}
-              {rowDetail && <TableRowDetail
-                contentComponent={rowDetail}
-                toggleCellComponent={this.ToggleCellComponent}
-              />}
-              {resizingEnabled && (
-                <TableColumnResizing
-                  minColumnWidth={this.props.minColumnWidth || 30}
-                  defaultColumnWidths={defaultWidth}
-                />
+                {groupingEnabled && (this.props.getChildGroups
+                  ? <CustomGrouping
+                    getChildGroups={this.props.getChildGroups}
+                    grouping={this.props.customGrouping}
+                    expandedGroups={this.props.customExpandedGroups}
+                  />
+                  : <IntegratedGrouping columnExtensions={groupingExtension}/>)}
+                {filteringEnabled && !this.props.onFiltersChange && <IntegratedFiltering columnExtensions={filterExtension}/>}
+                {sortingEnabled && !this.props.onSortingChange && <IntegratedSorting columnExtensions={sortingExtension}/>}
+                {allowExport && <Getter
+                  name="rows"
+                  computed={this.getterComputed}
+                />}
+                {paginationEnabled && (typeof (this.props.totalCount) === "number"
+                    ? <CustomPaging totalCount={this.props.totalCount}/>
+                    : <IntegratedPaging/>
+                )}
+                {(selectionEnabled || highlightEnabled) && <IntegratedSelection/>}
+                <DragDropProvider/>
+                {virtual
+                  ? <VirtualTable
+                    cellComponent={this.CellComponent}
+                    noDataCellComponent={TableNoDataCell}
+                    rowComponent={this.RowComponent}
+                    columnExtensions={wordWrapExtension}
+                  />
+                  : <Table
+                    cellComponent={this.CellComponent}
+                    noDataCellComponent={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? TableNoDataCell : TableNoDataCellSmall}
+                    rowComponent={this.RowComponent}
+                    columnExtensions={wordWrapExtension}
+                  />}
+                {rowDetail && <TableRowDetail
+                  contentComponent={rowDetail}
+                  toggleCellComponent={this.ToggleCellComponent}
+                />}
+                {resizingEnabled && (
+                  <TableColumnResizing
+                    minColumnWidth={this.props.minColumnWidth || 30}
+                    defaultColumnWidths={defaultWidth}
+                  />
+                )}
+                {headerEnabled && <TableHeaderRow showSortingControls={sortingEnabled}/>}
+                {filteringEnabled && <TableFilterRow cellComponent={this.FilterCell}/>}
+                {paginationEnabled && <PagingPanel
+                  containerComponent={pagingContainerComponent}
+                  pageSizes={this.props.pageSizes || (virtual ? undefined : [10, 25, 50, 100, 0])}
+                  messages={{
+                    info: virtual ? BaseTable.virtualPageInfo : BaseTable.pageInfo,
+                    rowsPerPage: 'Записей на страницу',
+                    showAll: 'Все',
+                  }}
+                />}
+                {(selectionEnabled || highlightEnabled) && (
+                  <TableSelection
+                    highlightRow={highlightEnabled}
+                    selectByRowClick={highlightEnabled}
+                    showSelectionColumn={!highlightEnabled}
+                    cellComponent={this.SelectionCellComponent}
+                    showSelectAll={!this.props.selectionFilter && !this.props.singleSelection && !highlightEnabled}
+                  />
+                )}
+                {groupingEnabled && <TableGroupRow contentComponent={tableGroupRowContentComponent}/>}
+                {groupingEnabled && this.props.groupSubtotalData && hasSubtotals && <GroupSummaryRow subtotalData={this.props.groupSubtotalData}/>}
+                <TableColumnReordering defaultOrder={this.props.cols.map(value => value.id)}/>
+                {userSettingsEnabled && (<UserSettingsSupportPlugin/>)}
+                {visibilityEnabled && (
+                  <TableColumnVisibility
+                    defaultHiddenColumnNames={defaultHidden}
+                    emptyMessageComponent={EmptyMessageComponent}
+                  />
+                )}
+                {(visibilityEnabled || groupingEnabled || allowExport || this.props.toolbarButtons) && (
+                  <Toolbar
+                    rootComponent={this.toolbarRootComponent}
+                  />
+                )}
+                {visibilityEnabled && <ColumnChooser containerComponent={ColumnChooserContainer} messages={{showColumnChooser: 'Отобразить выбор колонок'}}/>}
+                {allowExport && (
+                  <ExportPlugin
+                    onClick={this.onExport}
+                    tooltip="Выгрузка в Excel"
+                    icon={<CloudDownload/>}
+                  />
+                )}
+                {groupingEnabled && <GroupingPanel
+                  messages={{groupByColumn: 'Перетащите заголовок колонки сюда для группировки'}}
+                  showGroupingControls={true}
+                  showSortingControls={true}
+                />}
+                {this.props.columnBands && (<TableBandHeader columnBands={this.props.columnBands}/>)}
+                {this.props.toolbarButtons}
+                {userSettingsEnabled && (<UserSettingsPlugin onSettingsChange={this.props.onSettingsChange}/>)}
+              </Grid>}
+              {this.props.loading && (
+                <div className={LOADING_SPIN_WRAPPER}>
+                  <Spin
+                    tip="Подождите..."
+                  />
+                </div>
               )}
-              {headerEnabled && <TableHeaderRow showSortingControls={sortingEnabled}/>}
-              {filteringEnabled && <TableFilterRow cellComponent={this.FilterCell}/>}
-              {paginationEnabled && <PagingPanel
-                containerComponent={pagingContainerComponent}
-                pageSizes={this.props.pageSizes || (virtual ? undefined : [10, 25, 50, 100, 0])}
-                messages={{
-                  info: virtual ? BaseTable.virtualPageInfo : BaseTable.pageInfo,
-                  rowsPerPage: 'Записей на страницу',
-                  showAll: 'Все',
-                }}
-              />}
-              {(selectionEnabled || highlightEnabled) && (
-                <TableSelection
-                  highlightRow={highlightEnabled}
-                  selectByRowClick={highlightEnabled}
-                  showSelectionColumn={!highlightEnabled}
-                  cellComponent={this.SelectionCellComponent}
-                  showSelectAll={!this.props.selectionFilter && !this.props.singleSelection && !highlightEnabled}
-                />
-              )}
-              {groupingEnabled && <TableGroupRow contentComponent={tableGroupRowContentComponent}/>}
-              {groupingEnabled && this.props.groupSubtotalData && hasSubtotals && <GroupSummaryRow subtotalData={this.props.groupSubtotalData}/>}
-              <TableColumnReordering defaultOrder={this.props.cols.map(value => value.id)}/>
-              {userSettingsEnabled && (<UserSettingsSupportPlugin/>)}
-              {visibilityEnabled && (
-                <TableColumnVisibility
-                  defaultHiddenColumnNames={defaultHidden}
-                  emptyMessageComponent={EmptyMessageComponent}
-                />
-              )}
-              {(visibilityEnabled || groupingEnabled || allowExport || this.props.toolbarButtons) && (
-                <Toolbar
-                  rootComponent={this.toolbarRootComponent}
-                />
-              )}
-              {visibilityEnabled && <ColumnChooser containerComponent={ColumnChooserContainer} messages={{showColumnChooser: 'Отобразить выбор колонок'}}/>}
-              {allowExport && (
-                <ExportPlugin
-                  onClick={this.onExport}
-                  tooltip="Выгрузка в Excel"
-                  icon={<CloudDownload/>}
-                />
-              )}
-              {groupingEnabled && <GroupingPanel
-                messages={{groupByColumn: 'Перетащите заголовок колонки сюда для группировки'}}
-                showGroupingControls={true}
-                showSortingControls={true}
-              />}
-              {this.props.columnBands && (<TableBandHeader columnBands={this.props.columnBands}/>)}
-              {this.props.toolbarButtons}
-              {userSettingsEnabled && (<UserSettingsPlugin onSettingsChange={this.props.onSettingsChange}/>)}
-            </Grid>}
-            {this.props.loading && (
-              <div className={LOADING_SPIN_WRAPPER}>
-                <Spin
-                  tip="Подождите..."
-                />
-              </div>
-            )}
-          </Card>
+            </Card>
+          </ThemeProvider>
         )}
       </SuiThemeContext.Consumer>
     );

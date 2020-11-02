@@ -17,6 +17,10 @@ function compileThemeConfig(theme?: SuiThemeConfig): CompiledSuiThemeConfig {
     theme.materialThemeConfig = theme.materialThemeConfig(defaultMuiTheme);
   }
 
+  if (typeof theme.baseTableMaterialThemeConfig === 'function') {
+    theme.baseTableMaterialThemeConfig = theme.baseTableMaterialThemeConfig(defaultMuiTheme);
+  }
+
   return theme as CompiledSuiThemeConfig;
 }
 
@@ -50,12 +54,14 @@ export function getCompiledThemes(themes: ThemesConfig): CompiledThemes {
     light: {
       name: "light",
       lessVars: mergedThemes.commonWithLightTheme.lessVars,
-      muiTheme: createMuiTheme(mergedThemes.commonWithLightTheme.materialThemeConfig)
+      muiTheme: createMuiTheme(mergedThemes.commonWithLightTheme.materialThemeConfig),
+      baseTableMuiTheme: createMuiTheme(merge({}, mergedThemes.commonWithLightTheme.materialThemeConfig, mergedThemes.commonWithLightTheme.baseTableMaterialThemeConfig))
     },
     dark: {
       name: "dark",
       lessVars: mergedThemes.commonWithDarkTheme.lessVars,
-      muiTheme: createMuiTheme(mergedThemes.commonWithDarkTheme.materialThemeConfig)
+      muiTheme: createMuiTheme(mergedThemes.commonWithDarkTheme.materialThemeConfig),
+      baseTableMuiTheme: createMuiTheme(merge({}, mergedThemes.commonWithDarkTheme.materialThemeConfig, mergedThemes.commonWithDarkTheme.baseTableMaterialThemeConfig))
     }
   }
 }
