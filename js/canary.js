@@ -1,5 +1,6 @@
 const clipboardy = require('clipboardy');
 const fs = require('fs');
+const notifier = require('node-notifier');
 const publish = require('./publish');
 
 
@@ -34,3 +35,7 @@ console.log("Successfully!");
 const command = `yarn add @sui/all@${version}`;
 clipboardy.writeSync(command);
 console.log(`To install: ${command} (already copied to you clipboard)`);
+notifier.notify({
+  title: "SUI canary build done",
+  message: "Command to install already copied to you clipboard"
+})
