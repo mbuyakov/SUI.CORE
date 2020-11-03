@@ -16,7 +16,7 @@ class BaseCardTabContextProviderInner extends React.Component<BaseCardTabContext
     let tab = "0";
     if (props.routeKey) {
       // Backward compatibility
-      if (props.match.params[props.routeKey] == null) {
+      if (props.match.params[props.routeKey] == null || props.match.params[props.routeKey] == `:${props.routeKey}`) {
         props.match.params[props.routeKey] = tab;
         props.history.replace(generatePath(props.match.path, props.match.params));
       } else {
