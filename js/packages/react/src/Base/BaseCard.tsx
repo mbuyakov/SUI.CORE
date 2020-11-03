@@ -58,15 +58,17 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
         let firstChildrenTabs = wrapInArrayWithoutNulls(firstRow.tabs);
         hasBlocks = firstChildrenTabs.some(tab => isTabWithBlocks(tab));
         // If any tab has blocks - map all tabs without blocks to tab with 1 block
-        firstChildrenTabs = firstChildrenTabs.map(tab => {
-          if (!isTabWithBlocks(tab)) {
-            (tab as unknown as IBaseCardTabWithBlocks<T, ITEM>).blocks = {
-              rows: tab.rows
-            };
-            delete tab.rows;
-          }
-          return tab;
-        })
+        if (hasBlocks) {
+          firstChildrenTabs = firstChildrenTabs.map(tab => {
+            if (!isTabWithBlocks(tab)) {
+              (tab as unknown as IBaseCardTabWithBlocks<T, ITEM>).blocks = {
+                rows: tab.rows
+              };
+              delete tab.rows;
+            }
+            return tab;
+          })
+        }
         tabList = firstChildrenTabs.map((tab, i) => ({key: i.toString(), tab: (<span>{tab.title}</span>)}));
         tabBarExtraContent = firstRow.tabBarExtraContent;
         // Body = tabs
