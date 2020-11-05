@@ -1,7 +1,7 @@
 SELECT pg_namespace.nspname AS table_schema,
        pg_class.relname AS table_name,
        pg_attribute.attname AS column_name,
-       pg_attrdef.adsrc AS column_default,
+       pg_get_expr(pg_attrdef.adbin, pg_attrdef.adrelid) AS column_default,
        (pg_attribute.atttypid::REGTYPE)::TEXT AS column_type,
        NOT pg_attribute.attnotnull AS is_nullable
 FROM pg_catalog.pg_class
