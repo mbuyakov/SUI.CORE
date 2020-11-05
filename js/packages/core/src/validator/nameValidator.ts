@@ -1,10 +1,10 @@
 import capitalize from 'lodash/capitalize';
 
-export const NAME_REGEXP = /^(?=(([А-Яа-яA-Za-z0-9().]+[\-']?|\s)+))\1$/;
-export const SURNAME_REGEXP = /^(?=(([А-Яа-яA-Za-z0-9()]+[\-']?|\s)+))\1$/;
+export const NAME_REGEXP = /^(?=(([А-ЯЁа-яёA-Za-z0-9().]+[\-']?|\s)+))\1$/;
+export const SURNAME_REGEXP = /^(?=(([А-ЯЁа-яёA-Za-z0-9()]+[\-']?|\s)+))\1$/;
 export const WHITESPACE_REGEXP = /^\s+.+$/;
 export const HYPHEN_REGEXP = /\-$/;
-export const ONLY_ONE_ALPHABET_REGEXP = /^(?:[^А-Яа-я]*|[^A-Za-z]*)$/;
+export const ONLY_ONE_ALPHABET_REGEXP = /^(?:[^А-ЯЁа-яё]*|[^A-Za-z]*)$/;
 export const ALL_SYMBOL_DIGIT_REGEXP = /^(\d*|[()]*)*$/;
 export const POINT_REGEXP_SURNAME_REGEXP = /(?:\s*\.\s*)/;
 export const NAME_REGEXP_MESSAGE = "Допустимые символы: А-Я,а-я,A-Z,a-z,0-9,(),-,' точка \".\" в Фамилии не допускается";
@@ -60,5 +60,5 @@ export function fioConverter(name: string): string {
 }
 
 export function fioConverterWithoutTrim(name: string): string {
-  return name.replace(/\s\s+/g, ' ').replace(/\w+|[А-Яа-я]+/g, capitalize);
+  return name.replace(/\s\s+/g, ' ').replace(/\w+|[А-Яа-яёЁ]+/g, capitalize);
 }

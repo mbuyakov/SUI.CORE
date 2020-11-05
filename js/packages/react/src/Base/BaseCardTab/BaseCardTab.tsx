@@ -1,7 +1,4 @@
-import Tabs, {TabsProps} from 'antd/lib/tabs';
 import * as React from 'react';
-
-import {BaseCardTabContext} from '@/Base/BaseCardTab/BaseCardTabContext';
 import {BaseCardTabWithBlocks, IBaseCardTabWithBlocks, isTabWithBlocks} from "@/Base/BaseCardTab/BaseCardTabWithBlocks";
 import {BaseCardTabWithRows, IBaseCardTabWithRows, isTabWithRows} from "@/Base/BaseCardTab/BaseCardTabWithRows";
 
@@ -33,21 +30,3 @@ export function renderIBaseCardTabLayout<T, ITEM>(sourceItem: T, tab: IBaseCardT
     return (<h3>UNKNOWN TAB TYPE</h3>);
   }
 }
-
-type ManagedTabsProps = Omit<TabsProps, 'onChange' | 'activeKey'>;
-
-const ManagedTabsInner: React.FC<ManagedTabsProps> = props => {
-  const [activeTab, setTab] = React.useState(props.defaultActiveKey);
-
-  return (
-    <BaseCardTabContext.Provider value={setTab}>
-      <Tabs
-        {...props}
-        activeKey={activeTab}
-        onChange={setTab}
-      />
-    </BaseCardTabContext.Provider>
-  );
-};
-
-export const ManagedTabs = ManagedTabsInner;

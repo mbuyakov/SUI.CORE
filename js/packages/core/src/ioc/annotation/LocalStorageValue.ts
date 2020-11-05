@@ -33,7 +33,7 @@ export function _LocalStorageValue(localStorageKey: string, target: any, key: st
     },
     set(newValue: string) {
       if(!_this[propKeyInit]) {
-        log.warn(`[${localStorageKey}] Skip init. Setter called before read value`);
+        log.debug(`[${localStorageKey}] Skip init. Setter called before read value`);
         _this[propKeyInit] = true;
       }
       const oldValue = _this[propKey];

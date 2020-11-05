@@ -2,11 +2,13 @@ import React from "react";
 import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 import {BaseCard} from "@/Base/BaseCard";
 import {BaseCardContext} from "@/Base/BaseCardContext";
-import {IBaseCardTabLayout, ManagedTabs, renderIBaseCardTabLayout} from "@/Base/BaseCardTab";
+import {IBaseCardTabLayout, renderIBaseCardTabLayout} from "@/Base/BaseCardTab";
 import {IBaseCardRowLayout} from "@/Base/BaseCardRow/BaseCardRow";
+import {ManagedTabs} from "@/Base/BaseCardTab/ManagedTabs";
 
 export interface IBaseCardRowWithTabsLayout<T, ITEM> {
   tabBarExtraContent?: React.ReactNode;
+  tabsRouteKey?: string;
   tabs: OneOrArrayWithNulls<IBaseCardTabLayout<T, ITEM>>;
   tabsInCard?: boolean;
 }
@@ -28,7 +30,7 @@ export const BaseCardRowWithTabs: <T, ITEM>(props: IBaseCardRowWithTabsLayout<T,
       : (
         <BaseCardContext.Consumer>
           {({forceRenderTabs}): JSX.Element => (
-            <ManagedTabs defaultActiveKey="0">
+            <ManagedTabs routeKey={props.tabsRouteKey}>
               {tabs.map((tab, index) => renderIBaseCardTabLayout(props.sourceItem, tab, index, forceRenderTabs))}
             </ManagedTabs>
           )}

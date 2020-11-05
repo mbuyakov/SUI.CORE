@@ -46,6 +46,13 @@ export const defaultThemesConfig: ThemesConfig = {
       palette: {
         type: "light"
       }
+    },
+    baseTableMaterialThemeConfig: {
+      palette: {
+        action: {
+          selected: "#0000FF" // For highlighted row
+        }
+      }
     }
   },
   dark: {
