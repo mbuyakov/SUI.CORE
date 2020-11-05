@@ -1,4 +1,4 @@
-import {DatePicker} from "antd";
+import DatePicker from "@/SuiDatePicker/date-picker";
 import autobind from "autobind-decorator";
 import moment, {Moment} from "moment";
 import * as React from 'react';
@@ -60,6 +60,7 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
         showTime={this.props.pickerMode === "datetime"}
         ranges={GET_DEFAULT_CALENDAR_RANGES()}
         value={this.state.filterValue}
+        useFormatAsMask={true}
         onChange={this.onChange}
         onOpenChange={this.onOpenChange}
         open={this.state.open}
