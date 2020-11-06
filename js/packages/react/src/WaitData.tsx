@@ -55,9 +55,9 @@ this.updateData();
     const children = (): JSX.Element => (this.props.children instanceof Function) ? this.props.children(data === '__NULL__' ? null : data, this.updateData) : this.props.children;
     // console.log(data ? 'data' : 'no data');
     const hasErrors = this.props.error || (this.state && this.state.error);
-    const spinning = !data || !!this.props.spinning;
+    const spinning = hasErrors || !data || !!this.props.spinning;
 
-    if (!hasErrors && !spinning && !this.props.disableUnwrapOnReady) {
+    if (!spinning && !this.props.disableUnwrapOnReady) {
       return children();
     }
 
