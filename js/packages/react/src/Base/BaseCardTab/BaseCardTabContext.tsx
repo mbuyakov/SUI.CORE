@@ -39,6 +39,9 @@ class BaseCardTabContextProviderInner extends React.Component<BaseCardTabContext
 
   @autobind
   public setTab(tab: string): void {
+    if (tab == `:${this.props.routeKey}`) {
+      tab = "0";
+    }
     this.setState({tab});
     this.props.match.params[this.props.routeKey] = tab;
     this.props.history.replace(generatePath(this.props.match.path, this.props.match.params));
