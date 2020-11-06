@@ -21,13 +21,13 @@ public class FromGraph {
   public void addJoin(
     @NonNull JoinType joinType,
     @NonNull TableSegment toTableSegment,
-    @NonNull ReferenceCondition condition) {
+    @NonNull ReferenceCondition condition
+  ) {
     val fromTable = Stream
       .of(condition.getFromTable(), condition.getToTable())
       .filter(table -> !toTableSegment.equals(table))
       .findFirst()
-      .orElseThrow(() -> new IllegalArgumentException(
-        String.format("Illegal join %s -> %1$s", toTableSegment)));
+      .orElseThrow(() -> new IllegalArgumentException(String.format("Illegal join %s -> %1$s", toTableSegment)));
 
     if (!hasJoin(fromTable, toTableSegment)) {
       if (!joinMap.containsKey(fromTable)) {

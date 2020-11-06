@@ -10,12 +10,13 @@ import lombok.Getter;
 public class ReferenceCondition implements Condition {
 
   private final TableSegment fromTable;
+  private final String fromColumnName;
   private final TableSegment toTable;
-  private final String referencedColumnName;
+  private final String toColumnName;
 
   @Override
   public String toString() {
-    return String.format("%s.%s = %s.id", fromTable, referencedColumnName, toTable);
+    return String.format("%s.%s = %s.%s", fromTable, fromColumnName, toTable, toColumnName);
   }
 
 }

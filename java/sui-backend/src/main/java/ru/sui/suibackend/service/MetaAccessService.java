@@ -103,8 +103,9 @@ public class MetaAccessService {
               ReferenceCondition
                 .builder()
                 .fromTable(fromTable)
+                .fromColumnName("id")
                 .toTable(fromSubQuery)
-                .referencedColumnName("id")
+                .toColumnName("id")
                 .build());
           } else {
             return null;
@@ -160,13 +161,12 @@ public class MetaAccessService {
                   .build());
               } else {
                 val followColumnInfo = fromTableInfo.getFollowColumnInfo();
+                val targetColumnInfo = Objects.requireNonNull(MetaSchemaUtils.getReferencedColumnInfo(followColumnInfo));
+
                 val subSelect = FromSubQuery
                   .builder()
                   .alias(FROM_SUB_QUERY_ALIAS)
-                  .query(generateRestrictionSubSelect(
-                    MetaSchemaUtils.getReferencedTableInfo(followColumnInfo),
-                    restrictionTableInfo,
-                    joinedRestrictions))
+                  .query(generateRestrictionSubSelect(targetColumnInfo.getTableInfo(), restrictionTableInfo, joinedRestrictions))
                   .build();
 
                 renderFromGraph.addJoin(
@@ -175,8 +175,9 @@ public class MetaAccessService {
                   ReferenceCondition
                     .builder()
                     .fromTable(fromTable)
+                    .fromColumnName(followColumnInfo.getColumnName())
                     .toTable(subSelect)
-                    .referencedColumnName(followColumnInfo.getColumnName())
+                    .toColumnName(targetColumnInfo.getColumnName())
                     .build());
               }
             } else {
@@ -206,7 +207,8 @@ public class MetaAccessService {
         var currentColumn = column;
 
         do {
-          val referencedTableInfo = MetaSchemaUtils.getReferencedTableInfo(currentColumn.getColumnInfo());
+          val referencedColumnInfo = Objects.requireNonNull(MetaSchemaUtils.getReferencedColumnInfo(currentColumn.getColumnInfo()));
+          val referencedTableInfo = referencedColumnInfo.getTableInfo();
           Table toTable;
 
           if (renderTableInfo.equals(referencedTableInfo)) {
@@ -225,11 +227,11 @@ public class MetaAccessService {
             ReferenceCondition
               .builder()
               .fromTable(currentColumn.getFrom())
+              .fromColumnName(currentColumn.getColumnName())
               .toTable(toTable)
-              .referencedColumnName(currentColumn.getColumnName())
+              .toColumnName(referencedColumnInfo.getColumnName())
               .build());
 
-          //noinspection ConstantConditions
           currentColumn = Column
             .builder()
             .from(toTable)
@@ -296,8 +298,8 @@ public class MetaAccessService {
 
       column.setColumnInfo(
         Optional.ofNullable(fullSchemaReferenceRenderColumnInfoMap.get(renderColumnInfoId))
-          .orElseThrow(() -> new RuntimeException(
-            "Couldn't find columnInfo with id = " + renderColumnInfoId)));
+          .orElseThrow(() -> new RuntimeException("Couldn't find columnInfo with id = " + renderColumnInfoId))
+      );
     });
 
     return columns;
@@ -314,12 +316,19 @@ public class MetaAccessService {
 
     while (!restrictionTableInfo.equals(previousTable.getTableInfo())) {
       val followColumnInfo = previousTable.getTableInfo().getFollowColumnInfo();
-      val currentTable = new Table(MetaSchemaUtils.getReferencedTableInfo(followColumnInfo));
+      val targetColumnInfo = Objects.requireNonNull(MetaSchemaUtils.getReferencedColumnInfo(followColumnInfo));
+      val currentTable = new Table(targetColumnInfo.getTableInfo());
 
       fromGraph.addJoin(
         JoinType.INNER_JOIN,
         currentTable,
-        new ReferenceCondition(previousTable, currentTable, followColumnInfo.getColumnName()));
+        new ReferenceCondition(
+          previousTable,
+          followColumnInfo.getColumnName(),
+          currentTable,
+          targetColumnInfo.getColumnName()
+        )
+      );
 
       previousTable = currentTable;
     }
@@ -329,7 +338,8 @@ public class MetaAccessService {
       fromTable,
       fromGraph,
       MetaSchemaUtils.getFullTableInfoName(restrictionTableInfo),
-      joinedRestrictions);
+      joinedRestrictions
+    );
   }
 
 }
