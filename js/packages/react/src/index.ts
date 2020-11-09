@@ -23,6 +23,7 @@ export * from "./translate";
 export * from "./utils";
 
 export * from "./AfterChangeContext";
+export * from "./ChangedEditModeContext";
 export * from "./CategoryColumnChart";
 export * from "./ChartWrapper";
 export * from "./compatibleTypes";

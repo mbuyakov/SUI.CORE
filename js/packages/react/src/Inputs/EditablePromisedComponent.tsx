@@ -10,6 +10,7 @@ import {hasAnyRole} from "../RoleVisibilityWrapper";
 import {EDITABLE_PROMISED_COMPONENT_CHILDREN} from '../styles';
 
 import {IPromisedBaseProps} from "./PromisedBase";
+import { ChangedEditModeContext } from "../ChangedEditModeContext";
 
 export interface IEditablePromisedComponentProps<T> {
   children: React.ReactElement<IPromisedBaseProps<T>>;
@@ -22,6 +23,7 @@ export class EditablePromisedComponent<T>
   extends React.Component<IEditablePromisedComponentProps<T>, { editMode?: boolean; }> {
 
   private afterChange: () => void;
+  private setDisabledEditMode: (disalbedEditMode: boolean) => void;
 
   public constructor(props: IEditablePromisedComponentProps<T>) {
     super(props);
@@ -34,34 +36,41 @@ export class EditablePromisedComponent<T>
         {afterChange => {
           this.afterChange = afterChange;
           return (
-            <DisableEditContext.Consumer>
-              {disableEdit => {
-                const editAllowed = !disableEdit && (this.props.editRoles ? hasAnyRole(this.props.editRoles) : true);
-                const editMode = editAllowed && this.state.editMode;
-
+            <ChangedEditModeContext.Consumer>
+              {({disabledEditMode, setDisabledEditMode}) => {
+                console.debug("Change edit mode context", disabledEditMode);
+                this.setDisabledEditMode = setDisabledEditMode;
                 return (
-                  <div
-                    style={{
-                      alignItems: "center",
-                      display: "flex",
-                      wordBreak: "break-word"
+                  <DisableEditContext.Consumer>
+                    {disableEdit => {
+                      const editAllowed = !disableEdit && !disabledEditMode && (this.props.editRoles ? hasAnyRole(this.props.editRoles) : true);
+                      const editMode = editAllowed && this.state.editMode;
+
+                      return (
+                        <div
+                          style={{
+                            alignItems: "center",
+                            display: "flex",
+                            wordBreak: "break-word"
+                          }}
+                          className={EDITABLE_PROMISED_COMPONENT_CHILDREN}
+                        >
+                          {editMode ? React.cloneElement(this.props.children, {promise: this.getPromise}) : (this.props.nonEditRender || this.DEFAULT_RENDERER).apply(null, [this.props.children.props.defaultValue])}
+                          {editAllowed && (
+                            <IconButton
+                              onClick={this.switchEdit}
+                              style={{marginLeft: 6}}
+                              size="small"
+                            >
+                              {editMode ? (<CloseIcon/>) : (<CreateIcon/>)}
+                            </IconButton>
+                          )}
+                        </div>
+                      );
                     }}
-                    className={EDITABLE_PROMISED_COMPONENT_CHILDREN}
-                  >
-                    {editMode ? React.cloneElement(this.props.children, {promise: this.getPromise}) : (this.props.nonEditRender || this.DEFAULT_RENDERER).apply(null, [this.props.children.props.defaultValue])}
-                    {editAllowed && (
-                      <IconButton
-                        onClick={this.switchEdit}
-                        style={{marginLeft: 6}}
-                        size="small"
-                      >
-                        {editMode? (<CloseIcon/>) : (<CreateIcon/>)}
-                      </IconButton>
-                    )}
-                  </div>
+                  </DisableEditContext.Consumer>
                 );
-              }}
-            </DisableEditContext.Consumer>
+              }            }</ChangedEditModeContext.Consumer>
           );
         }}
       </AfterChangeContext.Consumer>
@@ -77,7 +86,7 @@ export class EditablePromisedComponent<T>
     const promise = this.props.children.props.promise(value);
     // noinspection ES6MissingAwait
     promise.then(() => {
-      this.setState({editMode: false});
+      this.setEditMode(false);
       if (this.afterChange) {
         this.afterChange();
       }
@@ -88,7 +97,14 @@ export class EditablePromisedComponent<T>
 
   @autobind
   private switchEdit(): void {
-    this.setState({editMode: !this.state.editMode});
+    const newEditMode = !this.state.editMode;
+    this.setEditMode(newEditMode);
   }
 
+  @autobind
+  private setEditMode(editMode: boolean): void {
+    console.debug("set edit mode", editMode);
+    this.setState({editMode});
+    this.setDisabledEditMode(editMode);
+  }
 }
