@@ -53,7 +53,7 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
 
   public render(): JSX.Element {
     const {defaultValue, ...restProps} = this.props;
-    const filterValue = this.props.mode == "multiple" ? this.state?.value : getDataByKey(this.props.filter, "value");
+    const filterValue = this.props.mode == "multiple" ? (this.props.disabled ? getDataByKey(this.props.filter, "value") : this.state?.value) : getDataByKey(this.props.filter, "value");
 
     return (
       <Select<any>

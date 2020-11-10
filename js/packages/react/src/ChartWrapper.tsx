@@ -1,11 +1,16 @@
 import * as React from 'react';
+import {Container} from "typescript-ioc";
 import {AMCHARTS, getAmcharts} from "@sui/charts";
+import {SUIReactComponent} from "@/SUIReactComponent";
+import {ThemeService} from './themes';
 
-export abstract class ChartWrapper<T extends { new(): any }> extends React.Component<{
+export abstract class ChartWrapper<T extends { new(): any }> extends SUIReactComponent<{
   data: any[];
   style?: React.CSSProperties;
   onChartCreated?(chart: InstanceType<T>, amcharts: AMCHARTS): void;
 }> {
+  private themeService = Container.get(ThemeService);
+
   public chart: InstanceType<T>;
   private nextData: any;
 
@@ -14,8 +19,21 @@ export abstract class ChartWrapper<T extends { new(): any }> extends React.Compo
   // after the decimal.
   private readonly id: string = Math.random().toString(36).substr(2, 9);
 
+  public constructor(props) {
+    super(props);
+    this.registerObservableHandler(this.themeService.subscribe(async () => {
+      await this.componentWillUnmount();
+      await this.componentDidMount();
+    }));
+  }
+
   public async componentDidMount(data?: any): Promise<void> {
     const amcharts = await getAmcharts();
+    if (this.themeService.getCurrentTheme().name === "dark") {
+      amcharts.am4core.useTheme(amcharts.am4themes_dark);
+    } else {
+      amcharts.am4core.unuseTheme(amcharts.am4themes_dark);
+    }
     this.chart = amcharts.am4core.create<InstanceType<T>>(`chartdiv_${this.id}`, this.getType(amcharts));
     // noinspection JSPrimitiveTypeWrapperUsage
     this.chart.language.locale = amcharts.am4lang_ru_RU;

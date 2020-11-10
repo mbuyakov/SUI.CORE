@@ -6,8 +6,9 @@ import autobind from "autobind-decorator";
 import {ThemeService} from "@/themes/ThemeService";
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
+import {SUIReactComponent} from "@/SUIReactComponent";
 
-export class ThemeSwitchButton extends React.Component<{}, {
+export class ThemeSwitchButton extends SUIReactComponent<{}, {
   theme: ThemeVariant
 }> {
   private themeService = Container.get(ThemeService);
@@ -17,7 +18,7 @@ export class ThemeSwitchButton extends React.Component<{}, {
     this.state = {
       theme: this.themeService.getValue()
     };
-    this.themeService.subscribe(theme => this.setState({theme}));
+    this.registerObservableHandler(this.themeService.subscribe(theme => this.setState({theme})));
   }
 
   public render(): JSX.Element {
