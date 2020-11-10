@@ -4,7 +4,7 @@ import autobind from 'autobind-decorator';
 import isEqual from 'lodash/isEqual';
 import * as React from 'react';
 
-import {OneOrArray,getDataByKey} from "@sui/core";
+import {getDataByKey} from "@sui/core";
 import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from '../types';
 
 
@@ -17,9 +17,9 @@ export type IBaseSelectFilterProps<T> = LazyTableFilterRowCellProps
   & ICommonColumnSearchProps
   & Omit<SelectProps<T>, "disabled" | "value" | "onChange" | "onDropdownVisibleChange">
   & {
-    data?: ISelectColumnFilterData[];
-    onChange?(value: T): void
-  };
+  data?: ISelectColumnFilterData[];
+  onChange?(value: T): void
+};
 
 interface IBaseSelectFilterState<T> {
   data?: ISelectColumnFilterData[];
@@ -28,7 +28,18 @@ interface IBaseSelectFilterState<T> {
 
 export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSelectFilterProps<T>, IBaseSelectFilterState<T>> {
 
-  private dropdownVisible:boolean = false;
+  private dropdownVisible: boolean = false;
+
+
+  constructor(props: Readonly<IBaseSelectFilterProps<T>> | IBaseSelectFilterProps<T>) {
+    super(props);
+    if (this.props.mode == "multiple") {
+      console.debug("create select filter", this.props.filter?.value, this.props.filter?.columnName)
+      this.state = {
+        value: this.props.filter?.value || undefined as any,
+      };
+    }
+  }
 
   public componentDidMount(): void {
     this.updateStateData();
@@ -108,7 +119,7 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
   @autobind
   private onDropdownVisibleChange(opened: boolean): void {
     this.dropdownVisible = opened;
-    if(!opened && this.props.mode == "multiple") {
+    if (!opened && this.props.mode == "multiple") {
       this._onChange(this.state?.value);
     }
   }
