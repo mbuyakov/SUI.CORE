@@ -30,11 +30,9 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
 
   private dropdownVisible: boolean = false;
 
-
   constructor(props: Readonly<IBaseSelectFilterProps<T>> | IBaseSelectFilterProps<T>) {
     super(props);
     if (this.props.mode == "multiple") {
-      console.debug("create select filter", this.props.filter?.value, this.props.filter?.columnName)
       this.state = {
         value: this.props.filter?.value || undefined as any,
       };
@@ -48,12 +46,17 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
   public componentDidUpdate(nextProps: IBaseSelectFilterProps<T>): void {
     if (!isEqual(this.props.data, nextProps.data)) {
       this.updateStateData();
+      console.debug("try to update select value", this.props.filter?.columnName, "condition", this.props.mode == "multiple" && !this.props.filter?.value && !!nextProps.filter?.value, ". before", this.props.filter?.value, " after", nextProps.filter?.value);
+      if(this.props.mode == "multiple" && !this.props.filter?.value && !!nextProps.filter?.value) {
+        this.setState({value: nextProps.filter?.value || undefined as any});
+      }
     }
   }
 
   public render(): JSX.Element {
     const {defaultValue, ...restProps} = this.props;
-    const filterValue = this.props.mode == "multiple" ? (this.props.disabled ? getDataByKey(this.props.filter, "value") : this.state?.value) : getDataByKey(this.props.filter, "value");
+    //const filterValue = this.props.mode == "multiple" ? (this.props.disabled ? getDataByKey(this.props.filter, "value") : this.state?.value) : getDataByKey(this.props.filter, "value");
+    const filterValue = this.props.mode == "multiple" ? this.state?.value : getDataByKey(this.props.filter, "value");
 
     return (
       <Select<any>
