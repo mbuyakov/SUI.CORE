@@ -1,10 +1,8 @@
 import * as React from 'react';
 import {useState} from "react";
+import {DisableEditContext} from './DisableEditContext';
 
-const EditModeContext = React.createContext<{
-  editMode: boolean,
-  setEditMode(editMode: boolean): void,
-}>({editMode: false, setEditMode: null});
+const EditModeContext = React.createContext<(editMode: boolean) => void>(null);
 
 interface IEditModeContainerProps {
   children?: React.ReactNode;
@@ -13,10 +11,18 @@ interface IEditModeContainerProps {
 
 function EditModeContainer(props: IEditModeContainerProps): JSX.Element {
   const [editMode, setEditMode] = useState(!!props.defaultEditMode || false);
+
   return (
-    <EditModeContext.Provider value={{editMode, setEditMode}}>
-      {props.children}
-    </EditModeContext.Provider>
+    // receive outer disable value to push to the inner disable context
+    <DisableEditContext.Consumer>
+      {(disable): JSX.Element => (
+        <EditModeContext.Provider value={setEditMode}>
+          <DisableEditContext.Provider value={disable || editMode}>
+            {props.children}
+          </DisableEditContext.Provider>
+        </EditModeContext.Provider>
+      )}
+    </DisableEditContext.Consumer>
   );
 }
 

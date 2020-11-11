@@ -11,6 +11,7 @@ import {EDITABLE_PROMISED_COMPONENT_CHILDREN} from '../styles';
 
 import {IPromisedBaseProps} from "./PromisedBase";
 import {ChangedEditModeContext} from "../ChangedEditModeContext";
+import set = Reflect.set;
 
 export interface IEditablePromisedComponentProps<T> {
   children: React.ReactElement<IPromisedBaseProps<T>>;
@@ -37,18 +38,15 @@ export class EditablePromisedComponent<T>
           this.afterChange = afterChange;
           return (
             <ChangedEditModeContext.Consumer>
-              {value => {
-                const outerEditMode = value.editMode;
-                this.setOuterEditMode = value.setEditMode;
-                console.debug("Change edit mode context", outerEditMode, !!this.state?.editMode, this.props.children.props.defaultValue);
+              {(setOuterEditMode): JSX.Element => {
+                this.setOuterEditMode = setOuterEditMode;
+
                 return (
                   <DisableEditContext.Consumer>
                     {(disableEdit): JSX.Element => {
-                      const editAllowed = !disableEdit
-                        && (!outerEditMode || !!this.state?.editMode)
+                      const editAllowed = (!disableEdit || !!this.state?.editMode)
                         && (!this.props.editRoles || hasAnyRole(this.props.editRoles));
                       const editMode = editAllowed && !!this.state?.editMode;
-                      console.debug("edit allowed", editAllowed, "actual edit mode", editMode, this.props.children.props.defaultValue);
 
                       return (
                         <div
@@ -107,14 +105,7 @@ export class EditablePromisedComponent<T>
 
   @autobind
   private setEditMode(editMode: boolean): void {
-    console.debug("set edit mode", editMode, this.setOuterEditMode);
-    this.setState({editMode},
-      () => {
-        console.debug("after set state of edit mode", this.state.editMode, editMode, this.setOuterEditMode);
-        if (!!this.setOuterEditMode) {
-          console.debug("set outer edit mode", editMode);
-          this.setOuterEditMode(editMode)
-        }
-      });
+    this.setState({editMode});
+    this.setOuterEditMode(editMode);
   }
 }
