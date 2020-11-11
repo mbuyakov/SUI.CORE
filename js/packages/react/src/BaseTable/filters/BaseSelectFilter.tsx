@@ -43,13 +43,15 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
     this.updateStateData();
   }
 
-  public componentDidUpdate(nextProps: IBaseSelectFilterProps<T>): void {
-    if (!isEqual(this.props.data, nextProps.data)) {
+  public componentDidUpdate(prevProps: IBaseSelectFilterProps<T>): void {
+    if (!isEqual(this.props.data, prevProps.data)) {
       this.updateStateData();
-      console.debug("try to update select value", this.props.filter?.columnName, "condition", this.props.mode == "multiple" && !this.props.filter?.value && !!nextProps.filter?.value, ". before", this.props.filter?.value, " after", nextProps.filter?.value);
-      if(this.props.mode == "multiple" && !this.props.filter?.value && !!nextProps.filter?.value) {
-        this.setState({value: nextProps.filter?.value || undefined as any});
-      }
+    }
+    const needToInitValueState = this.props.mode == "multiple"
+      && !isEmptyFilterValue(this.props.filter?.value)
+      && isEmptyFilterValue(this.state?.value);
+    if(needToInitValueState) {
+      this.setState({value: this.props.filter?.value || undefined as any});
     }
   }
 
@@ -147,4 +149,8 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
     this.setState({data: Array.from(dataElementByValue.values())});
   }
 
+}
+
+function isEmptyFilterValue(value?: any): boolean {
+  return !value || (Array.isArray(value) && value.length === 0);
 }
