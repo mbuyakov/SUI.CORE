@@ -5,13 +5,13 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import {AfterChangeContext} from '@/AfterChangeContext';
 
-import {DisableEditContext} from "../DisableEditContext";
-import {hasAnyRole} from "../RoleVisibilityWrapper";
-import {EDITABLE_PROMISED_COMPONENT_CHILDREN} from '../styles';
+import {DisableEditContext} from "@/DisableEditContext";
+import {hasAnyRole} from "@/RoleVisibilityWrapper";
+import {EDITABLE_PROMISED_COMPONENT_CHILDREN} from '@/styles';
 
+import {ChangedEditModeContext} from "@/ChangedEditModeContext";
 import {IPromisedBaseProps} from "./PromisedBase";
-import {ChangedEditModeContext} from "../ChangedEditModeContext";
-import set = Reflect.set;
+
 
 export interface IEditablePromisedComponentProps<T> {
   children: React.ReactElement<IPromisedBaseProps<T>>;
@@ -34,7 +34,7 @@ export class EditablePromisedComponent<T>
   public render(): React.ReactNode {
     return (
       <AfterChangeContext.Consumer>
-        {afterChange => {
+        {(afterChange): JSX.Element => {
           this.afterChange = afterChange;
           return (
             <ChangedEditModeContext.Consumer>
@@ -80,10 +80,10 @@ export class EditablePromisedComponent<T>
   }
 
   // @ts-ignore
-  private readonly DEFAULT_RENDERER = (value: T) => (value != null ? value.toString() : "");
+  private readonly DEFAULT_RENDERER = (value: T): string => (value != null ? value.toString() : "");
 
   @autobind
-  private async getPromise(value: any): Promise<void> {
+  private async getPromise(value: unknown): Promise<void> {
     // noinspection ES6MissingAwait
     const promise = this.props.children.props.promise(value);
     // noinspection ES6MissingAwait
