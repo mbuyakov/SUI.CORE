@@ -38,8 +38,8 @@ export class EditablePromisedComponent<T>
           this.afterChange = afterChange;
           return (
             <ChangedEditModeContext.Consumer>
-              {(setOuterEditMode): JSX.Element => {
-                this.setOuterEditMode = setOuterEditMode;
+              {(editModeValue): JSX.Element => {
+                this.setOuterEditMode = editModeValue.setEditMode;
 
                 return (
                   <DisableEditContext.Consumer>
@@ -49,25 +49,27 @@ export class EditablePromisedComponent<T>
                       const editMode = editAllowed && !!this.state?.editMode;
 
                       return (
-                        <div
-                          style={{
-                            alignItems: "center",
-                            display: "flex",
-                            wordBreak: "break-word"
-                          }}
-                          className={EDITABLE_PROMISED_COMPONENT_CHILDREN}
-                        >
-                          {editMode ? React.cloneElement(this.props.children, {promise: this.getPromise}) : (this.props.nonEditRender || this.DEFAULT_RENDERER).apply(null, [this.props.children.props.defaultValue])}
-                          {editAllowed && (
-                            <IconButton
-                              onClick={this.switchEdit}
-                              style={{marginLeft: 6}}
-                              size="small"
-                            >
-                              {editMode ? (<CloseIcon/>) : (<CreateIcon/>)}
-                            </IconButton>
-                          )}
-                        </div>
+                        <DisableEditContext.Provider value={editModeValue.outerDisable}>
+                          <div
+                            style={{
+                              alignItems: "center",
+                              display: "flex",
+                              wordBreak: "break-word"
+                            }}
+                            className={EDITABLE_PROMISED_COMPONENT_CHILDREN}
+                          >
+                            {editMode ? React.cloneElement(this.props.children, {promise: this.getPromise}) : (this.props.nonEditRender || this.DEFAULT_RENDERER).apply(null, [this.props.children.props.defaultValue])}
+                            {editAllowed && (
+                              <IconButton
+                                onClick={this.switchEdit}
+                                style={{marginLeft: 6}}
+                                size="small"
+                              >
+                                {editMode ? (<CloseIcon/>) : (<CreateIcon/>)}
+                              </IconButton>
+                            )}
+                          </div>
+                        </DisableEditContext.Provider>
                       );
                     }}
                   </DisableEditContext.Consumer>
