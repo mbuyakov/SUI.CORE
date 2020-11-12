@@ -3,6 +3,7 @@ import {DeleteOutlined, IssuesCloseOutlined} from "@ant-design/icons";
 import {Card, Select, Tooltip} from "antd";
 import * as React from "react";
 import {IRole, IUser, IUserRole,OneOrArrayWithNulls, wrapInArrayWithoutNulls,EMAIL_REGEXP,NO_DATA_TEXT} from "@sui/core";
+import { ChangedEditModeContext } from '@/ChangedEditModeContext';
 import {BaseCard, IBaseCardItemLayout, IBaseCardRowLayout} from "../Base";
 
 import {EditablePromisedComponent, PromisedButton, PromisedInput, PromisedSelect} from "../Inputs";
@@ -73,127 +74,129 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                   ) : null}
               </div>
             </div>
-            <BaseCard
-              noCard={true}
-              item={userData}
-              rows={[
-                {
-                  isDivider: true,
-                  dividerText: "Основная информация"
-                },
-                {
-                  cols: {
-                    colspan: COLSPAN,
-                    items: {
-                      title: "ФИО",
-                      dataKey: "name",
-                      render: (name: string): JSX.Element => (
-                        <EditablePromisedComponent>
-                          <PromisedInput
-                            promise={this.props.updateMainInfoPartFn("name")}
-                            defaultValue={name}
-                          />
-                        </EditablePromisedComponent>
-                      )
+            <ChangedEditModeContext.Container>
+              <BaseCard
+                noCard={true}
+                item={userData}
+                rows={[
+                  {
+                    isDivider: true,
+                    dividerText: "Основная информация"
+                  },
+                  {
+                    cols: {
+                      colspan: COLSPAN,
+                      items: {
+                        title: "ФИО",
+                        dataKey: "name",
+                        render: (name: string): JSX.Element => (
+                          <EditablePromisedComponent>
+                            <PromisedInput
+                              promise={this.props.updateMainInfoPartFn("name")}
+                              defaultValue={name}
+                            />
+                          </EditablePromisedComponent>
+                        )
+                      }
                     }
-                  }
-                },
-                {
-                  cols: {
-                    colspan: COLSPAN,
-                    items: {
-                      title: "Электронная почта",
-                      dataKey: "email",
-                      render: (email: string): JSX.Element => (
-                        <EditablePromisedComponent>
-                          <PromisedInput
-                            promise={this.props.updateMainInfoPartFn("email")}
-                            defaultValue={email}
-                            validator={[{pattern: EMAIL_REGEXP, message: 'Невалидный адрес электронной почты'}]}
-                          />
-                        </EditablePromisedComponent>
-                      )
+                  },
+                  {
+                    cols: {
+                      colspan: COLSPAN,
+                      items: {
+                        title: "Электронная почта",
+                        dataKey: "email",
+                        render: (email: string): JSX.Element => (
+                          <EditablePromisedComponent>
+                            <PromisedInput
+                              promise={this.props.updateMainInfoPartFn("email")}
+                              defaultValue={email}
+                              validator={[{pattern: EMAIL_REGEXP, message: 'Невалидный адрес электронной почты'}]}
+                            />
+                          </EditablePromisedComponent>
+                        )
+                      }
                     }
-                  }
-                },
-                {
-                  cols: {
-                    colspan: COLSPAN,
-                    items: {
-                      title: "Имя пользователя",
-                      dataKey: "username",
-                      render: (username: string): JSX.Element => (
-                        <EditablePromisedComponent>
-                          <PromisedInput
-                            promise={this.props.updateMainInfoPartFn("username")}
-                            defaultValue={username}
-                            validator={[{min: MIN_USERNAME_LENGTH, message: MIN_USERNAME_LENGTH_MESSAGE}]}
-                          />
-                        </EditablePromisedComponent>
-                      )
+                  },
+                  {
+                    cols: {
+                      colspan: COLSPAN,
+                      items: {
+                        title: "Имя пользователя",
+                        dataKey: "username",
+                        render: (username: string): JSX.Element => (
+                          <EditablePromisedComponent>
+                            <PromisedInput
+                              promise={this.props.updateMainInfoPartFn("username")}
+                              defaultValue={username}
+                              validator={[{min: MIN_USERNAME_LENGTH, message: MIN_USERNAME_LENGTH_MESSAGE}]}
+                            />
+                          </EditablePromisedComponent>
+                        )
+                      }
                     }
-                  }
-                },
-                ...(this.props.additionalMainInfoRows ? wrapInArrayWithoutNulls(this.props.additionalMainInfoRows) : []),
-                {
-                  isDivider: true,
-                  dividerText: "Пароль"
-                },
-                {
-                  cols: {
-                    colspan: COLSPAN,
-                    items: {
-                      title: "Пароль",
-                      render: (): JSX.Element => (
-                        <EditablePromisedComponent
-                          nonEditRender={() => "********"}
-                        >
-                          <PromisedInput
-                            promise={this.props.updatePassword}
-                            type={"password" as any}
-                            validator={[
-                              {min: MIN_PASSWORD_LENGTH, message: MIN_PASSWORD_LENGTH_MESSAGE},
-                              {max: MAX_PASSWORD_LENGTH, message: MAX_PASSWORD_LENGTH_MESSAGE}
-                            ]}
-                          />
-                        </EditablePromisedComponent>
-                      )
-                    }
-                  }
-                },
-                {
-                  isDivider: true,
-                  dividerText: "Роли"
-                },
-                {
-                  cols: {
-                    colspan: COLSPAN,
-                    items: {
-                      title: "Список ролей",
-                      dataKey: ["userRolesByUserId", "nodes"],
-                      render: (userRoles: IUserRole[] | undefined): JSX.Element => (
-                        <EditablePromisedComponent
-                          nonEditRender={(roleIds: string[] | undefined) => roleIds?.length
-                            ? this.props.roles.filter(role => roleIds.includes(role.id)).map(role => role.rusName).join(", ")
-                            : NO_DATA_TEXT
-                          }
-                        >
-                          <PromisedSelect
-                            promise={this.props.updateRoles}
-                            mode="multiple"
-                            defaultValue={userRoles?.map(userRole => userRole.roleId)}
-                            validator={[{required: true, message: "Роли должны быть заполнены", type: "array"}]}
+                  },
+                  ...(this.props.additionalMainInfoRows ? wrapInArrayWithoutNulls(this.props.additionalMainInfoRows) : []),
+                  {
+                    isDivider: true,
+                    dividerText: "Пароль"
+                  },
+                  {
+                    cols: {
+                      colspan: COLSPAN,
+                      items: {
+                        title: "Пароль",
+                        render: (): JSX.Element => (
+                          <EditablePromisedComponent
+                            nonEditRender={() => "********"}
                           >
-                            {this.props.roles.map(role => (<Select.Option key={role.id} value={role.id}>{role.rusName}</Select.Option>))}
-                          </PromisedSelect>
-                        </EditablePromisedComponent>
-                      )
+                            <PromisedInput
+                              promise={this.props.updatePassword}
+                              type={"password" as any}
+                              validator={[
+                                {min: MIN_PASSWORD_LENGTH, message: MIN_PASSWORD_LENGTH_MESSAGE},
+                                {max: MAX_PASSWORD_LENGTH, message: MAX_PASSWORD_LENGTH_MESSAGE}
+                              ]}
+                            />
+                          </EditablePromisedComponent>
+                        )
+                      }
                     }
-                  }
-                },
-                ...(this.props.additionalRows ? wrapInArrayWithoutNulls(this.props.additionalRows) : [])
-              ]}
-            />
+                  },
+                  {
+                    isDivider: true,
+                    dividerText: "Роли"
+                  },
+                  {
+                    cols: {
+                      colspan: COLSPAN,
+                      items: {
+                        title: "Список ролей",
+                        dataKey: ["userRolesByUserId", "nodes"],
+                        render: (userRoles: IUserRole[] | undefined): JSX.Element => (
+                          <EditablePromisedComponent
+                            nonEditRender={(roleIds: string[] | undefined) => roleIds?.length
+                              ? this.props.roles.filter(role => roleIds.includes(role.id)).map(role => role.rusName).join(", ")
+                              : NO_DATA_TEXT
+                            }
+                          >
+                            <PromisedSelect
+                              promise={this.props.updateRoles}
+                              mode="multiple"
+                              defaultValue={userRoles?.map(userRole => userRole.roleId)}
+                              validator={[{required: true, message: "Роли должны быть заполнены", type: "array"}]}
+                            >
+                              {this.props.roles.map(role => (<Select.Option key={role.id} value={role.id}>{role.rusName}</Select.Option>))}
+                            </PromisedSelect>
+                          </EditablePromisedComponent>
+                        )
+                      }
+                    }
+                  },
+                  ...(this.props.additionalRows ? wrapInArrayWithoutNulls(this.props.additionalRows) : [])
+                ]}
+              />
+            </ChangedEditModeContext.Container>
           </Card>
         )}
       </WaitData>
