@@ -7,6 +7,7 @@ import {ConfigContext, ConfigConsumerProps} from 'antd/lib/config-provider'
 import SizeContext from 'antd/lib/config-provider/SizeContext';
 import LocaleReceiver from 'antd/lib/locale-provider/LocaleReceiver';
 import enUS from '../locale/en_US';
+import ruRU from '../locale/ru_RU';
 import { RangePicker as RCRangePicker } from '../../rc-picker';
 import { getRangePlaceholder } from '../util';
 import { RangePickerProps, PickerLocale, getTimeProps, Components } from '.';
@@ -37,6 +38,7 @@ export default function generateRangePicker<DateType>(
       const { locale } = this.props;
       const result = {
         ...enUS,
+        ...ruRU,
         ...locale,
       };
       result.lang = {

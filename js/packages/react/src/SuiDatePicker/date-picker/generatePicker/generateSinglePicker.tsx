@@ -9,6 +9,7 @@ import LocaleReceiver from 'antd/lib/locale-provider/LocaleReceiver';
 import SizeContext from 'antd/lib/config-provider/SizeContext';
 import { getPlaceholder } from '../util';
 import enUS from '../locale/en_US';
+import ruRU from '../locale/ru_RU';
 import RCPicker from '../../rc-picker';
 import {
   PickerProps,
@@ -60,6 +61,7 @@ export default function generatePicker<DateType>(generateConfig: GenerateConfig<
         const { locale } = this.props;
         const result = {
           ...enUS,
+          ...ruRU,
           ...locale,
         };
         result.lang = {
