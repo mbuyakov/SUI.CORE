@@ -37,10 +37,10 @@ export class EditableEntityField<T = any> extends React.Component<IEditableEntit
           alwaysUpdate={true}
           extractFirstKey={!this.props.customQuery}
           query={this.props.customQuery || `{
-          ${this.props.entity}ById(id: "${this.props.id}") {
-            ${this.props.field}
-          }
-        }`}
+            ${this.props.entity}ById(id: "${this.props.id}") {
+              ${this.props.field}
+            }
+          }`}
         >
           {(data): JSX.Element => (
             <EditablePromisedComponent
@@ -88,5 +88,9 @@ export class EditableEntityField<T = any> extends React.Component<IEditableEntit
         </WaitData>
       </div>
     );
+  }
+
+  public async updateData(): Promise<void> {
+    return this.waitDataRef.current.updateData();
   }
 }

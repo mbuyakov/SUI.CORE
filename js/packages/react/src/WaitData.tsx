@@ -45,7 +45,7 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
   }
 
   public componentDidMount(): void {
-this.updateData();
+    this.updateData();
   }
 
   public render(): JSX.Element {
@@ -79,14 +79,14 @@ this.updateData();
 
   public shouldComponentUpdate(nextProps: Readonly<IWaitDataProps<T>>): boolean {
     // console.log(nextProps, nextState);
-if (this.props.query != nextProps.query) {
+    if (this.props.query != nextProps.query) {
       if (this.state) {
         // @ts-ignore
         this.state.data = false;
       }
       // @ts-ignore
       this.props = nextProps;
-this.updateData();
+      this.updateData();
 
       return true;
     }
@@ -101,7 +101,7 @@ this.updateData();
     }
     let promise = this.props.promise;
     if (this.props.query) {
-if (promise) {
+      if (promise) {
         console.error('[WaitData]Props conflict! Defined promise and query. Props:', this.props);
         this.setState({error: true});
 
@@ -110,7 +110,7 @@ if (promise) {
       promise = queryWrapper(query(this.props.query, this.props.extractFirstKey || this.props.extractKeysLevel));
     }
     if (this.props.mutation) {
-if (promise) {
+      if (promise) {
         console.error('[WaitData]Props conflict! Defined promise and mutation. Props:', this.props);
         this.setState({error: true});
 
@@ -118,13 +118,13 @@ if (promise) {
       }
       promise = queryWrapper(mutate(this.props.mutation, this.props.extractFirstKey || this.props.extractKeysLevel));
     }
-if (promise) {
+    if (promise) {
       return promise
         .then(data => {
           // Workaround. Null in data are ok
           if (data === null) {
             // @ts-ignore
-data = '__NULL__';
+            data = '__NULL__';
           }
           if (typeof data === 'object') {
             // Magic. May have false-positive error
