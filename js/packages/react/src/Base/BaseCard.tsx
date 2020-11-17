@@ -10,6 +10,7 @@ import {BaseCardRow, IBaseCardRowLayout, IBaseCardRowWithTabsLayout} from '@/Bas
 import {BaseCardTabContextConsumer, BaseCardTabContextProvider, IBaseCardTabWithBlocks, isTabWithBlocks, renderIBaseCardTabLayout} from '@/Base/BaseCardTab';
 import {BaseCardBlock, IBaseCardBlockLayout} from "@/Base/BaseCardBlockLayout";
 import {BASE_CARD, BASE_CARD_HEADER_ONLY} from "@/styles";
+import { ChangedEditModeContext } from '@/ChangedEditModeContext';
 
 
 const renderTabBar = () => <React.Fragment/>;
@@ -96,6 +97,11 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
       }
     }
 
+    body = (
+      <ChangedEditModeContext.Container>
+        {body}
+      </ChangedEditModeContext.Container>
+    );
     const className = classNames(BASE_CARD, this.props.className);
 
     // !!! DON'T REASSIGN body VARIABLE AFTER THIS LINE !!!
