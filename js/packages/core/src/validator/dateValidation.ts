@@ -88,7 +88,7 @@ export function disableFutureDateAndPassportIssueDateByAge(birthday: string, age
 
 export function disableFutureDateAndIssueDateGreaterThanAge(docCode: number, birthday: string, age: number, current: Moment): boolean {
   const targetAge = docCode === 14 ? 14 : 18;
-  const disableDateByAge = age > targetAge
+  const disableDateByAge = age >= targetAge
     ? dateDisabler( moment(birthday).add(targetAge, "years").toISOString(), "less")(current)
     : true;
 
