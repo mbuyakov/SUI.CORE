@@ -1,3 +1,4 @@
+export * from "./DulTypeSelector";
 export * from "./EditablePromisedComponent";
 export * from "./PromisedBase";
 export * from "./PromisedButton";

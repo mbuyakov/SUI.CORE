@@ -41,6 +41,7 @@ export * from "./ReportTopBarChart";
 export * from "./RoleVisibilityWrapper";
 export * from "./Socket";
 export * from "./SparkLine";
+export * from "./soctech";
 export * from "./styles";
 export * from "./SUIMaskedInput";
 export * from "./SUIReactComponent";

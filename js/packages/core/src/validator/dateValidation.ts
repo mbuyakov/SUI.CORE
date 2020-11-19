@@ -73,3 +73,32 @@ export function checkDateInRangeOfYearsFromNow(from: number, to: number, date: M
 export function disableDateNotBetweenYearsFromNow(from: number, to: number): (current: Moment) => boolean {
   return (current: Moment): boolean => checkDateInRangeOfYearsFromNow(from, to, current) !== 0
 }
+
+export function disableFutureDateAndPassportIssueDateByAge(birthday: string, age: number, current: Moment): boolean {
+  const disableDateByAge = age < 14
+    ? true
+    : age >= 14 && age < 20
+      ? dateDisabler( moment(birthday).add(14, "years").toISOString(), "less")(current)
+      : age >= 20 && age < 44
+        ? dateDisabler(age == 20 ? moment(birthday).add(20, 'years').add(1, "month").toISOString() : birthday, "less")(current)
+        : dateDisabler(age == 45 ? moment(birthday).add(45, 'years').add(1, "month").toISOString() : birthday, "less")(current);
+
+  return disableFutureDate(current) || disableDateByAge;
+}
+
+export function disableFutureDateAndIssueDateGreaterThanAge(docCode: number, birthday: string, age: number, current: Moment): boolean {
+  const targetAge = docCode === 14 ? 14 : 18;
+  const disableDateByAge = age > targetAge
+    ? dateDisabler( moment(birthday).add(targetAge, "years").toISOString(), "less")(current)
+    : true;
+
+  return disableFutureDate(current) || disableDateByAge;
+}
+
+export function disableDocDate(docCode: number, birthday: string, age: number, current: Moment): boolean {
+  return docCode === 21 // passport
+    ? disableFutureDateAndPassportIssueDateByAge(birthday, age, current)
+    : [14, 7, 8].includes(docCode) // 14 - temporary identity card, 7 - military ID, 8 - temporary military ID
+      ? disableFutureDateAndIssueDateGreaterThanAge(docCode, birthday, age, current) // temporary identity card - 14 years age, other 18
+      : disableFutureDateAndDateLessThanBirthday(birthday)(current);
+}
