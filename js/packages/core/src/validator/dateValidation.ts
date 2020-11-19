@@ -78,10 +78,10 @@ export function disableFutureDateAndPassportIssueDateByAge(birthday: string, age
   const disableDateByAge = age < 14
     ? true
     : age >= 14 && age < 20
-      ? dateDisabler( moment(birthday).add(14, "years").toISOString(), "less")(current)
-      : age >= 20 && age < 44
-        ? dateDisabler(age == 20 ? moment(birthday).add(20, 'years').add(1, "month").toISOString() : birthday, "less")(current)
-        : dateDisabler(age == 45 ? moment(birthday).add(45, 'years').add(1, "month").toISOString() : birthday, "less")(current);
+      ? dateDisabler(moment(birthday).add(14, "years").toISOString(), "less")(current)
+      : age >= 20 && age <= 44
+        ? dateDisabler(moment(birthday).add(20, 'years').add(30, "days").toISOString(), "less")(current)
+        : dateDisabler(moment(birthday).add(45, 'years').add(30, "days").toISOString(), "less")(current);
 
   return disableFutureDate(current) || disableDateByAge;
 }
