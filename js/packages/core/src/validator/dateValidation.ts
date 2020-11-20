@@ -76,17 +76,14 @@ export function disableDateNotBetweenYearsFromNow(from: number, to: number): (cu
 
 export function disableFutureDateAndPassportIssueDateByAge(birthday: string, age: number, current: Moment): boolean {
   const disableDateByAge = (): boolean => {
-    switch (true) {
-      case age >= 14 && age < 20:
-        return dateDisabler(moment(birthday).add(14, "years").toISOString(), "less")(current);
-      case age >= 20 && age <= 44:
-        const twentyYearsAddDays = moment(birthday).add(20, 'years').add(30, "days");
-        return dateDisabler(moment(birthday).add(20, 'years').toISOString(), "less")(current) || (moment().endOf('days') > twentyYearsAddDays ? false : dateDisabler(twentyYearsAddDays.toISOString(), 'greaterOrEqual')(current));
-      case age >= 45:
-        const fortyFiveYearsAddDays = moment(birthday).add(45, 'years').add(30, "days");
-        return dateDisabler(moment(birthday).add(45, 'years').toISOString(), "less")(current) || (moment().endOf('days') > fortyFiveYearsAddDays ? false : dateDisabler(fortyFiveYearsAddDays.toISOString(), 'greaterOrEqual')(current));
-      default:
-        return true;
+    if (moment(birthday).add(45, 'years').add(30, "days") <= current) {
+      return dateDisabler(moment(birthday).add(45, 'years').toISOString(), "less")(current);
+    } else if(moment(birthday).add(20, 'years').add(30, "days") <= current) {
+      return dateDisabler(moment(birthday).add(20, 'years').toISOString(), "less")(current);
+    } else if (moment(birthday).add(14, 'years') <= current) {
+      return dateDisabler(moment(birthday).add(14, "years").toISOString(), "less")(current)
+    } else {
+      return true;
     }
   };
   return disableFutureDate(current) || disableDateByAge();
