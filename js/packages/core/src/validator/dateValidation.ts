@@ -75,12 +75,13 @@ export function disableDateNotBetweenYearsFromNow(from: number, to: number): (cu
 }
 
 export function disableFutureDateAndPassportIssueDateByAge(birthday: string, age: number, current: Moment): boolean {
+  const realCurrent = moment();
   const disableDateByAge = (): boolean => {
-    if (moment(birthday).add(45, 'years').add(30, "days") <= current) {
+    if (moment(birthday).add(45, 'years').add(30, "days") <= realCurrent) {
       return dateDisabler(moment(birthday).add(45, 'years').toISOString(), "less")(current);
-    } else if(moment(birthday).add(20, 'years').add(30, "days") <= current) {
+    } else if(moment(birthday).add(20, 'years').add(30, "days") <= realCurrent) {
       return dateDisabler(moment(birthday).add(20, 'years').toISOString(), "less")(current);
-    } else if (moment(birthday).add(14, 'years') <= current) {
+    } else if (moment(birthday).add(14, 'years') <= realCurrent) {
       return dateDisabler(moment(birthday).add(14, "years").toISOString(), "less")(current)
     } else {
       return true;
