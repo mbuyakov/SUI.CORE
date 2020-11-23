@@ -278,7 +278,10 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
 
   @autobind
   public setFieldValue(field: string, value: any): void {
-    this.getOrCreateFormField(field).value.setValue(value);
+    const formField = this.getOrCreateFormField(field);
+    if (formField.value.getValue() !== value) {
+      formField.value.setValue(value);
+    }
   }
 
   @autobind
