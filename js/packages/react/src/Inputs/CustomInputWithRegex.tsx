@@ -2,6 +2,7 @@ import {Input} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import autobind from "autobind-decorator";
 import React, {ChangeEvent} from "react";
+import {Rules} from "async-validator";
 
 export const MAGIC = "___!___";
 
@@ -14,6 +15,10 @@ export type CustomInputWithRegexProps = InputProps & {
 }
 
 export class CustomInputWithRegex extends React.Component<CustomInputWithRegexProps>{
+
+  public static enchantedValueValidator(rule: Rules, value: string, callback: (error: (string | string[])) => void): void {
+    callback(value.startsWith(MAGIC) ? value.split(MAGIC)[1] : "");
+  }
 
   public componentDidUpdate(prevProps: Readonly<CustomInputWithRegexProps>): void {
     if (prevProps.regex && prevProps.regex !== this.props.regex) {

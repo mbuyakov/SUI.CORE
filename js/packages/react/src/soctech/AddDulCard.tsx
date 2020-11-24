@@ -1,4 +1,4 @@
-import {CustomInputWithRegex, CustomInputWithRegexProps, MAGIC} from "@/Inputs/CustomInputWithRegex";
+import {CustomInputWithRegex, CustomInputWithRegexProps, enchantedValueValidator, MAGIC} from "@/Inputs/CustomInputWithRegex";
 import {DatePicker} from "antd";
 import locale from "antd/es/date-picker/locale/ru_RU";
 import {Rules} from "async-validator";
@@ -298,9 +298,4 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
     // Stub function
     return Promise.resolve(true);
   }
-}
-
-
-function enchantedValueValidator(rule: Rules, value: any, callback: (error: (string | string[])) => void): void {
-  callback(value.startsWith(MAGIC) ? value.split(MAGIC)[1] : "");
 }
