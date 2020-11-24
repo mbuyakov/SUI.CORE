@@ -1,3 +1,5 @@
+export * from "./CustomFioInput";
+export * from "./CustomInputWithRegex";
 export * from "./DulTypeSelector";
 export * from "./EditablePromisedComponent";
 export * from "./PromisedBase";
@@ -12,4 +14,3 @@ export * from "./PromisedSwitch";
 export * from "./PromisedTextArea";
 export * from "./SelectWithWaitData";
 export * from "./TreeSelectWithWaitData";
-export * from "./CustomFioInput";
