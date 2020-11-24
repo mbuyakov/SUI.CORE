@@ -36,7 +36,7 @@ export class ThemeService extends ObservableLocalStorageValue<ThemeVariant> {
 
     const {switcher} = themeSwitcher({
       themeMap: {
-        dark: '/theme/dark.css'
+        dark: './theme/dark.css'
       }
     });
     this.themeSwitcher = switcher;
