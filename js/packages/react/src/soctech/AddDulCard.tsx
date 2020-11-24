@@ -1,4 +1,4 @@
-import {CustomInputWithRegex, CustomInputWithRegexProps, enchantedValueValidator, MAGIC} from "@/Inputs/CustomInputWithRegex";
+import {CustomInputWithRegex, CustomInputWithRegexProps} from "@/Inputs/CustomInputWithRegex";
 import {DatePicker} from "antd";
 import locale from "antd/es/date-picker/locale/ru_RU";
 import {Rules} from "async-validator";
@@ -62,7 +62,7 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
 
   public static allFieldsFilledValidator = (rule: Rules, value: IDulFields, cb: (error: string | string[]) => void): void => {
     const notFulfilled = Object.values(value).some(v =>
-      v === null || v === undefined || String(v).startsWith(MAGIC)
+      v === null || v === undefined || CustomInputWithRegex.isEnchanted(v)
     );
     cb(notFulfilled ? "  " : "");
   };
@@ -124,7 +124,7 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
                 title: 'Серия',
                 fieldName: 'series',
                 inputNode: <CustomInputWithRegex/>,
-                rules: [{validator: enchantedValueValidator}],
+                rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   const docType = AddDulCard.getDocTypeById(values.docTypeId);
@@ -140,7 +140,7 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
                 title: 'Код подразделения',
                 fieldName: 'departmentCode',
                 inputNode: <CustomInputWithRegex/>,
-                rules: [{validator: enchantedValueValidator}],
+                rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
                 mapFormValuesToRequired: (get: ValuesGetter): boolean => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   return AddDulCard.isRussianDocType(values.docTypeId)
@@ -163,7 +163,7 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
                 title: 'Номер',
                 fieldName: 'number',
                 inputNode: <CustomInputWithRegex/>,
-                rules: [{validator: enchantedValueValidator}],
+                rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   const docType = AddDulCard.getDocTypeById(values.docTypeId);
@@ -179,7 +179,7 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
                 title: 'Кем выдан',
                 fieldName: 'issuedBy',
                 inputNode: <CustomInputWithRegex/>,
-                rules: [{validator: enchantedValueValidator}],
+                rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
                 mapFormValuesToRequired: (get: ValuesGetter): boolean => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   return AddDulCard.isRussianDocType(values.docTypeId)

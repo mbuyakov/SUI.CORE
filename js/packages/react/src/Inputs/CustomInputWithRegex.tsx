@@ -16,8 +16,12 @@ export type CustomInputWithRegexProps = InputProps & {
 
 export class CustomInputWithRegex extends React.Component<CustomInputWithRegexProps>{
 
+  public static isEnchanted(value: string): boolean {
+    return String(value).startsWith(MAGIC);
+  }
+
   public static enchantedValueValidator(rule: Rules, value: string, callback: (error: (string | string[])) => void): void {
-    callback(value.startsWith(MAGIC) ? value.split(MAGIC)[1] : "");
+    callback(CustomInputWithRegex.isEnchanted(value) ? value.split(MAGIC)[1] : "");
   }
 
   public componentDidUpdate(prevProps: Readonly<CustomInputWithRegexProps>): void {
