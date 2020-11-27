@@ -123,6 +123,10 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
               {
                 title: 'Серия',
                 fieldName: 'series',
+                mapFormValuesToRequired: (get: ValuesGetter): boolean => {
+                  const values: { docTypeId?: string } = get(["docTypeId"]);
+                  return !!values.docTypeId
+                },
                 inputNode: <CustomInputWithRegex/>,
                 rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
@@ -164,6 +168,10 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
                 fieldName: 'number',
                 inputNode: <CustomInputWithRegex/>,
                 rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
+                mapFormValuesToRequired: (get: ValuesGetter): boolean => {
+                  const values: { docTypeId?: string } = get(["docTypeId"]);
+                  return !!values.docTypeId
+                },
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   const docType = AddDulCard.getDocTypeById(values.docTypeId);
