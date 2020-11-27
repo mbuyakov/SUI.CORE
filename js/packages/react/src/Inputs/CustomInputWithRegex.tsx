@@ -9,7 +9,6 @@ export const MAGIC = "___!___";
 export type CustomInputWithRegexProps = InputProps & {
   desc?: string,
   regex?: string,
-  value?: string,
 
   onChange?(value: string): void
 }
