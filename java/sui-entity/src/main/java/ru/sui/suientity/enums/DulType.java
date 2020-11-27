@@ -30,20 +30,12 @@ public enum DulType {
   ID25(25, "Служебный паспорт гражданина РФ", null, "^.{0,25}$", "до 25 знаков", "^.{0,25}$", "до 25 знаков", 9),
   ID26(26, "Удостоверение личности моряка", null, "^.{0,25}$", "до 25 знаков", "^.{0,25}$", "до 25 знаков", 21);
 
-  private static Map<Long, DulType> dulTypeById = null;
-
-  private static synchronized void initDulTypesMap() {
-    if(dulTypeById == null) {
-      dulTypeById = new HashMap<>();
-
-    }
+  private static class DulTypesHolder {
+    private static Map<Long, DulType> dulTypeById = new HashMap<>();
   }
 
   public static DulType getDulTypeById(long id) {
-    if(dulTypeById == null) {
-      initDulTypesMap();
-    }
-    return dulTypeById.getOrDefault(id, null);
+    return DulTypesHolder.dulTypeById.getOrDefault(id, null);
   }
 
   private long id;
@@ -64,6 +56,8 @@ public enum DulType {
     this.numberRegex = numberRegex;
     this.numberRegexDesc = numberRegexDesc;
     this.sorting = sorting;
+
+    DulTypesHolder.dulTypeById.put(id, this);
   }
 
   public long getId() {
