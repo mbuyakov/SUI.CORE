@@ -43,6 +43,7 @@ export interface IAddDulValues {
 export interface IAddDulCardProps {
   birthday?: string;
   personAge?: number;
+  required?: boolean;
   value?: IDulFields;
 
   onChange?(value: IDulFields): void;
@@ -83,14 +84,21 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
     return docTypeId && AddDulCard.allDocTypes.find(ridt => ridt.id === docTypeId) || null;
   }
 
-  public static getDulFormProps(value: IDulFields, birthday: string, personAge: number, isEdit: boolean): BaseFormProps<any> {
+  public static getDulFormProps(value: IDulFields, birthday: string, personAge: number,
+                                isEdit: boolean, required: boolean = true
+  ): BaseFormProps<any> {
     return ({
       ...AddDulCard.getInitDulFormProps(value, birthday, personAge, isEdit),
       rows: AddDulCard.getDulFormRows(birthday, personAge, isEdit),
     });
   }
 
-  public static getDulFormRows(birthday: string, personAge: number, isEdit: boolean): OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseFormItemLayout>> {
+  public static trueIfEmpty(required: boolean): boolean {
+    return required !== false;
+  }
+
+  public static getDulFormRows(birthday: string, personAge: number, isEdit: boolean, required: boolean = true
+  ): OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseFormItemLayout>> {
     // TODO: strange thing, birthday and personAge are undefined in mapFormValuesToInputNodeProps
     AddDulCard.birthday = birthday;
     AddDulCard.personAge = personAge;
@@ -102,14 +110,14 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
             items: [
               {
                 title: 'Тип документа',
-                required: true,
+                required: AddDulCard.trueIfEmpty(required),
                 fieldName: 'docTypeId',
                 inputNode: <DulTypeSelector disabled={isEdit}/>
               },
               {
                 title: 'Дата выдачи',
                 fieldName: 'date',
-                required: true,
+                required: AddDulCard.trueIfEmpty(required),
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): any => {
                   const {docTypeId} = get(["docTypeId"]);
                   return AddDulCard.getIssuedDateDisabler(docTypeId, AddDulCard.birthday, AddDulCard.personAge);
@@ -246,21 +254,26 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
     super(props);
     this.state = {
       initFormProps: AddDulCard.getDulFormProps(props.value, props.birthday, props.personAge, false),
-      rows: AddDulCard.getDulFormRows(props.birthday, props.personAge, false),
+      rows: AddDulCard.getDulFormRows(props.birthday, props.personAge, false,
+        AddDulCard.trueIfEmpty(props?.required)),
     };
   }
 
   public componentDidUpdate(prevProps: Readonly<IAddDulCardProps>, prevState: Readonly<IAddDulCardState>): void {
-    if(prevProps.personAge !== this.props.personAge || prevProps.birthday !== this.props.birthday) {
-      this.setState({rows: AddDulCard.getDulFormRows(this.props.birthday, this.props.personAge, false)});
+    if (prevProps.personAge !== this.props.personAge || prevProps.birthday !== this.props.birthday
+      || prevProps.required !== this.props.required) {
+      this.setState({
+        rows: AddDulCard.getDulFormRows(this.props.birthday, this.props.personAge, false,
+          AddDulCard.trueIfEmpty(this.props?.required))
+      });
     }
-    if(!isEqual(prevProps.value, this.props.value)) {
+    if (!isEqual(prevProps.value, this.props.value)) {
       this.setState({initFormProps: AddDulCard.getInitDulFormProps(this.props.value, this.props.birthday, this.props.personAge, false)});
     }
   }
 
   public componentWillUnmount(): void {
-    this.fieldsHandlers.forEach(handler => handler.unsubscribe());
+    this.fieldsHandlers?.forEach(handler => handler.unsubscribe());
   }
 
   public render(): JSX.Element {
@@ -291,7 +304,8 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
 
   @autobind
   private onInitializedForm(form: BaseForm): void {
-    if (!!this.props.onChange || !!this.props.onErrorCheck) {
+    if (AddDulCard.trueIfEmpty(this.props.required)
+        && (!!this.props.onChange || !!this.props.onErrorCheck)) {
       const fields = form.getFormFields();
       this.fieldsHandlers = fields.flatMap(field => [
         field.value.subscribe(this.getOnFieldChange(form)),
