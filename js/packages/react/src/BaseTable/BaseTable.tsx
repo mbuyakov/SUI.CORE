@@ -397,6 +397,8 @@ export class BaseTable<TSelection = defaultSelection>
                     defaultColumnWidths={defaultWidth}
                   />
                 )}
+                <TableColumnReordering defaultOrder={this.props.cols.map(value => value.id)}/>
+                {userSettingsEnabled && (<UserSettingsSupportPlugin/>)}
                 {headerEnabled && <TableHeaderRow showSortingControls={sortingEnabled}/>}
                 {filteringEnabled && <TableFilterRow cellComponent={this.FilterCell}/>}
                 {paginationEnabled && <PagingPanel
@@ -419,8 +421,6 @@ export class BaseTable<TSelection = defaultSelection>
                 )}
                 {groupingEnabled && <TableGroupRow contentComponent={tableGroupRowContentComponent}/>}
                 {groupingEnabled && this.props.groupSubtotalData && hasSubtotals && <GroupSummaryRow subtotalData={this.props.groupSubtotalData}/>}
-                <TableColumnReordering defaultOrder={this.props.cols.map(value => value.id)}/>
-                {userSettingsEnabled && (<UserSettingsSupportPlugin/>)}
                 {visibilityEnabled && (
                   <TableColumnVisibility
                     defaultHiddenColumnNames={defaultHidden}
