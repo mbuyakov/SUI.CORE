@@ -30,7 +30,7 @@ export interface IDulFields {
 }
 
 
-export interface IAddDulValues {
+export interface IDulValues {
   date: string;
   departmentCode: string;
   docTypeId: string;
@@ -40,10 +40,16 @@ export interface IAddDulValues {
   series: string;
 }
 
-export interface IAddDulCardProps {
+export interface IDulCardOptions {
   birthday?: string;
+  disabled?: boolean;
+  isEdit?: boolean;
   personAge?: number;
   required?: boolean;
+  uuid?: string;
+}
+
+export interface IDulCardProps extends IDulCardOptions {
   value?: IDulFields;
 
   onChange?(value: IDulFields): void;
@@ -51,7 +57,7 @@ export interface IAddDulCardProps {
   onErrorCheck?(hasError: boolean): void;
 }
 
-export interface IAddDulCardState {
+export interface IDulCardState {
   initFormProps: BaseFormProps<any>,
   rows: OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseFormItemLayout>>,
 }
@@ -59,7 +65,7 @@ export interface IAddDulCardState {
 const DATE_FORMATS = ['DD.MM.YYYY', 'DDMMYYYY', 'DDMMYY'];
 
 
-export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardState> {
+export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
 
   public static allFieldsFilledValidator = (rule: Rules, value: IDulFields, cb: (error: string | string[]) => void): void => {
     const notFulfilled = Object.values(value).some(v =>
@@ -68,7 +74,7 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
     cb(notFulfilled ? "  " : "");
   };
 
-  public static formValuesToAddDul(personId: string, values: IDulFields): IAddDulValues {
+  public static formValuesToChangeDul(personId: string, values: IDulFields): IDulValues {
     return ({
       date: values.date.format(moment.HTML5_FMT.DATE),
       departmentCode: values.departmentCode,
@@ -81,15 +87,13 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
   }
 
   public static getDocTypeById(docTypeId?: string): IallDocTypes {
-    return docTypeId && AddDulCard.allDocTypes.find(ridt => ridt.id === docTypeId) || null;
+    return docTypeId && DulCard.allDocTypes.find(ridt => ridt.id === docTypeId) || null;
   }
 
-  public static getDulFormProps(value: IDulFields, birthday: string, personAge: number,
-                                isEdit: boolean, required: boolean = true
-  ): BaseFormProps<any> {
+  public static getDulFormProps(dulCardProps: IDulCardProps): BaseFormProps<any> {
     return ({
-      ...AddDulCard.getInitDulFormProps(value, birthday, personAge, isEdit),
-      rows: AddDulCard.getDulFormRows(birthday, personAge, isEdit),
+      ...DulCard.getInitDulFormProps(dulCardProps),
+      rows: DulCard.getDulFormRows(dulCardProps),
     });
   }
 
@@ -97,11 +101,10 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
     return required !== false;
   }
 
-  public static getDulFormRows(birthday: string, personAge: number, isEdit: boolean, required: boolean = true
-  ): OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseFormItemLayout>> {
+  public static getDulFormRows(dulCardProps: Readonly<IDulCardProps>): OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseFormItemLayout>> {
     // TODO: strange thing, birthday and personAge are undefined in mapFormValuesToInputNodeProps
-    AddDulCard.birthday = birthday;
-    AddDulCard.personAge = personAge;
+    DulCard.birthday = dulCardProps.birthday;
+    DulCard.personAge = dulCardProps.personAge;
 
     return [
       {
@@ -110,19 +113,19 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
             items: [
               {
                 title: 'Тип документа',
-                required: AddDulCard.trueIfEmpty(required),
+                required: DulCard.trueIfEmpty(dulCardProps.required),
                 fieldName: 'docTypeId',
-                inputNode: <DulTypeSelector disabled={isEdit}/>
+                inputNode: <DulTypeSelector disabled={dulCardProps.isEdit || dulCardProps.disabled}/>
               },
               {
                 title: 'Дата выдачи',
                 fieldName: 'date',
-                required: AddDulCard.trueIfEmpty(required),
+                required: DulCard.trueIfEmpty(dulCardProps.required),
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): any => {
                   const {docTypeId} = get(["docTypeId"]);
-                  return AddDulCard.getIssuedDateDisabler(docTypeId, AddDulCard.birthday, AddDulCard.personAge);
+                  return DulCard.getIssuedDateDisabler(docTypeId, DulCard.birthday, DulCard.personAge);
                 },
-                inputNode: (<DatePicker locale={locale as any} format={DATE_FORMATS}/>),
+                inputNode: (<DatePicker locale={locale as any} format={DATE_FORMATS} disabled={dulCardProps.disabled}/>),
               },
             ]
           },
@@ -135,11 +138,11 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   return !!values.docTypeId
                 },
-                inputNode: <CustomInputWithRegex/>,
+                inputNode: <CustomInputWithRegex disabled={dulCardProps.disabled}/>,
                 rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
-                  const docType = AddDulCard.getDocTypeById(values.docTypeId);
+                  const docType = DulCard.getDocTypeById(values.docTypeId);
                   return docType
                     ? {
                       regex: docType.seriesRegex,
@@ -151,15 +154,15 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
               {
                 title: 'Код подразделения',
                 fieldName: 'departmentCode',
-                inputNode: <CustomInputWithRegex/>,
+                inputNode: <CustomInputWithRegex disabled={dulCardProps.disabled}/>,
                 rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
                 mapFormValuesToRequired: (get: ValuesGetter): boolean => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
-                  return AddDulCard.isRussianDocType(values.docTypeId)
+                  return DulCard.isRussianDocType(values.docTypeId)
                 },
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
-                  return AddDulCard.isRussianDocType(values.docTypeId)
+                  return DulCard.isRussianDocType(values.docTypeId)
                     ? {
                       regex: DEPARTMENT_CODE_REGEX,
                       desc: DEPARTMENT_CODE_DESC,
@@ -174,7 +177,7 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
               {
                 title: 'Номер',
                 fieldName: 'number',
-                inputNode: <CustomInputWithRegex/>,
+                inputNode: <CustomInputWithRegex disabled={dulCardProps.disabled}/>,
                 rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
                 mapFormValuesToRequired: (get: ValuesGetter): boolean => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
@@ -182,7 +185,7 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
                 },
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
-                  const docType = AddDulCard.getDocTypeById(values.docTypeId);
+                  const docType = DulCard.getDocTypeById(values.docTypeId);
                   return docType
                     ? {
                       regex: docType.numberRegex,
@@ -194,15 +197,15 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
               {
                 title: 'Кем выдан',
                 fieldName: 'issuedBy',
-                inputNode: <CustomInputWithRegex/>,
+                inputNode: <CustomInputWithRegex disabled={dulCardProps.disabled}/>,
                 rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
                 mapFormValuesToRequired: (get: ValuesGetter): boolean => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
-                  return AddDulCard.isRussianDocType(values.docTypeId)
+                  return DulCard.isRussianDocType(values.docTypeId)
                 },
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
-                  return AddDulCard.isRussianDocType(values.docTypeId)
+                  return DulCard.isRussianDocType(values.docTypeId)
                     ? {
                       regex: issuedByRegex,
                       desc: issuedByDesc,
@@ -217,11 +220,14 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
     ];
   }
 
-  public static getInitDulFormProps(value: IDulFields, birthday: string, personAge: number, isEdit: boolean): BaseFormProps<any> {
+  public static getInitDulFormProps(dulCardProps: Readonly<IDulCardProps>): BaseFormProps<any> {
+    const editSuffix = dulCardProps.isEdit ? 'edit' : 'create';
+    const uuidSuffix = dulCardProps.uuid && typeof dulCardProps.uuid === 'string' && dulCardProps.uuid.length > 0
+      ? `-${dulCardProps.uuid}` : '';
     return ({
-      uuid: `iddoc-${isEdit ? 'edit' : 'create'}-form`,
+      uuid: `iddoc-${editSuffix}-form${uuidSuffix}`,
       momentFields: ["date"],
-      initialValues: value || {docTypeId: ''},
+      initialValues: dulCardProps.value || {docTypeId: ''},
       verticalLabel: true,
       noCard: true,
       cardStyle: {padding: 0},
@@ -230,7 +236,7 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
   }
 
   public static getIssuedDateDisabler(docTypeId: string, birthday: string, personAge: number): IObjectWithIndex {
-    const docType = AddDulCard.getDocTypeById(docTypeId);
+    const docType = DulCard.getDocTypeById(docTypeId);
     return docTypeId
       ? {
         disabledDate: ((current: Moment): boolean => disableDocDate(docType.docCode, birthday, personAge, current))
@@ -239,7 +245,15 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
   }
 
   public static isRussianDocType(docTypeId: string): boolean {
-    return docTypeId && AddDulCard.getDocTypeById(docTypeId)?.docCode === RUSSIAN_PASSPORT_DOC_CODE || false;
+    return docTypeId && DulCard.getDocTypeById(docTypeId)?.docCode === RUSSIAN_PASSPORT_DOC_CODE || false;
+  }
+
+  private static dulCardOptionsIsNotEqual(options1: IDulCardOptions, options2: IDulCardOptions): boolean {
+    return options1.personAge !== options2.personAge
+      || options1.birthday !== options2.birthday
+      || options1.required !== options2.required
+      || options1.isEdit !== options2.isEdit
+      || options1.disabled !== options2.disabled;
   }
 
   private static readonly allDocTypes: IallDocTypes[] = DulService.allDocTypes();
@@ -249,26 +263,22 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
 
   private fieldsHandlers: ObservableHandlerStub[] = null;
 
-
-  public constructor(props: Readonly<IAddDulCardProps>) {
+  public constructor(props: Readonly<IDulCardProps>) {
     super(props);
     this.state = {
-      initFormProps: AddDulCard.getDulFormProps(props.value, props.birthday, props.personAge, false),
-      rows: AddDulCard.getDulFormRows(props.birthday, props.personAge, false,
-        AddDulCard.trueIfEmpty(props?.required)),
+      initFormProps: DulCard.getInitDulFormProps(props),
+      rows: DulCard.getDulFormRows(props),
     };
   }
 
-  public componentDidUpdate(prevProps: Readonly<IAddDulCardProps>, prevState: Readonly<IAddDulCardState>): void {
-    if (prevProps.personAge !== this.props.personAge || prevProps.birthday !== this.props.birthday
-      || prevProps.required !== this.props.required) {
+  public componentDidUpdate(prevProps: Readonly<IDulCardProps>, prevState: Readonly<IDulCardState>): void {
+    if (DulCard.dulCardOptionsIsNotEqual(prevProps, this.props)) {
       this.setState({
-        rows: AddDulCard.getDulFormRows(this.props.birthday, this.props.personAge, false,
-          AddDulCard.trueIfEmpty(this.props?.required))
+        rows: DulCard.getDulFormRows(this.props)
       });
     }
     if (!isEqual(prevProps.value, this.props.value)) {
-      this.setState({initFormProps: AddDulCard.getInitDulFormProps(this.props.value, this.props.birthday, this.props.personAge, false)});
+      this.setState({initFormProps: DulCard.getInitDulFormProps(this.props)});
     }
   }
 
@@ -304,7 +314,7 @@ export class AddDulCard extends React.Component<IAddDulCardProps, IAddDulCardSta
 
   @autobind
   private onInitializedForm(form: BaseForm): void {
-    if (AddDulCard.trueIfEmpty(this.props.required)
+    if (DulCard.trueIfEmpty(this.props.required)
         && (!!this.props.onChange || !!this.props.onErrorCheck)) {
       const fields = form.getFormFields();
       this.fieldsHandlers = fields.flatMap(field => [

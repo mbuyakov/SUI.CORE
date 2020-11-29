@@ -1,2 +1,2 @@
-export * from "./AddDulCard";
+export * from "./DulCard";
 export * from "./DulService";
