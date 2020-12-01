@@ -40,6 +40,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
     let firstTabRouteKey;
     let hasBlocks = !!this.props.blocks; // BaseCard props OR any tab have blocks
     // If has parent blocks - disable custom tab logic
+    console.debug("Перерисовываем");
     if (hasBlocks) {
       const blocks = wrapInArrayWithoutNulls(this.props.blocks);
       body = blocks.map((block, rowIndex) => (

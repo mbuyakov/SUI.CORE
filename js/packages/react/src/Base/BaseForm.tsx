@@ -237,6 +237,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
 
   public render(): React.ReactNode {
     const {onSubmit, ...rest} = this.props;
+    console.debug("BaseForm render");
 
     return (
       <BaseFormContext.Provider

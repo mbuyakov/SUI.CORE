@@ -103,8 +103,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
 
   public static getDulFormRows(dulCardProps: Readonly<IDulCardProps>): OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseFormItemLayout>> {
     // TODO: strange thing, birthday and personAge are undefined in mapFormValuesToInputNodeProps
-    DulCard.birthday = dulCardProps.birthday;
-    DulCard.personAge = dulCardProps.personAge;
+    console.debug("disabled", dulCardProps.disabled);
 
     return [
       {
@@ -113,9 +112,16 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
             items: [
               {
                 title: 'Тип документа',
-                required: DulCard.trueIfEmpty(dulCardProps.required),
                 fieldName: 'docTypeId',
-                inputNode: <DulTypeSelector disabled={dulCardProps.isEdit || dulCardProps.disabled}/>
+                required: DulCard.trueIfEmpty(dulCardProps.required),
+                mapFormValuesToInputNodeProps: (get: ValuesGetter): any => {
+                  const {docTypeId} = get(["docTypeId"]);
+                  console.debug("disabled", dulCardProps.disabled, dulCardProps.isEdit);
+                  return {
+                    disabled: dulCardProps.isEdit || dulCardProps.disabled,
+                  };
+                },
+                inputNode: <DulTypeSelector/>
               },
               {
                 title: 'Дата выдачи',
@@ -123,7 +129,8 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 required: DulCard.trueIfEmpty(dulCardProps.required),
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): any => {
                   const {docTypeId} = get(["docTypeId"]);
-                  return DulCard.getIssuedDateDisabler(docTypeId, DulCard.birthday, DulCard.personAge);
+                  console.debug("birthday", dulCardProps.birthday, "disabled", dulCardProps.disabled);
+                  return DulCard.getIssuedDateDisabler(docTypeId, dulCardProps.birthday, dulCardProps.personAge);
                 },
                 inputNode: (<DatePicker locale={locale as any} format={DATE_FORMATS} disabled={dulCardProps.disabled}/>),
               },
@@ -257,9 +264,6 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
   }
 
   private static readonly allDocTypes: IallDocTypes[] = DulService.allDocTypes();
-
-  private static birthday: string;
-  private static personAge: number;
 
   private fieldsHandlers: ObservableHandlerStub[] = null;
 
