@@ -55,7 +55,6 @@ export interface IDulCardOptions {
   isEdit?: boolean;
   alreadyFilled?: boolean;
   narrowMode?: boolean;
-  personAge?: number;
   required?: boolean;
   uuid: string;
 }
@@ -153,7 +152,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
       mapFormValuesToInputNodeProps: (get: ValuesGetter): any => {
         const {docTypeId} = get(["docTypeId"]);
         const props = DulCard.propsMap.get(dulCardUuid);
-        const res = DulCard.getIssuedDateDisabler(docTypeId, props.birthday, props.personAge)
+        const res = DulCard.getIssuedDateDisabler(docTypeId, props.birthday)
         res.disabled = props.disabled;
         return res;
       },
@@ -335,11 +334,11 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     });
   }
 
-  public static getIssuedDateDisabler(docTypeId: string, birthday: string, personAge: number): IObjectWithIndex {
+  public static getIssuedDateDisabler(docTypeId: string, birthday: string): IObjectWithIndex {
     const docType = DulCard.getDocTypeById(docTypeId);
     return docTypeId
       ? {
-        disabledDate: ((current: Moment): boolean => disableDocDate(docType.docCode, birthday, personAge, current))
+        disabledDate: ((current: Moment): boolean => disableDocDate(docType.docCode, birthday, current))
       }
       : {disabled: true};
   }
@@ -349,8 +348,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
   }
 
   private static dulCardOptionsIsNotEqual(options1: IDulCardOptions, options2: IDulCardOptions): boolean {
-    return options1.personAge !== options2.personAge
-      || options1.birthday !== options2.birthday
+    return options1.birthday !== options2.birthday
       || options1.required !== options2.required
       || options1.isEdit !== options2.isEdit
       || options1.disabled !== options2.disabled;

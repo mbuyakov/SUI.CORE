@@ -73,7 +73,7 @@ export function disableDateNotBetweenYearsFromNow(from: number, to: number): (cu
   return (current: Moment): boolean => checkDateInRangeOfYearsFromNow(from, to, current) !== 0
 }
 
-export function disableFutureDateAndPassportIssueDateByAge(birthday: string, age: number, current: Moment): boolean {
+export function disableFutureDateAndPassportIssueDateByAge(birthday: string, current: Moment): boolean {
   const realCurrent = moment();
   const disableDateByAge = (): boolean => {
     if (moment(birthday).add(45, 'years').add(30, "days") <= realCurrent) {
@@ -89,19 +89,19 @@ export function disableFutureDateAndPassportIssueDateByAge(birthday: string, age
   return disableFutureDate(current) || disableDateByAge();
 }
 
-export function disableFutureDateAndIssueDateGreaterThanAge(docCode: number, birthday: string, age: number, current: Moment): boolean {
+export function disableFutureDateAndIssueDateGreaterThanAge(docCode: number, birthday: string, current: Moment): boolean {
   const targetAge = docCode === 14 ? 14 : 18;
-  const disableDateByAge = age >= targetAge
+  const disableDateByAge = moment().diff(birthday, 'years') >= targetAge
     ? dateDisabler( moment(birthday).add(targetAge, "years").toISOString(), "less")(current)
     : true;
 
   return disableFutureDate(current) || disableDateByAge;
 }
 
-export function disableDocDate(docCode: number, birthday: string, age: number, current: Moment): boolean {
+export function disableDocDate(docCode: number, birthday: string, current: Moment): boolean {
   return docCode === 21 // passport
-    ? disableFutureDateAndPassportIssueDateByAge(birthday, age, current)
+    ? disableFutureDateAndPassportIssueDateByAge(birthday, current)
     : [14, 7, 8].includes(docCode) // 14 - temporary identity card, 7 - military ID, 8 - temporary military ID
-      ? disableFutureDateAndIssueDateGreaterThanAge(docCode, birthday, age, current) // temporary identity card - 14 years age, other 18
+      ? disableFutureDateAndIssueDateGreaterThanAge(docCode, birthday,current) // temporary identity card - 14 years age, other 18
       : disableFutureDateAndDateLessThanBirthday(birthday)(current);
 }
