@@ -72,7 +72,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
 
   public static allFieldsFilledValidator = (rule: Rules, value: IDulFields, cb: (error: string | string[]) => void): void => {
     const notFulfilled = Object.values(value).some(v =>
-      v === null || v === undefined || StringWithError.isPacked(v)
+      v === null || v === undefined || StringWithError.hasError(v)
     );
     cb(notFulfilled ? "  " : "");
   };
@@ -122,6 +122,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                   return {
                     disabled: props.isEdit || props.disabled,
                   };
+
                 },
                 inputNode: <DulTypeSelector/>
               },
@@ -151,7 +152,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                   return !!docType && (!docType?.seriesRegex || docType?.seriesRegex == "");
                 },
                 inputNode: <CustomInputWithRegex/>,
-                rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
+                rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   const props = DulCard.propsMap.get(dulCardUuid);
@@ -169,7 +170,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 title: 'Код подразделения',
                 fieldName: 'departmentCode',
                 inputNode: <CustomInputWithRegex/>,
-                rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
+                rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   const props = DulCard.propsMap.get(dulCardUuid);
@@ -190,7 +191,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 title: 'Номер',
                 fieldName: 'number',
                 inputNode: <CustomInputWithRegex/>,
-                rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
+                rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
                 mapFormValuesToRequired: (get: ValuesGetter): boolean => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   const docType = DulCard.getDocTypeById(values.docTypeId);
@@ -213,7 +214,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 title: 'Кем выдан',
                 fieldName: 'issuedBy',
                 inputNode: <CustomInputWithRegex/>,
-                rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
+                rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   const props = DulCard.propsMap.get(dulCardUuid);

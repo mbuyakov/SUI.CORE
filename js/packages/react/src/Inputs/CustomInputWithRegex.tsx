@@ -14,7 +14,7 @@ export type CustomInputWithRegexProps = InputProps & {
 
 export class CustomInputWithRegex extends React.Component<CustomInputWithRegexProps>{
 
-  public static enchantedValueValidator(rule: Rules, value: string, callback: (error: (string | string[])) => void): void {
+  public static stringWithErrorValidator(rule: Rules, value: string, callback: (error: (string | string[])) => void): void {
     callback(StringWithError.getError(value));
   }
 

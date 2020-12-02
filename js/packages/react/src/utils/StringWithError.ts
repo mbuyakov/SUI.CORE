@@ -1,7 +1,7 @@
 export const MAGIC = "___!___";
 
 export class StringWithError {
-  public static isPacked(value: string): boolean {
+  public static hasError(value: string): boolean {
     return String(value).startsWith(MAGIC);
   }
 
