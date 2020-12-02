@@ -146,7 +146,8 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 fieldName: 'series',
                 mapFormValuesToRequired: (get: ValuesGetter): boolean => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
-                  return !!values.docTypeId
+                  const docType = DulCard.getDocTypeById(values.docTypeId);
+                  return !docType?.seriesRegex || docType?.seriesRegex == "";
                 },
                 inputNode: <CustomInputWithRegex/>,
                 rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
@@ -168,10 +169,6 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 fieldName: 'departmentCode',
                 inputNode: <CustomInputWithRegex/>,
                 rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
-                mapFormValuesToRequired: (get: ValuesGetter): boolean => {
-                  const values: { docTypeId?: string } = get(["docTypeId"]);
-                  return DulCard.isRussianDocType(values.docTypeId)
-                },
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   const props = DulCard.propsMap.get(dulCardUuid);
@@ -195,7 +192,8 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
                 mapFormValuesToRequired: (get: ValuesGetter): boolean => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
-                  return !!values.docTypeId
+                  const docType = DulCard.getDocTypeById(values.docTypeId);
+                  return !docType?.numberRegex || docType?.numberRegex == "";
                 },
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
@@ -215,10 +213,6 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 fieldName: 'issuedBy',
                 inputNode: <CustomInputWithRegex/>,
                 rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
-                mapFormValuesToRequired: (get: ValuesGetter): boolean => {
-                  const values: { docTypeId?: string } = get(["docTypeId"]);
-                  return DulCard.isRussianDocType(values.docTypeId)
-                },
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   const props = DulCard.propsMap.get(dulCardUuid);
