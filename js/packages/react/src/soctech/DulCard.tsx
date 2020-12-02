@@ -47,7 +47,7 @@ export interface IDulCardOptions {
   isEdit?: boolean;
   personAge?: number;
   required?: boolean;
-  uuid?: string;
+  uuid: string;
 }
 
 export interface IDulCardProps extends IDulCardOptions {
@@ -119,6 +119,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 required: DulCard.trueIfEmpty(dulCardProps.required),
                 mapFormValuesToInputNodeProps: (_: ValuesGetter): any => {
                   const props = DulCard.propsMap.get(dulCardUuid);
+
                   return {
                     disabled: props.isEdit || props.disabled,
                   };
