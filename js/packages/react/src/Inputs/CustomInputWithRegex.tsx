@@ -21,7 +21,7 @@ export class CustomInputWithRegex extends React.Component<CustomInputWithRegexPr
   }
 
   public componentDidUpdate(prevProps: Readonly<CustomInputWithRegexProps>): void {
-    if (prevProps.regex && prevProps.regex !== this.props.regex) {
+    if (prevProps.regex !== this.props.regex) {
       const value = this.props.value || "";
 
       this.onChange({
