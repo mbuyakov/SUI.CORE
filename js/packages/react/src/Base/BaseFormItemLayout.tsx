@@ -127,7 +127,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
 
           if (required) {
             if (this.formField.rules.findIndex(rule => rule.required || false) < 0) {
-              this.formField.rules.push({required: true, message: FILL_FIELD_TEXT});
+              this.formField.rules.unshift({required: true, message: FILL_FIELD_TEXT});
               this.baseForm.validateField(item.fieldName);
             }
           }
