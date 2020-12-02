@@ -13,7 +13,7 @@ export * from "./formUtils";
 export * from "./init";
 export * from "./location";
 export * from "./array";
-export * from "./MagicStrings";
+export * from "./StringWithError";
 export * from "./metaInfo";
 export * from "./metaUtils";
 export * from "./TabSyncer";

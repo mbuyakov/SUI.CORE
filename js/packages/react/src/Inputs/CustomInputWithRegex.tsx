@@ -3,7 +3,7 @@ import {InputProps} from 'antd/lib/input';
 import autobind from "autobind-decorator";
 import React, {ChangeEvent} from "react";
 import {Rules} from "async-validator";
-import {MagicStrings} from "@/utils";
+import {StringWithError} from "@/utils";
 
 export type CustomInputWithRegexProps = InputProps & {
   desc?: string,
@@ -15,9 +15,7 @@ export type CustomInputWithRegexProps = InputProps & {
 export class CustomInputWithRegex extends React.Component<CustomInputWithRegexProps>{
 
   public static enchantedValueValidator(rule: Rules, value: string, callback: (error: (string | string[])) => void): void {
-    callback(MagicStrings.isEnchanted(value)
-      ? MagicStrings.unspellAdditionalValues(value).join(" ")
-      : "");
+    callback(StringWithError.getError(value));
   }
 
   public componentDidUpdate(prevProps: Readonly<CustomInputWithRegexProps>): void {
@@ -26,7 +24,7 @@ export class CustomInputWithRegex extends React.Component<CustomInputWithRegexPr
 
       this.onChange({
         target: {
-          value: MagicStrings.unspellValue(value as string),
+          value: StringWithError.getValue(value as string),
         }
       } as any);
     }
@@ -49,7 +47,7 @@ export class CustomInputWithRegex extends React.Component<CustomInputWithRegexPr
   private getValue(): string | undefined {
     const value = this.props.value;
 
-    return value && typeof(value === "string") && MagicStrings.unspellValue(value as string) || "";
+    return value && typeof(value === "string") && StringWithError.getValue(value as string) || "";
   }
 
   @autobind
@@ -57,7 +55,7 @@ export class CustomInputWithRegex extends React.Component<CustomInputWithRegexPr
     let value = e.target.value;
 
     if(!RegExp(this.props.regex).test(value)) {
-      value = this.props.disabled ? '' : MagicStrings.enchantValue(value, this.props.desc);
+      value = this.props.disabled ? '' : StringWithError.pack(value, this.props.desc);
     }
 
     this.props.onChange(value);
