@@ -67,6 +67,8 @@ const DATE_FORMATS = ['DD.MM.YYYY', 'DDMMYYYY', 'DDMMYY'];
 
 export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
 
+  private static propsMap: Map<string, IDulCardProps> = new Map<string, IDulCardProps>();
+
   public static allFieldsFilledValidator = (rule: Rules, value: IDulFields, cb: (error: string | string[]) => void): void => {
     const notFulfilled = Object.values(value).some(v =>
       v === null || v === undefined || CustomInputWithRegex.isEnchanted(v)
@@ -76,7 +78,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
 
   public static formValuesToChangeDul(personId: string, values: IDulFields): IDulValues {
     return ({
-      date: values.date.format(moment.HTML5_FMT.DATE),
+      date: values.date?.format(moment.HTML5_FMT.DATE),
       departmentCode: values.departmentCode,
       docTypeId: values.docTypeId,
       issuedBy: formatRawForGraphQL(values.issuedBy),
@@ -102,8 +104,8 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
   }
 
   public static getDulFormRows(dulCardProps: Readonly<IDulCardProps>): OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseFormItemLayout>> {
-    // TODO: strange thing, birthday and personAge are undefined in mapFormValuesToInputNodeProps
-    console.debug("disabled", dulCardProps.disabled);
+    const dulCardUuid = dulCardProps.uuid || "main";
+    DulCard.propsMap.set(dulCardUuid, dulCardProps);
 
     return [
       {
@@ -115,10 +117,9 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 fieldName: 'docTypeId',
                 required: DulCard.trueIfEmpty(dulCardProps.required),
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): any => {
-                  const {docTypeId} = get(["docTypeId"]);
-                  console.debug("disabled", dulCardProps.disabled, dulCardProps.isEdit);
+                  const props = DulCard.propsMap.get(dulCardUuid);
                   return {
-                    disabled: dulCardProps.isEdit || dulCardProps.disabled,
+                    disabled: props.isEdit || props.disabled,
                   };
                 },
                 inputNode: <DulTypeSelector/>
@@ -129,10 +130,12 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 required: DulCard.trueIfEmpty(dulCardProps.required),
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): any => {
                   const {docTypeId} = get(["docTypeId"]);
-                  console.debug("birthday", dulCardProps.birthday, "disabled", dulCardProps.disabled);
-                  return DulCard.getIssuedDateDisabler(docTypeId, dulCardProps.birthday, dulCardProps.personAge);
+                  const props = DulCard.propsMap.get(dulCardUuid);
+                  const res = DulCard.getIssuedDateDisabler(docTypeId, props.birthday, props.personAge)
+                  res.disabled = props.disabled;
+                  return res;
                 },
-                inputNode: (<DatePicker locale={locale as any} format={DATE_FORMATS} disabled={dulCardProps.disabled}/>),
+                inputNode: (<DatePicker locale={locale as any} format={DATE_FORMATS}/>),
               },
             ]
           },
@@ -145,15 +148,17 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   return !!values.docTypeId
                 },
-                inputNode: <CustomInputWithRegex disabled={dulCardProps.disabled}/>,
+                inputNode: <CustomInputWithRegex/>,
                 rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
+                  const props = DulCard.propsMap.get(dulCardUuid);
                   const docType = DulCard.getDocTypeById(values.docTypeId);
                   return docType
                     ? {
                       regex: docType.seriesRegex,
-                      desc: docType.seriesRegexDesc
+                      desc: docType.seriesRegexDesc,
+                      disabled: props.disabled,
                     }
                     : {disabled: true};
                 }
@@ -161,7 +166,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
               {
                 title: 'Код подразделения',
                 fieldName: 'departmentCode',
-                inputNode: <CustomInputWithRegex disabled={dulCardProps.disabled}/>,
+                inputNode: <CustomInputWithRegex/>,
                 rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
                 mapFormValuesToRequired: (get: ValuesGetter): boolean => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
@@ -169,10 +174,12 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 },
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
+                  const props = DulCard.propsMap.get(dulCardUuid);
                   return DulCard.isRussianDocType(values.docTypeId)
                     ? {
                       regex: DEPARTMENT_CODE_REGEX,
                       desc: DEPARTMENT_CODE_DESC,
+                      disabled: props.disabled,
                     }
                     : {disabled: true};
                 }
@@ -184,7 +191,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
               {
                 title: 'Номер',
                 fieldName: 'number',
-                inputNode: <CustomInputWithRegex disabled={dulCardProps.disabled}/>,
+                inputNode: <CustomInputWithRegex/>,
                 rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
                 mapFormValuesToRequired: (get: ValuesGetter): boolean => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
@@ -192,11 +199,13 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 },
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
+                  const props = DulCard.propsMap.get(dulCardUuid);
                   const docType = DulCard.getDocTypeById(values.docTypeId);
                   return docType
                     ? {
                       regex: docType.numberRegex,
-                      desc: docType.numberRegexDesc
+                      desc: docType.numberRegexDesc,
+                      disabled: props.disabled,
                     }
                     : {disabled: true};
                 }
@@ -204,7 +213,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
               {
                 title: 'Кем выдан',
                 fieldName: 'issuedBy',
-                inputNode: <CustomInputWithRegex disabled={dulCardProps.disabled}/>,
+                inputNode: <CustomInputWithRegex/>,
                 rules: [{validator: CustomInputWithRegex.enchantedValueValidator}],
                 mapFormValuesToRequired: (get: ValuesGetter): boolean => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
@@ -212,10 +221,12 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 },
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
                   const values: { docTypeId?: string } = get(["docTypeId"]);
+                  const props = DulCard.propsMap.get(dulCardUuid);
                   return DulCard.isRussianDocType(values.docTypeId)
                     ? {
                       regex: issuedByRegex,
                       desc: issuedByDesc,
+                      disabled: props.disabled,
                     }
                     : {disabled: true};
                 }

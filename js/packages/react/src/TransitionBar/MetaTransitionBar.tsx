@@ -248,8 +248,6 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
     const {transitionFormatter, ...barProps} = this.props;
     const transitions = this.state.transitions;
 
-    console.debug(this.state);
-
     return (
       <TransitionBar
         {...barProps}

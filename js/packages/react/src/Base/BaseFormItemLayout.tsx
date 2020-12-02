@@ -103,7 +103,6 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
   }
 
   public render(): React.ReactNode {
-    console.debug("render item", this.props.title);
     return (
       <BaseFormContext.Consumer>
         {({baseForm, verticalLabel, customInputNodesProps, customFinalInputNodesProps}): React.ReactNode => {
@@ -128,7 +127,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
 
           if (required) {
             if (this.formField.rules.findIndex(rule => rule.required || false) < 0) {
-              this.formField.rules.unshift({required: true, message: FILL_FIELD_TEXT});
+              this.formField.rules.push({required: true, message: FILL_FIELD_TEXT});
               this.baseForm.validateField(item.fieldName);
             }
           }
@@ -160,7 +159,6 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
           let additionalProps: IObjectWithIndex = {};
 
           if (item.mapFormValuesToInputNodeProps) {
-            console.debug("Invoke mapFormValuesToInputNodeProps", item.title);
             additionalProps = item.mapFormValuesToInputNodeProps(this.valueGetter);
           }
 
