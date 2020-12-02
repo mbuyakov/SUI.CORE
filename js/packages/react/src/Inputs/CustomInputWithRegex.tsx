@@ -3,8 +3,7 @@ import {InputProps} from 'antd/lib/input';
 import autobind from "autobind-decorator";
 import React, {ChangeEvent} from "react";
 import {Rules} from "async-validator";
-
-export const MAGIC = "___!___";
+import {MagicStrings} from "@/utils";
 
 export type CustomInputWithRegexProps = InputProps & {
   desc?: string,
@@ -15,12 +14,10 @@ export type CustomInputWithRegexProps = InputProps & {
 
 export class CustomInputWithRegex extends React.Component<CustomInputWithRegexProps>{
 
-  public static isEnchanted(value: string): boolean {
-    return String(value).startsWith(MAGIC);
-  }
-
   public static enchantedValueValidator(rule: Rules, value: string, callback: (error: (string | string[])) => void): void {
-    callback(CustomInputWithRegex.isEnchanted(value) ? value.split(MAGIC)[1] : "");
+    callback(MagicStrings.isEnchanted(value)
+      ? MagicStrings.unspellAdditionalValues(value).join(" ")
+      : "");
   }
 
   public componentDidUpdate(prevProps: Readonly<CustomInputWithRegexProps>): void {
@@ -29,7 +26,7 @@ export class CustomInputWithRegex extends React.Component<CustomInputWithRegexPr
 
       this.onChange({
         target: {
-          value: value && (value as string).split(MAGIC)[(value as string).split(MAGIC).length - 1]
+          value: MagicStrings.unspellValue(value as string),
         }
       } as any);
     }
@@ -51,9 +48,8 @@ export class CustomInputWithRegex extends React.Component<CustomInputWithRegexPr
   @autobind
   private getValue(): string | undefined {
     const value = this.props.value;
-    const splittedValue = value && typeof(value === "string") && (value as string).split(MAGIC);
 
-    return splittedValue && splittedValue[splittedValue.length - 1] || "";
+    return value && typeof(value === "string") && MagicStrings.unspellValue(value as string) || "";
   }
 
   @autobind
@@ -61,7 +57,7 @@ export class CustomInputWithRegex extends React.Component<CustomInputWithRegexPr
     let value = e.target.value;
 
     if(!RegExp(this.props.regex).test(value)) {
-      value = this.props.disabled ? '' : MAGIC + this.props.desc + MAGIC + value;
+      value = this.props.disabled ? '' : MagicStrings.enchantValue(value, this.props.desc);
     }
 
     this.props.onChange(value);
