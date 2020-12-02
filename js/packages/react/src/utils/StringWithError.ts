@@ -11,7 +11,7 @@ export class StringWithError {
 
   public static getValue(enchantedValue: string): string {
     if(!enchantedValue) {
-      return undefined;
+      return '';
     }
     const values = enchantedValue.split(MAGIC);
     return values[values.length - 1];
