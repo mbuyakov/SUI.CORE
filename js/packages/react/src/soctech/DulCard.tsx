@@ -140,7 +140,11 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
               {
                 title: 'Дата выдачи',
                 fieldName: 'date',
-                required: DulCard.trueIfEmpty(dulCardProps.required),
+                mapFormValuesToRequired: (get: ValuesGetter): boolean => {
+                  const props = DulCard.propsMap.get(dulCardUuid);
+                  const {docTypeId} = get(["docTypeId"]);
+                  return DulCard.trueIfEmpty(props.required) || !!docTypeId;
+                },
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): any => {
                   console.debug("mapFormValuesToInputNodeProps date");
                   const {docTypeId} = get(["docTypeId"]);
