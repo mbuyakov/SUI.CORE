@@ -329,7 +329,8 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
   @autobind
   private getOnFieldChange(form: BaseForm, fieldName: string): ObservableHandler<any> {
     return (newValue: any, oldValue?: any): void => {
-      if(!!this.props?.onChange && !isEqual(newValue, oldValue)) {
+      console.debug("DulCard getOnFieldChange hasOnChange", !!this.props.onChange, "is equals", isEqual(newValue, oldValue));
+      if(!!this.props.onChange && !isEqual(newValue, oldValue)) {
         console.debug("DulCard onFieldChange", fieldName, newValue, oldValue);
         const newDulObject = {...this.props?.value, [fieldName]: newValue};
         return this.props?.onChange(newDulObject);
@@ -340,7 +341,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
   @autobind
   private getOnFieldErrorChange(form: BaseForm, fieldName: string): ObservableHandler<any> {
     return (newValue: any, oldValue?: any): void => {
-      if(!!this.props?.onErrorCheck && !isEqual(newValue, oldValue)) {
+      if(!!this.props.onErrorCheck && !isEqual(newValue, oldValue)) {
         console.debug("DulCard getOnFieldErrorChange", fieldName, newValue, oldValue);
         const errors = Object.values(form.getFieldsError())
           .map((error: Observable<string>): string => error.getValue());
@@ -352,15 +353,19 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
 
   @autobind
   private onInitializedForm(form: BaseForm): void {
-    console.debug("DulCard onInitializedForm");
-    if (DulCard.trueIfEmpty(this.props.required)
-        && (!!this.props.onChange || !!this.props.onErrorCheck)) {
+    const hasErrorChecking = DulCard.trueIfEmpty(this.props.required) && !!this.props.onErrorCheck;
+    console.debug("DulCard onInitializedForm has onChange", !!this.props.onChange, "hasErrorChecking", hasErrorChecking);
+    if (!!this.props.onChange || hasErrorChecking) {
       this.fieldsHandlers = [];
       DUL_FIELDS_NAMES.forEach(name => {
         const field = form.getFormField(name);
         this.formFields.set(name, field);
-        this.fieldsHandlers.push(field.value.subscribe(this.getOnFieldChange(form, name)));
-        this.fieldsHandlers.push(field.error.subscribe(this.getOnFieldErrorChange(form, name)));
+        if (!!this.props.onChange) {
+          this.fieldsHandlers.push(field.value.subscribe(this.getOnFieldChange(form, name)));
+        }
+        if(hasErrorChecking) {
+          this.fieldsHandlers.push(field.error.subscribe(this.getOnFieldErrorChange(form, name)));
+        }
       });
     }
   }
