@@ -126,7 +126,10 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
               {
                 title: 'Тип документа',
                 fieldName: 'docTypeId',
-                required: DulCard.trueIfEmpty(dulCardProps.required),
+                mapFormValuesToRequired: (_: ValuesGetter): boolean => {
+                  const props = DulCard.propsMap.get(dulCardUuid);
+                  return DulCard.trueIfEmpty(props.required);
+                },
                 mapFormValuesToInputNodeProps: (_: ValuesGetter): any => {
                   const props = DulCard.propsMap.get(dulCardUuid);
                   console.debug("mapFormValuesToInputNodeProps doc type ");
