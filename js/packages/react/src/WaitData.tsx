@@ -79,13 +79,16 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
 
   public shouldComponentUpdate(nextProps: Readonly<IWaitDataProps<T>>): boolean {
     // console.log(nextProps, nextState);
-    if (this.props.query != nextProps.query) {
+    if ((this.props.query != nextProps.query) || (this.props.mutation != nextProps.mutation)) {
       if (this.state) {
         // @ts-ignore
+        // noinspection JSConstantReassignment
         this.state.data = false;
       }
       // @ts-ignore
+      // noinspection JSConstantReassignment
       this.props = nextProps;
+      // noinspection JSIgnoredPromiseFromCall
       this.updateData();
 
       return true;
