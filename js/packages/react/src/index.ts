@@ -44,6 +44,7 @@ export * from "./SparkLine";
 export * from "./soctech";
 export * from "./styles";
 export * from "./SUIMaskedInput";
+export * from "./SUIPhoneInput";
 export * from "./SUIReactComponent";
 export * from "./TableSettings";
 export * from "./tmp";
