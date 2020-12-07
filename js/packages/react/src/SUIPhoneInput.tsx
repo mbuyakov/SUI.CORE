@@ -3,7 +3,7 @@ import InputMask from "antd-mask-input/build/main/lib/inputmask-core";
 import {MaskedInputProps} from 'antd-mask-input/build/main/lib/MaskedInput';
 import autobind from 'autobind-decorator';
 import React from 'react';
-import {PHONE_MASK_LENGTH} from "@sui/all";
+import {NO_DATA_TEXT, PHONE_MASK_LENGTH} from "@sui/all";
 
 const PHONE_MASKS = [
   "+1(111)111-11-11",
@@ -15,6 +15,17 @@ export type SUIPhoneInputProps = Omit<MaskedInputProps, 'onChange' | 'mask'> & {
 }
 
 export class SUIPhoneInput extends React.Component<SUIPhoneInputProps> {
+  public static formatByMask(value: string | null | undefined): string {
+      if (!value) {
+        return NO_DATA_TEXT;
+      }
+
+      return new InputMask({
+        pattern: SUIPhoneInput.getFirsValidMask(value),
+        value
+      }).getValue();
+  }
+
   public static lengthValidator(value: string): string {
     if (!value) {
       return null;
