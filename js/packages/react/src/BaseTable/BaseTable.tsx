@@ -1,4 +1,4 @@
-import {CustomPagingPanelContainer} from "@/BaseTable/extends/CustomPagingPanelContainer";
+import {CustomPagingPanelContainer, CustomToggleCell, DoubleScrollbar, UserSettingsPlugin, UserSettingsSupportPlugin} from "@/BaseTable/extends";
 import {CheckOutlined, CloseOutlined, QuestionOutlined} from '@ant-design/icons';
 import {Getter, Getters} from '@devexpress/dx-react-core';
 import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSelection, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
@@ -11,15 +11,10 @@ import {Card, Result, Spin} from 'antd';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import * as React from 'react';
-import DoubleScrollbar from 'react-double-scrollbar';
 import {SuiThemeContext} from '@/themes';
+import {BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER, BASE_TABLE_NO_PAGINATION} from '@/styles';
 
-
-import {BASE_TABLE, HIDE_BUTTONS, LOADING_SPIN_WRAPPER, BASE_TABLE_NO_PAGINATION} from '../styles';
 import {ColumnChooserContainer, EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, WarningPlugin} from './extends';
-import {CustomToggleCell} from "./extends/CustomToggleCell";
-import {UserSettingsPlugin} from "./extends/UserSettingsPlugin";
-import {UserSettingsSupportPlugin} from "./extends/UserSettingsSupportPlugin";
 import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter} from './filters';
 import {defaultSelection, ISelectionTable} from './ISelectionTable';
 import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
