@@ -46,7 +46,7 @@ export class DoubleScrollbar extends React.Component<{}, IDoubleScrollbarState> 
 
   public render(): JSX.Element {
     let outerDivStyle: React.CSSProperties = {overflowX: "auto", overflowY: "hidden"};
-    let innerDivStyle: React.CSSProperties = {paddingTop: 0, height: 0, width: this.state.width};
+    let innerDivStyle: React.CSSProperties = {marginTop: -1, height: 1, width: this.state.width};
     let childDivStyle: React.CSSProperties = {overflow: "auto", overflowY: "hidden"};
 
     return (
