@@ -51,10 +51,10 @@ export class DoubleScrollbar extends React.Component<{}, IDoubleScrollbarState> 
 
     return (
       <div>
-        <div ref="outerDiv" style={outerDivStyle}>
-          <div ref="innerDiv" style={innerDivStyle}>&nbsp;</div>
+        <div ref={this.outerDiv} style={outerDivStyle}>
+          <div style={innerDivStyle}>&nbsp;</div>
         </div>
-        <div ref="childrenWrapper" style={childDivStyle}>
+        <div ref={this.childrenWrapper} style={childDivStyle}>
           {this.props.children}
         </div>
       </div>
@@ -76,7 +76,7 @@ export class DoubleScrollbar extends React.Component<{}, IDoubleScrollbarState> 
     let width = null;
 
     if (this.childrenWrapper.current && this.childrenWrapper.current.scrollWidth) {
-      width = this.childrenWrapper.current.scrollWidth + "px"
+      width = `${this.childrenWrapper.current.scrollWidth}px`;
     }
 
     return width;
