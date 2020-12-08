@@ -6,11 +6,12 @@ import {ColumnChooser, DragDropProvider, Grid, GroupingPanel, PagingPanel, Table
 import {TableRow} from '@material-ui/core';
 import {ThemeProvider} from '@material-ui/core/styles';
 import CloudDownload from '@material-ui/icons/CloudDownload';
-import {defaultIfNotBoolean, getDataByKey} from "@sui/core";
+import {defaultIfNotBoolean, getDataByKey, getSUISettings} from "@sui/core";
 import {Card, Result, Spin} from 'antd';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import * as React from 'react';
+import DoubleScrollbar from 'react-double-scrollbar';
 import {SuiThemeContext} from '@/themes';
 
 
@@ -278,6 +279,10 @@ export class BaseTable<TSelection = defaultSelection>
       );
     };
 
+    const tableContainerComponent = (typeof(this.props.doubleVerticalScroll) == "boolean" ? this.props.doubleVerticalScroll : getSUISettings().enableDoubleVerticalScrollForAllTables)
+      ? DoubleScrollbar
+      : undefined;
+
     return (
       <SuiThemeContext.Consumer>
         {theme => (
@@ -375,18 +380,24 @@ export class BaseTable<TSelection = defaultSelection>
                 {(selectionEnabled || highlightEnabled) && <IntegratedSelection/>}
                 <DragDropProvider/>
                 {virtual
-                  ? <VirtualTable
-                    cellComponent={this.CellComponent}
-                    noDataCellComponent={TableNoDataCell}
-                    rowComponent={this.RowComponent}
-                    columnExtensions={wordWrapExtension}
-                  />
-                  : <Table
-                    cellComponent={this.CellComponent}
-                    noDataCellComponent={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? TableNoDataCell : TableNoDataCellSmall}
-                    rowComponent={this.RowComponent}
-                    columnExtensions={wordWrapExtension}
-                  />}
+                  ? (
+                    <VirtualTable
+                      cellComponent={this.CellComponent}
+                      containerComponent={tableContainerComponent}
+                      noDataCellComponent={TableNoDataCell}
+                      rowComponent={this.RowComponent}
+                      columnExtensions={wordWrapExtension}
+                    />
+                  )
+                  : (
+                    <Table
+                      cellComponent={this.CellComponent}
+                      containerComponent={tableContainerComponent}
+                      noDataCellComponent={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? TableNoDataCell : TableNoDataCellSmall}
+                      rowComponent={this.RowComponent}
+                      columnExtensions={wordWrapExtension}
+                    />
+                  )}
                 {rowDetail && <TableRowDetail
                   contentComponent={rowDetail}
                   toggleCellComponent={this.ToggleCellComponent}

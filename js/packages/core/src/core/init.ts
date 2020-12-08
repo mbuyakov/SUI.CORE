@@ -19,6 +19,7 @@ export interface IInitSUISettings {
   backendUrl: string;
   basicAuthToken?: string;
   checkVersionMismatchUrl: string;
+  enableDoubleVerticalScrollForAllTables?: boolean;
   graphqlUri: string;
   restUri: string;
   rusName: string;
