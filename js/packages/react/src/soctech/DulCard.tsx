@@ -8,7 +8,7 @@ import moment, {Moment} from 'moment';
 import * as React from 'react';
 import {BaseFormProps} from "@/MutableBackendTable";
 import {DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, disableDocDate, formatRawForGraphQL, IObjectWithIndex, OneOrArrayWithNulls} from "@sui/core";
-import {BaseForm, IBaseCardRowLayout, IBaseFormItemLayout, IFormField, ValuesGetter} from "@/Base";
+import {BaseForm, clearFields, IBaseCardRowLayout, IBaseFormItemLayout, IFormField, ValuesGetter} from "@/Base";
 import {DulService, IallDocTypes} from "@/soctech/DulService";
 import {DulTypeSelector} from "@/Inputs";
 import {BASE_FORM_CLASS} from "@/styles";
@@ -76,6 +76,7 @@ const DATE_FORMATS = ['DD.MM.YYYY', 'DDMMYYYY', 'DDMMYY'];
 
 export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
 
+  private static readonly allDocTypes: IallDocTypes[] = DulService.allDocTypes();
   private static propsMap: Map<string, IDulCardProps> = new Map<string, IDulCardProps>();
 
   public static allFieldsFilledValidator = (rule: Rules, value: IDulFields, cb: (error: string | string[]) => void): void => {
@@ -116,8 +117,6 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     const dulCardUuid = dulCardProps.uuid || "main";
     DulCard.propsMap.set(dulCardUuid, dulCardProps);
 
-    console.debug("getDulFormRows");
-
     return [
       {
         cols: [
@@ -132,11 +131,16 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 },
                 mapFormValuesToInputNodeProps: (_: ValuesGetter): any => {
                   const props = DulCard.propsMap.get(dulCardUuid);
-                  console.debug("mapFormValuesToInputNodeProps doc type ");
                   return {
                     disabled: props.isEdit || props.disabled,
                   };
-
+                },
+                afterChange: (value, form): void => {
+                  const docType = DulCard.getDocTypeById(value);
+                  const cleanFields = DulCard.getFieldsToCleanByDocType(docType);
+                  if (!!cleanFields) {
+                    clearFields(form, undefined, ...cleanFields);
+                  }
                 },
                 inputNode: <DulTypeSelector/>
               },
@@ -149,7 +153,6 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                   return DulCard.trueIfEmpty(props.required) || !!docTypeId;
                 },
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): any => {
-                  console.debug("mapFormValuesToInputNodeProps date");
                   const {docTypeId} = get(["docTypeId"]);
                   const props = DulCard.propsMap.get(dulCardUuid);
                   const res = DulCard.getIssuedDateDisabler(docTypeId, props.birthday, props.personAge)
@@ -166,7 +169,6 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 title: 'Серия',
                 fieldName: 'series',
                 mapFormValuesToRequired: (get: ValuesGetter): boolean => {
-                  console.debug("mapFormValuesToRequired series");
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   const docType = DulCard.getDocTypeById(values.docTypeId);
                   return !!docType && (!docType?.seriesRegex || docType?.seriesRegex == "");
@@ -174,7 +176,6 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                 inputNode: <CustomInputWithRegex/>,
                 rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
                 mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
-                  console.debug("mapFormValuesToInputNodeProps series");
                   const values: { docTypeId?: string } = get(["docTypeId"]);
                   const props = DulCard.propsMap.get(dulCardUuid);
                   const docType = DulCard.getDocTypeById(values.docTypeId);
@@ -291,7 +292,23 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
       || options1.disabled !== options2.disabled;
   }
 
-  private static readonly allDocTypes: IallDocTypes[] = DulService.allDocTypes();
+  private static getFieldsToCleanByDocType(docType: IallDocTypes): string[] {
+    if (!docType) {
+      return DUL_FIELDS_NAMES.filter(name => name !== 'docTypeId');
+    }
+    const result = [];
+    if (!docType.seriesRegex) {
+      result.push('series');
+    }
+    if (!docType.numberRegex) {
+      result.push('number');
+    }
+    if (!DulCard.isRussianDocType(docType.id)) {
+      result.push('departmentCode');
+      result.push('issuedBy');
+    }
+    return result;
+  }
 
   private fieldsHandlers: ObservableHandlerStub[] = [];
   private readonly formFields: Map<string, IFormField> = new Map();
@@ -306,14 +323,12 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
 
   public componentDidUpdate(prevProps: Readonly<IDulCardProps>, prevState: Readonly<IDulCardState>): void {
     if (DulCard.dulCardOptionsIsNotEqual(prevProps, this.props)) {
-      console.debug("DulCard componentDidUpdate rows");
       this.setState({
         rows: DulCard.getDulFormRows(this.props)
       });
     }
     this.updateValueFields(prevProps.value, this.props.value);
     if (prevProps.isEdit !== this.props.isEdit || prevProps.uuid !== this.props.uuid) {
-      console.debug("DulCard componentDidUpdate initFormProps");
       this.setState({initFormProps: DulCard.getInitDulFormProps(this.props)});
     }
   }
@@ -336,9 +351,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
   @autobind
   private getOnFieldChange(form: BaseForm, fieldName: string): ObservableHandler<any> {
     return (newValue: any, oldValue?: any): void => {
-      console.debug("DulCard getOnFieldChange hasOnChange", !!this.props.onChange, "is equals", isEqual(newValue, oldValue));
-      if(!!this.props.onChange && !isEqual(newValue, oldValue)) {
-        console.debug("DulCard onFieldChange", fieldName, newValue, oldValue);
+      if (!!this.props.onChange && !isEqual(newValue, oldValue)) {
         const newDulObject = {...this.props?.value, [fieldName]: newValue};
         return this.props?.onChange(newDulObject);
       }
@@ -348,8 +361,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
   @autobind
   private getOnFieldErrorChange(form: BaseForm, fieldName: string): ObservableHandler<any> {
     return (newValue: any, oldValue?: any): void => {
-      if(!!this.props.onErrorCheck && !isEqual(newValue, oldValue)) {
-        console.debug("DulCard getOnFieldErrorChange", fieldName, newValue, oldValue);
+      if (!!this.props.onErrorCheck && !isEqual(newValue, oldValue)) {
         const errors = Object.values(form.getFieldsError())
           .map((error: Observable<string>): string => error.getValue());
         const hasError = errors.some(error => !!error);
@@ -361,7 +373,6 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
   @autobind
   private onInitializedForm(form: BaseForm): void {
     const hasErrorChecking = DulCard.trueIfEmpty(this.props.required) && !!this.props.onErrorCheck;
-    console.debug("DulCard onInitializedForm has onChange", !!this.props.onChange, "hasErrorChecking", hasErrorChecking);
     if (!!this.props.onChange || hasErrorChecking) {
       this.fieldsHandlers = [];
       DUL_FIELDS_NAMES.forEach(name => {
@@ -370,7 +381,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
         if (!!this.props.onChange) {
           this.fieldsHandlers.push(field.value.subscribe(this.getOnFieldChange(form, name)));
         }
-        if(hasErrorChecking) {
+        if (hasErrorChecking) {
           this.fieldsHandlers.push(field.error.subscribe(this.getOnFieldErrorChange(form, name)));
         }
       });
@@ -386,11 +397,10 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
 
   @autobind
   private updateValueFields(oldValues: IDulFields, newValues: IDulFields): void {
-    console.debug("updateValueFields", oldValues, newValues);
     this.formFields.forEach((field, name) => {
       const newValue = newValues && newValues[name];
       const oldValue = oldValues && oldValues[name];
-      if(oldValue !== newValue) {
+      if (oldValue !== newValue) {
         field.value.setValue(newValue);
       }
     });
