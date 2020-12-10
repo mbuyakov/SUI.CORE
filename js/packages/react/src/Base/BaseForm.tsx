@@ -167,6 +167,11 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   }
 
   @autobind
+  public getFormFieldsMap(): Map<string, IFormField> {
+    return this.formFields;
+  }
+
+  @autobind
   public removeField(field: string) {
     const formField = this.formFields.get(field);
     if (formField) {
