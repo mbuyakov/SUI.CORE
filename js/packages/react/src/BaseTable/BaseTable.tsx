@@ -275,7 +275,7 @@ export class BaseTable<TSelection = defaultSelection>
 
     const tableContainerComponent = (typeof(this.props.doubleVerticalScroll) == "boolean" ? this.props.doubleVerticalScroll : getSUISettings().enableDoubleVerticalScrollForAllTables)
       ? DoubleScrollbar
-      : (props: any) => props.children;
+      : Table.Container;
 
     return (
       <SuiThemeContext.Consumer>
