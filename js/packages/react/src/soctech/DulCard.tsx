@@ -54,6 +54,7 @@ export interface IDulCardOptions {
   disabled?: boolean;
   isEdit?: boolean;
   alreadyFilled?: boolean;
+  narrowMode?: boolean;
   personAge?: number;
   required?: boolean;
   uuid: string;
@@ -118,143 +119,190 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     const dulCardUuid = dulCardProps.uuid || "main";
     DulCard.propsMap.set(dulCardUuid, dulCardProps);
 
-    const rows: IBaseCardRowLayout<any, IBaseFormItemLayout>[] = [
-      {
-        cols: [
-          {
-            items: [
-              {
-                title: 'Тип документа',
-                fieldName: 'docTypeId',
-                mapFormValuesToRequired: (_: ValuesGetter): boolean => {
-                  const props = DulCard.propsMap.get(dulCardUuid);
-                  return DulCard.trueIfEmpty(props.required);
-                },
-                mapFormValuesToInputNodeProps: (_: ValuesGetter): any => {
-                  const props = DulCard.propsMap.get(dulCardUuid);
-                  return {
-                    disabled: props.isEdit || props.disabled,
-                  };
-                },
-                afterChange: (value, form): void => {
-                  const docType = DulCard.getDocTypeById(value);
-                  const cleanFields = DulCard.getFieldsToCleanByDocType(docType);
-                  if (!!cleanFields) {
-                    clearFields(form, undefined, ...cleanFields);
-                  }
-                },
-                inputNode: <DulTypeSelector allowClear={!DulCard.trueIfEmpty(DulCard.propsMap.get(dulCardUuid).required)}/>
-              },
-              {
-                title: 'Дата выдачи',
-                fieldName: 'date',
-                mapFormValuesToRequired: (get: ValuesGetter): boolean => {
-                  const props = DulCard.propsMap.get(dulCardUuid);
-                  const {docTypeId} = get(["docTypeId"]);
-                  return DulCard.trueIfEmpty(props.required) || !!docTypeId;
-                },
-                mapFormValuesToInputNodeProps: (get: ValuesGetter): any => {
-                  const {docTypeId} = get(["docTypeId"]);
-                  const props = DulCard.propsMap.get(dulCardUuid);
-                  const res = DulCard.getIssuedDateDisabler(docTypeId, props.birthday, props.personAge)
-                  res.disabled = props.disabled;
-                  return res;
-                },
-                inputNode: (<DatePicker locale={locale as any} format={DATE_FORMATS}/>),
-              },
-            ]
-          },
-          {
-            items: [
-              {
-                title: 'Серия',
-                fieldName: 'series',
-                mapFormValuesToRequired: (get: ValuesGetter): boolean => {
-                  const values: { docTypeId?: string } = get(["docTypeId"]);
-                  const docType = DulCard.getDocTypeById(values.docTypeId);
-                  return !!docType && (!docType?.seriesRegex || docType?.seriesRegex == "");
-                },
-                inputNode: <CustomInputWithRegex/>,
-                rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
-                mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
-                  const values: { docTypeId?: string } = get(["docTypeId"]);
-                  const props = DulCard.propsMap.get(dulCardUuid);
-                  const docType = DulCard.getDocTypeById(values.docTypeId);
-                  return docType
-                    ? {
-                      regex: docType.seriesRegex,
-                      desc: docType.seriesRegexDesc,
-                      disabled: props.disabled,
-                    }
-                    : {disabled: true};
-                }
-              },
-              {
-                title: 'Код подразделения',
-                fieldName: 'departmentCode',
-                inputNode: <CustomInputWithRegex/>,
-                rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
-                mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
-                  const values: { docTypeId?: string } = get(["docTypeId"]);
-                  const props = DulCard.propsMap.get(dulCardUuid);
-                  return DulCard.isRussianDocType(values.docTypeId)
-                    ? {
-                      regex: DEPARTMENT_CODE_REGEX,
-                      desc: DEPARTMENT_CODE_DESC,
-                      disabled: props.disabled,
-                    }
-                    : {disabled: true};
-                }
-              },
-            ]
-          },
-          {
-            items: [
-              {
-                title: 'Номер',
-                fieldName: 'number',
-                inputNode: <CustomInputWithRegex/>,
-                rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
-                mapFormValuesToRequired: (get: ValuesGetter): boolean => {
-                  const values: { docTypeId?: string } = get(["docTypeId"]);
-                  const docType = DulCard.getDocTypeById(values.docTypeId);
-                  return !!docType && (!docType?.numberRegex || docType?.numberRegex == "");
-                },
-                mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
-                  const values: { docTypeId?: string } = get(["docTypeId"]);
-                  const props = DulCard.propsMap.get(dulCardUuid);
-                  const docType = DulCard.getDocTypeById(values.docTypeId);
-                  return docType
-                    ? {
-                      regex: docType.numberRegex,
-                      desc: docType.numberRegexDesc,
-                      disabled: props.disabled,
-                    }
-                    : {disabled: true};
-                }
-              },
-              {
-                title: 'Кем выдан',
-                fieldName: 'issuedBy',
-                inputNode: <CustomInputWithRegex/>,
-                rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
-                mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
-                  const values: { docTypeId?: string } = get(["docTypeId"]);
-                  const props = DulCard.propsMap.get(dulCardUuid);
-                  return DulCard.isRussianDocType(values.docTypeId)
-                    ? {
-                      regex: issuedByRegex,
-                      desc: issuedByDesc,
-                      disabled: props.disabled,
-                    }
-                    : {disabled: true};
-                }
-              },
-            ]
-          },
-        ]
+    const typeItem = {
+      title: 'Тип документа',
+      fieldName: 'docTypeId',
+      mapFormValuesToRequired: (_: ValuesGetter): boolean => {
+        const props = DulCard.propsMap.get(dulCardUuid);
+        return DulCard.trueIfEmpty(props.required);
+      },
+      mapFormValuesToInputNodeProps: (_: ValuesGetter): any => {
+        const props = DulCard.propsMap.get(dulCardUuid);
+        return {
+          disabled: props.isEdit || props.disabled,
+        };
+      },
+      afterChange: (value, form): void => {
+        const docType = DulCard.getDocTypeById(value);
+        const cleanFields = DulCard.getFieldsToCleanByDocType(docType);
+        if (!!cleanFields) {
+          clearFields(form, undefined, ...cleanFields);
+        }
+      },
+      inputNode: <DulTypeSelector allowClear={!DulCard.trueIfEmpty(DulCard.propsMap.get(dulCardUuid).required)}/>
+    };
+
+    const dateItem = {
+      title: 'Дата выдачи',
+      fieldName: 'date',
+      mapFormValuesToRequired: (get: ValuesGetter): boolean => {
+        const props = DulCard.propsMap.get(dulCardUuid);
+        const {docTypeId} = get(["docTypeId"]);
+        return DulCard.trueIfEmpty(props.required) || !!docTypeId;
+      },
+      mapFormValuesToInputNodeProps: (get: ValuesGetter): any => {
+        const {docTypeId} = get(["docTypeId"]);
+        const props = DulCard.propsMap.get(dulCardUuid);
+        const res = DulCard.getIssuedDateDisabler(docTypeId, props.birthday, props.personAge)
+        res.disabled = props.disabled;
+        return res;
+      },
+      inputNode: (<DatePicker locale={locale as any} format={DATE_FORMATS}/>),
+    };
+
+    const seriesItem = {
+      title: 'Серия',
+      fieldName: 'series',
+      mapFormValuesToRequired: (get: ValuesGetter): boolean => {
+        const values: { docTypeId?: string } = get(["docTypeId"]);
+        const docType = DulCard.getDocTypeById(values.docTypeId);
+        return !!docType && (!docType?.seriesRegex || docType?.seriesRegex == "");
+      },
+      inputNode: <CustomInputWithRegex/>,
+      rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
+      mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
+        const values: { docTypeId?: string } = get(["docTypeId"]);
+        const props = DulCard.propsMap.get(dulCardUuid);
+        const docType = DulCard.getDocTypeById(values.docTypeId);
+        return docType
+          ? {
+            regex: docType.seriesRegex,
+            desc: docType.seriesRegexDesc,
+            disabled: props.disabled,
+          }
+          : {disabled: true};
       }
-    ];
+    };
+
+    const departmentCodeItem = {
+      title: 'Код подразделения',
+      fieldName: 'departmentCode',
+      inputNode: <CustomInputWithRegex/>,
+      rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
+      mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
+        const values: { docTypeId?: string } = get(["docTypeId"]);
+        const props = DulCard.propsMap.get(dulCardUuid);
+        return DulCard.isRussianDocType(values.docTypeId)
+          ? {
+            regex: DEPARTMENT_CODE_REGEX,
+            desc: DEPARTMENT_CODE_DESC,
+            disabled: props.disabled,
+          }
+          : {disabled: true};
+      }
+    };
+
+    const numberItem = {
+      title: 'Номер',
+      fieldName: 'number',
+      inputNode: <CustomInputWithRegex/>,
+      rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
+      mapFormValuesToRequired: (get: ValuesGetter): boolean => {
+        const values: { docTypeId?: string } = get(["docTypeId"]);
+        const docType = DulCard.getDocTypeById(values.docTypeId);
+        return !!docType && (!docType?.numberRegex || docType?.numberRegex == "");
+      },
+      mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
+        const values: { docTypeId?: string } = get(["docTypeId"]);
+        const props = DulCard.propsMap.get(dulCardUuid);
+        const docType = DulCard.getDocTypeById(values.docTypeId);
+        return docType
+          ? {
+            regex: docType.numberRegex,
+            desc: docType.numberRegexDesc,
+            disabled: props.disabled,
+          }
+          : {disabled: true};
+      }
+    };
+
+    const issuedByItem = {
+      title: 'Кем выдан',
+      fieldName: 'issuedBy',
+      inputNode: <CustomInputWithRegex/>,
+      rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
+      mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
+        const values: { docTypeId?: string } = get(["docTypeId"]);
+        const props = DulCard.propsMap.get(dulCardUuid);
+        return DulCard.isRussianDocType(values.docTypeId)
+          ? {
+            regex: issuedByRegex,
+            desc: issuedByDesc,
+            disabled: props.disabled,
+          }
+          : {disabled: true};
+      }
+    };
+
+    let rows: IBaseCardRowLayout<any, IBaseFormItemLayout>[];
+
+    if (dulCardProps.narrowMode) {
+      rows = [
+        {
+          cols: {
+            items: typeItem
+          }
+        },
+        {
+          cols: [
+            {
+              items: seriesItem,
+            },
+            {
+              items: numberItem,
+            }
+          ]
+        },
+        {
+          cols: [
+            {
+              items: dateItem,
+            },
+            {
+              items: departmentCodeItem,
+            },
+            {
+              items: issuedByItem,
+            }
+          ]
+        }
+      ];
+    } else {
+      rows = [
+        {
+          cols: [
+            {
+              items: [
+                typeItem,
+                dateItem,
+              ]
+            },
+            {
+              items: [
+                seriesItem,
+                departmentCodeItem,
+              ]
+            },
+            {
+              items: [
+                numberItem,
+                issuedByItem,
+              ]
+            },
+          ]
+        }
+      ];
+    }
 
     if (dulCardProps.alreadyFilled) {
       rows.unshift({
