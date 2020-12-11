@@ -3,6 +3,7 @@ import * as React from 'react';
 import {DulService} from "@/soctech";
 
 export interface IDulTypeSelectorProps {
+  allowClear?: boolean
   disabled?: boolean
   value?: string
 
