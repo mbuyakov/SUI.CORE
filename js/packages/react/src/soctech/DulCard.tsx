@@ -1,5 +1,5 @@
 import {CustomInputWithRegex, CustomInputWithRegexProps} from "@/Inputs/CustomInputWithRegex";
-import {DatePicker} from "antd";
+import {Alert, DatePicker} from "antd";
 import locale from "antd/es/date-picker/locale/ru_RU";
 import {Rules} from "async-validator";
 import autobind from "autobind-decorator";
@@ -53,6 +53,7 @@ export interface IDulCardOptions {
   birthday?: string;
   disabled?: boolean;
   isEdit?: boolean;
+  alreadyFilled?: boolean;
   personAge?: number;
   required?: boolean;
   uuid: string;
@@ -117,7 +118,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     const dulCardUuid = dulCardProps.uuid || "main";
     DulCard.propsMap.set(dulCardUuid, dulCardProps);
 
-    return [
+    const rows: IBaseCardRowLayout<any, IBaseFormItemLayout>[] = [
       {
         cols: [
           {
@@ -142,7 +143,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
                     clearFields(form, undefined, ...cleanFields);
                   }
                 },
-                inputNode: <DulTypeSelector/>
+                inputNode: <DulTypeSelector allowClear={!DulCard.trueIfEmpty(DulCard.propsMap.get(dulCardUuid).required)}/>
               },
               {
                 title: 'Дата выдачи',
@@ -254,6 +255,19 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
         ]
       }
     ];
+
+    if (dulCardProps.alreadyFilled) {
+      rows.unshift({
+        cols: {
+          items: {
+            fieldName: "_alert",
+            inputNode: <Alert type="success" message="ДУЛ гражданина заполнен в ИС СДУ, будет добавлен в анкету при выгрузке результатов диагностики"/>
+          }
+        }
+      })
+    }
+
+    return rows;
   }
 
   public static getInitDulFormProps(dulCardProps: Readonly<IDulCardProps>): BaseFormProps<any> {
