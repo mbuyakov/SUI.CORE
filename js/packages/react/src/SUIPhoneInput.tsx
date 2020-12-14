@@ -34,15 +34,17 @@ export class SUIPhoneInput extends React.Component<SUIPhoneInputProps> {
   }
 
   private static getFirsValidMask(value: string): string {
-    if (!!value && (value.startsWith("+8") || value.startsWith("8"))) {
-      return PHONE_MASKS[1];
+    if (!value || value.startsWith("+7") || value.startsWith("7")) {
+      return PHONE_MASKS[0];
     }
-    return PHONE_MASKS[0];
+    return PHONE_MASKS[1];
   }
 
   private static getMaskedValue(mask: string, value: string): string {
     const mi = new InputMask({pattern: mask});
-    mi.paste(value);
+    for (let i = 0; !!value && i < value.length; ++i) {
+      mi.input(value.charAt(i));
+    }
     const idx = mi.selection.start;
     return mi.getValue().substring(0, idx);
   }
