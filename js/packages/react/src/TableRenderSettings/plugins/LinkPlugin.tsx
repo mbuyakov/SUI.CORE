@@ -1,12 +1,13 @@
 import {IBaseTableColLayout} from '@/BaseTable';
 import {RouterLink} from '@/Link';
-import {TableRenderParamsPlugin, TableRenderSettingsPluginManager} from "@/TableRenderSettings";
 import {ColumnInfo, ColumnInfoManager, getDataByKey} from "@sui/core";
 import {Select} from "antd";
 import * as React from 'react';
 
 import {getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps} from '../../utils';
 import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
+import {TableRenderSettingsPluginManager} from "../TableRenderSettingsPluginManager";
+import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 
 export interface ILinkPluginTRP {
   customColumnInfoId: string
@@ -33,7 +34,7 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
 
     const link = getLinkForTable(referencedTableInfo.tableName, 'card', ':id');
     if (link) {
-      result.render = (value: any, row: any): JSX.Element => {
+      result.render = (value: any, row: any): React.ReactNode => {
         if (value || value === 0) {
           const id = customColumnInfo
             ? row[customColumnInfo.columnName]
