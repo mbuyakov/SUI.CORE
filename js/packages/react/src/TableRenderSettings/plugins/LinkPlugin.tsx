@@ -1,14 +1,12 @@
+import {IBaseTableColLayout} from '@/BaseTable';
+import {RouterLink} from '@/Link';
+import {TableRenderParamsPlugin, TableRenderSettingsPluginManager} from "@/TableRenderSettings";
+import {ColumnInfo, ColumnInfoManager, getDataByKey} from "@sui/core";
 import {Select} from "antd";
 import * as React from 'react';
-import {ColumnInfo, ColumnInfoManager, getDataByKey} from "@sui/core";
 
-import { IBaseTableColLayout } from '../../BaseTable';
-import { RouterLink } from '../../Link';
 import {getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps} from '../../utils';
-import {TableRenderSettingsPluginManager} from "../TableRenderSettingsPluginManager";
 import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
-
-import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 
 export interface ILinkPluginTRP {
   customColumnInfoId: string
@@ -19,10 +17,7 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
     super('link', 'Ссылка', true);
   }
 
-public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams<ILinkPluginTRP>): Promise<void> {
-
-    // console.warn(await ColumnInfoManager.getById(tableRenderParams.customColumnInfoId));
-
+  public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams<ILinkPluginTRP>): Promise<void> {
     const customColumnInfo = tableRenderParams.customColumnInfoId && await ColumnInfoManager.getById(tableRenderParams.customColumnInfoId);
 
     const referencedTableInfo = props.isLinkCol
@@ -38,27 +33,34 @@ public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInf
 
     const link = getLinkForTable(referencedTableInfo.tableName, 'card', ':id');
     if (link) {
-result.render = (value: any, row: any): JSX.Element => value && (
-        <RouterLink
-          to={link.replace(
-            ':id',
-            customColumnInfo
-              ? row[customColumnInfo.columnName]
-              : props.isLinkCol
+      result.render = (value: any, row: any): JSX.Element => {
+        if (value || value === 0) {
+          const id = customColumnInfo
+            ? row[customColumnInfo.columnName]
+            : props.isLinkCol
               ? row.id
               : result.dataKey
                 ? row[props.columnInfo.columnName]
-                : value,
-          )}
-          text={value}
-          type="button"
-          monospace={false}
-        />
-      );
+                : value;
+
+          if (id || id === 0) {
+            return (
+              <RouterLink
+                to={link.replace(':id', id)}
+                text={value}
+                type="button"
+                monospace={false}
+              />
+            )
+          }
+        }
+
+        return value;
+      };
     }
   }
 
-public extraActivationKostyl(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams<ILinkPluginTRP>): boolean {
+  public extraActivationKostyl(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams<ILinkPluginTRP>): boolean {
     const isLinkCol = props.isLinkCol;
     const renderType = getDataByKey<string>(tableRenderParams, "renderType");
 
