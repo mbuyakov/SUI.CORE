@@ -1,7 +1,16 @@
-// eslint-disable-next-line no-restricted-imports
-import {CustomIconComponentProps} from '@ant-design/icons/lib/components/Icon';
 import * as H from "history";
 import * as React from "react";
+
+// Tree shaking
+// import {CustomIconComponentProps} from '@ant-design/icons/lib/components/Icon';
+export interface CustomIconComponentProps {
+  width: string | number;
+  height: string | number;
+  fill: string;
+  viewBox?: string;
+  className?: string;
+  style?: React.CSSProperties;
+}
 
 export * from "./AddressFlag";
 export * from "./BlockUIConditionally";
