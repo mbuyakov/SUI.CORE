@@ -1,5 +1,5 @@
 import {IObjectWithIndex} from "@/other";
-import {addQuotesIfString, camelCase, capitalize, formatRawForGraphQL} from "@/stringFormatters";
+import {addQuotesIfString, camelCase, capitalize, formatRawForGraphQL, lineFeedScreening} from "@/stringFormatters";
 import {IGqlFilter} from "../types";
 import { mutate, query } from '../wrapper';
 
@@ -123,6 +123,18 @@ export function generateCreateText(entity: string, fields: object): string {
 }
 
 /**
+ * Add quotes and some magic
+ */
+function formatString(value: string): string {
+  if(ILLEGAL_QUERY_SYMBOLS.test(value)) {
+    value = formatRawForGraphQL(value);
+  }
+  value = lineFeedScreening(value);
+  
+  return addQuotesIfString(value);
+}
+
+/**
  * Fields formatter for textGenerators
  */
 function format(fields: object, excludeNulls: boolean): string {
@@ -132,12 +144,8 @@ function format(fields: object, excludeNulls: boolean): string {
     .map(key => {
       const value = (fields as IObjectWithIndex)[key];
       let valueStr: string = Array.isArray(value)
-        ? `[${value.map(element => addQuotesIfString(element))}]`
-        : addQuotesIfString(value);
-
-      if(ILLEGAL_QUERY_SYMBOLS.test(valueStr)) {
-        valueStr = formatRawForGraphQL(valueStr);
-      }
+        ? `[${value.map(element => formatString(element))}]`
+        : formatString(value);
 
       return `${key}: ${valueStr}`;
     })

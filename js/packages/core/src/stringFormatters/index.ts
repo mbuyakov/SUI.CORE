@@ -188,7 +188,7 @@ export function lineFeedScreening(str: string | null | undefined): string {
     return "";
   }
 
-  return str.replace(/\n/g, "\\n").replace(/\t/g, "\\t");
+  return str.replace(/(?<!\\)\n/g, "\\n").replace(/(?<!\\)\t/g, "\\t");
 }
 
 /**

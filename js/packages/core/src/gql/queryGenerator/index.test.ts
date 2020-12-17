@@ -55,3 +55,15 @@ test("GenerateDeleteText", () => {
 }`);
   });
 });
+
+test("GenerateDeleteText", () => {
+  ["teSt", "te_st"].forEach(entity => {
+    expect(
+      queryGenerator.generateDeleteText(entity, "123"),
+    ).toBe(`mutation {
+  deleteTeStById(input: {id: "123"}) {
+    clientMutationId
+  }
+}`);
+  });
+});
