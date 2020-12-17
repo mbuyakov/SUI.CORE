@@ -1,10 +1,12 @@
 import {IObjectWithIndex} from "@/other";
-import {addQuotesIfString, camelCase, capitalize} from "@/stringFormatters";
+import {addQuotesIfString, camelCase, capitalize, formatRawForGraphQL} from "@/stringFormatters";
 import {IGqlFilter} from "../types";
 import { mutate, query } from '../wrapper';
 
 export type PossibleId = string | number;
 export type PossibleValue = string | number | boolean;
+
+export const ILLEGAL_QUERY_SYMBOLS = /(?<!\\)["']/;
 
 /**
  * Generate Gql query for select
@@ -129,9 +131,13 @@ function format(fields: object, excludeNulls: boolean): string {
     .filter(key => excludeNulls ? ((fields as IObjectWithIndex)[key] != null) : true)
     .map(key => {
       const value = (fields as IObjectWithIndex)[key];
-      const valueStr = Array.isArray(value)
+      let valueStr: string = Array.isArray(value)
         ? `[${value.map(element => addQuotesIfString(element))}]`
         : addQuotesIfString(value);
+
+      if(ILLEGAL_QUERY_SYMBOLS.test(valueStr)) {
+        valueStr = formatRawForGraphQL(valueStr);
+      }
 
       return `${key}: ${valueStr}`;
     })
