@@ -1,16 +1,7 @@
 import * as H from "history";
 import * as React from "react";
-
-// Tree shaking
-// import {CustomIconComponentProps} from '@ant-design/icons/lib/components/Icon';
-export interface CustomIconComponentProps {
-  width: string | number;
-  height: string | number;
-  fill: string;
-  viewBox?: string;
-  className?: string;
-  style?: React.CSSProperties;
-}
+// eslint-disable-next-line no-restricted-imports
+import Icon, {CustomIconComponentProps} from '@ant-design/icons/lib/components/Icon';
 
 export * from "./AddressFlag";
 export * from "./BlockUIConditionally";
@@ -27,3 +18,5 @@ export interface location<QueryParams extends { [K in keyof QueryParams]?: strin
 }
 
 export type IAntIconComponent = React.ComponentType<CustomIconComponentProps | React.SVGProps<SVGSVGElement>>;
+
+export const AntdIcon = Icon;
