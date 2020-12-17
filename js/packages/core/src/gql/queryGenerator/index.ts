@@ -129,8 +129,7 @@ function formatString(value: string): string {
   if(ILLEGAL_QUERY_SYMBOLS.test(value)) {
     value = formatRawForGraphQL(value);
   }
-  value = lineFeedScreening(value);
-  
+
   return addQuotesIfString(value);
 }
 
