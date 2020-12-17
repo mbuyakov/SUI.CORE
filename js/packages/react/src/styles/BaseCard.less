@@ -122,11 +122,20 @@
       text-align: initial;
     }
   }
+}
 
-  &:first-of-type > tbody > tr:first-child > td:first-child:last-child > div.sui-base-table:first-child:last-child {
-    border: none;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    margin: -24px -25px -33px !important;
-  }
+// Kill me pls
+*:not(.ant-collapse-content) > * > .baseCardCols:first-of-type > tbody > tr:first-child > td:first-child:last-child > div.sui-base-table:first-child:last-child {
+  border: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin: -24px -25px -33px !important;
+}
+
+// BaseTable in BaseCard collapse panel
+.ant-collapse-content .baseCardCols:only-child tbody:only-child tr:only-child td:only-child .sui-base-table:only-child {
+  border: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin: -16px -16px -24px !important;
 }
