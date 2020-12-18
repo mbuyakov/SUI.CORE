@@ -193,7 +193,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
 
           const data = verticalLabel
             ? (
-              <td colSpan={2 + (this.props.colspan - 1) * 2} style={{paddingRight: 12}}>
+              <td colSpan={2 + (this.props.colspan - 1) * 2} style={{verticalAlign: 'top', paddingRight: 12}}>
                 {title && (<div style={TITLE_STYLE}>{title}</div>)}
                 <div>{formItem}</div>
               </td>

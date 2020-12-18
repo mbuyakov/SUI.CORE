@@ -21,6 +21,8 @@ export function _LocalStorageValue(localStorageKey: string, target: any, key: st
   const propKey = `__${key}`;
   const propKeyInit = `${propKey}__init`;
   const _this = target.constructor.prototype;
+  // Force reinit after call new YouClass()
+  _this[propKeyInit] = false;
   return {
     get() {
       if(!_this[propKeyInit]) {
