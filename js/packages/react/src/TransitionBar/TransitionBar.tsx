@@ -150,39 +150,41 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
             );
             const content = <>{transitionContent} <DownOutlined/></>;
 
-            return (
-              <Dropdown
-                {...dropDownProps}
-                key={key}
-                overlay={menu}
-                disabled={disabled || dropDownProps.disabled}
-              >
-                <Button
-                  {...commonButtonProps}
-                  {...buttonProps}
-                  loading={false}
-                  disabled={disabled}
+            return wrapInTooltip(
+              (
+                  <Dropdown
+                  {...dropDownProps}
+                  key={key}
+                  overlay={menu}
+                  disabled={disabled || dropDownProps.disabled}
                 >
-                  {wrapInTooltip(content, tooltip)}
-                </Button>
-              </Dropdown>
-            );
+                  <Button
+                    {...commonButtonProps}
+                    {...buttonProps}
+                    loading={false}
+                    disabled={disabled}
+                  >
+                    {content}
+                  </Button>
+                </Dropdown>
+              ), tooltip);
           } else {
             const hasConfirm = hasPopconfirm(transition.popconfirmProps);
             const onClick = this.onTransitFn(transition);
 
-            const result = (
-              <Button
-                {...commonButtonProps}
-                {...buttonProps}
-                loading={false}
-                key={key}
-                disabled={disabled}
-                onClick={hasConfirm ? undefined : onClick}
-              >
-                {wrapInTooltip(transitionContent, tooltip)}
-              </Button>
-            );
+            const result = wrapInTooltip(
+              (
+                <Button
+                  {...commonButtonProps}
+                  {...buttonProps}
+                  loading={false}
+                  key={key}
+                  disabled={disabled}
+                  onClick={hasConfirm ? undefined : onClick}
+                >
+                  {transitionContent}
+                </Button>
+              ), tooltip) as JSX.Element;
 
             return wrapInPopover(
               result,
