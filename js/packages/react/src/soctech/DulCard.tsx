@@ -270,11 +270,13 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
             },
             {
               items: departmentCodeItem,
-            },
-            {
-              items: issuedByItem,
             }
           ]
+        },
+        {
+          cols: {
+            items: issuedByItem,
+          }
         }
       ];
     } else {
