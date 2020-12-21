@@ -1,7 +1,6 @@
 package ru.sui.suibackend.utils;
 
 import lombok.val;
-import lombok.var;
 import org.springframework.lang.NonNull;
 import ru.sui.suibackend.message.model.Sorting;
 import ru.sui.suibackend.message.model.SortingDirection;
@@ -52,19 +51,16 @@ public class QueryUtils {
       if (!hasNull || isIn) {
         if (isIn) {
           if (!elements.isEmpty()) {
-            var inFilterStr = String.format(
-              "%s %s (%s)",
-              columnName,
-              operationStr,
-              elements.stream()
-                .map(element -> '\'' + element + '\'')
-                .collect(Collectors.joining(COLUMN_SEPARATOR)));
+            val nonNullElements = elements.stream().filter(Objects::nonNull).collect(Collectors.toList());
 
-            if (hasNull) {
-              inFilterStr += String.format(" OR %s IS NULL", columnName);
-            }
-
-            return inFilterStr;
+            return Stream.of(
+              !nonNullElements.isEmpty()
+                ? String.format("%s %s (%s)", columnName, operationStr, nonNullElements.stream().map(element -> '\'' + element + '\'').collect(Collectors.joining(COLUMN_SEPARATOR)))
+                : null,
+              hasNull ? String.format("%s IS NULL", columnName) : null
+            )
+              .filter(Objects::nonNull)
+              .collect(Collectors.joining(COLUMN_SEPARATOR, "(", ")"));
           }
         } else if (operation.name().contains("CONTAINS")) {
           return String.format(
