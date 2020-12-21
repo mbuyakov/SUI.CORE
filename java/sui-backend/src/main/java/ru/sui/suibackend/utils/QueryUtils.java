@@ -60,7 +60,7 @@ public class QueryUtils {
               hasNull ? String.format("%s IS NULL", columnName) : null
             )
               .filter(Objects::nonNull)
-              .collect(Collectors.joining(COLUMN_SEPARATOR, "(", ")"));
+              .collect(Collectors.joining(OR_FILTER_JOINER, "(", ")"));
           }
         } else if (operation.name().contains("CONTAINS")) {
           return String.format(
