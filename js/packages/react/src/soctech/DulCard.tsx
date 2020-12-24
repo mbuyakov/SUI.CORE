@@ -374,6 +374,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     return result;
   }
 
+  private baseForm: BaseForm = null;
   private fieldsHandlers: ObservableHandlerStub[] = [];
   private readonly formFields: Map<string, IFormField> = new Map();
 
@@ -394,6 +395,10 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     this.updateValueFields(prevProps.value, this.props.value);
     if (prevProps.isEdit !== this.props.isEdit || prevProps.uuid !== this.props.uuid) {
       this.setState({initFormProps: DulCard.getInitDulFormProps(this.props)});
+    }
+
+    if (!!this.props.onErrorCheck && !!this.baseForm && prevProps.onErrorCheck !== this.props.onErrorCheck) {
+      this.checkFormFieldsError(this.baseForm);
     }
   }
 
@@ -425,17 +430,29 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
   @autobind
   private getOnFieldErrorChange(form: BaseForm, fieldName: string): ObservableHandler<any> {
     return (newValue: any, oldValue?: any): void => {
-      if (!!this.props.onErrorCheck && !isEqual(newValue, oldValue)) {
-        const errors = Object.values(form.getFieldsError())
-          .map((error: Observable<string>): string => error.getValue());
-        const hasError = errors.some(error => !!error);
-        this.props?.onErrorCheck(hasError);
+      if (!isEqual(newValue, oldValue)) {
+        this.checkFormFieldsError(form);
       }
     }
   }
 
   @autobind
+  private checkFormFieldsError(form: BaseForm): boolean {
+    if (!!form) {
+      const errors = Object.values(form.getFieldsError())
+        .map((error: Observable<string>): string => error.getValue());
+      const hasError = errors.some(error => !!error);
+      this.props?.onErrorCheck(hasError);
+
+      return hasError;
+    }
+
+    return false;
+  }
+
+  @autobind
   private onInitializedForm(form: BaseForm): void {
+    this.baseForm = form;
     const hasErrorChecking = !!this.props.onErrorCheck;
     if (!!this.props.onChange || hasErrorChecking) {
       this.fieldsHandlers = [];
