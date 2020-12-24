@@ -436,7 +436,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
 
   @autobind
   private onInitializedForm(form: BaseForm): void {
-    const hasErrorChecking = DulCard.trueIfEmpty(this.props.required) && !!this.props.onErrorCheck;
+    const hasErrorChecking = !!this.props.onErrorCheck;
     if (!!this.props.onChange || hasErrorChecking) {
       this.fieldsHandlers = [];
       DUL_FIELDS_NAMES.forEach(name => {
