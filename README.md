@@ -1,5 +1,12 @@
 # SUI.CORE
 
+## Available ENV variable for js part
+
+| name | required | default | comment |
+| --- | --- | --- | --- |
+| PROJECT_KEY| + | | unique key for project(use as prefix for localStorage) |
+| NO_DARK | - | false | disable dark theme |
+
 ## Commands
 - `yarn lint` - Lint all file using TSLint
 - `yarn test` - Start all tests using Jest
