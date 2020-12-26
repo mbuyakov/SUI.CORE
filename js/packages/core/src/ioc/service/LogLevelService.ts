@@ -1,6 +1,6 @@
 import { Singleton } from 'typescript-ioc';
 import autobind from "autobind-decorator";
-import { Nullable } from '@/other';
+import {isNotNull, Nullable} from '@/other';
 import { LoggerLevel } from '../enum';
 import { ROOT_LOGGER_KEY } from '../const';
 
@@ -25,8 +25,12 @@ export class LogLevelService {
   }
 
   @autobind
-  public getLogLevel(key: string): LoggerLevel {
-    return this.logLevels.get(key) || this.logLevels.get(ROOT_LOGGER_KEY);
+  public getLogLevel(key: Nullable<string>): LoggerLevel {
+    let ret: Nullable<LoggerLevel>;
+    if (isNotNull(key)) {
+      ret = this.logLevels.get(key);
+    }
+    return ret ?? this.logLevels.get(ROOT_LOGGER_KEY)!;
   }
 
   @autobind

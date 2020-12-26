@@ -44,7 +44,7 @@ export async function asyncReplace(
 
   const replacements = await Promise.all(promises);
 
-  return str.replace(regExp, () => replacements.shift());
+  return str.replace(regExp, () => replacements.shift()!);
 }
 
 export type Unpacked<T> =
@@ -146,4 +146,15 @@ export type TOrCallback<T> = NotFunction<T> | (() => T)
 
 export function getTOrCall<T>(value: TOrCallback<T>): T {
   return typeof value == 'function' ? (value as (() => T))() : (value as T);
+}
+
+export function isNotNull<T>(value: Nullable<T>): value is T {
+  return value !== null && value !== undefined;
+}
+
+export function throwIfNull<T>(value: Nullable<T>, message: TOrCallback<string>): T {
+  if (value === null || value === undefined) {
+    throw new Error(getTOrCall(message));
+  }
+  return value;
 }

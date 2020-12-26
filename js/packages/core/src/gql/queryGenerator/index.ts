@@ -1,4 +1,4 @@
-import {IObjectWithIndex} from "@/other";
+import {IObjectWithIndex, Nullable} from "@/other";
 import {addQuotesIfString, camelCase, capitalize, formatRawForGraphQL, lineFeedScreening} from "@/stringFormatters";
 import {IGqlFilter} from "../types";
 import { mutate, query } from '../wrapper';
@@ -221,7 +221,7 @@ export async function concatAndMutate<T = void>(queries: string[]): Promise<T> {
  *
  * @return joint mutation query consists of all the incoming queries.
  */
-export function concatQueryTexts(queries: string[]): string {
+export function concatQueryTexts(queries: string[]): Nullable<string> {
   if(queries) {
     const queriesInside = queries
       .map(unpackQueryTextFromCurlyBrackets)
@@ -242,7 +242,7 @@ export function concatQueryTexts(queries: string[]): string {
  * @return string - text of query inside curly brackets.
  *  }.
  */
-function unpackQueryTextFromCurlyBrackets(queryText: string): string {
+function unpackQueryTextFromCurlyBrackets(queryText: string): Nullable<string> {
   const start: number = queryText.indexOf('{');
   const end: number = queryText.lastIndexOf('}');
   if(start === -1 || start >= end) {

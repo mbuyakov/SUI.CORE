@@ -1,4 +1,5 @@
 import capitalize from 'lodash/capitalize';
+import {Nullable} from "@/other";
 
 export const NAME_REGEXP = /^(?=(([А-ЯЁа-яёA-Za-z0-9().]+([\-'](?!\s|$))?|\s)+))\1$/;
 export const SURNAME_REGEXP = /^(?=(([А-ЯЁа-яёA-Za-z0-9()]+([\-'](?!\s|$))?|\s)+))\1$/;
@@ -13,9 +14,9 @@ export const WHITESPACE_MESSAGE = "Удалите лишние пробелы в
 export const ONLY_ONE_ALPHABET_MESSAGE = "Введите все буквы в одной раскладке";
 export const POINT_REGEXP_SURNAME_MESSAGE = "Точка \".\" в Фамилии не допускается";
 
-export function nameValidator(field: "firstName" | "middleName" | "lastName", allowNulls?: boolean): (name: string | null) => string {
+export function nameValidator(field: "firstName" | "middleName" | "lastName", allowNulls?: boolean): (name: Nullable<string>) => Nullable<string> {
 
-  return (name: string): string | null => {
+  return (name: Nullable<string>): Nullable<string> => {
     if (!name || !name.trim().length) {
       return (field === "middleName" || allowNulls) ? '' : "Поле должно быть заполнено";
     } else {

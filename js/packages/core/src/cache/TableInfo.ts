@@ -4,7 +4,7 @@ import { ICacheEntry } from '@/cacheManager';
 import { getDataByKey } from '@/dataKey';
 import { GqlCacheManager, query } from '@/gql';
 import { Logger } from "@/ioc/utils";
-import { asyncMap } from '@/other';
+import {asyncMap, isNotNull} from '@/other';
 import { IColumnInfo, IGraphQLConnection, ITableInfo } from '@/types';
 
 import {ColumnInfo, ColumnInfoManager} from "./ColumnInfo";
@@ -57,7 +57,7 @@ export class TableInfo {
   }
 
   public directGetColumns(): ColumnInfo[] {
-    return (this.colIds || []).map(id => ColumnInfoManager.directGetById(id)).filter(Boolean);
+    return (this.colIds || []).map(id => ColumnInfoManager.directGetById(id)).filter(isNotNull);
   }
 
   public async getColumns(refresh: boolean = false): Promise<ColumnInfo[]> {

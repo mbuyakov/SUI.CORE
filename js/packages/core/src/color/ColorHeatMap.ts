@@ -2,6 +2,7 @@ import autobind from 'autobind-decorator';
 
 import { clamp } from '@/math';
 import { Color, findColorBetween } from '@/color';
+import {throwIfNull} from "@/other";
 
 export interface IColorHeatMapSettings {
   /**
@@ -11,7 +12,7 @@ export interface IColorHeatMapSettings {
   /**
    * 50%
    */
-center: Color,
+  center: Color,
   /**
    * 100%
    */
@@ -33,7 +34,8 @@ export class ColorHeatMap {
   // 0 - 99
   @autobind
   public get(value: number): Color {
-    return this.cache.get(clamp(0, 99, Math.floor(value)));
+    const floorValue = Math.floor(value);
+    return throwIfNull(this.cache.get(clamp(0, 99, floorValue)), `Color for value ${floorValue} not founded`);
   }
 }
 

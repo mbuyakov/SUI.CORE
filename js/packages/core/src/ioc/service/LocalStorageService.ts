@@ -1,10 +1,11 @@
 import {Container} from "typescript-ioc";
+import {Nullable} from "@/other";
 
 export class LocalStorageService {
 
   private projectKey = Container.getValue("sui.projectKey");
 
-  public getItem(key: string): string {
+  public getItem(key: string): Nullable<string> {
     return localStorage.getItem(`${this.projectKey}_${key}`);
   }
 

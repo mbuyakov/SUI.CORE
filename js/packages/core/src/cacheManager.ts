@@ -1,4 +1,4 @@
-import { sleep } from "./other";
+import { sleep, throwIfNull } from "./other";
 
 const WAIT_TIME: number = 100;
 
@@ -83,7 +83,7 @@ export abstract class CacheManager<T, ID = string> {
 
     await this.loadById(id);
 
-    return this.store.get(id);
+    return throwIfNull(this.store.get(id), `Entity with id ${id} not found`);
   }
 
   /**

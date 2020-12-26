@@ -18,7 +18,7 @@ export class ColumnInfo {
   public defaultGrouping: boolean;
   public defaultSorting?: string;
   public defaultVisible: boolean;
-  public dependencies?: ColumnInfoDependence[];
+  public dependencies: ColumnInfoDependence[];
   public filterTypeByFilterTypeId?: IFilterType;
   public foreignColumnInfo?: string[];
   public id: string;
@@ -48,7 +48,7 @@ export class ColumnInfo {
     this.defaultVisible = item.defaultVisible;
     this.defaultSorting = item.defaultSorting;
     this.defaultGrouping = item.defaultGrouping;
-    this.dependencies = item.columnInfoDependencesByColumnInfoId.nodes.length ? item.columnInfoDependencesByColumnInfoId.nodes : null;
+    this.dependencies = item.columnInfoDependencesByColumnInfoId.nodes ?? [];
     this.width = item.width;
     this.wordWrapEnabled = item.wordWrapEnabled;
     this.order = item.order;

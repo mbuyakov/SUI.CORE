@@ -1,5 +1,5 @@
 import {query} from "@/gql";
-import {IObjectWithIndex} from "@/other";
+import {IObjectWithIndex, Nullable} from "@/other";
 import {addQuotesIfString} from "@/stringFormatters";
 
 
@@ -16,7 +16,7 @@ export interface IQueryResult {
 export async function DBUniqueValidator(gqTable: string,
                                         queryFields: IObjectWithIndex,
                                         idFieldName: string = 'id',
-                                        excludeId: string = null): Promise<IQueryResult> {
+                                        excludeId: Nullable<string> = null): Promise<Nullable<IQueryResult>> {
   const fieldsFilter = createFieldsFilter(queryFields, idFieldName, excludeId);
   if (!gqTable || !fieldsFilter || fieldsFilter.length === 0) {
     return null;
@@ -35,7 +35,7 @@ export async function DBUniqueValidator(gqTable: string,
 }
 
 
-function createFieldsFilter(fields: IObjectWithIndex, idFieldName: string, excludeId: string): string {
+function createFieldsFilter(fields: IObjectWithIndex, idFieldName: string, excludeId: Nullable<string>): string {
   const filters = fieldsToFilterStrings(fields, 'equalTo', true);
   if (excludeId && excludeId.length > 0) {
     filters.push(getFilterExpression(idFieldName, 'notEqualTo', excludeId));

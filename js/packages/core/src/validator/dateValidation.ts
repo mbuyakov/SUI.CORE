@@ -54,9 +54,9 @@ export function birthDayValidator(birthday: Moment, deathDate: Nullable<Moment>,
       return AGE_LESS_THAN_18_MSG;
     case age > 150:
       return AGE_GREATER_THAN_150_MSG;
-    case true:
-      return '';
   }
+
+  return '';
 }
 
 export function dateDisabledForBirthday(deathDate: Nullable<Moment>, adultOnly: boolean): (target: Moment) => boolean {
