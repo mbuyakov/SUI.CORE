@@ -1,4 +1,4 @@
-export class Event<T> {
+export class SuiEvent<T> {
   name: string
   payload: T
 

@@ -6,4 +6,5 @@ export class Pair<A, B> {
     this.first = first;
     this.second = second;
   }
+
 }
