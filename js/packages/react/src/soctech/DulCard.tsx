@@ -12,7 +12,7 @@ import {BaseForm, clearFields, IBaseCardRowLayout, IBaseFormItemLayout, IFormFie
 import {DulService, IallDocTypes} from "@/soctech/DulService";
 import {DulTypeSelector} from "@/Inputs";
 import {BASE_FORM_CLASS} from "@/styles";
-import {Observable, ObservableHandler, ObservableHandlerStub} from "@/Observable";
+import {ObservableHandler, ObservableHandlerStub} from "@/Observable";
 import {StringWithError} from "@/utils";
 
 
@@ -69,6 +69,7 @@ export interface IDulCardProps extends IDulCardOptions {
 }
 
 export interface IDulCardState {
+  hasError: boolean,
   initFormProps: BaseFormProps<any>,
   rows: OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseFormItemLayout>>,
 }
@@ -374,13 +375,13 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     return result;
   }
 
-  private baseForm: BaseForm = null;
   private fieldsHandlers: ObservableHandlerStub[] = [];
   private readonly formFields: Map<string, IFormField> = new Map();
 
   public constructor(props: Readonly<IDulCardProps>) {
     super(props);
     this.state = {
+      hasError: false,
       initFormProps: DulCard.getInitDulFormProps(props),
       rows: DulCard.getDulFormRows(props),
     };
@@ -392,13 +393,17 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
         rows: DulCard.getDulFormRows(this.props)
       });
     }
+
     this.updateValueFields(prevProps.value, this.props.value);
+
     if (prevProps.isEdit !== this.props.isEdit || prevProps.uuid !== this.props.uuid) {
       this.setState({initFormProps: DulCard.getInitDulFormProps(this.props)});
     }
 
-    if (!!this.props.onErrorCheck && !!this.baseForm && prevProps.onErrorCheck !== this.props.onErrorCheck) {
-      this.checkFormFieldsError(this.baseForm);
+    const onErrorCheckerChanged = prevProps.onErrorCheck !== this.props.onErrorCheck;
+    const hasErrorChanged = this.state.hasError !== prevState?.hasError;
+    if (!!this.props.onErrorCheck && (onErrorCheckerChanged || hasErrorChanged)) {
+      this.props.onErrorCheck(this.state.hasError);
     }
   }
 
@@ -418,7 +423,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
   }
 
   @autobind
-  private getOnFieldChange(form: BaseForm, fieldName: string): ObservableHandler<any> {
+  private getOnFieldChange(fieldName: string): ObservableHandler<any> {
     return (newValue: any, oldValue?: any): void => {
       if (!!this.props.onChange && !isEqual(newValue, oldValue)) {
         const newDulObject = {...this.props?.value, [fieldName]: newValue};
@@ -428,50 +433,20 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
   }
 
   @autobind
-  private getOnFieldErrorChange(form: BaseForm, fieldName: string): ObservableHandler<any> {
-    return (newValue: any, oldValue?: any): void => {
-      if (!isEqual(newValue, oldValue)) {
-        this.checkFormFieldsError(form);
-      }
-    }
-  }
-
-  @autobind
-  private checkFormFieldsError(form: BaseForm): boolean {
-    if (!!form) {
-      const errors = Object.values(form.getFieldsError())
-        .map((error: Observable<string>): string => error.getValue());
-      const hasError = errors.some(error => !!error);
-      this.props?.onErrorCheck(hasError);
-
-      return hasError;
-    }
-
-    return false;
-  }
-
-  @autobind
   private onInitializedForm(form: BaseForm): void {
-    this.baseForm = form;
-    const hasErrorChecking = !!this.props.onErrorCheck;
-    if (!!this.props.onChange || hasErrorChecking) {
-      this.fieldsHandlers = [];
-      DUL_FIELDS_NAMES.forEach(name => {
-        const field = form.getFormField(name);
-        this.formFields.set(name, field);
-        if (!!this.props.onChange) {
-          this.fieldsHandlers.push(field.value.subscribe(this.getOnFieldChange(form, name)));
-        }
-        if (hasErrorChecking) {
-          this.fieldsHandlers.push(field.error.subscribe(this.getOnFieldErrorChange(form, name)));
-        }
-      });
-    }
+    this.fieldsHandlers = [];
+    DUL_FIELDS_NAMES.forEach(name => {
+      const field = form.getFormField(name);
+      this.formFields.set(name, field);
+      this.fieldsHandlers.push(field.value.subscribe(this.getOnFieldChange(name)));
+    });
+
+    form.subscribeOnHasError((hasError => this.setState({hasError})), true);
   }
 
   @autobind
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private onSubmit(value: IDulFields): Promise<boolean> {
+  private onSubmit(): Promise<boolean> {
     // Stub function
     return Promise.resolve(true);
   }
