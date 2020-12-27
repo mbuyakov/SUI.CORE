@@ -12,7 +12,6 @@ export * from "./types";
 export * from "./typeWrappers";
 export * from "./validator";
 
-export * from "./cacheManager";
 export * from "./const";
 export * from "./math";
 export * from "./tmp";

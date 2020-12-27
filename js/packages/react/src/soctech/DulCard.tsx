@@ -7,7 +7,7 @@ import {isEqual} from "lodash";
 import moment, {Moment} from 'moment';
 import * as React from 'react';
 import {BaseFormProps} from "@/MutableBackendTable";
-import {DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, disableDocDate, formatRawForGraphQL, IObjectWithIndex, OneOrArrayWithNulls} from "@sui/core";
+import {DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, formatRawForGraphQL, IObjectWithIndex, OneOrArrayWithNulls, dateDisabledForIssueDate} from "@sui/core";
 import {BaseForm, clearFields, IBaseCardRowLayout, IBaseFormItemLayout, IFormField, ValuesGetter} from "@/Base";
 import {DulService, IallDocTypes} from "@/soctech/DulService";
 import {DulTypeSelector} from "@/Inputs";
@@ -338,7 +338,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     const docType = DulCard.getDocTypeById(docTypeId);
     return docTypeId
       ? {
-        disabledDate: ((current: Moment): boolean => disableDocDate(docType.docCode, birthday, current))
+        disabledDate: dateDisabledForIssueDate(docType.docCode, moment(birthday))
       }
       : {disabled: true};
   }

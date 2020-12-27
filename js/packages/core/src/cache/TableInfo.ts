@@ -1,12 +1,10 @@
 import autobind from "autobind-decorator";
-
-import { ICacheEntry } from '@/cacheManager';
 import { getDataByKey } from '@/dataKey';
 import { GqlCacheManager, query } from '@/gql';
 import { Logger } from "@/ioc/utils";
 import {asyncMap, isNotNull} from '@/other';
 import { IColumnInfo, IGraphQLConnection, ITableInfo } from '@/types';
-
+import { ICacheEntry } from './cacheManager';
 import {ColumnInfo, ColumnInfoManager} from "./ColumnInfo";
 import {Name} from "./Name";
 

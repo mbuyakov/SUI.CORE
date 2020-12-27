@@ -10,7 +10,7 @@ fs.readdirSync(".").forEach(packageName => {
 function recursiveProcess(path) {
   console.log(`Processing path ${path}`);
 
-  if (path === "react/src/SuiDatePicker" || path === "all/src") {
+  if (path === "react/src/SuiDatePicker" || path === "all/src" || path.endsWith("styles")) {
     console.warn(`Ignore ${path}`);
     return;
   }

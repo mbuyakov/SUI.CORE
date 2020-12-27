@@ -1,4 +1,4 @@
-import { sleep, throwIfNull } from "./other";
+import { sleep, throwIfNull } from "../other";
 
 const WAIT_TIME: number = 100;
 

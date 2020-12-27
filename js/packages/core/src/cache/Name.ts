@@ -1,6 +1,6 @@
-import { ICacheEntry } from '@/cacheManager';
 import { GqlCacheManager } from '@/gql';
 import { IName } from '@/types';
+import { ICacheEntry } from './cacheManager';
 
 export class Name {
   public description?: string;
