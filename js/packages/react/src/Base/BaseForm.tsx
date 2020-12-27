@@ -5,7 +5,7 @@ import isEqual from 'lodash/isEqual';
 import moment from 'moment';
 import * as React from 'react';
 
-import {OneOrArray, OneOrArrayWithNulls, wrapInArray, IObjectWithIndex} from '@sui/core';
+import {OneOrArray, wrapInArray, IObjectWithIndex} from '@sui/core';
 import {errorNotification} from '../drawUtils';
 import {Observable, ObservableHandlerStub} from '../Observable';
 import {BASE_FORM_CLASS} from '../styles';
@@ -138,6 +138,11 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
 
       return prev;
     }, {} as IObjectWithIndex);
+  }
+
+  @autobind
+  public subscribeOnHasError(callback: (newValue: boolean, oldValue: boolean) => void, triggerOnSubscribe: boolean = false): void {
+    this.registerObservableHandler(this.hasErrors.subscribe(callback, triggerOnSubscribe));
   }
 
   @autobind
