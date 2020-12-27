@@ -56,7 +56,7 @@ export class ReportElement extends React.Component<IReportElement, {
           <ReactToPrint
             trigger={() => (<Button icon={<PrinterOutlined/>}/>)}
             content={() => this.printContentRef.current}
-            onBeforeGetContent={async () => new Promise(resolve => this.setState({printMode: true}, resolve))}
+            onBeforeGetContent={async () => new Promise<void>(resolve => this.setState({printMode: true}, resolve))}
             onAfterPrint={() => this.setState({printMode: false})}
           />
         ) : undefined}

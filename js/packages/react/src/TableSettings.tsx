@@ -276,7 +276,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           getSUISettings().routerPushFn(getLinkForTable(data.tableInfoById.tableName, 'card', value));
 
                                           // Stub
-                                          return new Promise((resolve): void => resolve());
+                                          return new Promise<void>((resolve): void => resolve());
                                         }}
                                       />
                                     }
@@ -466,7 +466,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       defaultChecked={value.every(col => col.visible)}
                                       popconfirmSettings={true}
                                       promise={(newValue: boolean): Promise<any> => {
-                                        let promise = new Promise<any>((resolve): void => resolve());
+                                        let promise = new Promise<void>((resolve): void => resolve());
                                         value.map(col => {
                                           promise = promise.then(_ => this.updateColField(col.id, 'visible', newValue, false));
                                         });
@@ -664,7 +664,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       defaultChecked={value.every(col => col.defaultVisible)}
                                       popconfirmSettings={true}
                                       promise={(newValue: boolean): Promise<any> => {
-                                        let promise = new Promise<any>((resolve): void => resolve());
+                                        let promise = new Promise<void>((resolve): void => resolve());
                                         value.map(col => {
                                           promise = promise.then(_ => this.updateColField(col.id, 'defaultVisible', newValue, false));
                                         });
@@ -897,7 +897,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
   private onIsAuditedChangeFn(value: boolean): Promise<any> {
     const mutationName = value ? 'startAuditTable' : 'stopAuditTable';
 
-    return new Promise((resolve, reject): void => {
+    return new Promise<void>((resolve, reject): void => {
       mutate(`mutation {
         ${mutationName}(input: {tableInfoId: "${this.state.tableInfoById.id}"}) {
           clientMutationId
@@ -914,7 +914,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
 
   @autobind
   private onNameChanged(newId: string): Promise<any> {
-    return new Promise((resolve, reject): void => {
+    return new Promise<void>((resolve, reject): void => {
       mutate(`mutation {
         updateTableInfoById(input: {id: "${this.props.id}", tableInfoPatch: {nameId: ${newId ? `"${newId}"` : null}}}) {
           clientMutationId
@@ -930,7 +930,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
 
   @autobind
   private updateColField(id: string, field: keyof IColumnInfo, value: any, sleepAtEnd: boolean = true, onlyState: boolean = false, needUpdateState: boolean = true): Promise<any> {
-    const updateState = new Promise((resolve): void => {
+    const updateState = new Promise<void>((resolve): void => {
       const tableInfoById = this.state.tableInfoById;
       const colIndex = tableInfoById.columnInfosByTableInfoId.nodes.findIndex(col => col.id === id);
       (tableInfoById.columnInfosByTableInfoId.nodes[colIndex] as IObjectWithIndex)[field] = value;

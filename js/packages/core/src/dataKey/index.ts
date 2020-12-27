@@ -86,7 +86,7 @@ export function dataKeysToDataTree(dataKeys: DataKey[], rootKey: string = ""): D
 function appendKey(node: DataKeyNode, key: string[] | string): void {
     if (Array.isArray(key)) {
       if (key.length === 1) {
-key = key[0];
+        key = key[0];
       }
       if (key.length === 0) {
         return;

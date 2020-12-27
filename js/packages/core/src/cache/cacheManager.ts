@@ -143,13 +143,13 @@ const id = this.subscribersCounter++;
    * Load all entries to cache
    * Must be implemented in CacheManager realisation
    */
-  protected abstract async __loadAll(): Promise<Array<ICacheEntry<T, ID>>>;
+  protected abstract __loadAll(): Promise<Array<ICacheEntry<T, ID>>>;
 
   /**
    * Load entry to cache
    * Must be implemented in CacheManager realisation
    */
-  protected abstract async __loadById(id: ID): Promise<T>;
+  protected abstract __loadById(id: ID): Promise<T>;
 
   /**
    * Set value and notify subscribers

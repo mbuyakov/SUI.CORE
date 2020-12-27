@@ -21,7 +21,7 @@ export abstract class TableRenderParamsPlugin<T> {
     this.hidden = hidden;
   }
 
-  public abstract async baseTableColGenerator(
+  public abstract baseTableColGenerator(
     result: IBaseTableColLayout,
     renderColumnInfo: ColumnInfo | null,
     props: IColumnInfoToBaseTableColProps,

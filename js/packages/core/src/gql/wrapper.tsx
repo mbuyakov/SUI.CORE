@@ -15,12 +15,12 @@ async function rejectOnError<T>(promise: Promise<ApolloQueryResult<T> | FetchRes
       promise
         .then(value => {
           if (value.errors) {
-value.errors.forEach((error: any) => {
+            value.errors.forEach((error: any) => {
               console.error('PostGraphile error', error);
             });
             reject(value.errors[0].message);
           } else {
-            resolve(value.data === null ? undefined : value.data);
+            resolve((value.data === null ? undefined : value.data) as unknown as T);
           }
         })
         .catch(reject);
