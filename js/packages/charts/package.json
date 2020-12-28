@@ -11,12 +11,9 @@
     "*.less"
   ],
   "scripts": {
-    "lint": "cross-env ROOT_DIR=src sui-linter",
-    "lint-fix": "cross-env ROOT_DIR=src FIX=1 sui-linter",
-    "lint-watch": "cross-env ROOT_DIR=src sui-linter --watch",
-    "lint-timing": "cross-env TIMING=1 ROOT_DIR=src sui-linter",
-    "build": "cd ../.. && cross-env PACKAGE=charts father-build && cross-env PACKAGE=charts node ./fix-babel-warning.js && cd ./packages/charts && npx tsc-alias -p tsconfig.json",
-    "ci": "run-s lint build"
+    "lint": "node ../../lcm.js lint",
+    "build": "node ../../lcm.js build",
+    "ci": "node ../../lcm.js ci"
   },
   "devDependencies": {
     "@sui/linter": "8.0.0"
