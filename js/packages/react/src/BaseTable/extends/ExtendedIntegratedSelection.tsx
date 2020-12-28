@@ -41,7 +41,7 @@ const pluginDependencies = [
 ];
 
 // eslint-disable-next-line react/prefer-stateless-function
-class IntegratedSelectionBase extends React.PureComponent<IExtendedIntegratedSelectionProps> {
+class ExtendedIntegratedSelectionBase extends React.PureComponent<IExtendedIntegratedSelectionProps> {
   render() {
     return (
       <Plugin
@@ -60,4 +60,4 @@ class IntegratedSelectionBase extends React.PureComponent<IExtendedIntegratedSel
 }
 
 /** A plugin that performs built-in selection. */
-export const IntegratedSelection: React.ComponentType<IExtendedIntegratedSelectionProps> = IntegratedSelectionBase;
+export const ExtendedIntegratedSelection: React.ComponentType<IExtendedIntegratedSelectionProps> = ExtendedIntegratedSelectionBase;

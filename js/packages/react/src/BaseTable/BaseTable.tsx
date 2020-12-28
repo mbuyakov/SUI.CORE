@@ -1,4 +1,4 @@
-import {ColumnChooserContainer, CustomPagingPanelContainer, CustomToggleCell, DoubleScrollbar, EmptyMessageComponent, ExportPlugin, GroupSummaryRow, IntegratedSelection, TableNoDataCell, TableNoDataCellSmall, UserSettingsPlugin, UserSettingsSupportPlugin, WarningPlugin} from "@/BaseTable/extends";
+import {ColumnChooserContainer, CustomPagingPanelContainer, CustomToggleCell, DoubleScrollbar, EmptyMessageComponent, ExportPlugin, ExtendedIntegratedSelection, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, UserSettingsPlugin, UserSettingsSupportPlugin, WarningPlugin} from "@/BaseTable/extends";
 import {BASE_TABLE, BASE_TABLE_NO_PAGINATION, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '@/styles';
 import {SuiThemeContext} from '@/themes';
 import {CheckOutlined, CloseOutlined, QuestionOutlined} from '@ant-design/icons';
@@ -371,7 +371,7 @@ export class BaseTable<TSelection = defaultSelection>
                     ? <CustomPaging totalCount={this.props.totalCount}/>
                     : <IntegratedPaging/>
                 )}
-                {(selectionEnabled || highlightEnabled) && (<IntegratedSelection selectionFilter={this.props.selectionFilter}/>)}
+                {(selectionEnabled || highlightEnabled) && (<ExtendedIntegratedSelection selectionFilter={this.props.selectionFilter}/>)}
                 <DragDropProvider/>
                 {virtual
                   ? (
