@@ -11,7 +11,7 @@
     "tsconfig-common.json"
   ],
   "scripts": {
-    "build": "cd ../.. && cross-env PACKAGE=all father-build && cd ./packages/all && npx tsc-alias -p tsconfig.json",
+    "build": "cd ../.. && cross-env PACKAGE=all father-build && cross-env PACKAGE=all node ./fix-babel-warning.js && cd ./packages/all && npx tsc-alias -p tsconfig.json",
     "ci": "run-s build"
   },
   "dependencies": {

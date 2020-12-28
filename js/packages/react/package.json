@@ -16,7 +16,7 @@
     "lint-fix": "cross-env ROOT_DIR=src FIX=1 sui-linter",
     "lint-watch": "cross-env ROOT_DIR=src sui-linter --watch",
     "lint-timing": "cross-env TIMING=1 ROOT_DIR=src sui-linter",
-    "build": "cd ../.. && cross-env PACKAGE=react father-build && cd ./packages/react && npx tsc-alias -p tsconfig.json",
+    "build": "cd ../.. && cross-env PACKAGE=react father-build && cross-env PACKAGE=react node ./fix-babel-warning.js && cd ./packages/react && npx tsc-alias -p tsconfig.json",
     "ci": "run-s lint build"
   },
   "peerDependencies": {
