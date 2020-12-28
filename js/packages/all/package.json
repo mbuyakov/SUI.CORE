@@ -11,8 +11,9 @@
     "tsconfig-common.json"
   ],
   "scripts": {
-    "build": "cd ../.. && cross-env PACKAGE=all father-build && cd ./packages/all && npx tsc-alias -p tsconfig.json",
-    "ci": "run-s build"
+    "lint": "node ../../lcm.js lint",
+    "build": "node ../../lcm.js build",
+    "ci": "node ../../lcm.js ci"
   },
   "dependencies": {
     "@sui/charts": "9.0.0",

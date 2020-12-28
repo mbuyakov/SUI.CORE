@@ -7,9 +7,10 @@
     "es"
   ],
   "sideEffects": false,
-  "scripts": {    "lint": "sui-linter",
-    "build": "cd ../.. && cross-env PACKAGE=sentry father-build && cd ./packages/sentry && npx tsc-alias -p tsconfig.json",
-    "ci": "run-s lint build"
+  "scripts": {
+    "lint": "node ../../lcm.js lint",
+    "build": "node ../../lcm.js build",
+    "ci": "node ../../lcm.js ci"
   },
   "dependencies": {
     "@sentry/browser": "^5.27.1",

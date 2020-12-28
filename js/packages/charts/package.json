@@ -10,9 +10,10 @@
   "sideEffects": [
     "*.less"
   ],
-  "scripts": {    "lint": "sui-linter",
-    "build": "cd ../.. && cross-env PACKAGE=charts father-build && cd ./packages/charts && npx tsc-alias -p tsconfig.json",
-    "ci": "run-s lint build"
+  "scripts": {
+    "lint": "node ../../lcm.js lint",
+    "build": "node ../../lcm.js build",
+    "ci": "node ../../lcm.js ci"
   },
   "dependencies": {
     "@amcharts/amcharts4": "4.10.15",

@@ -10,11 +10,9 @@
     "magic-deps.json"
   ],
   "scripts": {
-    "test": "jest",
-    "test-watch": "jest --watch",
-    "lint": "sui-linter",
-    "build": "cd ../.. && cross-env PACKAGE=react father-build && cd ./packages/react && npx tsc-alias -p tsconfig.json",
-    "ci": "run-s lint build"
+    "lint": "node ../../lcm.js lint",
+    "build": "node ../../lcm.js build",
+    "ci": "node ../../lcm.js ci"
   },
   "peerDependencies": {
     "@ant-design/icons": "4.6.2",
