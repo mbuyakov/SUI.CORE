@@ -18,7 +18,7 @@ const rowsWithAvailableToSelectComputed = ({rows, getRowId, isGroupRow}: Getters
   }
 
   if (selectionFilter) {
-    dataRows = dataRows.filter(selectionFilter);
+    dataRows = dataRows.filter(row => !selectionFilter(row));
   }
 
   // Костыль для отображения селекта выбора
