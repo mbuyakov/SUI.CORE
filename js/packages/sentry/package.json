@@ -1,6 +1,6 @@
 {
   "name": "@sui/sentry",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "module": "es/index.js",
   "typings": "es/index.d.ts",
   "files": [
@@ -13,7 +13,7 @@
     "ci": "node ../../lcm.js"
   },
   "devDependencies": {
-    "@sui/linter": "8.0.0"
+    "@sui/linter": "9.0.0"
   },
   "dependencies": {
     "@sentry/browser": "^5.27.1",

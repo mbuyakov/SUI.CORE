@@ -1,6 +1,6 @@
 {
   "name": "@sui/linter",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "files": [
     "bin",
     ".eslintrc.js",
@@ -11,7 +11,7 @@
     "sui-linter": "bin/sui-linter.js"
   },
   "dependencies": {
-    "@sui/test": "8.0.0",
+    "@sui/test": "9.0.0",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
     "eslint": "^6.8.0",

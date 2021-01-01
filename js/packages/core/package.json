@@ -1,6 +1,6 @@
 {
   "name": "@sui/core",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "module": "es/index.js",
   "typings": "es/index.d.ts",
   "files": [
@@ -14,7 +14,7 @@
     "ci": "node ../../lcm.js"
   },
   "devDependencies": {
-    "@sui/linter": "8.0.0",
+    "@sui/linter": "9.0.0",
     "@types/jsonpack": "^1.1.0",
     "@types/lodash": "^4.14.149",
     "@types/node": "^13.11.1",
