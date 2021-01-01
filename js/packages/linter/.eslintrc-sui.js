@@ -23,7 +23,8 @@ module.exports = {
   ],
   "extends": [
     "plugin:react/recommended",
-    "airbnb",
+    "eslint-config-airbnb-base",
+    "airbnb/rules/react",
 //    "plugin:prettier/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
@@ -154,7 +155,6 @@ module.exports = {
     "semi-spacing": [0],
     "@typescript-eslint/type-annotation-spacing": [0],
     "new-cap": [0],
-    "jsx-a11y/control-has-associated-label": [0],
     "no-case-declarations": [0],
     "no-eval": [0],
     "no-control-regex": [0],

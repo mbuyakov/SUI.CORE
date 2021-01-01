@@ -1,4 +1,4 @@
-const origin = require("@sui/linter/.eslintrc.js");
+const origin = require("@sui/linter/.eslintrc-sui.js");
 
 module.exports = {
   ...origin
