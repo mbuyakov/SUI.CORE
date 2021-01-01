@@ -13,9 +13,9 @@ const chalk = require(`${__dirname}/../node_modules/chalk`);
     console.log(`Has EsLint config: ${curPackage == "GLOBAL" ? "not applicable" : packageHasEslintConfig(curPackage)}`);
 
     if (curPackage !== "GLOBAL") {
-      await runCommandForPackage(command, curPackage, process.argv[3]);
+      await runCommandForPackage(command as any, curPackage, process.argv[3]);
     } else {
-      await runGlobalCommand(command, process.argv[3]);
+      await runGlobalCommand(command as any, process.argv[3]);
     }
     console.log("Done!");
   } catch (e) {

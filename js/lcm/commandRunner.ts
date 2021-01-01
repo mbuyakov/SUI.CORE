@@ -11,9 +11,26 @@ import {globalCanary} from "./commands/global/globalCanary";
 import {globalPublish} from "./commands/global/globalPublish";
 const chalk = require(`${__dirname}/../node_modules/chalk`);
 
+export type Merge<T, K> = Pick<T, Exclude<keyof T, keyof K>> & K;
+
+type CommandArg = {
+  ci: never,
+  lint: never,
+  build: never,
+  bkpPackageJson: never,
+  restorePackageJson: never,
+  updatePackageVersion: string,
+  publish: string,
+}
+
+type GlobalCommandArg = Merge<CommandArg, {
+  canary: never,
+  publish: string,
+}>
+
 const alreadyProcessedPackages: Map<string, Array<string>> = new Map<string, Array<string>>();
 
-export async function runCommandForPackage(command: string, packageName: string, argument: string | null = null): Promise<void> {
+export async function runCommandForPackage<T extends keyof CommandArg>(command: T, packageName: string, argument: CommandArg[T] = null): Promise<void> {
   try {
     console.log(`Start command ${chalk.cyan(command)} for package ${chalk.cyan(packageName)}${argument ? ` with arg ${argument}` : ""}`);
     switch (command) {
@@ -51,7 +68,7 @@ export async function runCommandForPackage(command: string, packageName: string,
   }
 }
 
-export async function runCommandForPackageWithDep(command: string, packageName: string): Promise<void> {
+export async function runCommandForPackageWithDep<T extends keyof CommandArg>(command: T, packageName: string): Promise<void> {
   console.log(chalk.grey(`Processing package ${packageName}`));
   if (!alreadyProcessedPackages.get(command)) {
     alreadyProcessedPackages.set(command, []);
@@ -74,7 +91,7 @@ export async function runCommandForPackageWithDep(command: string, packageName: 
   alreadyProcessedPackages.get(command).push(packageName);
 }
 
-export async function runCommandForAllPackages(command: string) {
+export async function runCommandForAllPackages<T extends keyof CommandArg>(command: T) {
   const packages = getAllPackagesWithCommand(command);
   if (!packages.length) {
     throw new Error(`Command ${command} not found in any packages`);
@@ -85,7 +102,7 @@ export async function runCommandForAllPackages(command: string) {
   }
 }
 
-export async function runGlobalCommand(command: string, argument: string | null = null): Promise<void> {
+export async function runGlobalCommand<T extends keyof GlobalCommandArg>(command: T, argument: GlobalCommandArg[T] = null): Promise<void> {
   try {
     console.log(`Start global command ${chalk.cyan(command)}${argument ? ` with arg ${argument}` : ""}`);
     switch (command) {
@@ -96,7 +113,7 @@ export async function runGlobalCommand(command: string, argument: string | null 
         await globalPublish(argument);
         break;
       default:
-        await runCommandForAllPackages(command);
+        await runCommandForAllPackages(command as keyof CommandArg);
     }
     console.log(chalk.green(`Global command ${chalk.cyan(command)} ended successfully`));
   } catch (e) {
