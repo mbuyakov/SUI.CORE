@@ -73,7 +73,7 @@ pipeline {
               yarn
               yarn bootstrap
               yarn ci
-              node ./publish.js 9.0.${BUILD_NUMBER}-${BRANCH_NAME}
+              yarn lcm publish 9.0.${BUILD_NUMBER}-${BRANCH_NAME}
             """
           }
         }

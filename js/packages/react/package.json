@@ -12,9 +12,9 @@
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch",
-    "lint": "node ../../lcm.js lint",
-    "build": "node ../../lcm.js build",
-    "ci": "node ../../lcm.js ci"
+    "lint": "node ../../lcm.js",
+    "build": "node ../../lcm.js",
+    "ci": "node ../../lcm.js"
   },
   "peerDependencies": {
     "@ant-design/icons": "4.2.2",
