@@ -1,9 +1,9 @@
-import {ColumnChooserContainer, CustomPagingPanelContainer, CustomToggleCell, DoubleScrollbar, EmptyMessageComponent, ExportPlugin, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, UserSettingsPlugin, UserSettingsSupportPlugin, WarningPlugin} from "@/BaseTable/extends";
+import {ColumnChooserContainer, CustomPagingPanelContainer, CustomToggleCell, DoubleScrollbar, EmptyMessageComponent, ExportPlugin, ExtendedIntegratedSelection, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, UserSettingsPlugin, UserSettingsSupportPlugin, WarningPlugin} from "@/BaseTable/extends";
 import {BASE_TABLE, BASE_TABLE_NO_PAGINATION, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '@/styles';
 import {SuiThemeContext} from '@/themes';
 import {CheckOutlined, CloseOutlined, QuestionOutlined} from '@ant-design/icons';
 import {Getter, Getters} from '@devexpress/dx-react-core';
-import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSelection, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
+import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
 import {ColumnChooser, DragDropProvider, Grid, GroupingPanel, PagingPanel, Table, TableBandHeader, TableColumnReordering, TableColumnResizing, TableColumnVisibility, TableFilterRow, TableGroupRow, TableHeaderRow, TableRowDetail, TableSelection, Toolbar, VirtualTable} from '@devexpress/dx-react-grid-material-ui';
 import {TableRow} from '@material-ui/core';
 import {ThemeProvider} from '@material-ui/core/styles';
@@ -98,9 +98,9 @@ export class BaseTable<TSelection = defaultSelection>
   );
 
   private SelectionCellComponent = (props: any): JSX.Element => (
-    (this.props.selectionFilter && this.props.selectionFilter(props.row))
-      ? <Cell {...props} />
-      : <SelectionCell {...props} />
+    (props.row.__SUI_available_to_select)
+      ? <SelectionCell {...props} />
+      : <Cell {...props} />
   );
 
   public constructor(props: any) {
@@ -371,7 +371,7 @@ export class BaseTable<TSelection = defaultSelection>
                     ? <CustomPaging totalCount={this.props.totalCount}/>
                     : <IntegratedPaging/>
                 )}
-                {(selectionEnabled || highlightEnabled) && <IntegratedSelection/>}
+                {(selectionEnabled || highlightEnabled) && (<ExtendedIntegratedSelection selectionFilter={this.props.selectionFilter}/>)}
                 <DragDropProvider/>
                 {virtual
                   ? (
@@ -421,7 +421,7 @@ export class BaseTable<TSelection = defaultSelection>
                     selectByRowClick={highlightEnabled}
                     showSelectionColumn={!highlightEnabled}
                     cellComponent={this.SelectionCellComponent}
-                    showSelectAll={!this.props.selectionFilter && !this.props.singleSelection && !highlightEnabled}
+                    showSelectAll={!this.props.singleSelection && !highlightEnabled}
                   />
                 )}
                 {groupingEnabled && <TableGroupRow contentComponent={tableGroupRowContentComponent}/>}

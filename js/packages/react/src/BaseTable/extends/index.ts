@@ -4,6 +4,7 @@ export * from "./CustomToggleCell";
 export * from "./DoubleScrollbar";
 export * from "./EmptyMessageComponent";
 export * from "./ExportPlugin";
+export * from "./ExtendedIntegratedSelection";
 export * from "./GroupSummaryRow";
 export * from "./TableNoDataCell";
 export * from "./ToolbarBase";
