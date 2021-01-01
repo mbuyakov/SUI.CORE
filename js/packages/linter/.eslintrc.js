@@ -171,6 +171,8 @@ module.exports = {
           "@ant-design/icons/*",
           "xlsx", // Use async kostyl - @sui/charts
           "@amcharts/amcharts4", // Use async kostyl - @sui/charts
+          "@sui/all", // Don't use @sui/all in SUI repo
+          "@sui/*/*" // Import only from root of package
         ]
       }
     ]
