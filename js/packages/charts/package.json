@@ -11,9 +11,9 @@
     "*.less"
   ],
   "scripts": {
-    "lint": "node ../../lcm.js lint",
-    "build": "node ../../lcm.js build",
-    "ci": "node ../../lcm.js ci"
+    "lint": "node ../../lcm.js",
+    "build": "node ../../lcm.js",
+    "ci": "node ../../lcm.js"
   },
   "dependencies": {
     "@amcharts/amcharts4": "4.10.15",

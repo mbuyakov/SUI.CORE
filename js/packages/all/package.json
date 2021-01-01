@@ -11,9 +11,8 @@
     "tsconfig-common.json"
   ],
   "scripts": {
-    "lint": "node ../../lcm.js lint",
-    "build": "node ../../lcm.js build",
-    "ci": "node ../../lcm.js ci"
+    "build": "node ../../lcm.js",
+    "ci": "node ../../lcm.js"
   },
   "dependencies": {
     "@sui/charts": "9.0.0",

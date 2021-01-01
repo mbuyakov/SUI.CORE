@@ -103,7 +103,7 @@ pipeline {
                 sh """
                   npx npm-cli-adduser
                   cd js
-                  node ./publish.js 9.0.${BUILD_NUMBER}${SUFFIX}
+                  yarn lcm 9.0.${BUILD_NUMBER}${SUFFIX}
                 """
               }
             }
