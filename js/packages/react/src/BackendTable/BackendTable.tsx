@@ -12,7 +12,8 @@ import moment from 'moment';
 import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {wrapInArray, getSUISettings, DEFAULT_PAGE_SIZES, generateCreate, IObjectWithIndex, ColumnInfo, defaultIfNotBoolean, TableInfo, getDataByKey, camelCase, ColumnInfoManager, TableInfoManager, IUserSetting, query, formatRawForGraphQL, mutate, asyncMap, toMap} from "@sui/core";
-import {LazyStubNoDataCell} from "@/BackendTable/LazyStubNoDataCell";
+import {LazyStubNoDataCell, LazyStubNoDataCellSmall} from "@/BackendTable/LazyStubNoDataCell";
+import {LoadingNoDataCell, LoadingNoDataCellSmall} from "@/BackendTable/LoadingNoDataCell";
 import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
 import {exportToXlsx} from "../BaseTable/utils";
 
@@ -283,7 +284,8 @@ export class BackendTable<TSelection = defaultSelection>
           groupingEnabled={this.state.lazyStub ? false : this.props.groupingEnabled}
           sortingEnabled={this.state.lazyStub ? false : this.props.sortingEnabled}
           paginationEnabled={this.state.lazyStub ? false : this.props.paginationEnabled}
-          noDataCellComponent={this.state.lazyStub ? LazyStubNoDataCell(this.showAll) : undefined}
+          noDataCellComponent={this.state.loading ? LoadingNoDataCell : this.state.lazyStub ? LazyStubNoDataCell(this.showAll) : undefined}
+          noDataCellComponentSmall={this.state.loading ? LoadingNoDataCellSmall : this.state.lazyStub ? LazyStubNoDataCellSmall(this.showAll) : undefined}
           defaultFilters={undefined}
           cols={this.state.cols || []}
           rows={this.state.lazyStub ? [] : this.state.data}

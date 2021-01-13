@@ -12,3 +12,16 @@ export const LazyStubNoDataCell = (showAll: () => void) => ({colSpan}: { colSpan
   </TableCell>
 );
 
+export const LazyStubNoDataCellSmall = (showAll: () => void) => ({colSpan}: { colSpan?: number | undefined }): JSX.Element => (
+  <TableCell
+    style={{
+      paddingLeft: 64
+    }}
+    className={TABLE_NO_DATA_CELL_SMALL}
+    colSpan={colSpan}
+  >
+    <div>
+      <span>Заполните фильтры или <a onClick={showAll}>нажмите сюда</a> для показа всех записей в таблице</span>
+    </div>
+  </TableCell>
+);

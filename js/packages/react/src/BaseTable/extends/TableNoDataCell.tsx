@@ -8,7 +8,7 @@ export const TableNoDataCell = ({colSpan}: { colSpan?: number | undefined }): JS
     style={{height: 180}}
     colSpan={colSpan}
   >
-    <Empty style={{width: '100%', position: 'absolute', marginTop: -65}}/>
+    <Empty style={{width: '100%', position: 'absolute', marginTop: -65}} description="Нет данных" />
   </TableCell>
 );
 
