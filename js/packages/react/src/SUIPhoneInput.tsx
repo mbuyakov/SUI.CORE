@@ -3,7 +3,7 @@ import InputMask from "antd-mask-input/build/main/lib/inputmask-core";
 import {MaskedInputProps} from 'antd-mask-input/build/main/lib/MaskedInput';
 import autobind from 'autobind-decorator';
 import React from 'react';
-import {NO_DATA_TEXT, PHONE_MASK_LENGTH} from "@sui/all";
+import {NO_DATA_TEXT, PHONE_MASK_LENGTH} from "@sui/core";
 
 const PHONE_MASKS = [
   "+1(111)111-11-11",
