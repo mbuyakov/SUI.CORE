@@ -2,15 +2,15 @@ import {EventDispatcher} from "@/event/EventDispatcher";
 import {Nullable} from "@/other";
 import {SuiEvent} from "@/event/SuiEvent";
 
-export type EventConsumer<T> = (event: SuiEvent<T>) => never;
+export type EventConsumer<EVENT_NAME extends string, T> = (event: SuiEvent<EVENT_NAME, T>) => void;
 
-export type EventFilter<T> = (event: SuiEvent<T>) => boolean;
+export type EventFilter<EVENT_NAME extends string, T> = (event: SuiEvent<EVENT_NAME, T>) => boolean;
 
-export class EventConsumerHandler {
-  public eventDispatcher: Nullable<EventDispatcher>;
+export class EventConsumerHandler<EVENT_NAME extends string = string> {
+  public eventDispatcher: Nullable<EventDispatcher<EVENT_NAME>>;
   public id: Nullable<string>;
 
-  constructor(eventDispatcher: EventDispatcher, id: string) {
+  constructor(eventDispatcher: EventDispatcher<EVENT_NAME>, id: string) {
     this.eventDispatcher = eventDispatcher;
     this.id = id;
   }

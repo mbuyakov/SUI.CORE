@@ -21,3 +21,6 @@ export type IGqlFilter<TTable> = ISimpleGqlFilter<TTable> & {
   or?: Array<IGqlFilter<TTable>>;
   not?: IGqlFilter<TTable>
 }
+
+export type PossibleId = string | number;
+export type PossibleValue = string | number | boolean;

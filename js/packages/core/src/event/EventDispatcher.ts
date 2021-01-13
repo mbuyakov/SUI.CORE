@@ -3,13 +3,13 @@ import {Nullable} from "@/other";
 import {EventConsumer, EventConsumerHandler, EventFilter} from "./utils";
 import { SuiEvent } from './SuiEvent';
 
-class EnhancedEventConsumerHandler extends EventConsumerHandler {
-  public eventName: Nullable<string>;
-  public eventFilter: Nullable<EventFilter<never>>;
-  public consumer: EventConsumer<never>;
+class EnhancedEventConsumerHandler<EVENT_NAME extends string, T> extends EventConsumerHandler<EVENT_NAME> {
+  public eventName: Nullable<EVENT_NAME>;
+  public eventFilter: Nullable<EventFilter<EVENT_NAME, T>>;
+  public consumer: EventConsumer<EVENT_NAME, T>;
 
 
-  constructor(eventDispatcher: EventDispatcher, id: string, eventName: Nullable<string>, eventFilter: Nullable<(event: SuiEvent<never>) => boolean>, consumer: EventConsumer<never>) {
+  constructor(eventDispatcher: EventDispatcher<EVENT_NAME>, id: string, eventName: Nullable<EVENT_NAME>, eventFilter: Nullable<EventFilter<EVENT_NAME, T>>, consumer: EventConsumer<EVENT_NAME, T>) {
     super(eventDispatcher, id);
     this.eventName = eventName;
     this.eventFilter = eventFilter;
@@ -17,8 +17,8 @@ class EnhancedEventConsumerHandler extends EventConsumerHandler {
   }
 }
 
-export class EventDispatcher {
-  private handlers: Map<string, EnhancedEventConsumerHandler> = new Map();
+export class EventDispatcher<EVENT_NAME extends string = string> {
+  private handlers: Map<string, EnhancedEventConsumerHandler<EVENT_NAME, unknown>> = new Map();
 
   public unsubscribeById(id: string): void {
     this.handlers.delete(id);
@@ -33,7 +33,7 @@ export class EventDispatcher {
     this.handlers.clear();
   }
 
-  public dispatch(event: SuiEvent<never>): void {
+  public dispatch(event: SuiEvent<EVENT_NAME, unknown>): void {
     [...this.handlers.values()].forEach(handler => {
       if (
         (handler.eventName && handler.eventName == event.name) ||
@@ -44,13 +44,13 @@ export class EventDispatcher {
     })
   }
 
-  public subscribe<T = never>(eventNameOrFilter: string | EventFilter<T>, consumer: EventConsumer<T>): EventConsumerHandler {
+  public subscribe<T = never>(eventNameOrFilter: EVENT_NAME | EventFilter<EVENT_NAME, T>, consumer: EventConsumer<EVENT_NAME, T>): EventConsumerHandler<EVENT_NAME> {
     const id = uuidv4();
     const eventName = typeof eventNameOrFilter === "string" ? eventNameOrFilter : null;
     const eventFilter = typeof eventNameOrFilter !== "string" ? eventNameOrFilter : null;
 
     const handler = new EnhancedEventConsumerHandler(this, id, eventName, eventFilter, consumer);
-    this.handlers.set(id, handler);
+    this.handlers.set(id, handler as EnhancedEventConsumerHandler<EVENT_NAME, unknown>);
 
     return handler;
   }

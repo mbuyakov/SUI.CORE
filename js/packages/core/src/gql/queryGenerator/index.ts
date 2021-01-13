@@ -1,10 +1,7 @@
 import {IObjectWithIndex, Nullable} from "@/other";
-import {addQuotesIfString, camelCase, capitalize, formatRawForGraphQL, lineFeedScreening} from "@/stringFormatters";
-import {IGqlFilter} from "../types";
+import {addQuotesIfString, camelCase, capitalize, formatRawForGraphQL} from "@/stringFormatters";
+import {IGqlFilter, PossibleId, PossibleValue} from "../types";
 import { mutate, query } from '../wrapper';
-
-export type PossibleId = string | number;
-export type PossibleValue = string | number | boolean;
 
 export const ILLEGAL_QUERY_SYMBOLS = /(?<!\\)["']/;
 

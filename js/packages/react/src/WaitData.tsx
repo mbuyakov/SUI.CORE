@@ -11,7 +11,7 @@ import {SPIN_WRAPPER} from './styles';
 const SPIN_DELAY = 300;
 
 
-export type ChildrenType = JSX.Element[] | JSX.Element | string;
+export type ChildrenType = React.ReactNode;
 export type FunChildrenType<T> = (data: T, updateData?: () => void) => ChildrenType;
 
 export interface IWaitDataProps<T> {
@@ -48,11 +48,11 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
     this.updateData();
   }
 
-  public render(): JSX.Element {
+  public render(): ChildrenType {
     // console.log(this);
     const data = (this.state && this.state.data) || this.props.data;
     // @ts-ignore
-    const children = (): JSX.Element => (this.props.children instanceof Function) ? this.props.children(data === '__NULL__' ? null : data, this.updateData) : this.props.children;
+    const children = (): ChildrenType => (this.props.children instanceof Function) ? this.props.children(data === '__NULL__' ? null : data, this.updateData) : this.props.children;
     // console.log(data ? 'data' : 'no data');
     const hasErrors = this.props.error || (this.state && this.state.error);
     const spinning = hasErrors || !data || !!this.props.spinning;
