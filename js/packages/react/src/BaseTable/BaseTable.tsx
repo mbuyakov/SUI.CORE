@@ -378,7 +378,7 @@ export class BaseTable<TSelection = defaultSelection>
                     <VirtualTable
                       cellComponent={this.CellComponent}
                       containerComponent={tableContainerComponent}
-                      noDataCellComponent={TableNoDataCell}
+                      noDataCellComponent={this.props.noDataCellComponent || TableNoDataCell}
                       rowComponent={this.RowComponent}
                       columnExtensions={wordWrapExtension}
                     />
@@ -387,7 +387,7 @@ export class BaseTable<TSelection = defaultSelection>
                     <Table
                       cellComponent={this.CellComponent}
                       containerComponent={tableContainerComponent}
-                      noDataCellComponent={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? TableNoDataCell : TableNoDataCellSmall}
+                      noDataCellComponent={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? (this.props.noDataCellComponent || TableNoDataCell) : (this.props.noDataCellComponentSmall || TableNoDataCellSmall)}
                       rowComponent={this.RowComponent}
                       columnExtensions={wordWrapExtension}
                     />

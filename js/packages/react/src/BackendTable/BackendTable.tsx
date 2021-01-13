@@ -12,10 +12,11 @@ import moment from 'moment';
 import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {wrapInArray, getSUISettings, DEFAULT_PAGE_SIZES, generateCreate, IObjectWithIndex, ColumnInfo, defaultIfNotBoolean, TableInfo, getDataByKey, camelCase, ColumnInfoManager, TableInfoManager, IUserSetting, query, formatRawForGraphQL, mutate, asyncMap, toMap} from "@sui/core";
+import {LazyStubNoDataCell} from "@/BackendTable/LazyStubNoDataCell";
 import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
 import {exportToXlsx} from "../BaseTable/utils";
 
-import {BaseTable, colToBaseTableCol, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from '../index';
+import {BaseTable, colToBaseTableCol, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from '../index';
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 import {ResetUserSettingsPlugin} from "../plugins/ResetUserSettingsPlugin";
 import {LazyFilter} from "../BaseTable/types";
@@ -79,6 +80,7 @@ export interface IBackendTableProps {
   table: string;
   titleEnabled?: boolean;
   watchFilters?: boolean;
+  lazyMode?: boolean;
 
   cardLinkFn?(id: string, row: IObjectWithIndex): string;
 
@@ -94,6 +96,7 @@ interface IExpandedGroup {
 type IBackendTableState<T> = {
   cols?: IBaseTableColLayout[];
   data?: any[];
+  lazyStub?: boolean;
   defaultCurrentPage?: number;
   defaultFilter?: SimpleBackendFilter[];
   error?: string;
@@ -147,9 +150,9 @@ export class BackendTable<TSelection = defaultSelection>
     let pageNumber = 0;
     let pageSize = this.props.pageSize;
 
-
+    let urlState: IInnerTableStateDefinition | undefined;
     if (this.props.id) {
-      const urlState = getStateFromUrlParam(this.props.id);
+      urlState = getStateFromUrlParam(this.props.id);
 
       if (urlState) {
         const shouldMergeFilters = urlState.mergeFilters;
@@ -172,6 +175,7 @@ export class BackendTable<TSelection = defaultSelection>
     this.state = {
       defaultFilter,
       filter,
+      lazyStub: this.props.lazyMode && !urlState,
       filters: [],
       lastSendSelection: [],
       paginationEnabled,
@@ -276,9 +280,13 @@ export class BackendTable<TSelection = defaultSelection>
         <BaseTable<TSelection>
           {...this.props}
           {...this.state}
+          groupingEnabled={this.state.lazyStub ? false : this.props.groupingEnabled}
+          sortingEnabled={this.state.lazyStub ? false : this.props.sortingEnabled}
+          paginationEnabled={this.state.lazyStub ? false : this.props.paginationEnabled}
+          noDataCellComponent={this.state.lazyStub ? LazyStubNoDataCell(this.showAll) : undefined}
           defaultFilters={undefined}
           cols={this.state.cols || []}
-          rows={this.state.data}
+          rows={this.state.lazyStub ? [] : this.state.data}
           ref={this.baseTableRef}
           title={this.props.title || this.state.title}
           paperStyle={{
@@ -600,14 +608,31 @@ export class BackendTable<TSelection = defaultSelection>
     const newFilters = filters.filter(filter => !stateFiltersAsString.includes(JSON.stringify(filter)));
 
     if (filters.length < stateFiltersAsString.length || newFilters.some(filter => !filter.lazy)) {
-      // noinspection JSIgnoredPromiseFromCall
-      this.sendMessage(
-        'FILTER_CHANGE',
-        {
-          filters: this.mapFilters(filters),
-        },
-        { filters },
-      );
+      const mappedFilters = this.mapFilters(filters);
+      // If table not initialized in lazy mode
+      if (this.state.lazyStub) {
+        // Add filters to init message
+        // @ts-ignore
+        // noinspection JSConstantReassignment
+        this.state.defaultFilter = mappedFilters;
+        this.sendInitMessage(
+          this.state.tableInfo,
+          {
+            filters,
+            lazyStub: false
+          },
+          false
+        );
+      } else {
+        // noinspection JSIgnoredPromiseFromCall
+        this.sendMessage(
+          'FILTER_CHANGE',
+          {
+            filters: mappedFilters,
+          },
+          {filters},
+        );
+      }
     } else {
       this.setState({filters});
     }
@@ -664,7 +689,9 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private onOpen(): void {
-    this.sendInitMessage(this.state.tableInfo);
+    if(!this.state.lazyStub) {
+      this.sendInitMessage(this.state.tableInfo);
+    }
   }
 
   @autobind
@@ -887,6 +914,11 @@ export class BackendTable<TSelection = defaultSelection>
   private shouldIgnoreWS(): boolean {
     const ignoreWsItem = localStorage.getItem(LOCAL_STORAGE_IGNORE_WS_KEY);
     return ignoreWsItem && moment().diff(moment(ignoreWsItem), 'hours') < IGNORE_WS_ACTUALITY_HOURS;
+  }
+
+  @autobind
+  private showAll():void {
+    this.sendInitMessage(this.state.tableInfo, {lazyStub: false});
   }
 
   @autobind

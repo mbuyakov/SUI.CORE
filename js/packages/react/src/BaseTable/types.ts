@@ -1,4 +1,4 @@
-import {Filter, FilterOperation, Grouping, GroupKey, Sorting, TableBandHeader as TableBandHeaderBase, TableFilterRow, TableRowDetail} from '@devexpress/dx-react-grid';
+import {Filter, FilterOperation, Grouping, GroupKey, Sorting, Table as TableBase, TableBandHeader as TableBandHeaderBase, TableFilterRow, TableRowDetail} from '@devexpress/dx-react-grid';
 import {CardType} from 'antd/lib/card';
 import * as React from 'react';
 
@@ -128,6 +128,8 @@ export interface IBaseTableProps<TSelection = any> {
   loading?: boolean;
   minColumnWidth?: number;
   noColsContent?: React.ReactNode;
+  noDataCellComponent?: React.ComponentType<TableBase.NoDataCellProps>;
+  noDataCellComponentSmall?: React.ComponentType<TableBase.NoDataCellProps>;
   pageSize?: number;
   pageSizes?: number[];
   paginationEnabled?: boolean;
