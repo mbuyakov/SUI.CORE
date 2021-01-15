@@ -14,38 +14,21 @@ export interface LocalStorageValueWrapper {
   set(value: Nullable<string>): void;
 }
 
-export function _LocalStorageValue(localStorageKey: string, target: any, key: string = localStorageKey): LocalStorageValueWrapper {
+export function _LocalStorageValue(localStorageKey: string): LocalStorageValueWrapper {
   const localStorageService = Container.get(LocalStorageService);
   const log = new Logger("LocalStorageValue");
-
-  const propKey = `__${key}`;
-  const propKeyInit = `${propKey}__init`;
-  const _this = target.constructor.prototype;
-  // Force reinit after call new YouClass()
-  _this[propKeyInit] = false;
   return {
     get() {
-      if(!_this[propKeyInit]) {
-        const newValue = localStorageService.getItem(localStorageKey);
-        log.info(`[${localStorageKey}] Init. Readed value: ${newValue}`);
-        _this[propKey] = newValue;
-        _this[propKeyInit] = true;
-      }
-      return _this[propKey];
+      return localStorageService.getItem(localStorageKey);
     },
     set(newValue: string) {
-      if(!_this[propKeyInit]) {
-        log.debug(`[${localStorageKey}] Skip init. Setter called before read value`);
-        _this[propKeyInit] = true;
-      }
-      const oldValue = _this[propKey];
+      const oldValue = localStorageService.getItem(localStorageKey);
       log.info(`[${localStorageKey}] ${oldValue} -> ${newValue}`);
       if(newValue == null) {
         localStorageService.removeItem(localStorageKey);
       } else {
         localStorageService.setItem(localStorageKey, newValue);
       }
-      _this[propKey] = newValue;
     },
   };
 }
@@ -57,7 +40,7 @@ export function LocalStorageValue(localStorageKey: string) {
 
     const target = args[0] as Function;
     const key = args[1] as string;
-    const wrapper = _LocalStorageValue(localStorageKey, target, key);
+    const wrapper = _LocalStorageValue(localStorageKey);
 
     Object.defineProperty(target.constructor.prototype, key, {
       enumerable: true,
