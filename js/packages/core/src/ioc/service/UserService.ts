@@ -18,7 +18,7 @@ const NOTIFICATION_KEY_USER_FORCIBLY_LOGOUT = 'connect__USER_FORCIBLYLOGOUT_BY_I
 @Singleton
 export class UserService {
 
-  private token = _LocalStorageValue('token', this);
+  private token = _LocalStorageValue('token');
 
   private restUri: string = Container.getValue('sui.restUri');
 
