@@ -50,16 +50,23 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
           verticalLabel={true}
           {...this.props.baseFormProps}
           onInitialized={this.onInitialized}
-          onSubmit={(values) => this.props.onSubmit(values).then(() => false)}
+          onSubmit={(values) =>
+            this.props.onSubmit(values).then(result => {
+              this.result = result;
+              return false;
+            })
+          }
         />
       </PromisedModal>
     );
   }
 
+  private result: boolean;
+
   @autobind
   private async modalPromise(): Promise<boolean> {
     if (this.props.onSubmit && this.formRef.current) {
-      return this.formRef.current.onSubmit();
+      return this.formRef.current.onSubmit().then(() => this.result);
     }
 
     return true;
