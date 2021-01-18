@@ -50,7 +50,7 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
           verticalLabel={true}
           {...this.props.baseFormProps}
           onInitialized={this.onInitialized}
-          onSubmit={this.props.onSubmit}
+          onSubmit={(values) => this.props.onSubmit(values).then(() => false)}
         />
       </PromisedModal>
     );
