@@ -27,7 +27,7 @@ export class WarningPlugin extends React.Component<IWarningPluginProps, {
     }
 
     const button = (
-      <IconButton style={{marginLeft: -18, marginRight: 8}} onClick={this.openPopover}>
+      <IconButton style={{marginLeft: -12, marginRight: 8}} onClick={this.openPopover}>
         <Warning fontSize="large" className={YELLOW_BLINK}/>
       </IconButton>
     );
