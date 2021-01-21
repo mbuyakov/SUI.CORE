@@ -1,21 +1,14 @@
 import autobind from "autobind-decorator";
 import React from "react";
-import {Color} from '@sui/core';
-import {AMCHARTS} from '@sui/charts';
-import {XYChartWrapper} from './ChartWrapper';
+import { Color } from '@sui/core';
+import { AMCHARTS } from '@sui/charts';
+import { XYChartWrapper } from './ChartWrapper';
 
 export interface ICategoryColumnChartSeries {
   color?: Color;
   name: string;
   tooltipText?: string;
   valueY: string;
-}
-
-export interface IColumnDataChart {
-  btiRayonName: string;
-  districtName: string;
-  districtId: string;
-  btiRayonId: string;
 }
 
 export interface IAdditionalSettingProps {
@@ -28,13 +21,11 @@ export interface IAdditionalSettingProps {
 
 interface ICategoryColumnChartProps {
   categoryX: string;
-  data: Array<{ [field: string]: any }>;
+  data: Array<{[field: string]: any}>;
   series: ICategoryColumnChartSeries[];
   style?: React.CSSProperties;
   title?: string;
   additionalSetting?(props: IAdditionalSettingProps): void;
-  isColumnClickable?: boolean;
-  onColumnClick?(districtId?: IColumnDataChart): void;
 }
 
 export class CategoryColumnChart extends React.Component<ICategoryColumnChartProps> {
@@ -69,11 +60,6 @@ export class CategoryColumnChart extends React.Component<ICategoryColumnChartPro
     }
     if (seriesProps.color) {
       series.columns.template.fill = amcharts.am4core.color(seriesProps.color.toRgba());
-    }
-    if (!!this.props.isColumnClickable) {
-      series.columns.template.events.on("hit", event => {
-        this.props.onColumnClick(event.target.dataItem.dataContext as IColumnDataChart)
-      });
     }
 
     return series;
