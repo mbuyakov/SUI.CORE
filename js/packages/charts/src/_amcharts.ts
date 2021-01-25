@@ -45,6 +45,9 @@ export async function getAmcharts(): Promise<AMCHARTS> {
     am4core.useTheme(am4themes_animated.default);
     am4core.options.minPolylineStep = 5;
 
+    am4core.options.queue = true;
+    am4core.options.onlyShowOnViewport = true;
+
     amcharts_loaded = {
       am4core,
       am4charts,
