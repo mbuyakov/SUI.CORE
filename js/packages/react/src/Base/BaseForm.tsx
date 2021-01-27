@@ -35,6 +35,7 @@ export type BaseFormChildrenFn = React.FunctionComponent<IBaseFormChildrenProps>
 
 export type IBaseFormProps = Omit<IBaseCardProps<any, IBaseFormItemLayout>, 'item' | 'forceRenderTabs' | 'itemRenderer'> & {
   children?: BaseFormChildrenFn;
+  childrenPosition?: "top" | "bottom" | "both";
   customFinalInputNodesProps?: IObjectWithIndex;
   customInputNodesProps?: IObjectWithIndex;
   initialValues?: IObjectWithIndex;
@@ -246,7 +247,17 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   }
 
   public render(): React.ReactNode {
-    const {onSubmit, ...rest} = this.props;
+    const {onSubmit, childrenPosition, ...rest} = this.props;
+
+    const showChildrenOnTop = !childrenPosition || childrenPosition === "top" || childrenPosition === "both";
+    const showChildrenOnBottom = childrenPosition === "bottom" || childrenPosition === "both";
+    const children = this.props.children && this.props.children({
+        get: this.headerWrapperValuesGetter,
+        hasErrors: this.hasErrors,
+        isSaveInProgress: this.state.saving,
+        onClear: this.clearForm,
+        onSubmit: this.onSubmit
+      });
 
     return (
       <BaseFormContext.Provider
@@ -257,13 +268,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
           verticalLabel: !!this.props.verticalLabel,
         }}
       >
-        {this.props.children && this.props.children({
-          get: this.headerWrapperValuesGetter,
-          hasErrors: this.hasErrors,
-          isSaveInProgress: this.state.saving,
-          onClear: this.clearForm,
-          onSubmit: this.onSubmit
-        })}
+        {showChildrenOnTop && children}
         <FormBodyWrapper>
           <BaseCard
             forceRenderTabs={true}
@@ -272,6 +277,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
             className={classNames(BASE_FORM_CLASS, this.props.className)}
           />
         </FormBodyWrapper>
+        {showChildrenOnBottom && children}
       </BaseFormContext.Provider>
     );
   }
