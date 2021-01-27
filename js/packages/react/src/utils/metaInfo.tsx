@@ -13,6 +13,8 @@ export async function colToBaseTableCol(
   const {columnInfo, rawMode, roles} = props;
   const columnName = columnInfo.getNameOrColumnName();
 
+  const isJson = ["json", "json[]", "jsonb", "jsonb[]"].includes(columnInfo.columnType);
+
   const result: IBaseTableColLayout = {
     defaultGrouping: columnInfo.defaultGrouping,
     defaultSorting: columnInfo.defaultSorting as SortingDirection,
@@ -23,6 +25,7 @@ export async function colToBaseTableCol(
     title: `${columnName}${rawMode ? ` (${columnInfo.columnName})` : ''}`,
     width: columnInfo.width,
     wordWrapEnabled: columnInfo.wordWrapEnabled,
+    ...(isJson ? {groupingEnabled: false, sortingEnabled: false} : {}),
     // Костыль (имя для легкого поиска)
     ...{__SUI_columnInfo: columnInfo}
   };
