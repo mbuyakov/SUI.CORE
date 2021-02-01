@@ -423,11 +423,10 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
   }
 
   @autobind
-  private getOnFieldChange(fieldName: string): ObservableHandler<any> {
+  private getOnFieldChange(form: BaseForm): ObservableHandler<any> {
     return (newValue: any, oldValue?: any): void => {
       if (!!this.props.onChange && !isEqual(newValue, oldValue)) {
-        const newDulObject = {...this.props?.value, [fieldName]: newValue};
-        return this.props?.onChange(newDulObject);
+        return this.props?.onChange(form.getFieldsValue());
       }
     };
   }
@@ -438,7 +437,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     DUL_FIELDS_NAMES.forEach(name => {
       const field = form.getFormField(name);
       this.formFields.set(name, field);
-      this.fieldsHandlers.push(field.value.subscribe(this.getOnFieldChange(name)));
+      this.fieldsHandlers.push(field.value.subscribe(this.getOnFieldChange(form)));
     });
 
     form.subscribeOnHasError((hasError => this.setState({hasError})), true);
