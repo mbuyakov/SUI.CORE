@@ -427,7 +427,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     return (newValue: any, oldValue?: any): void => {
       if (!!this.props.onChange
         && !isEqual(newValue, oldValue)
-        && !isEqual(newValue, this.props.value[fieldName])
+        && !isEqual(newValue, this.props.value?.[fieldName])
       ) {
         return this.props?.onChange(form.getFieldsValue());
       }
