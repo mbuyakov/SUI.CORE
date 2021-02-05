@@ -47,11 +47,13 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
     if (!isEqual(this.props.data, prevProps.data)) {
       this.updateStateData();
     }
-    const needToInitValueState = this.props.mode == "multiple"
-      && !isEmptyFilterValue(this.props.filter?.value)
-      && isEmptyFilterValue(this.state?.value);
-    if(needToInitValueState) {
-      this.setState({value: this.props.filter?.value || undefined as any});
+
+    const stateValue = this.state.value || undefined;
+    const prevPropsValue = prevProps.filter?.value || undefined;
+    const curPropsValue = this.props.filter?.value || undefined;
+
+    if (!isEqual(prevPropsValue, curPropsValue) && !isEqual(stateValue, curPropsValue)) {
+      this.setState({value: curPropsValue as any});
     }
   }
 
@@ -99,10 +101,14 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
   @autobind
   private onChange(value: T): void {
     if (this.props.mode == "multiple") {
-      this.setState({value});
-      if (!this.dropdownVisible) {
-        this._onChange(value);
-      }
+      this.setState(
+        {value},
+        () => {
+          if (!this.dropdownVisible) {
+            this._onChange(value);
+          }
+        }
+      );
     } else {
       this._onChange(value);
     }
@@ -124,7 +130,12 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
   @autobind
   private onDropdownVisibleChange(opened: boolean): void {
     this.dropdownVisible = opened;
-    if (!opened && this.props.mode == "multiple") {
+
+    const triggerChange = !opened
+      && this.props.mode == "multiple"
+      && !isEqual(this.props.filter?.value || undefined, this.state?.value || undefined);
+
+    if (triggerChange) {
       this._onChange(this.state?.value);
     }
   }
@@ -132,8 +143,10 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
   @autobind
   private onClear(): void {
     if (this.props.mode == "multiple") {
-      this._onChange([] as unknown as T);
-      this.setState({value: undefined});
+      this.setState(
+        {value: undefined},
+        () => this._onChange([] as unknown as T)
+      );
     }
   }
 
