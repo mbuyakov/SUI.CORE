@@ -66,8 +66,9 @@ export class DoubleScrollbar extends React.Component<{}, IDoubleScrollbarState> 
     const width = this.getChildWrapperWidth() || "auto";
 
     // Set the width of the inner div to the first child's
-    // @ts-ignore
-    if ((typeof width === 'number' && typeof (this.state.width) === 'number') ? (Math.abs(width - this.state.width as unknown as number) > 5) : (width !== this.state.width)) {
+    const widthNumber = Number(width.toString().replace("px", ""));
+    const stateWidthNumber = Number(width.toString().replace("px", ""));
+    if ((!isNaN(widthNumber) && !isNaN(stateWidthNumber)) ? (Math.abs(widthNumber - stateWidthNumber) > 5) : (width !== this.state.width)) {
       this.setState({width});
     }
   }
