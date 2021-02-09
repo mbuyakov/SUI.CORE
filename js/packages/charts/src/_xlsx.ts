@@ -15,13 +15,11 @@ export interface XLSX {
   stream: StreamUtils;
 }
 
-let xlsx_loaded: XLSX = null;
+let xlsx_loaded: Promise<XLSX> = null;
 
-export async function getXlsx(): Promise<XLSX> {
-  if (!xlsx_loaded) {
-    xlsx_loaded = await import('xlsx');
-  }
-  return xlsx_loaded;
+export function getXlsx(): Promise<XLSX> {
+  // Считаем, что импорт всегда успешный
+  return xlsx_loaded ? xlsx_loaded : import('xlsx');
 }
 
 

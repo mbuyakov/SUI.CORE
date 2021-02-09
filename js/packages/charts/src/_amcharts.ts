@@ -12,26 +12,19 @@ export interface AMCHARTS {
 
 // Strange bug. Can't import Irange from am4core
 type Optional<A> = A | undefined;
+
 export interface IRange {
   start: Optional<number>;
   end: Optional<number>;
   priority?: "start" | "end";
 }
 
-let amcharts_loaded: AMCHARTS = null;
+let amcharts_loaded: Promise<AMCHARTS> = null;
 
-export async function getAmcharts(): Promise<AMCHARTS> {
+export function getAmcharts(): Promise<AMCHARTS> {
   if (!amcharts_loaded) {
-    const [
-      am4core,
-      am4charts,
-      am4lang_ru_RU,
-      am4themes_animated,
-      am4themes_dark,
-      am4maps,
-      am4forceDirected,
-      am4wordCloud
-    ] = await Promise.all([
+    // Считаем, что всегда успешный
+    amcharts_loaded = Promise.all([
       import('@amcharts/amcharts4/core'),
       import('@amcharts/amcharts4/charts'),
       import('@amcharts/amcharts4/lang/ru_RU'),
@@ -40,25 +33,37 @@ export async function getAmcharts(): Promise<AMCHARTS> {
       import('@amcharts/amcharts4/maps'),
       import('@amcharts/amcharts4/plugins/forceDirected'),
       import('@amcharts/amcharts4/plugins/wordCloud')
-    ]);
+    ])
+      .then(data => {
+        const [
+          am4core,
+          am4charts,
+          am4lang_ru_RU,
+          am4themes_animated,
+          am4themes_dark,
+          am4maps,
+          am4forceDirected,
+          am4wordCloud
+        ] = data;
 
-    am4core.useTheme(am4themes_animated.default);
-    am4core.options.minPolylineStep = 5;
+        am4core.useTheme(am4themes_animated.default);
+        am4core.options.minPolylineStep = 5;
 
-    am4core.options.queue = true;
-    am4core.options.onlyShowOnViewport = true;
+        am4core.options.queue = true;
+        am4core.options.onlyShowOnViewport = true;
 
-    amcharts_loaded = {
-      am4core,
-      am4charts,
-      am4lang_ru_RU: am4lang_ru_RU.default,
-      am4themes_animated: am4themes_animated.default,
-      am4themes_dark: am4themes_dark.default,
-      am4maps,
-      am4forceDirected,
-      am4wordCloud
-    };
+        return {
+          am4core,
+          am4charts,
+          am4lang_ru_RU: am4lang_ru_RU.default,
+          am4themes_animated: am4themes_animated.default,
+          am4themes_dark: am4themes_dark.default,
+          am4maps,
+          am4forceDirected,
+          am4wordCloud
+        };
+      });
   }
-  (new amcharts_loaded.am4forceDirected.ForceDirectedTree()).data = [];
+
   return amcharts_loaded;
 }
