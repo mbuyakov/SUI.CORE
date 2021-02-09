@@ -42,7 +42,7 @@ export class DoubleScrollbar extends React.Component {
     const width = this.getChildWrapperWidth() || "auto";
 
     const outerDivStyle: React.CSSProperties = {marginTop: -1, overflowX: "auto", overflowY: "hidden"};
-    const innerDivStyle: React.CSSProperties = {height: 1, width, marginRight: -1};
+    const innerDivStyle: React.CSSProperties = {height: 1, width};
     const childDivStyle: React.CSSProperties = {overflow: "auto", overflowY: "hidden"};
 
     return (
@@ -62,7 +62,7 @@ export class DoubleScrollbar extends React.Component {
     let width = null;
 
     if (this.childrenWrapper.current && this.childrenWrapper.current.scrollWidth) {
-      width = `${this.childrenWrapper.current.scrollWidth}px`;
+      width = `${this.childrenWrapper.current.scrollWidth - 1}px`;
     }
 
     return width;
