@@ -99,7 +99,7 @@ export class AuditLogTable extends React.Component<IAuditLogTableProps> {
             title: "Дата/время операции",
             width: 250,
             search: {type: "date"},
-            render: (created: string | undefined) => created ? moment(created).format("DD.MM.YYYY HH:mm:ss") : created
+            render: (created: string | undefined) => created ? moment.utc(created).local().format("DD.MM.YYYY HH:mm:ss") : created
           },
         ]}
         rowDetailComponent={this.rowDetails}
