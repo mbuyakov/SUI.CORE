@@ -1,0 +1,2 @@
+ALTER TABLE log.audit_log ALTER COLUMN created SET DEFAULT now() AT TIME ZONE 'UTC';
+ALTER TABLE log.meta_audit_log ALTER COLUMN created SET DEFAULT now() AT TIME ZONE 'UTC';
