@@ -5,7 +5,7 @@ import autobind from "autobind-decorator";
 
 export class SUIInputNumber extends React.Component<InputNumberProps> {
 
-  private prevValue = ""
+  private prevValue = undefined;
 
   public render(): JSX.Element {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
