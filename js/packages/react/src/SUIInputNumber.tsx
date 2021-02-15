@@ -17,7 +17,7 @@ export class SUIInputNumber extends React.Component<InputNumberProps> {
     const numberValue = Number(value);
 
     // Not changed
-    if (value == this.prevValue || numberValue === this.props.value || value === this.props.value as unknown as string) {
+    if (value === this.prevValue || numberValue === this.props.value || value === this.props.value as unknown as string) {
       return value;
     }
 
