@@ -14,14 +14,19 @@ export class SUIInputNumber extends React.Component<InputNumberProps> {
 
   @autobind
   private formatter(value: string): string {
-    if (value == this.prevValue) {
+    const numberValue = Number(value);
+
+    // Not changed
+    if (value == this.prevValue || numberValue === this.props.value || value === this.props.value as unknown as string) {
       return value;
     }
 
+    // Blank or valid
     if (!value || /^[0-9]+\.?[0-9]*$/.test(value)) {
       this.prevValue = value;
+
       if (this.props.onChange) {
-        this.props.onChange(Number(value));
+        this.props.onChange(!value ? null : numberValue);
       }
     } else {
       value = this.prevValue;
