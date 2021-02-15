@@ -43,6 +43,7 @@ export * from "./Socket";
 export * from "./SparkLine";
 export * from "./soctech";
 export * from "./styles";
+export * from "./SUIInputNumber";
 export * from "./SUIMaskedInput";
 export * from "./SUIPhoneInput";
 export * from "./SUIReactComponent";
