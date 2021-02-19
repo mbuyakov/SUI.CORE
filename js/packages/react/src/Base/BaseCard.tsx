@@ -7,7 +7,7 @@ import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 import {BaseCardContext} from '@/Base/BaseCardContext';
 import {DEFAULT_ITEM_RENDERER, IBaseCardItemLayout} from '@/Base/BaseCardItemLayout';
 import {BaseCardRow, IBaseCardRowLayout, IBaseCardRowWithTabsLayout} from '@/Base/BaseCardRow';
-import {BaseCardTabContextConsumer, BaseCardTabContextProvider, IBaseCardTabWithBlocks, isTabWithBlocks, renderIBaseCardTabLayout} from '@/Base/BaseCardTab';
+import {BaseCardTabContextConsumer, BaseCardTabContextProvider, IBaseCardTabWithBlocks, isCustomTab, isTabWithBlocks, renderIBaseCardTabLayout} from '@/Base/BaseCardTab';
 import {BaseCardBlock, IBaseCardBlockLayout} from "@/Base/BaseCardBlockLayout";
 import {BASE_CARD, BASE_CARD_HEADER_ONLY} from "@/styles";
 import { ChangedEditModeContext } from '@/ChangedEditModeContext';
@@ -61,7 +61,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
         // If any tab has blocks - map all tabs without blocks to tab with 1 block
         if (hasBlocks) {
           firstChildrenTabs = firstChildrenTabs.map(tab => {
-            if (!isTabWithBlocks(tab)) {
+            if (!isTabWithBlocks(tab) && !isCustomTab(tab)) {
               (tab as unknown as IBaseCardTabWithBlocks<T, ITEM>).blocks = {
                 rows: tab.rows
               };
