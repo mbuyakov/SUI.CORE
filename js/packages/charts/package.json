@@ -22,6 +22,7 @@
     "@sui/linter": "8.0.0"
   },
   "dependencies": {
-    "@amcharts/amcharts4": "4.10.15"
+    "@amcharts/amcharts4": "4.10.15",
+    "@sui/core": "8.0.0"
   }
 }
