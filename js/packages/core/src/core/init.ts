@@ -25,10 +25,9 @@ export interface IInitSUISettings {
   rusName: string;
   offlineMode?: boolean;
   percentToColorSettings: IColorHeatMapSettings;
-  permissions?: {
-    exportAll?: Permission
-  },
+  permissions?: { exportAll?: Permission };
   routes: IRawRoute[];
+  chart?: {queue: boolean, onlyShowOnViewport: boolean};
 
   defaultGetLinkForTable?(tableName: string, type: RouteType, id?: string | number): string | null;
   metaschemaRefreshPromise(): Promise<void>;
