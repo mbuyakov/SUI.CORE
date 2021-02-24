@@ -52,8 +52,8 @@ export function getAmcharts(): Promise<AMCHARTS> {
 
         const suiSettings = getSUISettings();
 
-        am4core.options.queue = suiSettings.chart.queue ?? true;
-        am4core.options.onlyShowOnViewport = suiSettings.chart.onlyShowOnViewport ?? true;
+        am4core.options.queue = suiSettings.chart?.queue ?? true;
+        am4core.options.onlyShowOnViewport = suiSettings.chart?.onlyShowOnViewport ?? true;
 
         return {
           am4core,
