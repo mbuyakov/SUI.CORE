@@ -50,5 +50,5 @@ export function fioConverter(name: string): string {
 }
 
 export function fioConverterWithoutTrim(name: string): string {
-  return name.replace(/\s\s+/g, ' ').replace(/\w+|[А-Яа-яёЁ]+/g, capitalize);
+  return name.replace(/\s\s+/g, ' ').replace(/\w+|[А-Яа-яёЁA-Za-z]+/g, capitalize);
 }
