@@ -1,16 +1,15 @@
+import {BackendTable} from "@/BackendTable";
+import {DisableEditContext} from '@/DisableEditContext';
+import {errorNotification} from "@/drawUtils";
+import {PromisedBaseFormModal} from "@/Modal";
+import {hasAnyRole} from "@/RoleVisibilityWrapper";
 import {DeleteOutlined, PlusCircleOutlined} from "@ant-design/icons";
 import CreateIcon from '@material-ui/icons/CreateOutlined';
+import {defaultIfNotBoolean, getDataByKey, IObjectWithIndex, sleep} from "@sui/core";
 import {Button, notification} from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {defaultIfNotBoolean, getDataByKey, sleep, IObjectWithIndex } from "@sui/core";
-
-import {BackendTable} from "../BackendTable";
-import {DisableEditContext} from '../DisableEditContext';
-import {errorNotification} from "../drawUtils";
 import {PromisedButton, PromisedMaterialIconButton} from '../Inputs';
-import {PromisedBaseFormModal} from "../Modal";
-import {hasAnyRole} from "../RoleVisibilityWrapper";
 
 import {IMutableBackendTableProps} from "./types";
 
@@ -22,6 +21,7 @@ export const DEFAULT_MODAL_WIDTH_VARIANT = {
   medium: 900,
   large: 1500
 };
+
 interface IMutableBackendTableState<T> {
   editModalInitialValues?: Partial<T>;
   editRow?: IObjectWithIndex;
@@ -51,7 +51,8 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
             getEditInitialValues,
             handleCreate,
             handleEdit,
-            serviceColumns
+            serviceColumns,
+            editableFilter
           } = this.props;
           const allowEdit = !disableEdit && (mutationRoles ? hasAnyRole(mutationRoles) : true);
           const rowEditable = !!getEditInitialValues && allowEdit;
@@ -119,17 +120,20 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
                   ? serviceColumns
                   : [{
                     id: "__edit",
-                    render: (_: null, row: {id: TSelection}): JSX.Element => (
-                      <PromisedMaterialIconButton
-                        style={{
-                          marginBottom: -12,
-                          marginTop: -12
-                        }}
-                        loading={this.state.initEditLoading}
-                        icon={<CreateIcon/>}
-                        promise={this.handleEditClickFn(row)}
-                      />
-                    ),
+                    render: (_: null, row: IObjectWithIndex): JSX.Element =>
+                      (!editableFilter || editableFilter(row))
+                        ? (
+                          <PromisedMaterialIconButton
+                            style={{
+                              marginBottom: -12,
+                              marginTop: -12
+                            }}
+                            loading={this.state.initEditLoading}
+                            icon={<CreateIcon/>}
+                            promise={this.handleEditClickFn(row)}
+                          />
+                        )
+                        : (<div/>),
                     title: " ",
                     width: defaultIfNotBoolean(this.props.selectionEnabled, true) ? 80 : (80 + 32),
                   }]
@@ -177,7 +181,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
       if (this.props.handleDelete) {
         await (this.props.handleDelete(selection)
           .then(async () => {
-            if (!!this.props.disableDeleteNotification){
+            if (!!this.props.disableDeleteNotification) {
               notification.success({message: "Записи успешно удалены"});
             }
             this.tableRef.current.clearSelection();
@@ -185,7 +189,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
             return this.tableRef.current.refresh();
           })
           .catch(err => {
-            if(err) {
+            if (err) {
               const errMsg = (typeof err === "string")
                 ? err
                 : (err.hasOwnProperty("message")

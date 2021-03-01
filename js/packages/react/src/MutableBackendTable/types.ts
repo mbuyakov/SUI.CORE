@@ -33,6 +33,7 @@ export type IMutableBackendTableProps<TValues, TSelection, TEditValues = TValues
   // !!! EDIT MODE ENABLER
   getEditInitialValues?(row: IObjectWithIndex): Promise<Partial<TEditValues>>;
   // Others
+  editableFilter?(row: IObjectWithIndex): boolean;
   mutationRoles?: string[];
   customExtra?(createButton: JSX.Element, deleteButton: JSX.Element): JSX.Element;
   disableDeleteNotification?: boolean;
