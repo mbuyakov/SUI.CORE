@@ -142,7 +142,7 @@ private onDeclineBtnClickHandler() {
 }
 
 const PREFIX_REGEX = /(__\w+__)/;
-const APOSTROPHE_REGEX = /'/g;
+const APOSTROPHE_REGEX = /['`]/g;
 
 export enum AcceptState {
   START = "__START__",
