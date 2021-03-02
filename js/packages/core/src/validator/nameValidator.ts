@@ -1,6 +1,6 @@
 import capitalize from 'lodash/capitalize';
 
-export const NAME_REGEXP = /^(?=(([А-ЯЁа-яё0-9().]+([\-'](?!\s|$))?|\s)+))\1$/;
+export const NAME_REGEXP = /^(?=(([А-ЯЁа-яё0-9().]+([\-'`](?!\s|$))?|\s)+))\1$/;
 export const LAST_NAME_REGEXP = /^(?=(([А-ЯЁа-яё0-9()]+([\-'`](?!\s|$))?|\s)+))\1$/;
 export const WHITESPACE_REGEXP = /^\s+.+$/;
 export const ALL_SYMBOL_DIGIT_REGEXP = /^(\d*|[()]*)*$/;
