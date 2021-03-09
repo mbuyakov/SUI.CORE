@@ -10,7 +10,6 @@ import { defaultIfNotBoolean } from './typeWrappers';
 
 const SPIN_DELAY = 300;
 
-
 export type ChildrenType = JSX.Element[] | JSX.Element | string;
 export type FunChildrenType<T> = (data: T, updateData?: () => void) => ChildrenType;
 
