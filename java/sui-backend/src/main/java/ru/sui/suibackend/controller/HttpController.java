@@ -10,6 +10,7 @@ import lombok.val;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.sui.suibackend.cache.UserStateCache;
 import ru.sui.suibackend.model.UserState;
 import ru.sui.suibackend.service.MessageHandlerService;
 
@@ -23,23 +24,19 @@ import static ru.sui.suibackend.utils.Constants.*;
 @CrossOrigin
 public class HttpController {
 
-    // public - костыль для ExportController
-    public final Cache<String, UserState> userStateCache = CacheBuilder
-            .newBuilder()
-            .expireAfterWrite(3, TimeUnit.HOURS)
-            .build();
-
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
     private MessageHandlerService messageHandlerService;
+    @Autowired
+    private UserStateCache userStateCache;
 
     @PostMapping(BACKEND_ENDPOINT + "-http")
     public ObjectNode processMessage(
             @RequestHeader(INIT_SESSION_ID_KEY) String sessionId,
             @RequestBody String payload) {
         if (!"DISCONNECT".equals(payload)) {
-            var userState = userStateCache.getIfPresent(sessionId);
+            var userState = userStateCache.get(sessionId);
 
             if (userState == null) {
                 userState = new UserState();

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.socket.WebSocketSession
 import org.springframework.web.socket.messaging.SubProtocolWebSocketHandler
+import ru.sui.suibackend.cache.UserStateCache
 import ru.sui.suibackend.model.UserState
 import ru.sui.suibackend.service.BackendService
 import ru.sui.suibackend.utils.Constants.BACKEND_ENDPOINT
@@ -84,8 +85,7 @@ private fun Sheet.putRow(rowNumber: Int, row: Row) {
 class ExportController(
         private val objectMapper: ObjectMapper,
         private val backendService: BackendService,
-        // Получение userState по id сессии
-        private val httpController: HttpController,
+        private val userStateCache: UserStateCache,
         private val applicationContext: ApplicationContext
 ) {
 
@@ -96,7 +96,7 @@ class ExportController(
 
     @PostMapping("/init")
     fun init(@RequestHeader(INIT_SESSION_ID_KEY) sessionId: String) {
-        val userState = httpController.userStateCache.getIfPresent(sessionId) ?: getUserStateFromWebSocketSession(sessionId)
+        val userState = userStateCache.get(sessionId) ?: getUserStateFromWebSocketSession(sessionId)
 
         if (userState != null) {
             val userStateForExport = userState.copy().apply {
