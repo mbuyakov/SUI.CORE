@@ -375,6 +375,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     return result;
   }
 
+  private formRef: React.RefObject<BaseForm> = React.createRef();
   private fieldsHandlers: ObservableHandlerStub[] = [];
   private readonly formFields: Map<string, IFormField> = new Map();
 
@@ -402,8 +403,10 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
 
     const onErrorCheckerChanged = prevProps.onErrorCheck !== this.props.onErrorCheck;
     const hasErrorChanged = this.state.hasError !== prevState?.hasError;
+
     if (!!this.props.onErrorCheck && (onErrorCheckerChanged || hasErrorChanged)) {
       this.props.onErrorCheck(this.state.hasError);
+      this.props.onChange?.(this.formRef.current.getFieldsValue())
     }
   }
 
@@ -418,6 +421,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
         onInitialized={this.onInitializedForm}
         onSubmit={this.onSubmit}
         rows={this.state?.rows}
+        ref={this.formRef}
       />
     );
   }
@@ -463,4 +467,5 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
       }
     });
   }
+
 }
