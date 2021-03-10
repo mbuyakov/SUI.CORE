@@ -202,13 +202,18 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
     return (
       <Select
         placeholder="Выберите таблицу"
-        optionFilterProp="label"
-        options={this.state.tableInfoOptions}
+        optionFilterProp="children"
         showSearch={true}
         style={{width: 300}}
         value={value}
         onChange={onChange}
-      />
+      >
+        {(this.state.tableInfoOptions || []).map(option => (
+          <Select.Option key={option.value} value={option.value}>
+            {option.label}
+          </Select.Option>
+        ))}
+      </Select>
     );
   }
 
