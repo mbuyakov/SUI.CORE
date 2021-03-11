@@ -118,7 +118,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
               }
             },
             {
-              title: "Конкертная запись",
+              title: "Конкретная запись",
               rows: {
                 cols: {
                   items: {
