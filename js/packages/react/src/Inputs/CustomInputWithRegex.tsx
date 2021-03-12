@@ -8,6 +8,7 @@ import {StringWithError} from "@/utils";
 export type CustomInputWithRegexProps = InputProps & {
   desc?: string,
   regex?: string,
+  checkDisabled?: boolean;
 
   onChange?(value: string): void
 }
@@ -54,8 +55,8 @@ export class CustomInputWithRegex extends React.Component<CustomInputWithRegexPr
   private onChange(e: ChangeEvent<HTMLInputElement>): void {
     let value = e.target.value;
 
-    if(!RegExp(this.props.regex).test(value)) {
-      value = this.props.disabled ? '' : StringWithError.pack(value, this.props.desc);
+    if ((this.props.checkDisabled || !this.props.disabled) && !RegExp(this.props.regex).test(value)) {
+      value = StringWithError.pack(value, this.props.desc);
     }
 
     this.props.onChange(value);
