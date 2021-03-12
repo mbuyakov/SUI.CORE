@@ -61,7 +61,9 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
         .map(ti => ({
           value: ti.id,
           label: ti.getNameOrTableName()
-        })),
+        }))
+        // Удаляем дубликаты (зачем ?????)
+        .filter((option, index, array) => array.findIndex(it => it.value === option.value) === index),
       notMovedLogCount: await query(`{ allAuditLogs { totalCount } }`, 2)
     })
   }
