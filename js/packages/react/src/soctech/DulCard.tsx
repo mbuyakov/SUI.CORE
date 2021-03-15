@@ -61,10 +61,9 @@ export interface IDulCardOptions {
 }
 
 export interface IDulCardProps extends IDulCardOptions {
+  checkDisabled?: boolean;
   value?: IDulFields;
-
   onChange?(value: IDulFields): void;
-
   onErrorCheck?(hasError: boolean): void;
 }
 
@@ -169,7 +168,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
         const docType = DulCard.getDocTypeById(values.docTypeId);
         return !!docType && (!docType?.seriesRegex || docType?.seriesRegex == "");
       },
-      inputNode: <CustomInputWithRegex/>,
+      inputNode: <CustomInputWithRegex checkDisabled={dulCardProps.checkDisabled}/>,
       rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
       mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
         const values: { docTypeId?: string } = get(["docTypeId"]);
@@ -188,7 +187,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     const departmentCodeItem = {
       title: 'Код подразделения',
       fieldName: 'departmentCode',
-      inputNode: <CustomInputWithRegex/>,
+      inputNode: <CustomInputWithRegex checkDisabled={dulCardProps.checkDisabled}/>,
       rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
       mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
         const values: { docTypeId?: string } = get(["docTypeId"]);
@@ -206,7 +205,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     const numberItem = {
       title: 'Номер',
       fieldName: 'number',
-      inputNode: <CustomInputWithRegex/>,
+      inputNode: <CustomInputWithRegex checkDisabled={dulCardProps.checkDisabled}/>,
       rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
       mapFormValuesToRequired: (get: ValuesGetter): boolean => {
         const values: { docTypeId?: string } = get(["docTypeId"]);
@@ -230,7 +229,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     const issuedByItem = {
       title: 'Кем выдан',
       fieldName: 'issuedBy',
-      inputNode: <CustomInputWithRegex/>,
+      inputNode: <CustomInputWithRegex checkDisabled={dulCardProps.checkDisabled}/>,
       rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
       mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
         const values: { docTypeId?: string } = get(["docTypeId"]);
