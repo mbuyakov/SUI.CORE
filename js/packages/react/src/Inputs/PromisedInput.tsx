@@ -1,14 +1,13 @@
-import { CircularProgress, IconButton } from '@material-ui/core';
+import {Rendered} from "@/other";
+import {SUI_ROW_GRID} from '@/styles';
+import {SUIMaskedInput} from '@/SUIMaskedInput';
+import {CircularProgress, IconButton} from '@material-ui/core';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
+import {trimIfString} from '@sui/core';
 import Input, {InputProps} from 'antd/lib/input';
 import Tooltip from 'antd/lib/tooltip';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-
-import {trimIfString} from '@sui/core';
-import {Rendered} from "../other";
-import {SUI_ROW_GROW_LEFT} from '../styles';
-import {SUIMaskedInput} from '../SUIMaskedInput';
 
 import {ComposeValidator, IPromisedBaseProps, IPromisedBaseState, PromisedBase, ValidatorFunction} from './PromisedBase';
 
@@ -59,7 +58,7 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
         onClick={this.saveWithoutValue}
         size="small"
       >
-        {this.state.loading ? (<CircularProgress size={16} />) : (this.props.icon || <SaveOutlinedIcon/>)}
+        {this.state.loading ? (<CircularProgress size={16}/>) : (this.props.icon || <SaveOutlinedIcon/>)}
       </IconButton>
     );
     saveButton = (this.state.savedValue !== this.state.value
@@ -72,8 +71,11 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
 
     return (
       <div
-        className={SUI_ROW_GROW_LEFT}
-        style={this.props.rowStyle}
+        className={SUI_ROW_GRID}
+        style={{
+          ...this.props.rowStyle,
+          gridTemplateColumns: "minmax(1px, 1fr) max-content"
+        }}
       >
         {
           this.wrapInValidationPopover(
@@ -120,8 +122,8 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
   @autobind
   private handleNewValue(newValue: React.ChangeEvent<HTMLInputElement> | string): void {
     const value = typeof newValue === 'string' ? newValue : newValue.target.value;
-this.validate(value as unknown as V);
-if (this.props.type === 'number' && !((!Number.isNaN(value as any) && NUMBER_REGEX.test(value)) || value === '' || value === '-')) {
+    this.validate(value as unknown as V);
+    if (this.props.type === 'number' && !((!Number.isNaN(value as any) && NUMBER_REGEX.test(value)) || value === '' || value === '-')) {
       return;
     }
     this.setState({value: this.props.type === 'number' ? (value ? (value === '-' ? '-' : Number(value)) : undefined) : value} as unknown as V);

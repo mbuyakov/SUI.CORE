@@ -1,12 +1,11 @@
-import { CircularProgress, IconButton } from '@material-ui/core';
+import {SUI_ROW_GRID} from '@/styles';
+import {CircularProgress, IconButton} from '@material-ui/core';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
+import {trimIfString} from '@sui/core';
 import Input, {TextAreaProps} from "antd/lib/input";
 import Tooltip from "antd/lib/tooltip";
 import autobind from "autobind-decorator";
 import * as React from "react";
-
-import {trimIfString} from '@sui/core';
-import {SUI_ROW_GROW_LEFT} from '../styles';
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
@@ -37,7 +36,7 @@ export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromi
         onClick={this.saveWithoutValue}
         size="small"
       >
-        {this.state.loading ? (<CircularProgress size={16} />) : (this.props.icon || <SaveOutlinedIcon/>)}
+        {this.state.loading ? (<CircularProgress size={16}/>) : (this.props.icon || <SaveOutlinedIcon/>)}
       </IconButton>
     );
     saveButton = (this.state.savedValue !== this.state.value)
@@ -46,8 +45,11 @@ export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromi
 
     return (
       <div
-        className={this.props.rowClassName || SUI_ROW_GROW_LEFT}
-        style={this.props.rowStyle}
+        className={this.props.rowClassName || SUI_ROW_GRID}
+        style={{
+          gridTemplateColumns: "minmax(1px, 1fr) max-content",
+          ...this.props.rowStyle
+        }}
       >
         {this.wrapInValidationPopover(
           <Input.TextArea

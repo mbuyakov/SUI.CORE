@@ -1,10 +1,10 @@
 /* tslint:disable:no-magic-numbers */
+import {SUI_ROW_GRID} from "@/styles";
 import {CircularProgress, IconButton} from '@material-ui/core';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import {Slider} from "antd";
 import {SliderSingleProps} from "antd/lib/slider";
 import * as React from "react";
-import {SUI_ROW_GROW_LEFT} from "../styles";
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
 export type PromisedSliderProps = Omit<IPromisedBaseProps<number>, "validator"> & Omit<SliderSingleProps, "value" | "onChange">;
@@ -28,12 +28,15 @@ export class PromisedSlider extends PromisedBase<PromisedSliderProps, IPromisedB
         onClick={this.saveWithoutValue}
         size="small"
       >
-        {this.state.loading ? (<CircularProgress size={16} />) : (<SaveOutlinedIcon/>)}
+        {this.state.loading ? (<CircularProgress size={16}/>) : (<SaveOutlinedIcon/>)}
       </IconButton>
     );
 
     return (
-      <div className={SUI_ROW_GROW_LEFT}>
+      <div
+        className={SUI_ROW_GRID}
+        style={{gridTemplateColumns: "minmax(1px, 1fr) max-content"}}
+      >
         <Slider
           {...sliderProps}
           disabled={this.props.disabled || this.state.loading || false}

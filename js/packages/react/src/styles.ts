@@ -1,5 +1,6 @@
 export const SUI_ROW_CONTAINER = "sui-row-container";
 export const SUI_ROW = "sui-row";
+export const SUI_ROW_GRID = "sui-row-grid";
 export const SUI_ROW_GROW_LEFT = "sui-row-grow-left";
 export const SUI_ROW_GROW_RIGHT = "sui-row-grow-right";
 export const SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS = "sui-BackendTable-hideModalButtons";

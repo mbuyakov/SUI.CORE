@@ -1,12 +1,11 @@
-import { CircularProgress, IconButton } from '@material-ui/core';
+import {DisableEditContext} from "@/DisableEditContext";
+import {SUI_ROW_GRID} from '@/styles';
+import {CircularProgress, IconButton} from '@material-ui/core';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import Select, {SelectProps, SelectValue} from "antd/lib/select";
 import * as React from "react";
 
-import { SUI_ROW_GROW_LEFT } from '../styles';
-
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
-import {DisableEditContext} from "../DisableEditContext";
 
 export type PromisedSelectProps<T> = IPromisedBaseProps<T> & Omit<SelectProps<T>, "onChange" | "value">
 
@@ -28,9 +27,9 @@ export class PromisedSelect<T extends SelectValue> extends PromisedBase<Promised
         onClick={this.saveWithoutValue}
         size="small"
       >
-        {this.state.loading ? (<CircularProgress size={16} />) : (<SaveOutlinedIcon/>)}
+        {this.state.loading ? (<CircularProgress size={16}/>) : (<SaveOutlinedIcon/>)}
       </IconButton>
-      );
+    );
     const withPopover: JSX.Element = (
       <DisableEditContext.Consumer>
         {(disableEdit): JSX.Element => {
@@ -48,7 +47,10 @@ export class PromisedSelect<T extends SelectValue> extends PromisedBase<Promised
     );
 
     return (
-      <div className={SUI_ROW_GROW_LEFT}>
+      <div
+        className={SUI_ROW_GRID}
+        style={{gridTemplateColumns: "minmax(1px, 1fr) max-content"}}
+      >
         {withPopover}
         {this.state.savedValue !== this.state.value && saveButton}
       </div>

@@ -1,13 +1,12 @@
-import { CircularProgress, IconButton } from '@material-ui/core';
+import {SUI_ROW_GRID} from '@/styles';
+import {CircularProgress, IconButton} from '@material-ui/core';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
-import { DatePicker } from 'antd';
-import { DatePickerProps } from 'antd/lib/date-picker';
+import {DatePicker} from 'antd';
+import {DatePickerProps} from 'antd/lib/date-picker';
 import moment from 'moment';
 import * as React from 'react';
 
-import { SUI_ROW_GROW_LEFT } from '../styles';
-
-import { IPromisedBaseProps, IPromisedBaseState, PromisedBase } from './PromisedBase';
+import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from './PromisedBase';
 
 export type PromisedDatepickerProps = IPromisedBaseProps<moment.Moment | null> & Omit<DatePickerProps, "onChange" | "value">
 
@@ -34,7 +33,7 @@ export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps,
       >
         {this.state.loading ? (<CircularProgress size={16}/>) : (<SaveOutlinedIcon/>)}
       </IconButton>
-      );
+    );
     const datePickerWithPopover: JSX.Element = this.wrapInValidationPopover(
       <DatePicker
         {...selectProps as DatePickerProps}
@@ -45,7 +44,10 @@ export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps,
     );
 
     return (
-      <div className={SUI_ROW_GROW_LEFT}>
+      <div
+        className={SUI_ROW_GRID}
+        style={{gridTemplateColumns: "minmax(1px, 1fr) max-content"}}
+      >
         {datePickerWithPopover}
         {this.state.savedValue !== this.state.value && saveButton}
       </div>
