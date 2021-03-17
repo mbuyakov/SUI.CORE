@@ -35,7 +35,7 @@ export class PromisedSlider extends PromisedBase<PromisedSliderProps, IPromisedB
     return (
       <div
         className={SUI_ROW_GRID}
-        style={{gridTemplateColumns: "minmax(1px, 1fr) max-content"}}
+        style={{gridTemplateColumns: "1fr max-content"}}
       >
         <Slider
           {...sliderProps}

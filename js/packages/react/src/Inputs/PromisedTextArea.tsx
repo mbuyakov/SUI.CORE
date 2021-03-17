@@ -47,7 +47,7 @@ export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromi
       <div
         className={this.props.rowClassName || SUI_ROW_GRID}
         style={{
-          gridTemplateColumns: "minmax(1px, 1fr) max-content",
+          gridTemplateColumns: "1fr max-content",
           ...this.props.rowStyle
         }}
       >

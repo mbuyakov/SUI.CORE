@@ -46,7 +46,7 @@ export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps,
     return (
       <div
         className={SUI_ROW_GRID}
-        style={{gridTemplateColumns: "minmax(1px, 1fr) max-content"}}
+        style={{gridTemplateColumns: "1fr max-content"}}
       >
         {datePickerWithPopover}
         {this.state.savedValue !== this.state.value && saveButton}

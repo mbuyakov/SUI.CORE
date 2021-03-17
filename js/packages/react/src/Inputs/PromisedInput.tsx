@@ -74,7 +74,7 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
         className={SUI_ROW_GRID}
         style={{
           ...this.props.rowStyle,
-          gridTemplateColumns: "minmax(1px, 1fr) max-content"
+          gridTemplateColumns: "1fr max-content"
         }}
       >
         {
