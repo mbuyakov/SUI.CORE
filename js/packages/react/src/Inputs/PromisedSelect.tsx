@@ -49,7 +49,7 @@ export class PromisedSelect<T extends SelectValue> extends PromisedBase<Promised
     return (
       <div
         className={SUI_ROW_GRID}
-        style={{gridTemplateColumns: "1fr max-content"}}
+        style={{gridTemplateColumns: "minmax(1px, 1fr) max-content"}}
       >
         {withPopover}
         {this.state.savedValue !== this.state.value && saveButton}
