@@ -82,6 +82,7 @@ export interface IBackendTableProps {
   titleEnabled?: boolean;
   watchFilters?: boolean;
   lazyMode?: boolean;
+  cardLinkFnIcon?: JSX.Element;
 
   cardLinkFn?(id: string, row: IObjectWithIndex): string;
 
@@ -987,12 +988,13 @@ export class BackendTable<TSelection = defaultSelection>
       const _serviceColumns = (this.props.serviceColumns ? wrapInArray(this.props.serviceColumns) : []);
 
       if (this.props.cardLinkFn) {
+        const _cardLinkFnIcon = this.props.cardLinkFnIcon ? this.props.serviceColumns : <LinkIcon/>;
         _serviceColumns.push({
           id: '__link__',
           title: ' ',
           width: 80,
           dataKey: 'id',
-          render: (value: any, row: IObjectWithIndex): JSX.Element => (<RouterLink to={this.props.cardLinkFn(value, row)} type="link" text={<IconButton><LinkIcon/></IconButton>}/>),
+          render: (value: any, row: IObjectWithIndex): JSX.Element => (<RouterLink to={this.props.cardLinkFn(value, row)} type="link" text={<IconButton>{_cardLinkFnIcon}</IconButton>}/>),
         });
       }
 
