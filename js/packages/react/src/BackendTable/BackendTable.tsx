@@ -988,7 +988,7 @@ export class BackendTable<TSelection = defaultSelection>
       const _serviceColumns = (this.props.serviceColumns ? wrapInArray(this.props.serviceColumns) : []);
 
       if (this.props.cardLinkFn) {
-        const _cardLinkFnIcon = this.props.cardLinkFnIcon ? this.props.serviceColumns : <LinkIcon/>;
+        const _cardLinkFnIcon = this.props.cardLinkFnIcon ? this.props.cardLinkFnIcon : <LinkIcon/>;
         _serviceColumns.push({
           id: '__link__',
           title: ' ',
