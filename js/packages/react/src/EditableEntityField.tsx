@@ -30,7 +30,7 @@ export class EditableEntityField<T = any> extends React.Component<IEditableEntit
   private readonly waitDataRef: React.RefObject<WaitData> = React.createRef<WaitData>();
 
   public render(): JSX.Element {
-    const childrenWidth = this.props.children?.props?.style?.width;
+    const childrenWidth = this.props.children?.props?.style?.width ?? this.props.children?.props?.style?.minWidth;
     return (
       <div style={{display: 'inline-block', width: (childrenWidth && typeof childrenWidth == "number") ? childrenWidth + 75/* button block width */ : undefined}}>
         <WaitData<IObjectWithIndex>
