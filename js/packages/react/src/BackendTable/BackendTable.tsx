@@ -270,6 +270,7 @@ export class BackendTable<TSelection = defaultSelection>
     const allowExportAll = getSUISettings().permissions?.exportAll
       ? getSUISettings().permissions?.exportAll(getUser())
       : admin;
+    const virtual = this.props.virtual;
 
     return (
       <WaitData
@@ -312,7 +313,7 @@ export class BackendTable<TSelection = defaultSelection>
             )
           }
           toolbarButtons={[
-            allowExportAll && (
+            (allowExportAll && !virtual) && (
               <ExportPlugin
                 onClick={this.exportAll}
                 tooltip="Выгрузка всех строк в Excel"
