@@ -271,6 +271,7 @@ export class BackendTable<TSelection = defaultSelection>
       ? getSUISettings().permissions?.exportAll(getUser())
       : admin;
     const virtual = this.props.virtual;
+    const lazyStub = this.state.lazyStub;
 
     return (
       <WaitData
@@ -283,14 +284,15 @@ export class BackendTable<TSelection = defaultSelection>
         <BaseTable<TSelection>
           {...this.props}
           {...this.state}
-          groupingEnabled={this.state.lazyStub ? false : this.props.groupingEnabled}
-          sortingEnabled={this.state.lazyStub ? false : this.props.sortingEnabled}
-          paginationEnabled={this.state.lazyStub ? false : this.props.paginationEnabled}
-          noDataCellComponent={this.state.loading ? LoadingNoDataCell : this.state.lazyStub ? LazyStubNoDataCell(this.showAll) : undefined}
-          noDataCellComponentSmall={this.state.loading ? LoadingNoDataCellSmall : this.state.lazyStub ? LazyStubNoDataCellSmall(this.showAll) : undefined}
+          groupingEnabled={lazyStub ? false : this.props.groupingEnabled}
+          sortingEnabled={lazyStub ? false : this.props.sortingEnabled}
+          paginationEnabled={lazyStub ? false : this.props.paginationEnabled}
+          noDataCellComponent={this.state.loading ? LoadingNoDataCell : lazyStub ? LazyStubNoDataCell(this.showAll) : undefined}
+          noDataCellComponentSmall={this.state.loading ? LoadingNoDataCellSmall : lazyStub ? LazyStubNoDataCellSmall(this.showAll) : undefined}
           defaultFilters={undefined}
+          allowExport={!lazyStub && this.props.allowExport}
           cols={this.state.cols || []}
-          rows={this.state.lazyStub ? [] : this.state.data}
+          rows={lazyStub ? [] : this.state.data}
           ref={this.baseTableRef}
           title={this.props.title || this.state.title}
           paperStyle={{
@@ -313,7 +315,7 @@ export class BackendTable<TSelection = defaultSelection>
             )
           }
           toolbarButtons={[
-            (allowExportAll && !virtual) && (
+            (allowExportAll && !virtual && !lazyStub) && (
               <ExportPlugin
                 onClick={this.exportAll}
                 tooltip="Выгрузка всех строк в Excel"
