@@ -88,7 +88,7 @@ export function addPluralEnding(str: string | null | undefined): string {
         ret = `${str.slice(0, -1)}ie`;
       }
       ret += "s";
-    } else if (str.endsWith("us")) {
+    } else if (str.endsWith("us") || str.endsWith("ss")) {
       ret += "es";
     }
   }
@@ -111,6 +111,8 @@ export function removePluralEnding(str: string | null | undefined): string {
     ret = str;
 
     if (str.endsWith("uses")) {
+      ret = str.slice(0, -2);
+    } else if (str.endsWith("sses")) {
       ret = str.slice(0, -2);
     } else if (str.endsWith("us")) {
       ret = str;

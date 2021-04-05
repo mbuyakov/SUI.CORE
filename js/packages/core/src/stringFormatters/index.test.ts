@@ -72,6 +72,9 @@ test("Add plural ending y", () => {
 test("Add plural ending status", () => {
   expect(stringFormatters.addPluralEnding("status")).toBe("statuses");
 });
+test("Add plural ending class", () => {
+  expect(stringFormatters.addPluralEnding("class")).toBe("classes");
+});
 test("Add plural ending person (exclusion)", () => {
   expect(stringFormatters.addPluralEnding("person")).toBe("people");
 });
@@ -93,6 +96,9 @@ test("Remove plural ending ies", () => {
 });
 test("Remove plural ending statuses", () => {
   expect(stringFormatters.removePluralEnding("statuses")).toBe("status");
+});
+test("Remove plural ending classes", () => {
+  expect(stringFormatters.removePluralEnding("classes")).toBe("class");
 });
 test("Remove plural ending people", () => {
   expect(stringFormatters.removePluralEnding("people")).toBe("person");
