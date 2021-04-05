@@ -98,6 +98,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
                               allowClear={false}
                               ranges={GET_DEFAULT_CALENDAR_RANGES()}
                               value={latestLogValues.period}
+                              format={"DD.MM.YYYY"}
                               onChange={this.onLatestLogValuesChangeFn("period")}
                             />
                             <InputNumber
