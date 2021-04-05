@@ -2,6 +2,7 @@ import InputNumber from 'antd/lib/input-number';
 import autobind from "autobind-decorator";
 import * as React from 'react';
 
+import {sleep} from "@sui/core";
 import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 type INumberIntervalColumnFilterProps = LazyTableFilterRowCellProps & INewSearchProps;
@@ -12,10 +13,13 @@ type FilterValue = [SingleValue, SingleValue];
 interface INumberIntervalColumnFilterState {
   lastFilterValue: FilterValue;
   value: FilterValue;
+  fromIsInFocus: boolean;
+  toIsInFocus: boolean;
 }
 
 const propsFilterValueToStateFilterValue = (filterValue: FilterValue): FilterValue => [filterValue[0] ?? null, filterValue[1] ?? null];
 const equals = (filterValue1: FilterValue, filterValue2: FilterValue): boolean => (filterValue1[0] === filterValue2[0]) && ((filterValue1[1] === filterValue2[1]));
+const notNull = (filterValue1: FilterValue): boolean => !!filterValue1[0] && !!filterValue1[1];
 
 export class NumberIntervalColumnFilter extends React.Component<INumberIntervalColumnFilterProps, INumberIntervalColumnFilterState> {
 
@@ -24,7 +28,12 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
 
     const value = propsFilterValueToStateFilterValue((props.filter?.value || []) as unknown as FilterValue);
 
-    this.state = { lastFilterValue: value, value };
+    this.state = {
+      lastFilterValue: value,
+      value,
+      fromIsInFocus: false,
+      toIsInFocus: false
+    };
   }
 
   public componentDidUpdate(): void {
@@ -49,7 +58,8 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
           placeholder="С"
           style={{width: "100%"}}
           value={this.state.value[0]}
-          onBlur={this.onBlur}
+          onBlur={() => this.onBlur(0)}
+          onFocus={() => this.setState({fromIsInFocus: true})}
           onChange={this.onChangeFn(0)}
           onKeyUp={this.onKeyUp}
         />
@@ -58,7 +68,8 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
           placeholder="По"
           style={{width: "100%"}}
           value={this.state.value[1]}
-          onBlur={this.onBlur}
+          onBlur={() => this.onBlur(1)}
+          onFocus={() => this.setState({toIsInFocus: true})}
           onChange={this.onChangeFn(1)}
           onKeyUp={this.onKeyUp}
         />
@@ -67,8 +78,17 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
   }
 
   @autobind
-  private onBlur(): void {
-    this.triggerFilter(true);
+  private async onBlur(inputId: 0 | 1): Promise<void> {
+    if (inputId == 0) {
+      await this.setState({fromIsInFocus: false})
+    } else {
+      await this.setState({toIsInFocus: false})
+    }
+    await sleep(250);
+
+    const allInputsIsOnBlur = !(this.state.fromIsInFocus || this.state.toIsInFocus);
+
+    this.triggerFilter(!(!equals(this.state.value, this.state.lastFilterValue) && notNull(this.state.value) && allInputsIsOnBlur));
   }
 
   @autobind
