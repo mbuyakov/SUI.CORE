@@ -99,7 +99,7 @@ export class UserList<T extends {}> extends React.Component<IUserListProps<T>> {
                 }
               }
             },
-            ...(this.props.additionalRows ? wrapInArrayWithoutNulls(this.props.additionalRows) : undefined)
+            ...(this.props.additionalRows ? wrapInArrayWithoutNulls(this.props.additionalRows) : [])
           ]
         }}
       />
