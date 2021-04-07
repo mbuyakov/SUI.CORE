@@ -1,13 +1,19 @@
 import {DBUniqueValidator} from "@/validator/DBUniqueValidator";
+import {IObjectWithIndex} from "@/other";
 
 export async function PersonUniqueFieldValidator<T = string>(fieldName: string,
                                                              fieldValue: T,
                                                              errMessage: string,
                                                              excludePersonId: string = null,
                                                              linkToEntity: (idFieldName: string, entityId: string, errMessage: string) => void,
-                                                             includeDeletedPeople: boolean = true): Promise<any> {
+                                                             excludeDeletedPeople?: boolean): Promise<any> {
   return new Promise((resolve, reject): any => {
-    DBUniqueValidator("allPeople", {[fieldName]: fieldValue, 'deleted': includeDeletedPeople}, 'id', excludePersonId)
+    let queryFields: IObjectWithIndex = !!excludeDeletedPeople ? {deleted: false} : {};
+    queryFields = {
+      ...queryFields,
+      [fieldName]: fieldValue
+    };
+    DBUniqueValidator("allPeople", queryFields, 'id', excludePersonId)
       .then(data => {
         if (data.table.totalCount > 0) {
           reject(linkToEntity('id', data.table.nodes[0].__id, errMessage));
