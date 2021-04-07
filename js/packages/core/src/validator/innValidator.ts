@@ -6,5 +6,5 @@ export function innValidator(inn: string): string {
   const firstCheckSum = checkSumMaskInnFirst.map((value, index) => value * innNumber[index]).reduce((previousValue, currentValue) => previousValue + currentValue) % 11;
   const secondCheckSum = checkSumMaskInnSecond.map((value, index) => value * innNumber[index]).reduce((previousValue, currentValue) => previousValue + currentValue) % 11;
 
-  return inn.length < 12 ? '' : firstCheckSum === innNumber[10] && secondCheckSum === innNumber[11] ? '' : "Ошибка. Некорректный ИНН";
+  return inn.length < 12 ? '' : (firstCheckSum > 9 ? firstCheckSum % 10 : firstCheckSum) === innNumber[10] && (secondCheckSum > 9 ? secondCheckSum % 10 : secondCheckSum) === innNumber[11] ? '' : "Ошибка. Некорректный ИНН";
 }
