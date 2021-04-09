@@ -174,7 +174,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                       render: (userRoles: IUserRole[] | undefined): JSX.Element => (
                         <EditablePromisedComponent
                           nonEditRender={(roleIds: string[] | undefined) => roleIds?.length
-                            ? this.props.roles.filter(role => roleIds.includes(role.id)).map(role => role.rusName).join(", ")
+                            ? this.props.roles?.filter(role => roleIds.includes(role.id)).map(role => role.rusName).join(", ")
                             : NO_DATA_TEXT
                           }
                         >
@@ -184,7 +184,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                             defaultValue={userRoles?.map(userRole => userRole.roleId)}
                             validator={[{required: true, message: "Роли должны быть заполнены", type: "array"}]}
                           >
-                            {this.props.roles.map(role => (<Select.Option key={role.id} value={role.id}>{role.rusName}</Select.Option>))}
+                            {this.props.roles?.map(role => (<Select.Option key={role.id} value={role.id}>{role.rusName}</Select.Option>))}
                           </PromisedSelect>
                         </EditablePromisedComponent>
                       )
