@@ -75,17 +75,17 @@ public class MetaAccessService {
 
     // ignore restrictions if user is Admin
     if (user.getRoles().stream().noneMatch(role -> role.getRoleName() == RoleName.ROLE_ADMIN)) {
-      val restrictions = restrictionRepository.findRestrictions(user, Long.class);
-
-      val joinedRestrictions = restrictions
-        .stream()
-        .map(Objects::toString)
-        .map(restriction -> String.format("'%s'", restriction))
-        .collect(Collectors.joining(","));
-
       val restrictionTableInfo = suiMetaSettingRepository.getRestrictionTable().orElse(null);
 
       if (restrictionTableInfo != null) {
+        val restrictions = restrictionRepository.findRestrictions(user, Long.class);
+
+        val joinedRestrictions = restrictions
+          .stream()
+          .map(Objects::toString)
+          .map(restriction -> String.format("'%s'", restriction))
+          .collect(Collectors.joining(","));
+
         val fromTableInfo = fromTable.getTableInfo();
 
         // Select from restriction table
