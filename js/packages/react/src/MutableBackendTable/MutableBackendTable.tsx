@@ -45,8 +45,6 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
       <DisableEditContext.Consumer>
         {(disableEdit): JSX.Element => {
           const {
-            createButtonProps,
-            deleteButtonProps,
             mutationRoles,
             getEditInitialValues,
             handleCreate,
@@ -57,29 +55,8 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
           const allowEdit = !disableEdit && (mutationRoles ? hasAnyRole(mutationRoles) : true);
           const rowEditable = !!getEditInitialValues && allowEdit;
 
-          const createButton = (
-            <Button
-              icon={<PlusCircleOutlined/>}
-              {...createButtonProps}
-              onClick={this.showBaseModalFn(this.createBaseFormModalRef)}
-            >
-              {createButtonProps && createButtonProps.children || "Создать"}
-            </Button>
-          );
-
-          const deleteButton = (
-            <PromisedButton
-              icon={<DeleteOutlined/>}
-              {...deleteButtonProps}
-              promise={this.handleDeleteClick}
-              popconfirmSettings={{
-                placement: "topRight",
-                title: "Вы уверены, что хотите удалить выбранные записи?"
-              }}
-            >
-              {deleteButtonProps && deleteButtonProps.children || "Удалить"}
-            </PromisedButton>
-          );
+          const createButton = this.generateCreateButton();
+          const deleteButton = this.generateDeleteButton();
 
           let extra = this.props.customExtra
             ? this.props.customExtra(createButton, deleteButton)
@@ -170,6 +147,38 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
           );
         }}
       </DisableEditContext.Consumer>
+    );
+  }
+
+  @autobind
+  public generateDeleteButton(): JSX.Element {
+    const deleteButtonProps = this.props.deleteButtonProps;
+    return (
+      <PromisedButton
+        icon={<DeleteOutlined/>}
+        {...deleteButtonProps}
+        promise={this.handleDeleteClick}
+        popconfirmSettings={{
+          placement: "topRight",
+          title: "Вы уверены, что хотите удалить выбранные записи?"
+        }}
+      >
+        {deleteButtonProps && deleteButtonProps.children || "Удалить"}
+      </PromisedButton>
+    );
+  }
+
+  @autobind
+  public generateCreateButton(): JSX.Element {
+    const createButtonProps = this.props.createButtonProps;
+    return (
+      <Button
+        icon={<PlusCircleOutlined/>}
+        {...createButtonProps}
+        onClick={this.showBaseModalFn(this.createBaseFormModalRef)}
+      >
+        {createButtonProps && createButtonProps.children || "Создать"}
+      </Button>
     );
   }
 
