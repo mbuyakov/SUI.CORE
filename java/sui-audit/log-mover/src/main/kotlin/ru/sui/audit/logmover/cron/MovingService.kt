@@ -38,7 +38,7 @@ class MovingService(
 
     private val transactionTemplate = transactionManager.template()
 
-    @Scheduled(fixedDelay = 60_000)
+    @Scheduled(fixedDelayString = "\${setting.logmover.delay:60000}")
     fun moveLogs() {
         log.info { "Start executing moveLogs()" }
 
