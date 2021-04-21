@@ -17,8 +17,8 @@ import {StringWithError} from "@/utils";
 
 
 export const RUSSIAN_PASSPORT_DOC_CODE = 21;
-export const issuedByRegex = "^[0-9А-Яа-я\\s№.\\-\"\']{1,250}$";
-export const issuedByDesc = "Разрешены русские буквы, цифры и символы №.-\"\' до 250 знаков";
+export const issuedByRegex = "^[0-9А-Яа-я\\s№.\\-\"\'()]{1,250}$";
+export const issuedByDesc = "Разрешены русские буквы, цифры и символы №.-\"\'() до 250 знаков";
 
 const DUL_FIELDS_NAMES = [
   "date",
