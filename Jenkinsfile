@@ -6,6 +6,11 @@ pipeline {
       disableConcurrentBuilds()
   }
 
+  parameters {
+          booleanParam(defaultValue: true, description: 'Build', name: 'build')
+          booleanParam(defaultValue: false, description: 'Clean workspace', name: 'clean_ws')
+  }
+
   agent any
 
   stages {
@@ -21,9 +26,9 @@ pipeline {
       }
     }
     stage("Parralel"){
-//       when {
-//         branch "master"
-//       }
+      when {
+        environment name: 'игшдв', value: 'true'
+      }
       parallel {
         stage("JVM") {
           steps {
@@ -77,6 +82,16 @@ pipeline {
             """
           }
         }
+      }
+    }
+
+    stage('Clean workspace') {
+      when {
+        environment name: 'clean_ws', value: 'true'
+      }
+
+      steps {
+        cleanWs()
       }
     }
   }
