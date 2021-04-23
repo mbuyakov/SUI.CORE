@@ -27,7 +27,7 @@ pipeline {
     }
     stage("Parralel"){
       when {
-        environment name: 'игшдв', value: 'true'
+        environment name: 'build', value: 'true'
       }
       parallel {
         stage("JVM") {
