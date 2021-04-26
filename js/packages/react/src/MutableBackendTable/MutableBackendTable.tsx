@@ -91,7 +91,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
               <BackendTable<TSelection>
                 {...this.props}
                 innerRef={this.tableRef}
-                selectionEnabled={!!extra && defaultIfNotBoolean(this.props.selectionEnabled, true)} // Отключение selection в случае невидимости кнопок по ролям
+                selectionEnabled={defaultIfNotBoolean(this.props.selectionEnabled, true)}
                 extra={extra}
                 serviceColumns={!rowEditable
                   ? serviceColumns
