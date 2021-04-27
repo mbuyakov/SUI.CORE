@@ -9,6 +9,7 @@ import {defaultIfNotBoolean, getDataByKey, IObjectWithIndex, sleep} from "@sui/c
 import {Button, notification} from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";
+import {unCapitalize} from "@sui/core/es/stringFormatters";
 import {PromisedButton, PromisedMaterialIconButton} from '../Inputs';
 
 import {IMutableBackendTableProps} from "./types";
@@ -158,7 +159,8 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
         promise={this.handleDeleteClick}
         popconfirmSettings={{
           placement: "topRight",
-          title: "Вы уверены, что хотите удалить выбранные записи?"
+          title: `Вы уверены, что хотите ${typeof deleteButtonProps?.children === 'string' ?
+            unCapitalize(deleteButtonProps?.children) : "удалить"} выбранные записи?`
         }}
       >
         {deleteButtonProps && deleteButtonProps.children || "Удалить"}
@@ -183,6 +185,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
   @autobind
   private async handleDeleteClick(): Promise<void> {
     const selection = this.tableRef.current.getSelection();
+    const deleteButtonProps = this.props.deleteButtonProps;
 
     if (selection.length) {
       if (this.props.handleDelete) {
@@ -207,7 +210,8 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
           }));
       }
     } else {
-      errorNotification("Ничего не выбрано", "Пожалуйста, выберите записи, которые Вы хотите удалить");
+      errorNotification("Ничего не выбрано", `Пожалуйста, выберите записи, которые Вы хотите
+      ${typeof deleteButtonProps?.children === 'string' ? unCapitalize(deleteButtonProps?.children) : "удалить"}`);
     }
   }
 
