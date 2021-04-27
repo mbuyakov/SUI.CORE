@@ -25,7 +25,6 @@ export const DEFAULT_MODAL_WIDTH_VARIANT = {
 interface IMutableBackendTableState<T> {
   editModalInitialValues?: Partial<T>;
   editRow?: IObjectWithIndex;
-  initEditLoading: boolean;
 }
 
 export class MutableBackendTable<TValues extends {}, TSelection = number, TEditValues = TValues>
@@ -37,7 +36,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
 
   public constructor(props: IMutableBackendTableProps<TValues, TSelection, TEditValues>) {
     super(props);
-    this.state = {initEditLoading: false};
+    this.state = {};
   }
 
   public render(): JSX.Element {
@@ -105,7 +104,6 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
                               marginBottom: -12,
                               marginTop: -12
                             }}
-                            loading={this.state.initEditLoading}
                             icon={<CreateIcon/>}
                             promise={this.handleEditClickFn(row)}
                           />
@@ -219,7 +217,6 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
       const {getEditInitialValues} = this.props;
 
       if (getEditInitialValues) {
-        this.setState({initEditLoading: true});
         this.setState(
           {
             editModalInitialValues: await getEditInitialValues(row),
@@ -228,7 +225,6 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
           this.showBaseModalFn(this.editBaseFormModalRef)
         );
         await sleep(500);
-        this.setState({initEditLoading: false});
       } else {
         throw new Error("getEditInitialValues can not be null");
       }
