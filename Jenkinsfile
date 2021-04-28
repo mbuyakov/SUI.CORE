@@ -11,7 +11,7 @@ pipeline {
           booleanParam(defaultValue: false, description: 'Clean workspace', name: 'clean_ws')
   }
 
-  agent any
+  agent { label 'master' }
 
   stages {
     stage("Deploy Verdaccio") {
