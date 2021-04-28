@@ -5,11 +5,10 @@ import {PromisedBaseFormModal} from "@/Modal";
 import {hasAnyRole} from "@/RoleVisibilityWrapper";
 import {DeleteOutlined, PlusCircleOutlined} from "@ant-design/icons";
 import CreateIcon from '@material-ui/icons/CreateOutlined';
-import {defaultIfNotBoolean, getDataByKey, IObjectWithIndex, sleep} from "@sui/core";
+import {defaultIfNotBoolean, getDataByKey, IObjectWithIndex, sleep, unCapitalize} from "@sui/core";
 import {Button, notification} from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {unCapitalize} from "@sui/core/es/stringFormatters";
 import {PromisedButton, PromisedMaterialIconButton} from '../Inputs';
 
 import {IMutableBackendTableProps} from "./types";
