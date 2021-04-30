@@ -83,6 +83,7 @@ export class PromisedModal
       <Modal
         visible={this.state.visible}
         destroyOnClose={true}
+        maskClosable={false}
         centered={true}
         {...this.props}
         bodyStyle={{
@@ -100,6 +101,7 @@ export class PromisedModal
 
   @autobind
   public setModalVisibility(visible: boolean = true, callback?: () => void): void {
+    console.log("setModalVisibility", visible);
     this.setState({visible}, async (): Promise<void> => {
       if (callback) {
         callback();
@@ -113,6 +115,7 @@ export class PromisedModal
 
   @autobind
   private onModalClose(e: React.MouseEvent<HTMLElement>): void {
+    console.log("onModalClose", e);
     this.setModalVisibility(false);
     if(this.props.onCancel) {
       this.props.onCancel(e);
