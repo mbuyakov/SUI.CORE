@@ -11,14 +11,16 @@ export abstract class TableRenderParamsPlugin<T> {
 
   public readonly hasSettings: boolean;
   public readonly hidden: boolean;
+  public readonly useInSubtotal: boolean;
   public readonly id: string;
   public readonly title: string;
 
-  protected constructor(id: string, title: string, hasSettings: boolean, hidden: boolean = false) {
+  protected constructor(id: string, title: string, hasSettings: boolean, useInSubtotal: boolean = false, hidden: boolean = false) {
     this.id = id;
     this.title = title;
     this.hasSettings = hasSettings;
     this.hidden = hidden;
+    this.useInSubtotal = useInSubtotal;
   }
 
   public abstract async baseTableColGenerator(
@@ -42,7 +44,7 @@ export abstract class TableRenderParamsPlugin<T> {
     return false;
   }
 
-// @ts-ignore
+  // @ts-ignore
   public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<T>): React.ReactNode {
     return (
       <Tooltip
@@ -58,5 +60,9 @@ export abstract class TableRenderParamsPlugin<T> {
 
   public parseParams(tableRenderParams: ITableRenderParams<T>): ITableRenderParams<T> {
     return tableRenderParams;
+  }
+
+  public formatSubtotal(value: any, tableRenderParams: ITableRenderParams<T>): string {
+    return "Кажется, метод забыли переопределить("
   }
 }

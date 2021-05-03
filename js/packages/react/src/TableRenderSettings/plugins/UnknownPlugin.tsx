@@ -12,7 +12,7 @@ import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 export class UnknownPlugin extends TableRenderParamsPlugin<{}> {
 
   public constructor() {
-    super('unk', '-- Неизвестно --', false, true);
+    super('unk', '-- Неизвестно --', false, false, true);
   }
 
   public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): Promise<void> {

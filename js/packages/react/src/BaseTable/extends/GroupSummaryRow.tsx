@@ -1,12 +1,10 @@
-
 import {Getter, Plugin, Template} from "@devexpress/dx-react-core";
 import {GroupKey, TableRow as TableRowProps} from "@devexpress/dx-react-grid";
 import {Table} from "@devexpress/dx-react-grid-material-ui";
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {stringSymbolEquals, getDataByKey, NO_DATA_TEXT} from '@sui/core';
-import { IGroupSubtotalData, IBaseTableColLayout } from '../types';
-
+import {NO_DATA_TEXT, stringSymbolEquals} from '@sui/core';
+import {IBaseTableColLayout, IGroupSubtotalData} from '../types';
 
 
 const SUMMARY_KEY_PREFIX = "summary__";
@@ -71,15 +69,18 @@ export class GroupSummaryRow extends React.Component<IGroupSummaryRowProps> {
     const groupSubtotals = this.props.subtotalData && this.props.subtotalData.get(rowKey);
     const result = groupSubtotals
       && groupSubtotals.data
-// @ts-ignore
+      // @ts-ignore
       && groupSubtotals.data[column.id];
-    const roundCount = getDataByKey(column, "__tableRenderParams", "roundCount");
 
-    return (result === null || result === undefined)
-      ? NO_DATA_TEXT
-      : (Number.isInteger(result))
-        ? result
-        : Number(result.toFixed(typeof(roundCount) === "number" ? roundCount : 4)).toString();
-}
+    if (result === null || result === undefined) {
+      return NO_DATA_TEXT;
+    }
+
+    if (column.tableRenderPlugin.useInSubtotal) {
+      return column.tableRenderPlugin.formatSubtotal(result, column.tableRenderParams);
+    }
+
+    return result;
+  }
 
 }

@@ -3,6 +3,7 @@ import {CardType} from 'antd/lib/card';
 import * as React from 'react';
 
 import {DataKey, IObjectWithIndex} from '@sui/core';
+import {TableRenderParamsPlugin} from "@/TableRenderSettings";
 import {IBaseTableUserSettings} from "./extends/UserSettingsPlugin";
 
 export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode;
@@ -67,6 +68,9 @@ export interface IBaseTableColLayout {
   title?: string;
   width?: number;
   wordWrapEnabled?: boolean;
+
+  tableRenderPlugin?: TableRenderParamsPlugin<any>;
+  tableRenderParams?: any;
 
   comparator?(a: any, b: any): number;
   groupingCriteria?(value: any): any;

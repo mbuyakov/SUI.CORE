@@ -1,13 +1,13 @@
-import { InputNumber } from 'antd';
+import {InputNumber} from 'antd';
 import * as React from 'react';
 import {ColumnInfo} from "@sui/core";
 
-import { IBaseTableColLayout } from '../../BaseTable';
-import { IColumnInfoToBaseTableColProps } from '../../utils';
-import { TableRenderSettingsPluginManager } from '../TableRenderSettingsPluginManager';
-import { ITableRenderParams, TableRenderSettingsPopover } from '../TableRenderSettingsPopover';
+import {IBaseTableColLayout} from '../../BaseTable';
+import {IColumnInfoToBaseTableColProps} from '../../utils';
+import {TableRenderSettingsPluginManager} from '../TableRenderSettingsPluginManager';
+import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
 
-import { TableRenderParamsPlugin } from './TableRenderParamsPlugin';
+import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 
 
 export interface IRoundPluginTRP {
@@ -20,11 +20,11 @@ export class RoundPlugin extends TableRenderParamsPlugin<IRoundPluginTRP> {
     super('round', 'Округление', true);
   }
 
-public async baseTableColGenerator(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, _trp: ITableRenderParams<IRoundPluginTRP>): Promise<void> {
+  public async baseTableColGenerator(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, _trp: ITableRenderParams<IRoundPluginTRP>): Promise<void> {
     return;
   }
 
-public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<IRoundPluginTRP>): React.ReactNode {
+  public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<IRoundPluginTRP>): React.ReactNode {
     return (
       <>
         <span>Число знаков:</span>
@@ -34,6 +34,13 @@ public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<IRoundPluginTR
         />
       </>
     );
+  }
+
+  public formatSubtotal(value: any, tableRenderParams: ITableRenderParams<IRoundPluginTRP>): string {
+    const roundCount = tableRenderParams.roundCount;
+    return (Number.isInteger(value))
+      ? value
+      : Number(value.toFixed(typeof(roundCount) === "number" ? roundCount : 4)).toString();
   }
 }
 

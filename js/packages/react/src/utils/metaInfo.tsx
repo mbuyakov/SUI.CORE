@@ -85,8 +85,8 @@ export async function colToBaseTableCol(
     // @ts-ignore
     await selectedPlugin.baseTableColGenerator(result, renderColumnInfo, props, trp);
 
-    // @ts-ignore
-    result.__tableRenderParams = trp; // Костыль для округления подытогов
+    result.tableRenderPlugin = selectedPlugin;
+    result.tableRenderParams = trp;
   }
 
   // if (metaInitProps && metaInitProps.baseTableColLayoutGenerateHelper) {
