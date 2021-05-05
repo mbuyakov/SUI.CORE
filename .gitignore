@@ -11,3 +11,4 @@ node_modules
 .rts2_cache_umd
 dist
 es
+/js/yarn.lock
