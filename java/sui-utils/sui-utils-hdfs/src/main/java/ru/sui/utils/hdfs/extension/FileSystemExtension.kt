@@ -48,7 +48,7 @@ fun FileSystem.createWithLock(filePath: String, stream: InputStream, closeStream
         try {
             this.unlock(lockedFilePath)
         } catch (exception: Exception) {
-            this.deleteWithException(lockedFilePath)
+            kotlin.runCatching { this.delete(Path(lockedFilePath), false) }.onFailure { exception.addSuppressed(it) }
             throw exception
         }
     } finally {
