@@ -80,6 +80,10 @@ subprojects {
     }
   }
 
+  java {
+    withSourcesJar()
+  }
+
   task writeNewPom {
     doLast {
       pom {
