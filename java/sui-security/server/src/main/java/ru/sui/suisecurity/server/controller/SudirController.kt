@@ -4,10 +4,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import ru.sui.suisecurity.base.utils.sudirTmpToken
 import ru.sui.suisecurity.server.model.LoginRequest
 import ru.sui.suisecurity.server.service.SudirService
@@ -20,7 +17,7 @@ class SudirController(
   val suiAuthController: SuiAuthController
 ) {
 
-  @PostMapping("/callback")
+  @GetMapping("/callback")
   fun callback(@RequestParam code: String) : ResponseEntity<*> {
     val headers = HttpHeaders()
     headers.add("Location", "/#/login?sudirCode=$code")
