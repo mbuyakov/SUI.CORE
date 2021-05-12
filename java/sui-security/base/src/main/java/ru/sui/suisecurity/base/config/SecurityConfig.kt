@@ -1,5 +1,6 @@
 package ru.sui.suisecurity.base.config
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import ru.sui.suisecurity.base.security.CustomUserDetailsService
 import ru.sui.suisecurity.base.security.JwtAuthenticationEntryPoint
 import ru.sui.suisecurity.base.security.JwtAuthenticationFilter
+import ru.sui.suisecurity.base.utils.SudirBCryptPasswordEncoder
 import javax.annotation.PostConstruct
 
 @Configuration
@@ -48,7 +50,7 @@ class SecurityConfig(
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
+        return SudirBCryptPasswordEncoder()
     }
 
     @Throws(Exception::class)
