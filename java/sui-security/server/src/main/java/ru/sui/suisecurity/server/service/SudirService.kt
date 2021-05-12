@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
@@ -31,6 +32,7 @@ data class MeResponse(
 )
 
 @Service
+@ConditionalOnExpression("\${sudir.enabled:false}")
 class SudirService(
   @Value("\${sudir.url}")
   val url: String,
