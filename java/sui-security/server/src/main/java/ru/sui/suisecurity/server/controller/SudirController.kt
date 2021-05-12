@@ -18,16 +18,16 @@ class SudirController(
 ) {
 
   @GetMapping("/callback")
-  fun callback(@RequestParam code: String) : ResponseEntity<*> {
+  fun callback(@RequestParam code: String): ResponseEntity<*> {
     val headers = HttpHeaders()
     headers.add("Location", "/#/login?sudirCode=$code")
     return ResponseEntity<String>(headers, HttpStatus.FOUND)
   }
 
   @PostMapping("/signin")
-  fun sudirSignin(@RequestParam code: String) {
+  fun sudirSignin(@RequestParam code: String): ResponseEntity<*> {
     val teResponse = sudirService.te(code)
     val meResponse = sudirService.me(teResponse.accessToken)
-    suiAuthController.signin(LoginRequest(meResponse.email, sudirTmpToken))
+    return suiAuthController.signin(LoginRequest(meResponse.email, sudirTmpToken))
   }
 }
