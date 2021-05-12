@@ -1,4 +1,4 @@
-package ru.sui.suisecurity.base.service
+package ru.sui.suisecurity.server.service
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
@@ -14,14 +14,6 @@ import java.util.*
 
 private val log = KotlinLogging.logger { }
 private val restTemplate = RestTemplate()
-
-val sudirTmpToken by lazy {
-  val token = "sudir-${UUID.randomUUID()}"
-  log.info { "SUDIR tmp token: $token" }
-  token
-}
-
-
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy::class)
 data class TeResponse(
