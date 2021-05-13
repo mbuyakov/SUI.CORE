@@ -33,7 +33,7 @@ function publish(version) {
     });
     packages.forEach(pkg => {
       console.log(`====\r\nPublishing ${pkg}\r\n====`);
-        execSync(`yarn publish --registry http://verdaccio.smp.cloudcom.ru/ --non-interactive --no-git-tag-version --new-version ${version}`, {
+        execSync(`yarn publish --registry https://nexus.suilib.ru/repository/npm-sui/ --non-interactive --no-git-tag-version --new-version ${version}`, {
           stdio: "inherit",
           cwd: `${process.cwd()}/packages/${pkg}`
         });

@@ -9,15 +9,11 @@
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch",
-    "lint": "cross-env ROOT_DIR=src sui-linter",
-    "lint-fix": "cross-env ROOT_DIR=src FIX=1 sui-linter",
-    "lint-watch": "cross-env ROOT_DIR=src sui-linter --watch",
-    "lint-timing": "cross-env TIMING=1 ROOT_DIR=src sui-linter",
+    "lint": "sui-linter",
     "build": "cd ../.. && cross-env PACKAGE=core father-build && cd ./packages/core && npx tsc-alias -p tsconfig.json",
     "ci": "run-s lint build"
   },
   "devDependencies": {
-    "@sui/linter": "8.0.0",
     "@types/jsonpack": "^1.1.0",
     "@types/lodash": "^4.14.149",
     "@types/node": "^13.11.1",

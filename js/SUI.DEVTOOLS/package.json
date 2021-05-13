@@ -7,7 +7,6 @@
     "tsconfig.json",
     "umi",
     "jest-linter.config.js",
-    "jest-runner-eslint.config.js"
   ],
   "bin": {
     "sui-builder": "bin/sui-builder.js",

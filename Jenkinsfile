@@ -14,18 +14,7 @@ pipeline {
   agent { label 'master' }
 
   stages {
-    stage("Deploy Verdaccio") {
-      when {
-        changeset "**/verdaccio/**"
-      }
-      steps {
-        sh """
-          export DOCKER_HOST=tcp://176.9.72.49:2375
-          docker-compose -f ./verdaccio/docker-compose.yml up -d --build
-        """
-      }
-    }
-    stage("Parralel"){
+    stage("Parralel") {
       when {
         environment name: 'build', value: 'true'
       }
@@ -58,12 +47,20 @@ pipeline {
           }
         }
         stage("JS") {
+          environment {
+            NPM_REGISTRY = "https://nexus.suilib.ru/repository/npm-sui/"
+            NPM_SCOPE = "@sui"
+            NPM_USER = "jenkins"
+            NPM_EMAIL = "jenkins@jenkins.jenkins"
+            NPM_PASS = credentials('suilib-nexus-pass')
+          }
           steps {
             sh """
               cd js
               yarn
               yarn bootstrap
               yarn ci
+              npx npm-cli-adduser
               node ./publish.js 8.0.${BUILD_NUMBER}-${BRANCH_NAME}
             """
           }
