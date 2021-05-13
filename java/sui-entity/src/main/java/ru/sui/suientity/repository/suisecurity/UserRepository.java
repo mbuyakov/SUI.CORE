@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findById(@NonNull Long id);
 
     @EntityGraph(value = User.WITH_ROLES)
-    Optional<User> findByUsernameOrEmail(String username, String email);
+    Optional<User> findByUsernameIgnoreCaseOrEmailIgnoreCase(String username, String email);
 
     Boolean existsByUsername(String username);
 

@@ -16,6 +16,7 @@ import ru.sui.suisecurity.base.extension.clientIp
 import ru.sui.suisecurity.base.extension.get
 import ru.sui.suisecurity.base.extension.jwtToken
 import ru.sui.suisecurity.base.model.LoginResult
+import ru.sui.suisecurity.base.security.CustomUserDetailsService
 import ru.sui.suisecurity.base.security.JwtTokenProvider
 import ru.sui.suisecurity.base.security.UserPrincipal
 import ru.sui.suisecurity.base.service.AuthenticationLogService
@@ -29,14 +30,15 @@ private val log = KotlinLogging.logger {  }
 @Service
 @Suppress("ThrowableNotThrown", "UNCHECKED_CAST")
 class AuthenticationService(
-  private val authenticationManager: AuthenticationManager,
-  private val tokenProvider: JwtTokenProvider,
-  private val sessionManager: SessionManager,
-  private val authenticationLogService: AuthenticationLogService,
+        private val authenticationManager: AuthenticationManager,
+        private val tokenProvider: JwtTokenProvider,
+        private val sessionManager: SessionManager,
+        private val authenticationLogService: AuthenticationLogService,
+        private val customUserDetailsService: CustomUserDetailsService,
         // repos
-  private val authenticationResultRepository: AuthenticationResultRepository,
-  private val authenticationLogRepository: AuthenticationLogRepository,
-  private val userRepository: UserRepository
+        private val authenticationResultRepository: AuthenticationResultRepository,
+        private val authenticationLogRepository: AuthenticationLogRepository,
+        private val userRepository: UserRepository
 ) {
 
     @Value(value = "\${security.login.max-attempts-count:25}")
@@ -95,12 +97,15 @@ class AuthenticationService(
         val result = authenticationResultRepository.get(loginResultCode)
 
         if (formLogin != null) {
+            val user = principal?.user
+              ?: kotlin.runCatching { customUserDetailsService.loadUserByUsername(formLogin) as UserPrincipal }.getOrNull()?.user
+
             // TODO: add clientInfo
             authenticationLogService.create(
                     operation = AuthenticationOperation.LOGIN,
                     result = result,
                     sessionId = jwt?.let { tokenProvider.getSessionIdFromJWT(it) },
-                    user = principal?.user ?: kotlin.runCatching { userRepository.findByUsernameOrEmail(formLogin, formLogin).orElse(null) }.getOrNull(),
+                    user = user,
                     remoteAddress = remoteAddress,
                     formLogin = formLogin
             )

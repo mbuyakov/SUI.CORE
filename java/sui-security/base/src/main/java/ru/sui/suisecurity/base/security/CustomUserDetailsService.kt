@@ -23,7 +23,7 @@ class CustomUserDetailsService : UserDetailsService {
     @Cacheable(LOAD_USER_BY_USERNAME_CACHE)
     override fun loadUserByUsername(usernameOrEmail: String): UserDetails {
         return userRepository
-                .findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
+                .findByUsernameIgnoreCaseOrEmailIgnoreCase(usernameOrEmail, usernameOrEmail)
                 .orElse(null)
                 ?.let { UserPrincipal(it) }
                 ?: throw UsernameNotFoundException("User not found with username or email : $usernameOrEmail")
