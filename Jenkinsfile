@@ -60,7 +60,7 @@ pipeline {
           steps {
             sh """
               cd js
-              yarn
+              yarn install --frozen-lockfile
               yarn bootstrap
               yarn ci
               npx npm-cli-adduser
