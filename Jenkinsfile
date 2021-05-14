@@ -20,6 +20,9 @@ pipeline {
       }
       parallel {
         stage("JVM") {
+          environment {
+            NEXUS_PASS = credentials('suilib-nexus-pass')
+          }
           steps {
             rtGradleRun (
               tool: "gradle-6.3",

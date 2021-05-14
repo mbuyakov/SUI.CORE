@@ -23,6 +23,6 @@ else
   FOLDER="$2"
 fi
 
-curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./${FOLDER}/build/libs/${SUBPROJECT}-${BUILD_NUMBER}-${BRANCH_NAME}.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/${SUBPROJECT}/${BUILD_NUMBER}-${BRANCH_NAME}/${SUBPROJECT}-${BUILD_NUMBER}-${BRANCH_NAME}.jar
-curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./${FOLDER}/build/libs/${SUBPROJECT}-${BUILD_NUMBER}-${BRANCH_NAME}-sources.jar http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/${SUBPROJECT}/${BUILD_NUMBER}-${BRANCH_NAME}/${SUBPROJECT}-${BUILD_NUMBER}-${BRANCH_NAME}-sources.jar
-curl -v -X PUT --user jenkins:2wsx2WSX --upload-file ./${FOLDER}/build/libs/${SUBPROJECT}-${BUILD_NUMBER}-${BRANCH_NAME}.pom http://etp4.sm-soft.ru:8081/artifactory/sui/ru/sui/${SUBPROJECT}/${BUILD_NUMBER}-${BRANCH_NAME}/${SUBPROJECT}-${BUILD_NUMBER}-${BRANCH_NAME}.pom
+curl -v -X PUT --user jenkins:${NEXUS_PASS} --upload-file ./${FOLDER}/build/libs/${SUBPROJECT}-${BUILD_NUMBER}-${BRANCH_NAME}.jar https://nexus.suilib.ru/repository/mvn-sui/ru/sui/${SUBPROJECT}/${BUILD_NUMBER}-${BRANCH_NAME}/${SUBPROJECT}-${BUILD_NUMBER}-${BRANCH_NAME}.jar
+curl -v -X PUT --user jenkins:${NEXUS_PASS} --upload-file ./${FOLDER}/build/libs/${SUBPROJECT}-${BUILD_NUMBER}-${BRANCH_NAME}-sources.jar https://nexus.suilib.ru/repository/mvn-sui/ru/sui/${SUBPROJECT}/${BUILD_NUMBER}-${BRANCH_NAME}/${SUBPROJECT}-${BUILD_NUMBER}-${BRANCH_NAME}-sources.jar
+curl -v -X PUT --user jenkins:${NEXUS_PASS} --upload-file ./${FOLDER}/build/libs/${SUBPROJECT}-${BUILD_NUMBER}-${BRANCH_NAME}.pom https://nexus.suilib.ru/repository/mvn-sui/ru/sui/${SUBPROJECT}/${BUILD_NUMBER}-${BRANCH_NAME}/${SUBPROJECT}-${BUILD_NUMBER}-${BRANCH_NAME}.pom
