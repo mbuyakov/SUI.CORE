@@ -1,9 +1,7 @@
 package ru.sui.suisecurity.base.config
 
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.BeanIds
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -13,9 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import ru.sui.suisecurity.base.security.AuthorizeRequestsCustomizer
 import ru.sui.suisecurity.base.security.CustomUserDetailsService
 import ru.sui.suisecurity.base.security.JwtAuthenticationEntryPoint
 import ru.sui.suisecurity.base.security.JwtAuthenticationFilter
@@ -25,7 +23,8 @@ import javax.annotation.PostConstruct
 @Configuration
 class SecurityConfig(
         private val customUserDetailsService: CustomUserDetailsService,
-        private val unauthorizedHandler: JwtAuthenticationEntryPoint
+        private val unauthorizedHandler: JwtAuthenticationEntryPoint,
+        private val authorizeRequestsCustomizers: List<AuthorizeRequestsCustomizer>
 ) : WebSecurityConfigurerAdapter() {
 
     @PostConstruct
@@ -67,52 +66,20 @@ class SecurityConfig(
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
                 .cors()
                 .and()
                 .csrf()
-                .disable()
+                    .disable()
                 .exceptionHandling()
-                .authenticationEntryPoint(unauthorizedHandler)
+                    .authenticationEntryPoint(unauthorizedHandler)
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/",
-                        "/csrf",
-                        "/favicon.ico",
-                        "/**/*.png",
-                        "/**/*.gif",
-                        "/**/*.svg",
-                        "/**/*.jpg",
-                        "/**/*.html",
-                        "/**/*.css",
-                        "/**/*.js",
-                        "/**/*.mp3")
-                .permitAll()
-                .antMatchers("/table-backend")
-                .permitAll()
-                .antMatchers("/table-backend/**")
-                .permitAll()
-                .antMatchers("/api/tracks/download/**")
-                .permitAll()
-                .antMatchers("/api/images/**")
-                .permitAll()
-                .antMatchers("/api/auth/**")
-                .permitAll()
-                .antMatchers("/api/token/**")
-                .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/or2/**")
-                .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/users/**")
-                .permitAll()
-                .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
-                .permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
+                    .let { authorizeRequestsCustomizers.fold(it) { registry, customizer -> customizer.invoke(registry) } }
+                    .anyRequest().authenticated()
     }
+
 }
