@@ -41,6 +41,7 @@ pipeline {
               }
               steps {
                 sh """
+                  cd java
                   sh ./upload.sh sui-audit-common sui-audit/common
                   sh ./upload.sh sui-audit-log-mover sui-audit/log-mover
                   sh ./upload.sh sui-audit-manager sui-audit/manager
