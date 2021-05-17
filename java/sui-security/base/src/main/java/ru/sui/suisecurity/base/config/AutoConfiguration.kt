@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true, proxyTargetClass = true)
 @ComponentScan("ru.sui.suisecurity.base")
 @EnableScheduling
 class AutoConfiguration
