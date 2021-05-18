@@ -9,7 +9,7 @@ function convertValue(value?: string): string | null | undefined {
   return value && fioConverterWithoutTrim(value);
 }
 
-export type CustomFioInputProps = InputProps & {}
+export type CustomFioInputProps = InputProps
 
 export class CustomFioInput extends React.Component<CustomFioInputProps> {
 
@@ -17,6 +17,7 @@ export class CustomFioInput extends React.Component<CustomFioInputProps> {
     const value = this.props.value && convertValue(this.props.value as string);
 
     if (this.props.value !== value) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       this.onChange({target: {value}} as any);
     }
   }

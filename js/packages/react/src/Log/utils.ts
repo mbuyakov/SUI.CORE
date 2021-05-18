@@ -1,8 +1,8 @@
-import axios, {AxiosRequestConfig} from "axios";
+import {errorNotification} from "@/drawUtils";
+import {getUser} from "@/utils";
 import {IObjectWithIndex, IUser, query, toMap} from "@sui/core";
+import axios, {AxiosRequestConfig} from "axios";
 
-import {errorNotification} from "../drawUtils";
-import {getUser} from "../utils";
 import {IAuditLogTableRow} from "./AuditLogTable";
 
 function formatConfig(config?: AxiosRequestConfig): AxiosRequestConfig {

@@ -1,14 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // tslint:disable:member-ordering jsx-no-lambda
+import {BaseCard} from "@/Base";
+import {RangePickerValue} from "@/compatibleTypes";
+import {PromisedButton} from "@/Inputs";
+import {GET_DEFAULT_CALENDAR_RANGES, query, TableInfoManager} from "@sui/core";
 import {DatePicker, Input, InputNumber, Select} from "antd";
 import autobind from "autobind-decorator";
 import moment from 'moment';
 import React from 'react';
-import {TableInfoManager,query,GET_DEFAULT_CALENDAR_RANGES} from "@sui/core";
-import {BaseCard} from "../Base";
-import {RangePickerValue} from "../compatibleTypes";
-
-
-import {PromisedButton} from "../Inputs";
 import {AuditLogTable, IAuditLogTableProps, IAuditLogTableRow} from "./AuditLogTable";
 import {fetchAndFormatAuditLog, fetchTablesWithAuditLogs} from "./utils";
 
@@ -69,6 +68,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
   }
 
   public render(): React.ReactNode {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {auditApiUri, ...tableProps} = this.props;
     const {logByRowIdRows, logByRowIdValues, latestLogRows, latestLogValues} = this.state;
 
@@ -82,7 +82,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
               rows: {
                 cols: {
                   items: {
-                    render: () => (
+                    render: (): JSX.Element => (
                       <AuditLogTable
                         {...tableProps}
                         extra={(
@@ -125,7 +125,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
               rows: {
                 cols: {
                   items: {
-                    render: () => (
+                    render: (): JSX.Element => (
                       <AuditLogTable
                         {...tableProps}
                         extra={(
@@ -141,7 +141,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
                               placeholder="Введите ИД строки"
                               style={{width: 300}}
                               value={logByRowIdValues.rowId}
-                              onChange={event => this.onLogByRowIdValuesChangeFn("rowId")(event.target.value)}
+                              onChange={(event): void => this.onLogByRowIdValuesChangeFn("rowId")(event.target.value)}
                             />
                             {this.generateRefreshButton(this.refreshLogByRowId, !logByRowIdValues.tableInfoId || !logByRowIdValues.rowId)}
                           </div>
@@ -222,7 +222,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
 
   @autobind
   private onLogByRowIdValuesChangeFn(key: keyof IAuditLogState["logByRowIdValues"]): (value: any) => void {
-    return value => this.setState({
+    return (value): void => this.setState({
       logByRowIdValues: {
         ...this.state.logByRowIdValues,
         [key]: value
@@ -232,7 +232,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
 
   @autobind
   private onLatestLogValuesChangeFn(key: keyof IAuditLogState["latestLogValues"]): (value: any) => void {
-    return value => this.setState({
+    return (value): void => this.setState({
       latestLogValues: {
         ...this.state.latestLogValues,
         [key]: value

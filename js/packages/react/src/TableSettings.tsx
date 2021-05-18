@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {CheckOutlined, CloseOutlined, IdcardOutlined, ProfileOutlined, QuestionOutlined, SortAscendingOutlined, SortDescendingOutlined} from "@ant-design/icons";
 import {ThemeProvider, withTheme} from '@material-ui/core';
 import IconButton from "@material-ui/core/IconButton";
@@ -11,7 +12,7 @@ import Column from 'antd/lib/table/Column';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
-import {ColumnInfo, generateUpdate, generateUpdateFn, getDataByKey, getSUISettings, IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IObjectWithIndex, IRole, ISubtotalType, ITableInfo, mutate, query, sleep, TableInfo, TableInfoManager} from "@sui/core";
+import {generateUpdate, generateUpdateFn, getDataByKey, getSUISettings, IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IObjectWithIndex, IRole, ISubtotalType, ITableInfo, mutate, query, sleep, TableInfo, TableInfoManager} from "@sui/core";
 
 import {AdditionalTab} from './additionalTabs';
 import {BaseCard} from './Base';
@@ -37,19 +38,19 @@ export function FullScreenTableSettings(props: {
   dialogRef?: React.RefObject<FullScreenModal>,
   id: string,
 }): JSX.Element {
-  const { id, dialogRef, defaultOpen } = props;
+  const {id, dialogRef, defaultOpen} = props;
 
   return (
     <FullScreenModal
       ref={dialogRef}
-      title={<div style={{ display: 'grid', gridTemplateColumns: 'max-content max-content auto', alignItems: 'center'}}>
+      title={<div style={{display: 'grid', gridTemplateColumns: 'max-content max-content auto', alignItems: 'center'}}>
         <span>Настройки таблицы&nbsp;</span>
         <WaitData<string>
           promise={TableInfoManager.getById(id).then(table => table.getNameOrTableName())}
         >
-          {name => (<span>{name}</span>)}
+          {(name): JSX.Element => (<span>{name}</span>)}
         </WaitData>
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <div style={{display: 'flex', justifyContent: 'flex-end'}}>
           <PromisedMaterialIconButton
             promise={getSUISettings().metaschemaRefreshPromise}
             tooltipText="Обновить метасхему"
@@ -61,7 +62,7 @@ export function FullScreenTableSettings(props: {
       </div>}
       defaultOpen={defaultOpen || false}
     >
-      {getPopupContainer => (
+      {(getPopupContainer): JSX.Element => (
         <TableSettings
           startTimeout={200}
           popupMode={true}
@@ -101,14 +102,14 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
 
   private readonly waitDataRef: React.RefObject<WaitData> = React.createRef<WaitData>();
 
-  public constructor(props: any) {
+  public constructor(props: ITableSettingsProps) {
     super(props);
     this.state = {};
   }
 
   @autobind
   public componentDidMount(): void {
-    sleep(this.props.startTimeout || 0).then(_ =>
+    sleep(this.props.startTimeout || 0).then(() =>
       query(`{
         allRoles {
           nodes {
@@ -215,7 +216,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
 
   public componentDidUpdate(prevProps: ITableSettingsProps): void {
     if (this.props.id !== prevProps.id) {
-      this.setState({ tableInfoById: null }, this.componentDidMount);
+      this.setState({tableInfoById: null}, this.componentDidMount);
     }
   }
 
@@ -234,7 +235,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
       >
         {(data): JSX.Element => {
           if (!data) {
-            return <div style={{ height: 300 }}/>;
+            return <div style={{height: 300}}/>;
           }
 
           const auditable = (getDataByKey(data, 'tableInfoById', 'type') === 'BASE TABLE' && !['audit', 'meta'].includes(getDataByKey(data, 'tableInfoById', 'schemaName')));
@@ -258,7 +259,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       href={null}
                                       icon={<ProfileOutlined/>}
                                       type="primary"
-                                      style={{ marginBottom: 8 }}
+                                      style={{marginBottom: 8}}
                                     >
                                       Показать таблицу
                                     </Button>
@@ -266,10 +267,10 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                   <Popover
                                     trigger="click"
                                     title="Введите ID"
-                                    overlayStyle={{ width: 200 }}
+                                    overlayStyle={{width: 200}}
                                     content={
                                       <PromisedInput
-                                        rowStyle={{ width: 200 - 32 }}
+                                        rowStyle={{width: 200 - 32}}
                                         icon={<ChevronRightIcon/>}
                                         type="number"
                                         promise={(value: any): any => {
@@ -285,7 +286,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       href={null}
                                       icon={<IdcardOutlined/>}
                                       type="primary"
-                                      style={{ marginBottom: 8, marginLeft: 8 }}
+                                      style={{marginBottom: 8, marginLeft: 8}}
                                     >
                                       Показать карточку
                                     </Button>
@@ -382,7 +383,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                           render: (value: string): JSX.Element => (
                             <PromisedInput<string>
                               defaultValue={value}
-                              validator={value => PAGE_SIZE_REGEXP.test(value) ? undefined : "Некорректный формат. Пример: 10,25,100" }
+                              validator={(value): string | undefined => PAGE_SIZE_REGEXP.test(value) ? undefined : "Некорректный формат. Пример: 10,25,100"}
                               promise={generateUpdateFn('tableInfo', this.props.id, "pageSizes")}
                             />
                           ),
@@ -407,7 +408,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                         ].map(setting => ({
                           ...setting,
                           render: (value: string): JSX.Element => (
-                            <div style={{ width: 500 }}>
+                            <div style={{width: 500}}>
                               <PromisedSelect<string>
                                 defaultValue={value}
                                 promise={generateUpdateFn('tableInfo', this.props.id, setting.dataKey)}
@@ -444,7 +445,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                             />
                           ),
                         },
-                        { render: () => "" }
+                        {render: (): string => ""}
                       ]
                     },
                   ],
@@ -468,7 +469,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       promise={(newValue: boolean): Promise<any> => {
                                         let promise = new Promise<any>((resolve): void => resolve());
                                         value.map(col => {
-                                          promise = promise.then(_ => this.updateColField(col.id, 'visible', newValue, false));
+                                          promise = promise.then(() => this.updateColField(col.id, 'visible', newValue, false));
                                         });
 
                                         return promise;
@@ -492,7 +493,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                   render: (value: IColumnInfo[]): JSX.Element => (
                                     <>
                                       <DraggableRowTable
-                                        scroll={{ x: true }}
+                                        scroll={{x: true}}
                                         pagination={false}
                                         dataSource={value.sort((a, b): number => a.order - b.order)}
                                         bordered={true}
@@ -509,13 +510,15 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                             const refTableInfo = refColInfo && refColInfo.tableInfoByTableInfoId;
 
                                             return refColInfo
-                                              ? (<Button
-                                                size="small"
-                                                type="ghost"
-                                                onClick={() => draw(<ThemeProvider theme={this.props.theme}><FullScreenTableSettings id={refColInfo.tableInfoId} defaultOpen={true}/></ThemeProvider>)}
-                                              >
-                                                {`${refTableInfo.nameByNameId ? refTableInfo.nameByNameId.name : refTableInfo.tableName}.${refColInfo.nameByNameId ? refColInfo.nameByNameId.name : refColInfo.columnName}`}
-                                              </Button>)
+                                              ? (
+                                                <Button
+                                                  size="small"
+                                                  type="ghost"
+                                                  onClick={(): void => draw(<ThemeProvider theme={this.props.theme}><FullScreenTableSettings id={refColInfo.tableInfoId} defaultOpen={true}/></ThemeProvider>)}
+                                                >
+                                                  {`${refTableInfo.nameByNameId ? refTableInfo.nameByNameId.name : refTableInfo.tableName}.${refColInfo.nameByNameId ? refColInfo.nameByNameId.name : refColInfo.columnName}`}
+                                                </Button>
+                                              )
                                               : null;
                                           }}
                                         />
@@ -526,7 +529,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                         <Column<IColumnInfo>
                                           title="Обязательность"
                                           render={(_, record): JSX.Element => (
-                                            record.isNullable ? <CloseOutlined style={{fontSize: 18}} /> : <CheckOutlined style={{fontSize: 18}}/>
+                                            record.isNullable ? <CloseOutlined style={{fontSize: 18}}/> : <CheckOutlined style={{fontSize: 18}}/>
                                           )}
                                         />
                                         <Column<IColumnInfo>
@@ -538,12 +541,12 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           render={(_, record): JSX.Element => (
                                             <div className={SUI_ROW_GROW_LEFT}>
                                               {record.nameByNameId
-                                                ? <span>
-                                              {record.nameByNameId.name}
-                                                  {record.nameByNameId.description && <TooltipIcon>
-                                                    {record.nameByNameId.description}
-                                                  </TooltipIcon>}
-                                            </span>
+                                                ? (
+                                                  <span>
+                                                    {record.nameByNameId.name}
+                                                    {record.nameByNameId.description && <TooltipIcon>{record.nameByNameId.description}</TooltipIcon>}
+                                                  </span>
+                                                )
                                                 : <span>Не выбрано</span>
                                               }
                                               <NamePopover
@@ -551,7 +554,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                 id={record.nameByNameId && record.nameByNameId.id}
                                                 onChanged={(newId): Promise<any> =>
                                                   generateUpdate('columnInfo', record.id, 'nameId', newId)
-                                                    .then<IName>(__ => {
+                                                    .then<IName>(() => {
                                                       if (newId === null) {
                                                         return {} as IName;
                                                       }
@@ -581,7 +584,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           render={(_, record): JSX.Element => (
                                             <div className={SUI_ROW_GROW_LEFT}>
                                               {record.columnInfoTagsByColumnInfoId.nodes.length > 0
-                                                ? <ul style={{ paddingLeft: 16, marginBottom: 0 }}>
+                                                ? <ul style={{paddingLeft: 16, marginBottom: 0}}>
                                                   {record.columnInfoTagsByColumnInfoId.nodes.map(con => (
                                                     <li>
                                                       {con.tagByTagId.code} {con.tagByTagId.name && `(${con.tagByTagId.name})`}
@@ -599,7 +602,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                       clientMutationId
                                                     }
                                                   }`)))
-                                                    .then(__ => Promise.all(newIds.map(tagId => mutate<{ columnInfoTag: IColumnInfoTag }>(`mutation {
+                                                    .then(() => Promise.all(newIds.map(tagId => mutate<{ columnInfoTag: IColumnInfoTag }>(`mutation {
                                                       createColumnInfoTag(input: {columnInfoTag: {columnInfoId: "${record.id}", tagId: "${tagId}"}}) {
                                                         columnInfoTag {
                                                           id
@@ -611,7 +614,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                         }
                                                       }
                                                     }`, true))))
-                                                    .then(columnInfoTags => this.updateColField(record.id, 'columnInfoTagsByColumnInfoId', { nodes: columnInfoTags.map(value => value.columnInfoTag) }, false, true))
+                                                    .then(columnInfoTags => this.updateColField(record.id, 'columnInfoTagsByColumnInfoId', {nodes: columnInfoTags.map(value => value.columnInfoTag)}, false, true))
                                                 }
                                               />
                                             </div>
@@ -634,7 +637,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                               getPopupContainer={this.props.getPopupContainer}
                                               roles={data.allRoles.nodes}
                                               visiblePromise={this.updateColFieldFn(record.id, 'visible')}
-                                              afterRolesPromise={(roles): Promise<any> => this.updateColField(record.id, 'columnInfoRolesByColumnInfoId', { nodes: roles || [] }, false, true)}
+                                              afterRolesPromise={(roles): Promise<any> => this.updateColField(record.id, 'columnInfoRolesByColumnInfoId', {nodes: roles || []}, false, true)}
                                               columnInfo={record}
                                             />
                                           )}
@@ -666,7 +669,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       promise={(newValue: boolean): Promise<any> => {
                                         let promise = new Promise<any>((resolve): void => resolve());
                                         value.map(col => {
-                                          promise = promise.then(_ => this.updateColField(col.id, 'defaultVisible', newValue, false));
+                                          promise = promise.then(() => this.updateColField(col.id, 'defaultVisible', newValue, false));
                                         });
 
                                         return promise;
@@ -706,7 +709,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           },
                                         },
                                       }}
-                                      scroll={{ x: true }}
+                                      scroll={{x: true}}
                                       pagination={false}
                                       dataSource={value.sort((a, b): number => a.order - b.order)}
                                       bordered={true}
@@ -767,7 +770,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                 undefined,
                                               )}
                                               icon={_TableSettings.getElementBySortType<React.ReactNode>(record.defaultSorting as SortingDirection, (<SortAscendingOutlined/>), (<SortDescendingOutlined/>), (<QuestionOutlined/>))}
-                                              onClick={() => {
+                                              onClick={(): void => {
                                                 const sequence = [null, 'asc', 'desc'];
                                                 this.updateColFieldFn(record.id, 'defaultSorting')(
                                                   sequence[(sequence.indexOf(record.defaultSorting || null) + 1) % sequence.length],
@@ -859,7 +862,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                 <MainSettings
                                   getPopupContainer={this.props.getPopupContainer}
                                   tableId={item.id}
-                                  onSave={settings => Promise.all([
+                                  onSave={(settings): Promise<unknown> => Promise.all([
                                     generateUpdate('tableInfo', item.id, 'cardRenderParams', JSON.stringify(JSON.stringify(settings)).slice(1, -1)),
                                     sleep(SAVE_SLEEP_DELAY),
                                   ])}
@@ -903,12 +906,12 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
           clientMutationId
         }
       }`)
-        .then(_ => {
+        .then(() => {
           const tableInfoById = this.state.tableInfoById;
           tableInfoById.isAudited = value;
-          this.setState({ tableInfoById }, () => resolve());
+          this.setState({tableInfoById}, () => resolve());
         })
-        .catch(_ => reject(`Ошибка при ${value ? 'включении' : 'выключении'} аудита`));
+        .catch(() => reject(`Ошибка при ${value ? 'включении' : 'выключении'} аудита`));
     });
   }
 
@@ -920,11 +923,11 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
           clientMutationId
         }
       }`)
-        .then(_ => {
+        .then(() => {
           resolve();
           this.waitDataRef.current.updateData();
         })
-        .catch(_ => reject('Ошибка при сохранении связи сущностей'));
+        .catch(() => reject('Ошибка при сохранении связи сущностей'));
     });
   }
 
@@ -935,7 +938,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
       const colIndex = tableInfoById.columnInfosByTableInfoId.nodes.findIndex(col => col.id === id);
       (tableInfoById.columnInfosByTableInfoId.nodes[colIndex] as IObjectWithIndex)[field] = value;
       if (needUpdateState) {
-        this.setState({ tableInfoById });
+        this.setState({tableInfoById});
       }
       if (sleepAtEnd) {
         return resolve(sleep(Number.MAX_VALUE));
@@ -948,7 +951,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
       return updateState;
     }
 
-    return generateUpdate('columnInfo', id, field, value).then(_ => updateState);
+    return generateUpdate('columnInfo', id, field, value).then(() => updateState);
   }
 
   @autobind

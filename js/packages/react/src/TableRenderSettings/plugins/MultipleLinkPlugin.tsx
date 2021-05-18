@@ -1,16 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {IBaseTableColLayout} from '@/BaseTable';
+import {RouterLink} from '@/Link';
+import {TableRenderParamsPlugin, TableRenderSettingsPluginManager} from "@/TableRenderSettings";
 import {InfoCircleOutlined} from "@ant-design/icons";
+import {ColumnInfo} from "@sui/core";
 import {Input, Tooltip} from "antd";
 import * as React from 'react';
-import {ColumnInfo} from "@sui/core";
 
-import { IBaseTableColLayout } from '../../BaseTable';
-import { RouterLink } from '../../Link';
 import {getLinkForTable, IColumnInfoToBaseTableColProps} from '../../utils';
-import {TableRenderSettingsPluginManager} from "../TableRenderSettingsPluginManager";
 import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
-
-import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
-
 
 export interface IMultipleLinkPluginParams {
   linkTableName: string
@@ -28,7 +26,7 @@ export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPlu
   ): Promise<void> {
     const linkTableName = tableRenderParams.linkTableName || ' ';
     const linkTemplate = !isBlank(linkTableName) && getLinkForTable(linkTableName, 'card', ':id') || null;
-    result.render = (value: any, _: any): JSX.Element => {
+    result.render = (value: any): JSX.Element => {
       const links = getLinkFromJsonValue(value);
       return (
         <>

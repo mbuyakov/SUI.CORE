@@ -1,20 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {DeletableSmallCard} from "@/DeletableSmallCard";
+import {Rendered} from '@/other';
+import {DND_LIST__COLS, DND_LIST__PLUS_BTN, DND_LIST__ROWS, DND_LIST__SCROLL_SEMI_PADDING} from "@/styles";
+import {applyDrag} from "@/utils";
 import {PlusCircleOutlined} from "@ant-design/icons";
+import {unCapitalize} from '@sui/core';
 import {Dropdown, Menu} from "antd";
 import Button from "antd/lib/button";
 import {MenuItemProps} from "antd/lib/menu/MenuItem";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {Container, ContainerOptions, Draggable, DropResult} from "react-smooth-dnd";
-import { v4 as uuidv4 } from 'uuid';
-
-import { unCapitalize } from '@sui/core';
-import {DeletableSmallCard} from "../DeletableSmallCard";
-import { Rendered } from '../other';
-import {DND_LIST__COLS, DND_LIST__PLUS_BTN, DND_LIST__ROWS, DND_LIST__SCROLL_SEMI_PADDING} from "../styles";
-import {applyDrag} from "../utils";
+import {v4 as uuidv4} from 'uuid';
 
 import {DnDChild, IBaseDnDChildProps} from "./DnDChild";
-
 
 export type Direction = 'vertical' | 'horizontal'
 
@@ -29,8 +28,7 @@ export interface IDnDListProps<T extends React.Component> extends IBaseDnDChildP
   style?: React.CSSProperties
   title?: string
   type: string
-
-shouldAcceptDrop?(sourceContainerOptions: ContainerOptions, payload: any): boolean;
+  shouldAcceptDrop?(sourceContainerOptions: ContainerOptions, payload: any): boolean;
 }
 
 export interface IDnDListState<T extends React.Component> {
@@ -126,29 +124,33 @@ export class DnDList<T extends DnDChild> extends DnDChild<IDnDListProps<T>, IDnD
             {hasAddButton && (
               <div>
                 {direction === 'vertical' && this.props.addButtons.length === 1
-                  ? <Button
-                    href={null}
-                    type="dashed"
-                    block={direction === 'vertical'}
-                    onClick={this.props.addButtons[0].props.onClick as () => void}
-                  >
-                    {`Добавить ${unCapitalize(this.props.addButtons[0].props.children as string)}`}
-                  </Button>
-                  : <Dropdown
-                    overlay={<Menu>
-                      {this.props.addButtons}
-                    </Menu>}
-                  >
+                  ? (
                     <Button
                       href={null}
-                      className={DND_LIST__PLUS_BTN}
                       type="dashed"
                       block={direction === 'vertical'}
-                      icon={direction === 'horizontal' ? <PlusCircleOutlined/> : null}
+                      onClick={this.props.addButtons[0].props.onClick as () => void}
                     >
-                      {direction === 'vertical' && "Добавить"}
+                      {`Добавить ${unCapitalize(this.props.addButtons[0].props.children as string)}`}
                     </Button>
-                  </Dropdown>
+                  )
+                  : (
+                    <Dropdown
+                      overlay={<Menu>
+                        {this.props.addButtons}
+                      </Menu>}
+                    >
+                      <Button
+                        href={null}
+                        className={DND_LIST__PLUS_BTN}
+                        type="dashed"
+                        block={direction === 'vertical'}
+                        icon={direction === 'horizontal' ? <PlusCircleOutlined/> : null}
+                      >
+                        {direction === 'vertical' && "Добавить"}
+                      </Button>
+                    </Dropdown>
+                  )
                 }
               </div>
             )}
@@ -161,13 +163,13 @@ export class DnDList<T extends DnDChild> extends DnDChild<IDnDListProps<T>, IDnD
   @autobind
   private __internalProcessItem(item: Rendered<T>): Rendered<T> {
     let id = item.props.id;
-if (id == null) {
+    if (id == null) {
       id = uuidv4();
     }
 
     let onDelete = item.props.onDelete;
     if (this.props.deletableChildren) {
-      onDelete = () => this.onDelete(id);
+      onDelete = (): void => this.onDelete(id);
     }
 
     return React.cloneElement(item, {...item.props, ref: this.getRefCallback(id), draggable: true, id, onDelete});
@@ -185,7 +187,7 @@ if (id == null) {
 
   @autobind
   private getRefCallback(id: string): (ref: T) => void {
-    return ref => {
+    return (ref): void => {
       // // console.log(ref, typeof ref);
       if (ref === null) {
         // Ignore

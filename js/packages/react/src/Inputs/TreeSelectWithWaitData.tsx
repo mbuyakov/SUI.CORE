@@ -1,14 +1,11 @@
+import {DefaultValueType} from "@/compatibleTypes";
+import {TREE_SELECT_DISABLE_GROUP_SELECTION} from "@/styles";
+import {getDataByKey, IGqlFilter, TableInfoManager} from "@sui/core";
 import {TreeSelect} from 'antd';
 import {TreeSelectProps} from "antd/lib/tree-select";
 import autobind from "autobind-decorator";
 import classNames from "classnames";
 import * as React from "react";
-
-import {TableInfoManager,getDataByKey,IGqlFilter} from "@sui/core";
-import {DefaultValueType} from "../compatibleTypes";
-
-
-import {TREE_SELECT_DISABLE_GROUP_SELECTION} from "../styles";
 import {getDataSet, getDataSetRender, getUser, IDataSet} from "../utils";
 
 export type ITreeSelectWithWaitDataProps<TValue, TValueType, TGroupType> =
@@ -27,6 +24,7 @@ export interface ITreeSelectWithWaitDataState<TValue> {
   treeData?: TreeSelectProps<TValue>["treeData"];
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export class TreeSelectWithWaitData<TValue = DefaultValueType, TValueType = {}, TGroupType = {}>
   extends React.Component<ITreeSelectWithWaitDataProps<TValue, TValueType, TGroupType>, ITreeSelectWithWaitDataState<TValue>> {
 

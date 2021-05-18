@@ -45,7 +45,7 @@ export class ThemeService extends ObservableLocalStorageValue<ThemeVariant> {
   }
 
   @autobind
-  private onThemeChange(theme: ThemeVariant, oldTheme: ThemeVariant) {
+  private onThemeChange(theme: ThemeVariant, oldTheme: ThemeVariant): void {
     this.log.info(`Theme changed: ${oldTheme}->${theme}`);
     this.themeSwitcher({theme});
   }

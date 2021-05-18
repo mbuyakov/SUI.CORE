@@ -1,16 +1,17 @@
+import {DeletableSmallCard} from "@/DeletableSmallCard";
+import {COMMON__GRID} from "@/styles";
 import {Input} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
 import {IBaseCardItemLayout, IBaseCardTabLayout} from '../Base';
-import {DeletableSmallCard} from "../DeletableSmallCard";
 import {DnDList, IBaseDnDChildProps} from '../Draggable';
 import {ISerializable, SerializableDnDChild} from '../Draggable/Serializable';
-import {COMMON__GRID} from "../styles";
 
 import {RowSettings, SerializedRowSettings} from "./RowSettings";
 import {RowsList} from "./RowsList";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type TabSettingsState = Omit<IBaseCardTabLayout<any, IBaseCardItemLayout<any>>, 'rows'> & {
   rows: SerializedRowSettings[];
 };

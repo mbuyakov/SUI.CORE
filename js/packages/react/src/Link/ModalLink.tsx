@@ -1,10 +1,8 @@
+import {draw} from '@/utils';
 import Button, {ButtonType} from 'antd/lib/button/button';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-import { RouteComponentProps, Router, withRouter } from 'react-router';
-
-import { draw } from '../utils';
-
+import {RouteComponentProps, Router, withRouter} from 'react-router';
 
 export interface IModalLinkProps {
   ghost?: boolean,

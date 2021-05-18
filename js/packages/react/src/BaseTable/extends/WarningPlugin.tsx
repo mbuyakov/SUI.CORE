@@ -1,3 +1,4 @@
+import {YELLOW_BLINK} from "@/styles";
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Warning from '@material-ui/icons/Warning';
@@ -5,8 +6,6 @@ import {Popover} from "antd";
 import Divider from "antd/lib/divider";
 import autobind from "autobind-decorator";
 import React from 'react';
-
-import {YELLOW_BLINK} from "../../styles";
 
 export interface IWarningPluginProps {
   messages?: Array<JSX.Element | string>

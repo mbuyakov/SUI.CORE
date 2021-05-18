@@ -1,6 +1,6 @@
 import autobind from "autobind-decorator";
 import React from "react";
-import { Color } from '@sui/core';
+import {Color, IObjectWithIndex} from '@sui/core';
 import { AMCHARTS } from '@sui/charts';
 import { XYChartWrapper } from './ChartWrapper';
 
@@ -21,7 +21,7 @@ export interface IAdditionalSettingProps {
 
 interface ICategoryColumnChartProps {
   categoryX: string;
-  data: Array<{[field: string]: any}>;
+  data: IObjectWithIndex[];
   series: ICategoryColumnChartSeries[];
   style?: React.CSSProperties;
   title?: string;

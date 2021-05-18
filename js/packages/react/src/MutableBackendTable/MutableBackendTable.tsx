@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {BackendTable} from "@/BackendTable";
 import {DisableEditContext} from '@/DisableEditContext';
 import {errorNotification} from "@/drawUtils";
@@ -27,6 +28,7 @@ interface IMutableBackendTableState<T> {
   editRow?: IObjectWithIndex;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export class MutableBackendTable<TValues extends {}, TSelection = number, TEditValues = TValues>
   extends React.Component<IMutableBackendTableProps<TValues, TSelection, TEditValues>, IMutableBackendTableState<TEditValues>> {
 

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types */
+
 /**
  * Try to cast a and b to number and compare it
  */
@@ -21,7 +23,7 @@ export function numberComparator(a: any, b: any, nullFirst: boolean = true): num
  * Try to cast a and b to number and compare it
  */
 export function numberComparatorFn(nullFirst: boolean): (a: any, b: any) => number {
-  return (a, b) => numberComparator(a, b, nullFirst);
+  return (a, b): number => numberComparator(a, b, nullFirst);
 }
 
 const datePattern = /(\d{2})\.(\d{2})\.(\d{4})/;

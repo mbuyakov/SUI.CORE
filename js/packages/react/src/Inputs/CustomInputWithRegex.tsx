@@ -22,12 +22,8 @@ export class CustomInputWithRegex extends React.Component<CustomInputWithRegexPr
   public componentDidUpdate(prevProps: Readonly<CustomInputWithRegexProps>): void {
     if (prevProps.regex !== this.props.regex) {
       const value = this.props.value || "";
-
-      this.onChange({
-        target: {
-          value: StringWithError.getValue(value as string),
-        }
-      } as any);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      this.onChange({target: {value: StringWithError.getValue(value as string),}} as any);
     }
   }
 

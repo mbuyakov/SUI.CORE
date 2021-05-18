@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {DBUniqueValidator} from "@/validator/DBUniqueValidator";
 import {IObjectWithIndex} from "@/other";
 
-export async function PersonUniqueFieldValidator<T = string>(fieldName: string,
-                                                             fieldValue: T,
-                                                             errMessage: string,
-                                                             excludePersonId: string = null,
-                                                             linkToEntity: (idFieldName: string, entityId: string, errMessage: string) => void,
-                                                             excludeDeletedPeople?: boolean): Promise<any> {
+export async function PersonUniqueFieldValidator<T = string>(
+  fieldName: string,
+  fieldValue: T,
+  errMessage: string,
+  excludePersonId: string = null,
+  linkToEntity: (idFieldName: string, entityId: string, errMessage: string) => void,
+  excludeDeletedPeople?: boolean
+): Promise<any> {
   return new Promise((resolve, reject): any => {
     let queryFields: IObjectWithIndex = !!excludeDeletedPeople ? {deleted: false} : {};
     queryFields = {

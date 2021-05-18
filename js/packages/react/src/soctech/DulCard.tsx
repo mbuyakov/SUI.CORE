@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {CustomInputWithRegex, CustomInputWithRegexProps} from "@/Inputs/CustomInputWithRegex";
 import {Alert, DatePicker} from "antd";
 import locale from "antd/es/date-picker/locale/ru_RU";
@@ -122,11 +123,11 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
     const typeItem = {
       title: 'Тип документа',
       fieldName: 'docTypeId',
-      mapFormValuesToRequired: (_: ValuesGetter): boolean => {
+      mapFormValuesToRequired: (): boolean => {
         const props = DulCard.propsMap.get(dulCardUuid);
         return DulCard.trueIfEmpty(props.required);
       },
-      mapFormValuesToInputNodeProps: (_: ValuesGetter): any => {
+      mapFormValuesToInputNodeProps: (): any => {
         const props = DulCard.propsMap.get(dulCardUuid);
         return {
           disabled: props.isEdit || props.disabled,

@@ -4,6 +4,9 @@ module.exports = {
   ...origin,
   rules: {
     ...origin.rules,
+    "no-use-before-define": [0],
+    "camelcase": [0],
+    "no-console": [0],
     "react/jsx-indent-props": [1],
     "jsx-a11y/click-events-have-key-events": [1],
     "jsx-a11y/no-static-element-interactions": [1],
@@ -11,6 +14,6 @@ module.exports = {
     "@typescript-eslint/no-empty-interface": [1],
     "react/static-property-placement": [1],
     "jsx-a11y/no-autofocus": [1],
-    "jsx-a11y/no-noninteractive-element-interactions": [1],
+    "jsx-a11y/no-noninteractive-element-interactions": [1]
   }
 }

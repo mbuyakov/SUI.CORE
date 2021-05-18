@@ -20,6 +20,7 @@ export class PromisedSlider extends PromisedBase<PromisedSliderProps, IPromisedB
   }
 
   public render(): JSX.Element {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {promise, popconfirmSettings, ...sliderProps} = this.props;
 
     const saveButton: JSX.Element = this.wrapConfirmAndError(

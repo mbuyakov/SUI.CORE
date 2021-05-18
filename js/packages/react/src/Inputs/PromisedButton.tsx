@@ -3,14 +3,16 @@ import * as React from "react";
 
 import {IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
-export class PromisedButton extends PromisedBase<ButtonProps & {
+interface IPromisedButtonProps extends ButtonProps {
   disabled?: boolean;
   style?: React.CSSProperties;
-},
-  IPromisedBaseState<{}>,
-  {}> {
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export class PromisedButton extends PromisedBase<IPromisedButtonProps, IPromisedBaseState<{}>, {}> {
 
   public render(): JSX.Element {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {promise, ...buttonProps} = this.props;
 
     return this.wrapConfirmAndError(

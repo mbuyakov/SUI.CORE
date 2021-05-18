@@ -2,7 +2,7 @@ import merge from 'lodash/merge';
 import {createMuiTheme} from '@material-ui/core/styles';
 import {getThemeVariables} from 'antd/dist/theme';
 
-import {CompiledSuiThemeConfig, CompiledThemes, MergedThemeConfigs, SuiThemeConfig, ThemesConfig, CompiledThemesConfig} from "@/themes/types";
+import {CompiledSuiThemeConfig, CompiledThemes, MergedThemeConfigs, SuiThemeConfig, ThemesConfig} from "@/themes/types";
 import {defaultMuiTheme, defaultThemesConfig} from "@/themes/defaultThemesConfig";
 
 const lightAntdTheme = getThemeVariables({dark: false});

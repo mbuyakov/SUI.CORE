@@ -14,6 +14,7 @@ interface ITableDetailToggleCellBaseProps extends TableRowDetail.ToggleCellProps
   style?: React.CSSProperties;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const styles = (theme: any): any => ({
   toggleCell: {
     paddingBottom: 0,
@@ -33,6 +34,7 @@ const styles = (theme: any): any => ({
 class TableDetailToggleCellBase extends React.Component<ITableDetailToggleCellBaseProps> {
 
   public render(): JSX.Element {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {style, expanded, classes, onToggle, tableColumn, tableRow, row, className, ...restProps} = this.props;
 
     return (

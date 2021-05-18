@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {IBaseTableColLayout} from '@/BaseTable';
+import {IColumnInfoToBaseTableColProps} from '@/utils';
 import {WarningTwoTone} from '@ant-design/icons';
 import {ColumnInfo} from '@sui/core';
 import {Tooltip} from 'antd';
 import * as React from 'react';
 
-import {IBaseTableColLayout} from '../../BaseTable';
-import {IColumnInfoToBaseTableColProps} from '../../utils';
 import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
 
 export abstract class TableRenderParamsPlugin<T> {
@@ -32,19 +33,14 @@ export abstract class TableRenderParamsPlugin<T> {
 
   // For link
   public extraActivationKostyl(
-    // @ts-ignore
     result: IBaseTableColLayout,
-    // @ts-ignore
     renderColumnInfo: ColumnInfo | null,
-    // @ts-ignore
     props: IColumnInfoToBaseTableColProps,
-    // @ts-ignore
     tableRenderParams: ITableRenderParams<T>,
   ): boolean {
     return false;
   }
 
-  // @ts-ignore
   public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<T>): React.ReactNode {
     return (
       <Tooltip
@@ -62,7 +58,8 @@ export abstract class TableRenderParamsPlugin<T> {
     return tableRenderParams;
   }
 
-  public formatSubtotal(value: any, tableRenderParams: ITableRenderParams<T>): string {
+  public formatSubtotal(value: unknown, tableRenderParams: ITableRenderParams<T>): string {
     return "Кажется, метод забыли переопределить("
   }
+
 }

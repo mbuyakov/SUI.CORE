@@ -1,9 +1,7 @@
+import {BaseSelectFilter} from '@/BaseTable';
 import {CheckOutlined, CloseOutlined} from '@ant-design/icons';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-
-
-import {BaseSelectFilter} from './BaseSelectFilter';
 import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 export type BooleanColumnFilterProps = LazyTableFilterRowCellProps
@@ -46,6 +44,7 @@ export class BooleanColumnFilter extends React.Component<BooleanColumnFilterProp
     }
 
     event
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ? this.props.onFilter({columnName: this.props.column.name, value: value as any, operation: 'equal'})
       : this.props.onFilter(null);
   }

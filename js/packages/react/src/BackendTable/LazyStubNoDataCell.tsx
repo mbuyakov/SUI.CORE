@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */
 import TableCell from '@material-ui/core/TableCell';
 import Empty from 'antd/lib/empty';
 import * as React from 'react';
@@ -8,7 +9,15 @@ export const LazyStubNoDataCell = (showAll: () => void) => ({colSpan}: { colSpan
     style={{height: 180}}
     colSpan={colSpan}
   >
-    <Empty style={{width: '100%', position: 'absolute', marginTop: -65}} description={<span>Заполните фильтры или <a onClick={showAll}>нажмите сюда</a> для показа всех записей в таблице</span>}/>
+    <Empty
+      style={{width: '100%', position: 'absolute', marginTop: -65}}
+      description={(
+        <span>
+          <span>Заполните фильтры или </span>
+          <a onClick={showAll}>нажмите сюда</a>
+          <span> для показа всех записей в таблице</span>
+        </span>
+      )}/>
   </TableCell>
 );
 
@@ -21,7 +30,11 @@ export const LazyStubNoDataCellSmall = (showAll: () => void) => ({colSpan}: { co
     colSpan={colSpan}
   >
     <div>
-      <span>Заполните фильтры или <a onClick={showAll}>нажмите сюда</a> для показа всех записей в таблице</span>
+      <span>
+        <span>Заполните фильтры или </span>
+        <a onClick={showAll}>нажмите сюда</a>
+        <span> для показа всех записей в таблице</span>
+      </span>
     </div>
   </TableCell>
 );

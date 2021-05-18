@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {SelectData} from '@/BaseTable';
 import {addPluralEnding, camelCase, capitalize, ColumnInfo, ColumnInfoManager, DataKey, dataKeysToDataTree, getDataByKey, getSUISettings, IGqlFilter, IObjectWithIndex, IRawRoute, query, removePluralEnding, RouteType, stringifyGqlFilter, TableInfo, TableInfoManager, wrapInArray} from "@sui/core";
 
-import {SelectData} from '../BaseTable';
 import {ActionType, isNumberAction} from './actionType';
 import {FilterType} from './filterType';
 
@@ -162,6 +163,7 @@ function __queryFilterString<T>(filter?: IGqlFilter<T>): string {
     : '';
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export async function getDataSet<TValueType = {}, TGroupType = {}>(
   roles: string[],
   valueTableInfo: TableInfo,
@@ -217,6 +219,7 @@ export async function getDataSet<TValueType = {}, TGroupType = {}>(
 
   const queryData = await query(dataKeysToDataTree(queryDataKeys).toString());
 
+  // eslint-disable-next-line func-names
   const formatValues = function <T extends { id: string }>(elements: T[], valueDataKey?: DataKey, additional?: (result: IDataSet, element: T) => void): IDataSet[] {
     return (elements || []).map(element => {
       const result: IDataSet = {id: element.id};
@@ -254,7 +257,7 @@ export async function getRenderValue(
 
   if (dataKey) {
     const innerQuery = dataKeysToDataTree(wrapInArray(dataKey)).toString();
-    const generateQuery = (addQuotes: boolean) => `{
+    const generateQuery = (addQuotes: boolean): string => `{
       ${removePluralEnding(camelCase(tableInfo.tableName))}ById(id: ${addQuotes ? `"${identifier}"` : identifier})
       ${innerQuery}
     }`;

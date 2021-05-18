@@ -1,9 +1,7 @@
-import axios, {AxiosPromise, AxiosResponse} from "axios";
-import * as React from "react";
+import {errorNotification} from "@/drawUtils";
+import {getUser} from "@/utils";
 import {IObjectWithIndex} from "@sui/core";
-import {errorNotification} from "../drawUtils";
-import {getUser} from "../utils";
-
+import axios, {AxiosPromise, AxiosResponse} from "axios";
 
 export function doHandledUserRestRequest<T, R = void>(
   uri: string,
@@ -14,10 +12,10 @@ export function doHandledUserRestRequest<T, R = void>(
 ): Promise<void> {
   return doUserRestRequest<T, R>(uri, body, headers)
     .then(onSuccess)
-    .catch((reason: any) => {
+    .catch((reason) => {
       handleUserRestError(reason);
       if (reThrowError) {
-        throw typeof(reThrowError) === "string" ? reThrowError : reason;
+        throw typeof (reThrowError) === "string" ? reThrowError : reason;
       }
     });
 }
@@ -40,6 +38,7 @@ export function doUserRestRequest<T, R = void>(
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/no-explicit-any
 export function handleUserRestError(reason: any, message?: string): void {
   const {data} = reason.response;
   const errors = data.errors

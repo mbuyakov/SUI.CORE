@@ -1,4 +1,7 @@
+import {SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT} from '@/styles';
+import {WaitData} from '@/WaitData';
 import {ArrowLeftOutlined, CloseOutlined} from "@ant-design/icons";
+import {IGraphQLConnection, IName, mutate, query} from '@sui/core';
 import {Button} from 'antd';
 import Input from 'antd/es/input';
 import Alert from 'antd/lib/alert';
@@ -8,17 +11,15 @@ import autobind from 'autobind-decorator';
 import gql from 'graphql-tag';
 import * as React from 'react';
 
-import { IGraphQLConnection, IName , mutate, query } from '@sui/core';
-
-import { SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT } from '../styles';
-import { WaitData } from '../WaitData';
-
 export type NamePopoverRenderType = "choose" | "edit";
 
 interface INamePopoverProps {
   id?: string;
+
   getPopupContainer(): HTMLElement;
+
   onChanged(newId: string): Promise<void> | void;
+
   render?(type: NamePopoverRenderType): JSX.Element;
 }
 
@@ -32,7 +33,8 @@ export class NamePopover extends React.Component<INamePopoverProps, {
   visible?: boolean;
 }> {
 
-private static filterOption(inputValue: string, option: any): boolean {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private static filterOption(inputValue: string, option: any): boolean {
     return option.props.children.toString().toLowerCase().indexOf(inputValue.toLowerCase()) >= 0;
   }
 
@@ -211,7 +213,7 @@ private static filterOption(inputValue: string, option: any): boolean {
     }`)
       .then(value => {
         if (value.allNames.totalCount > 0) {
-throw 'Запись с таким именем уже существует';
+          throw 'Запись с таким именем уже существует';
         }
       })
       .then(() => mutate<{ createName: { name: { id: string } } }>(gql`mutation {

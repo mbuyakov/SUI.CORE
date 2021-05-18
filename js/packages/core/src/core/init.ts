@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import ApolloClient from 'apollo-client';
 import {setContext} from 'apollo-link-context';
 import {Container} from 'typescript-ioc';
@@ -37,6 +38,7 @@ export interface IInitSUISettings {
 
 
 export type ISUISettings = IInitSUISettings & {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   apolloClient: ApolloClient<{}>;
 }
 

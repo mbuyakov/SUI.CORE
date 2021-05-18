@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApolloQueryResult } from 'apollo-client';
 import { FetchResult } from 'apollo-link';
 import gql from 'graphql-tag';
@@ -15,7 +16,7 @@ async function rejectOnError<T>(promise: Promise<ApolloQueryResult<T> | FetchRes
       promise
         .then(value => {
           if (value.errors) {
-value.errors.forEach((error: any) => {
+            value.errors.forEach((error: any) => {
               console.error('PostGraphile error', error);
             });
             reject(value.errors[0].message);
@@ -32,7 +33,7 @@ value.errors.forEach((error: any) => {
  * Extract keys from object if it has only one key
  */
 function extractKeys(obj: IObjectWithIndex, extractKeysLevel: number | boolean): any {
-extractKeysLevel = typeof extractKeysLevel === 'boolean' ? 1 : extractKeysLevel;
+  extractKeysLevel = typeof extractKeysLevel === 'boolean' ? 1 : extractKeysLevel;
 
   let ret = obj;
   for (let i = 1; i <= extractKeysLevel; i++) {
@@ -58,7 +59,7 @@ extractKeysLevel = typeof extractKeysLevel === 'boolean' ? 1 : extractKeysLevel;
  */
 export async function query<T>(queryBody: string | any, extractKeysLevel: boolean | number = false): Promise<T> {
   if (typeof queryBody === 'string') {
-queryBody = gql(queryBody);
+    queryBody = gql(queryBody);
   }
 
   let ret = rejectOnError<T>(
@@ -81,7 +82,7 @@ queryBody = gql(queryBody);
  */
 export async function mutate<T>(mutationBody: string | any, extractKeysLevel: boolean | number = false): Promise<T> {
   if (typeof mutationBody === 'string') {
-mutationBody = gql(mutationBody);
+    mutationBody = gql(mutationBody);
   }
 
   let ret = rejectOnError<T>(

@@ -13,7 +13,7 @@ import {BASE_CARD, BASE_CARD_HEADER_ONLY} from "@/styles";
 import { ChangedEditModeContext } from '@/ChangedEditModeContext';
 
 
-const renderTabBar = () => <React.Fragment/>;
+const renderTabBar = (): React.ReactElement => <React.Fragment/>;
 
 export interface IBaseCardProps<T, ITEM> {
   cardStyle?: React.CSSProperties;

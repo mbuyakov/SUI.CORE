@@ -5,13 +5,16 @@ import {ThemeProvider} from '@material-ui/core/styles';
 import {ConfigProvider} from 'antd';
 import ru_RU from 'antd/es/locale/ru_RU';
 
+export type IGlobalRoutesWrapperProps = Record<string, never>;
 
-export default class GlobalRoutesWrapper extends React.Component<{}, {
-  theme: ThemeVariant
-}> {
+export interface IGlobalRoutesWrapperState {
+  theme: ThemeVariant;
+}
+
+export default class GlobalRoutesWrapper extends React.Component<IGlobalRoutesWrapperProps, IGlobalRoutesWrapperState> {
   private readonly themeService = Container.get(ThemeService);
 
-  public constructor(props) {
+  public constructor(props: IGlobalRoutesWrapperProps) {
     super(props);
     this.state = {
       theme: this.themeService.getValue()

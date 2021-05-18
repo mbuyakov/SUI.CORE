@@ -2,7 +2,6 @@ import {query} from "@/gql";
 import {IObjectWithIndex} from "@/other";
 import {addQuotesIfString} from "@/stringFormatters";
 
-
 export type gqlCompareOperations = 'equalTo' | 'notEqualTo' | 'distinctFrom' | 'notDistinctFrom';
 export interface IQueryResult {
   table: {
@@ -60,6 +59,7 @@ function fieldsToFilterStrings(fields: IObjectWithIndex, comparator: gqlCompareO
     .map(key => getFilterExpression(key, comparator, fields[key]));
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getFilterExpression(field: string, comparator: gqlCompareOperations, value: any): string {
   return `{${field}: {${comparator}: ${addQuotesIfString(value)}}}`;
 }

@@ -1,10 +1,9 @@
+import {AfterChangeContext} from '@/AfterChangeContext';
+import {DisableEditContext} from "@/DisableEditContext";
 import Switch, {SwitchProps} from "antd/lib/switch";
 import autobind from "autobind-decorator";
 import * as React from "react";
-import { AfterChangeContext } from '@/AfterChangeContext';
-
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
-import { DisableEditContext } from "../DisableEditContext";
 
 export type PromisedSwitchProps = Omit<IPromisedBaseProps<boolean>, "validator"> & Omit<SwitchProps, "checked" | "loading" | "onChange">;
 
@@ -26,11 +25,12 @@ export class PromisedSwitch extends PromisedBase<PromisedSwitchProps, IPromisedB
   }
 
   public render(): JSX.Element {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {promise, popconfirmSettings, ...switchProps} = this.props;
 
     return (
       <AfterChangeContext.Consumer>
-        {afterChange => {
+        {(afterChange): JSX.Element => {
           this.setAfterChange(afterChange);
           return (
             <DisableEditContext.Consumer>

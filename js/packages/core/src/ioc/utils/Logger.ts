@@ -1,4 +1,4 @@
-/* eslint-disable no-console,@typescript-eslint/no-explicit-any */
+/* eslint-disable no-console,@typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars */
 import { Container } from 'typescript-ioc';
 import { getTOrCall, TOrCallback } from '@/other';
 import { OneOrArray, wrapInArray } from '@/typeWrappers';

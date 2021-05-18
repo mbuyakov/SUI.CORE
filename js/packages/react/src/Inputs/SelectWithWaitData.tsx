@@ -1,13 +1,9 @@
+import {ExtractProps} from "@/other";
+import {getDataByKey, IGqlFilter, NO_DATA_TEXT, TableInfoManager} from "@sui/core";
 import {Select} from 'antd';
 import {SelectProps, SelectValue} from 'antd/lib/select';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-
-import {TableInfoManager,getDataByKey,IGqlFilter,NO_DATA_TEXT} from "@sui/core";
-
-
-
-import {ExtractProps} from "../other";
 import {getDataSet, getDataSetRender, getUser, IDataSet} from "../utils";
 
 export type ISelectWithWaitDataProps<TValueType, TGroupType> = Omit<SelectProps<SelectValue>, 'mode'> & {
@@ -27,6 +23,7 @@ export interface ISelectWithWaitDataState {
   ready?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
   extends React.Component<ISelectWithWaitDataProps<TValueType, TGroupType>, ISelectWithWaitDataState> {
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {Select} from 'antd';
 import {SelectProps, SelectValue} from "antd/lib/select";
 import autobind from 'autobind-decorator';
@@ -58,6 +59,7 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
   }
 
   public render(): JSX.Element {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {defaultValue, ...restProps} = this.props;
     //const filterValue = this.props.mode == "multiple" ? (this.props.disabled ? getDataByKey(this.props.filter, "value") : this.state?.value) : getDataByKey(this.props.filter, "value");
     const filterValue = this.props.mode == "multiple" ? this.state?.value : getDataByKey(this.props.filter, "value");
@@ -153,7 +155,7 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
   @autobind
   private updateStateData(): void {
     const dataElementByValue = new Map<string | null, ISelectColumnFilterData>();
-    (this.props.data || []).forEach((element: any) => {
+    (this.props.data || []).forEach((element): void => {
       if (!dataElementByValue.has(element.value && element.value.toString())) {
         dataElementByValue.set(element.value && element.value.toString(), element);
       }
@@ -162,8 +164,4 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
     this.setState({data: Array.from(dataElementByValue.values())});
   }
 
-}
-
-function isEmptyFilterValue(value?: any): boolean {
-  return !value || (Array.isArray(value) && value.length === 0);
 }

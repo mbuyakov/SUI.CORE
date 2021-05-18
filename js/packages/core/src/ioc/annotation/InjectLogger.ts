@@ -1,7 +1,9 @@
-import { Logger } from "../utils";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Logger } from "@/ioc";
 
 // Please, don't touch. Magic from typescript-ioc
 export function InjectLogger(...args: any[]): any {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   const target = args[0] as Function;
   const key = args[1] as string;
 

@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type ISerializable<P extends {} = {}> = P & {
   __type?: string;
   id: string;

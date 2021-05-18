@@ -1,4 +1,4 @@
-import {Collapse, withStyles} from '@material-ui/core';
+import {Collapse, CollapseProps, withStyles} from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Dialog, {DialogProps} from '@material-ui/core/Dialog';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,8 +14,8 @@ import {Z_999} from './styles';
 
 type ChildrenWithPopupContainer = (getPopupContainer?: () => HTMLElement) => JSX.Element
 
-function Transition(props: any): JSX.Element {
-  return <Collapse direction="up" {...props} />;
+function Transition(props: CollapseProps): JSX.Element {
+  return <Collapse {...props}/>;
 }
 
 interface IFullScreenModalProps {

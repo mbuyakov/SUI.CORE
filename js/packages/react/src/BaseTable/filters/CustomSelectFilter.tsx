@@ -1,15 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {SimpleBackendFilter} from "@/BackendTable";
+import {WaitData} from '@/WaitData';
+import {asyncMap, camelCase, ColumnInfoDependence, ColumnInfoManager, IObjectWithIndex} from '@sui/core';
 import autobind from "autobind-decorator";
 import * as React from "react";
-
-import { ColumnInfoDependence, IObjectWithIndex, asyncMap, ColumnInfoManager, camelCase } from '@sui/core';
-import {SimpleBackendFilter} from "../../BackendTable";
-
-
-
-import {WaitData} from '../../WaitData';
+import {INewSearchProps, LazyFilter, SelectData} from '../types';
 
 import {BaseSelectFilter, IBaseSelectFilterProps} from "./BaseSelectFilter";
-import { LazyFilter, INewSearchProps, SelectData } from '../types';
 
 type ICustomSelectFilterProps<T> = Omit<IBaseSelectFilterProps<T>, "data" | "onChange"> & INewSearchProps & { filters?: LazyFilter[] };
 
@@ -20,12 +17,14 @@ interface ICustomSelectFilterState<T> {
 }
 
 function extractValueFromFilter<T>(filter: LazyFilter): T | undefined {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  return (filter?.elements ??  filter?.value) as T | undefined;
+  return (filter?.elements ?? filter?.value) as T | undefined;
 }
 
 export class CustomSelectFilter<T extends string | string[] | number | number[]> extends React.Component<ICustomSelectFilterProps<T>, ICustomSelectFilterState<T>> {
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public static isPromise(element: any): boolean {
     return !!element && (typeof (element) === 'object' || typeof (element) === 'function') && typeof (element.then) === 'function'
   }

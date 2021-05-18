@@ -19,6 +19,7 @@ export function concatDataKey(...keys: DataKey[]): Array<number | string> {
 /**
  * Get data from object by DataKeys
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
 export function getDataByKey<T = any>(obj: any, ...keys: DataKey[]): T {
   const key = concatDataKey(...keys);
   if (key.length === 0) {

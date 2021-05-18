@@ -1,23 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {DeletableSmallCard} from '@/DeletableSmallCard';
+import {DnDList, ISerializableComponent} from '@/Draggable';
+import {PromisedButton} from '@/Inputs';
+import {MAIN_SETTINGS__CONTAINER, MAIN_SETTINGS__ITEM_TREE} from '@/styles';
+import {WaitData} from '@/WaitData';
 import {SaveOutlined} from "@ant-design/icons";
-import { Switch } from 'antd';
+import {ColumnInfoManager, TableInfoManager} from '@sui/core';
+import {Switch} from 'antd';
 import Tooltip from 'antd/lib/tooltip';
 import Tree from 'antd/lib/tree';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import { ColumnInfoManager, TableInfoManager } from '@sui/core';
-import { DeletableSmallCard } from '../DeletableSmallCard';
-import { DnDList } from '../Draggable';
-import { ISerializableComponent } from '../Draggable/Serializable';
-import { PromisedButton } from '../Inputs';
-import { MAIN_SETTINGS__CONTAINER, MAIN_SETTINGS__ITEM_TREE } from '../styles';
-import { WaitData } from '../WaitData';
-
-import { CardSettings, SerializedCardSettings } from './CardSettings';
-import { DebugModeContext } from './DebugModeContext';
-import { FieldsContext } from './FieldsContext';
-import { GetPopupContainerContext } from './GetPopupContainerContext';
-import { ItemSettings } from './ItemSettings';
+import {CardSettings, SerializedCardSettings} from './CardSettings';
+import {DebugModeContext} from './DebugModeContext';
+import {FieldsContext} from './FieldsContext';
+import {GetPopupContainerContext} from './GetPopupContainerContext';
+import {ItemSettings} from './ItemSettings';
 
 async function getFieldsForCol(colId: string, includeChildren: boolean = true): Promise<IFieldNode> {
   const colInfo = await ColumnInfoManager.getById(colId);
@@ -40,13 +39,11 @@ async function getFieldsForCol(colId: string, includeChildren: boolean = true): 
 
 
 interface IMainSettingsProps {
-  fields: string[]
-  plain?: SerializedCardSettings
-  tableId: string
-
-  getPopupContainer(): HTMLElement
-
-  onSave(settings: SerializedCardSettings): Promise<any>
+  fields: string[];
+  plain?: SerializedCardSettings;
+  tableId: string;
+  getPopupContainer(): HTMLElement;
+  onSave(settings: SerializedCardSettings): Promise<any>;
 }
 
 interface IFieldNode {

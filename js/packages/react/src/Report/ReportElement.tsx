@@ -1,12 +1,11 @@
-import { PrinterOutlined } from '@ant-design/icons';
-import { Button, Card } from 'antd';
-import { CardType } from 'antd/lib/card';
+import {SMALL_HEADER_PADDING} from '@/styles';
+import {PrinterOutlined} from '@ant-design/icons';
+import {Button, Card} from 'antd';
+import {CardType} from 'antd/lib/card';
 import * as React from 'react';
 import ReactToPrint from 'react-to-print';
 
-import { SMALL_HEADER_PADDING } from '../styles';
-
-import { PrintModeContext } from './PrintModeContext';
+import {PrintModeContext} from './PrintModeContext';
 
 
 interface IReportElement {
@@ -23,7 +22,7 @@ export class ReportElement extends React.Component<IReportElement, {
 }> {
 
   // tslint:disable-next-line:no-any
-  private readonly printContentRef: React.RefObject<any> = React.createRef();
+  private readonly printContentRef: React.RefObject<HTMLDivElement> = React.createRef();
 
   public constructor(props: IReportElement) {
     super(props);
@@ -54,10 +53,10 @@ export class ReportElement extends React.Component<IReportElement, {
         title={this.props.header}
         extra={this.props.print ? (
           <ReactToPrint
-            trigger={() => (<Button icon={<PrinterOutlined/>}/>)}
-            content={() => this.printContentRef.current}
-            onBeforeGetContent={async () => new Promise(resolve => this.setState({printMode: true}, resolve))}
-            onAfterPrint={() => this.setState({printMode: false})}
+            trigger={(): JSX.Element => (<Button icon={<PrinterOutlined/>}/>)}
+            content={(): HTMLDivElement => this.printContentRef.current}
+            onBeforeGetContent={(): Promise<void> => new Promise(resolve => this.setState({printMode: true}, resolve))}
+            onAfterPrint={(): void => this.setState({printMode: false})}
           />
         ) : undefined}
         type={this.props.type}

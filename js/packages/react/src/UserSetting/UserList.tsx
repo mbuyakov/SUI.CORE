@@ -1,18 +1,19 @@
-/* tslint:disable:no-magic-numbers jsx-no-lambda */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {SelectWithWaitData} from "@/Inputs";
+import {MutableBackendTable} from "@/MutableBackendTable";
+import {ExtractProps} from "@/other";
+import {EMAIL_REGEXP, IObjectWithIndex, OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 import {Input} from "antd";
 import autobind from "autobind-decorator";
 import React from "react";
-import {OneOrArrayWithNulls, wrapInArrayWithoutNulls,EMAIL_REGEXP, IObjectWithIndex} from "@sui/core";
+
 import {BaseForm, IBaseCardRowLayout, IBaseFormItemLayout} from "../Base";
-import {SelectWithWaitData} from "../Inputs";
-import {MutableBackendTable} from "../MutableBackendTable";
-import {ExtractProps} from "../other";
 
 import {MAX_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH_MESSAGE, MIN_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH_MESSAGE, MIN_USERNAME_LENGTH, MIN_USERNAME_LENGTH_MESSAGE} from "./const";
 import {ICreateUserFormValues} from "./types";
 
 const TABLE_NAME = "user_ui";
-const isDeleted = (user: { deleted?: boolean }) => !!user.deleted;
+const isDeleted = (user: { deleted?: boolean }): boolean => !!user.deleted;
 
 interface IUserListProps<T> {
   additionalRows?: OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseFormItemLayout>>;
@@ -23,6 +24,7 @@ interface IUserListProps<T> {
   isDeleted?(row: IObjectWithIndex): boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export class UserList<T extends {}> extends React.Component<IUserListProps<T>> {
 
   public render(): JSX.Element {
@@ -95,7 +97,7 @@ export class UserList<T extends {}> extends React.Component<IUserListProps<T>> {
                     />
                   ),
                   title: "Роли",
-                  afterChange: (roleIds, form) => this.props.afterRolesChange(roleIds || [], form)
+                  afterChange: (roleIds, form): void => this.props.afterRolesChange(roleIds || [], form)
                 }
               }
             },

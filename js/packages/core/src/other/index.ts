@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type NotFunction<T> = T extends Function ? never : T;
 
 export type Nullable<T> = T | null | undefined;
@@ -59,7 +61,7 @@ export type Unpacked<T> =
 export function groupBy<K, V, U = V[]>(
   array: V[],
   keyExtractor: (v: V) => K,
-  combiner: (v: V, values: U | undefined) => U = (v, values) => [...(values as any || []), v] as any
+  combiner: (v: V, values: U | undefined) => U = (v, values): any => [...(values as any || []), v] as any
 ): Map<K, U> {
   const groups = new Map<K, U>();
   array.forEach((element) => {
@@ -76,7 +78,7 @@ export function groupBy<K, V, U = V[]>(
 export function toMap<K, V, U = V>(
   array: V[],
   keyExtractor: (v: V) => K,
-  valueExtractor: (v: V) => U = v => v as any as U
+  valueExtractor: (v: V) => U = (v): U => v as any as U
 ): Map<K, U> {
   const result = new Map<K, U>();
   array.forEach(element => result.set(keyExtractor(element), valueExtractor(element)));
@@ -93,11 +95,11 @@ export function distinctValues<E, V = E>(params: {
   equals?(v1: V, v2: V): boolean;
   mapper?(element: E): V;
 }): V[] {
-  const equalsFn = params.equals || ((v1, v2) => v1 === v2);
+  const equalsFn = params.equals || ((v1, v2): boolean => v1 === v2);
 
   return params.array
-    .map(params.mapper || (e => e as unknown as V))
-    .filter(params.includeNulls ? () => true : Boolean)
+    .map(params.mapper || ((e): V => e as unknown as V))
+    .filter(params.includeNulls ? (): boolean => true : Boolean)
     .filter((element, index, array) => index === array.findIndex(value => equalsFn(element, value)));
 }
 

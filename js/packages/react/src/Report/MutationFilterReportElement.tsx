@@ -1,4 +1,4 @@
-// tslint:disable:no-any
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import autobind from "autobind-decorator";
 import React from "react";
 
@@ -42,6 +42,7 @@ export type IMutationFilterReportElementProps<TData, TFilter, TRaw = any> = Omit
   "fetchData"
 >;
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export class MutationFilterReportElement<TData, TFilter = {}, TRaw = any>
   extends React.Component<IMutationFilterReportElementProps<TData, TFilter, TRaw>> {
 

@@ -1,11 +1,10 @@
+import {DnDList} from '@/Draggable';
+import {MetaCardConfigurator} from '@/Meta';
+import {Rendered} from '@/other';
+import {defaultIfNotBoolean} from '@sui/core';
 import {Menu} from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";
-
-import { defaultIfNotBoolean } from '@sui/core';
-import { DnDList } from '../Draggable';
-import { MetaCardConfigurator } from '../Meta';
-import { Rendered } from '../other';
 
 import {RowSettings} from "./RowSettings";
 
@@ -58,7 +57,8 @@ export class RowsList extends React.Component<{
           </Menu.Item>),
           ...Array.from(MetaCardConfigurator.plugins.values()).map(plugin => (
             <Menu.Item
-              onClick={() => this.props.listRef.current.addItem(React.cloneElement(plugin.getNewSettingsInstance(false), {__type: plugin.id}) as unknown as any)}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              onClick={(): void => this.props.listRef.current.addItem(React.cloneElement(plugin.getNewSettingsInstance(false), {__type: plugin.id}) as unknown as any)}
             >
               {plugin.addText}
             </Menu.Item>

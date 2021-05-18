@@ -21,6 +21,7 @@ export const BaseCardTabCustom: <T>(props: IBaseCardTabCustom<T> & {
   </Tabs.TabPane>
 );
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isCustomTab<T>(tab: IBaseCardTabLayout<T, any>): tab is IBaseCardTabCustom<T> {
   return "render" in tab;
 }

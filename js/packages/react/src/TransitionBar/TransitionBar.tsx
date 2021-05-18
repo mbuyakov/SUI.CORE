@@ -1,15 +1,15 @@
+import {INFO_MODAL_FIX, NO_BORDER_MODAL} from "@/styles";
 import {DownOutlined, LoadingOutlined, ShareAltOutlined} from '@ant-design/icons';
 import {defaultIfNotBoolean} from "@sui/core";
 import {Button, Dropdown, Menu, Modal, Popconfirm} from 'antd';
 import {ButtonGroupProps} from "antd/lib/button";
 import {ModalFuncProps} from "antd/lib/modal";
-import { PopconfirmProps } from 'antd/lib/popconfirm';
+import {PopconfirmProps} from 'antd/lib/popconfirm';
 import Tooltip, {TooltipProps} from 'antd/lib/tooltip';
 import autobind from "autobind-decorator";
 import classNames from "classnames";
 import * as React from "react";
 
-import {INFO_MODAL_FIX, NO_BORDER_MODAL} from "../styles";
 import {TransitionGraph} from "./TransitionGraph";
 import {IResolution, ITransition, ITransitionStatus, TransitionButtonProps} from "./types";
 
@@ -24,6 +24,7 @@ export interface ITransitionBarProps<TStatus extends ITransitionStatus<TID>, TID
   transitions: Array<ITransition<TID>>;
 
   onTransit(toStatus: TStatus, resolution?: IResolution): Promise<void>;
+
   statusNameExtractor(status: TStatus): string;
 }
 
@@ -152,7 +153,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
 
             return wrapInTooltip(
               (
-                  <Dropdown
+                <Dropdown
                   {...dropDownProps}
                   key={key}
                   overlay={menu}
@@ -167,7 +168,9 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
                     {content}
                   </Button>
                 </Dropdown>
-              ), tooltip);
+              ),
+              tooltip
+            );
           } else {
             const hasConfirm = hasPopconfirm(transition.popconfirmProps);
             const onClick = this.onTransitFn(transition);
@@ -202,8 +205,8 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
   }
 
   @autobind
-  private onDropdownMenuItemClickHandler(transition: ITransition<TID>): (event: { key: any }) => Promise<void> {
-    return (event): Promise<void> => this.onTransitFn(transition, event.key)();
+  private onDropdownMenuItemClickHandler(transition: ITransition<TID>): (event: { key: React.ReactText }) => Promise<void> {
+    return (event): Promise<void> => this.onTransitFn(transition, event.key as string)();
   }
 
   @autobind

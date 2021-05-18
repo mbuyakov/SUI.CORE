@@ -39,7 +39,7 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
 
   @autobind
   public maskValidator(mask: string, totalValueLength: number): ValidatorFunction<V> {
-    return value => {
+    return (value): string => {
       const strValue = value.toString();
 
       return ((strValue.length === totalValueLength) || (strValue.length === 0 && this.props.allowEmpty))
@@ -123,7 +123,7 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
   private handleNewValue(newValue: React.ChangeEvent<HTMLInputElement> | string): void {
     const value = typeof newValue === 'string' ? newValue : newValue.target.value;
     this.validate(value as unknown as V);
-    if (this.props.type === 'number' && !((!Number.isNaN(value as any) && NUMBER_REGEX.test(value)) || value === '' || value === '-')) {
+    if (this.props.type === 'number' && !((!Number.isNaN(value as unknown) && NUMBER_REGEX.test(value)) || value === '' || value === '-')) {
       return;
     }
     this.setState({value: this.props.type === 'number' ? (value ? (value === '-' ? '-' : Number(value)) : undefined) : value} as unknown as V);

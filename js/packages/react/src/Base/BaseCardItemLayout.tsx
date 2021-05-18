@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {CheckOutlined, CloseOutlined, WarningTwoTone} from '@ant-design/icons';
 import {DataKey, defaultIfNotBoolean, getDataByKey, NO_DATA_TEXT} from '@sui/core';
 import {Tooltip} from 'antd';
@@ -62,6 +63,7 @@ class CustomRender<T> extends React.Component<ICustomRenderProps<T>, {
 
 export const DEFAULT_ITEM_RENDERER = renderIBaseCardItem;
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayout<T>, colspan: number): React.ReactNode {
   // console.log(item);
   const required = defaultIfNotBoolean(item.required, true);
@@ -71,7 +73,6 @@ export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayou
     data = <CustomRender item={sourceItem} render={item.render} value={data}/>;
   } else if (item.tableProps) {
     data = (
-      // @ts-ignore
       <BaseTable
         cardType="inner"
         paperStyle={{ margin: 0 }}

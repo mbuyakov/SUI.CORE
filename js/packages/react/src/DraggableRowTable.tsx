@@ -1,14 +1,15 @@
-import { Table } from 'antd';
-import { TableProps } from 'antd/lib/table';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {IObjectWithIndex} from '@sui/core';
+import {Table} from 'antd';
+import {TableProps} from 'antd/lib/table';
 import autobind from 'autobind-decorator';
 import update from 'immutability-helper';
 import * as React from 'react';
-import { DndProvider, DragSource, DropTarget } from 'react-dnd';
+import {DndProvider, DragSource, DropTarget} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { IObjectWithIndex } from '@sui/core';
 
 import {ExtractProps} from './other';
-import { WaitData } from './WaitData';
+import {WaitData} from './WaitData';
 
 let dragingIndex = -1;
 
@@ -18,11 +19,12 @@ class BodyRow extends React.Component<any> {
       isOver,
       connectDragSource,
       connectDropTarget,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       moveRow,
       ...restProps
     } = this.props;
 
-    const style = { ...restProps.style, cursor: 'move' };
+    const style = {...restProps.style, cursor: 'move'};
 
     let className = restProps.className;
     if (isOver) {
@@ -110,7 +112,7 @@ class DraggableRowTableClass<T extends IObjectWithIndex> extends React.Component
   @autobind
   public componentWillReceiveProps(nextProps: any): void {
     // // console.log(nextProps);
-    this.setState({ data: nextProps.dataSource });
+    this.setState({data: nextProps.dataSource});
   }
 
   public render(): JSX.Element {
@@ -137,16 +139,16 @@ class DraggableRowTableClass<T extends IObjectWithIndex> extends React.Component
 
   @autobind
   private moveRow(dragIndex: any, hoverIndex: any): any {
-    const { data } = this.state;
+    const {data} = this.state;
     const dragRow = data[dragIndex];
     const newState = update(this.state, {
       data: {
         $splice: [[dragIndex, 1], [hoverIndex, 0, dragRow]],
       },
     });
-    this.setState({ loading: true });
-this.props.onOrderChanged(newState.data)
-      .then(_ => this.setState({ ...newState, loading: false }));
+    this.setState({loading: true});
+    this.props.onOrderChanged(newState.data)
+      .then((): void => this.setState({...newState, loading: false}));
   }
 
   @autobind

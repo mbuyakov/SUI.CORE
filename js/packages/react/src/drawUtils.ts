@@ -30,7 +30,7 @@ export async function loadingMessage<T>(promise: Promise<T>, loadingText: string
     hideMsg = message.loading(loadingText, 0);
   }, delay);
 
-  hideMsg = () => {
+  hideMsg = (): void => {
     clearTimeout(timeout);
   };
 

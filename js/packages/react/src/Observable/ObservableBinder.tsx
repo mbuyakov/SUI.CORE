@@ -1,8 +1,7 @@
+import {SUIReactComponent} from '@/SUIReactComponent';
 import React from "react";
 
-import { SUIReactComponent } from '../SUIReactComponent';
-
-import { Observable } from './Observable';
+import {Observable} from './Observable';
 
 export interface IObservableBinderProps<T> {
   observable: Observable<T>

@@ -1,20 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {RouterLink} from '@/Link';
+import {TableSettingsDialog} from '@/plugins';
+import {WaitData} from '@/WaitData';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import { Cached } from '@material-ui/icons';
+import {Cached} from '@material-ui/icons';
+import {addPluralEnding, addQuotesIfString, capitalize, ColumnInfoManager, DataKey, dataKeysToDataTree, getDataByKey, isValidUuid, NameManager, NO_DATA_TEXT, normalizeDataKey, query, TableInfoManager, wrapInArray, wrapInArrayWithoutNulls} from "@sui/core";
 import Card from 'antd/lib/card';
 import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
-import {ColumnInfoManager, DataKey, getDataByKey, NameManager, NO_DATA_TEXT, normalizeDataKey, TableInfoManager, wrapInArray, addPluralEnding, capitalize, query, addQuotesIfString, dataKeysToDataTree, wrapInArrayWithoutNulls, isValidUuid} from "@sui/core";
 
 import {BaseCard, DATA_KEY_REGEXP, IBaseCardItemLayout, IBaseCardRowLayout, IBaseCardRowWithColsLayout} from '../Base';
-import { RouterLink } from '../Link';
 import {SerializedCardSettings, SerializedFreeText, SerializedItemSettings, SerializedRowSettings} from "../MetaCardSettings";
-import { TableSettingsDialog } from '../plugins';
-import { getLinkForTable, getReferencedTableInfo, isAdmin } from '../utils';
-import { WaitData } from '../WaitData';
+import {getLinkForTable, getReferencedTableInfo, isAdmin} from '../utils';
 
-import { MetaCardConfigurator } from './MetaCardConfigurator';
+import {MetaCardConfigurator} from './MetaCardConfigurator';
 
 export interface IMetaCardProps {
   itemId: string;
@@ -31,7 +32,7 @@ function getIdDataKey(dataKey: DataKey): DataKey {
 
 export class MetaCard extends React.Component<IMetaCardProps, {
   error?: string;
-item?: any;
+  item?: any;
   ready?: boolean;
   schema?: SerializedCardSettings;
   tableInfoId?: string;
@@ -73,7 +74,7 @@ item?: any;
             }
 
             const data = getDataByKey(this.state.item && this.state.item.nodes[0], (title as SerializedItemSettings).dataKey);
-return data == null ? NO_DATA_TEXT : data;
+            return data == null ? NO_DATA_TEXT : data;
           }).join(' ')
         }
         extra={
@@ -115,19 +116,23 @@ return data == null ? NO_DATA_TEXT : data;
         }}
       >
         {this.state.ready
-          ? <BaseCard
-            cardStyle={{ margin: -1 }}
-            item={this.state.item && this.state.item.nodes[0]}
-            rows={this.state.schema && this.state.schema.rows as IBaseCardRowLayout<any, any>[]}
-          />
-          : <WaitData
-            data={this.state.ready}
-            error={!!this.state.error}
-            errorTip={this.state.error}
-            alwaysUpdate={true}
-          >
-            {() => null}
-          </WaitData>
+          ? (
+            <BaseCard
+              cardStyle={{margin: -1}}
+              item={this.state.item && this.state.item.nodes[0]}
+              rows={this.state.schema && this.state.schema.rows as IBaseCardRowLayout<any, any>[]}
+            />
+          )
+          : (
+            <WaitData
+              data={this.state.ready}
+              error={!!this.state.error}
+              errorTip={this.state.error}
+              alwaysUpdate={true}
+            >
+              {(): null => null}
+            </WaitData>
+          )
         }
       </Card>
     );
@@ -135,14 +140,14 @@ return data == null ? NO_DATA_TEXT : data;
 
   @autobind
   public async updateData(clearState: boolean = true): Promise<void> {
-clearState && this.setState({ ready: false, item: null, schema: null });
+    clearState && this.setState({ready: false, item: null, schema: null});
     const object = await TableInfoManager.getById(this.props.tableId);
-    this.setState({ tableInfoId: object.id });
+    this.setState({tableInfoId: object.id});
 
     const schema: SerializedCardSettings = object.cardRenderParams && JSON.parse(object.cardRenderParams);
 
-if (schema == null || !((schema.rows && schema.rows.length) || (schema.title && schema.title.length))) {
-      this.setState({ error: 'Схема не настроена' });
+    if (schema == null || !((schema.rows && schema.rows.length) || (schema.title && schema.title.length))) {
+      this.setState({error: 'Схема не настроена'});
 
       return;
     }
@@ -153,17 +158,15 @@ if (schema == null || !((schema.rows && schema.rows.length) || (schema.title && 
         const plugin = MetaCardConfigurator.plugins.get(row.__type);
 
         if (!plugin) {
-          this.setState({ error: `Плагин "${row.__type}" не найден` });
+          this.setState({error: `Плагин "${row.__type}" не найден`});
         }
 
         (row as unknown as IBaseCardRowWithColsLayout<any, IBaseCardItemLayout<any>>).cols = {
           items: {
-// @ts-ignore
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             dataKey: row.field,
-            render: (item: any) => plugin.render({
-              props: row,
-              item,
-            }),
+            render: (item: any): JSX.Element => plugin.render({props: row, item}),
           },
         };
 
@@ -220,15 +223,15 @@ if (schema == null || !((schema.rows && schema.rows.length) || (schema.title && 
 
     await Promise.all(schema.rows.map(async (row) => rowParser(row)));
 
-    this.setState({ schema });
+    this.setState({schema});
 
     try {
       query(await this.generateQuery(this.props.tableId, this.props.itemId, schema), true)
         .then(item => {
-          this.setState({ item, ready: true });
+          this.setState({item, ready: true});
         });
     } catch (e) {
-      this.setState({ error: e.stack && e.stack.toString() || e });
+      this.setState({error: e.stack && e.stack.toString() || e});
     }
   }
 
@@ -256,7 +259,7 @@ if (schema == null || !((schema.rows && schema.rows.length) || (schema.title && 
             if (typeof filter === 'string') {
               const regexp = new RegExp(DATA_KEY_REGEXP);
               let result;
-while (result = regexp.exec(filter)) { // All ok, use assign here. Not typo
+              while (result = regexp.exec(filter)) { // All ok, use assign here. Not typo
                 ret.push(result[1].split('|'));
               }
             }

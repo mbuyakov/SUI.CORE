@@ -1,20 +1,21 @@
+/* eslint-disable */
+import {errorNotification} from '@/drawUtils';
+import {BASE_FORM_CLASS} from '@/styles';
+import {SUIReactComponent} from '@/SUIReactComponent';
+import {hasErrors} from '@/utils';
+
+import {IObjectWithIndex, OneOrArray, wrapInArray} from '@sui/core';
 import asyncValidator, {RuleItem} from 'async-validator';
 import autobind from 'autobind-decorator';
 import classNames from 'classnames';
 import isEqual from 'lodash/isEqual';
 import moment from 'moment';
 import * as React from 'react';
-
-import {OneOrArray, wrapInArray, IObjectWithIndex} from '@sui/core';
-import {errorNotification} from '../drawUtils';
 import {Observable, ObservableHandlerStub} from '../Observable';
-import {BASE_FORM_CLASS} from '../styles';
-import {SUIReactComponent} from '../SUIReactComponent';
 
 import {BaseCard, IBaseCardProps} from './BaseCard';
 import {BaseFormContext} from './BaseFormContext';
 import {IBaseFormItemLayout, renderIBaseFormItemLayout} from './BaseFormItemLayout';
-import { hasErrors } from '../utils/formUtils';
 
 export type ValuesGetter = (fields: string[]) => IObjectWithIndex;
 
@@ -178,7 +179,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   }
 
   @autobind
-  public removeField(field: string) {
+  public removeField(field: string): void {
     const formField = this.formFields.get(field);
     if (formField) {
       formField.error.setValue(null);

@@ -1,9 +1,8 @@
+import {BackendTable} from "@/BackendTable";
+import {ExtractProps} from "@/other";
+import {WaitData} from "@/WaitData";
 import autobind from "autobind-decorator";
 import React from 'react';
-
-import {BackendTable} from "../BackendTable";
-import {ExtractProps} from "../other";
-import {WaitData} from "../WaitData";
 
 export type IOldAuditTableProps =
   Omit<ExtractProps<BackendTable>, "rowDetailComponent" | "table">

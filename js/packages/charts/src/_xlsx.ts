@@ -260,6 +260,7 @@ export interface WorkBook {
   Props?: FullProperties;
 
   /** Custom workbook Properties */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   Custprops?: object;
 
   Workbook?: WBProps;

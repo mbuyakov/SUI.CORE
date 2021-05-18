@@ -1,13 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {WaitData} from '@/WaitData';
+import {NO_DATA_TEXT, TableInfoManager} from '@sui/core';
 import autobind from "autobind-decorator";
 import * as React from "react";
+import {getLinkForTable, getRenderValue, getUser, RenderValue} from '../utils';
 
-import { getDataByKey ,TableInfoManager, NO_DATA_TEXT } from '@sui/core';
-
-
-import { getLinkForTable, getRenderValue, getUser, RenderValue } from '../utils';
-import { WaitData } from '../WaitData';
-
-import { RouterLink } from './RouterLink';
+import {RouterLink} from './RouterLink';
 
 interface IMetaLinkProps {
   id: string | number;
@@ -22,9 +20,10 @@ interface IMetaLinkState {
 }
 
 export function metaLinkRender(table: string, withLink: boolean = false): (id: string | number | null | undefined) => JSX.Element | string {
-return id => (id != null)
-    ? <MetaLink tableInfoIdentifier={table} withLink={withLink} id={id}/>
-    : NO_DATA_TEXT;
+  return (id): JSX.Element | string =>
+    (id != null)
+      ? <MetaLink tableInfoIdentifier={table} withLink={withLink} id={id}/>
+      : NO_DATA_TEXT;
 }
 
 export function renderMetaLinkArray(table: string, ids: Array<string | number>, withLink: boolean = false): JSX.Element | string {
@@ -63,8 +62,8 @@ export class MetaLink extends React.Component<IMetaLinkProps, IMetaLinkState> {
           data={this.state && this.state.ready}
           alwaysUpdate={true}
         >
-          {() => {
-const renderValue = (this.state.renderValue != null)
+          {(): any => {
+            const renderValue = (this.state.renderValue != null)
               ? this.state.renderValue.value
               : this.props.id;
 

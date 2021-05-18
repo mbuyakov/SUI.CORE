@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {IBaseCardItemLayout} from '@/Base';
+import {DnDDragHandler} from "@/Draggable";
+import {NamePopover} from '@/Popover';
+import {COMMON__GRID, ITEM_SETTINGS__DELETE_ICON, ITEM_SETTINGS__SETTINGS_ICON} from "@/styles";
+import {WaitData} from '@/WaitData';
 import {EditOutlined, OrderedListOutlined} from '@ant-design/icons';
 import {Chip} from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -12,12 +18,7 @@ import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
-import {IBaseCardItemLayout} from '../Base';
-import {DnDDragHandler} from "../Draggable";
 import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
-import {NamePopover} from '../Popover';
-import {COMMON__GRID, ITEM_SETTINGS__DELETE_ICON, ITEM_SETTINGS__SETTINGS_ICON} from "../styles";
-import {WaitData} from '../WaitData';
 
 import {DebugModeContext} from "./DebugModeContext";
 import {GetPopupContainerContext} from "./GetPopupContainerContext";
@@ -60,9 +61,9 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
 
     return (
       <GetPopupContainerContext.Consumer>
-        {getPopupContainer => (
+        {(getPopupContainer): JSX.Element => (
           <DebugModeContext.Consumer>
-            {debugMode => (
+            {(debugMode): JSX.Element => (
               <Chip
                 label={
                   <>
@@ -94,11 +95,13 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
                               />
                             </Tooltip>
                               {this.state.freeTitleEnabled
-                                ? <Input
-                                  value={this.state.title as string}
-                                  placeholder={this.state.nameFromColId || this.state.originalTitle}
-                                  onChange={this.onTitleChanged}
-                                />
+                                ? (
+                                  <Input
+                                    value={this.state.title as string}
+                                    placeholder={this.state.nameFromColId || this.state.originalTitle}
+                                    onChange={this.onTitleChanged}
+                                  />
+                                )
                                 : <>
                                 <span
                                   style={{
@@ -107,17 +110,15 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
                                   }}
                                 >
                                   {this.state.nameId
-                                    ? <WaitData<IName>
-                                      query={`{
-                                      nameById(id: "${this.state.nameId}") {
-                                        name
-                                      }
-                                    }`}
-                                      extractFirstKey={true}
-                                      alwaysUpdate={true}
-                                    >
-                                      {name => name.name}
-                                    </WaitData>
+                                    ? (
+                                      <WaitData<IName>
+                                        query={`{ nameById(id: "${this.state.nameId}") { name } }`}
+                                        extractFirstKey={true}
+                                        alwaysUpdate={true}
+                                      >
+                                        {(name): string => name.name}
+                                      </WaitData>
+                                    )
                                     : 'Не выбранно'
                                   }
                                 </span>

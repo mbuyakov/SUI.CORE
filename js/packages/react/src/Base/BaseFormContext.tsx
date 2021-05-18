@@ -10,4 +10,5 @@ export interface IBaseFormContext {
   verticalLabel: boolean
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const BaseFormContext = React.createContext<IBaseFormContext>(null as any);

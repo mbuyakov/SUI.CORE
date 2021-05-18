@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/no-explicit-any */
 import {BaseForm} from "./BaseForm";
 
 interface IClearField {
@@ -37,7 +38,7 @@ export function clearFieldsAfterChange(
   defaultEmptyValue: any,
   ...fieldNames: Array<string | IClearField>
 ): (value: any, form: BaseForm) => void {
-  return (_, form) => clearFields(form, defaultEmptyValue, ...fieldNames);
+  return (_, form): void => clearFields(form, defaultEmptyValue, ...fieldNames);
 }
 
 export function clearFieldsWithUndefinedAfterChange(
