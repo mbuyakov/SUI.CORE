@@ -95,6 +95,10 @@ export class CategoryColumnChart extends React.Component<ICategoryColumnChartPro
 
     chart.cursor = new amcharts.am4charts.XYCursor();
 
+    chart.exporting.events.on("exportstarted", () => this.exportTooltip(chart, seriesMap, false));
+
+    chart.exporting.events.on("exportfinished", () => this.exportTooltip(chart, seriesMap, true));
+
     if (this.props.additionalSetting) {
       this.props.additionalSetting({
         categoryAxis,
@@ -104,6 +108,20 @@ export class CategoryColumnChart extends React.Component<ICategoryColumnChartPro
         amcharts
       });
     }
+  }
+
+  @autobind
+  private exportTooltip(chart: InstanceType<AMCHARTS["am4charts"]["XYChart"]>, seriesMap: Map<string, any>, enable: boolean): void {
+    chart.yAxes.each(value => value.cursorTooltipEnabled = enable);
+    chart.xAxes.each(value => value.cursorTooltipEnabled = enable);
+    chart.cursor.lineY.disabled = !enable;
+    chart.cursor.lineX.disabled = !enable;
+    seriesMap.forEach(series => {
+      series.columns.each(column => {
+          column.tooltip.disabled = !enable;
+        }
+      )
+    })
   }
 
 }
