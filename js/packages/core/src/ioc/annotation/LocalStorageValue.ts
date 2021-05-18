@@ -18,10 +18,10 @@ export function _LocalStorageValue(localStorageKey: string): LocalStorageValueWr
   const localStorageService = Container.get(LocalStorageService);
   const log = new Logger("LocalStorageValue");
   return {
-    get() {
+    get(): string {
       return localStorageService.getItem(localStorageKey);
     },
-    set(newValue: string) {
+    set(newValue: string): void {
       const oldValue = localStorageService.getItem(localStorageKey);
       log.info(`[${localStorageKey}] ${oldValue} -> ${newValue}`);
       if(newValue == null) {
@@ -35,9 +35,10 @@ export function _LocalStorageValue(localStorageKey: string): LocalStorageValueWr
 
 // Please, don't touch. Magic from typescript-ioc
 export function LocalStorageValue(localStorageKey: string) {
-  return (...args: any[]) => {
+  return (...args: any[]): void => {
     console.debug('@LocalStorageValue', localStorageKey, args);
 
+    // eslint-disable-next-line @typescript-eslint/ban-types
     const target = args[0] as Function;
     const key = args[1] as string;
     const wrapper = _LocalStorageValue(localStorageKey);

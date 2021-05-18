@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-types */
+import {IGqlFilter} from "@/gql";
 import {IObjectWithIndex} from "@/other";
-import {addQuotesIfString, camelCase, capitalize, formatRawForGraphQL, lineFeedScreening} from "@/stringFormatters";
-import {IGqlFilter} from "../types";
-import { mutate, query } from '../wrapper';
+import {addQuotesIfString, camelCase, capitalize, formatRawForGraphQL} from "@/stringFormatters";
+
+import {mutate, query} from '../wrapper';
 
 export type PossibleId = string | number;
 export type PossibleValue = string | number | boolean;
@@ -73,7 +75,7 @@ export async function generateUpdate(entity: string, id: PossibleId, field: stri
  * Generate promise for Gql update
  */
 export function generateUpdateFn(entity: string, id: PossibleId, field: string): (value: PossibleValue) => Promise<void> {
-  return (value: PossibleValue) => generateUpdate(entity, id, field, value);
+  return (value: PossibleValue): Promise<void> => generateUpdate(entity, id, field, value);
 }
 
 /**
@@ -165,7 +167,7 @@ export async function generateCreate<T = void>(entity: string, fields: object): 
  * Available fields types - string, number, boolean
  */
 export function generateCreateFn<T = void>(entity: string): (fields: object) => Promise<T> {
-  return (fields: object) => generateCreate(entity, fields);
+  return (fields: object): Promise<T> => generateCreate(entity, fields);
 }
 
 /**
@@ -195,7 +197,7 @@ export async function generateDelete(entity: string, id: PossibleId): Promise<vo
  * Available fields types - string, number, boolean
  */
 export function generateDeleteFn(entity: string): (id: PossibleId) => Promise<void> {
-  return (id: PossibleId) => generateDelete(entity, id);
+  return (id: PossibleId): Promise<void> => generateDelete(entity, id);
 }
 
 /**

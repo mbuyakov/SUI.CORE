@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types */
 import * as React from 'react';
 import {Container} from "typescript-ioc";
 import {AMCHARTS, getAmcharts} from "@sui/charts";
 import {SUIReactComponent} from "@/SUIReactComponent";
 import {ThemeService} from './themes';
 
-export abstract class ChartWrapper<T extends { new(): any }> extends SUIReactComponent<{
+export interface IChartWrapperProps<T extends { new(): any }> {
   data: any[];
   style?: React.CSSProperties;
   onChartCreated?(chart: InstanceType<T>, amcharts: AMCHARTS): void;
-}> {
+}
+
+export abstract class ChartWrapper<T extends { new(): any }> extends SUIReactComponent<IChartWrapperProps<T>> {
   private themeService = Container.get(ThemeService);
 
   public chart: InstanceType<T>;
@@ -19,7 +22,7 @@ export abstract class ChartWrapper<T extends { new(): any }> extends SUIReactCom
   // after the decimal.
   private readonly id: string = Math.random().toString(36).substr(2, 9);
 
-  public constructor(props) {
+  public constructor(props: IChartWrapperProps<T>) {
     super(props);
     this.registerObservableHandler(this.themeService.subscribe(async () => {
       await this.componentWillUnmount();

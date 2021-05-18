@@ -28,7 +28,7 @@ export class UserService {
 
   private tokenCheckerRunning = true;
 
-  public setTokenCheckerRunning(value: boolean) {
+  public setTokenCheckerRunning(value: boolean): void {
     this.tokenCheckerRunning = value;
   }
 

@@ -3,10 +3,10 @@ import autobind from "autobind-decorator";
 import moment from 'moment';
 import React from 'react';
 import { IObjectWithIndex } from '@sui/core';
-import {BaseTable} from "../BaseTable";
-import {RouterLink} from "../Link";
-import {ExtractProps} from "../other";
-import {getLinkForTable} from "../utils";
+import {BaseTable} from "@/BaseTable";
+import {RouterLink} from "@/Link";
+import {ExtractProps} from "@/other";
+import {getLinkForTable} from "@/utils";
 
 export interface IAuditLogTableRow {
   id: number;
@@ -82,7 +82,7 @@ export class AuditLogTable extends React.Component<IAuditLogTableProps> {
           {
             id: "userName",
             title: "Пользователь",
-            render: (value: string, row: IObjectWithIndex) => (
+            render: (value: string, row: IObjectWithIndex): JSX.Element => (
               <RouterLink
                 to={getLinkForTable("users", "card", row.userId)}
                 text={row.userName}
@@ -99,7 +99,7 @@ export class AuditLogTable extends React.Component<IAuditLogTableProps> {
             title: "Дата/время операции",
             width: 250,
             search: {type: "date", format: "DD.MM.YYYY"},
-            render: (created: string | undefined) => created ? moment.utc(created).local().format("DD.MM.YYYY HH:mm:ss") : created,
+            render: (created: string | undefined): string | undefined => created ? moment.utc(created).local().format("DD.MM.YYYY HH:mm:ss") : created,
           },
         ]}
         rowDetailComponent={this.rowDetails}
@@ -108,7 +108,7 @@ export class AuditLogTable extends React.Component<IAuditLogTableProps> {
   }
 
   @autobind
-  private rowDetails({row}: { row: { content: object } }): JSX.Element {
+  private rowDetails({row}: { row: { content: Record<string, unknown> } }): JSX.Element {
     return (<pre>{JSON.stringify(row.content, null, 2)}</pre>);
   }
 

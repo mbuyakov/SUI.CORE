@@ -1,12 +1,12 @@
+import {BackendTable} from "@/BackendTable";
+import {PromisedButton} from "@/Inputs";
+import {ExtractProps} from "@/other";
+import {IObjectWithIndex} from "@sui/core";
 import {ButtonProps} from "antd/lib/button";
 
-import {IObjectWithIndex} from "@sui/core";
-import {BackendTable} from "../BackendTable";
-import {PromisedButton} from "../Inputs";
 import {IPromisedBaseFormModalOnlyModalProps, IPromisedBaseFormModalProps} from "../Modal";
-import {ExtractProps} from "../other";
 
-import { DEFAULT_MODAL_WIDTH_VARIANT } from './MutableBackendTable';
+import {DEFAULT_MODAL_WIDTH_VARIANT} from './MutableBackendTable';
 
 type IPromisedBaseFormModalPropsBase<T> = Omit<IPromisedBaseFormModalProps<T>, "onSubmit" | "baseFormProps">;
 export type BaseFormProps<T> = IPromisedBaseFormModalProps<T>["baseFormProps"];

@@ -1,10 +1,9 @@
+import {FixedRuleItem} from "@/Base";
 import {Popconfirm, Popover} from 'antd';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import asyncValidator from "async-validator";
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-
-import {FixedRuleItem} from "../Base";
 
 import {IPromisedErrorPopoverProps, PromisedErrorPopover} from './PromisedErrorPopover';
 
@@ -38,12 +37,13 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   private afterChange: () => void;
 
   @autobind
-  protected setAfterChange(afterChange: () => void) {
+  protected setAfterChange(afterChange: () => void): void {
     this.afterChange = afterChange;
   }
 
   public constructor(props: IPromisedBaseProps<V> & P) {
     super(props);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.state = {
       validatorText: ''
@@ -112,9 +112,8 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
 
   protected functionValidatorToFixedRuleItem(validator: ValidatorFunction<V>): FixedRuleItem {
     return {
-      "validator": (_, value, cb) => {
+      "validator": (_, value, cb): void => {
         const validationMsg = validator(value);
-
         return cb(validationMsg ? validationMsg : '');
       }
     };
@@ -181,7 +180,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   private onConfirm(value?: V): void {
     const promise = this.props
       .promise(value == null ? this.state.value : value)
-      .then(_ => {
+      .then((): void => {
         this.setState({loading: false, savedValue: (value == null ? this.state.value : value)});
 
         if (this.afterChange) {

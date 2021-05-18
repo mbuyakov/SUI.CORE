@@ -57,7 +57,7 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
           style={{width: "100%"}}
           value={this.state.value[0]}
           onBlur={this.onBlur(0)}
-          onFocus={() => this.onFocusChanged(0, true)}
+          onFocus={(): void => this.onFocusChanged(0, true)}
           onChange={this.onChangeFn(0)}
           onKeyUp={this.onKeyUp}
         />
@@ -67,7 +67,7 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
           style={{width: "100%"}}
           value={this.state.value[1]}
           onBlur={this.onBlur(1)}
-          onFocus={() => this.onFocusChanged(1, true)}
+          onFocus={(): void => this.onFocusChanged(1, true)}
           onChange={this.onChangeFn(1)}
           onKeyUp={this.onKeyUp}
         />
@@ -76,7 +76,7 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
   }
 
   @autobind
-  private onFocusChanged(index: 0 | 1, state: boolean) {
+  private onFocusChanged(index: 0 | 1, state: boolean): void {
     this.focus[index] = state;
     if(this.filterTriggerTimeout != null) {
       clearTimeout(this.filterTriggerTimeout);
@@ -85,7 +85,7 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
 
   @autobind
   private onBlur(index: 0 | 1): () => void {
-    return () => {
+    return (): void => {
       this.onFocusChanged(index, false);
 
       this.filterTriggerTimeout = setTimeout(() => {
@@ -144,6 +144,7 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
         columnName: this.props.column.name,
         lazy,
         operation: "interval",
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         value: value as any
       });
     }

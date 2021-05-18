@@ -1,15 +1,14 @@
-// tslint:disable:no-any
+/* eslint-disable @typescript-eslint/ban-types */
+import {errorNotification} from "@/drawUtils";
+import {ExtractProps} from "@/other";
+import {FRE_WITH_HEADER_FILTER_BUTTON, FRE_WITHOUT_HEADER_FILTER_BUTTON} from "@/styles";
+import {WaitData} from "@/WaitData";
 import IconButton from '@material-ui/core/IconButton';
 import SettingsIcon from '@material-ui/icons/Settings';
 import {Popover} from 'antd';
 import {PopoverProps} from "antd/lib/popover";
 import autobind from "autobind-decorator";
 import React from "react";
-
-import {errorNotification} from "../drawUtils";
-import {ExtractProps} from "../other";
-import {FRE_WITHOUT_HEADER_FILTER_BUTTON, FRE_WITH_HEADER_FILTER_BUTTON} from "../styles";
-import {WaitData} from "../WaitData";
 
 import {ReportElement} from "./ReportElement";
 
@@ -102,7 +101,7 @@ export class FilterReportElement<TData, TFilter = {}>
             alwaysUpdate={true}
             disableUnwrapOnReady={true}
           >
-            {() => children(data, lastFetchedFilter)}
+            {(): JSX.Element => children(data, lastFetchedFilter)}
           </WaitData>
           {!hasHeader && (
             <span
@@ -126,8 +125,8 @@ export class FilterReportElement<TData, TFilter = {}>
   }
 
   @autobind
-  private filterChangeHandler(filter: TFilter) {
-    return this.setState({filter});
+  private filterChangeHandler(filter: TFilter): void {
+    this.setState({filter});
   }
 
   @autobind

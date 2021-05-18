@@ -1,14 +1,12 @@
+import {IBaseTableColLayout} from '@/BaseTable';
+import {ITableRenderParams, TableRenderParamsPlugin, TableRenderSettingsPluginManager} from '@/TableRenderSettings';
+import {IColumnInfoToBaseTableColProps} from '@/utils';
 import {WarningTwoTone} from '@ant-design/icons';
 import {ColumnInfo} from "@sui/core";
 import {Tooltip} from 'antd';
 import * as React from 'react';
 
-import {IBaseTableColLayout} from '../../BaseTable';
-import {IColumnInfoToBaseTableColProps} from '../../utils';
-import {TableRenderSettingsPluginManager} from '../TableRenderSettingsPluginManager';
-import {ITableRenderParams} from '../TableRenderSettingsPopover';
-import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
-
+// eslint-disable-next-line @typescript-eslint/ban-types
 export class UnknownPlugin extends TableRenderParamsPlugin<{}> {
 
   public constructor() {

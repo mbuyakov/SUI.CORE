@@ -1,8 +1,8 @@
+import {ForceDirectedTree, IForceDirectedTreeAdditionalSettingProps} from "@/ForceDirectedTree";
+
+import {toMap} from '@sui/core';
 import autobind from "autobind-decorator";
 import * as React from "react";
-
-import { toMap } from '@sui/core';
-import {ForceDirectedTree, IForceDirectedTreeAdditionalSettingProps} from "../ForceDirectedTree";
 
 import {ITransition, ITransitionStatus} from "./types";
 
@@ -12,6 +12,7 @@ export interface ITransitionGraphProps<TStatus, TID> {
   statuses: TStatus[];
   style?: React.CSSProperties;
   transitions: Array<ITransition<TID>>;
+
   statusNameExtractor(status: TStatus): string;
 }
 

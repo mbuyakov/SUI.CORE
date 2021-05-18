@@ -1,15 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {DeletableSmallCard} from '@/DeletableSmallCard';
+import {COMMON__GRID} from '@/styles';
+
+import {camelCase, Merge} from '@sui/core';
 import {Button, Mentions, Menu} from 'antd';
 import Checkbox, {CheckboxChangeEvent} from 'antd/lib/checkbox';
 import Input from 'antd/lib/input';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import {camelCase, Merge} from '@sui/core';
 import {IBaseCardItemLayout, IBaseCardRowLayout, IBaseCardRowWithCollapseLayout, IBaseCardRowWithColsLayout, IBaseCardRowWithDividerLayout, IBaseCardRowWithMetaTableLayout, IBaseCardRowWithTabsLayout, IMetaTableProps, isRowWithCollapse, isRowWithCols, isRowWithDivider, isRowWithMetaTable, isRowWithTabs} from '../Base';
-import {DeletableSmallCard} from '../DeletableSmallCard';
 import {DnDList, IBaseDnDChildProps} from '../Draggable';
 import {ISerializable, SerializableDnDChild} from '../Draggable/Serializable';
-import {COMMON__GRID} from '../styles';
 
 import {CollapseSettings, SerializedCollapseSettings} from './CollapseSettings';
 import {ColSettings, SerializedColSettings} from './ColSettings';
@@ -164,10 +166,8 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
               ].map(setting => [
                 (<span>{setting.title}</span>),
                 (<FieldsContext.Consumer>
-                  {fields => (
+                  {(fields): JSX.Element => (
                     <Mentions
-                      // defaultSuggestions={fields}
-                      // @ts-ignore
                       defaultValue={this.state.metaTableProps[setting.field]}
                       onChange={this.onFilterChanged(setting.field)}
                     >
@@ -331,7 +331,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
 
   @autobind
   private onFilterChanged(fieldName: string): (contentState: any) => void {
-    return (contentState: any) =>
+    return (contentState: any): void =>
       this.setState({metaTableProps: {...this.state.metaTableProps, [fieldName]: contentState}});
   }
 

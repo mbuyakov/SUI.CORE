@@ -1,12 +1,9 @@
+import {IBaseTableColLayout} from '@/BaseTable';
+import {ITableRenderParams, TableRenderParamsPlugin, TableRenderSettingsPluginManager} from '@/TableRenderSettings';
+import {IColumnInfoToBaseTableColProps} from '@/utils';
 import {ColumnInfo} from "@sui/core";
 
-import { IBaseTableColLayout } from '../../BaseTable';
-import { IColumnInfoToBaseTableColProps } from '../../utils';
-import { TableRenderSettingsPluginManager } from '../TableRenderSettingsPluginManager';
-import { ITableRenderParams } from '../TableRenderSettingsPopover';
-
-import { TableRenderParamsPlugin } from './TableRenderParamsPlugin';
-
+// eslint-disable-next-line @typescript-eslint/ban-types
 export class RawPlugin extends TableRenderParamsPlugin<{}> {
   public constructor() {
     super('raw', 'По умолчанию', false);

@@ -1,8 +1,7 @@
+import {Socket} from '@/Socket';
+import {getUser} from '@/utils';
 import {IFrame, StompConfig} from '@stomp/stompjs';
-import {getSUISettings, IObjectWithIndex, Logger, sleep } from "@sui/core";
-
-import {Socket} from '../Socket';
-import {getUser} from '../utils';
+import {getSUISettings, IObjectWithIndex, Logger, sleep} from "@sui/core";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from './BackendDataSource';
 

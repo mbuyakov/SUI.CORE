@@ -11,7 +11,7 @@ export interface IExportPluginProps {
 
 export function ExportPlugin(props: IExportPluginProps): JSX.Element {
   function tooltipFn(getters: Getters): JSX.Element {
-    const onClick = async () => props.onClick(getters);
+    const onClick = async (): Promise<void> => props.onClick(getters);
 
     return (
       <Tooltip title={props.tooltip} placement='bottom' enterDelay={300}>

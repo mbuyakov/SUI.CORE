@@ -1,18 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any,no-restricted-imports */
+import Icon, {CustomIconComponentProps} from '@ant-design/icons/lib/components/Icon';
 import * as H from "history";
 import * as React from "react";
-// eslint-disable-next-line no-restricted-imports
-import Icon, {CustomIconComponentProps} from '@ant-design/icons/lib/components/Icon';
 
 export * from "./AddressFlag";
 export * from "./BlockUIConditionally";
 
 export type Rendered<T extends React.Component> = React.ReactElement<T["props"]>;
 
-export type ExtractProps<T> = T extends React.Component<infer TProps, any> ? TProps : T;
+export type ExtractProps<T> = T extends React.Component<infer TProps> ? TProps : T;
 
 /**
  * React router location type
  */
+// eslint-disable-next-line @typescript-eslint/ban-types
 export interface location<QueryParams extends { [K in keyof QueryParams]?: string } = {}, S = any> extends H.Location<S> {
   query: QueryParams;
 }

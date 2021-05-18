@@ -1,8 +1,8 @@
-import { Singleton } from 'typescript-ioc';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import {LoggerLevel, ROOT_LOGGER_KEY} from '@/ioc';
+import {Nullable} from '@/other';
 import autobind from "autobind-decorator";
-import { Nullable } from '@/other';
-import { LoggerLevel } from '../enum';
-import { ROOT_LOGGER_KEY } from '../const';
+import {Singleton} from 'typescript-ioc';
 
 @Singleton
 export class LogLevelService {
@@ -33,4 +33,5 @@ export class LogLevelService {
   public isLevelEnabled(key: Nullable<string>, level: LoggerLevel): boolean {
     return this.getLogLevel(key) >= level;
   }
+
 }

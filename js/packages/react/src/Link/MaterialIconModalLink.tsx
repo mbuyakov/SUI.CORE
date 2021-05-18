@@ -1,14 +1,13 @@
-import { IconButton } from '@material-ui/core';
-import LinkIcon  from '@material-ui/icons/Link';
+import {draw} from '@/utils';
+import {IconButton} from '@material-ui/core';
+import LinkIcon from '@material-ui/icons/Link';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-import { RouteComponentProps, Router, withRouter } from 'react-router';
-
-import { draw } from '../utils';
-
+import {RouteComponentProps, Router, withRouter} from 'react-router';
 
 export interface IMaterialIconModalLinkProps {
-icon?: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  icon?: any,
   modal: JSX.Element,
 }
 
@@ -37,4 +36,4 @@ class __MaterialIconModalLink extends React.Component<IMaterialIconModalLinkProp
 
 }
 
-export const MaterialIconModalLink  = withRouter(__MaterialIconModalLink);
+export const MaterialIconModalLink = withRouter(__MaterialIconModalLink);

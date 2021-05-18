@@ -1,6 +1,5 @@
-import {ColumnInfo, TableInfo, TableInfoManager,query,addPluralEnding, camelCase, capitalize, IObjectWithIndex} from "@sui/core";
-
-import {getReferencedTableInfo} from "../utils";
+import {getReferencedTableInfo} from "@/utils";
+import {addPluralEnding, camelCase, capitalize, ColumnInfo, IObjectWithIndex, query, TableInfo, TableInfoManager} from "@sui/core";
 
 export async function fetchAllRows<T = IObjectWithIndex>(tableInfo: TableInfo): Promise<T[]> {
   const columns = await tableInfo.getColumns();
@@ -15,11 +14,11 @@ export async function fetchAllRows<T = IObjectWithIndex>(tableInfo: TableInfo): 
 }
 
 export async function fetchJoinTable(
-  joinTableName: string | {first?: TableInfo; second?: TableInfo;}
+  joinTableName: string | { first?: TableInfo; second?: TableInfo; }
 ): Promise<TableInfo> {
   let joinTableInfo: TableInfo;
 
-  if (typeof(joinTableName) === "string") {
+  if (typeof (joinTableName) === "string") {
     joinTableInfo = await TableInfoManager.getById(joinTableName);
   } else {
     const {first, second} = joinTableName;
@@ -50,7 +49,7 @@ export async function findColumnsByReferencedTable(
   referencedTableInfoId: TableInfo["id"]
 ): Promise<ColumnInfo[]> {
   const columns = await baseTableInfo.getColumns();
-  const result =[];
+  const result = [];
 
   for (const column of columns) {
     const referencedTableInfo = await getReferencedTableInfo(column);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {Getter, Plugin, Template} from "@devexpress/dx-react-core";
 import {GroupKey, TableRow as TableRowProps} from "@devexpress/dx-react-grid";
 import {Table} from "@devexpress/dx-react-grid-material-ui";
@@ -45,7 +46,7 @@ export class GroupSummaryRow extends React.Component<IGroupSummaryRowProps> {
           name="tableCell"
           predicate={GroupSummaryRow.isSummaryRow as any}
         >
-          {(cellProps: Table.DataCellProps) => {
+          {(cellProps: Table.DataCellProps): JSX.Element => {
             const column = cellProps.tableColumn.column as unknown as IBaseTableColLayout;
 
             return (
@@ -69,7 +70,6 @@ export class GroupSummaryRow extends React.Component<IGroupSummaryRowProps> {
     const groupSubtotals = this.props.subtotalData && this.props.subtotalData.get(rowKey);
     const result = groupSubtotals
       && groupSubtotals.data
-      // @ts-ignore
       && groupSubtotals.data[column.id];
 
     if (result === null || result === undefined) {

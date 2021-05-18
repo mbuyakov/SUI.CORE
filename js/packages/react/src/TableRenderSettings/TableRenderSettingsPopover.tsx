@@ -1,11 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/ban-types */
+import {PromisedButton} from '@/Inputs';
+import {SUI_AUTO_WIDTH, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT} from '@/styles';
 import {ExperimentOutlined, WarningTwoTone} from '@ant-design/icons';
+import {chain, ITableInfo, sleep} from '@sui/core';
 import {Button, Popover, Select, Tooltip} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-import { ITableInfo, chain, sleep } from '@sui/core';
-
-import {PromisedButton} from '../Inputs';
-import {SUI_AUTO_WIDTH, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT} from '../styles';
 
 import {TableRenderSettingsPluginManager} from './TableRenderSettingsPluginManager';
 
@@ -119,7 +119,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
                 <PromisedButton
                   ref={this.saveButtonRef}
                   style={{width: '100%'}}
-                  promise={() => this.props.promise(JSON.stringify(this.state.tableRenderParams).replace(/"/g, '\\"'))}
+                  promise={(): Promise<void> => this.props.promise(JSON.stringify(this.state.tableRenderParams).replace(/"/g, '\\"'))}
                   type="primary"
                   disabled={!this.state.changed}
                 >
@@ -139,9 +139,9 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
 
   @autobind
   public updateField(field: string, save: boolean = false): (value: any) => Promise<any> {
-    return async value => {
-      // console.log(field, value);
+    return (value): Promise<any> => {
       const tableRenderParams = this.state.tableRenderParams;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       tableRenderParams[field] = value;
       this.setState({tableRenderParams: {...tableRenderParams}, changed: true});

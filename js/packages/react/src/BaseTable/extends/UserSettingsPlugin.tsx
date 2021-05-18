@@ -48,6 +48,7 @@ export class UserSettingsPlugin extends React.Component<IUserSettingsPluginProps
 
   @autobind
   private computedForWatcher(property: string): ComputedFn {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (getters): any => {
       const userSettings = generateUserSettings(getters);
 

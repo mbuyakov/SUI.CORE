@@ -1,32 +1,22 @@
-import {InputNumber} from 'antd';
-import Checkbox from 'antd/lib/checkbox';
-import Input from 'antd/lib/input';
+import {IBaseTableColLayout} from '@/BaseTable';
+import {SparkLine} from '@/SparkLine';
+import {ITableRenderParams, TableRenderParamsPlugin, TableRenderSettingsPluginManager} from '@/TableRenderSettings';
+import {IColumnInfoToBaseTableColProps} from '@/utils';
+import {ColumnInfo} from '@sui/core';
 import * as React from 'react';
-import { ColumnInfo } from '@sui/core';
 
-import {IBaseTableColLayout} from '../../BaseTable';
-import {SparkLine} from '../../SparkLine';
-import {IColumnInfoToBaseTableColProps} from '../../utils';
-import {TableRenderSettingsPluginManager} from '../TableRenderSettingsPluginManager';
-import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
-
-import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
-
-
+// eslint-disable-next-line @typescript-eslint/ban-types
 export class SparklinePlugin extends TableRenderParamsPlugin<{}> {
   public constructor() {
     super('sparkline', 'Спарклайн', false);
   }
 
-public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams): Promise<void> {
-result.render = (value: any, _: any, col: any): React.ReactNode =>
-      value != null
-        ? (
-          <SparkLine
-            value={value}
-          />
-        ) : null;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    result.render = (value: any): React.ReactNode => value != null ? (<SparkLine value={value}/>) : null;
   }
+
 }
 
 TableRenderSettingsPluginManager.register(new SparklinePlugin());

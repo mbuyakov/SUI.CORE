@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {notification} from 'antd';
 import * as React from 'react';
 
@@ -46,9 +47,8 @@ export class EditableEntityField<T = any> extends React.Component<IEditableEntit
           {(data): JSX.Element => (
             <EditablePromisedComponent
               {...this.props}
-              nonEditRender={() => {
+              nonEditRender={(): React.ReactNode => {
                 const renderData = this.props.customQuery ? data : data[this.props.field];
-
                 return this.props.nonEditRender ? (this.props.nonEditRender(renderData)) : (renderData || NO_DATA_TEXT);
               }}
             >
@@ -78,7 +78,7 @@ export class EditableEntityField<T = any> extends React.Component<IEditableEntit
                     });
 
                   if (this.props.afterSave) {
-                    update = update.then(() => this.props.afterSave(valueForUpdate));
+                    update = update.then((): Promise<void> => this.props.afterSave(valueForUpdate));
                   }
 
                   return update;

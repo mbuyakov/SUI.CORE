@@ -3,14 +3,15 @@ import * as React from 'react';
 
 import { IPromisedBaseState, PromisedBase } from './PromisedBase';
 
-export class PromisedMaterialIconButton extends PromisedBase<IconButtonProps & {
+interface IPromisedMaterialIconButtonProps extends IconButtonProps {
   icon?: JSX.Element;
   loading?: boolean;
   progressColor?: 'primary' | 'secondary';
   tooltipText?: string;
-},
-  IPromisedBaseState<{}>,
-  {}> {
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export class PromisedMaterialIconButton extends PromisedBase<IPromisedMaterialIconButtonProps, IPromisedBaseState<{}>, {}> {
 
   public render(): JSX.Element {
     let btn = (

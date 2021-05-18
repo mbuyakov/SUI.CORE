@@ -1,10 +1,9 @@
-import * as React from 'react';
-
+import { Rendered } from '@/other';
 import {ISerializable, SerializableDnDChild} from "../Draggable/Serializable";
-import { Rendered } from '../other';
 
 export type DEFAULT_ROOT_TYPES = 'root' | 'row' | string;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface IMetaCardRenderParams<TProps, TItem = any> {
   item: TItem;
   props: TProps;

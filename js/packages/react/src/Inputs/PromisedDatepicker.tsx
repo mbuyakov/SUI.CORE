@@ -24,6 +24,7 @@ export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps,
   }
 
   public render(): JSX.Element {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {promise, popconfirmSettings, ...selectProps} = this.props;
     const saveButton: JSX.Element = this.wrapConfirmAndError(
       <IconButton

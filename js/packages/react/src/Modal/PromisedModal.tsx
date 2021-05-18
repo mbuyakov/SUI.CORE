@@ -1,12 +1,11 @@
+import {PromisedButton} from "@/Inputs";
+import {ExtractProps} from "@/other";
 import {Button, Modal} from "antd";
 import {ModalProps} from "antd/lib/modal";
 import autobind from "autobind-decorator";
 import React from "react";
 
-import {PromisedButton} from "../Inputs";
-import {ExtractProps} from "../other";
-
-export const defaultModalFooter = (okButton: JSX.Element, cancelButton: JSX.Element) => (
+export const defaultModalFooter = (okButton: JSX.Element, cancelButton: JSX.Element): JSX.Element => (
   <div
     style={{
       display: "grid",

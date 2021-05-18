@@ -81,6 +81,7 @@ export class EditablePromisedComponent<T>
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   private readonly DEFAULT_RENDERER = (value: T): string => (value != null ? value.toString() : "");
 

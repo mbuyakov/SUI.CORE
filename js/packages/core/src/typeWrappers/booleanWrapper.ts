@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types */
+
 /**
  * If type of value is number - return value.
  * Otherwise return default value

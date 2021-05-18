@@ -9,7 +9,7 @@ export class SUIInputNumber extends React.Component<InputNumberProps> {
 
   public render(): JSX.Element {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    return (<InputNumber formatter={this.formatter} {...this.props} onChange={() => {}}/>)
+    return (<InputNumber formatter={this.formatter} {...this.props} onChange={(): void => {}}/>)
   }
 
   @autobind

@@ -1,8 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/ban-ts-comment */
+import {LazyStubNoDataCell, LazyStubNoDataCellSmall} from "@/BackendTable/LazyStubNoDataCell";
+import {LoadingNoDataCell, LoadingNoDataCellSmall} from "@/BackendTable/LoadingNoDataCell";
+import {IBaseTableUserSettings, LazyFilter} from "@/BaseTable";
+import {exportToXlsx} from "@/BaseTable/utils";
+import {ClearFiltersPlugin} from "@/plugins/ClearFiltersPlugin";
+import {ResetUserSettingsPlugin} from "@/plugins/ResetUserSettingsPlugin";
 import {Getters} from "@devexpress/dx-react-core";
 import {Grouping, GroupKey, Sorting, TableColumnWidthInfo, TableFilterRow} from '@devexpress/dx-react-grid';
 import IconButton from '@material-ui/core/IconButton';
 import CloudDownloadOutlined from '@material-ui/icons/CloudDownloadOutlined';
 import LinkIcon from '@material-ui/icons/Link';
+import {asyncMap, camelCase, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, formatRawForGraphQL, generateCreate, getDataByKey, getSUISettings, IObjectWithIndex, IUserSetting, mutate, query, TableInfo, TableInfoManager, toMap, wrapInArray} from "@sui/core";
 import {Modal, notification} from 'antd';
 import autobind from 'autobind-decorator';
 import axios from 'axios';
@@ -10,17 +18,9 @@ import JSzip from 'jszip';
 import difference from 'lodash/difference';
 import moment from 'moment';
 import * as React from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import {wrapInArray, getSUISettings, DEFAULT_PAGE_SIZES, generateCreate, IObjectWithIndex, ColumnInfo, defaultIfNotBoolean, TableInfo, getDataByKey, camelCase, ColumnInfoManager, TableInfoManager, IUserSetting, query, formatRawForGraphQL, mutate, asyncMap, toMap} from "@sui/core";
-import {LazyStubNoDataCell, LazyStubNoDataCellSmall} from "@/BackendTable/LazyStubNoDataCell";
-import {LoadingNoDataCell, LoadingNoDataCellSmall} from "@/BackendTable/LoadingNoDataCell";
-import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
-import {exportToXlsx} from "../BaseTable/utils";
+import {v4 as uuidv4} from 'uuid';
 
 import {BaseTable, colToBaseTableCol, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from '../index';
-import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
-import {ResetUserSettingsPlugin} from "../plugins/ResetUserSettingsPlugin";
-import {LazyFilter} from "../BaseTable/types";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from './BackendDataSource';
 import {RestBackendDataSource} from './RestBackendDataSource';
@@ -115,10 +115,6 @@ type IBackendTableState<T> = {
   colorSettingsRowStyler?(row: any): React.CSSProperties;
 } & IRemoteBaseTableFields;
 
-function getRowValue(row: any, column: IBaseTableColLayout): any {
-  return getDataByKey(row, column.dataKey || column.id);
-}
-
 function calculateParentExpandedGroups(realExpandedGroupKeys: IExpandedGroup[], key: GroupKey): IExpandedGroup[] {
   const splittedNewKey = key.split(DX_REACT_GROUP_SEPARATOR);
   const parents: IExpandedGroup[] = [];
@@ -143,6 +139,7 @@ export class BackendTable<TSelection = defaultSelection>
   private backendDataSource: BackendDataSource;
   private baseTableRef: React.RefObject<BaseTable<TSelection>> = React.createRef<BaseTable<TSelection>>();
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public constructor(props: any) {
     super(props);
     const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
@@ -209,7 +206,6 @@ export class BackendTable<TSelection = defaultSelection>
 
   public componentDidUpdate(prevProps: IBackendTableProps): void {
     if (this.props.watchFilters) {
-      // @ts-ignore
       const isEquals = (first, second): boolean => JSON.stringify(first) === JSON.stringify(second);
 
       const newState: Partial<IBackendTableState<TSelection>> = {};
@@ -977,6 +973,7 @@ export class BackendTable<TSelection = defaultSelection>
         const expression = JSON.parse(tableInfo.colorSettings)?.expression as string;
 
         if (expression) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           colorSettingsRowStyler = (row: any): React.CSSProperties => {
             try {
               const result = eval(expression);
@@ -1101,6 +1098,7 @@ export class BackendTable<TSelection = defaultSelection>
         const fileCount = 5;
 
         try {
+          // eslint-disable-next-line no-constant-condition
           while (true) {
             modal.update({ content: `Обработано ${processedCount} из ${totalCount}` });
 

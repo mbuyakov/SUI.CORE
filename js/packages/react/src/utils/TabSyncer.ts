@@ -3,6 +3,7 @@ export interface ITabSyncerHandler<T> {
   id: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ITabSyncerHandlerCb<T> = (key: string, value?: T | null) => any;
 
 export class TabSyncer<T> {

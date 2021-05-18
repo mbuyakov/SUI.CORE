@@ -1,8 +1,8 @@
+import {isLocalServer} from '@/utils';
 import {Result} from "antd";
 import autobind from "autobind-decorator";
 import axios from 'axios';
 import React, {ReactNode} from "react";
-import { isLocalServer } from '../utils/location';
 
 export interface IBlockUIConditionallyProps {
   header?: string | ReactNode;
@@ -73,9 +73,7 @@ export class BlockUIConditionally extends React.Component<IBlockUIConditionallyP
             this.runBlockMode(message);
           }
         })
-        .catch(_ => {
-          this.runFreeMode();
-        });
+        .catch(() => this.runFreeMode());
     }
   }
 

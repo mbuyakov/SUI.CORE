@@ -1,11 +1,12 @@
-import React from 'react';
-import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {BASE_CARD_COL_TITLE, BASE_CARD_COLS} from '@/styles';
 import {SuiThemeContext} from "@/themes";
+import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
+import React from 'react';
 
-import { BASE_CARD_COLS, BASE_CARD_COL_TITLE } from '../styles';
+import {BaseCardContext} from './BaseCardContext';
 
-import { BaseCardContext } from './BaseCardContext';
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface IBaseCardColLayout<T, ITEM> {
   colspan?: number;
   items: OneOrArrayWithNulls<ITEM>;
@@ -13,6 +14,7 @@ export interface IBaseCardColLayout<T, ITEM> {
   wideTitle?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function renderIBaseCardColsLayout<T, ITEM>(sourceItem: any, cols: Array<IBaseCardColLayout<T, ITEM>>): JSX.Element {
   const anyHasTitle = cols.some(col => col.title);
   const maxRows = Math.max(...cols.map(col => wrapInArrayWithoutNulls<any>(col.items).length));
@@ -28,13 +30,9 @@ for (let colIndex = 0; colIndex < cols.length; colIndex++) {
       // console.log(cols, item);
       itemsInRow.push(
         item
-          ? (
-            <BaseCardContext.Consumer>
-              {({ itemRenderer }) => (itemRenderer(sourceItem, item, colspan))}
-            </BaseCardContext.Consumer>)
-          : (
-            <td colSpan={2}/>
-            ));
+          ? (<BaseCardContext.Consumer>{({ itemRenderer }): React.ReactNode => (itemRenderer(sourceItem, item, colspan))}</BaseCardContext.Consumer>)
+          : (<td colSpan={2}/>)
+      );
     }
 
     rows.push(
@@ -46,7 +44,7 @@ for (let colIndex = 0; colIndex < cols.length; colIndex++) {
 
   return (
     <SuiThemeContext.Consumer>
-      {theme => (
+      {(): JSX.Element => (
         <table className={BASE_CARD_COLS}>
           {anyHasTitle && (
             <thead>

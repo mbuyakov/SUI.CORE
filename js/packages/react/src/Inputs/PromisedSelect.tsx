@@ -20,6 +20,7 @@ export class PromisedSelect<T extends SelectValue> extends PromisedBase<Promised
   }
 
   public render(): JSX.Element {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {promise, popconfirmSettings, ...selectProps} = this.props;
     const saveButton: JSX.Element = this.wrapConfirmAndError(
       <IconButton
@@ -35,8 +36,7 @@ export class PromisedSelect<T extends SelectValue> extends PromisedBase<Promised
         {(disableEdit): JSX.Element => {
           return this.wrapInValidationPopover(
             <Select<T>
-              // Typescript goes crazy. Mark as any to ignore
-              {...selectProps as SelectProps<T> as any}
+              {...selectProps as SelectProps<T> as unknown}
               disabled={disableEdit || this.props.disabled || this.props.loading || this.state.loading || false}
               onChange={this.onChange}
               value={this.state.value}

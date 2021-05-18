@@ -1,14 +1,11 @@
+import {IBaseTableColLayout} from '@/BaseTable';
+import {TableRenderParamsPlugin, TableRenderSettingsPluginManager} from '@/TableRenderSettings';
+import {IColumnInfoToBaseTableColProps} from '@/utils';
+import {ColumnInfo} from "@sui/core";
 import {InputNumber} from 'antd';
 import * as React from 'react';
-import {ColumnInfo} from "@sui/core";
 
-import {IBaseTableColLayout} from '../../BaseTable';
-import {IColumnInfoToBaseTableColProps} from '../../utils';
-import {TableRenderSettingsPluginManager} from '../TableRenderSettingsPluginManager';
 import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
-
-import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
-
 
 export interface IRoundPluginTRP {
   roundCount?: number;
@@ -20,6 +17,7 @@ export class RoundPlugin extends TableRenderParamsPlugin<IRoundPluginTRP> {
     super('round', 'Округление', true);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async baseTableColGenerator(_result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, _trp: ITableRenderParams<IRoundPluginTRP>): Promise<void> {
     return;
   }
@@ -36,11 +34,11 @@ export class RoundPlugin extends TableRenderParamsPlugin<IRoundPluginTRP> {
     );
   }
 
-  public formatSubtotal(value: any, tableRenderParams: ITableRenderParams<IRoundPluginTRP>): string {
+  public formatSubtotal(value: unknown, tableRenderParams: ITableRenderParams<IRoundPluginTRP>): string {
     const roundCount = tableRenderParams.roundCount;
     return (Number.isInteger(value))
-      ? value
-      : Number(value.toFixed(typeof(roundCount) === "number" ? roundCount : 4)).toString();
+      ? String(value)
+      : Number((value as number).toFixed(typeof(roundCount) === "number" ? roundCount : 4)).toString();
   }
 }
 

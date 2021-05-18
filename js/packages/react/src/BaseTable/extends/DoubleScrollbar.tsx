@@ -15,11 +15,11 @@ export class DoubleScrollbar extends React.Component {
     window.addEventListener("resize", this.update);
 
     // assoc the scrolls
-    outerDiv.onscroll = function(): void {
+    outerDiv.onscroll = (): void => {
       childWrapper.scrollLeft = outerDiv.scrollLeft;
     };
 
-    childWrapper.onscroll = function(): void {
+    childWrapper.onscroll = (): void => {
       outerDiv.scrollLeft = childWrapper.scrollLeft;
     };
 
@@ -27,6 +27,7 @@ export class DoubleScrollbar extends React.Component {
     this.update();
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public componentDidUpdate(prevProps: Readonly<{}>): void {
     // Н - Надежность
     if (prevProps !== this.props) {

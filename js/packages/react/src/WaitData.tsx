@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/ban-ts-comment */
 import {queryWrapper} from "@/tmp";
 import {CloseCircleTwoTone} from '@ant-design/icons';
 import {defaultIfNotBoolean, mutate, query} from "@sui/core";
@@ -44,16 +45,14 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
     this.state = {};
   }
 
-  public componentDidMount(): void {
-    this.updateData();
+  public componentDidMount(): Promise<void> {
+    return this.updateData();
   }
 
   public render(): JSX.Element {
-    // console.log(this);
     const data = (this.state && this.state.data) || this.props.data;
     // @ts-ignore
     const children = (): JSX.Element => (this.props.children instanceof Function) ? this.props.children(data === '__NULL__' ? null : data, this.updateData) : this.props.children;
-    // console.log(data ? 'data' : 'no data');
     const hasErrors = this.props.error || (this.state && this.state.error);
     const spinning = hasErrors || !data || !!this.props.spinning;
 

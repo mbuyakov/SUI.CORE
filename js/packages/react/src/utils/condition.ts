@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/no-explicit-any */
 import {ActionType} from "./actionType";
 import {FilterType} from "./filterType";
 
@@ -22,13 +23,11 @@ export function checkCondition(
   let result: boolean | null = null;
 
   switch (action) {
-    // @ts-ignore
     case ActionType.NOT_EQUAL:
       inverse = true;
     case ActionType.EQUAL:
       result = formattedFieldValue === filterValue;
       break;
-    // @ts-ignore
     case ActionType.NOT_FILLED:
       inverse = true;
     case ActionType.FILLED:
@@ -46,13 +45,11 @@ export function checkCondition(
     case ActionType.MORE_OR_EQUAL:
       result = hasFieldValue && formattedFieldValue >= filterValue;
       break;
-    // @ts-ignore
     case ActionType.NOT_LIKE:
       inverse = true;
     case ActionType.LIKE:
       result = hasFieldValue && formattedFieldValue.search(filterValue) !== -1;
       break;
-    // @ts-ignore
     case ActionType.NOT_IN:
       inverse = true;
     case ActionType.IN:

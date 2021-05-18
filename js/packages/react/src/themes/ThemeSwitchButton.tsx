@@ -1,23 +1,25 @@
-import React from 'react';
-import {IconButton} from "@material-ui/core";
-import {ThemeVariant} from "@/themes/types";
-import {Container} from "typescript-ioc";
-import autobind from "autobind-decorator";
+import {SUIReactComponent} from "@/SUIReactComponent";
 import {ThemeService} from "@/themes/ThemeService";
+import {ThemeVariant} from "@/themes/types";
+import {IconButton} from "@material-ui/core";
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
-import {SUIReactComponent} from "@/SUIReactComponent";
+import autobind from "autobind-decorator";
+import React from 'react';
+import {Container} from "typescript-ioc";
 
-export class ThemeSwitchButton extends SUIReactComponent<{}, {
-  theme: ThemeVariant
-}> {
+type IThemeSwitchButtonProps = Record<string, never>;
+
+interface IThemeSwitchButtonState {
+  theme: ThemeVariant;
+}
+
+export class ThemeSwitchButton extends SUIReactComponent<IThemeSwitchButtonProps, IThemeSwitchButtonState> {
   private themeService = Container.get(ThemeService);
 
-  public constructor(props) {
+  public constructor(props: IThemeSwitchButtonProps) {
     super(props);
-    this.state = {
-      theme: this.themeService.getValue()
-    };
+    this.state = {theme: this.themeService.getValue()};
     this.registerObservableHandler(this.themeService.subscribe(theme => this.setState({theme})));
   }
 
@@ -30,13 +32,13 @@ export class ThemeSwitchButton extends SUIReactComponent<{}, {
   }
 
   @autobind
-  private changeTheme() {
+  private changeTheme(): void {
     switch (this.state.theme) {
       case "dark":
-          this.themeService.setValue("light");
+        this.themeService.setValue("light");
         break;
-        case "light":
-          this.themeService.setValue("dark");
+      case "light":
+        this.themeService.setValue("dark");
         break;
     }
   }

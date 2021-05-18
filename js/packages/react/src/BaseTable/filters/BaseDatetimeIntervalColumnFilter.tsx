@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import DatePicker from "@/SuiDatePicker/date-picker";
 import autobind from "autobind-decorator";
 import moment, {Moment} from "moment";
@@ -5,8 +6,6 @@ import * as React from 'react';
 import {RangePickerValue} from "@/compatibleTypes";
 import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from "@/BaseTable";
 import {GET_DEFAULT_CALENDAR_RANGES, getDataByKey} from '@sui/core';
-
-
 
 type DatetimeType = "date" | "datetime";
 

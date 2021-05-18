@@ -1,15 +1,13 @@
+import {SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT} from '@/styles';
+import {WaitData} from '@/WaitData';
 import {ArrowLeftOutlined, CloseOutlined} from "@ant-design/icons";
+import {IColumnInfoTag, IGraphQLConnection, ITag, mutate, query} from '@sui/core';
 import {Button, Select} from 'antd';
 import Input from 'antd/es/input';
 import Alert from 'antd/lib/alert';
 import Popover from 'antd/lib/popover';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-
-import { IColumnInfoTag, IGraphQLConnection, ITag , mutate, query } from '@sui/core';
-
-import { SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT } from '../styles';
-import { WaitData } from '../WaitData';
 
 export interface ITagsPopoverProps {
   colTagsConnection?: IGraphQLConnection<IColumnInfoTag>;
@@ -29,7 +27,8 @@ export class TagsPopover extends React.Component<ITagsPopoverProps, {
   visible?: boolean;
 }> {
 
-private static filterOption(inputValue: string, option: any): boolean {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private static filterOption(inputValue: string, option: any): boolean {
     return option.props.children.toString().toLowerCase().indexOf(inputValue.toLowerCase()) >= 0;
   }
 
@@ -41,7 +40,7 @@ private static filterOption(inputValue: string, option: any): boolean {
   }
 
   public componentWillReceiveProps(nextProps: ITagsPopoverProps): void {
-    this.setState({ selectedTags: nextProps.colTagsConnection.nodes.map(con => con.tagByTagId.id) });
+    this.setState({selectedTags: nextProps.colTagsConnection.nodes.map(con => con.tagByTagId.id)});
   }
 
   public render(): JSX.Element {
@@ -107,7 +106,7 @@ private static filterOption(inputValue: string, option: any): boolean {
                     <Select<string[]>
                       mode="multiple"
                       showSearch={true}
-                      style={{ width: '100%' }}
+                      style={{width: '100%'}}
                       onChange={this.onChange}
                       value={data && this.state.selectedTags}
                       disabled={this.state.savingInProcess}
@@ -164,47 +163,47 @@ private static filterOption(inputValue: string, option: any): boolean {
 
   @autobind
   private cleanAndClose(): void {
-    this.setState({ code: null, name: null, errorText: null, createMode: false, savingInProcess: false, visible: false });
+    this.setState({code: null, name: null, errorText: null, createMode: false, savingInProcess: false, visible: false});
   }
 
   @autobind
   private clearSelect(): void {
-    this.setState({ selectedTags: [] });
+    this.setState({selectedTags: []});
   }
 
   @autobind
   private disableCreateMode(): void {
-    this.setState({ createMode: false });
+    this.setState({createMode: false});
   }
 
   @autobind
   private enableCreateMode(): void {
-    this.setState({ createMode: true });
+    this.setState({createMode: true});
   }
 
   @autobind
   private handleVisibleChange(visible: boolean): void {
-    this.setState({ visible });
+    this.setState({visible});
   }
 
   @autobind
   private onChange(data: string[]): void {
-    this.setState({ selectedTags: data });
+    this.setState({selectedTags: data});
   }
 
   @autobind
   private onCodeChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    this.setState({ code: e.target.value });
+    this.setState({code: e.target.value});
   }
 
   @autobind
   private onNameChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    this.setState({ name: e.target.value });
+    this.setState({name: e.target.value});
   }
 
   @autobind
   private onNewTag(): void {
-    this.setState({ savingInProcess: true, errorText: null });
+    this.setState({savingInProcess: true, errorText: null});
     query<IGraphQLConnection<ITag>>(`{
       allTags(filter: {code: {equalTo: "${this.state.code.replace(/"/g, '\\"')}"}}) {
         totalCount
@@ -212,10 +211,10 @@ private static filterOption(inputValue: string, option: any): boolean {
     }`, true)
       .then(value => {
         if (value.totalCount > 0) {
-throw 'Запись с таким кодом уже существует';
+          throw 'Запись с таким кодом уже существует';
         }
       })
-      .then(_ => mutate<{ createTag: { tag: { id: string } } }>(`mutation {
+      .then(() => mutate<{ createTag: { tag: { id: string } } }>(`mutation {
         createTag(input: {tag: {code: "${this.state.code.replace(/"/g, '\\"')}", name: "${(this.state.name || '').replace(/"/g, '\\"')}"}}) {
           tag {
             id
@@ -231,17 +230,17 @@ throw 'Запись с таким кодом уже существует';
         savingInProcess: false,
         selectedTags: [...this.state.selectedTags, newId],
       }))
-      .catch(reason => this.setState({ savingInProcess: false, errorText: reason.toString() || 'Ошибка при сохранении' }));
+      .catch(reason => this.setState({savingInProcess: false, errorText: reason.toString() || 'Ошибка при сохранении'}));
   }
 
   @autobind
   private onSave(): void {
-    this.setState({ savingInProcess: true, errorText: null });
+    this.setState({savingInProcess: true, errorText: null});
     const promise = this.props.onChanged(this.state.selectedTags);
     if (promise) {
       promise
         .then(this.cleanAndClose)
-        .catch(reason => this.setState({ savingInProcess: false, errorText: reason.toString() || 'Ошибка при сохранении' }));
+        .catch(reason => this.setState({savingInProcess: false, errorText: reason.toString() || 'Ошибка при сохранении'}));
     } else {
       this.cleanAndClose();
     }

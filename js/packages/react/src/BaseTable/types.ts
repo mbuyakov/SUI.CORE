@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {IBaseTableUserSettings} from "@/BaseTable/extends";
+import {TableRenderParamsPlugin} from "@/TableRenderSettings";
 import {Filter, FilterOperation, Grouping, GroupKey, Sorting, Table as TableBase, TableBandHeader as TableBandHeaderBase, TableFilterRow, TableRowDetail} from '@devexpress/dx-react-grid';
+import {DataKey, IObjectWithIndex} from '@sui/core';
 import {CardType} from 'antd/lib/card';
 import * as React from 'react';
-
-import {DataKey, IObjectWithIndex} from '@sui/core';
-import {TableRenderParamsPlugin} from "@/TableRenderSettings";
-import {IBaseTableUserSettings} from "./extends/UserSettingsPlugin";
 
 export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode;
 export type TableSearchType = 'select' | 'date' | 'boolean' | 'string' | 'none';
@@ -79,6 +79,7 @@ export interface IBaseTableColLayout {
 export type IFormattedBaseTableColLayout = IBaseTableColLayout & { name: string, title: string, getCellValue(row: any): any };
 
 export interface IGroupSubtotalData {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   data?: object;
   elements: number;
 }

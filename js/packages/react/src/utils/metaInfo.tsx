@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {asyncMap, ColumnInfo, ColumnInfoManager, getDataByKey, TableInfoManager} from "@sui/core";
 
 import {booleanRender, IBaseTableColLayout, SortingDirection} from '../BaseTable';
@@ -19,6 +18,7 @@ export async function colToBaseTableCol(
     defaultGrouping: columnInfo.defaultGrouping,
     defaultSorting: columnInfo.defaultSorting as SortingDirection,
     defaultVisible: columnInfo.defaultVisible,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     groupingCriteria: (value: any) => value,
     id: columnInfo.columnName,
     subtotal: columnInfo.subtotalTypeBySubtotalTypeId,
@@ -67,7 +67,7 @@ export async function colToBaseTableCol(
     }
   } else if (columnInfo.columnType && ['boolean', 'bit'].includes(columnInfo.columnType.toLowerCase())) {
     result.render = booleanRender;
-    result.groupingCriteria = (value: boolean | number | null | undefined) => value ? 'Истина' : 'Ложь';
+    result.groupingCriteria = (value: boolean | number | null | undefined): string => value ? 'Истина' : 'Ложь';
   }
 
   // const metaInitProps = getMetaInitProps();
@@ -75,14 +75,12 @@ export async function colToBaseTableCol(
   const trp = TableRenderSettingsPopover.parseTableRenderParams(props.columnInfo.tableRenderParams);
 
   if (!props.rawMode) {
-    // @ts-ignore
     let selectedPlugin = Array.from(TableRenderSettingsPluginManager.plugins.values()).find(plugin => plugin.extraActivationKostyl(result, renderColumnInfo, props, trp));
 
     if (!selectedPlugin && trp && trp.renderType) {
       selectedPlugin = TableRenderSettingsPluginManager.plugins.get(trp.renderType); // || new UnknownPlugin();
     }
 
-    // @ts-ignore
     await selectedPlugin.baseTableColGenerator(result, renderColumnInfo, props, trp);
 
     result.tableRenderPlugin = selectedPlugin;

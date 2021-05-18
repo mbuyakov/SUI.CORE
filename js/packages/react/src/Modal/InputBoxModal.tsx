@@ -1,16 +1,18 @@
+import {draw} from "@/utils";
 import {Input} from "antd";
 import {TextAreaProps} from "antd/lib/input/TextArea";
 import React from "react";
 
-import {draw} from "../utils";
-
 import {IPromisedBaseFormModalProps, PromisedBaseFormModal} from "./PromisedBaseFormModal";
 
-export async function inputBoxModal<T>(title: string,
-                                       formProps: IPromisedBaseFormModalProps<T> = null,
-                                       inputProps: TextAreaProps = null,
-validator: any = null,
-                                       onSubmitCallback: (value: string) => Promise<boolean> = null): Promise<string> {
+export async function inputBoxModal<T>(
+  title: string,
+  formProps: IPromisedBaseFormModalProps<T> = null,
+  inputProps: TextAreaProps = null,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  validator: any = null,
+  onSubmitCallback: (value: string) => Promise<boolean> = null
+): Promise<string> {
   return new Promise<string>(resolve => {
     const {TextArea} = Input;
 
@@ -21,7 +23,7 @@ validator: any = null,
         okText="Подтвердить"
         cancelText="Отменить"
         {...formProps}
-        onSubmit={async (values: { text: string }) => {
+        onSubmit={async (values: { text: string }): Promise<boolean> => {
           let successCallback = true;
           if (onSubmitCallback) {
             successCallback = await onSubmitCallback(values.text);
@@ -34,7 +36,7 @@ validator: any = null,
 
           return false;
         }}
-        onCancel={() => resolve(null)}
+        onCancel={(): void => resolve(null)}
         baseFormProps={{
           rows: [
             {

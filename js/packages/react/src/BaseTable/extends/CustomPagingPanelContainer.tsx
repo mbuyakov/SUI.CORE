@@ -9,6 +9,7 @@ import debounce from "lodash/debounce";
 const DEBOUNCE_ON_CHANGE_MS = 1000;
 const MAX_NUMBER_TO_SELECT_IN_MENU = 20;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ICustomPagingContainer = PagingPanel.ContainerProps & { className?: string; style?: React.CSSProperties; [x: string]: any };
 
 export function CustomPagingPanelContainer(props: ICustomPagingContainer): ReactElement<PagingPanelBase.ContainerProps> {
@@ -19,7 +20,7 @@ export function CustomPagingPanelContainer(props: ICustomPagingContainer): React
         native
         defaultValue={props.currentPage}
         disableUnderline={true}
-        onChange={event => props.onCurrentPageChange && props.onCurrentPageChange(event.target.value as number || 0)}
+        onChange={(event): void => props.onCurrentPageChange && props.onCurrentPageChange(event.target.value as number || 0)}
       >
         {Array.from({length: props.totalPages}, (_, key) => (
           <option value={key}>{key + 1}</option>
@@ -35,7 +36,7 @@ export function CustomPagingPanelContainer(props: ICustomPagingContainer): React
           max: props.totalPages,
           type: "number",
         }}
-        onChange={event => {
+        onChange={(event): void => {
           if(!!debouncedOnChange) {
             const page = event.target.value && parseInt(event.target.value, 10);
             debouncedOnChange((!page || isNaN(page)) ? 0 : page - 1);

@@ -1,11 +1,9 @@
 import Menu from 'antd/lib/menu';
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {ContainerOptions} from 'react-smooth-dnd';
-
-import {DnDList} from "../Draggable";
+import {DnDList} from "@/Draggable";
+import {MetaCardConfigurator} from "@/Meta";
 import {ISerializable, ISerializableComponent} from "../Draggable/Serializable";
-import {MetaCardConfigurator} from "../Meta";
 
 import {FreeText, SerializedFreeText} from "./FreeText";
 import {ItemSettings, SerializedItemSettings} from "./ItemSettings";
@@ -25,10 +23,6 @@ interface ICardSettingsProps {
 const LAST_CARD_SETTINGS_VERSION: number = -1;
 
 export class CardSettings extends React.Component<ICardSettingsProps> implements ISerializableComponent<SerializedCardSettings> {
-
-  private static shouldAcceptDrop(e: ContainerOptions): boolean {
-    return e.groupName === "ItemSettings" || e.groupName === "TITLE";
-  }
 
   private readonly rowsRef: React.RefObject<DnDList<RowSettings>> = React.createRef();
   private readonly titleListRef: React.RefObject<DnDList<ItemSettings | FreeText>> = React.createRef();

@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {DnDList} from "@/Draggable";
+import {getDataByKey, Merge} from '@sui/core';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-import { ContainerOptions } from 'react-smooth-dnd';
+import {ContainerOptions} from 'react-smooth-dnd';
 
-import { getDataByKey , Merge } from '@sui/core';
-import { IBaseCardColLayout, IBaseCardItemLayout } from '../Base';
-import {DnDList} from "../Draggable";
+import {IBaseCardColLayout, IBaseCardItemLayout} from '../Base';
 import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
 
 import {ItemSettings, SerializedItemSettings} from "./ItemSettings";

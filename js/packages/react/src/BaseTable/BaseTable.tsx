@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {ColumnChooserContainer, CustomPagingPanelContainer, CustomToggleCell, DoubleScrollbar, EmptyMessageComponent, ExportPlugin, ExtendedIntegratedSelection, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, UserSettingsPlugin, UserSettingsSupportPlugin, WarningPlugin} from "@/BaseTable/extends";
 import {BASE_TABLE, BASE_TABLE_NO_PAGINATION, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '@/styles';
 import {SuiThemeContext} from '@/themes';
@@ -75,7 +76,7 @@ export class BaseTable<TSelection = defaultSelection>
     );
   };
 
-  private FilterCell = (props: any) => (
+  private FilterCell = (props: any): JSX.Element => (
     <Table.Cell
       {...props as any}
     >
@@ -103,6 +104,7 @@ export class BaseTable<TSelection = defaultSelection>
       : <Cell {...props} />
   );
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public constructor(props: any) {
     super(props);
 
@@ -232,7 +234,7 @@ export class BaseTable<TSelection = defaultSelection>
 
     const filterExtension = cols.map(col => ({
       columnName: col.id,
-      predicate: (value: any, filter: Filter, row: any) => {
+      predicate: (value: any, filter: Filter, row: any): boolean => {
         let filters = [filter];
 
         if (filter.operation === "interval") {
@@ -262,7 +264,7 @@ export class BaseTable<TSelection = defaultSelection>
     const hasSubtotals = (this.props.cols || []).some(col => !!col.subtotal);
     const groupSubtotalData = this.props.groupSubtotalData;
 
-    const tableGroupRowContentComponent = (props: any) => {
+    const tableGroupRowContentComponent = (props: any): JSX.Element => {
       const subtotalData = groupSubtotalData && groupSubtotalData.get(props.row.compoundKey);
 
       return (
@@ -279,7 +281,7 @@ export class BaseTable<TSelection = defaultSelection>
 
     return (
       <SuiThemeContext.Consumer>
-        {theme => (
+        {(theme): JSX.Element => (
           <ThemeProvider
             theme={theme.baseTableMuiTheme}
           >
@@ -355,11 +357,13 @@ export class BaseTable<TSelection = defaultSelection>
                   onSelectionChange={this.onSelectionChange as any}
                 />}
                 {groupingEnabled && (this.props.getChildGroups
-                  ? <CustomGrouping
-                    getChildGroups={this.props.getChildGroups}
-                    grouping={this.props.customGrouping}
-                    expandedGroups={this.props.customExpandedGroups}
-                  />
+                  ? (
+                    <CustomGrouping
+                      getChildGroups={this.props.getChildGroups}
+                      grouping={this.props.customGrouping}
+                      expandedGroups={this.props.customExpandedGroups}
+                    />
+                  )
                   : <IntegratedGrouping columnExtensions={groupingExtension}/>)}
                 {filteringEnabled && !this.props.onFiltersChange && <IntegratedFiltering columnExtensions={filterExtension}/>}
                 {sortingEnabled && !this.props.onSortingChange && <IntegratedSorting columnExtensions={sortingExtension}/>}

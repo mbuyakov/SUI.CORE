@@ -1,10 +1,9 @@
+import {CustomFioInput} from "@/Inputs";
+import {ExtractProps} from "@/other";
 import {Button, Popover} from 'antd';
 import {InputProps} from "antd/lib/input/Input";
 import autobind from 'autobind-decorator';
 import React, {ChangeEvent} from 'react';
-
-import {CustomFioInput} from "@/Inputs";
-import {ExtractProps} from "@/other";
 
 
 export type ValidatorFunc = (name: string | null) => string;
@@ -20,14 +19,13 @@ export function apostropheValidator(value: string | null): string {
   return '';
 }
 
-export function wrapWithApostropheValidator(validator: ValidatorFunc) {
-  return (value: string | null) =>
-    apostropheValidator(value) || validator(value);
+export function wrapWithApostropheValidator(validator: ValidatorFunc): (value: string | null) => string {
+  return (value: string | null): string => apostropheValidator(value) || validator(value);
 }
 
 export type InputWithApostropheValidationProps = InputProps & {
   errorPlacement: "top" | "right" | "bottom" | "left" | null,
-  input:  React.ComponentClass<ExtractProps<CustomFioInput>>
+  input: React.ComponentClass<ExtractProps<CustomFioInput>>
   onChange?(value: string): void,
 }
 
@@ -68,11 +66,12 @@ export class InputWithApostropheValidation extends React.Component<InputWithApos
         >
           {React.createElement(this.props.input,
             {
-            ...this.props,
-            onBlur: this.onBlur,
-            onChange: this.onChange,
-            onFocus: this.onFocus,
-            value: clearValue})
+              ...this.props,
+              onBlur: this.onBlur,
+              onChange: this.onChange,
+              onFocus: this.onFocus,
+              value: clearValue
+            })
           }
         </Popover>
       </div>
@@ -80,13 +79,13 @@ export class InputWithApostropheValidation extends React.Component<InputWithApos
   }
 
   @autobind
-private getAcceptDeclineButtons() {
+  private getAcceptDeclineButtons(): JSX.Element {
     return (
       <span>
-        <Button danger={true} size="small" onClick={ this.onDeclineBtnClickHandler }>
+        <Button danger={true} size="small" onClick={this.onDeclineBtnClickHandler}>
           Отказаться
         </Button>&nbsp;
-        <Button type="primary" size="small" onClick={ this.onAcceptBtnClickHandler }>
+        <Button type="primary" size="small" onClick={this.onAcceptBtnClickHandler}>
           Разрешить
         </Button>
       </span>
@@ -94,7 +93,7 @@ private getAcceptDeclineButtons() {
   }
 
   @autobind
-private getNewAcceptStateOnChange(apostrophesCount: number) {
+  private getNewAcceptStateOnChange(apostrophesCount: number): AcceptState {
     if (apostrophesCount === 0) {
       return AcceptState.START;
     }
@@ -106,7 +105,7 @@ private getNewAcceptStateOnChange(apostrophesCount: number) {
   }
 
   @autobind
-private onAcceptBtnClickHandler() {
+  private onAcceptBtnClickHandler(): void {
     this.setState({acceptState: AcceptState.ACCEPTED});
   }
 
@@ -131,7 +130,7 @@ private onAcceptBtnClickHandler() {
   }
 
   @autobind
-private onDeclineBtnClickHandler() {
+  private onDeclineBtnClickHandler(): void {
     this.setState({acceptState: AcceptState.NOT_ACCEPTED});
   }
 
@@ -152,11 +151,10 @@ export enum AcceptState {
 }
 
 // Never returns ACCEPTED prefix, cause string value never contains such a prefix.
-function getAcceptStateFromPrefix(s: string): AcceptState | null  {
-  if(s) {
+function getAcceptStateFromPrefix(s: string): AcceptState | null {
+  if (s) {
     const matches = s.match(PREFIX_REGEX);
-    if(matches !== null) {
-// @ts-ignore
+    if (matches !== null) {
       return AcceptState[matches[0]];
     }
   }
@@ -195,15 +193,11 @@ function dropPrefix(s: string): string {
   return s;
 }
 
-function countApostrophes(s: string) {
-const ap_match = s.match(APOSTROPHE_REGEX);
+function countApostrophes(s: string): number {
+  const ap_match = s.match(APOSTROPHE_REGEX);
   if (ap_match === null) {
     return 0;
-} else {
+  } else {
     return ap_match.length;
   }
-}
-
-function hasPrefix(s: string): boolean {
-  return s && PREFIX_REGEX.test(s);
 }

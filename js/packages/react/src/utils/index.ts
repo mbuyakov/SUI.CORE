@@ -55,8 +55,7 @@ function writeFile(fileEntry: any, blob: Blob, fileName: string): void {
 
 function saveBlob2File(blob: Blob, fileName: string): void {
   const folder = `${cordova.file.externalRootDirectory}Download`;
-  // @ts-ignore
-  window.resolveLocalFileSystemURL(folder, (dirEntry) => {
+  (window as IObjectWithIndex).resolveLocalFileSystemURL(folder, (dirEntry) => {
     console.log(`file system open: ${dirEntry.name}`);
     createFile(dirEntry, blob, fileName);
   }, errorWhileSaving)

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-function-return-type */
 // https://github.com/DevExpress/devextreme-reactive/blob/f2007142015d27482e45e96b60f2ec6536d3a9b9/packages/dx-grid-core/src/plugins/integrated-selection/computeds.ts#L8
 import {allSelected, someSelected, unwrapSelectedRows,} from '@devexpress/dx-grid-core';
 import {Action, Actions, Getter, Getters, Plugin} from '@devexpress/dx-react-core';
@@ -42,7 +43,7 @@ const pluginDependencies = [
 
 // eslint-disable-next-line react/prefer-stateless-function
 class ExtendedIntegratedSelectionBase extends React.PureComponent<IExtendedIntegratedSelectionProps> {
-  render() {
+  public render(): JSX.Element {
     return (
       <Plugin
         name="IntegratedSelection"

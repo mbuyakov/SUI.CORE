@@ -1,15 +1,14 @@
-// tslint:disable:no-magic-numbers jsx-no-lambda
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {isAdmin} from "@/utils";
+import {WaitData} from "@/WaitData";
 import {DeleteOutlined, IssuesCloseOutlined} from "@ant-design/icons";
+import {EMAIL_REGEXP, IRole, IUser, IUserRole, NO_DATA_TEXT, OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 import {Card, Select, Tooltip} from "antd";
 import * as React from "react";
-import {EMAIL_REGEXP, IRole, IUser, IUserRole, NO_DATA_TEXT, OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
-import {BaseCard, IBaseCardItemLayout, IBaseCardRowLayout} from "../Base";
 
+import {BaseCard, IBaseCardItemLayout, IBaseCardRowLayout} from "../Base";
 import {EditablePromisedComponent, PromisedButton, PromisedInput, PromisedSelect} from "../Inputs";
 
-import {isAdmin} from "../utils";
-
-import {WaitData} from "../WaitData";
 import {MAX_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH_MESSAGE, MIN_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH_MESSAGE, MIN_USERNAME_LENGTH, MIN_USERNAME_LENGTH_MESSAGE} from "./const";
 
 const COLSPAN = 2;
@@ -27,6 +26,7 @@ interface IUserCardProps<TDetail, TAdditional> {
   updateRoles(roleIds: string[] | null | undefined): Promise<void>;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IUserCardProps<TDetail, TAdditional>> {
 
   public constructor(props: IUserCardProps<TDetail, TAdditional>) {
@@ -40,7 +40,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
         data={this.props.userData}
         alwaysUpdate={true}
       >
-        {(userData) => (
+        {(userData): JSX.Element => (
           <Card
             style={{width: 700}}
           >
@@ -146,7 +146,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                       title: "Пароль",
                       render: (): JSX.Element => (
                         <EditablePromisedComponent
-                          nonEditRender={() => "********"}
+                          nonEditRender={(): string => "********"}
                         >
                           <PromisedInput
                             promise={this.props.updatePassword}
@@ -173,7 +173,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                       dataKey: ["userRolesByUserId", "nodes"],
                       render: (userRoles: IUserRole[] | undefined): JSX.Element => (
                         <EditablePromisedComponent
-                          nonEditRender={(roleIds: string[] | undefined) => roleIds?.length
+                          nonEditRender={(roleIds: string[] | undefined): string => roleIds?.length
                             ? this.props.roles?.filter(role => roleIds.includes(role.id)).map(role => role.rusName).join(", ")
                             : NO_DATA_TEXT
                           }

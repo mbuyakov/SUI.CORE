@@ -33,7 +33,7 @@ export class AdditionalTab extends React.Component<IAdditionalTabProps, IAdditio
         <Space direction="vertical" style={{width: "100%"}}>
           <Input.TextArea
             {...this.props}
-            onChange={(event: ChangeEvent<HTMLTextAreaElement>) => this.setState({value: event.target.value})}
+            onChange={(event: ChangeEvent<HTMLTextAreaElement>): void => this.setState({value: event.target.value})}
             value={this.state?.value}
             rows={4}
           />

@@ -1,13 +1,12 @@
-import {defaultIfNotBoolean,getDataByKey,NO_DATA_TEXT, IObjectWithIndex} from "@sui/core";
+import {translate} from "@/translate";
 import {getXlsx, WritingOptions} from "@sui/charts";
-
-
-import {translate} from "../translate";
+import {defaultIfNotBoolean, getDataByKey, IObjectWithIndex, NO_DATA_TEXT} from "@sui/core";
 import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout} from "./types";
 
 export function mapColumns(cols: IBaseTableColLayout[]): IFormattedBaseTableColLayout[] {
   return cols.map(col => ({
     ...col,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getCellValue: (row: any): any => (col.dataKey && getDataByKey(row, col.dataKey)) || (col.defaultData !== undefined ? col.defaultData : row[col.id]),
     name: col.id,
     title: col.title || translate(col.id, true) || translate(col.id.replace(/Id$/, '')),

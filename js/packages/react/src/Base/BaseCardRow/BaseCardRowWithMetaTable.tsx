@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import React from "react";
 import {BackendTable} from "@/BackendTable";
 import {addQuotesIfString, getDataByKey} from "@sui/core";
@@ -17,7 +18,7 @@ export interface IBaseCardRowWithMetaTableLayout {
   metaTableProps: IMetaTableProps;
 }
 
-export const DATA_KEY_REGEXP = /@([a-zA-z0-9\|]+)/g;
+export const DATA_KEY_REGEXP = /@([a-zA-z0-9|]+)/g;
 
 export function mapFilters<T>(filters: string, sourceItem: T): string | null {
   let result = filters;

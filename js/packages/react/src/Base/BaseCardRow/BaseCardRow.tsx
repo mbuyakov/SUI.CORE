@@ -14,7 +14,6 @@ export type IBaseCardRowLayout<T, ITEM> =
   IBaseCardRowWithMetaTableLayout |
   IBaseCardRowWithTabsLayout<T, ITEM>;
 
-// @ts-ignore
 export const BaseCardRow: <T, ITEM>(props: {
   sourceItem: T,
   row: IBaseCardRowLayout<T, ITEM>,
