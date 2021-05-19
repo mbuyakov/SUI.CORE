@@ -1,6 +1,8 @@
-import {IBaseCardTabLayout} from "@/Base";
 import Tabs from "antd/lib/tabs";
 import * as React from "react";
+
+// noinspection ES6PreferShortImport
+import { IBaseCardTabLayout } from './BaseCardTab';
 
 export interface IBaseCardTabCustom<T> {
   title: string;

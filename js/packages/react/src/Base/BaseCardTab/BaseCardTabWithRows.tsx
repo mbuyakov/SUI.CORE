@@ -1,8 +1,12 @@
 import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
-import {BaseCardRow, IBaseCardRowLayout} from "@/Base/BaseCardRow";
-import * as React from "react";
 import Tabs from "antd/lib/tabs";
-import {IBaseCardTabLayout} from "@/Base";
+import * as React from "react";
+
+// noinspection ES6PreferShortImport
+import {BaseCardRow, IBaseCardRowLayout} from '../BaseCardRow/BaseCardRow';
+
+// noinspection ES6PreferShortImport
+import {IBaseCardTabLayout} from './BaseCardTab';
 
 export interface IBaseCardTabWithRows<T, ITEM> {
   rows: OneOrArrayWithNulls<IBaseCardRowLayout<T, ITEM>>;
