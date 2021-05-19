@@ -1,14 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {IBaseTableColLayout} from '@/BaseTable';
-import {RouterLink} from '@/Link';
-import {TableRenderParamsPlugin, TableRenderSettingsPluginManager} from "@/TableRenderSettings";
 import {InfoCircleOutlined} from "@ant-design/icons";
 import {ColumnInfo} from "@sui/core";
 import {Input, Tooltip} from "antd";
 import * as React from 'react';
 
+// noinspection ES6PreferShortImport
+import {IBaseTableColLayout} from '../../BaseTable';
+// noinspection ES6PreferShortImport
+import {RouterLink} from '../../Link';
+// noinspection ES6PreferShortImport
 import {getLinkForTable, IColumnInfoToBaseTableColProps} from '../../utils';
+// noinspection ES6PreferShortImport
+import {TableRenderSettingsPluginManager} from "../TableRenderSettingsPluginManager";
+// noinspection ES6PreferShortImport
 import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
+
+// noinspection ES6PreferShortImport
+import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 
 export interface IMultipleLinkPluginParams {
   linkTableName: string

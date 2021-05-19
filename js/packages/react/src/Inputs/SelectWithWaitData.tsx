@@ -1,9 +1,12 @@
-import {ExtractProps} from "@/other";
 import {getDataByKey, IGqlFilter, NO_DATA_TEXT, TableInfoManager} from "@sui/core";
 import {Select} from 'antd';
 import {SelectProps, SelectValue} from 'antd/lib/select';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
+
+// noinspection ES6PreferShortImport
+import {ExtractProps} from "../other";
+// noinspection ES6PreferShortImport
 import {getDataSet, getDataSetRender, getUser, IDataSet} from "../utils";
 
 export type ISelectWithWaitDataProps<TValueType, TGroupType> = Omit<SelectProps<SelectValue>, 'mode'> & {

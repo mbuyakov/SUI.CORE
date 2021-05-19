@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// tslint:disable:member-ordering jsx-no-lambda
-import {BaseCard} from "@/Base";
-import {RangePickerValue} from "@/compatibleTypes";
-import {PromisedButton} from "@/Inputs";
 import {GET_DEFAULT_CALENDAR_RANGES, query, TableInfoManager} from "@sui/core";
 import {DatePicker, Input, InputNumber, Select} from "antd";
 import autobind from "autobind-decorator";
 import moment from 'moment';
 import React from 'react';
+
+// noinspection ES6PreferShortImport
+import {BaseCard} from "../Base";
+// noinspection ES6PreferShortImport
+import {RangePickerValue} from "../compatibleTypes";
+// noinspection ES6PreferShortImport
+import {PromisedButton} from "../Inputs";
+
 import {AuditLogTable, IAuditLogTableProps, IAuditLogTableRow} from "./AuditLogTable";
 import {fetchAndFormatAuditLog, fetchTablesWithAuditLogs} from "./utils";
 

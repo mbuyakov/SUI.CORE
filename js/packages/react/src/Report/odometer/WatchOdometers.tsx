@@ -1,9 +1,12 @@
-import {errorNotification} from "@/drawUtils";
-import {ICustomOdometerData} from "@/Report";
 import {IObjectWithIndex, mutate} from "@sui/core";
 import autobind from "autobind-decorator";
 import React from "react";
 
+// noinspection ES6PreferShortImport
+import {errorNotification} from "../../drawUtils";
+
+// noinspection ES6PreferShortImport
+import {ICustomOdometerData} from "./CustomOdometer";
 import {IOdometersProps, Odometers} from "./Odometers";
 
 const refreshInterval = 5000; // ms

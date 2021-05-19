@@ -1,16 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {DeletableSmallCard} from '@/DeletableSmallCard';
-import {DnDList, ISerializableComponent} from '@/Draggable';
-import {PromisedButton} from '@/Inputs';
-import {MAIN_SETTINGS__CONTAINER, MAIN_SETTINGS__ITEM_TREE} from '@/styles';
-import {WaitData} from '@/WaitData';
 import {SaveOutlined} from "@ant-design/icons";
+
 import {ColumnInfoManager, TableInfoManager} from '@sui/core';
 import {Switch} from 'antd';
 import Tooltip from 'antd/lib/tooltip';
 import Tree from 'antd/lib/tree';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
+
+// noinspection ES6PreferShortImport
+import {DeletableSmallCard} from '../DeletableSmallCard';
+// noinspection ES6PreferShortImport
+import {DnDList} from '../Draggable';
+// noinspection ES6PreferShortImport
+import {ISerializableComponent} from '../Draggable/Serializable';
+// noinspection ES6PreferShortImport
+import {PromisedButton} from '../Inputs';
+// noinspection ES6PreferShortImport
+import {MAIN_SETTINGS__CONTAINER, MAIN_SETTINGS__ITEM_TREE} from '../styles';
+// noinspection ES6PreferShortImport
+import {WaitData} from '../WaitData';
 
 import {CardSettings, SerializedCardSettings} from './CardSettings';
 import {DebugModeContext} from './DebugModeContext';
@@ -42,7 +51,9 @@ interface IMainSettingsProps {
   fields: string[];
   plain?: SerializedCardSettings;
   tableId: string;
+
   getPopupContainer(): HTMLElement;
+
   onSave(settings: SerializedCardSettings): Promise<any>;
 }
 
@@ -107,7 +118,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
 
   public async componentDidMount(): Promise<void> {
     const fields = await Promise.all(this.props.fields.map(field => getFieldsForCol(field)));
-    this.setState({ fields });
+    this.setState({fields});
   }
 
   public getCurrentVersion(): number {
@@ -176,12 +187,12 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
   private async loadData(treeNode: any): Promise<void> {
     const field: IFieldNode = treeNode.data;
     field.child = (await getFieldsForCol(field.colInfoIds)).child;
-    this.setState({ fields: [...this.state.fields] });
+    this.setState({fields: [...this.state.fields]});
   }
 
   @autobind
   private onDebugModeChange(debugMode: boolean): void {
-    this.setState({ debugMode });
+    this.setState({debugMode});
   }
 
   @autobind

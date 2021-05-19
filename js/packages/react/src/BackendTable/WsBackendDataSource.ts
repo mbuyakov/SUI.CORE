@@ -1,7 +1,10 @@
-import {Socket} from '@/Socket';
-import {getUser} from '@/utils';
 import {IFrame, StompConfig} from '@stomp/stompjs';
-import {getSUISettings, IObjectWithIndex, Logger, sleep} from "@sui/core";
+import {getSUISettings, IObjectWithIndex, Logger, sleep } from "@sui/core";
+
+// noinspection ES6PreferShortImport
+import {Socket} from '../Socket';
+// noinspection ES6PreferShortImport
+import {getUser} from '../utils';
 
 import {BackendDataSource, MESSAGE_ID_KEY} from './BackendDataSource';
 

@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {SimpleBackendFilter} from "@/BackendTable";
-import {WaitData} from '@/WaitData';
 import {asyncMap, camelCase, ColumnInfoDependence, ColumnInfoManager, IObjectWithIndex} from '@sui/core';
 import autobind from "autobind-decorator";
 import * as React from "react";
+
+// noinspection ES6PreferShortImport
+import {SimpleBackendFilter} from "../../BackendTable";
+// noinspection ES6PreferShortImport
+import {WaitData} from '../../WaitData';
 import {INewSearchProps, LazyFilter, SelectData} from '../types';
 
 import {BaseSelectFilter, IBaseSelectFilterProps} from "./BaseSelectFilter";
+
 
 type ICustomSelectFilterProps<T> = Omit<IBaseSelectFilterProps<T>, "data" | "onChange"> & INewSearchProps & { filters?: LazyFilter[] };
 

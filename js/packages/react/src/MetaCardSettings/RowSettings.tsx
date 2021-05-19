@@ -1,7 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {DeletableSmallCard} from '@/DeletableSmallCard';
-import {COMMON__GRID} from '@/styles';
-
 import {camelCase, Merge} from '@sui/core';
 import {Button, Mentions, Menu} from 'antd';
 import Checkbox, {CheckboxChangeEvent} from 'antd/lib/checkbox';
@@ -9,9 +6,16 @@ import Input from 'antd/lib/input';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
+// noinspection ES6PreferShortImport
 import {IBaseCardItemLayout, IBaseCardRowLayout, IBaseCardRowWithCollapseLayout, IBaseCardRowWithColsLayout, IBaseCardRowWithDividerLayout, IBaseCardRowWithMetaTableLayout, IBaseCardRowWithTabsLayout, IMetaTableProps, isRowWithCollapse, isRowWithCols, isRowWithDivider, isRowWithMetaTable, isRowWithTabs} from '../Base';
+// noinspection ES6PreferShortImport
+import {DeletableSmallCard} from '../DeletableSmallCard';
+// noinspection ES6PreferShortImport
 import {DnDList, IBaseDnDChildProps} from '../Draggable';
+// noinspection ES6PreferShortImport
 import {ISerializable, SerializableDnDChild} from '../Draggable/Serializable';
+// noinspection ES6PreferShortImport
+import {COMMON__GRID} from '../styles';
 
 import {CollapseSettings, SerializedCollapseSettings} from './CollapseSettings';
 import {ColSettings, SerializedColSettings} from './ColSettings';

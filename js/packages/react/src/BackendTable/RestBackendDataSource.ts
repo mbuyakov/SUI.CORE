@@ -1,7 +1,9 @@
-import {getUser} from "@/utils";
 import {getSUISettings, IObjectWithIndex} from '@sui/core';
 import axios from "axios";
 import {v4 as uuidv4} from 'uuid';
+
+// noinspection ES6PreferShortImport
+import {getUser} from "../utils";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
 

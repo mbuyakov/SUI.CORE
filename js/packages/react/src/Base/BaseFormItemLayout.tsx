@@ -1,7 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {BASE_CARD_ITEM_LABEL_HORIZONTAL} from "@/styles";
-import {SUIMaskedInput} from '@/SUIMaskedInput';
-import {SUIReactComponent} from '@/SUIReactComponent';
 import {IObjectWithIndex} from "@sui/core";
 import {Form} from 'antd';
 import {FormItemProps} from 'antd/lib/form';
@@ -9,6 +6,13 @@ import {RuleItem} from 'async-validator';
 import autobind from 'autobind-decorator';
 import classNames from 'classnames';
 import * as React from 'react';
+
+// noinspection ES6PreferShortImport
+import {BASE_CARD_ITEM_LABEL_HORIZONTAL} from "../styles";
+// noinspection ES6PreferShortImport
+import {SUIMaskedInput} from '../SUIMaskedInput';
+// noinspection ES6PreferShortImport
+import {SUIReactComponent} from '../SUIReactComponent';
 
 import {DEFAULT_ITEM_RENDERER} from './BaseCardItemLayout';
 import {BaseForm, IFormField, SUBMITTED_FIELD, ValuesGetter} from './BaseForm';

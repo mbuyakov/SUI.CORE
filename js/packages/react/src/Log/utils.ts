@@ -1,7 +1,10 @@
-import {errorNotification} from "@/drawUtils";
-import {getUser} from "@/utils";
 import {IObjectWithIndex, IUser, query, toMap} from "@sui/core";
 import axios, {AxiosRequestConfig} from "axios";
+
+// noinspection ES6PreferShortImport
+import {errorNotification} from "../drawUtils";
+// noinspection ES6PreferShortImport
+import {getUser} from "../utils";
 
 import {IAuditLogTableRow} from "./AuditLogTable";
 

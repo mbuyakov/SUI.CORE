@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {DnDList} from "@/Draggable";
 import {getDataByKey, Merge} from '@sui/core';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import {ContainerOptions} from 'react-smooth-dnd';
 
+// noinspection ES6PreferShortImport
 import {IBaseCardColLayout, IBaseCardItemLayout} from '../Base';
+// noinspection ES6PreferShortImport
+import {DnDList} from "../Draggable";
+// noinspection ES6PreferShortImport
 import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
 
 import {ItemSettings, SerializedItemSettings} from "./ItemSettings";
-
 
 type ColSettingsState = Merge<IBaseCardColLayout<any, IBaseCardItemLayout<any>>, {
   items: SerializedItemSettings[];

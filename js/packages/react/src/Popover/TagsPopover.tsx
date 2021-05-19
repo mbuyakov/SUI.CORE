@@ -1,5 +1,3 @@
-import {SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT} from '@/styles';
-import {WaitData} from '@/WaitData';
 import {ArrowLeftOutlined, CloseOutlined} from "@ant-design/icons";
 import {IColumnInfoTag, IGraphQLConnection, ITag, mutate, query} from '@sui/core';
 import {Button, Select} from 'antd';
@@ -8,6 +6,11 @@ import Alert from 'antd/lib/alert';
 import Popover from 'antd/lib/popover';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
+
+// noinspection ES6PreferShortImport
+import {SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT} from '../styles';
+// noinspection ES6PreferShortImport
+import {WaitData} from '../WaitData';
 
 export interface ITagsPopoverProps {
   colTagsConnection?: IGraphQLConnection<IColumnInfoTag>;

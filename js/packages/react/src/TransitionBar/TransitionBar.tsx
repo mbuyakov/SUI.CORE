@@ -1,4 +1,3 @@
-import {INFO_MODAL_FIX, NO_BORDER_MODAL} from "@/styles";
 import {DownOutlined, LoadingOutlined, ShareAltOutlined} from '@ant-design/icons';
 import {defaultIfNotBoolean} from "@sui/core";
 import {Button, Dropdown, Menu, Modal, Popconfirm} from 'antd';
@@ -9,6 +8,9 @@ import Tooltip, {TooltipProps} from 'antd/lib/tooltip';
 import autobind from "autobind-decorator";
 import classNames from "classnames";
 import * as React from "react";
+
+// noinspection ES6PreferShortImport
+import {INFO_MODAL_FIX, NO_BORDER_MODAL} from "../styles";
 
 import {TransitionGraph} from "./TransitionGraph";
 import {IResolution, ITransition, ITransitionStatus, TransitionButtonProps} from "./types";

@@ -1,4 +1,3 @@
-import {SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT} from '@/styles';
 import {UsergroupAddOutlined} from '@ant-design/icons';
 import {IColumnInfo, IColumnInfoRole, IRole, mutate} from '@sui/core';
 import {Popover} from 'antd';
@@ -8,7 +7,11 @@ import Select from 'antd/lib/select';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
+// noinspection ES6PreferShortImport
 import {PromisedButton, PromisedSwitch} from '../Inputs';
+// noinspection ES6PreferShortImport
+import {SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT} from '../styles';
+
 
 export interface IVisibleByRolesPopoverProps {
   columnInfo?: IColumnInfo;
@@ -36,7 +39,7 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
 
   @autobind
   public async generateSavePromise(): Promise<void> {
-    this.setState({ savingInProcess: true });
+    this.setState({savingInProcess: true});
 
     return Promise.all(this.props.columnInfo.columnInfoRolesByColumnInfoId.nodes.map((columnInfoRole: IColumnInfoRole) => mutate(`mutation {
       deleteColumnInfoRoleById(input: {id: "${columnInfoRole.id}"}) {
@@ -53,7 +56,7 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
           }
         }`, true))))
       .then(async columnInfoRoles => {
-        this.setState({ savingInProcess: false, popoverVisible: false, selectedRoles: null });
+        this.setState({savingInProcess: false, popoverVisible: false, selectedRoles: null});
 
         return this.props.afterRolesPromise(columnInfoRoles.map(val => val.columnInfoRole));
       });
@@ -65,17 +68,17 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
       // Ignore
       return;
     }
-    this.setState({ popoverVisible: value });
+    this.setState({popoverVisible: value});
   }
 
   @autobind
   public onRolesChanged(value: string[]): void {
-    this.setState({ selectedRoles: value || [] });
+    this.setState({selectedRoles: value || []});
   }
 
   @autobind
   public openPopover(): void {
-    this.setState({ popoverVisible: true });
+    this.setState({popoverVisible: true});
   }
 
   public render(): JSX.Element {
@@ -112,7 +115,7 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
               </Select>
               <PromisedButton
                 ref={this.saveButtonRef}
-                style={{ width: '100%' }}
+                style={{width: '100%'}}
                 promise={this.generateSavePromise}
                 disabled={!this.state.selectedRoles}
                 type="primary"
@@ -122,7 +125,7 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
             </div>}
         >
           <Button
-            style={!(this.state.selectedRoles || this.props.columnInfo.columnInfoRolesByColumnInfoId.nodes.length > 0) ? { color: '#f5f5f5', backgroundColor: '#f5222d' } : {}}
+            style={!(this.state.selectedRoles || this.props.columnInfo.columnInfoRolesByColumnInfoId.nodes.length > 0) ? {color: '#f5f5f5', backgroundColor: '#f5222d'} : {}}
             icon={<UsergroupAddOutlined/>}
             onClick={this.openPopover}
           />
@@ -136,8 +139,8 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
     return (
       <div>
         {menu}
-        <Divider style={{ margin: '4px 0' }}/>
-        <div style={{ padding: 8, paddingTop: 4 }}>
+        <Divider style={{margin: '4px 0'}}/>
+        <div style={{padding: 8, paddingTop: 4}}>
           <Button
             onMouseDown={this.onMouseDown}
             block={true}
@@ -153,7 +156,7 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
 
   @autobind
   private onDropdownVisibleChange(open: boolean): void {
-    this.setState({ selectOpened: open });
+    this.setState({selectOpened: open});
   }
 
   @autobind

@@ -1,13 +1,19 @@
-import {DeletableSmallCard} from "@/DeletableSmallCard";
-import {DnDList} from "@/Draggable";
-import {COMMON__GRID} from "@/styles";
 import {Merge} from '@sui/core';
 import {Input} from "antd";
 import Checkbox, {CheckboxChangeEvent} from "antd/lib/checkbox";
 import autobind from "autobind-decorator";
 import * as React from "react";
+
+// noinspection ES6PreferShortImport
 import {IBaseCardCollapseLayout, IBaseCardItemLayout} from '../Base';
+// noinspection ES6PreferShortImport
+import {DeletableSmallCard} from "../DeletableSmallCard";
+// noinspection ES6PreferShortImport
+import {DnDList} from "../Draggable";
+// noinspection ES6PreferShortImport
 import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
+// noinspection ES6PreferShortImport
+import {COMMON__GRID} from "../styles";
 
 import {RowSettings, SerializedRowSettings} from "./RowSettings";
 import {RowsList} from "./RowsList";

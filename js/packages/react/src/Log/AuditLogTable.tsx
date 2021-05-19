@@ -1,12 +1,16 @@
-// tslint:disable:member-ordering jsx-no-lambda
 import autobind from "autobind-decorator";
 import moment from 'moment';
 import React from 'react';
 import { IObjectWithIndex } from '@sui/core';
-import {BaseTable} from "@/BaseTable";
-import {RouterLink} from "@/Link";
-import {ExtractProps} from "@/other";
-import {getLinkForTable} from "@/utils";
+
+// noinspection ES6PreferShortImport
+import {BaseTable} from "../BaseTable";
+// noinspection ES6PreferShortImport
+import {RouterLink} from "../Link";
+// noinspection ES6PreferShortImport
+import {ExtractProps} from "../other";
+// noinspection ES6PreferShortImport
+import {getLinkForTable} from "../utils";
 
 export interface IAuditLogTableRow {
   id: number;

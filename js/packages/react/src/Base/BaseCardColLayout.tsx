@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {BASE_CARD_COL_TITLE, BASE_CARD_COLS} from '@/styles';
 import {SuiThemeContext} from "@/themes";
 import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 import React from 'react';
+
+// noinspection ES6PreferShortImport
+import {BASE_CARD_COL_TITLE, BASE_CARD_COLS} from '../styles';
 
 import {BaseCardContext} from './BaseCardContext';
 
@@ -23,14 +25,14 @@ export function renderIBaseCardColsLayout<T, ITEM>(sourceItem: any, cols: Array<
   for (let curRowIndex = 0; curRowIndex < maxRows; curRowIndex++) {
     const itemsInRow: React.ReactNode[] = [];
 
-for (let colIndex = 0; colIndex < cols.length; colIndex++) {
+    for (let colIndex = 0; colIndex < cols.length; colIndex++) {
       const col = cols[colIndex];
       const colspan = col.colspan || 1;
       const item = wrapInArrayWithoutNulls(col.items)[curRowIndex];
       // console.log(cols, item);
       itemsInRow.push(
         item
-          ? (<BaseCardContext.Consumer>{({ itemRenderer }): React.ReactNode => (itemRenderer(sourceItem, item, colspan))}</BaseCardContext.Consumer>)
+          ? (<BaseCardContext.Consumer>{({itemRenderer}): React.ReactNode => (itemRenderer(sourceItem, item, colspan))}</BaseCardContext.Consumer>)
           : (<td colSpan={2}/>)
       );
     }

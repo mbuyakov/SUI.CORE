@@ -1,8 +1,9 @@
-import {ForceDirectedTree, IForceDirectedTreeAdditionalSettingProps} from "@/ForceDirectedTree";
-
 import {toMap} from '@sui/core';
 import autobind from "autobind-decorator";
 import * as React from "react";
+
+// noinspection ES6PreferShortImport
+import {ForceDirectedTree, IForceDirectedTreeAdditionalSettingProps} from "../ForceDirectedTree";
 
 import {ITransition, ITransitionStatus} from "./types";
 

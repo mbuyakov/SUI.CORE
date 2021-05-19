@@ -1,16 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/ban-ts-comment */
-import {LazyStubNoDataCell, LazyStubNoDataCellSmall} from "@/BackendTable/LazyStubNoDataCell";
-import {LoadingNoDataCell, LoadingNoDataCellSmall} from "@/BackendTable/LoadingNoDataCell";
-import {IBaseTableUserSettings, LazyFilter} from "@/BaseTable";
-import {exportToXlsx} from "@/BaseTable/utils";
-import {ClearFiltersPlugin} from "@/plugins/ClearFiltersPlugin";
-import {ResetUserSettingsPlugin} from "@/plugins/ResetUserSettingsPlugin";
 import {Getters} from "@devexpress/dx-react-core";
 import {Grouping, GroupKey, Sorting, TableColumnWidthInfo, TableFilterRow} from '@devexpress/dx-react-grid';
 import IconButton from '@material-ui/core/IconButton';
 import CloudDownloadOutlined from '@material-ui/icons/CloudDownloadOutlined';
 import LinkIcon from '@material-ui/icons/Link';
-import {asyncMap, camelCase, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, formatRawForGraphQL, generateCreate, getDataByKey, getSUISettings, IObjectWithIndex, IUserSetting, mutate, query, TableInfo, TableInfoManager, toMap, wrapInArray} from "@sui/core";
 import {Modal, notification} from 'antd';
 import autobind from 'autobind-decorator';
 import axios from 'axios';
@@ -18,9 +11,23 @@ import JSzip from 'jszip';
 import difference from 'lodash/difference';
 import moment from 'moment';
 import * as React from 'react';
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
+import {wrapInArray, getSUISettings, DEFAULT_PAGE_SIZES, generateCreate, IObjectWithIndex, ColumnInfo, defaultIfNotBoolean, TableInfo, getDataByKey, camelCase, ColumnInfoManager, TableInfoManager, IUserSetting, query, formatRawForGraphQL, mutate, asyncMap, toMap} from "@sui/core";
+import {LazyStubNoDataCell, LazyStubNoDataCellSmall} from "@/BackendTable/LazyStubNoDataCell";
+import {LoadingNoDataCell, LoadingNoDataCellSmall} from "@/BackendTable/LoadingNoDataCell";
 
+// noinspection ES6PreferShortImport
+import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
+// noinspection ES6PreferShortImport
+import {exportToXlsx} from "../BaseTable/utils";
+// noinspection ES6PreferShortImport
 import {BaseTable, colToBaseTableCol, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from '../index';
+// noinspection ES6PreferShortImport
+import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
+// noinspection ES6PreferShortImport
+import {ResetUserSettingsPlugin} from "../plugins/ResetUserSettingsPlugin";
+// noinspection ES6PreferShortImport
+import {LazyFilter} from "../BaseTable/types";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from './BackendDataSource';
 import {RestBackendDataSource} from './RestBackendDataSource';

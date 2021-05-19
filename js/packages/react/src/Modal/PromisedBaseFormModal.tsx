@@ -1,8 +1,10 @@
-import {ObservableBinder} from "@/Observable";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
+// noinspection ES6PreferShortImport
 import {BaseForm, IBaseFormProps} from "../Base";
+// noinspection ES6PreferShortImport
+import {ObservableBinder} from "../Observable";
 
 import {defaultModalFooter, IPromisedModalProps, PromisedModal} from "./PromisedModal";
 

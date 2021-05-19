@@ -1,11 +1,14 @@
-import {FullScreenModal} from '@/FullScreenModal';
-import {FullScreenTableSettings} from '@/TableSettings';
 import {Plugin, Template, TemplateConnector, TemplatePlaceholder} from '@devexpress/dx-react-core';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Build from '@material-ui/icons/Build';
 import autobind from "autobind-decorator";
 import React from 'react';
+
+// noinspection ES6PreferShortImport
+import {FullScreenModal} from '../FullScreenModal';
+// noinspection ES6PreferShortImport
+import {FullScreenTableSettings} from '../TableSettings';
 
 interface ITableSettingsDialogProps {
   buttonStyle?: React.CSSProperties

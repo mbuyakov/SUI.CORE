@@ -1,9 +1,12 @@
-import {PromisedButton} from "@/Inputs";
-import {ExtractProps} from "@/other";
 import {Button, Modal} from "antd";
 import {ModalProps} from "antd/lib/modal";
 import autobind from "autobind-decorator";
 import React from "react";
+
+// noinspection ES6PreferShortImport
+import {PromisedButton} from "../Inputs";
+// noinspection ES6PreferShortImport
+import {ExtractProps} from "../other";
 
 export const defaultModalFooter = (okButton: JSX.Element, cancelButton: JSX.Element): JSX.Element => (
   <div

@@ -1,11 +1,15 @@
-import {DefaultValueType} from "@/compatibleTypes";
-import {TREE_SELECT_DISABLE_GROUP_SELECTION} from "@/styles";
 import {getDataByKey, IGqlFilter, TableInfoManager} from "@sui/core";
 import {TreeSelect} from 'antd';
 import {TreeSelectProps} from "antd/lib/tree-select";
 import autobind from "autobind-decorator";
 import classNames from "classnames";
 import * as React from "react";
+
+// noinspection ES6PreferShortImport
+import {DefaultValueType} from "../compatibleTypes";
+// noinspection ES6PreferShortImport
+import {TREE_SELECT_DISABLE_GROUP_SELECTION} from "../styles";
+// noinspection ES6PreferShortImport
 import {getDataSet, getDataSetRender, getUser, IDataSet} from "../utils";
 
 export type ITreeSelectWithWaitDataProps<TValue, TValueType, TGroupType> =

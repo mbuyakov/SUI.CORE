@@ -1,6 +1,9 @@
-import {translate} from "@/translate";
 import {getXlsx, WritingOptions} from "@sui/charts";
 import {defaultIfNotBoolean, getDataByKey, IObjectWithIndex, NO_DATA_TEXT} from "@sui/core";
+
+// noinspection ES6PreferShortImport
+import {translate} from "../translate";
+
 import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout} from "./types";
 
 export function mapColumns(cols: IBaseTableColLayout[]): IFormattedBaseTableColLayout[] {
@@ -44,7 +47,7 @@ export async function exportToXlsx(
     }))
   );
 
-  const ws = xlsx.utils.json_to_sheet(formattedData, { header: exportedColumns.map(it => it.title) });
+  const ws = xlsx.utils.json_to_sheet(formattedData, {header: exportedColumns.map(it => it.title)});
 
   const wb = xlsx.utils.book_new();
 

@@ -1,12 +1,17 @@
-import {DeletableSmallCard} from "@/DeletableSmallCard";
-import {COMMON__GRID} from "@/styles";
 import {Input} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
+// noinspection ES6PreferShortImport
 import {IBaseCardItemLayout, IBaseCardTabLayout} from '../Base';
+// noinspection ES6PreferShortImport
+import {DeletableSmallCard} from "../DeletableSmallCard";
+// noinspection ES6PreferShortImport
 import {DnDList, IBaseDnDChildProps} from '../Draggable';
+// noinspection ES6PreferShortImport
 import {ISerializable, SerializableDnDChild} from '../Draggable/Serializable';
+// noinspection ES6PreferShortImport
+import {COMMON__GRID} from "../styles";
 
 import {RowSettings, SerializedRowSettings} from "./RowSettings";
 import {RowsList} from "./RowsList";

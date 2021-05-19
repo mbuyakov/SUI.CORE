@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {WaitData} from '@/WaitData';
 import {NO_DATA_TEXT, TableInfoManager} from '@sui/core';
 import autobind from "autobind-decorator";
 import * as React from "react";
+
+// noinspection ES6PreferShortImport
 import {getLinkForTable, getRenderValue, getUser, RenderValue} from '../utils';
+// noinspection ES6PreferShortImport
+import {WaitData} from '../WaitData';
 
 import {RouterLink} from './RouterLink';
 

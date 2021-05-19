@@ -1,5 +1,3 @@
-import {SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT} from '@/styles';
-import {WaitData} from '@/WaitData';
 import {ArrowLeftOutlined, CloseOutlined} from "@ant-design/icons";
 import {IGraphQLConnection, IName, mutate, query} from '@sui/core';
 import {Button} from 'antd';
@@ -10,6 +8,11 @@ import Select from 'antd/lib/select';
 import autobind from 'autobind-decorator';
 import gql from 'graphql-tag';
 import * as React from 'react';
+
+// noinspection ES6PreferShortImport
+import {SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT} from '../styles';
+// noinspection ES6PreferShortImport
+import {WaitData} from '../WaitData';
 
 export type NamePopoverRenderType = "choose" | "edit";
 

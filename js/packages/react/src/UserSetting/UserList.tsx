@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {SelectWithWaitData} from "@/Inputs";
-import {MutableBackendTable} from "@/MutableBackendTable";
-import {ExtractProps} from "@/other";
 import {EMAIL_REGEXP, IObjectWithIndex, OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 import {Input} from "antd";
 import autobind from "autobind-decorator";
 import React from "react";
 
+// noinspection ES6PreferShortImport
 import {BaseForm, IBaseCardRowLayout, IBaseFormItemLayout} from "../Base";
+// noinspection ES6PreferShortImport
+import {SelectWithWaitData} from "../Inputs";
+// noinspection ES6PreferShortImport
+import {MutableBackendTable} from "../MutableBackendTable";
+// noinspection ES6PreferShortImport
+import {ExtractProps} from "../other";
 
 import {MAX_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH_MESSAGE, MIN_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH_MESSAGE, MIN_USERNAME_LENGTH, MIN_USERNAME_LENGTH_MESSAGE} from "./const";
 import {ICreateUserFormValues} from "./types";
@@ -18,9 +22,13 @@ const isDeleted = (user: { deleted?: boolean }): boolean => !!user.deleted;
 interface IUserListProps<T> {
   additionalRows?: OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseFormItemLayout>>;
   tableProps?: { table?: string } & Omit<ExtractProps<MutableBackendTable<ICreateUserFormValues<T>>>, "table" | "handleCreate" | "handleDelete" | "selectionFilter" | "createBaseFormProps">;
+
   afterRolesChange?(roleIds: string[], form: BaseForm): void;
+
   handleCreate(values: ICreateUserFormValues<T>): Promise<boolean>;
+
   handleDelete(ids: string[]): Promise<void>;
+
   isDeleted?(row: IObjectWithIndex): boolean;
 }
 

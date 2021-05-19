@@ -1,7 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {RouterLink} from '@/Link';
-import {TableSettingsDialog} from '@/plugins';
-import {WaitData} from '@/WaitData';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import {Cached} from '@material-ui/icons';
@@ -11,9 +8,18 @@ import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
+// noinspection ES6PreferShortImport
 import {BaseCard, DATA_KEY_REGEXP, IBaseCardItemLayout, IBaseCardRowLayout, IBaseCardRowWithColsLayout} from '../Base';
+// noinspection ES6PreferShortImport
+import {RouterLink} from '../Link';
+// noinspection ES6PreferShortImport
 import {SerializedCardSettings, SerializedFreeText, SerializedItemSettings, SerializedRowSettings} from "../MetaCardSettings";
+// noinspection ES6PreferShortImport
+import {TableSettingsDialog} from '../plugins';
+// noinspection ES6PreferShortImport
 import {getLinkForTable, getReferencedTableInfo, isAdmin} from '../utils';
+// noinspection ES6PreferShortImport
+import {WaitData} from '../WaitData';
 
 import {MetaCardConfigurator} from './MetaCardConfigurator';
 

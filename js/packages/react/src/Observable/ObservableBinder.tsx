@@ -1,7 +1,9 @@
-import {SUIReactComponent} from '@/SUIReactComponent';
 import React from "react";
 
-import {Observable} from './Observable';
+// noinspection ES6PreferShortImport
+import { SUIReactComponent } from '../SUIReactComponent';
+
+import { Observable } from './Observable';
 
 export interface IObservableBinderProps<T> {
   observable: Observable<T>

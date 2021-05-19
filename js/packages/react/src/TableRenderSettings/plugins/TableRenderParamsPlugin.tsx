@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {IBaseTableColLayout} from '@/BaseTable';
-import {IColumnInfoToBaseTableColProps} from '@/utils';
 import {WarningTwoTone} from '@ant-design/icons';
 import {ColumnInfo} from '@sui/core';
 import {Tooltip} from 'antd';
 import * as React from 'react';
 
+// noinspection ES6PreferShortImport
+import {IBaseTableColLayout} from '../../BaseTable';
+// noinspection ES6PreferShortImport
+import {IColumnInfoToBaseTableColProps} from '../../utils';
+// noinspection ES6PreferShortImport
 import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
 
 export abstract class TableRenderParamsPlugin<T> {

@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {isAdmin} from "@/utils";
-import {WaitData} from "@/WaitData";
 import {DeleteOutlined, IssuesCloseOutlined} from "@ant-design/icons";
 import {EMAIL_REGEXP, IRole, IUser, IUserRole, NO_DATA_TEXT, OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 import {Card, Select, Tooltip} from "antd";
 import * as React from "react";
 
+// noinspection ES6PreferShortImport
 import {BaseCard, IBaseCardItemLayout, IBaseCardRowLayout} from "../Base";
+// noinspection ES6PreferShortImport
 import {EditablePromisedComponent, PromisedButton, PromisedInput, PromisedSelect} from "../Inputs";
+// noinspection ES6PreferShortImport
+import {isAdmin} from "../utils";
+// noinspection ES6PreferShortImport
+import {WaitData} from "../WaitData";
 
 import {MAX_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH_MESSAGE, MIN_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH_MESSAGE, MIN_USERNAME_LENGTH, MIN_USERNAME_LENGTH_MESSAGE} from "./const";
 
@@ -20,9 +24,13 @@ interface IUserCardProps<TDetail, TAdditional> {
   extraHeader?: JSX.Element;
   roles?: IRole[];
   userData: IUser<TDetail> & TAdditional;
+
   handleDeleteChange(): Promise<void>;
+
   updateMainInfoPartFn(key: "name" | "email" | "username"): (value: string) => Promise<void>;
+
   updatePassword(password: string): Promise<void>;
+
   updateRoles(roleIds: string[] | null | undefined): Promise<void>;
 }
 

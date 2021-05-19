@@ -1,9 +1,13 @@
 import Menu from 'antd/lib/menu';
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {DnDList} from "@/Draggable";
-import {MetaCardConfigurator} from "@/Meta";
+
+// noinspection ES6PreferShortImport
+import {DnDList} from "../Draggable";
+// noinspection ES6PreferShortImport
 import {ISerializable, ISerializableComponent} from "../Draggable/Serializable";
+// noinspection ES6PreferShortImport
+import {MetaCardConfigurator} from "../Meta";
 
 import {FreeText, SerializedFreeText} from "./FreeText";
 import {ItemSettings, SerializedItemSettings} from "./ItemSettings";

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {SelectData} from '@/BaseTable';
 import {addPluralEnding, camelCase, capitalize, ColumnInfo, ColumnInfoManager, DataKey, dataKeysToDataTree, getDataByKey, getSUISettings, IGqlFilter, IObjectWithIndex, IRawRoute, query, removePluralEnding, RouteType, stringifyGqlFilter, TableInfo, TableInfoManager, wrapInArray} from "@sui/core";
+
+// noinspection ES6PreferShortImport
+import {SelectData} from '../BaseTable';
 
 import {ActionType, isNumberAction} from './actionType';
 import {FilterType} from './filterType';

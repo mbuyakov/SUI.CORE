@@ -1,11 +1,18 @@
-import {IBaseTableColLayout} from '@/BaseTable';
-import {TableRenderParamsPlugin, TableRenderSettingsPluginManager} from '@/TableRenderSettings';
-import {IColumnInfoToBaseTableColProps} from '@/utils';
 import {ColumnInfo} from "@sui/core";
 import {InputNumber} from 'antd';
 import * as React from 'react';
 
+// noinspection ES6PreferShortImport
+import {IBaseTableColLayout} from '../../BaseTable';
+// noinspection ES6PreferShortImport
+import {IColumnInfoToBaseTableColProps} from '../../utils';
+// noinspection ES6PreferShortImport
+import {TableRenderSettingsPluginManager} from '../TableRenderSettingsPluginManager';
+// noinspection ES6PreferShortImport
 import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
+
+// noinspection ES6PreferShortImport
+import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 
 export interface IRoundPluginTRP {
   roundCount?: number;
@@ -38,7 +45,7 @@ export class RoundPlugin extends TableRenderParamsPlugin<IRoundPluginTRP> {
     const roundCount = tableRenderParams.roundCount;
     return (Number.isInteger(value))
       ? String(value)
-      : Number((value as number).toFixed(typeof(roundCount) === "number" ? roundCount : 4)).toString();
+      : Number((value as number).toFixed(typeof (roundCount) === "number" ? roundCount : 4)).toString();
   }
 }
 

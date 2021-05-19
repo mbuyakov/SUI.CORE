@@ -1,8 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {DeletableSmallCard} from "@/DeletableSmallCard";
-import {Rendered} from '@/other';
-import {DND_LIST__COLS, DND_LIST__PLUS_BTN, DND_LIST__ROWS, DND_LIST__SCROLL_SEMI_PADDING} from "@/styles";
-import {applyDrag} from "@/utils";
 import {PlusCircleOutlined} from "@ant-design/icons";
 import {unCapitalize} from '@sui/core';
 import {Dropdown, Menu} from "antd";
@@ -12,6 +8,15 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import {Container, ContainerOptions, Draggable, DropResult} from "react-smooth-dnd";
 import {v4 as uuidv4} from 'uuid';
+
+// noinspection ES6PreferShortImport
+import {DeletableSmallCard} from "../DeletableSmallCard";
+// noinspection ES6PreferShortImport
+import {Rendered} from '../other';
+// noinspection ES6PreferShortImport
+import {DND_LIST__COLS, DND_LIST__PLUS_BTN, DND_LIST__ROWS, DND_LIST__SCROLL_SEMI_PADDING} from "../styles";
+// noinspection ES6PreferShortImport
+import {applyDrag} from "../utils";
 
 import {DnDChild, IBaseDnDChildProps} from "./DnDChild";
 

@@ -1,10 +1,12 @@
-import {ROUTER_LINK_BTN} from '@/styles';
 import Button, {ButtonType} from 'antd/lib/button/button';
 import {SizeType} from 'antd/lib/config-provider/SizeContext';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 
+// noinspection ES6PreferShortImport
 import {appendStateToLink, ITableStateDefinition} from "../BackendTable";
+// noinspection ES6PreferShortImport
+import {ROUTER_LINK_BTN} from '../styles';
 
 export type RouterLinkType = 'button' | 'button-primary' | 'link';
 
@@ -16,7 +18,7 @@ export interface IRouterLinkProps {
   monospace?: boolean;
   size?: SizeType;
   style?: React.CSSProperties;
-  tableStates?: {[tableId: string]: ITableStateDefinition};
+  tableStates?: { [tableId: string]: ITableStateDefinition };
   text?: React.ReactNode;
   to: string;
   type?: RouterLinkType;

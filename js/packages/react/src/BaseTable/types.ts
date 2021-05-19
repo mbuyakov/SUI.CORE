@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {IBaseTableUserSettings} from "@/BaseTable/extends";
 import {TableRenderParamsPlugin} from "@/TableRenderSettings";
 import {Filter, FilterOperation, Grouping, GroupKey, Sorting, Table as TableBase, TableBandHeader as TableBandHeaderBase, TableFilterRow, TableRowDetail} from '@devexpress/dx-react-grid';
 import {DataKey, IObjectWithIndex} from '@sui/core';
 import {CardType} from 'antd/lib/card';
 import * as React from 'react';
+
+// noinspection ES6PreferShortImport
+import {IBaseTableUserSettings} from "./extends/UserSettingsPlugin";
 
 export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode;
 export type TableSearchType = 'select' | 'date' | 'boolean' | 'string' | 'none';

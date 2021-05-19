@@ -1,7 +1,10 @@
-import {errorNotification} from "@/drawUtils";
-import {getUser} from "@/utils";
-import {IObjectWithIndex} from "@sui/core";
 import axios, {AxiosPromise, AxiosResponse} from "axios";
+import {IObjectWithIndex} from "@sui/core";
+
+// noinspection ES6PreferShortImport
+import {errorNotification} from "../drawUtils";
+// noinspection ES6PreferShortImport
+import {getUser} from "../utils";
 
 export function doHandledUserRestRequest<T, R = void>(
   uri: string,

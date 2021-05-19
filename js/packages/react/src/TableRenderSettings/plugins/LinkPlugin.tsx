@@ -1,12 +1,18 @@
 import {IBaseTableColLayout} from '@/BaseTable';
 import {RouterLink} from '@/Link';
-import {TableRenderParamsPlugin, TableRenderSettingsPluginManager} from "@/TableRenderSettings";
 import {ColumnInfo, ColumnInfoManager, getDataByKey} from "@sui/core";
 import {Select} from "antd";
 import * as React from 'react';
 
+// noinspection ES6PreferShortImport
 import {getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps} from '../../utils';
+// noinspection ES6PreferShortImport
+import {TableRenderSettingsPluginManager} from "../TableRenderSettingsPluginManager";
+// noinspection ES6PreferShortImport
 import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
+
+// noinspection ES6PreferShortImport
+import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 
 export interface ILinkPluginTRP {
   customColumnInfoId: string

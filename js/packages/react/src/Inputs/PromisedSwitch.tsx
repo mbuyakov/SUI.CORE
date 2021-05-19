@@ -1,8 +1,11 @@
 import {AfterChangeContext} from '@/AfterChangeContext';
-import {DisableEditContext} from "@/DisableEditContext";
 import Switch, {SwitchProps} from "antd/lib/switch";
 import autobind from "autobind-decorator";
 import * as React from "react";
+
+// noinspection ES6PreferShortImport
+import {DisableEditContext} from "../DisableEditContext";
+
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
 export type PromisedSwitchProps = Omit<IPromisedBaseProps<boolean>, "validator"> & Omit<SwitchProps, "checked" | "loading" | "onChange">;

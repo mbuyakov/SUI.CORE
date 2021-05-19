@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/ban-types */
-import {PromisedButton} from '@/Inputs';
-import {SUI_AUTO_WIDTH, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT} from '@/styles';
 import {ExperimentOutlined, WarningTwoTone} from '@ant-design/icons';
 import {chain, ITableInfo, sleep} from '@sui/core';
 import {Button, Popover, Select, Tooltip} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
+
+// noinspection ES6PreferShortImport
+import {PromisedButton} from '../Inputs';
+// noinspection ES6PreferShortImport
+import {SUI_AUTO_WIDTH, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT} from '../styles';
 
 import {TableRenderSettingsPluginManager} from './TableRenderSettingsPluginManager';
 

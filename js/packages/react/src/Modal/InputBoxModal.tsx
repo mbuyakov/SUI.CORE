@@ -1,7 +1,9 @@
-import {draw} from "@/utils";
 import {Input} from "antd";
 import {TextAreaProps} from "antd/lib/input/TextArea";
 import React from "react";
+
+// noinspection ES6PreferShortImport
+import {draw} from "../utils";
 
 import {IPromisedBaseFormModalProps, PromisedBaseFormModal} from "./PromisedBaseFormModal";
 

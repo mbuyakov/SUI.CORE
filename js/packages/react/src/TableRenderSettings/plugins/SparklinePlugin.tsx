@@ -1,9 +1,19 @@
-import {IBaseTableColLayout} from '@/BaseTable';
-import {SparkLine} from '@/SparkLine';
-import {ITableRenderParams, TableRenderParamsPlugin, TableRenderSettingsPluginManager} from '@/TableRenderSettings';
-import {IColumnInfoToBaseTableColProps} from '@/utils';
 import {ColumnInfo} from '@sui/core';
 import * as React from 'react';
+
+// noinspection ES6PreferShortImport
+import {IBaseTableColLayout} from '../../BaseTable';
+// noinspection ES6PreferShortImport
+import {SparkLine} from '../../SparkLine';
+// noinspection ES6PreferShortImport
+import {IColumnInfoToBaseTableColProps} from '../../utils';
+// noinspection ES6PreferShortImport
+import {TableRenderSettingsPluginManager} from '../TableRenderSettingsPluginManager';
+// noinspection ES6PreferShortImport
+import {ITableRenderParams} from '../TableRenderSettingsPopover';
+
+// noinspection ES6PreferShortImport
+import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export class SparklinePlugin extends TableRenderParamsPlugin<{}> {

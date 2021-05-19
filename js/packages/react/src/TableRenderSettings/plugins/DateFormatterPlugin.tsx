@@ -1,12 +1,19 @@
-import {IBaseTableColLayout} from '@/BaseTable';
-import {TableRenderParamsPlugin, TableRenderSettingsPluginManager} from '@/TableRenderSettings';
-import {IColumnInfoToBaseTableColProps} from '@/utils';
 import {ColumnInfo} from "@sui/core";
 import {Checkbox, Input} from 'antd';
 import moment from 'moment';
 import * as React from 'react';
 
+// noinspection ES6PreferShortImport
+import {IBaseTableColLayout} from '../../BaseTable';
+// noinspection ES6PreferShortImport
+import {IColumnInfoToBaseTableColProps} from '../../utils';
+// noinspection ES6PreferShortImport
+import {TableRenderSettingsPluginManager} from '../TableRenderSettingsPluginManager';
+// noinspection ES6PreferShortImport
 import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
+
+// noinspection ES6PreferShortImport
+import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 
 export interface IDateFormatterPluginTRP {
   convertFromUtc?: boolean;
@@ -21,7 +28,7 @@ export class DateFormatterPlugin extends TableRenderParamsPlugin<IDateFormatterP
     super('dateFormatter', 'Форматирование даты/времени', true);
   }
 
-public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams<IDateFormatterPluginTRP>): Promise<void> {
+  public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams<IDateFormatterPluginTRP>): Promise<void> {
     const {convertFromUtc, filterFormat, sourceFormat, targetFormat} = trp;
 
     result.render = (value: string): React.ReactNode => {
@@ -49,7 +56,7 @@ public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInf
     return;
   }
 
-public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<IDateFormatterPluginTRP>): React.ReactNode {
+  public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<IDateFormatterPluginTRP>): React.ReactNode {
     return (
       <>
         <span>Исходный формат:</span>

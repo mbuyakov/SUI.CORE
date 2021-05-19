@@ -1,8 +1,10 @@
-import {isLocalServer} from '@/utils';
 import {Result} from "antd";
 import autobind from "autobind-decorator";
 import axios from 'axios';
 import React, {ReactNode} from "react";
+
+// noinspection ES6PreferShortImport
+import {isLocalServer} from '../utils/location';
 
 export interface IBlockUIConditionallyProps {
   header?: string | ReactNode;

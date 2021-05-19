@@ -1,8 +1,12 @@
-import {BaseSelectFilter} from '@/BaseTable';
 import {CheckOutlined, CloseOutlined} from '@ant-design/icons';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
+
 import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
+
+// noinspection ES6PreferShortImport
+import {BaseSelectFilter} from './BaseSelectFilter';
+
 
 export type BooleanColumnFilterProps = LazyTableFilterRowCellProps
   & INewSearchProps & {

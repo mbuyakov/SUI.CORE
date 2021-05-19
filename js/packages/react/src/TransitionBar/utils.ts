@@ -1,5 +1,7 @@
-import {getReferencedTableInfo} from "@/utils";
-import {addPluralEnding, camelCase, capitalize, ColumnInfo, IObjectWithIndex, query, TableInfo, TableInfoManager} from "@sui/core";
+import {ColumnInfo, TableInfo, TableInfoManager,query,addPluralEnding, camelCase, capitalize, IObjectWithIndex} from "@sui/core";
+
+// noinspection ES6PreferShortImport
+import {getReferencedTableInfo} from "../utils";
 
 export async function fetchAllRows<T = IObjectWithIndex>(tableInfo: TableInfo): Promise<T[]> {
   const columns = await tableInfo.getColumns();

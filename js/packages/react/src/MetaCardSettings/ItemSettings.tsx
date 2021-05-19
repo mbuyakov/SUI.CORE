@@ -1,9 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {IBaseCardItemLayout} from '@/Base';
-import {DnDDragHandler} from "@/Draggable";
-import {NamePopover} from '@/Popover';
-import {COMMON__GRID, ITEM_SETTINGS__DELETE_ICON, ITEM_SETTINGS__SETTINGS_ICON} from "@/styles";
-import {WaitData} from '@/WaitData';
 import {EditOutlined, OrderedListOutlined} from '@ant-design/icons';
 import {Chip} from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -18,7 +13,18 @@ import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
 
+// noinspection ES6PreferShortImport
+import {IBaseCardItemLayout} from '../Base';
+// noinspection ES6PreferShortImport
+import {DnDDragHandler} from "../Draggable";
+// noinspection ES6PreferShortImport
 import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
+// noinspection ES6PreferShortImport
+import {NamePopover} from '../Popover';
+// noinspection ES6PreferShortImport
+import {COMMON__GRID, ITEM_SETTINGS__DELETE_ICON, ITEM_SETTINGS__SETTINGS_ICON} from "../styles";
+// noinspection ES6PreferShortImport
+import {WaitData} from '../WaitData';
 
 import {DebugModeContext} from "./DebugModeContext";
 import {GetPopupContainerContext} from "./GetPopupContainerContext";

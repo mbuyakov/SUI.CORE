@@ -1,10 +1,14 @@
-import {BackendTable} from "@/BackendTable";
-import {PromisedButton} from "@/Inputs";
-import {ExtractProps} from "@/other";
 import {IObjectWithIndex} from "@sui/core";
 import {ButtonProps} from "antd/lib/button";
 
+// noinspection ES6PreferShortImport
+import {BackendTable} from "../BackendTable";
+// noinspection ES6PreferShortImport
+import {PromisedButton} from "../Inputs";
+// noinspection ES6PreferShortImport
 import {IPromisedBaseFormModalOnlyModalProps, IPromisedBaseFormModalProps} from "../Modal";
+// noinspection ES6PreferShortImport
+import {ExtractProps} from "../other";
 
 import {DEFAULT_MODAL_WIDTH_VARIANT} from './MutableBackendTable';
 

@@ -1,9 +1,11 @@
-import {FixedRuleItem} from "@/Base";
 import {Popconfirm, Popover} from 'antd';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import asyncValidator from "async-validator";
 import autobind from 'autobind-decorator';
 import * as React from 'react';
+
+// noinspection ES6PreferShortImport
+import {FixedRuleItem} from "../Base";
 
 import {IPromisedErrorPopoverProps, PromisedErrorPopover} from './PromisedErrorPopover';
 
