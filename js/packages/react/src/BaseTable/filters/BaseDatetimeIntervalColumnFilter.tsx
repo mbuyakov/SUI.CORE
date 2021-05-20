@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import DatePicker from "@/SuiDatePicker/date-picker";
+import {SuiRangePicker} from "@/Inputs/SuiRangePicker";
 import autobind from "autobind-decorator";
 import moment, {Moment} from "moment";
 import * as React from 'react';
@@ -51,7 +51,7 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
 
   public render(): JSX.Element {
     return (
-      <DatePicker.RangePicker
+      <SuiRangePicker
         {...this.props}
         allowClear={true}
         placeholder={this.props.placeholder as [string, string] || ["Начало", "Конец"]}
@@ -59,10 +59,22 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
         showTime={this.props.pickerMode === "datetime"}
         ranges={GET_DEFAULT_CALENDAR_RANGES()}
         value={this.state.filterValue}
-        useFormatAsMask={true}
         onChange={this.onChange}
         onOpenChange={this.onOpenChange}
         open={this.state.open}
+        formatter={(value, event): string => {
+          if (this.props.format) {
+            const inputType = event.inputType as string;
+
+            if (inputType.startsWith("insert")) {
+              return formatter(value, this.props.format, true);
+            } else if (inputType.startsWith("delete")) {
+              return formatter(value, this.props.format, false);
+            }
+          }
+
+          return value;
+        }}
       />
     );
   }
@@ -150,4 +162,45 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
     });
   }
 
+}
+
+function formatter(value: string, format: string, insert: boolean): string {
+  const valueDigits = value.replace(/[^0-9]+/g, '');
+
+  if (!insert && valueDigits.length == 0) {
+    return "";
+  }
+
+  const formattedNow = moment().format(format);
+
+  let result = "";
+  let resultDigitCount = 0;
+
+  for (let char of formattedNow) {
+    const isDigit = char >= "0" && char <= "9";
+
+    if (!isDigit) {
+      result += char;
+      // eslint-disable-next-line no-continue
+      continue;
+    }
+
+    if (insert) {
+      if (valueDigits.length === resultDigitCount) {
+        break;
+      } else {
+        result += valueDigits.charAt(resultDigitCount);
+        resultDigitCount++;
+      }
+    } else {
+      result += valueDigits.charAt(resultDigitCount);
+      resultDigitCount++;
+
+      if (valueDigits.length === resultDigitCount) {
+        break;
+      }
+    }
+  }
+
+  return result;
 }
