@@ -2,16 +2,21 @@
 import {Nullable, wrapInArray} from "@sui/core";
 import {DatePicker} from "antd";
 import {RangePickerProps} from "antd/lib/date-picker";
+import classNames from "classnames";
 import * as React from 'react';
+import {v4 as uuidv4} from 'uuid';
 
 export type ISuiRangePickerProps = RangePickerProps & { formatter?(value: string, event: InputEvent): string };
 
 export function SuiRangePicker(props: ISuiRangePickerProps): JSX.Element {
   const {formatter, ...rangePickerProps} = props;
-  const spanRef = React.useRef<HTMLSpanElement>();
+
+  const classForSearch = React.useMemo(() => `SuiRangePicker-${uuidv4()}`, []);
 
   React.useEffect((): void => {
-    if (spanRef.current) {
+    const pickerRoot = document.getElementsByClassName(classForSearch).item(0);
+
+    if (pickerRoot) {
       const onInput = (event: InputEvent): void => {
         if (formatter) {
           const format = (rangePickerProps.format ? (wrapInArray(rangePickerProps.format))[0] : undefined) as Nullable<string>;
@@ -27,9 +32,7 @@ export function SuiRangePicker(props: ISuiRangePickerProps): JSX.Element {
         }
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      [...spanRef.current.getElementsByClassName("ant-picker-input")]
+      [...pickerRoot.getElementsByClassName("ant-picker-input")]
         .flatMap(it => [...it.children] as HTMLInputElement[])
         .forEach(it => {
           it.oninput = onInput
@@ -38,8 +41,9 @@ export function SuiRangePicker(props: ISuiRangePickerProps): JSX.Element {
   });
 
   return (
-    <span ref={spanRef}>
-      <DatePicker.RangePicker {...rangePickerProps}/>
-    </span>
+    <DatePicker.RangePicker
+      {...rangePickerProps}
+      className={classNames(rangePickerProps.className, classForSearch)}
+    />
   );
 }
