@@ -11,11 +11,11 @@ export class SUIMaskedInput extends React.Component<MyMaskedInputProps> {
   private readonly inputRef: React.RefObject<MaskedInput> = React.createRef<MaskedInput>();
 
   public componentDidMount(): void {
-    this.inputRef.current.mask.setValue(this.props.value);
+    this.inputRef.current.state.mask.setValue(this.props.value);
   }
 
   public componentDidUpdate(): void {
-    this.inputRef.current.mask.setValue(this.props.value);
+    this.inputRef.current.state.mask.setValue(this.props.value);
   }
 
   public render(): React.ReactNode {
@@ -32,6 +32,6 @@ export class SUIMaskedInput extends React.Component<MyMaskedInputProps> {
   @autobind
   private onChange(): void {
     // this.props.onChange(this.inputRef.current.mask.getRawValue().replace(/[^\d]/g, ''));
-    this.props.onChange(this.inputRef.current.mask.getRawValue().replace(/_/g, ''));
+    this.props.onChange(this.inputRef.current.state.mask.getRawValue().replace(/_/g, ''));
   }
 }

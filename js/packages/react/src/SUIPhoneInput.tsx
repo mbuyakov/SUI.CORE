@@ -70,16 +70,16 @@ export class SUIPhoneInput extends React.Component<SUIPhoneInputProps> {
   @autobind
   private onChange(): void {
     // this.props.onChange(this.inputRef.current.mask.getRawValue().replace(/[^\d]/g, ''));
-    this.props.onChange(this.inputRef.current.mask.getRawValue().replace(/_/g, ''));
+    this.props.onChange(this.inputRef.current.state.mask.getRawValue().replace(/_/g, ''));
   }
 
   @autobind
   private setMask(): void {
     const newMask = SUIPhoneInput.getFirsValidMask(this.props.value);
-    const oldMask = this.inputRef.current.mask.pattern.source;
+    const oldMask = this.inputRef.current.state.mask.pattern.source;
     if (newMask !== oldMask) {
       const value = SUIPhoneInput.getMaskedValue(newMask, this.props.value);
-      this.inputRef.current.mask.setPattern(newMask, {value: this.props.value});
+      this.inputRef.current.state.mask.setPattern(newMask, {value: this.props.value});
       this.inputRef.current.setInputValue(value);
     }
   }
