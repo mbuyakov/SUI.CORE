@@ -42,7 +42,7 @@
     "@devexpress/dx-react-grid-material-ui": "2.6.1",
     "@sui/charts": "8.0.0",
     "@sui/core": "8.0.0",
-    "antd-mask-input": "0.1.14",
+    "antd-mask-input": "0.1.15",
     "classnames": "^2.2.6",
     "immutability-helper": "^3.0.2",
     "rc-trigger": "^5.0.4",
