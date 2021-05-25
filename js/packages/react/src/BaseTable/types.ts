@@ -158,6 +158,7 @@ export interface IBaseTableProps<TSelection = any> {
   beforeExport?(): Promise<boolean>; // TODO: Костыль, удалить при переводе экспорта на бек
   cellStyler?(row: any, value: any, column: IBaseTableColLayout): React.CSSProperties;
   customFilterComponent?(props: TableFilterRow.CellProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
+  customSubtotalInfo?(subtotalData: IGroupSubtotalData): JSX.Element;
   expandableFilter?(row: any): boolean;
   exportValueFormatter?(col: IBaseTableColLayout, value: any, row: IObjectWithIndex): any;
   getRowId?(row: any): any;

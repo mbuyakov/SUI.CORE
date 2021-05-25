@@ -17,7 +17,7 @@ import * as React from 'react';
 
 import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter} from './filters';
 import {defaultSelection, ISelectionTable} from './ISelectionTable';
-import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
+import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout, IGroupSubtotalData, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
 import {exportToXlsx, mapColumns} from "./utils";
 
 const Cell = Table.Cell;
@@ -25,6 +25,10 @@ const SelectionCell = TableSelection.Cell;
 const PagingPanelContainer = CustomPagingPanelContainer;
 const ToolbarRoot = Toolbar.Root;
 const TableGroupRowContent = TableGroupRow.Content;
+
+export function defaultSubtotalInfo(subtotalData: IGroupSubtotalData): JSX.Element {
+  return (<span>  (<em>Записей: {subtotalData.elements}</em>)</span>);
+}
 
 // Не нашел куда добавить
 export function booleanRender(value: boolean | null | undefined): JSX.Element {
@@ -270,7 +274,7 @@ export class BaseTable<TSelection = defaultSelection>
       return (
         <span>
           <TableGroupRowContent {...props} />
-          {subtotalData && <span>  (<em>Записей: {subtotalData.elements}</em>)</span>}
+          {subtotalData && (this.props.customSubtotalInfo ?? defaultSubtotalInfo)(subtotalData)}
         </span>
       );
     };
