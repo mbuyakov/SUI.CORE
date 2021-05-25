@@ -130,6 +130,7 @@ export interface IBaseTableProps<TSelection = any> {
   groupingEnabled?: boolean;
   headerEnabled?: boolean;
   hideRows?: boolean;
+  hideSubtotalRow?: boolean;
   highlightRow?: boolean;
   initialSelection?: TSelection[];
   loading?: boolean;

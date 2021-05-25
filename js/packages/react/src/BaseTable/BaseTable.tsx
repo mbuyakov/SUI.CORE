@@ -429,7 +429,7 @@ export class BaseTable<TSelection = defaultSelection>
                   />
                 )}
                 {groupingEnabled && <TableGroupRow contentComponent={tableGroupRowContentComponent}/>}
-                {groupingEnabled && this.props.groupSubtotalData && hasSubtotals && <GroupSummaryRow subtotalData={this.props.groupSubtotalData}/>}
+                {groupingEnabled && !this.props.hideSubtotalRow && this.props.groupSubtotalData && hasSubtotals && <GroupSummaryRow subtotalData={this.props.groupSubtotalData}/>}
                 {visibilityEnabled && (
                   <TableColumnVisibility
                     defaultHiddenColumnNames={defaultHidden}
