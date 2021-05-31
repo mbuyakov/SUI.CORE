@@ -74,7 +74,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                         promise={this.props.handleDeleteChange}
                         popconfirmSettings={{
                           placement: "topRight",
-                          title: "Вы уверены, что хотите сделать данную операцию?",
+                          title: `Вы уверены, что хотите ${userData.deleted ? 'восстановить' : 'удалить'} данного пользователя?`,
                         }}
                       />
                     </Tooltip>
