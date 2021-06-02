@@ -24,7 +24,7 @@ export class PromisedSelect<T extends SelectValue> extends PromisedBase<Promised
     const {promise, popconfirmSettings, ...selectProps} = this.props;
     const saveButton: JSX.Element = this.wrapConfirmAndError(
       <IconButton
-        disabled={this.state.loading}
+        disabled={this.state.loading || !this.isValidatorTextEmpty()}
         onClick={this.saveWithoutValue}
         size="small"
       >
