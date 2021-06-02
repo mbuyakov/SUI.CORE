@@ -13,13 +13,13 @@ const sortKeys = (unordered) => {
 }
 
 if(curPackageJson.name == "@sui/react") {
-  curPackageJson.peerDependencies = sortKeys(Object.assign(curPackageJson.peerDependencies, magicDeps.magic));
-  curPackageJson.devDependencies = sortKeys(Object.assign(curPackageJson.devDependencies, magicDeps.magic));
+  curPackageJson.peerDependencies = sortKeys(Object.assign(curPackageJson.peerDependencies || {}, magicDeps.magic));
+  curPackageJson.devDependencies = sortKeys(Object.assign(curPackageJson.devDependencies || {}, magicDeps.magic));
 } else {
-  curPackageJson.dependencies = sortKeys(Object.assign(curPackageJson.dependencies, magicDeps.magic));
-  curPackageJson.devDependencies = sortKeys(Object.assign(curPackageJson.devDependencies, magicDeps.dev));
+  curPackageJson.resolutions = sortKeys(Object.assign(curPackageJson.resolutions || {}, magicDeps.magic));
+  curPackageJson.devDependencies = sortKeys(Object.assign(curPackageJson.devDependencies || {}, magicDeps.dev));
 }
 
-fs.writeFile(curPackageJsonPath, JSON.stringify(curPackageJson, null, 2), 'utf8', function(err) {
+fs.writeFile(curPackageJsonPath, JSON.stringify(curPackageJson, null, 2) + '\n', 'utf8', function(err) {
   if (err) return console.log(err);
 });
