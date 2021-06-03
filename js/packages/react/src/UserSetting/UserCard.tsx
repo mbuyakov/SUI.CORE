@@ -13,7 +13,7 @@ import {isAdmin} from "../utils";
 // noinspection ES6PreferShortImport
 import {WaitData} from "../WaitData";
 
-import {MAX_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH_MESSAGE, MIN_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH_MESSAGE, MIN_USERNAME_LENGTH, MIN_USERNAME_LENGTH_MESSAGE} from "./const";
+import {MAX_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH_MESSAGE, MIN_NAME_LENGTH, MIN_NAME_LENGTH_MESSAGE, MIN_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH_MESSAGE, MIN_USERNAME_LENGTH, MIN_USERNAME_LENGTH_MESSAGE} from "./const";
 
 const COLSPAN = 2;
 
@@ -100,6 +100,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                           <PromisedInput
                             promise={this.props.updateMainInfoPartFn("name")}
                             defaultValue={name}
+                            validator={[{min: MIN_NAME_LENGTH, message: MIN_NAME_LENGTH_MESSAGE}]}
                           />
                         </EditablePromisedComponent>
                       )
