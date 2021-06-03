@@ -1,4 +1,4 @@
-import { Popover } from "antd";
+import {Popover} from "antd";
 import {PopoverProps} from "antd/lib/popover";
 import autobind from "autobind-decorator";
 import * as React from "react";
@@ -9,14 +9,12 @@ export interface IPromisedErrorPopoverProps
 
 }
 
-export class PromisedErrorPopover extends React.Component<
-  IPromisedErrorPopoverProps,
+export class PromisedErrorPopover extends React.Component<IPromisedErrorPopoverProps,
   {
     currentPromise?: Promise<void>;
     errorText?: string;
     popoverVisible?: boolean;
-  }
-> {
+  }> {
 
   public constructor(props: IPromisedErrorPopoverProps) {
     super(props);
@@ -32,7 +30,7 @@ export class PromisedErrorPopover extends React.Component<
         content={this.state.errorText}
         onVisibleChange={this.handleVisibleChange}
         trigger="click"
-        visible={this.state.popoverVisible}
+        visible={!!this.state.popoverVisible}
       >
         {this.props.children}
       </Popover>
@@ -45,16 +43,16 @@ export class PromisedErrorPopover extends React.Component<
       // Ignore
       return;
     }
-    this.setState({ popoverVisible: visible });
+    this.setState({popoverVisible: visible});
   }
 
   @autobind
   private onUpdate(): void {
-if (this.props.promise && this.props.promise !== this.state.currentPromise) {
-      this.setState({ currentPromise: this.props.promise });
+    if (this.props.promise && this.props.promise !== this.state.currentPromise) {
+      this.setState({currentPromise: this.props.promise});
       this.props.promise.catch(reason => {
         console.error(reason);
-        this.setState({ errorText: reason.toString(), popoverVisible: true });
+        this.setState({errorText: reason.toString(), popoverVisible: true});
       });
     }
   }
