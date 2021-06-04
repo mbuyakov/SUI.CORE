@@ -155,6 +155,7 @@ export class BackendTable<TSelection = defaultSelection>
     let filter = (this.props.filter && wrapInArray(this.props.filter)) || undefined;
     let pageNumber = 0;
     let pageSize = this.props.pageSize;
+    let sorting: Sorting[] | null | undefined;
 
     let urlState: IInnerTableStateDefinition | undefined;
     if (this.props.id) {
@@ -172,6 +173,7 @@ export class BackendTable<TSelection = defaultSelection>
           : urlState.filter;
         pageNumber = urlState.pageInfo.pageNumber;
         pageSize = urlState.pageInfo.pageSize;
+        sorting = urlState.sorting;
       }
     }
 
@@ -187,6 +189,7 @@ export class BackendTable<TSelection = defaultSelection>
       paginationEnabled,
       defaultCurrentPage,
       pageSize: resultPageSize,
+      sorting,
       totalCount: (defaultCurrentPage * resultPageSize) + 1
     };
   }
@@ -893,12 +896,13 @@ export class BackendTable<TSelection = defaultSelection>
       { loading: true, ...newState, ...(selection ? { lastSendSelection: selection } : null) },
       // Плохое место, но лучше не нашел
       () => {
-        if (this.props.id && type !== "INIT") {
+        if (this.props.id && (type !== "INIT" || this.props.lazyMode)) {
           putTableStateToUrlParam(
             this.props.id,
             {
               defaultFilter: this.state.filters,
               filter: this.state.filter,
+              sorting: this.state.sorting,
               pageInfo: {
                 pageNumber: this.state.currentPage,
                 pageSize: this.state.pageSize

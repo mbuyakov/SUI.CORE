@@ -1,3 +1,4 @@
+import {Sorting} from "@devexpress/dx-react-grid";
 import jsonpack from "jsonpack";
 import pako from "pako";
 import {OneOrArray, wrapInArray, getSUISettings } from "@sui/core";
@@ -14,17 +15,19 @@ interface IPageInfo {
 }
 
 export interface ITableStateDefinition {
-  defaultFilter?: OneOrArray<SimpleBackendFilter>,
-  filter?: OneOrArray<BackendFilter>,
-  mergeFilters?: boolean,
-  pageInfo?: IPageInfo
+  defaultFilter?: OneOrArray<SimpleBackendFilter>;
+  filter?: OneOrArray<BackendFilter>;
+  mergeFilters?: boolean;
+  pageInfo?: IPageInfo;
+  sorting?: Sorting[];
 }
 
 export interface IInnerTableStateDefinition {
-  defaultFilter?: SimpleBackendFilter[],
-  filter?: BackendFilter[],
-  mergeFilters: boolean,
-  pageInfo: IPageInfo
+  defaultFilter?: SimpleBackendFilter[];
+  filter?: BackendFilter[];
+  mergeFilters: boolean;
+  pageInfo: IPageInfo;
+  sorting?: Sorting[];
 }
 
 interface ISimpleLocation {
@@ -134,7 +137,8 @@ function putTableStateToLocation(
     }),
     filter: state.filter && wrapInArray(state.filter),
     mergeFilters: typeof(state.mergeFilters) === "boolean" ? state.mergeFilters : false,
-    pageInfo: state.pageInfo || { pageNumber: 0 }
+    pageInfo: state.pageInfo || { pageNumber: 0 },
+    sorting: state.sorting
   };
 
   location.searchParams.set(STATE_URL_PARAM, encodeState(urlStateDefinition));
