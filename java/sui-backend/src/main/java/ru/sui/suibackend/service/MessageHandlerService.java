@@ -14,8 +14,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.sui.suibackend.message.model.Grouping;
-import ru.sui.suibackend.message.model.Sorting;
-import ru.sui.suibackend.message.model.SortingDirection;
 import ru.sui.suibackend.message.request.*;
 import ru.sui.suibackend.message.response.ResponseMessageType;
 import ru.sui.suibackend.model.ResponseMessage;
@@ -67,7 +65,7 @@ public class MessageHandlerService {
           }
 
           @SuppressWarnings("ConstantConditions")
-          val orderSortedColumnInfos = new TreeSet<ColumnInfo>(Comparator
+          val orderSortedColumnInfos = new TreeSet<>(Comparator
             .comparing(
               ColumnInfo::getOrder,
               Comparator.nullsLast(Comparator.naturalOrder()))
@@ -83,14 +81,7 @@ public class MessageHandlerService {
           userState.setPageSize(initMessage.getPageSize());
           userState.setFilters(initMessage.getDefaultFilters());
           userState.setGlobalFilters(initMessage.getGlobalFilters());
-          userState.setSorts(orderSortedColumnInfos
-            .stream()
-            .filter(columnInfo -> columnInfo.getDefaultSorting() != null)
-            .map(columnInfo -> Sorting.builder()
-              .columnName(columnInfo.getColumnName())
-              .direction(SortingDirection.valueOf(columnInfo.getDefaultSorting().toUpperCase()))
-              .build())
-            .collect(Collectors.toList()));
+          userState.setSorts(initMessage.getSorts());
           userState.setGroupings(orderSortedColumnInfos
             .stream()
             .filter(columnInfo -> Boolean.TRUE.equals(columnInfo.getDefaultGrouping()))

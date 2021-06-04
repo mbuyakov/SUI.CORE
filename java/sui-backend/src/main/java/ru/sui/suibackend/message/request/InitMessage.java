@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.sui.suibackend.message.model.Sorting;
 import ru.sui.suibackend.message.model.filtering.Filtering;
 
 import java.util.List;
@@ -23,5 +24,7 @@ public class InitMessage {
   private List<Filtering> defaultFilters;
 
   private List<Filtering> globalFilters;
+
+  private List<Sorting> sorts;
 
 }

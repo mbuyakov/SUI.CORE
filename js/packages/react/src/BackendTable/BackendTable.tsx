@@ -810,11 +810,11 @@ export class BackendTable<TSelection = defaultSelection>
     if (tableInfo) {
       // TODO: Сейчас надо как-то дождатьзя загрузки инфы колонок что бы получить возможность тыкаться в directGetById. Куда ещё положить - не придумал
       await ColumnInfoManager.getAllValues();
-      const content = {
-        pageSize: this.state.pageSize,
-        currentPage: resetPage ? 0 : (this.state.currentPage || this.state.defaultCurrentPage),
-      };
+
+      const pageSize = this.state.pageSize;
+      const currentPage = resetPage ? 0 : (this.state.currentPage || this.state.defaultCurrentPage);
       const sortedColumns = await getAllowedColumnInfos(tableInfo, getUser().roles);
+
       let defaultFilter = this.mapFilters(this.state.defaultFilter || [], true);
 
       const addDeletedFilter = !this.props.disableDeletedFilter
@@ -832,26 +832,33 @@ export class BackendTable<TSelection = defaultSelection>
         ];
       }
 
+      const defaultSorting = sortedColumns
+        .filter(columnInfo => columnInfo.defaultSorting)
+        .map(columnInfo => ({
+          columnName: columnInfo.columnName,
+          direction: columnInfo.defaultSorting as 'asc' | 'desc',
+        }));
+
+      const sorting = this.state.sorting || defaultSorting;
+
       // noinspection JSIgnoredPromiseFromCall
       this.sendMessage(
         'INIT',
         {
-          ...content,
+          pageSize,
+          currentPage,
           tableInfoId: tableInfo.id,
           defaultFilters: defaultFilter,
           globalFilters: this.mapFilters(
             this.state.filter && wrapInArray(this.state.filter) || [],
             true,
           ),
+          sorts: sorting.map(sort => ({columnName: sort.columnName, direction: sort.direction.toUpperCase()}))
         },
         {
-          ...content,
-          sorting: sortedColumns
-            .filter(columnInfo => columnInfo.defaultSorting)
-            .map(columnInfo => ({
-              columnName: columnInfo.columnName,
-              direction: columnInfo.defaultSorting as 'asc' | 'desc',
-            })),
+          pageSize,
+          currentPage,
+          sorting,
           grouping: sortedColumns
             .filter(columnInfo => columnInfo.defaultGrouping)
             .map(columnInfo => ({ columnName: columnInfo.columnName })),
