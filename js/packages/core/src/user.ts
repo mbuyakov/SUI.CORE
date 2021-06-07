@@ -1,6 +1,6 @@
 export const SYSTEM_USER_ID = -1;
 
-export interface ICoreUser {
+export interface ICoreUser<META = Record<string, never>> {
   /**
    *   User Bearer access token
    */
@@ -17,4 +17,8 @@ export interface ICoreUser {
    *   User roles (with ROLE_ prefix)
    */
   roles: string[];
+  /**
+   *   User metadata
+   */
+  metadata?: META;
 }

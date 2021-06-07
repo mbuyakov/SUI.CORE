@@ -73,8 +73,8 @@ export function downloadFile(file: Blob, fileName: string): void {
   }
 }
 
-export function getUser(): ICoreUser {
-  return Container.get(UserService).getUser();
+export function getUser<META = Record<string, never>>(): ICoreUser<META> {
+  return (Container.get(UserService) as UserService<META>).getUser();
 }
 
 export function isAdmin(): boolean {

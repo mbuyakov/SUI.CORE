@@ -16,7 +16,7 @@ export const USER_FORCIBLY_LOGOUT_MSG = 'Ваш сеанс был автомат
 const NOTIFICATION_KEY_USER_FORCIBLY_LOGOUT = 'connect__USER_FORCIBLYLOGOUT_BY_IDLE_TIME';
 
 @Singleton
-export class UserService {
+export class UserService<META = Record<string, never>> {
 
   private token = _LocalStorageValue('token');
 
@@ -24,7 +24,7 @@ export class UserService {
 
   private log = new Logger('UserService');
 
-  private user: Nullable<ICoreUser>;
+  private user: Nullable<ICoreUser<META>>;
 
   private tokenCheckerRunning = true;
 
@@ -36,7 +36,7 @@ export class UserService {
     return this.token.get();
   }
 
-  public getUser(): ICoreUser {
+  public getUser(): ICoreUser<META> {
     if (this.user == null) {
       throw new Error('User not initialized');
     }
@@ -47,7 +47,7 @@ export class UserService {
     return !!this.user;
   }
 
-  public login(user: ICoreUser): void {
+  public login(user: ICoreUser<META>): void {
     this.token.set(user.accessToken);
     this.user = user;
 
