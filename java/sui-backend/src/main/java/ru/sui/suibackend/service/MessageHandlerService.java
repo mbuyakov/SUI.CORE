@@ -14,6 +14,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.sui.suibackend.message.model.Grouping;
+import ru.sui.suibackend.message.model.Sorting;
+import ru.sui.suibackend.message.model.SortingDirection;
 import ru.sui.suibackend.message.request.*;
 import ru.sui.suibackend.message.response.ResponseMessageType;
 import ru.sui.suibackend.model.ResponseMessage;
@@ -75,13 +77,27 @@ public class MessageHandlerService {
 
           val pageNumber = Optional.ofNullable(initMessage.getCurrentPage()).orElse(0L);
 
+          // else - Поддержка старого UI
+          val sorts = Optional.ofNullable(initMessage.getSorts())
+            .filter(it -> !it.isEmpty())
+            .orElse(
+              orderSortedColumnInfos
+                .stream()
+                .filter(columnInfo -> columnInfo.getDefaultSorting() != null)
+                .map(columnInfo -> Sorting.builder()
+                  .columnName(columnInfo.getColumnName())
+                  .direction(SortingDirection.valueOf(columnInfo.getDefaultSorting().toUpperCase()))
+                  .build())
+                .collect(Collectors.toList())
+            );
+
           userState.clear();
           userState.setMetaData(metaData);
           userState.setOffset(pageNumber * initMessage.getPageSize());
           userState.setPageSize(initMessage.getPageSize());
           userState.setFilters(initMessage.getDefaultFilters());
           userState.setGlobalFilters(initMessage.getGlobalFilters());
-          userState.setSorts(initMessage.getSorts());
+          userState.setSorts(sorts);
           userState.setGroupings(orderSortedColumnInfos
             .stream()
             .filter(columnInfo -> Boolean.TRUE.equals(columnInfo.getDefaultGrouping()))
