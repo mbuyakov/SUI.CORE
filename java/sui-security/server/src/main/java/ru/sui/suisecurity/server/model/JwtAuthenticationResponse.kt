@@ -16,6 +16,7 @@ class JwtAuthenticationResponse(
 
     val id: Long = principal.user.id
     val name: String = principal.user.name
-    val roles = principal.authorities.map { it.toString() }.map { it.replace("ROLE_", "") }.toTypedArray()
+    val roles = principal.user.roles.map { it.name }.map { it.replace("ROLE_", "") }.toTypedArray()
+    val authorities = principal.authorities.map { it.toString() }.map { it.replace("ROLE_", "") }.toTypedArray()
 
 }
