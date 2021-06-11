@@ -97,6 +97,10 @@ class SessionManager(
         }
     }
 
+    fun disableByUserId(userId: Long, resultCode: String? = null) {
+        sessionService.findAllActiveByUserId(userId).forEach { disableBySessionId(it.id, resultCode) }
+    }
+
     fun disableNotValidSessions() {
         sessionService
                 .findAllActive()
