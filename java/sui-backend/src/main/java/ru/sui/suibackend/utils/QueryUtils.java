@@ -64,7 +64,7 @@ public class QueryUtils {
           }
         } else if (operation.name().contains("CONTAINS")) {
           return String.format(
-            "%s::TEXT %s (ARRAY[%s])",
+            "%s::TEXT %s (ARRAY[%s]::TEXT[])",
             columnName,
             operationStr.replace("CONTAINS", "LIKE"),
             elements.stream()
