@@ -8,7 +8,7 @@ import {DisableEditContext} from "../DisableEditContext";
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
-export type PromisedSwitchProps = Omit<IPromisedBaseProps<boolean>, "validator"> & Omit<SwitchProps, "checked" | "loading" | "onChange">;
+export type PromisedSwitchProps = { allowEdit?: boolean } & Omit<IPromisedBaseProps<boolean>, "validator"> & Omit<SwitchProps, "checked" | "loading" | "onChange">;
 
 export class PromisedSwitch extends PromisedBase<PromisedSwitchProps, IPromisedBaseState<boolean>, boolean> {
 
@@ -44,7 +44,7 @@ export class PromisedSwitch extends PromisedBase<PromisedSwitchProps, IPromisedB
                     checked={this.state.savedValue}
                     loading={this.state.loading}
                     onChange={this.save}
-                    disabled={disableEdit || switchProps?.disabled}
+                    disabled={this.props.allowEdit ? false : disableEdit || switchProps?.disabled}
                   />
                 );
               }}
