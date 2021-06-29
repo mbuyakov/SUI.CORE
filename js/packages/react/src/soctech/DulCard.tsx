@@ -97,7 +97,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
       issuedBy: formatRawForGraphQL(values.issuedBy),
       number: values.number,
       personId,
-      series: values.series
+      series: values.series === '' ? null : values.series
     });
   }
 
