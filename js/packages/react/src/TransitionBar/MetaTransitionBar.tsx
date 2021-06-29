@@ -1,7 +1,7 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import {IRole,ColumnInfo, TableInfoManager,camelCase, asyncMap, groupBy, IObjectWithIndex, toMap, formatRoleName} from "@sui/core";
+import {IRole, ColumnInfo, TableInfoManager, camelCase, asyncMap, groupBy, IObjectWithIndex, toMap, formatRoleName} from "@sui/core";
 
 
 import {getDataSet, getDataSetRender, getUser} from "../utils";
@@ -34,6 +34,7 @@ export interface IMetaTransitionBarProps<TStatus extends ITransitionStatus<TID>,
   resolutionTableName?: string;
   statusTableName: string;
   toStatusColumnName?: string;
+
   transitionFormatter?(
     transition: ITransition<TID>,
     fromStatus: TStatus,
@@ -47,7 +48,7 @@ type IStateTransition<TStatus, TAction, TResolution, TID> = Omit<ITransition<TID
   [ACTION_FIELD]: TAction;
   [FROM_STATUS_FIELD]: TStatus;
   [TO_STATUS_FIELD]: TStatus;
-  resolutions?: Array<IResolution & {[RESOLUTION_FIELD]: TResolution}>
+  resolutions?: Array<IResolution & { [RESOLUTION_FIELD]: TResolution }>
 };
 
 export interface IMetaTransitionBarState<TStatus, TAction, TResolution, TID = string> {
@@ -253,13 +254,16 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
         {...barProps}
         {...this.state}
         transitions={transitionFormatter
-          ? transitions.map(transition => transitionFormatter(
-            transition,
-            transition[FROM_STATUS_FIELD],
-            transition[TO_STATUS_FIELD],
-            transition[ACTION_FIELD],
-            transition.resolutions ? transition.resolutions.map(resolution => resolution[RESOLUTION_FIELD]) : undefined
-          )) : transitions
+          ? transitions
+            .map(transition => transitionFormatter(
+              transition,
+              transition[FROM_STATUS_FIELD],
+              transition[TO_STATUS_FIELD],
+              transition[ACTION_FIELD],
+              transition.resolutions?.map(resolution => resolution[RESOLUTION_FIELD])
+            ))
+            .filter(Boolean)
+          : transitions
         }
         statusNameExtractor={this.statusNameExtractor}
       />

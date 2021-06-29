@@ -31,7 +31,7 @@ class SudirController(
   fun sudirSignin(@RequestParam code: String): ResponseEntity<*> {
     val teResponse = sudirService.te(code)
     val meResponse = sudirService.me(teResponse.accessToken)
-    val email = meResponse.email
+    val email = meResponse.email ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Ваша учетная запись не имеет привязанного email адреса")
     try {
       customUserDetailsService.loadUserByUsername(email)
     } catch (e: UsernameNotFoundException) {

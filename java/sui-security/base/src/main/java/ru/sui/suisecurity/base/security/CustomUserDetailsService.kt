@@ -13,9 +13,11 @@ import ru.sui.suisecurity.base.utils.LOAD_USER_BY_ID_CACHE
 import ru.sui.suisecurity.base.utils.LOAD_USER_BY_USERNAME_CACHE
 
 
+typealias UserPrincipalCustomizer = (UserPrincipal) -> UserPrincipal
+
 @Service
 @RequestMapping
-class CustomUserDetailsService : UserDetailsService {
+class CustomUserDetailsService(private val customizers: List<UserPrincipalCustomizer>) : UserDetailsService {
 
     @Autowired
     private lateinit var userRepository: UserRepository
@@ -25,7 +27,7 @@ class CustomUserDetailsService : UserDetailsService {
         return userRepository
                 .findByUsernameIgnoreCaseOrEmailIgnoreCase(usernameOrEmail, usernameOrEmail)
                 .orElse(null)
-                ?.let { UserPrincipal(it) }
+                ?.let { customize(UserPrincipal(it)) }
                 ?: throw UsernameNotFoundException("User not found with username or email : $usernameOrEmail")
     }
 
@@ -34,8 +36,12 @@ class CustomUserDetailsService : UserDetailsService {
         return userRepository
                 .findById(id)
                 .orElse(null)
-                ?.let { UserPrincipal(it) }
+                ?.let { customize(UserPrincipal(it)) }
                 ?: throw ResourceNotFoundException("User", "id", id)
+    }
+
+    private fun customize(userPrincipal: UserPrincipal): UserPrincipal {
+      return customizers.fold(userPrincipal) { current, customizer -> customizer.invoke(current) }
     }
 
 }

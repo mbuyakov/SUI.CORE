@@ -156,13 +156,13 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
     return (
       <PromisedButton
         icon={<DeleteOutlined/>}
-        {...deleteButtonProps}
-        promise={this.handleDeleteClick}
         popconfirmSettings={{
           placement: "topRight",
           title: `Вы уверены, что хотите ${typeof deleteButtonProps?.children === 'string' ?
             unCapitalize(deleteButtonProps?.children) : "удалить"} выбранные записи?`
         }}
+        {...deleteButtonProps}
+        promise={this.handleDeleteClick}
       >
         {deleteButtonProps && deleteButtonProps.children || "Удалить"}
       </PromisedButton>

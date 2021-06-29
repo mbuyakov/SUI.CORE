@@ -21,7 +21,7 @@ export function renderIBaseCardCollapseLayout<T, ITEM>(sourceItem: T, panel: IBa
       style={{
         borderRadius: fitCollapsePanel && rowsCount === 1 ? 0 : undefined,
       }}
-      key={index.toString()}
+      key={panel.title}
       header={panel.title}
       className={padding ? "" : COLLAPSE_PANEL_NO_PADDING}
     >

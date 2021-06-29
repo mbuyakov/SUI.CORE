@@ -15,6 +15,7 @@ import {IPromisedBaseProps} from "./PromisedBase";
 
 export interface IEditablePromisedComponentProps<T> {
   children: React.ReactElement<IPromisedBaseProps<T>>;
+  disableEdit?: boolean;
   editRoles?: string[];
 
   nonEditRender?(value: T): React.ReactNode;
@@ -44,7 +45,8 @@ export class EditablePromisedComponent<T>
                 return (
                   <DisableEditContext.Consumer>
                     {(disableEdit): JSX.Element => {
-                      const editAllowed = (!disableEdit || !!this.state?.editMode)
+                      const editAllowed = !this.props.disableEdit
+                        && (!disableEdit || !!this.state?.editMode)
                         && (!this.props.editRoles || hasAnyRole(this.props.editRoles));
                       const editMode = editAllowed && !!this.state?.editMode;
 
