@@ -75,7 +75,7 @@ export class UserService<META = Record<string, never>> {
           }
         } catch (reason) {
           this.log.error(reason, 'Token check error');
-          notification.warn({ message: 'Ошибка при проверке токена' });
+          // notification.warn({ message: 'Ошибка при проверке токена' });
           await sleep(1000);
         }
       } else {
