@@ -206,19 +206,19 @@ public class QueryUtils {
       val predicate = predicateFiltering.getPredicate();
       val filters = predicateFiltering.getFilters();
 
-      if (filters == null || filters.isEmpty()) {
-        throw new IllegalArgumentException("Predicate filtering elements can not be null or empty");
+      if (filters == null) {
+        throw new IllegalArgumentException("Predicate filtering elements can not be null");
       }
 
       switch (predicateFiltering.getPredicate()) {
         case OR:
         case AND:
-          return joinFilters(" " + predicate.toString() + " ", filters, resultColumnNameGetter);
+          return filters.isEmpty() ? "TRUE" : joinFilters(" " + predicate.toString() + " ", filters, resultColumnNameGetter);
         case NOT:
           if (filters.size() == 1) {
             return String.format("NOT (%s)", mapFilteringToQueryFilter(filters.get(0), resultColumnNameGetter));
           } else {
-            throw new IllegalArgumentException("Not predicate filtering elements size > 1");
+            throw new IllegalArgumentException("Not predicate filtering elements size != 1");
           }
         default:
           throw new IllegalArgumentException("Unsupported filtering predicate: " + type);
