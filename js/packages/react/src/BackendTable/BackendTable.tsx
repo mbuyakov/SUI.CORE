@@ -250,6 +250,16 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
+  public getJsonFromValue(value?: string | null | undefined): Array<{ id: string, name: string }> {
+    try {
+      const res = value && JSON.parse(value);
+      return res || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  @autobind
   public getSelection(): TSelection[] {
     return this.baseTableRef
       && this.baseTableRef.current
@@ -420,6 +430,10 @@ export class BackendTable<TSelection = defaultSelection>
 
     if (col.render && columnInfo?.parsedTableRenderParams?.renderType === "dateFormatter") {
       return col.render(value, row, col) as string;
+    }
+
+    if (col.render && columnInfo?.parsedTableRenderParams?.renderType === "multilink") {
+      return this.getJsonFromValue(value).map(value => value.name).join(", ");
     }
 
     return value;
