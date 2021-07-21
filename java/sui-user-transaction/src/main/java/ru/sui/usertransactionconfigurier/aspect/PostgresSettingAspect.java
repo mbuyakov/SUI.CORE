@@ -56,14 +56,12 @@ public class PostgresSettingAspect implements Ordered {
                 .ifPresent(id -> {
                     try {
                         // check has transaction
-                        val transactionStatus = TransactionAspectSupport.currentTransactionStatus();
+                        TransactionAspectSupport.currentTransactionStatus();
 
-                        if (transactionStatus.isNewTransaction()) {
-                            entityManager
-                                    // .createNativeQuery(String.format("SET LOCAL \"%s\" = '%s'", USER_ID_SETTING_NAME, id))
-                                    .createNativeQuery(String.format("SET LOCAL \"%s\" = '%s'", "user.id", id)) // TODO: USER_ID_SETTING_NAME брать из sui-security
-                                    .executeUpdate();
-                        }
+                        entityManager
+                                // .createNativeQuery(String.format("SET LOCAL \"%s\" = '%s'", USER_ID_SETTING_NAME, id))
+                                .createNativeQuery(String.format("SET LOCAL \"%s\" = '%s'", "user.id", id)) // TODO: USER_ID_SETTING_NAME брать из sui-security
+                                .executeUpdate();
                     } catch (NoTransactionException ignored) {}
                 });
     }
