@@ -641,14 +641,7 @@ export class BackendTable<TSelection = defaultSelection>
         // @ts-ignore
         // noinspection JSConstantReassignment
         this.state.defaultFilter = mappedFilters;
-        this.sendInitMessage(
-          this.state.tableInfo,
-          {
-            filters,
-            lazyStub: false
-          },
-          false
-        );
+        this.sendInitMessage(this.state.tableInfo, {lazyStub: false}, false);
       } else {
         // noinspection JSIgnoredPromiseFromCall
         this.sendMessage(
