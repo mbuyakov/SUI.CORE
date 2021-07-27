@@ -1036,11 +1036,11 @@ export class BackendTable<TSelection = defaultSelection>
       const userSettings: IBackendTableUserSettings = await this.getUserSettings(tableInfo).then(it => it ? JSON.parse(it.content) : undefined);
 
       if (userSettings) {
-        const columnByName = (columnName: string): IBaseTableColLayout => allColumns.find(it => it.id === columnName);
+        const columnById = (id: string): IBaseTableColLayout => allColumns.find(it => it.id === id);
 
         // Apply columnWidths
         userSettings.columnWidths.forEach(columnWidth => {
-          const column = columnByName(columnWidth.columnName);
+          const column = columnById(columnWidth.columnName);
 
           // columnWidth.metaWidth === column.width Мета не изменилась
           if (column && columnWidth.width && columnWidth.metaWidth === column.width) {
@@ -1051,16 +1051,18 @@ export class BackendTable<TSelection = defaultSelection>
         // Apply order
         const reorderedColumns: IBaseTableColLayout[] = [];
 
-        userSettings.order.forEach(columnName => {
-          const column = columnByName(columnName);
+        serviceColumns.forEach(it => reorderedColumns.push(it));
 
-          if (column) {
+        userSettings.order.forEach(columnName => {
+          const column = columnById(columnName);
+
+          if (column && !reorderedColumns.some(it => it.id === column.id)) {
             reorderedColumns.push(column);
           }
         });
 
         allColumns.forEach(column => {
-          if (!userSettings.order.includes(column.id)) {
+          if (!reorderedColumns.some(it => it.id === column.id)) {
             reorderedColumns.push(column);
           }
         });
