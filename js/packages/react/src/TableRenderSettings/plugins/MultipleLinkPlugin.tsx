@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {InfoCircleOutlined} from "@ant-design/icons";
 import {ColumnInfo} from "@sui/core";
-import {Input, Tooltip} from "antd";
+import {Checkbox, Input, Tooltip} from "antd";
 import * as React from 'react';
 
 // noinspection ES6PreferShortImport
@@ -20,6 +20,7 @@ import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 
 export interface IMultipleLinkPluginParams {
   linkTableName: string
+  limitCount: boolean
 }
 
 export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPluginParams> {
@@ -35,7 +36,12 @@ export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPlu
     const linkTableName = tableRenderParams.linkTableName || ' ';
     const linkTemplate = !isBlank(linkTableName) && getLinkForTable(linkTableName, 'card', ':id') || null;
     result.render = (value: any): JSX.Element => {
-      const links = getLinkFromJsonValue(value);
+      const [isExpanded, setExpanded] = React.useState(false);
+      let links = getLinkFromJsonValue(value);
+      const linksLength = links.length;
+      if (tableRenderParams.limitCount && !isExpanded) {
+        links = links.slice(0, 5);
+      }
       return (
         <>
           {!!linkTemplate ? links.map(link => (
@@ -49,6 +55,7 @@ export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPlu
             ))
             : links.map(link => link.name).filter(name => !!name).join("; ")
           }
+          {tableRenderParams.limitCount && linksLength > 5 && (<a onClick={() => setExpanded(!isExpanded)}>{isExpanded ? " скрыть" : " показать все"}</a>)}
         </>
       );
     }
@@ -70,6 +77,11 @@ export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPlu
               <InfoCircleOutlined style={{color: 'rgba(0,0,0,.45)'}}/>
             </Tooltip>
           }
+        />
+        <span>Ограничить кол-во выводимых значений?</span>
+        <Checkbox
+          checked={trsp.state.tableRenderParams.limitCount || undefined}
+          onChange={(e): Promise<void> => trsp.updateField('limitCount')(e.target.checked)}
         />
       </>
     );
