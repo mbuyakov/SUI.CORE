@@ -55,7 +55,7 @@ export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPlu
             ))
             : links.map(link => link.name).filter(name => !!name).join("; ")
           }
-          {tableRenderParams.limitCount && linksLength > 5 && (<a onClick={() => setExpanded(!isExpanded)}>{isExpanded ? " скрыть" : " показать все"}</a>)}
+          {tableRenderParams.limitCount && linksLength > 5 && (<a style={{whiteSpace: "nowrap"}} onClick={() => setExpanded(!isExpanded)}>{isExpanded ? " скрыть" : " показать все"}</a>)}
         </>
       );
     }
