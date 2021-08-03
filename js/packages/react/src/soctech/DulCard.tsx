@@ -156,7 +156,7 @@ export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
         const props = DulCard.propsMap.get(dulCardUuid);
         const res = DulCard.getIssuedDateDisabler(docTypeId, props.birthday, props.personAge)
         res.disabled = props.disabled;
-        return res;
+        return docTypeId ? res : {disabled: true};
       },
       inputNode: (<DatePicker locale={locale as any} format={DATE_FORMATS}/>),
     };
