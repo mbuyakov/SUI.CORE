@@ -65,7 +65,7 @@ $$
     END;
 $$;
 
-CREATE SCHEMA log;
+CREATE SCHEMA IF NOT EXISTS log;
 
 CREATE TABLE log.audit_log
 (
