@@ -1,21 +1,26 @@
 package ru.sui.migration
 
 import org.flywaydb.core.Flyway
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
+import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
 import javax.annotation.PostConstruct
-import javax.sql.DataSource
 
 
 @Service
-class FlywayMigrationApplier(private val dataSource: DataSource) {
+class FlywayMigrationApplier(private val jdbcTemplate: JdbcTemplate) {
 
+    @Suppress("SqlDialectInspection", "SqlNoDataSourceInspection")
     @PostConstruct
     fun postConstruct() {
+        jdbcTemplate.update("""
+            UPDATE public.sui_flyway_schema_history
+            SET checksum = -454516158
+            WHERE version = 8 AND checksum != -454516158;
+        """)
+
         val flyway = Flyway
                 .configure()
-                .dataSource(dataSource)
+                .dataSource(jdbcTemplate.dataSource)
                 .ignoreFutureMigrations(true)
                 .baselineOnMigrate(true)
                 .table("sui_flyway_schema_history")
