@@ -15,7 +15,7 @@ class FlywayMigrationApplier(private val jdbcTemplate: JdbcTemplate) {
         jdbcTemplate.update("""
             UPDATE public.sui_flyway_schema_history
             SET checksum = -454516158
-            WHERE version = 8 AND checksum != -454516158;
+            WHERE version = '8' AND checksum != -454516158;
         """)
 
         val flyway = Flyway
