@@ -1,6 +1,7 @@
 // Включение кеша ломает кеширование antd-pro-merge-less
 require = require("esm")(module, {cache: false});
 const fs = require('fs');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 // Почему бы не попатчить чужую либу на лету?
 // После замены require на esm версию ноде становится плохо от наличия шеллбенга в файле
@@ -35,14 +36,33 @@ const fs = require('fs');
 }
 // Во, теперь можно грузиться дальше
 
-const { getMergedThemeConfigs } = require('../../react/es/themes/utils');
+const {getMergedThemeConfigs} = require('../../react/es/themes/utils');
 
 const buildTime = new Date().toISOString();
 
 function defaultChainWebpack(config) {
+  config
+    .plugin('hard-source')
+    .use(HardSourceWebpackPlugin, [{
+      cachePrune: {
+        // Caches younger than `maxAge` are not considered for deletion. They must
+        // be at least this (default: 2 days) old in milliseconds.
+        // 2 Hrs
+        maxAge: 2 * 60 * 60 * 1000,
+        // All caches together must be larger than `sizeThreshold` before any
+        // caches will be deleted. Together they must be at least this
+        // (default: 50 MB) big in bytes.
+        // 1.5Gb
+        sizeThreshold: 1500 * 1024 * 1024
+      }
+    }]);
+
   // Used in copy-webpack-plugin
   fs.writeFileSync('./build_time.txt', buildTime);
+
+  return config;
 }
+
 exports.defaultChainWebpack = defaultChainWebpack;
 
 function generateUmiConfig(params) {
@@ -92,7 +112,7 @@ function generateUmiConfig(params) {
     ['umi-plugin-react', umiPluginReactConfig]
   ];
 
-  if(!process.env.NO_DARK) {
+  if (!process.env.NO_DARK) {
     plugins.push(['@sui/all/dark-theme-plugin.js', commonWithDarkTheme.lessVars]);
   }
 
@@ -166,4 +186,5 @@ function generateUmiConfig(params) {
 
   return umiConfig;
 }
+
 exports.generateUmiConfig = generateUmiConfig;
