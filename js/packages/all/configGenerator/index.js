@@ -117,7 +117,7 @@ function generateUmiConfig(params) {
   }
 
   let umiConfig = {
-    publicPath: "/",
+    publicPath: "./",
     theme: commonWithLightTheme.lessVars,
     define: {
       "process.env.BUILD_TIME": buildTime,
