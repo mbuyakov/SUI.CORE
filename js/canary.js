@@ -13,7 +13,7 @@ const dateStr =
   ("00" + date.getMinutes()).slice(-2) +
   ("00" + date.getSeconds()).slice(-2);
 
-const version = `8.0.${dateStr}-canary`;
+const version = `9.0.${dateStr}-canary`;
 
 const restoreLerna = () => fs.renameSync(`./lerna-bkp.json`, `./lerna.json`);
 

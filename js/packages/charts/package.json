@@ -1,6 +1,6 @@
 {
   "name": "@sui/charts",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "module": "es/index.js",
   "typings": "es/index.d.ts",
   "files": [
@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "@amcharts/amcharts4": "4.10.15",
-    "@sui/core": "8.0.0"
+    "@sui/core": "9.0.0"
   }
 }

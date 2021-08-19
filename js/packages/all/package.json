@@ -1,6 +1,6 @@
 {
   "name": "@sui/all",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "module": "es/index.js",
   "typings": "es/index.d.ts",
   "files": [
@@ -15,10 +15,10 @@
     "ci": "run-s build"
   },
   "dependencies": {
-    "@sui/charts": "8.0.0",
-    "@sui/core": "8.0.0",
-    "@sui/react": "8.0.0",
-    "@sui/sentry": "8.0.0",
+    "@sui/charts": "9.0.0",
+    "@sui/core": "9.0.0",
+    "@sui/react": "9.0.0",
+    "@sui/sentry": "9.0.0",
     "antd-pro-merge-less": "^3.0.10",
     "babel-plugin-import": "^1.13.0",
     "esm": "^3.2.25",

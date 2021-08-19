@@ -1,6 +1,6 @@
 {
   "name": "@sui/react",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "main": "es/index.js",
   "module": "es/index.js",
   "typings": "es/index.d.ts",
@@ -42,8 +42,8 @@
     "@devexpress/dx-react-core": "2.6.1",
     "@devexpress/dx-react-grid": "2.6.1",
     "@devexpress/dx-react-grid-material-ui": "2.6.1",
-    "@sui/charts": "8.0.0",
-    "@sui/core": "8.0.0",
+    "@sui/charts": "9.0.0",
+    "@sui/core": "9.0.0",
     "antd-mask-input": "0.1.15",
     "classnames": "^2.2.6",
     "immutability-helper": "^3.0.2",
