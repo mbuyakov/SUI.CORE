@@ -1,8 +1,8 @@
-import {IBaseTableColLayout} from '@/BaseTable';
-import {RouterLink} from '@/Link';
 import {ColumnInfo, ColumnInfoManager, getDataByKey} from "@sui/core";
 import {Select} from "antd";
 import * as React from 'react';
+import {RouterLink} from '@/Link';
+import {IBaseTableColLayout} from '@/BaseTable';
 
 // noinspection ES6PreferShortImport
 import {getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps} from '../../utils';

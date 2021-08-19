@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {CustomInputWithRegex, CustomInputWithRegexProps} from "@/Inputs/CustomInputWithRegex";
 import {Alert, DatePicker} from "antd";
 import locale from "antd/es/date-picker/locale/ru_RU";
 import {Rules} from "async-validator";
@@ -7,8 +6,9 @@ import autobind from "autobind-decorator";
 import {isEqual} from "lodash";
 import moment, {Moment} from 'moment';
 import * as React from 'react';
-import {BaseFormProps} from "@/MutableBackendTable";
 import {DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, disableDocDate, formatRawForGraphQL, IObjectWithIndex, OneOrArrayWithNulls} from "@sui/core";
+import {BaseFormProps} from "@/MutableBackendTable";
+import {CustomInputWithRegex, CustomInputWithRegexProps} from "@/Inputs/CustomInputWithRegex";
 import {BaseForm, clearFields, IBaseCardRowLayout, IBaseFormItemLayout, IFormField, ValuesGetter} from "@/Base";
 import {DulService, IallDocTypes} from "@/soctech/DulService";
 import {DulTypeSelector} from "@/Inputs";

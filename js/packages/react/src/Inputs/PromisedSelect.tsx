@@ -1,9 +1,9 @@
-import {DisableEditContext} from "@/DisableEditContext";
-import {SUI_ROW_GRID} from '@/styles';
 import {CircularProgress, IconButton} from '@material-ui/core';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import Select, {SelectProps, SelectValue} from "antd/lib/select";
 import * as React from "react";
+import {SUI_ROW_GRID} from '@/styles';
+import {DisableEditContext} from "@/DisableEditContext";
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 

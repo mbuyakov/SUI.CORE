@@ -1,9 +1,9 @@
 import * as React from "react";
-import {ThemeService, ThemeVariant, SuiThemeContext} from "@/themes";
 import {Container} from "typescript-ioc"
 import {ThemeProvider} from '@material-ui/core/styles';
 import {ConfigProvider} from 'antd';
 import ru_RU from 'antd/es/locale/ru_RU';
+import {ThemeService, ThemeVariant, SuiThemeContext} from "@/themes";
 
 export type IGlobalRoutesWrapperProps = Record<string, never>;
 

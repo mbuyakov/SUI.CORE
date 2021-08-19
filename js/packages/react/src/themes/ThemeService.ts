@@ -1,10 +1,10 @@
 import {Container, Singleton} from 'typescript-ioc';
-import {ObservableLocalStorageValue} from "@/Observable";
-import {CompiledTheme, CompiledThemes, ThemeVariant} from "@/themes/types";
 import themeSwitcher from 'theme-switcher';
 import autobind from 'autobind-decorator';
-import {getCompiledThemes} from "@/themes/utils";
 import {Logger} from "@sui/core";
+import {ObservableLocalStorageValue} from "@/Observable";
+import {CompiledTheme, CompiledThemes, ThemeVariant} from "@/themes/types";
+import {getCompiledThemes} from "@/themes/utils";
 
 
 @Singleton

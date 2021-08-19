@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {SuiThemeContext} from "@/themes";
 import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 import React from 'react';
+import {SuiThemeContext} from "@/themes";
 
 // noinspection ES6PreferShortImport
 import {BASE_CARD_COL_TITLE, BASE_CARD_COLS} from '../styles';

@@ -1,7 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {ColumnChooserContainer, CustomPagingPanelContainer, CustomToggleCell, DoubleScrollbar, EmptyMessageComponent, ExportPlugin, ExtendedIntegratedSelection, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, UserSettingsPlugin, UserSettingsSupportPlugin, WarningPlugin} from "@/BaseTable/extends";
-import {BASE_TABLE, BASE_TABLE_NO_PAGINATION, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '@/styles';
-import {SuiThemeContext} from '@/themes';
 import {CheckOutlined, CloseOutlined, QuestionOutlined} from '@ant-design/icons';
 import {Getter, Getters} from '@devexpress/dx-react-core';
 import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@devexpress/dx-react-grid';
@@ -14,6 +11,9 @@ import {Card, Result, Spin} from 'antd';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import * as React from 'react';
+import {SuiThemeContext} from '@/themes';
+import {BASE_TABLE, BASE_TABLE_NO_PAGINATION, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '@/styles';
+import {ColumnChooserContainer, CustomPagingPanelContainer, CustomToggleCell, DoubleScrollbar, EmptyMessageComponent, ExportPlugin, ExtendedIntegratedSelection, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, UserSettingsPlugin, UserSettingsSupportPlugin, WarningPlugin} from "@/BaseTable/extends";
 
 import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter} from './filters';
 import {defaultSelection, ISelectionTable} from './ISelectionTable';

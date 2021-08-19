@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import {Nullable} from '@/other';
 import autobind from "autobind-decorator";
 import {Singleton} from 'typescript-ioc';
+import {Nullable} from '@/other';
 
 // noinspection ES6PreferShortImport
 import {ROOT_LOGGER_KEY} from '../const';

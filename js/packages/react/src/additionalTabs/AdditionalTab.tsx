@@ -1,10 +1,10 @@
-import {PromisedButton} from '@/Inputs';
 import {formatRawForGraphQL, generateUpdate, TableInfo} from '@sui/core';
 import {Card, Space} from "antd";
 import Input from "antd/lib/input";
 import autobind from 'autobind-decorator';
 import * as React from "react";
 import {ChangeEvent} from "react";
+import {PromisedButton} from '@/Inputs';
 
 interface IAdditionalTabProps {
   tableInfo: TableInfo;

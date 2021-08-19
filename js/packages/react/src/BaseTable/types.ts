@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {TableRenderParamsPlugin} from "@/TableRenderSettings";
 import {Filter, FilterOperation, Grouping, GroupKey, Sorting, Table as TableBase, TableBandHeader as TableBandHeaderBase, TableFilterRow, TableRowDetail} from '@devexpress/dx-react-grid';
 import {DataKey, IObjectWithIndex} from '@sui/core';
 import {CardType} from 'antd/lib/card';
 import * as React from 'react';
+import {TableRenderParamsPlugin} from "@/TableRenderSettings";
 
 // noinspection ES6PreferShortImport
 import {IBaseTableUserSettings} from "./extends/UserSettingsPlugin";

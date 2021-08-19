@@ -1,7 +1,7 @@
 import React from "react";
 import {wrapInArrayWithoutNulls} from "@sui/core";
-import {IBaseCardCollapseLayout, renderIBaseCardCollapseLayout} from "@/Base/BaseCardCollapseLayout";
 import Collapse from "antd/lib/collapse";
+import {IBaseCardCollapseLayout, renderIBaseCardCollapseLayout} from "@/Base/BaseCardCollapseLayout";
 import {IBaseCardRowLayout} from "@/Base/BaseCardRow/BaseCardRow";
 
 export interface IBaseCardRowWithCollapseLayout<T, ITEM> {

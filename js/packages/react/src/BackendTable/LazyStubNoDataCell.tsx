@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */
 import TableCell from '@material-ui/core/TableCell';
 import Empty from 'antd/lib/empty';
 import * as React from 'react';

@@ -1,12 +1,12 @@
-import {SUIReactComponent} from "@/SUIReactComponent";
-import {ThemeService} from "@/themes/ThemeService";
-import {ThemeVariant} from "@/themes/types";
 import {IconButton} from "@material-ui/core";
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import autobind from "autobind-decorator";
 import React from 'react';
 import {Container} from "typescript-ioc";
+import {ThemeVariant} from "@/themes/types";
+import {ThemeService} from "@/themes/ThemeService";
+import {SUIReactComponent} from "@/SUIReactComponent";
 
 type IThemeSwitchButtonProps = Record<string, never>;
 

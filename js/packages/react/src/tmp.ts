@@ -1,6 +1,6 @@
-import { loadingErrorNotification } from '@/drawUtils';
 import InputMask from "antd-mask-input/build/main/lib/inputmask-core";
 import {NO_DATA_TEXT} from "@sui/core";
+import { loadingErrorNotification } from '@/drawUtils';
 
 
 /**
