@@ -31,6 +31,7 @@ export interface IWaitDataProps<T> {
   promise?: Promise<T>;
   query?: string | any;
   spinning?: boolean;
+  watchPromise?: boolean;
 }
 
 const errorIcon = (<CloseCircleTwoTone twoToneColor="#d6083f" style={{fontSize: 24}}/>);
@@ -78,7 +79,11 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
 
   public shouldComponentUpdate(nextProps: Readonly<IWaitDataProps<T>>): boolean {
     // console.log(nextProps, nextState);
-    if ((this.props.query != nextProps.query) || (this.props.mutation != nextProps.mutation)) {
+    const shouldUpdateData = (this.props.query != nextProps.query)
+      || (this.props.mutation != nextProps.mutation)
+      || (nextProps.watchPromise && this.props.promise != nextProps.promise);
+
+    if (shouldUpdateData) {
       if (this.state) {
         // @ts-ignore
         // noinspection JSConstantReassignment
