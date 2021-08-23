@@ -24,7 +24,7 @@ export const BaseCardRowWithCollapse: <T, ITEM>(props: IBaseCardRowWithCollapseL
       marginRight: props.fitCollapsePanel ? (-24) : undefined,
       marginTop: props.fitCollapsePanel && props.rowIndex === 0 ? (-24) : undefined,
     }}
-    defaultActiveKey={wrapInArrayWithoutNulls(props.collapsePanels).map((panel, index) => ({defaultOpened: panel.defaultOpened, index})).filter(panel => panel.defaultOpened).map(panel => panel.index.toString())}
+    defaultActiveKey={wrapInArrayWithoutNulls(props.collapsePanels).filter(panel => panel.defaultOpened).map(panel => panel.title.toString())}
   >
     {wrapInArrayWithoutNulls(props.collapsePanels).map((panel, index) => renderIBaseCardCollapseLayout(props.sourceItem, panel, index, props.fitCollapsePanel || false, props.rowsLength))}
   </Collapse>
