@@ -57,6 +57,7 @@ function defaultChainWebpack(config) {
       }
     }])
 
+  config
     .plugin('hard-source-exclude')
     .use(HardSourceWebpackPlugin.ExcludeModulePlugin, [[{
       test: /less-loader/
