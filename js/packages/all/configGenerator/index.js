@@ -55,7 +55,12 @@ function defaultChainWebpack(config) {
         // 1.5Gb
         sizeThreshold: 1500 * 1024 * 1024
       }
-    }]);
+    }])
+
+    .plugin('hard-source-exclude')
+    .use(HardSourceWebpackPlugin.ExcludeModulePlugin, [[{
+      test: /less-loader/
+    }]]);
 
   // Used in copy-webpack-plugin
   fs.writeFileSync('./build_time.txt', buildTime);

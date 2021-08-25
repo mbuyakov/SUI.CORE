@@ -1,5 +1,5 @@
 import { ThemesConfig } from '@sui/react';
-export declare function defaultChainWebpack(config: any): void;
+export declare function defaultChainWebpack(config: any): any;
 export interface UmiConfigParams {
     title: string;
     routes: any[];
