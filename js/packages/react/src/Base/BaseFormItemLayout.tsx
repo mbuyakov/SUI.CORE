@@ -105,6 +105,12 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
     this.state = {
       subscribedFormFieldValues: {},
     };
+
+    if (this.props.afterChange) {
+      this.registerObservableHandler(this.formField.value.subscribe(value => {
+        this.props.afterChange(value, this.baseForm);
+      }));
+    }
   }
 
   public render(): React.ReactNode {
@@ -238,10 +244,6 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
     const value = _getValueFromEvent(e);
 
     this.formField.value.setValue(value);
-
-    if (this.props.afterChange) {
-      this.props.afterChange(value, this.baseForm);
-    }
   }
 
   @autobind
