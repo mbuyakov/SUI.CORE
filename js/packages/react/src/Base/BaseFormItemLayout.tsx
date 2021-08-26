@@ -105,12 +105,6 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
     this.state = {
       subscribedFormFieldValues: {},
     };
-
-    if (this.props.afterChange) {
-      this.registerObservableHandler(this.formField.value.subscribe(value => {
-        this.props.afterChange(value, this.baseForm);
-      }));
-    }
   }
 
   public render(): React.ReactNode {
@@ -129,6 +123,11 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
             this.registerObservableHandler(this.formField.error.subscribe(error => this.setState({error})));
             if (item.initialValue != null) {
               this.formField.value.setValue(item.initialValue);
+            }
+            if (this.props.afterChange) {
+              this.registerObservableHandler(this.formField.value.subscribe(value => {
+                this.props.afterChange(value, this.baseForm);
+              }));
             }
           }
 
