@@ -154,7 +154,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
       const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
       return trueIfEmpty(props.required) || !!docTypeId;
     },
-    mapFormValuesToInputNodeProps: (get: ValuesGetter): any => {
+    mapFormValuesToInputNodeProps: (get: ValuesGetter): Partial<IStringValueDatePickerProps> => {
       const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
 
       if (!docTypeId) {
@@ -166,7 +166,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
 
       return {
         ...getIssuedDateDisabler(docTypeId, birthday, age),
-        disabled: props.disabled
+        disabled: propsDisabled(get)
       };
     },
     inputNode: (
