@@ -16,7 +16,7 @@ export const issuedByDesc = "Разрешены русские буквы, ци�
 export interface IDulCardFormItemsProps<T = any> {
   birthday?: Nullable<string> | ((get: ValuesGetter) => Nullable<string>);
   checkDisabled?: boolean;
-  disabled?: boolean | ((get: ValuesGetter) => boolean);
+  disabled?: boolean | ((get: ValuesGetter) => boolean | undefined);
   disableDocTypeSelect?: boolean;
   required?: boolean;
   fieldNames?: {
@@ -49,19 +49,23 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
   const departmentCodeFieldName = props.fieldNames?.departmentCode || "departmentCode";
   const issuedByFieldName = props.fieldNames?.issuedBy || "issuedBy";
 
-  const propsDisabled = (get: ValuesGetter): boolean => {
+  const propsDisabled = (get: ValuesGetter): {disabled?: boolean} => {
+    let value: boolean;
+
     if (typeof (props.disabled) === "function") {
-      return props.disabled(get);
+      value = props.disabled(get);
     } else {
-      return props.disabled || false;
+      value = props.disabled;
     }
+
+    return typeof (value) === "boolean" ? {disabled: value} : {};
   };
 
   const docTypeItem = {
     title: "Тип документа",
     fieldName: docTypeIdFieldName,
     mapFormValuesToRequired: (): boolean => trueIfEmpty(props.required),
-    mapFormValuesToInputNodeProps: (get: ValuesGetter): Partial<IDulTypeSelectorProps> => ({disabled: propsDisabled(get) || props.disableDocTypeSelect}),
+    mapFormValuesToInputNodeProps: (get: ValuesGetter): Partial<IDulTypeSelectorProps> => props.disableDocTypeSelect ? {disabled: true} : propsDisabled(get),
     afterChange: (value, form): void => {
       const docType = getDocTypeById(value);
 
@@ -107,7 +111,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
         ? {
           regex: docType.seriesRegex,
           desc: docType.seriesRegexDesc,
-          disabled: propsDisabled(get)
+          ...propsDisabled(get)
         }
         : {disabled: true};
     },
@@ -135,7 +139,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
         ? {
           regex: docType.numberRegex,
           desc: docType.numberRegexDesc,
-          disabled: propsDisabled(get)
+          ...propsDisabled(get)
         }
         : {disabled: true};
     },
@@ -166,7 +170,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
 
       return {
         ...getIssuedDateDisabler(docTypeId, birthday, age),
-        disabled: propsDisabled(get)
+        ...propsDisabled(get)
       };
     },
     inputNode: (
@@ -186,7 +190,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
         ? {
           regex: DEPARTMENT_CODE_REGEX,
           desc: DEPARTMENT_CODE_DESC,
-          disabled: propsDisabled(get)
+          ...propsDisabled(get)
         }
         : {disabled: true};
     },
@@ -207,7 +211,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
         ? {
           regex: issuedByRegex,
           desc: issuedByDesc,
-          disabled: propsDisabled(get)
+          ...propsDisabled(get)
         }
         : {disabled: true};
     },
