@@ -16,7 +16,7 @@ export const issuedByDesc = "Разрешены русские буквы, ци�
 export interface IDulCardFormItemsProps<T = any> {
   birthday?: Nullable<string> | ((get: ValuesGetter) => Nullable<string>);
   checkDisabled?: boolean;
-  disabled?: boolean;
+  disabled?: boolean | ((get: ValuesGetter) => boolean);
   disableDocTypeSelect?: boolean;
   required?: boolean;
   fieldNames?: {
@@ -49,11 +49,19 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
   const departmentCodeFieldName = props.fieldNames?.departmentCode || "departmentCode";
   const issuedByFieldName = props.fieldNames?.issuedBy || "issuedBy";
 
+  const propsDisabled = (get: ValuesGetter): boolean => {
+    if (typeof (props.disabled) === "function") {
+      return props.disabled(get);
+    } else {
+      return props.disabled || false;
+    }
+  };
+
   const docTypeItem = {
     title: "Тип документа",
     fieldName: docTypeIdFieldName,
     mapFormValuesToRequired: (): boolean => trueIfEmpty(props.required),
-    mapFormValuesToInputNodeProps: (): Partial<IDulTypeSelectorProps> => ({disabled: props.disabled || props.disableDocTypeSelect}),
+    mapFormValuesToInputNodeProps: (get: ValuesGetter): Partial<IDulTypeSelectorProps> => ({disabled: propsDisabled(get) || props.disableDocTypeSelect}),
     afterChange: (value, form): void => {
       const docType = getDocTypeById(value);
 
@@ -99,7 +107,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
         ? {
           regex: docType.seriesRegex,
           desc: docType.seriesRegexDesc,
-          disabled: props.disabled
+          disabled: propsDisabled(get)
         }
         : {disabled: true};
     },
@@ -127,7 +135,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
         ? {
           regex: docType.numberRegex,
           desc: docType.numberRegexDesc,
-          disabled: props.disabled
+          disabled: propsDisabled(get)
         }
         : {disabled: true};
     },
@@ -178,7 +186,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
         ? {
           regex: DEPARTMENT_CODE_REGEX,
           desc: DEPARTMENT_CODE_DESC,
-          disabled: props.disabled
+          disabled: propsDisabled(get)
         }
         : {disabled: true};
     },
@@ -199,7 +207,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
         ? {
           regex: issuedByRegex,
           desc: issuedByDesc,
-          disabled: props.disabled
+          disabled: propsDisabled(get)
         }
         : {disabled: true};
     },
