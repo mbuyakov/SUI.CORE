@@ -17,6 +17,7 @@ export interface IDulCardFormItemsProps<T = any> {
   birthday?: Nullable<string> | ((get: ValuesGetter) => Nullable<string>);
   checkDisabled?: boolean;
   disabled?: boolean;
+  disableDocTypeSelect?: boolean;
   required?: boolean;
   fieldNames?: {
     docTypeId?: string;
@@ -52,7 +53,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
     title: "Тип документа",
     fieldName: docTypeIdFieldName,
     mapFormValuesToRequired: (): boolean => trueIfEmpty(props.required),
-    mapFormValuesToInputNodeProps: (): Partial<IDulTypeSelectorProps> => ({disabled: props.disabled}),
+    mapFormValuesToInputNodeProps: (): Partial<IDulTypeSelectorProps> => ({disabled: props.disabled || props.disableDocTypeSelect}),
     afterChange: (value, form): void => {
       const docType = getDocTypeById(value);
 
