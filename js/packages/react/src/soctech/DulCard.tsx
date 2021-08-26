@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import locale from "antd/es/date-picker/locale/ru_RU";
-import {DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, Nullable} from "@sui/core";
+import {DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, Nullable, disableDocDate, IObjectWithIndex} from "@sui/core";
 import moment, {Moment} from "moment";
 import {DatePickerProps} from "antd/lib/date-picker";
 import {DatePicker} from "antd";
-import {disableDocDate, IObjectWithIndex} from "@sui/core/src";
 import {IBaseCardRowLayout, IBaseFormItemLayout, ValuesGetter} from "@/Base";
 import {CustomInputWithRegex, CustomInputWithRegexProps, DulTypeSelector, IDulTypeSelectorProps} from "@/Inputs";
 import {DulService, IallDocTypes} from "@/soctech/DulService";
