@@ -76,7 +76,6 @@ export class FilterReportElement<TData, TFilter = {}>
           onClick={this.onClick}
           disabled={!!this.state.loading}
           className={hasHeaderDynamicProps.filterButtonClassName}
-          style={{height: 45, width: 45}}
           size="small"
         >
           <SettingsIcon/>
