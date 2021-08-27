@@ -61,7 +61,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
     return typeof (value) === "boolean" ? {disabled: value} : {};
   };
 
-  const docTypeItem = {
+  const docTypeItem: IBaseFormItemLayout = {
     title: "Тип документа",
     fieldName: docTypeIdFieldName,
     mapFormValuesToRequired: (): boolean => trueIfEmpty(props.required),
@@ -95,7 +95,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
     )
   };
 
-  const seriesItem = {
+  const seriesItem: IBaseFormItemLayout = {
     title: "Серия",
     fieldName: seriesFieldName,
     mapFormValuesToRequired: (get: ValuesGetter): boolean => {
@@ -123,7 +123,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
     )
   };
 
-  const numberItem = {
+  const numberItem: IBaseFormItemLayout = {
     title: "Номер",
     fieldName: numberFieldName,
     mapFormValuesToRequired: (get: ValuesGetter): boolean => {
@@ -151,7 +151,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
     )
   };
 
-  const dateItem = {
+  const dateItem: IBaseFormItemLayout = {
     title: "Дата выдачи",
     fieldName: dateFieldName,
     mapFormValuesToRequired: (get: ValuesGetter): boolean => {
@@ -181,7 +181,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
     ),
   };
 
-  const departmentCodeItem = {
+  const departmentCodeItem: IBaseFormItemLayout = {
     title: "Код подразделения",
     fieldName: departmentCodeFieldName,
     mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
@@ -202,7 +202,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
     )
   };
 
-  const issuedByItem = {
+  const issuedByItem: IBaseFormItemLayout = {
     title: "Кем выдан",
     fieldName: issuedByFieldName,
     mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
@@ -223,7 +223,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
     )
   };
 
-  const layoutParams = {
+  const layoutParams: IDulCardLayoutParams = {
     docTypeItem,
     seriesItem,
     numberItem,
