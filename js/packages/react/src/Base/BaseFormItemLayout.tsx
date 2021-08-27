@@ -6,13 +6,9 @@ import {RuleItem} from 'async-validator';
 import autobind from 'autobind-decorator';
 import classNames from 'classnames';
 import * as React from 'react';
-
-// noinspection ES6PreferShortImport
-import {BASE_CARD_ITEM_LABEL_HORIZONTAL} from "../styles";
-// noinspection ES6PreferShortImport
-import {SUIMaskedInput} from '../SUIMaskedInput';
-// noinspection ES6PreferShortImport
-import {SUIReactComponent} from '../SUIReactComponent';
+import {SUIMaskedInput} from '@/SUIMaskedInput';
+import {BASE_CARD_ITEM_LABEL_HORIZONTAL} from "@/styles";
+import {SUIReactComponent} from '@/SUIReactComponent';
 
 import {DEFAULT_ITEM_RENDERER} from './BaseCardItemLayout';
 import {BaseForm, IFormField, SUBMITTED_FIELD, ValuesGetter} from './BaseForm';
@@ -110,7 +106,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
   public render(): React.ReactNode {
     return (
       <BaseFormContext.Consumer>
-        {({baseForm, verticalLabel, customInputNodesProps, customFinalInputNodesProps}): React.ReactNode => {
+        {({baseForm, customInputNodesProps, customFinalInputNodesProps, initialValues, verticalLabel}): React.ReactNode => {
           this.baseForm = baseForm;
           const item = this.props;
           const valuePropName = item.valuePropName || 'value';
@@ -121,7 +117,11 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
             this.formField = baseForm.getOrCreateFormField(this.formFieldName);
             this.registerObservableHandler(this.formField.value.subscribe(value => this.setState({value})));
             this.registerObservableHandler(this.formField.error.subscribe(error => this.setState({error})));
-            if (item.initialValue != null) {
+
+            // Initial value
+            if (initialValues?.hasOwnProperty?.(this.formFieldName)) {
+              this.formField.value.setValue(initialValues[this.formFieldName]);
+            } else if (item.initialValue != null) {
               this.formField.value.setValue(item.initialValue);
             }
             if (this.props.afterChange) {

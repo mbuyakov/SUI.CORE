@@ -1,22 +1,14 @@
 /* eslint-disable */
-import {IObjectWithIndex, OneOrArray, wrapInArray} from '@sui/core';
+import {IObjectWithIndex} from '@sui/core';
+import {Observable, ObservableHandlerStub} from "@/Observable";
+import {BASE_FORM_CLASS} from "@/styles";
+import {SUIReactComponent} from "@/SUIReactComponent";
+import {hasErrors} from '@/utils';
 import asyncValidator, {RuleItem} from 'async-validator';
 import autobind from 'autobind-decorator';
 import classNames from 'classnames';
 import isEqual from 'lodash/isEqual';
-import moment from 'moment';
 import * as React from 'react';
-
-// noinspection ES6PreferShortImport
-import {errorNotification} from '../drawUtils';
-// noinspection ES6PreferShortImport
-import {Observable, ObservableHandlerStub} from '../Observable';
-// noinspection ES6PreferShortImport
-import {BASE_FORM_CLASS} from '../styles';
-// noinspection ES6PreferShortImport
-import {SUIReactComponent} from '../SUIReactComponent';
-// noinspection ES6PreferShortImport
-import {hasErrors} from '../utils/formUtils';
 
 import {BaseCard, IBaseCardProps} from './BaseCard';
 import {BaseFormContext} from './BaseFormContext';
@@ -25,7 +17,6 @@ import {IBaseFormItemLayout, renderIBaseFormItemLayout} from './BaseFormItemLayo
 export type ValuesGetter = (fields: string[]) => IObjectWithIndex;
 
 export const SUBMITTED_FIELD = '___SUBMITTED___';
-export const FORM_LOCALSTORAGE_KEY = '__SUI_FORM_';
 
 export interface IBaseFormChildrenProps {
   get?: ValuesGetter,
@@ -45,8 +36,7 @@ export type IBaseFormProps = Omit<IBaseCardProps<any, IBaseFormItemLayout>, 'ite
   customFinalInputNodesProps?: IObjectWithIndex;
   customInputNodesProps?: IObjectWithIndex;
   initialValues?: IObjectWithIndex;
-  momentFields?: OneOrArray<string>;
-  uuid: string;
+  uuid?: string;
   verticalLabel?: boolean;
   customFieldValues?(get: ValuesGetter): IObjectWithIndex;
   onInitialized?(form: BaseForm): void;
@@ -81,7 +71,6 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
 
   @autobind
   public clearForm(): void {
-    localStorage.removeItem(`${FORM_LOCALSTORAGE_KEY}${this.props.uuid}`);
     Array.from(this.formFields.keys()).reduce((prev, cur) => {
       prev[cur] = null;
 
@@ -94,26 +83,6 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   }
 
   public componentDidMount(): void {
-    let formParsedValue;
-    if (this.props.initialValues) {
-      formParsedValue = this.props.initialValues;
-    }
-    const formValue = localStorage.getItem(`${FORM_LOCALSTORAGE_KEY}${this.props.uuid}`);
-    if (formParsedValue || formValue) {
-      try {
-        if (!formParsedValue) {
-          formParsedValue = JSON.parse(formValue);
-        }
-        this.setFieldsValuesFromRaw(formParsedValue);
-      } catch (e) {
-        errorNotification('Ошибка при попытке загрузки заполненной формы', e.stack ? e.stack.toString() : e.toString());
-        console.error(e);
-        console.log(formValue);
-        localStorage.removeItem(`${FORM_LOCALSTORAGE_KEY}${this.props.uuid}`);
-        console.log('Saved value cleared');
-      }
-    }
-
     this.customFieldValuesUpdater();
 
     if (this.props.onInitialized) {
@@ -122,13 +91,6 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
 
     // To disabled submit button at the beginning
     this.validateFields();
-  }
-
-  public componentDidUpdate(prevProps: IBaseFormProps): void {
-    // Very strange use-case
-    if (!isEqual(prevProps.initialValues, this.props.initialValues) && this.props.initialValues) {
-      this.setFieldsValues(this.props.initialValues);
-    }
   }
 
   @autobind
@@ -258,12 +220,12 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
     const showChildrenOnTop = !childrenPosition || childrenPosition === "top" || childrenPosition === "both";
     const showChildrenOnBottom = childrenPosition === "bottom" || childrenPosition === "both";
     const children = this.props.children && this.props.children({
-        get: this.headerWrapperValuesGetter,
-        hasErrors: this.hasErrors,
-        isSaveInProgress: this.state.saving,
-        onClear: this.clearForm,
-        onSubmit: this.onSubmit
-      });
+      get: this.headerWrapperValuesGetter,
+      hasErrors: this.hasErrors,
+      isSaveInProgress: this.state.saving,
+      onClear: this.clearForm,
+      onSubmit: this.onSubmit
+    });
 
     return (
       <BaseFormContext.Provider
@@ -271,7 +233,8 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
           baseForm: this,
           customFinalInputNodesProps: this.props.customFinalInputNodesProps,
           customInputNodesProps: this.props.customInputNodesProps,
-          verticalLabel: !!this.props.verticalLabel,
+          initialValues: this.props.initialValues,
+          verticalLabel: !!this.props.verticalLabel
         }}
       >
         {showChildrenOnTop && children}
@@ -417,29 +380,6 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
     }, {} as IObjectWithIndex);
   }
 
-  @autobind
-  private setFieldsValuesFromRaw(values: IObjectWithIndex): void {
-    const momentsFields = this.props.momentFields && wrapInArray(this.props.momentFields) || [];
-
-    const parsedValues = Object.keys(values).reduce((prev, curKey) => {
-      let fieldValue = values[curKey];
-
-      // Magic
-      if (typeof fieldValue === 'string' && momentsFields.includes(curKey)) {
-        const momentValue = moment(fieldValue);
-
-        if (momentValue.isValid()) {
-          fieldValue = momentValue;
-        }
-      }
-
-      prev[curKey] = fieldValue;
-
-      return prev;
-    }, {} as IObjectWithIndex);
-
-    this.setFieldsValues(parsedValues);
-  }
 }
 
 class FormBodyWrapper extends React.Component {
@@ -451,4 +391,5 @@ class FormBodyWrapper extends React.Component {
   public shouldComponentUpdate(): boolean {
     return false;
   }
+
 }
