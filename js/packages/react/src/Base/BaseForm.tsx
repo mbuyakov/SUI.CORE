@@ -16,8 +16,6 @@ import {IBaseFormItemLayout, renderIBaseFormItemLayout} from './BaseFormItemLayo
 
 export type ValuesGetter = (fields: string[]) => IObjectWithIndex;
 
-export const SUBMITTED_FIELD = '___SUBMITTED___';
-
 export interface IBaseFormChildrenProps {
   get?: ValuesGetter,
   hasErrors?: Observable<boolean>,
@@ -182,24 +180,7 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   }
 
   @autobind
-  public isFieldsTouched(fields?: string[]): boolean {
-    if (fields == null) {
-      fields = Array.from(this.formFields.keys());
-    }
-
-    return fields.some(field => this.isFieldTouched(field));
-  }
-
-  @autobind
-  public isFieldTouched(field: string): boolean {
-    // Stub. Is it really needed?
-    return true;
-  }
-
-  @autobind
   public async onSubmit(): Promise<boolean> {
-    this.setFieldValue(SUBMITTED_FIELD, true);
-
     if (!this.hasErrors.getValue()) {
       this.setState({saving: true});
       const answer = await this.props.onSubmit(this.getFieldsValue());

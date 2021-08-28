@@ -11,7 +11,7 @@ import {BASE_CARD_ITEM_LABEL_HORIZONTAL} from "@/styles";
 import {SUIReactComponent} from '@/SUIReactComponent';
 
 import {DEFAULT_ITEM_RENDERER} from './BaseCardItemLayout';
-import {BaseForm, IFormField, SUBMITTED_FIELD, ValuesGetter} from './BaseForm';
+import {BaseForm, IFormField, ValuesGetter} from './BaseForm';
 import {BaseFormContext} from './BaseFormContext';
 
 const FILL_FIELD_TEXT = 'Заполните поле';
@@ -156,14 +156,11 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
             </span>
           );
 
-          const isSubmitted = baseForm.getFieldValue(SUBMITTED_FIELD);
-          const fieldHasValue = baseForm.getFieldValue(item.fieldName) != null;
-          const isTouched = fieldHasValue || baseForm.isFieldTouched(item.fieldName);
           const errors = this.state.error;
 
           const formItemProps: Partial<FormItemProps> = {
-            help: (isTouched) ? errors : ((isSubmitted && required) ? FILL_FIELD_TEXT : ''),
-            validateStatus: (isTouched ? errors : (isSubmitted && required)) ? 'error' : '',
+            help: errors,
+            validateStatus: errors,
           };
 
           let additionalProps: IObjectWithIndex = {};
