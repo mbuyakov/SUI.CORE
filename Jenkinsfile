@@ -40,7 +40,7 @@ pipeline {
               }
               steps {
                 sh """
-                  docker login nexus.suilib.ru:10400/repository/docker-sui --username ${HARBOR_USR} --password ${HARBOR_PSW}
+                  docker login nexus.suilib.ru:10400/repository/docker-sui/ --username ${NEXUS_USR} --password ${NEXUS_PSW}
                   docker push nexus.suilib.ru:10400/repository/docker-sui/sui-baseimage:${BUILD_NUMBER}${SUFFIX}
                   docker push nexus.suilib.ru:10400/repository/docker-sui/sui-postgraphile:${BUILD_NUMBER}${SUFFIX}
                 """
