@@ -15,8 +15,6 @@ pipeline {
     SUFFIX = "${env.BRANCH_NAME == "master" ? " " : ("-" + env.BRANCH_NAME)}"
   }
 
-  agent { label 'master' }
-
   stages {
     stage("Parralel") {
       parallel {
