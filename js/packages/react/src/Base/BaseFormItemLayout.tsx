@@ -160,7 +160,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
 
           const formItemProps: Partial<FormItemProps> = {
             help: errors,
-            validateStatus: errors,
+            validateStatus: errors ? 'error' : '',
           };
 
           let additionalProps: IObjectWithIndex = {};
