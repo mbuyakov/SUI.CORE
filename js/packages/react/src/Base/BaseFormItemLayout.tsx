@@ -38,7 +38,7 @@ export interface IBaseFormItemLayoutBase {
   title?: string | React.ReactNode;
   valuePropName?: string;
 
-  afterChange?(value: any, form: BaseForm): void,
+  afterChange?(value: any, form: BaseForm, oldValue: any): void,
 
   getValueFromEvent?(...args: any[]): any;
 
@@ -125,8 +125,8 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
               this.formField.value.setValue(item.initialValue);
             }
             if (this.props.afterChange) {
-              this.registerObservableHandler(this.formField.value.subscribe(value => {
-                this.props.afterChange(value, this.baseForm);
+              this.registerObservableHandler(this.formField.value.subscribe((value, oldValue) => {
+                this.props.afterChange(value, this.baseForm, oldValue);
               }));
             }
           }
