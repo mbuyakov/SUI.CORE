@@ -78,7 +78,7 @@ export function disableFutureDateAndPassportIssueDateByAge(birthday: string, age
   const disableDateByAge = (): boolean => {
     if (moment(birthday).add(45, 'years').add(30, "days") <= realCurrent) {
       return dateDisabler(moment(birthday).add(45, 'years').toISOString(), "less")(current);
-    } else if(moment(birthday).add(20, 'years').add(30, "days") <= realCurrent) {
+    } else if (moment(birthday).add(20, 'years').add(30, "days") <= realCurrent) {
       return dateDisabler(moment(birthday).add(20, 'years').toISOString(), "less")(current);
     } else if (moment(birthday).add(14, 'years') <= realCurrent) {
       return dateDisabler(moment(birthday).add(14, "years").toISOString(), "less")(current)
@@ -92,7 +92,7 @@ export function disableFutureDateAndPassportIssueDateByAge(birthday: string, age
 export function disableFutureDateAndIssueDateGreaterThanAge(docCode: number, birthday: string, age: number, current: Moment): boolean {
   const targetAge = docCode === 14 ? 14 : 18;
   const disableDateByAge = age >= targetAge
-    ? dateDisabler( moment(birthday).add(targetAge, "years").toISOString(), "less")(current)
+    ? dateDisabler(moment(birthday).add(targetAge, "years").toISOString(), "less")(current)
     : true;
 
   return disableFutureDate(current) || disableDateByAge;

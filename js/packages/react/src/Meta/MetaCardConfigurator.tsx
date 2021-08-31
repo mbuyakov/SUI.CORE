@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {MetaCardPlugin} from "./MetaCardPlugin";
+
 // import {ChartPlugin} from "./plugins/chart";
 
 export class MetaCardConfigurator {

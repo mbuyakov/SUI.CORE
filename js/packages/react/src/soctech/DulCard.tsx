@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import locale from "antd/es/date-picker/locale/ru_RU";
-import {DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, Nullable, disableDocDate, IObjectWithIndex} from "@sui/core";
+import {DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, disableDocDate, IObjectWithIndex, Nullable} from "@sui/core";
 import moment, {Moment} from "moment";
 import {DatePickerProps} from "antd/lib/date-picker";
 import {DatePicker} from "antd";
@@ -49,7 +49,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
   const departmentCodeFieldName = props.fieldNames?.departmentCode || "departmentCode";
   const issuedByFieldName = props.fieldNames?.issuedBy || "issuedBy";
 
-  const propsDisabled = (get: ValuesGetter): {disabled?: boolean} => {
+  const propsDisabled = (get: ValuesGetter): { disabled?: boolean } => {
     let value: boolean;
 
     if (typeof (props.disabled) === "function") {
@@ -326,6 +326,7 @@ function narrowDulCardLayout<T>(params: IDulCardLayoutParams): Array<IBaseCardRo
 
 interface IStringValueDatePickerProps extends Omit<DatePickerProps, "picker" | "defaultValue" | "value" | "onChange"> {
   value?: Nullable<string>;
+
   onChange?(value: Nullable<string>): void;
 }
 

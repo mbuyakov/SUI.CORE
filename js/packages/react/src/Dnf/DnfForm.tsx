@@ -7,12 +7,14 @@ import {CardProps} from "antd/lib/card";
 import {FormItemProps} from "antd/lib/form";
 import {FormListProps} from "antd/lib/form/FormList";
 import React from "react";
-import { NamePath } from 'antd/lib/form/interface';
+import {NamePath} from 'antd/lib/form/interface';
 import {DnfActions} from "@/Dnf/DnfActions";
 
 export interface IRowCreatorMeta {
   formItemNameGenerator(field: NamePath): NamePath;
+
   formItemFieldKeyGenerator(field: NamePath): NamePath;
+
   internalNamePathGenerator(field?: NamePath): NamePath;
 }
 
@@ -30,6 +32,7 @@ export interface IDnfFormProps {
   gap?: number;
   andCardProps?: CardProps;
   addDisjunctionFormItemProps?: FormItemProps;
+
   rowCreator(meta: IRowCreatorMeta): JSX.Element;
 }
 

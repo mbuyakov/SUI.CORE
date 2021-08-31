@@ -37,7 +37,7 @@ export function CustomPagingPanelContainer(props: ICustomPagingContainer): React
           type: "number",
         }}
         onChange={(event): void => {
-          if(!!debouncedOnChange) {
+          if (!!debouncedOnChange) {
             const page = event.target.value && parseInt(event.target.value, 10);
             debouncedOnChange((!page || isNaN(page)) ? 0 : page - 1);
           }

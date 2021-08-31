@@ -7,8 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import autobind from 'autobind-decorator';
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { sleep } from '@sui/core';
+import {v4 as uuidv4} from 'uuid';
+import {sleep} from '@sui/core';
 
 import {Z_999} from './styles';
 

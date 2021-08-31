@@ -1,4 +1,4 @@
-import { message, notification } from "antd";
+import {message, notification} from "antd";
 import * as React from "react";
 
 const MESSAGE_TIMEOUT = 3;
@@ -17,7 +17,7 @@ export function errorNotification(messageText: string, description: string | Rea
   notification.error({
     description,
     message: messageText,
-    style: { width: 500, marginLeft: -100 },
+    style: {width: 500, marginLeft: -100},
   });
 }
 

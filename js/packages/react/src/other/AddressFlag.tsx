@@ -6,7 +6,7 @@ export class AddressFlag extends React.Component<{
   title?: string
 }> {
   public render(): JSX.Element {
-    return !this.props.disabled &&(
+    return !this.props.disabled && (
       <span>
         <span style={{marginRight: 6}}>{this.props.title}: </span>
         <Switch

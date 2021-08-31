@@ -1,10 +1,10 @@
 import Button, {ButtonType} from 'antd/lib/button/button';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-import { RouteComponentProps, Router, withRouter } from 'react-router';
+import {RouteComponentProps, Router, withRouter} from 'react-router';
 
 // noinspection ES6PreferShortImport
-import { draw } from '../utils';
+import {draw} from '../utils';
 
 export interface IModalLinkProps {
   ghost?: boolean,
@@ -41,4 +41,4 @@ class __ModalLink extends React.Component<IModalLinkProps & RouteComponentProps>
 
 }
 
-export const ModalLink  = withRouter(__ModalLink);
+export const ModalLink = withRouter(__ModalLink);

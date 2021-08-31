@@ -1,4 +1,3 @@
-
 export enum ActionType {
   EQUAL = 'EQUAL',
   NOT_EQUAL = 'NOT_EQUAL',

@@ -26,9 +26,7 @@ export class AdditionalTab extends React.Component<IAdditionalTabProps, IAdditio
       <Card
         type="inner"
         title="Покраска строк таблицы"
-        bodyStyle={{
-
-        }}
+        bodyStyle={{}}
       >
         <Space direction="vertical" style={{width: "100%"}}>
           <Input.TextArea

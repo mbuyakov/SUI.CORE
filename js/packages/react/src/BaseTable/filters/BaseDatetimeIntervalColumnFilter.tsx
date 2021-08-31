@@ -45,7 +45,7 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
     const value = this.propsFilterValueToStateFilterValue(this.props.filter?.value as unknown as string[]);
 
     if (!equals(value, this.state.lastSavedValue)) {
-      this.setState({ lastSavedValue: value, filterValue: value });
+      this.setState({lastSavedValue: value, filterValue: value});
     }
   }
 

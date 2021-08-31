@@ -33,6 +33,7 @@ export interface IDnDListProps<T extends React.Component> extends IBaseDnDChildP
   style?: React.CSSProperties
   title?: string
   type: string
+
   shouldAcceptDrop?(sourceContainerOptions: ContainerOptions, payload: any): boolean;
 }
 

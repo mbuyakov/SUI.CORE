@@ -86,7 +86,7 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
             // Multiple render issue
             maxTagCount={5}
             {...this.props}
-            filter={{ ...this.props.filter, value }}
+            filter={{...this.props.filter, value}}
             data={this.filterData(selectData)}
             onChange={this.onChange}
           />
@@ -173,7 +173,7 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
     }
 
     this.props.onFilter(filter);
-    this.setState({ lastFilterValue: extractValueFromFilter<T>(filter) });
+    this.setState({lastFilterValue: extractValueFromFilter<T>(filter)});
   }
 
 }

@@ -38,7 +38,7 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
     const value = propsFilterValueToStateFilterValue((this.props.filter?.value || []) as unknown as FilterValue);
 
     if (!equals(value, this.state.lastFilterValue)) {
-      this.setState({ lastFilterValue: value, value });
+      this.setState({lastFilterValue: value, value});
     }
   }
 
@@ -78,7 +78,7 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
   @autobind
   private onFocusChanged(index: 0 | 1, state: boolean): void {
     this.focus[index] = state;
-    if(this.filterTriggerTimeout != null) {
+    if (this.filterTriggerTimeout != null) {
       clearTimeout(this.filterTriggerTimeout);
     }
   }
@@ -124,7 +124,7 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
 
       stateValue[index] = numberValue ?? null;
 
-      this.setState({ value: stateValue });
+      this.setState({value: stateValue});
     };
   }
 

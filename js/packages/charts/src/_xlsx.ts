@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,import/first */
+
 // XLSX is part of amcharts dependencies
 
 export interface XLSX {
@@ -466,8 +467,10 @@ export interface MarginInfo {
   /** Footer bottom height (inches) */
   footer?: number;
 }
+
 export type SheetType = 'sheet' | 'chart';
 export type SheetKeys = string | MarginInfo | SheetType;
+
 /** General object representing a Sheet (worksheet or chartsheet) */
 export interface Sheet {
   /**
@@ -523,7 +526,9 @@ export interface WorkSheet extends Sheet {
  *
  * The normal Worksheet type uses indexer of type `any` -- this enforces CellObject
  */
-export interface StrictWS { [addr: string]: CellObject; }
+export interface StrictWS {
+  [addr: string]: CellObject;
+}
 
 /**
  * The Excel data type for a cell.
@@ -654,7 +659,7 @@ export interface Sheet2HTMLOpts {
 
 export interface Sheet2JSONOpts extends DateNFOption {
   /** Output format */
-  header?: "A"|number|string[];
+  header?: "A" | number | string[];
 
   /** Override worksheet range */
   range?: any;
@@ -677,7 +682,8 @@ export interface AOA2SheetOpts extends CommonOptions, DateNFOption {
   sheetStubs?: boolean;
 }
 
-export interface SheetAOAOpts extends AOA2SheetOpts, OriginOption {}
+export interface SheetAOAOpts extends AOA2SheetOpts, OriginOption {
+}
 
 export interface JSON2SheetOpts extends CommonOptions, DateNFOption {
   /** Use specified column order */
@@ -687,7 +693,8 @@ export interface JSON2SheetOpts extends CommonOptions, DateNFOption {
   skipHeader?: boolean;
 }
 
-export interface SheetJSONOpts extends JSON2SheetOpts, OriginOption {}
+export interface SheetJSONOpts extends JSON2SheetOpts, OriginOption {
+}
 
 export interface Table2SheetOpts extends CommonOptions, DateNFOption {
   /* If true, plaintext parsing will not parse values */
@@ -709,21 +716,26 @@ export interface XLSX$Utils {
 
   /** Converts an array of arrays of JS data to a worksheet. */
   aoa_to_sheet<T>(data: T[][], opts?: AOA2SheetOpts): WorkSheet;
+
   aoa_to_sheet(data: any[][], opts?: AOA2SheetOpts): WorkSheet;
 
   /** Converts an array of JS objects to a worksheet. */
   json_to_sheet<T>(data: T[], opts?: JSON2SheetOpts): WorkSheet;
+
   json_to_sheet(data: any[], opts?: JSON2SheetOpts): WorkSheet;
 
   /** BROWSER ONLY! Converts a TABLE DOM element to a worksheet. */
-  table_to_sheet(data: any,  opts?: Table2SheetOpts): WorkSheet;
-  table_to_book(data: any,  opts?: Table2SheetOpts): WorkBook;
+  table_to_sheet(data: any, opts?: Table2SheetOpts): WorkSheet;
+
+  table_to_book(data: any, opts?: Table2SheetOpts): WorkBook;
 
   /* --- Export Functions --- */
 
   /** Converts a worksheet object to an array of JSON objects */
   sheet_to_json<T>(worksheet: WorkSheet, opts?: Sheet2JSONOpts): T[];
+
   sheet_to_json(worksheet: WorkSheet, opts?: Sheet2JSONOpts): any[][];
+
   sheet_to_json(worksheet: WorkSheet, opts?: Sheet2JSONOpts): any[];
 
   /** Generates delimiter-separated-values output */
@@ -760,6 +772,7 @@ export interface XLSX$Utils {
 
   /** Converts 0-indexed range to A1 form */
   encode_range(s: CellAddress, e: CellAddress): string;
+
   encode_range(r: Range): string;
 
   /** Converts A1 cell address to 0-indexed form */
@@ -786,10 +799,10 @@ export interface XLSX$Utils {
   book_append_sheet(workbook: WorkBook, worksheet: WorkSheet, name?: string): void;
 
   /** Set sheet visibility (visible/hidden/very hidden) */
-  book_set_sheet_visibility(workbook: WorkBook, sheet: number|string, visibility: number): void;
+  book_set_sheet_visibility(workbook: WorkBook, sheet: number | string, visibility: number): void;
 
   /** Set number format for a cell */
-  cell_set_number_format(cell: CellObject, fmt: string|number): CellObject;
+  cell_set_number_format(cell: CellObject, fmt: string | number): CellObject;
 
   /** Set hyperlink for a cell */
   cell_set_hyperlink(cell: CellObject, target: string, tooltip?: string): CellObject;
@@ -801,14 +814,16 @@ export interface XLSX$Utils {
   cell_add_comment(cell: CellObject, text: string, author?: string): void;
 
   /** Assign an Array Formula to a range */
-  sheet_set_array_formula(ws: WorkSheet, range: Range|string, formula: string): WorkSheet;
+  sheet_set_array_formula(ws: WorkSheet, range: Range | string, formula: string): WorkSheet;
 
   /** Add an array of arrays of JS data to a worksheet */
   sheet_add_aoa<T>(ws: WorkSheet, data: T[][], opts?: SheetAOAOpts): WorkSheet;
+
   sheet_add_aoa(ws: WorkSheet, data: any[][], opts?: SheetAOAOpts): WorkSheet;
 
   /** Add an array of JS objects to a worksheet */
   sheet_add_json(ws: WorkSheet, data: any[], opts?: SheetJSONOpts): WorkSheet;
+
   sheet_add_json<T>(ws: WorkSheet, data: T[], opts?: SheetJSONOpts): WorkSheet;
 
 
@@ -832,8 +847,10 @@ export interface XLSX$Consts {
 export interface StreamUtils {
   /** CSV output stream, generate one line at a time */
   to_csv(sheet: WorkSheet, opts?: Sheet2CSVOpts): any;
+
   /** HTML output stream, generate one line at a time */
   to_html(sheet: WorkSheet, opts?: Sheet2HTMLOpts): any;
+
   /** JSON object stream, generate one row at a time */
   to_json(sheet: WorkSheet, opts?: Sheet2JSONOpts): any;
 }

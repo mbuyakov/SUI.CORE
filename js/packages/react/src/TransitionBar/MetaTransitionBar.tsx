@@ -1,7 +1,7 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import {IRole, ColumnInfo, TableInfoManager, camelCase, asyncMap, groupBy, IObjectWithIndex, toMap, formatRoleName} from "@sui/core";
+import {asyncMap, camelCase, ColumnInfo, formatRoleName, groupBy, IObjectWithIndex, IRole, TableInfoManager, toMap} from "@sui/core";
 
 
 import {getDataSet, getDataSetRender, getUser} from "../utils";

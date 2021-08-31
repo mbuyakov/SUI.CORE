@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // noinspection ES6PreferShortImport
-import { Logger } from "../utils";
+import {Logger} from "../utils";
 
 // Please, don't touch. Magic from typescript-ioc
 export function InjectLogger(...args: any[]): any {

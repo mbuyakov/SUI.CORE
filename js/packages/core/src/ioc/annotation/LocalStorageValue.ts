@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Container } from 'typescript-ioc';
+import {Container} from 'typescript-ioc';
 
 // Don't touch import
 // noinspection ES6PreferShortImport
-import { Logger } from '../utils';
+import {Logger} from '../utils';
 // noinspection ES6PreferShortImport
-import { LocalStorageService } from '../service/LocalStorageService';
+import {LocalStorageService} from '../service/LocalStorageService';
 // noinspection ES6PreferShortImport
-import { Nullable } from '../../other';
+import {Nullable} from '../../other';
 
 export interface LocalStorageValueWrapper {
   get(): Nullable<string>;
+
   set(value: Nullable<string>): void;
 }
 
@@ -24,7 +25,7 @@ export function _LocalStorageValue(localStorageKey: string): LocalStorageValueWr
     set(newValue: string): void {
       const oldValue = localStorageService.getItem(localStorageKey);
       log.info(`[${localStorageKey}] ${oldValue} -> ${newValue}`);
-      if(newValue == null) {
+      if (newValue == null) {
         localStorageService.removeItem(localStorageKey);
       } else {
         localStorageService.setItem(localStorageKey, newValue);
@@ -46,11 +47,11 @@ export function LocalStorageValue(localStorageKey: string) {
     Object.defineProperty(target.constructor.prototype, key, {
       enumerable: true,
       // eslint-disable-next-line object-shorthand,func-names
-      get: function() {
+      get: function () {
         return wrapper;
       },
       // eslint-disable-next-line object-shorthand,func-names
-      set: function() {
+      set: function () {
         throw new Error("Can't set LocalStorageValue wrapper!")
       },
     });

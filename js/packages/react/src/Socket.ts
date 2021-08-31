@@ -1,6 +1,6 @@
 import {Client, IPublishParams, StompConfig} from "@stomp/stompjs";
 import autobind from "autobind-decorator";
-import { sleep } from '@sui/core';
+import {sleep} from '@sui/core';
 
 
 const CONNECTED_AWAIT_TIMEOUT = 100;
@@ -16,7 +16,7 @@ export class Socket {
   }
 
   @autobind
-public disconnect(): void {
+  public disconnect(): void {
     const client = this.stompClient;
     if (client) {
       this.stompClient = undefined;
@@ -41,7 +41,7 @@ public disconnect(): void {
   }
 
   @autobind
-public async send(params: IPublishParams): Promise<void> {
+  public async send(params: IPublishParams): Promise<void> {
     if (this.stompClient) {
       while (!this.isConnected()) {
         await sleep(CONNECTED_AWAIT_TIMEOUT);

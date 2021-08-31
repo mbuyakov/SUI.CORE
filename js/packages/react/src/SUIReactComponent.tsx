@@ -1,7 +1,7 @@
 import autobind from 'autobind-decorator';
 import React from 'react';
 
-import { ObservableHandlerStub } from './Observable';
+import {ObservableHandlerStub} from './Observable';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export class SUIReactComponent<P = {}, S = {}> extends React.Component<P, S> {

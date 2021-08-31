@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { TableRenderParamsPlugin } from './plugins';
+import {TableRenderParamsPlugin} from './plugins';
 
 export class TableRenderSettingsPluginManager {
   public static plugins: Map<string, TableRenderParamsPlugin<any>> = new Map();

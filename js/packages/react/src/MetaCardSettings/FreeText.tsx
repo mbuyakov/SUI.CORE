@@ -23,7 +23,7 @@ export class FreeText extends SerializableDnDChild<SerializedFreeText> {
   public constructor(props: IFreeTextProps) {
     super(props);
 
-    if(this.isNew) {
+    if (this.isNew) {
       this.state = {
         ...this.state,
         text: "",

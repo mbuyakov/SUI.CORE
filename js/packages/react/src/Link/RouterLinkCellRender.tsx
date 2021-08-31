@@ -1,18 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 
-import { concatDataKey, DataKey, getDataByKey } from '@sui/core';
+import {concatDataKey, DataKey, getDataByKey} from '@sui/core';
 
-import { RouterLink, RouterLinkType } from './RouterLink';
+import {RouterLink, RouterLinkType} from './RouterLink';
 
 interface IRouterLinkCellRenderRet {
   dataKey?: DataKey
-groupingCriteria(value: any): any;
-render?(value: any, row: any): React.ReactNode;
+
+  groupingCriteria(value: any): any;
+
+  render?(value: any, row: any): React.ReactNode;
 }
 
 export function routerLinkCellRender(
-link: (id: any) => string,
+  link: (id: any) => string,
   params?: {
     baseKey?: DataKey,
     idKey?: DataKey,
@@ -25,8 +27,8 @@ link: (id: any) => string,
   const renderKey = params && (params.renderKey || params.valueKey);
   const textKey = params && renderKey && [params.baseKey, renderKey];
   const ret: IRouterLinkCellRenderRet = {
-groupingCriteria: (value: any): any => value,
-render: (value: any, row: any): React.ReactNode => {
+    groupingCriteria: (value: any): any => value,
+    render: (value: any, row: any): React.ReactNode => {
       const id = getDataByKey(row, ...idKey);
       if (!id) {
         return null;

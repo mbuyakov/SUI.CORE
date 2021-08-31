@@ -197,7 +197,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
                 <span>Во вложенной карточке</span>
                 <Checkbox checked={this.state.tabsInCard} onChange={this.onTabsInCardChanged}/>
               </div>}
-            bodyStyle={{ padding: 0, paddingTop: 1 }}
+            bodyStyle={{padding: 0, paddingTop: 1}}
             isVersionNotLast={isVersionNotLast}
           >
             <DnDList<TabSettings>
@@ -212,7 +212,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
                   id={tab.id}
                 />
               ))}
-              style={{ border: 0 }}
+              style={{border: 0}}
               addButtons={[
                 (<Menu.Item
                   onClick={this.onTabAddClicked}
@@ -229,7 +229,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
             title="Коллапс панели"
             draggable={this.props.draggable}
             onDelete={this.props.onDelete}
-            bodyStyle={{ padding: 0, paddingTop: 1 }}
+            bodyStyle={{padding: 0, paddingTop: 1}}
             isVersionNotLast={isVersionNotLast}
             settingsPopover={
               <div className={COMMON__GRID}>
@@ -242,7 +242,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
               id={`${this.props.id}-collapses`}
               type="CollapseSettings"
               deletableChildren={true}
-              style={{ border: 0 }}
+              style={{border: 0}}
               initialItems={this.state.collapsePanels.map((collapse: SerializedCollapseSettings) => (
                 <CollapseSettings
                   plain={collapse}

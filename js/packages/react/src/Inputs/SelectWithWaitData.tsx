@@ -39,7 +39,7 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
     return this.updateData();
   }
 
-  public async componentDidUpdate(prevProps: Readonly<ISelectWithWaitDataProps<TValueType, TGroupType>> ): Promise<void> {
+  public async componentDidUpdate(prevProps: Readonly<ISelectWithWaitDataProps<TValueType, TGroupType>>): Promise<void> {
     if (this.props.watchFilter) {
       if (JSON.stringify(this.props.valueTableFilter) !== JSON.stringify(prevProps.valueTableFilter)) {
         await this.updateData();

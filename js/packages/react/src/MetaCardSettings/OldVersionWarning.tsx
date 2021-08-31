@@ -11,7 +11,7 @@ export function OldVersionWarning(props: {
       title={`Текущия версия компонента - ${props.ids[0]}, доступна версия ${props.ids[1]}.\nДля получания доступа к новым функциям удалите элемент из карточки и добавьте заново`}
     >
       <WarningTwoTone
-        style={{transform: "scale(1.5)", marginRight: 12,...props.style}}
+        style={{transform: "scale(1.5)", marginRight: 12, ...props.style}}
         twoToneColor="#ad4e00"
       />
     </Tooltip>

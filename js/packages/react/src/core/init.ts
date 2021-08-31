@@ -2,7 +2,7 @@ import {InMemoryCache} from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-client';
 import {HttpLink} from 'apollo-link-http';
 import {Container} from 'typescript-ioc';
-import {authLink, IInitSUISettings, ISUISettings, ColorHeatMap, TableInfoManager, ColumnInfoManager, NameManager} from '@sui/core';
+import {authLink, ColorHeatMap, ColumnInfoManager, IInitSUISettings, ISUISettings, NameManager, TableInfoManager} from '@sui/core';
 
 import {parseRoutes, runCheckVersionMismatch} from '@/utils';
 import {ThemesConfig} from "@/themes";
@@ -36,7 +36,7 @@ export function initSUI(settings: _IInitSUISettings): void {
   Container.bindName('sui').to(settings);
 
   parseRoutes(settings.routes);
-  if(!settings.offlineMode) {
+  if (!settings.offlineMode) {
     const timeLabel = 'MetaInfoManagers load';
     console.time(timeLabel);
     Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));

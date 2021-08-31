@@ -1,7 +1,7 @@
 import autobind from "autobind-decorator";
 import moment from 'moment';
 import React from 'react';
-import { IObjectWithIndex } from '@sui/core';
+import {IObjectWithIndex} from '@sui/core';
 
 // noinspection ES6PreferShortImport
 import {BaseTable} from "../BaseTable";

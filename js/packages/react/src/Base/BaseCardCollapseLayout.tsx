@@ -1,7 +1,7 @@
 import Collapse from 'antd/lib/collapse';
 import * as React from 'react';
 
-import { defaultIfNotBoolean, OneOrArrayWithNulls, wrapInArrayWithoutNulls } from '@sui/core';
+import {defaultIfNotBoolean, OneOrArrayWithNulls, wrapInArrayWithoutNulls} from '@sui/core';
 import {BaseCardRow, IBaseCardRowLayout} from "@/Base/BaseCardRow";
 import {COLLAPSE_PANEL_NO_PADDING} from "@/styles";
 

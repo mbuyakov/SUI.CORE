@@ -62,11 +62,11 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
       </IconButton>
     );
     saveButton = (this.state.savedValue !== this.state.value
-      && (this.props.type === 'number' ? this.state.value as unknown !== '-' : true)
-      && (isEmptyAndEmptyNotAllowed
-          ? <Tooltip title="Нельзя сохранить пустое значение">{saveButton}</Tooltip>
-          : saveButton
-      ))
+        && (this.props.type === 'number' ? this.state.value as unknown !== '-' : true)
+        && (isEmptyAndEmptyNotAllowed
+            ? <Tooltip title="Нельзя сохранить пустое значение">{saveButton}</Tooltip>
+            : saveButton
+        ))
       || null;
 
     return (

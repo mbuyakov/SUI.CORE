@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { defaultIfNotBoolean } from '@sui/core';
+import {defaultIfNotBoolean} from '@sui/core';
 
-import { BASE_CARD_ITEM, BASE_CARD_ITEM_LABEL_HORIZONTAL } from './styles';
+import {BASE_CARD_ITEM, BASE_CARD_ITEM_LABEL_HORIZONTAL} from './styles';
 
 declare interface IDescriptionItemProps {
   containerStyle?: React.CSSProperties;

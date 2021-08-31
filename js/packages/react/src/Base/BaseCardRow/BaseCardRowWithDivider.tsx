@@ -18,6 +18,6 @@ export const BaseCardRowWithDivider: React.FC<IBaseCardRowWithDividerLayout> = p
   </Divider>
 );
 
-export function isRowWithDivider<T,ITEM>(row: IBaseCardRowLayout<T, ITEM>): row is IBaseCardRowWithDividerLayout {
+export function isRowWithDivider<T, ITEM>(row: IBaseCardRowLayout<T, ITEM>): row is IBaseCardRowWithDividerLayout {
   return "isDivider" in row && row.isDivider == true;
 }

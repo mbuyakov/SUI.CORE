@@ -1,9 +1,10 @@
 import * as React from 'react';
 
-import { DEFAULT_ITEM_RENDERER} from './BaseCardItemLayout';
+import {DEFAULT_ITEM_RENDERER} from './BaseCardItemLayout';
 
 export interface IBaseCardContext {
   forceRenderTabs: boolean;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   itemRenderer?(sourceItem: any, item: any, colspan: number): React.ReactNode
 }

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import * as React from "react";
 
-import { getDataByKey } from '@sui/core';
+import {getDataByKey} from '@sui/core';
 
 declare let window: Window & {
   DnDChildData: {
@@ -19,15 +19,15 @@ export interface IBaseDnDChildProps {
 
 export abstract class DnDChild<P extends IBaseDnDChildProps = IBaseDnDChildProps, S = {}> extends React.Component<P, S> {
   /**************************************************************************************************************
-  * ANY PRIVATE VARS IN CLASS MAY BE RESETED WHEN DnD CONTAINER CHANGED. STATE SAVED AND RESTORE IN CONSTRUCTOR *
-  ***************************************************************************************************************/
+   * ANY PRIVATE VARS IN CLASS MAY BE RESETED WHEN DnD CONTAINER CHANGED. STATE SAVED AND RESTORE IN CONSTRUCTOR *
+   ***************************************************************************************************************/
 
   protected constructor(props: P) {
     super(props);
     // DON'T USE AUTOBIND DECORATOR!!
     this.saveState = this.saveState.bind(this);
 
-    if(props.id) {
+    if (props.id) {
       const savedState = getDataByKey<S>(window, 'DnDChildData', props.id);
       if (savedState) {
         this.state = savedState;
@@ -38,7 +38,7 @@ export abstract class DnDChild<P extends IBaseDnDChildProps = IBaseDnDChildProps
   }
 
   public saveState(): void {
-    if(this.props.id == null) {
+    if (this.props.id == null) {
       throw new Error("No ID");
     }
     if (!window.DnDChildData) {

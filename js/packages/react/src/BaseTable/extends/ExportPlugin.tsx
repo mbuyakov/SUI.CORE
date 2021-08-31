@@ -6,6 +6,7 @@ import React from 'react';
 export interface IExportPluginProps {
   icon: JSX.Element;
   tooltip: string;
+
   onClick(getters: Getters): Promise<void>;
 }
 

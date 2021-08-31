@@ -30,7 +30,9 @@ interface IUserListProps<T> {
   handleDelete(ids: string[]): Promise<void>;
 
   isDeleted?(row: IObjectWithIndex): boolean;
+
   nameValidator?(_: any, value: string, callback: any): void
+
   userNameValidator?(_: any, value: string, callback: any): void
 }
 
@@ -54,7 +56,7 @@ export class UserList<T extends {}> extends React.Component<IUserListProps<T>> {
                   fieldName: "name",
                   inputNode: <Input placeholder="Введите ФИО"/>,
                   required: true,
-                  rules: [this.props.nameValidator ? {validator:  this.props.nameValidator} : {}],
+                  rules: [this.props.nameValidator ? {validator: this.props.nameValidator} : {}],
                   title: "ФИО"
                 }
               }
@@ -76,7 +78,7 @@ export class UserList<T extends {}> extends React.Component<IUserListProps<T>> {
                   fieldName: "username",
                   inputNode: <Input placeholder="Введите имя пользователя"/>,
                   required: true,
-                  rules: [this.props.userNameValidator ? {validator:  this.props.userNameValidator} : {min: MIN_USERNAME_LENGTH, message: MIN_USERNAME_LENGTH_MESSAGE}],
+                  rules: [this.props.userNameValidator ? {validator: this.props.userNameValidator} : {min: MIN_USERNAME_LENGTH, message: MIN_USERNAME_LENGTH_MESSAGE}],
                   title: "Имя пользователя"
                 }
               }

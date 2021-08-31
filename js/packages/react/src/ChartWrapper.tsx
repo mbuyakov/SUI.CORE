@@ -8,6 +8,7 @@ import {ThemeService} from './themes';
 export interface IChartWrapperProps<T extends { new(): any }> {
   data: any[];
   style?: React.CSSProperties;
+
   onChartCreated?(chart: InstanceType<T>, amcharts: AMCHARTS): void;
 }
 
@@ -40,7 +41,7 @@ export abstract class ChartWrapper<T extends { new(): any }> extends SUIReactCom
     this.chart = amcharts.am4core.create<InstanceType<T>>(`chartdiv_${this.id}`, this.getType(amcharts));
     // noinspection JSPrimitiveTypeWrapperUsage
     this.chart.language.locale = amcharts.am4lang_ru_RU;
-    if(this.nextData) {
+    if (this.nextData) {
       this.chart.data = this.nextData;
       this.nextData = null;
     } else {

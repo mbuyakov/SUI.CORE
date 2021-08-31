@@ -90,7 +90,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     const options = {first: false};
 
     return validator.validate({value}, options, errors => {
-      const notEmptyErrors = errors?.filter( e => Boolean(e.message));
+      const notEmptyErrors = errors?.filter(e => Boolean(e.message));
       const validatorResult = notEmptyErrors && notEmptyErrors.length > 0
         ? notEmptyErrors[0].message  //errors.map(error => error.message).join(", ")
         : '';

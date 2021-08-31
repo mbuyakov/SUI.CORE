@@ -279,7 +279,7 @@ export class BaseTable<TSelection = defaultSelection>
       );
     };
 
-    const tableContainerComponent = (typeof(this.props.doubleVerticalScroll) == "boolean" ? this.props.doubleVerticalScroll : getSUISettings().enableDoubleVerticalScrollForAllTables)
+    const tableContainerComponent = (typeof (this.props.doubleVerticalScroll) == "boolean" ? this.props.doubleVerticalScroll : getSUISettings().enableDoubleVerticalScrollForAllTables)
       ? DoubleScrollbar
       : Table.Container;
 

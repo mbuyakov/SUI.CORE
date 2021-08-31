@@ -22,14 +22,14 @@ export function setCustomPostProcessor(processor: CustomPostProcessor): void {
  */
 export function translate(text: string, returnNull: boolean = false): string | null {
   let ret: string | undefined;
-  if(text) {
+  if (text) {
     ret = TRANSLATE_MAP.get(text.toLowerCase());
-    if(typeof ret === "string") {
+    if (typeof ret === "string") {
       return ret;
     }
   }
 
-  if(customPostProcessor) {
+  if (customPostProcessor) {
     return customPostProcessor(text, returnNull);
   }
   if (returnNull) {

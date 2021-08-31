@@ -1,7 +1,7 @@
-import { CacheManager, ICacheEntry } from "@/cacheManager";
-import { addPluralEnding, addQuotesIfString, camelCase, capitalize } from "@/stringFormatters";
+import {CacheManager, ICacheEntry} from "@/cacheManager";
+import {addPluralEnding, addQuotesIfString, camelCase, capitalize} from "@/stringFormatters";
 
-import { query } from "./wrapper";
+import {query} from "./wrapper";
 
 /**
  * Wrapper for quick create cache from PG table use Gql query
@@ -11,7 +11,7 @@ export abstract class GqlCacheManager<GQL_T, T = GQL_T, ID = string> extends Cac
    * Load all entries
    */
   protected async __loadAll(): Promise<Array<ICacheEntry<T, ID>>> {
-const nodes = (await query<{ nodes: GQL_T[] }>(
+    const nodes = (await query<{ nodes: GQL_T[] }>(
       `{
       all${capitalize(addPluralEnding(camelCase(this.getTableName())))} {
         nodes {

@@ -58,6 +58,6 @@ export const BaseCardRowWithMetaTable: <T>(props: IBaseCardRowWithMetaTableLayou
   />
 );
 
-export function isRowWithMetaTable<T,ITEM>(row: IBaseCardRowLayout<T, ITEM>): row is IBaseCardRowWithMetaTableLayout {
+export function isRowWithMetaTable<T, ITEM>(row: IBaseCardRowLayout<T, ITEM>): row is IBaseCardRowWithMetaTableLayout {
   return "metaTableProps" in row;
 }

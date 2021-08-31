@@ -23,8 +23,11 @@ export interface IFilterReportElementProps<TData, TFilter>
   extends Omit<ExtractProps<ReportElement>, "children"> {
   initialFilter: TFilter;
   popoverProps?: Omit<PopoverProps, "children" | "content" | "trigger">;
+
   children(data: TData, filter: TFilter): JSX.Element;
+
   fetchData(filter: TFilter): Promise<TData>;
+
   popoverContent(filter: TFilter, filterChangeHandler: FilterChangeHandler<TFilter>): JSX.Element;
 }
 

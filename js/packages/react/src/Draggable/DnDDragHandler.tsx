@@ -11,6 +11,6 @@ export const DnDDragHandler: React.FC = () => (
     }}
     className="dragHandle"
   >
-    <DragOutlined style={{marginRight: 8, color: '#888'}} />
+    <DragOutlined style={{marginRight: 8, color: '#888'}}/>
   </div>
 );

@@ -18,8 +18,11 @@ export interface IDnfActionsProps {
   upButtonProps?: IDnfActionsButtonProps;
   removeButtonProps?: IDnfActionsButtonProps;
   downButtonProps?: IDnfActionsButtonProps;
+
   onUp?(): void;
+
   onRemove?(): void;
+
   onDown?(): void;
 }
 

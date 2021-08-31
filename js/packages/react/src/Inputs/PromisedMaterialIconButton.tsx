@@ -1,7 +1,7 @@
-import { CircularProgress, IconButton, IconButtonProps, Tooltip } from '@material-ui/core';
+import {CircularProgress, IconButton, IconButtonProps, Tooltip} from '@material-ui/core';
 import * as React from 'react';
 
-import { IPromisedBaseState, PromisedBase } from './PromisedBase';
+import {IPromisedBaseState, PromisedBase} from './PromisedBase';
 
 interface IPromisedMaterialIconButtonProps extends IconButtonProps {
   icon?: JSX.Element;

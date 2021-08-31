@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ApolloQueryResult } from 'apollo-client';
-import { FetchResult } from 'apollo-link';
+import {ApolloQueryResult} from 'apollo-client';
+import {FetchResult} from 'apollo-link';
 import gql from 'graphql-tag';
 
-import { getSUISettings } from '@/core';
-import { IObjectWithIndex } from '@/other';
+import {getSUISettings} from '@/core';
+import {IObjectWithIndex} from '@/other';
 
 /**
  * Stub for PostGraphile error format

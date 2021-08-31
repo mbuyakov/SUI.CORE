@@ -30,7 +30,7 @@ export class OldAuditTable extends React.Component<IOldAuditTableProps> {
   }
 
   @autobind
-  private rowDetails({row}: { row: {id: string} }): JSX.Element {
+  private rowDetails({row}: { row: { id: string } }): JSX.Element {
     return (
       <WaitData<string>
         query={`{

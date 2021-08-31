@@ -2,14 +2,14 @@ export async function initSentry(dsn: string, release: string, environment: stri
   const [
     sentryBrowser,
     sentryIntegrations
-    ] = await Promise.all([
+  ] = await Promise.all([
     import('@sentry/browser'),
     import('@sentry/integrations')
   ]);
 
   const integrations = [];
 
-  if(environment != 'local') {
+  if (environment != 'local') {
     integrations.push(new sentryIntegrations.CaptureConsole({
       levels: ['error', 'warn']
     }));

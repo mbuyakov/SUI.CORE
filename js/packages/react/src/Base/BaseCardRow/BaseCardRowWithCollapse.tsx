@@ -30,6 +30,6 @@ export const BaseCardRowWithCollapse: <T, ITEM>(props: IBaseCardRowWithCollapseL
   </Collapse>
 );
 
-export function isRowWithCollapse<T,ITEM>(row: IBaseCardRowLayout<T, ITEM>): row is IBaseCardRowWithCollapseLayout<T, ITEM> {
+export function isRowWithCollapse<T, ITEM>(row: IBaseCardRowLayout<T, ITEM>): row is IBaseCardRowWithCollapseLayout<T, ITEM> {
   return "collapsePanels" in row;
 }

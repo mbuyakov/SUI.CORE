@@ -18,7 +18,7 @@ export class StringColumnFilter extends React.Component<StringColumnFilterProps,
 
     const value = this.props.filter?.value || "";
 
-    this.state = { lastFilterValue: value, value };
+    this.state = {lastFilterValue: value, value};
   }
 
   public componentDidUpdate(): void {
@@ -58,7 +58,7 @@ export class StringColumnFilter extends React.Component<StringColumnFilterProps,
   private onChange(event: React.ChangeEvent<HTMLInputElement>): void {
     const value = event.target.value;
 
-    this.setState({ value }, () => {
+    this.setState({value}, () => {
       // Trigger on clearButton click
       if (event.type === "click" && value === "") {
         this.triggerFilter(true);
@@ -82,7 +82,7 @@ export class StringColumnFilter extends React.Component<StringColumnFilterProps,
         operation: this.props.operation || "contains",
         value
       });
-      this.setState({ lastFilterValue: value });
+      this.setState({lastFilterValue: value});
     }
   }
 

@@ -1,16 +1,14 @@
 /* eslint-disable no-console,@typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars */
-import { Container } from 'typescript-ioc';
-import { getTOrCall, TOrCallback } from '@/other';
-import { OneOrArray, wrapInArray } from '@/typeWrappers';
+import {Container} from 'typescript-ioc';
+import {getTOrCall, TOrCallback} from '@/other';
+import {OneOrArray, wrapInArray} from '@/typeWrappers';
 // Don't touch import
 // noinspection ES6PreferShortImport
-import { LogLevelService } from '../service/LogLevelService';
+import {LogLevelService} from '../service/LogLevelService';
 // noinspection ES6PreferShortImport
-
-import { LoggerLevel } from '../enum';
+import {LoggerLevel} from '../enum';
 // Don't touch import
 // noinspection ES6PreferShortImport
-import { Autowired } from '../annotation/Autowired';
 
 
 // Can't use @Autowired due to @InjectLogger

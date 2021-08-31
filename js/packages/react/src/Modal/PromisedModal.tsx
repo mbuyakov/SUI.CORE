@@ -25,8 +25,11 @@ export const defaultModalFooter = (okButton: JSX.Element, cancelButton: JSX.Elem
 export interface IPromisedModalProps extends Omit<ModalProps, "visible" | "onOk" | "footer" | "okButtonProps"> {
   defaultVisible?: boolean;
   okButtonProps?: Omit<ExtractProps<PromisedButton>, "promise" | "children">,
+
   customFooter?(okButton: JSX.Element, cancelButton: JSX.Element): React.ReactNode;
+
   onOpen?(): Promise<void>;
+
   promise?(): Promise<boolean>;
 }
 
@@ -119,7 +122,7 @@ export class PromisedModal
   private onModalClose(e: React.MouseEvent<HTMLElement>): void {
     console.log("onModalClose", e);
     this.setModalVisibility(false);
-    if(this.props.onCancel) {
+    if (this.props.onCancel) {
       this.props.onCancel(e);
     }
   }

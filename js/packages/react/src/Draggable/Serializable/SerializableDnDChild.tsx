@@ -1,4 +1,4 @@
-import { defaultIfNotNumber } from '@sui/core';
+import {defaultIfNotNumber} from '@sui/core';
 import {DnDChild, IBaseDnDChildProps} from "../DnDChild";
 
 import {ISerializable, ISerializableComponent} from "./ISerializable";
@@ -17,7 +17,7 @@ export abstract class SerializableDnDChild<S extends ISerializable, P extends Se
     super(props);
     if (!this.state) {
       let version: number;
-      if(props.plain) {
+      if (props.plain) {
         this.isFromPlain = true;
         version = defaultIfNotNumber(props.plain && props.plain.version, 0);
       } else {

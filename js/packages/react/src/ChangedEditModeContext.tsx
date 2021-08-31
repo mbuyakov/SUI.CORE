@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from "react";
+import {useState} from 'react';
 import {DisableEditContext} from './DisableEditContext';
 
 export interface IEditModeContext {
@@ -26,7 +26,7 @@ function EditModeContainer(props: IEditModeContainerProps): JSX.Element {
     // receive outer disable value to push to the inner disable context
     <DisableEditContext.Consumer>
       {(disable): JSX.Element => {
-        if(providerValue.outerDisable !== disable) {
+        if (providerValue.outerDisable !== disable) {
           providerValue = {outerDisable: false, setEditMode};
         }
 

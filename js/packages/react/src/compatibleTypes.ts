@@ -11,4 +11,5 @@ export interface LabelValueType {
   label?: React.ReactNode;
   value?: RawValueType;
 }
+
 export declare type DefaultValueType = RawValueType | RawValueType[] | LabelValueType | LabelValueType[];
