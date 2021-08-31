@@ -1,5 +1,5 @@
 // LifeCycleManager
-import {getCurPackage, packageHasEslintConfig} from "./utils";
+import {getCurPackage} from "./utils";
 import {runCommandForPackage, runGlobalCommand} from "./commandRunner";
 const chalk = require(`${__dirname}/../node_modules/chalk`);
 
@@ -10,7 +10,6 @@ const chalk = require(`${__dirname}/../node_modules/chalk`);
     const curPackage = getCurPackage();
     console.log(`Command: ${command}`);
     console.log(`Package: ${chalk.cyan(curPackage)}`);
-    console.log(`Has EsLint config: ${curPackage == "GLOBAL" ? "not applicable" : packageHasEslintConfig(curPackage)}`);
 
     if (curPackage !== "GLOBAL") {
       await runCommandForPackage(command as any, curPackage, process.argv[3]);

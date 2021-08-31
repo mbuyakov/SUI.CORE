@@ -1,7 +1,4 @@
-//Map<command, packages[]>
-import {ci} from "./commands/ci";
-import {getAllPackagesWithCommand, getLocalDep, packageHasCommand, packageHasEslintConfig} from "./utils";
-import {lint} from "./commands/lint";
+import {getAllPackagesWithCommand, getLocalDep, packageHasCommand} from "./utils";
 import {build} from "./commands/build";
 import {bkpPackageJson} from "./commands/bkpPackageJson";
 import {restorePackageJson} from "./commands/restorePackageJson";
@@ -14,8 +11,6 @@ const chalk = require(`${__dirname}/../node_modules/chalk`);
 export type Merge<T, K> = Pick<T, Exclude<keyof T, keyof K>> & K;
 
 type CommandArg = {
-  ci: never,
-  lint: never,
   build: never,
   bkpPackageJson: never,
   restorePackageJson: never,
@@ -34,15 +29,6 @@ export async function runCommandForPackage<T extends keyof CommandArg>(command: 
   try {
     console.log(`Start command ${chalk.cyan(command)} for package ${chalk.cyan(packageName)}${argument ? ` with arg ${argument}` : ""}`);
     switch (command) {
-      case "ci":
-        await ci(packageName);
-        break;
-      case "lint":
-        if (!packageHasEslintConfig(packageName)) {
-          throw new Error("Can't run lint without .eslintrc.js");
-        }
-        await lint(packageName);
-        break;
       case "build":
         await build(packageName);
         break;

@@ -9,7 +9,7 @@
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch",
-    "lint": "node ../../lcm.js",
+    "lint": "sui-linter",
     "build": "node ../../lcm.js",
     "ci": "node ../../lcm.js"
   },

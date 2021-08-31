@@ -7,10 +7,10 @@
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap && lerna link",
-    "build": "node ./lcm.js",
-    "lint": "node ./lcm.js",
-    "ci": "node ./lcm.js",
-    "canary": "node ./lcm.js",
+    "build": "lerna run build --stream",
+    "lint": "lerna run lint --stream --parallel",
+    "ci": "yarn build && yarn lint",
+    "canary": "yarn ci && node ./lcm.js",
     "lcm": "node ./lcm.js"
   },
   "devDependencies": {

@@ -1,16 +1,10 @@
 import {globalPublish} from "./globalPublish";
-import {getAllPackages} from "../../utils";
-import {runCommandForAllPackages} from "../../commandRunner";
 const clipboardy = require('clipboardy');
 const notifier = require('node-notifier');
 const chalk = require(`${__dirname}/../../../node_modules/chalk`);
 
 
 export async function globalCanary(): Promise<void> {
-  const packages = getAllPackages();
-  for (const it of packages) {
-    await runCommandForAllPackages("ci");
-  }
   const date = new Date();
   const dateStr =
     date.getFullYear() +

@@ -39,14 +39,6 @@ export function getPackagePath(packageName: string): string {
   return `${__dirname}/../packages/${packageName}`;
 }
 
-export function packageHasEslintConfig(packageName: string): boolean {
-  if (packageName === "GLOBAL") {
-    throw new Error("IDK");
-  }
-  console.log(__dirname);
-  return fs.existsSync(`${getPackagePath(packageName)}/.eslintrc.js`);
-}
-
 export function packageHasCommand(packageName: string, command: string): boolean {
   return (require(`${getPackagePath(packageName)}/package.json`).scripts || {})[command];
 }

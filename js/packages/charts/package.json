@@ -11,7 +11,7 @@
     "*.less"
   ],
   "scripts": {
-    "lint": "node ../../lcm.js",
+    "lint": "sui-linter",
     "build": "node ../../lcm.js",
     "ci": "node ../../lcm.js"
   },
