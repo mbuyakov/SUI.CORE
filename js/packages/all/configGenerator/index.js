@@ -2,6 +2,7 @@
 require = require("esm")(module, {cache: false});
 const fs = require('fs');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const {extraBabelPlugins} = require('./extraBabelPlugins');
 
 // Почему бы не попатчить чужую либу на лету?
 // После замены require на esm версию ноде становится плохо от наличия шеллбенга в файле
@@ -132,44 +133,7 @@ function generateUmiConfig(params) {
     },
     treeShaking: true,
     minimizer: 'terserjs',
-    extraBabelPlugins: [
-      [
-        'babel-plugin-import',
-        {
-          'libraryName': '@material-ui/core',
-          'libraryDirectory': 'esm',
-          'camel2DashComponentName': false
-        },
-        'import-material'
-      ],
-      [
-        'babel-plugin-import',
-        {
-          'libraryName': '@material-ui/icons',
-          'libraryDirectory': 'esm',
-          'camel2DashComponentName': false
-        },
-        'import-material-icons'
-      ],
-      [
-        "babel-plugin-import",
-        {
-          "libraryName": "antd",
-          "libraryDirectory": "es",
-          "style": true
-        },
-        'import-antd'
-      ],
-      [
-        "babel-plugin-import",
-        {
-          "libraryName": "@ant-design/icons",
-          "libraryDirectory": "es/icons",
-          "camel2DashComponentName": false
-        },
-        "import-antd-icons"
-      ]
-    ],
+    extraBabelPlugins,
     history: 'hash',
     manifest: {
       basePath: '/',
