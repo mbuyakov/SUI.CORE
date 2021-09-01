@@ -1,5 +1,4 @@
-import {Popconfirm, Popover} from 'antd';
-import {PopconfirmProps} from 'antd/lib/popconfirm';
+import {Popconfirm, PopconfirmProps, Popover} from 'antd';
 import asyncValidator from "async-validator";
 import autobind from 'autobind-decorator';
 import * as React from 'react';

@@ -1,10 +1,6 @@
 import {ArrowLeftOutlined, CloseOutlined} from "@ant-design/icons";
 import {IGraphQLConnection, IName, mutate, query} from '@sui/core';
-import {Button} from 'antd';
-import Input from 'antd/es/input';
-import Alert from 'antd/lib/alert';
-import Popover from 'antd/lib/popover';
-import Select from 'antd/lib/select';
+import {Alert, Button, Input, Popover, Select} from 'antd';
 import autobind from 'autobind-decorator';
 import gql from 'graphql-tag';
 import * as React from 'react';

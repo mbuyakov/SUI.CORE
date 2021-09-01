@@ -1,5 +1,4 @@
-import {Button, Modal} from "antd";
-import {ModalProps} from "antd/lib/modal";
+import {Button, Modal, ModalProps} from "antd";
 import autobind from "autobind-decorator";
 import React from "react";
 

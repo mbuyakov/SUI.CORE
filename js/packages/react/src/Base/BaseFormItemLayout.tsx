@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {IObjectWithIndex} from "@sui/core";
-import {Form} from 'antd';
-import {FormItemProps} from 'antd/lib/form';
+import {Form, FormItemProps} from 'antd';
 import {RuleItem} from 'async-validator';
 import autobind from 'autobind-decorator';
 import classNames from 'classnames';

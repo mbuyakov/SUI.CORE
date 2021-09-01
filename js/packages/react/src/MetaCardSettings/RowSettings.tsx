@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {camelCase, Merge} from '@sui/core';
-import {Button, Mentions, Menu} from 'antd';
-import Checkbox, {CheckboxChangeEvent} from 'antd/lib/checkbox';
-import Input from 'antd/lib/input';
+import {Button, Checkbox, Input, Mentions, Menu} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
+import {CheckboxChangeEvent} from '@/antdMissedExport';
 
 // noinspection ES6PreferShortImport
 import {IBaseCardItemLayout, IBaseCardRowLayout, IBaseCardRowWithCollapseLayout, IBaseCardRowWithColsLayout, IBaseCardRowWithDividerLayout, IBaseCardRowWithMetaTableLayout, IBaseCardRowWithTabsLayout, IMetaTableProps, isRowWithCollapse, isRowWithCols, isRowWithDivider, isRowWithMetaTable, isRowWithTabs} from '../Base';

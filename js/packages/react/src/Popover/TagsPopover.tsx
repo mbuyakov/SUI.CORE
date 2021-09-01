@@ -1,9 +1,6 @@
 import {ArrowLeftOutlined, CloseOutlined} from "@ant-design/icons";
 import {IColumnInfoTag, IGraphQLConnection, ITag, mutate, query} from '@sui/core';
-import {Button, Select} from 'antd';
-import Input from 'antd/es/input';
-import Alert from 'antd/lib/alert';
-import Popover from 'antd/lib/popover';
+import {Alert, Button, Input, Popover, Select} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 

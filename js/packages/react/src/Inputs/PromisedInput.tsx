@@ -1,10 +1,9 @@
 import {CircularProgress, IconButton} from '@material-ui/core';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import {trimIfString} from '@sui/core';
-import Input, {InputProps} from 'antd/lib/input';
-import Tooltip from 'antd/lib/tooltip';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
+import {Input, InputProps, Tooltip} from 'antd';
 import {SUIMaskedInput} from '@/SUIMaskedInput';
 import {SUI_ROW_GRID} from '@/styles';
 import {Rendered} from "@/other";

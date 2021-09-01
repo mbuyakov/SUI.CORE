@@ -1,5 +1,4 @@
-import {Button, Popover} from 'antd';
-import {InputProps} from "antd/lib/input/Input";
+import {Button, InputProps, Popover} from 'antd';
 import autobind from 'autobind-decorator';
 import React, {ChangeEvent} from 'react';
 import {ExtractProps} from "@/other";

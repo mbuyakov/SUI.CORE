@@ -27,6 +27,7 @@ export * from "./UserSetting";
 export * from "./utils";
 
 export * from "./AfterChangeContext";
+export * from "./antdMissedExport";
 export * from "./CategoryColumnChart";
 export * from "./ChangedEditModeContext";
 export * from "./ChartWrapper";

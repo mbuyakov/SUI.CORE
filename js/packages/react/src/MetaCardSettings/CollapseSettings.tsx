@@ -1,8 +1,8 @@
 import {Merge} from '@sui/core';
-import {Input} from "antd";
-import Checkbox, {CheckboxChangeEvent} from "antd/lib/checkbox";
+import {Input, Checkbox} from "antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
+import {CheckboxChangeEvent} from "@/antdMissedExport";
 
 // noinspection ES6PreferShortImport
 import {IBaseCardCollapseLayout, IBaseCardItemLayout} from '../Base';

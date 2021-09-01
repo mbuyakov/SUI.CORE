@@ -1,8 +1,8 @@
-import InputNumber from 'antd/lib/input-number';
 import autobind from "autobind-decorator";
 import * as React from 'react';
 
 import {Nullable} from "@sui/core";
+import {InputNumber} from "antd";
 import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 type INumberIntervalColumnFilterProps = LazyTableFilterRowCellProps & INewSearchProps;

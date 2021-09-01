@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import IconButton from '@material-ui/core/IconButton';
 import SettingsIcon from '@material-ui/icons/Settings';
-import {Popover} from 'antd';
-import {PopoverProps} from "antd/lib/popover";
+import {Popover, PopoverProps} from 'antd';
 import autobind from "autobind-decorator";
 import React from "react";
 

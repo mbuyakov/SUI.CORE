@@ -1,8 +1,7 @@
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Warning from '@material-ui/icons/Warning';
-import {Popover} from "antd";
-import Divider from "antd/lib/divider";
+import {Divider, Popover} from "antd";
 import autobind from "autobind-decorator";
 import React from 'react';
 

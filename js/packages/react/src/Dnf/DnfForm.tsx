@@ -1,14 +1,10 @@
 /* tslint:disable:member-ordering jsx-no-lambda */
 import {PlusCircleOutlined} from '@ant-design/icons';
 import {wrapInArray} from "@sui/core";
-import {Button, Card, Form, Space} from "antd";
-import {ButtonProps} from "antd/lib/button";
-import {CardProps} from "antd/lib/card";
-import {FormItemProps} from "antd/lib/form";
-import {FormListProps} from "antd/lib/form/FormList";
+import {Button, ButtonProps, Card, CardProps, Form, FormItemProps, Space} from "antd";
 import React from "react";
-import {NamePath} from 'antd/lib/form/interface';
 import {DnfActions} from "@/Dnf/DnfActions";
+import {FormListProps, NamePath} from '@/antdMissedExport';
 
 export interface IRowCreatorMeta {
   formItemNameGenerator(field: NamePath): NamePath;

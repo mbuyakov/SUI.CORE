@@ -1,7 +1,7 @@
 import TableCell from '@material-ui/core/TableCell';
-import Empty from 'antd/lib/empty';
 import * as React from 'react';
 import {FileSearchOutlined} from '@ant-design/icons';
+import {Empty} from 'antd';
 import {TABLE_NO_DATA_CELL_SMALL} from "@/styles";
 
 export const LoadingNoDataCell = ({colSpan}: { colSpan?: number | undefined }): JSX.Element => (

@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
-import locale from "antd/es/date-picker/locale/ru_RU";
 import {DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, disableDocDate, IObjectWithIndex, Nullable} from "@sui/core";
 import moment, {Moment} from "moment";
-import {DatePickerProps} from "antd/lib/date-picker";
-import {DatePicker} from "antd";
+import {DatePicker, DatePickerProps} from "antd";
 import {IBaseCardRowLayout, IBaseFormItemLayout, ValuesGetter} from "@/Base";
 import {CustomInputWithRegex, CustomInputWithRegexProps, DulTypeSelector, IDulTypeSelectorProps} from "@/Inputs";
 import {DulService, IallDocTypes} from "@/soctech/DulService";
+import {datePickerLocaleRu} from "@/antdMissedExport";
 
 export const RUSSIAN_PASSPORT_DOC_CODE = 21;
 export const issuedByRegex = "^[0-9А-Яа-я\\s№.\\-\"\'()]{1,250}$";
@@ -175,7 +174,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
     },
     inputNode: (
       <StringValueDatePicker
-        locale={locale as any}
+        locale={datePickerLocaleRu as any}
         format={['DD.MM.YYYY', 'DDMMYYYY', 'DDMMYY']}
       />
     ),

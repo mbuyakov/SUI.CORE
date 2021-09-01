@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {Nullable, wrapInArray} from "@sui/core";
 import {DatePicker} from "antd";
-import {RangePickerProps} from "antd/lib/date-picker";
 import classNames from "classnames";
 import * as React from 'react';
 import {v4 as uuidv4} from 'uuid';
+import {RangePickerProps} from "@/antdMissedExport";
 
 export type ISuiRangePickerProps = RangePickerProps & { formatter?(value: string, event: InputEvent): string };
 

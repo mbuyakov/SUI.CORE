@@ -1,6 +1,6 @@
-import Switch, {SwitchProps} from "antd/lib/switch";
 import autobind from "autobind-decorator";
 import * as React from "react";
+import {Switch, SwitchProps} from "antd";
 import {AfterChangeContext} from '@/AfterChangeContext';
 
 // noinspection ES6PreferShortImport

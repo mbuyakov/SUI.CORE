@@ -1,7 +1,8 @@
-import Button, {ButtonType} from 'antd/lib/button/button';
+import {Button} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import {RouteComponentProps, Router, withRouter} from 'react-router';
+import {ButtonType} from '@/antdMissedExport';
 
 // noinspection ES6PreferShortImport
 import {draw} from '../utils';

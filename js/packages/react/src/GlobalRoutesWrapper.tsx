@@ -2,8 +2,8 @@ import * as React from "react";
 import {Container} from "typescript-ioc"
 import {ThemeProvider} from '@material-ui/core/styles';
 import {ConfigProvider} from 'antd';
-import ru_RU from 'antd/es/locale/ru_RU';
 import {SuiThemeContext, ThemeService, ThemeVariant} from "@/themes";
+import {localeRu} from "@/antdMissedExport";
 
 export type IGlobalRoutesWrapperProps = Record<string, never>;
 
@@ -29,7 +29,7 @@ export default class GlobalRoutesWrapper extends React.Component<IGlobalRoutesWr
 
     return (
       <SuiThemeContext.Provider value={curTheme}>
-        <ConfigProvider locale={ru_RU}>
+        <ConfigProvider locale={localeRu}>
           <ThemeProvider theme={curTheme.muiTheme}>
             {this.props.children}
           </ThemeProvider>

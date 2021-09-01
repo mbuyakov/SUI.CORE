@@ -1,6 +1,5 @@
 import {getDataByKey, IGqlFilter, TableInfoManager} from "@sui/core";
-import {TreeSelect} from 'antd';
-import {TreeSelectProps} from "antd/lib/tree-select";
+import {TreeSelect, TreeSelectProps} from 'antd';
 import autobind from "autobind-decorator";
 import classNames from "classnames";
 import * as React from "react";

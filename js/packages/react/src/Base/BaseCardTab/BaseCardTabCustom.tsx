@@ -1,4 +1,4 @@
-import Tabs from "antd/lib/tabs";
+import {Tabs} from "antd";
 import * as React from "react";
 
 // noinspection ES6PreferShortImport

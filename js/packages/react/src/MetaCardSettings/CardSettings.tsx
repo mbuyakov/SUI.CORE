@@ -1,4 +1,4 @@
-import Menu from 'antd/lib/menu';
+import { Menu } from "antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 

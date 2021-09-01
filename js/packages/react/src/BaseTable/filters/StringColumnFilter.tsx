@@ -1,4 +1,4 @@
-import Input from 'antd/lib/input/Input';
+import {Input} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 

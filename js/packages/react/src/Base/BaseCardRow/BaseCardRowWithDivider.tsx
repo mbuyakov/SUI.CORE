@@ -1,5 +1,5 @@
 import React from "react";
-import Divider from "antd/lib/divider";
+import {Divider} from "antd";
 import {IBaseCardRowLayout} from "@/Base/BaseCardRow/BaseCardRow";
 
 

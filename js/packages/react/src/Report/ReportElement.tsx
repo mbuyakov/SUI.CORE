@@ -1,8 +1,8 @@
 import {PrinterOutlined} from '@ant-design/icons';
 import {Button, Card} from 'antd';
-import {CardType} from 'antd/lib/card';
 import * as React from 'react';
 import ReactToPrint from 'react-to-print';
+import {CardType} from '@/antdMissedExport';
 
 // noinspection ES6PreferShortImport
 import {SMALL_HEADER_PADDING} from '../styles';

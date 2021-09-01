@@ -1,7 +1,7 @@
-import Button, {ButtonType} from 'antd/lib/button/button';
-import {SizeType} from 'antd/lib/config-provider/SizeContext';
+import {Button} from 'antd';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
+import {SizeType, ButtonType} from '@/antdMissedExport';
 
 // noinspection ES6PreferShortImport
 import {appendStateToLink, ITableStateDefinition} from "../BackendTable";

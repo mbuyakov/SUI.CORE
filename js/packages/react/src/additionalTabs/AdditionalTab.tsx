@@ -1,6 +1,5 @@
 import {formatRawForGraphQL, generateUpdate, TableInfo} from '@sui/core';
-import {Card, Space} from "antd";
-import Input from "antd/lib/input";
+import {Card, Input, Space} from "antd";
 import autobind from 'autobind-decorator';
 import * as React from "react";
 import {ChangeEvent} from "react";

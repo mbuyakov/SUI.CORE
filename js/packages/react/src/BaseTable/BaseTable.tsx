@@ -415,6 +415,7 @@ export class BaseTable<TSelection = defaultSelection>
                 {headerEnabled && <TableHeaderRow showSortingControls={sortingEnabled}/>}
                 {filteringEnabled && <TableFilterRow cellComponent={this.FilterCell}/>}
                 {paginationEnabled && <PagingPanel
+                  // eslint-disable-next-line react/jsx-no-bind
                   containerComponent={pagingContainerComponent}
                   pageSizes={this.props.pageSizes || (virtual ? undefined : [10, 25, 50, 100, 0])}
                   messages={{

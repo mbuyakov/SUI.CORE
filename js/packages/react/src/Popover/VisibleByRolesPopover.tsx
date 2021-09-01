@@ -1,9 +1,6 @@
 import {UsergroupAddOutlined} from '@ant-design/icons';
 import {IColumnInfo, IColumnInfoRole, IRole, mutate} from '@sui/core';
-import {Popover} from 'antd';
-import Button from 'antd/lib/button';
-import Divider from 'antd/lib/divider';
-import Select from 'antd/lib/select';
+import {Button, Divider, Popover, Select} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 

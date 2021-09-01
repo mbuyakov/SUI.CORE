@@ -1,7 +1,5 @@
 import {CloseOutlined, SettingOutlined} from '@ant-design/icons';
-import {Button} from 'antd';
-import Card, {CardProps} from 'antd/lib/card';
-import Popover from 'antd/lib/popover';
+import {Button, Card, CardProps, Popover} from 'antd';
 import * as React from 'react';
 
 import {DnDDragHandler} from './Draggable';
