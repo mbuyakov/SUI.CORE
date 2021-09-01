@@ -1,18 +1,18 @@
 /* eslint-disable no-restricted-imports */
-export type {ButtonType, ButtonGroupProps} from 'antd/es/button';
-export type {CardType} from 'antd/es/card';
-export type {SelectValue} from "antd/es/select";
-export type {CheckboxChangeEvent} from "antd/es/checkbox";
-export type {SizeType} from 'antd/es/config-provider/SizeContext';
-export type {TextAreaProps} from "antd/es/input/TextArea";
-export type {RangePickerProps} from "antd/es/date-picker";
-export type {SliderSingleProps} from "antd/es/slider";
-export type {MenuItemProps} from "antd/es/menu/MenuItem";
-export type {FormListProps} from "antd/es/form/FormList";
-export type {NamePath} from 'antd/es/form/interface';
-export type {ButtonHTMLType} from "antd/es/button/button";
+export type {ButtonType, ButtonGroupProps} from 'antd/lib/button';
+export type {CardType} from 'antd/lib/card';
+export type {SelectValue} from "antd/lib/select";
+export type {CheckboxChangeEvent} from "antd/lib/checkbox";
+export type {SizeType} from 'antd/lib/config-provider/SizeContext';
+export type {TextAreaProps} from "antd/lib/input/TextArea";
+export type {RangePickerProps} from "antd/lib/date-picker";
+export type {SliderSingleProps} from "antd/lib/slider";
+export type {MenuItemProps} from "antd/lib/menu/MenuItem";
+export type {FormListProps} from "antd/lib/form/FormList";
+export type {NamePath} from 'antd/lib/form/interface';
+export type {ButtonHTMLType} from "antd/lib/button/button";
 
 export {getThemeVariables} from 'antd/dist/theme';
-export {default as datePickerLocaleRu} from "antd/es/date-picker/locale/ru_RU";
-export {default as localeRu} from "antd/es/locale/ru_RU";
-export {default as Icon, CustomIconComponentProps} from '@ant-design/icons/es/components/Icon';
+export {default as datePickerLocaleRu} from "antd/lib/date-picker/locale/ru_RU";
+export {default as localeRu} from "antd/lib/locale/ru_RU";
+export {default as AntdIcon, CustomIconComponentProps} from '@ant-design/icons/lib/components/Icon';
