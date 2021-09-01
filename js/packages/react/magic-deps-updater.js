@@ -12,12 +12,13 @@ const sortKeys = (unordered) => {
   return ordered;
 }
 
-if (curPackageJson.name == "@sui/react") {
-  curPackageJson.peerDependencies = sortKeys(Object.assign(curPackageJson.peerDependencies || {}, magicDeps.magic));
-  curPackageJson.devDependencies = sortKeys(Object.assign(curPackageJson.devDependencies || {}, magicDeps.magic));
+if (curPackageJson.name === "@sui/react") {
+  curPackageJson.peerDependencies = sortKeys(magicDeps.dependencies);
+  curPackageJson.resolutions = sortKeys(Object.assign(curPackageJson.resolutions || {}, magicDeps.dependencies, magicDeps.resolution));
+  curPackageJson.dependencies = sortKeys(Object.assign(curPackageJson.dependencies || {}, magicDeps.dependencies));
 } else {
-  curPackageJson.resolutions = sortKeys(Object.assign(curPackageJson.resolutions || {}, magicDeps.magic));
-  curPackageJson.devDependencies = sortKeys(Object.assign(curPackageJson.devDependencies || {}, magicDeps.dev));
+  curPackageJson.resolutions = sortKeys(Object.assign(curPackageJson.resolutions || {}, magicDeps.dependencies, magicDeps.resolution, magicDeps.umi));
+  curPackageJson.devDependencies = sortKeys(Object.assign(curPackageJson.devDependencies || {}, magicDeps.umi));
 }
 
 fs.writeFile(curPackageJsonPath, JSON.stringify(curPackageJson, null, 2) + '\n', 'utf8', function (err) {
