@@ -14,6 +14,7 @@ export type {ButtonHTMLType} from "antd/lib/button/button";
 export type {ColumnType} from "antd/lib/table";
 export type {UploadFile} from "antd/lib/upload/interface";
 export type {RcFile} from "antd/lib/upload/interface";
+export type {NotificationInstance} from "antd/lib/notification";
 
 export {getThemeVariables} from 'antd/dist/theme';
 export {default as datePickerLocaleRu} from "antd/lib/date-picker/locale/ru_RU";
