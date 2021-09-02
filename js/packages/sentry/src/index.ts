@@ -45,14 +45,18 @@ export async function initSentry(getOptions: (libs: ISentry) => BrowserOptions &
   const sentry = await getSentry();
   const options = getOptions(sentry);
 
-  options.defaultIntegrations = [
+  options.defaultIntegrations = options.defaultIntegrations === false ? [] : options.defaultIntegrations;
+
+  options.defaultIntegrations.push(
     new sentry.sentryIntegrations.CaptureConsole({
       levels: ['error', 'warn']
-    }),
+    })
+  );
+  options.defaultIntegrations.push(
     new sentry.sentryTracing.Integrations.BrowserTracing({
       routingInstrumentation: sentry.sentryReact.reactRouterV5Instrumentation(options.history)
     })
-  ];
+  );
 
   // Override default 20
   options.maxBreadcrumbs = options.maxBreadcrumbs || 100;
