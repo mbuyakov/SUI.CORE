@@ -1,18 +1,6 @@
-import type {Event, EventHint} from "@sentry/browser";
+import type {BrowserOptions} from "@sentry/browser";
 
-export async function initSentry({
-                                   dsn,
-                                   release,
-                                   environment,
-                                   beforeSend = undefined,
-                                   maxBreadcrumbs = 100
-                                 }: {
-  dsn: string,
-  release: string,
-  environment: string,
-  beforeSend?: (event: Event, hint: EventHint) => Event | null,
-  maxBreadcrumbs?: number
-}): Promise<void> {
+export async function initSentry(options: BrowserOptions): Promise<void> {
   const [
     sentryBrowser,
     sentryIntegrations
@@ -21,20 +9,14 @@ export async function initSentry({
     import('@sentry/integrations')
   ]);
 
-  const integrations = [];
-
-  if (environment != 'local') {
-    integrations.push(new sentryIntegrations.CaptureConsole({
+  options.defaultIntegrations = [
+    new sentryIntegrations.CaptureConsole({
       levels: ['error', 'warn']
-    }));
-  }
+    })
+  ];
 
-  sentryBrowser.init({
-    dsn,
-    release,
-    environment,
-    integrations,
-    beforeSend,
-    maxBreadcrumbs
-  });
+  // Override default 20
+  options.maxBreadcrumbs = options.maxBreadcrumbs || 100;
+
+  sentryBrowser.init(options);
 }
