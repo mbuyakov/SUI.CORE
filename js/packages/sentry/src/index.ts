@@ -45,14 +45,18 @@ export async function initSentry(getOptions: (libs: ISentry) => BrowserOptions &
   const sentry = await getSentry();
   const options = getOptions(sentry);
 
-  options.defaultIntegrations = options.defaultIntegrations === false ? [] : options.defaultIntegrations;
+  if (typeof options.integrations === "function") {
+    throw new Error("Function in integrations not supported. Please, use array")
+  }
 
-  options.defaultIntegrations.push(
+  options.integrations = options.integrations || [];
+
+  options.integrations.push(
     new sentry.sentryIntegrations.CaptureConsole({
       levels: ['error', 'warn']
     })
   );
-  options.defaultIntegrations.push(
+  options.integrations.push(
     new sentry.sentryTracing.Integrations.BrowserTracing({
       routingInstrumentation: sentry.sentryReact.reactRouterV5Instrumentation(options.history)
     })
