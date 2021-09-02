@@ -17,6 +17,8 @@ if (curPackageJson.name === "@sui/react") {
   curPackageJson.resolutions = sortKeys(Object.assign(curPackageJson.resolutions || {}, magicDeps.dependencies, magicDeps.resolution));
   curPackageJson.dependencies = sortKeys(Object.assign(curPackageJson.dependencies || {}, magicDeps.dependencies));
 } else {
+  // Add as dependencies for IDEA auto-import indexing
+  curPackageJson.dependencies = sortKeys(Object.assign(curPackageJson.dependencies || {}, magicDeps.dependencies));
   curPackageJson.resolutions = sortKeys(Object.assign(curPackageJson.resolutions || {}, magicDeps.dependencies, magicDeps.resolution, magicDeps.umi));
   curPackageJson.devDependencies = sortKeys(Object.assign(curPackageJson.devDependencies || {}, magicDeps.umi));
 }
