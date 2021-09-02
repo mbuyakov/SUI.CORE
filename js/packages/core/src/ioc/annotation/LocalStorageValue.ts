@@ -52,7 +52,8 @@ export function LocalStorageValue(localStorageKey: string) {
       },
       // eslint-disable-next-line object-shorthand,func-names
       set: function () {
-        throw new Error("Can't set LocalStorageValue wrapper!")
+        console.warn("Can't set LocalStorageValue wrapper!");
+        // throw new Error("Can't set LocalStorageValue wrapper!")
       },
     });
   };
