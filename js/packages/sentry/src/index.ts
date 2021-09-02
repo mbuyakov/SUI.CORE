@@ -1,4 +1,4 @@
-// eslint-disable no-restricted-imports
+/* eslint-disable no-restricted-imports */
 import type {BrowserOptions} from "@sentry/react";
 import type {RouterHistory} from "@sentry/react/dist/reactrouter";
 
