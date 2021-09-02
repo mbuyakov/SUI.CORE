@@ -1,4 +1,11 @@
-export async function initSentry(dsn: string, release: string, environment: string): Promise<void> {
+import type {Event, EventHint} from "@sentry/browser";
+
+export async function initSentry(
+  dsn: string,
+  release: string,
+  environment: string,
+  beforeSend: (event: Event, hint: EventHint) => Event | null = undefined
+): Promise<void> {
   const [
     sentryBrowser,
     sentryIntegrations
@@ -19,6 +26,7 @@ export async function initSentry(dsn: string, release: string, environment: stri
     dsn,
     release,
     environment,
-    integrations
+    integrations,
+    beforeSend
   });
 }
