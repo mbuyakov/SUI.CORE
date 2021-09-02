@@ -1,34 +1,57 @@
-// eslint-disable-next-line no-restricted-imports
-import type {BrowserOptions} from "@sentry/browser";
+// eslint-disable no-restricted-imports
+import type {BrowserOptions} from "@sentry/react";
+import type {RouterHistory} from "@sentry/react/dist/reactrouter";
 
 export interface ISentry {
-  sentryBrowser: typeof import('@sentry/browser'),
+  sentryReact: typeof import('@sentry/react'),
   sentryIntegrations: typeof import('@sentry/integrations'),
   sentryTracing: typeof import('@sentry/tracing'),
 }
 
-export async function initSentry(getOptions: (libs: ISentry) => BrowserOptions): Promise<void> {
-  const [
-    sentryBrowser,
-    sentryIntegrations,
-    sentryTracing
-  ] = await Promise.all([
-    import('@sentry/browser'),
+let sentryInitPromise: Promise<void>;
+let sentryInstance: ISentry = null;
+
+export async function getSentry(): Promise<ISentry> {
+  if (sentryInstance) {
+    return sentryInstance;
+  }
+  if (sentryInitPromise) {
+    await sentryInitPromise;
+    return sentryInstance;
+  }
+  sentryInitPromise = Promise.all([
+    import('@sentry/react'),
     import('@sentry/integrations'),
     import('@sentry/tracing'),
-  ]);
-
-  const options = getOptions({
-    sentryBrowser,
-    sentryIntegrations,
-    sentryTracing
+  ]).then(([
+             sentryReact,
+             sentryIntegrations,
+             sentryTracing
+           ]) => {
+    sentryInstance = {
+      sentryReact,
+      sentryIntegrations,
+      sentryTracing
+    }
   });
+  await sentryInitPromise;
+  return sentryInstance;
+}
+
+export async function initSentry(getOptions: (libs: ISentry) => BrowserOptions & {
+  history: RouterHistory
+}): Promise<void> {
+
+  const sentry = await getSentry();
+  const options = getOptions(sentry);
 
   options.defaultIntegrations = [
-    new sentryIntegrations.CaptureConsole({
+    new sentry.sentryIntegrations.CaptureConsole({
       levels: ['error', 'warn']
     }),
-    new sentryTracing.Integrations.BrowserTracing()
+    new sentry.sentryTracing.Integrations.BrowserTracing({
+      routingInstrumentation: sentry.sentryReact.reactRouterV5Instrumentation(options.history)
+    })
   ];
 
   // Override default 20
@@ -38,5 +61,5 @@ export async function initSentry(getOptions: (libs: ISentry) => BrowserOptions):
   // Why not?
   options.autoSessionTracking = typeof options.autoSessionTracking === 'boolean' ? options.autoSessionTracking : true;
 
-  sentryBrowser.init(options);
+  sentry.sentryReact.init(options);
 }

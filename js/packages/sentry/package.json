@@ -13,7 +13,7 @@
     "ci": "node ../../lcm.js"
   },
   "dependencies": {
-    "@sentry/browser": "^5.27.1",
+    "@sentry/react": "^5.27.1",
     "@sentry/integrations": "^5.27.1",
     "@sentry/tracing": "^5.27.1"
   }
