@@ -10,6 +10,7 @@ import {getSUISettings} from '@/core';
 import {_LocalStorageValue} from '../annotation/LocalStorageValue';
 // noinspection ES6PreferShortImport
 import {Logger} from '../utils';
+import {UserNotInitializedError} from "@/errors";
 
 
 export const USER_FORCIBLY_LOGOUT_MSG = 'Ваш сеанс был автоматически завершен.';
@@ -38,7 +39,7 @@ export class UserService<META = Record<string, never>> {
 
   public getUser(): ICoreUser<META> {
     if (this.user == null) {
-      throw new Error('User not initialized');
+      throw new UserNotInitializedError();
     }
     return this.user;
   }
