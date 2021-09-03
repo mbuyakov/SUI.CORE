@@ -1,12 +1,21 @@
 /* eslint-disable no-restricted-imports */
 import type {BrowserOptions} from "@sentry/react";
-import type {RouterHistory} from "@sentry/react/dist/reactrouter";
+import type {RouteConfig, RouterHistory} from "@sentry/react/dist/reactrouter";
 
 export interface ISentry {
   sentryReact: typeof import('@sentry/react'),
   sentryIntegrations: typeof import('@sentry/integrations'),
   sentryTracing: typeof import('@sentry/tracing'),
 }
+
+// Copy from @sentry/react. This types doesn't exported
+declare type Match = {
+  path: string;
+  url: string;
+  params: Record<string, any>;
+  isExact: boolean;
+};
+declare type MatchPath = (pathname: string, props: string | string[] | any, parent?: Match | null) => Match | null;
 
 let sentryInitPromise: Promise<void>;
 let sentryInstance: ISentry = null;
@@ -39,7 +48,9 @@ export async function getSentry(): Promise<ISentry> {
 }
 
 export async function initSentry(getOptions: (libs: ISentry) => BrowserOptions & {
-  history: RouterHistory
+  history: RouterHistory,
+  routes?: RouteConfig[],
+  matchPath?: MatchPath
 }): Promise<void> {
 
   const sentry = await getSentry();
@@ -58,7 +69,7 @@ export async function initSentry(getOptions: (libs: ISentry) => BrowserOptions &
   );
   options.integrations.push(
     new sentry.sentryTracing.Integrations.BrowserTracing({
-      routingInstrumentation: sentry.sentryReact.reactRouterV5Instrumentation(options.history)
+      routingInstrumentation: sentry.sentryReact.reactRouterV5Instrumentation(options.history, options.routes, options.matchPath)
     })
   );
 
