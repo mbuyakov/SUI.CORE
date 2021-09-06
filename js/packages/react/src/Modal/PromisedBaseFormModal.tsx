@@ -4,7 +4,7 @@ import * as React from "react";
 // noinspection ES6PreferShortImport
 import {BaseForm, IBaseFormProps} from "../Base";
 // noinspection ES6PreferShortImport
-import {ObservableBinder} from "../Observable";
+import {Observable, ObservableBinder} from "../Observable";
 
 import {defaultModalFooter, IPromisedModalProps, PromisedModal} from "./PromisedModal";
 
@@ -13,7 +13,7 @@ export type IPromisedBaseFormModalOnlyModalProps = Omit<IPromisedModalProps, "re
 export interface IPromisedBaseFormModalProps<TValues> extends IPromisedBaseFormModalOnlyModalProps {
   baseFormProps: Omit<IBaseFormProps, "children" | "onSubmit" | "ref">;
   modalHeader?: React.ReactNode;
-  customFooter?(okButton: JSX.Element, cancelButton: JSX.Element): React.ReactNode;
+  customFooter?(okButton: JSX.Element, cancelButton: JSX.Element, hasErrors: Observable<boolean>): React.ReactNode;
 
   onSubmit?(values: TValues): Promise<boolean>;
 }
@@ -44,7 +44,8 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
                 {(hasErrorsValue): React.ReactElement => React.cloneElement(okButton, {disabled: hasErrorsValue || okButton.props.disabled})}
               </ObservableBinder>
             ) : okButton,
-          cancelButton
+          cancelButton,
+          hasErrors
         )}
         onCancel={this.onCancel}
         onOpen={this.onOpen}
