@@ -273,7 +273,7 @@ function getValueFromEvent(e: any): any {
   if (typeof e === 'object' && typeof e.persist === 'function') {
     e.persist();
   } else {
-    console.warn('Unknown event type', e);
+    console.debug('Unknown event type', e);
   }
   const {target} = e;
 
