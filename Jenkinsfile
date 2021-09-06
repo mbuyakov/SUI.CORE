@@ -10,7 +10,7 @@ pipeline {
     booleanParam(defaultValue: false, description: 'Clean workspace', name: 'clean_ws')
   }
 
-  agent { label 'master' }
+  agent any
 
   stages {
     stage("Parralel") {
