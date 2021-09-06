@@ -11,6 +11,11 @@ export interface AMCHARTS {
   am4wordCloud: typeof import('@amcharts/amcharts4/plugins/wordCloud')
 }
 
+// eslint-disable-next-line no-restricted-imports
+export type {AMEvent} from "@amcharts/amcharts4/core";
+// eslint-disable-next-line no-restricted-imports
+export type {ListTemplate} from "@amcharts/amcharts4/core";
+
 // Strange bug. Can't import Irange from am4core
 type Optional<A> = A | undefined;
 
