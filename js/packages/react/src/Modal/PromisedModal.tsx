@@ -7,7 +7,7 @@ import {PromisedButton} from "../Inputs";
 // noinspection ES6PreferShortImport
 import {ExtractProps} from "../other";
 
-export const defaultModalFooter = (okButton: JSX.Element, cancelButton: JSX.Element): JSX.Element => (
+export const defaultModalFooter = (okButton: JSX.Element, cancelButton: JSX.Element): React.ReactNode => (
   <div
     style={{
       display: "grid",
