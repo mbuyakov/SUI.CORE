@@ -44,6 +44,7 @@ function defaultChainWebpack(config) {
   config
     .plugin('hard-source')
     .use(HardSourceWebpackPlugin, [{
+      cacheDirectory: `node_modules/.cache/hard-source/${process.env.npm_lifecycle_event}/[confighash]`,
       cachePrune: {
         // Caches younger than `maxAge` are not considered for deletion. They must
         // be at least this (default: 2 days) old in milliseconds.
