@@ -69,6 +69,7 @@ export async function initSentry(getOptions: (libs: ISentry) => BrowserOptions &
   );
   options.integrations.push(
     new sentry.sentryTracing.Integrations.BrowserTracing({
+      tracingOrigins: [/.+/],
       routingInstrumentation: sentry.sentryReact.reactRouterV5Instrumentation(options.history, options.routes, options.matchPath)
     })
   );
