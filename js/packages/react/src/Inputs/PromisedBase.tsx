@@ -147,20 +147,34 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   }
 
   protected wrapConfirmAndError(child: JSX.Element | null): JSX.Element {
-    const childWithErrorPopover = <PromisedErrorPopover {...this.props.errorPopoverProps} promise={this.state.promise}>{child}</PromisedErrorPopover>;
-
-    return this.props.popconfirmSettings ? (
-      <Popconfirm
-        {...(typeof this.props.popconfirmSettings === 'boolean' ? {title: 'Вы уверены?'} : (this.props.popconfirmSettings as PopconfirmSettings))}
-        visible={this.state.popconfirmVisible}
-        onConfirm={this.onConfirmWithoutValue}
-        onCancel={this.onCancel}
+    const childWithErrorPopover = (
+      <PromisedErrorPopover
+        {...this.props.errorPopoverProps}
+        promise={this.state.promise}
       >
-        {childWithErrorPopover}
-      </Popconfirm>
-    ) : (
-      childWithErrorPopover
+        {child}
+      </PromisedErrorPopover>
     );
+
+    const popconfirmSettings = this.props.popconfirmSettings
+      ? typeof this.props.popconfirmSettings === 'boolean'
+        ? {title: 'Вы уверены?'}
+        : (this.props.popconfirmSettings as PopconfirmSettings)
+      : undefined;
+
+    return popconfirmSettings
+      ? (
+        <Popconfirm
+          {...popconfirmSettings}
+          visible={this.state.popconfirmVisible}
+          onConfirm={this.onConfirmWithoutValue}
+          onCancel={this.onCancel}
+          disabled={popconfirmSettings.disabled || child?.props?.disabled}
+        >
+          {childWithErrorPopover}
+        </Popconfirm>
+      )
+      : (childWithErrorPopover);
   }
 
   protected wrapInValidationPopover(child: JSX.Element | null): JSX.Element {
