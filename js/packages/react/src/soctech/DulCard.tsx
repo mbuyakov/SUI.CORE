@@ -256,7 +256,7 @@ function trueIfEmpty(value: boolean): boolean {
 function getIssuedDateDisabler(docTypeId: string, birthday: Nullable<string>): IObjectWithIndex {
   const docType = getDocTypeById(docTypeId);
   return docType && birthday
-    ? {disabledDate: dateDisabledForIssueDate(docType.docCode, birthday)}
+    ? {disabledDate: dateDisabledForIssueDate(docType.docCode, moment(birthday))}
     : {disabled: true};
 }
 
