@@ -1,107 +1,97 @@
 import moment, {Moment} from 'moment';
-import {dateDisabler} from "./utils";
+import {Nullable} from "@/other";
 
-export function disableFutureDate(current: Moment): boolean {
-  return current > moment().endOf('day');
+export const MOMENT_01_01_1900 = moment('1900-01-01');
+
+export const BIRTHDAY_LESS_THAN_01_01_1900_MSG = "Дата рождения не может быть меньше 01.01.1900";
+export const BIRTHDAY_IN_FUTURE_MSG = "Дата рождения не может быть в будущем";
+export const AGE_LESS_THAN_18_MSG = "Возраст должен быть больше 18 лет";
+export const AGE_GREATER_THAN_150_MSG = "Возраст должен быть меньше 150 лет";
+export const BIRTHDAY_GREATER_THAN_DEATH_MSG = "Дата рождения должна быть меньше даты смерти";
+
+export const ISSUE_DATE_IN_FUTURE_MSG = "Дата выдачи не может быть в будущем";
+export const ISSUE_DATE_LESS_BIRTHDAY_MSG = "Дата выдачи не может быть раньше даты рождения";
+export const ISSUE_DATE_FROM_14_MSG = "Данный документ выдается с 14 лет";
+export const ISSUE_DATE_FROM_18_MSG = "Данный документ выдается с 18 лет";
+
+// Common stub for all variants. Algorithm:
+// If age >= 45 years + 30 days, then issue date > 45 years
+// If age >= 20 years + 30 days, then issue date > 20 years
+// Else issue date > 14 years
+export const PASSPORT_ISSUE_DATE_BROKEN_MSG = "Недопустимая дата выдача паспорта";
+
+
+export function isFutureDate(target: Moment): boolean {
+  return target > moment().endOf('day');
 }
 
 export function getAge(birthday: Moment): number {
   return moment().diff(birthday, 'years');
 }
 
-export const BIRTHDAY_NO_LESS_YEARS_AGO_FROM_NOW = 18;
-export const BIRTHDAY_NO_MORE_YEARS_AGO_FROM_NOW = 150;
-export const BIRTHDAY_LESS_THAN_18_MSG = "Возраст должен быть больше 18 лет";
-export const BIRTHDAY_GREATER_THAN_150_MSG = "Возраст должен быть меньше 150 лет";
-export const BIRTHDAY_GREATER_THAN_DEATH_MSG = "Дата рождения должна быть меньше даты смерти";
-export const BIRTHDAY_ERROR_MSG = "Укажите корректную дату рождения";
+//**************
+// Common naming rules
+// **Validator - receive Moment as params, return empty string if OK, error text if failed
+// disable** or dateDisabledFor** - receive Moment as params, return (target: Moment) => boolean (true if target is disabled). Usually wrapper for **Validator
+//**************
 
-export function birthDayValidator(birthDay: Moment, deathDateString: string): string {
-  if (deathDateString != null && disableBirthdayDateWithDeathDate(deathDateString)(birthDay)) {
-    return BIRTHDAY_GREATER_THAN_DEATH_MSG;
-  }
+/**
+ * Minimal birthday - 01.01.1900
+ * Max age - 150
+ * adultOnly - valid age only 18+
+ */
+export function birthDayValidator(birthday: Moment, deathDate: Nullable<Moment>, adultOnly: boolean): string {
+  const age = getAge(birthday);
 
-  const cmp = checkDateInRangeOfYearsFromNow(-BIRTHDAY_NO_MORE_YEARS_AGO_FROM_NOW, -BIRTHDAY_NO_LESS_YEARS_AGO_FROM_NOW, birthDay);
-  if (cmp > 0) {
-    return BIRTHDAY_LESS_THAN_18_MSG;
-  }
-  if (cmp < 0) {
-    return BIRTHDAY_GREATER_THAN_150_MSG;
+  switch (true) {
+    case isFutureDate(birthday):
+      return BIRTHDAY_IN_FUTURE_MSG;
+    case deathDate != null && deathDate < birthday:
+      return BIRTHDAY_GREATER_THAN_DEATH_MSG;
+    case birthday < MOMENT_01_01_1900:
+      return BIRTHDAY_LESS_THAN_01_01_1900_MSG;
+    case age < 18 && adultOnly:
+      return AGE_LESS_THAN_18_MSG;
+    case age > 150:
+      return AGE_GREATER_THAN_150_MSG;
   }
 
   return '';
 }
 
-export function disableBirthdayDateWithDeathDate(deathDate: string): (current: Moment) => boolean {
-  return (current: Moment): boolean => dateDisabler(new Date(1901, 0, 1).toISOString(), "less")(current)
-    || (deathDate != null ? dateDisabler(new Date(deathDate).toISOString(), "greater")(current) : undefined)
-    || dateDisabler(new Date().toISOString(), "greaterOrEqual")(current)
+export function dateDisabledForBirthday(deathDate: Nullable<Moment>, adultOnly: boolean): (target: Moment) => boolean {
+  return (target: Moment): boolean => birthDayValidator(target, deathDate, adultOnly) !== '';
 }
 
-export function disableAdultBirthdayDateWithDeathDate(deathDate: string): (current: Moment) => boolean {
-  return (current: Moment): boolean => dateDisabler(new Date(1901, 0, 1).toISOString(), "less")(current)
-    || (deathDate != null ? dateDisabler(new Date(deathDate).toISOString(), "greater")(current) : undefined)
-    || getAge(current) < 18
-    || disableFutureDate(current)
-}
-
-export function disableFutureDateAndDateLessThanBirthday(birthday: string): (current: Moment) => boolean {
-  return (current: Moment): boolean => disableFutureDate(current)
-    || (birthday != null ? dateDisabler(new Date(birthday).toISOString(), "less")(current) : undefined)
-}
-
-// Return:
-//  -1 if date < (current date - from year);
-//  +1 if date > (current date + to year);
-//  0 otherwise.
-//
-export function checkDateInRangeOfYearsFromNow(from: number, to: number, date: Moment): number {
-  const now = moment().endOf('day');
-  const fromDate = moment(now).add(from, "years").startOf("day");
-  const toDate = now.add(to, "years").endOf("day");
-  if (date < fromDate) {
-    return -1;
+export function issueDateValidator(issueDate: Moment, docCode: number, birthday: Moment): string {
+  switch (true) {
+    case isFutureDate(issueDate):
+      return ISSUE_DATE_IN_FUTURE_MSG;
+    case issueDate < birthday:
+      return ISSUE_DATE_LESS_BIRTHDAY_MSG;
+    case docCode == 21: // Паспорт гражданина РФ
+      const current = moment();
+      const birthdayPlus45y = birthday.clone().add(45, 'years');
+      const birthdayPlus20y = birthday.clone().add(20, 'years');
+      const birthdayPlus14y = birthday.clone().add(14, 'years');
+      if (
+        birthdayPlus45y.clone().add(30, "days") <= current && issueDate < birthdayPlus45y ||
+        birthdayPlus20y.clone().add(30, "days") <= current && issueDate < birthdayPlus20y ||
+        birthdayPlus14y.clone().add(30, "days") <= current && issueDate < birthdayPlus14y
+      ) {
+        return PASSPORT_ISSUE_DATE_BROKEN_MSG;
+      } else {
+        return '';
+      }
+    case docCode == 14 && issueDate.diff(birthday, 'years') < 14: // Временное удостоверение личности гражданина РФ
+      return ISSUE_DATE_FROM_14_MSG;
+    case [7, 8].includes(docCode) && issueDate.diff(birthday, 'years') < 18: // Военный билет солдата и Временное удостоверение, выданное взамен военного билета
+      return ISSUE_DATE_FROM_18_MSG;
+    case true:
+      return '';
   }
-  if (date > toDate) {
-    return 1;
-  }
-
-  return 0;
 }
 
-export function disableDateNotBetweenYearsFromNow(from: number, to: number): (current: Moment) => boolean {
-  return (current: Moment): boolean => checkDateInRangeOfYearsFromNow(from, to, current) !== 0
-}
-
-export function disableFutureDateAndPassportIssueDateByAge(birthday: string, age: number, current: Moment): boolean {
-  const realCurrent = moment();
-  const disableDateByAge = (): boolean => {
-    if (moment(birthday).add(45, 'years').add(30, "days") <= realCurrent) {
-      return dateDisabler(moment(birthday).add(45, 'years').toISOString(), "less")(current);
-    } else if (moment(birthday).add(20, 'years').add(30, "days") <= realCurrent) {
-      return dateDisabler(moment(birthday).add(20, 'years').toISOString(), "less")(current);
-    } else if (moment(birthday).add(14, 'years') <= realCurrent) {
-      return dateDisabler(moment(birthday).add(14, "years").toISOString(), "less")(current)
-    } else {
-      return true;
-    }
-  };
-  return disableFutureDate(current) || disableDateByAge();
-}
-
-export function disableFutureDateAndIssueDateGreaterThanAge(docCode: number, birthday: string, age: number, current: Moment): boolean {
-  const targetAge = docCode === 14 ? 14 : 18;
-  const disableDateByAge = age >= targetAge
-    ? dateDisabler(moment(birthday).add(targetAge, "years").toISOString(), "less")(current)
-    : true;
-
-  return disableFutureDate(current) || disableDateByAge;
-}
-
-export function disableDocDate(docCode: number, birthday: string, age: number, current: Moment): boolean {
-  return docCode === 21 // passport
-    ? disableFutureDateAndPassportIssueDateByAge(birthday, age, current)
-    : [14, 7, 8].includes(docCode) // 14 - temporary identity card, 7 - military ID, 8 - temporary military ID
-      ? disableFutureDateAndIssueDateGreaterThanAge(docCode, birthday, age, current) // temporary identity card - 14 years age, other 18
-      : disableFutureDateAndDateLessThanBirthday(birthday)(current);
+export function dateDisabledForIssueDate(docCode: number, birthday: Moment): (target: Moment) => boolean {
+  return (target: Moment): boolean => issueDateValidator(target, docCode, birthday) !== '';
 }
