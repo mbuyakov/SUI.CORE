@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
-import {DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, disableDocDate, IObjectWithIndex, Nullable} from "@sui/core";
+import {dateDisabledForIssueDate, DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, IObjectWithIndex, Nullable} from "@sui/core";
 import moment, {Moment} from "moment";
 import {DatePicker, DatePickerProps} from "antd";
 import {IBaseCardRowLayout, IBaseFormItemLayout, ValuesGetter} from "@/Base";
@@ -165,10 +165,9 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
       }
 
       const birthday = typeof (props.birthday) === "function" ? props.birthday(get) : props.birthday;
-      const age = birthday ? moment().diff(birthday, "years") : undefined;
 
       return {
-        ...getIssuedDateDisabler(docTypeId, birthday, age),
+        ...getIssuedDateDisabler(docTypeId, birthday),
         ...propsDisabled(get)
       };
     },
@@ -254,10 +253,10 @@ function trueIfEmpty(value: boolean): boolean {
   return value !== false;
 }
 
-function getIssuedDateDisabler(docTypeId: string, birthday: string, personAge: number): IObjectWithIndex {
+function getIssuedDateDisabler(docTypeId: string, birthday: Nullable<string>): IObjectWithIndex {
   const docType = getDocTypeById(docTypeId);
-  return docTypeId
-    ? {disabledDate: ((current: Moment): boolean => disableDocDate(docType.docCode, birthday, personAge, current))}
+  return docType && birthday
+    ? {disabledDate: dateDisabledForIssueDate(docType.docCode, birthday)}
     : {disabled: true};
 }
 
