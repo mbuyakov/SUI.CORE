@@ -1,9 +1,4 @@
-import {ButtonProps} from "antd/lib/button";
-import {DropDownProps} from "antd/lib/dropdown";
-import {MenuProps} from "antd/lib/menu";
-import {MenuItemProps} from "antd/lib/menu/MenuItem";
-import { PopconfirmProps } from "antd/lib/popconfirm";
-import {TooltipProps} from "antd/lib/tooltip";
+import {ButtonProps, DropDownProps, MenuItemProps, MenuProps, PopconfirmProps, TooltipProps} from "antd";
 import React from 'react';
 
 export type TransitionButtonProps = Omit<ButtonProps, "children" | "disabled" | "onClick">;

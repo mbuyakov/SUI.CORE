@@ -239,6 +239,9 @@ public class BackendService {
   }
 
   private List<JSONObject> parseJsonArrayPgObjectToJsonObjectCollection(PGobject pgObject) {
+    if (pgObject == null) {
+      return Collections.emptyList();
+    }
     try {
       return StreamSupport
         .stream(new JSONArray(pgObject.getValue()).spliterator(), false)

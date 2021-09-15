@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {SuiRangePicker} from "@/Inputs/SuiRangePicker";
 import autobind from "autobind-decorator";
 import moment, {Moment} from "moment";
 import * as React from 'react';
+import {GET_DEFAULT_CALENDAR_RANGES, getDataByKey} from '@sui/core';
 import {RangePickerValue} from "@/compatibleTypes";
 import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from "@/BaseTable";
-import {GET_DEFAULT_CALENDAR_RANGES, getDataByKey} from '@sui/core';
+import {SuiRangePicker} from "@/Inputs/SuiRangePicker";
 
 type DatetimeType = "date" | "datetime";
 
@@ -45,7 +45,7 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
     const value = this.propsFilterValueToStateFilterValue(this.props.filter?.value as unknown as string[]);
 
     if (!equals(value, this.state.lastSavedValue)) {
-      this.setState({ lastSavedValue: value, filterValue: value });
+      this.setState({lastSavedValue: value, filterValue: value});
     }
   }
 

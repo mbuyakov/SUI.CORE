@@ -10,7 +10,7 @@ export class StringWithError {
   }
 
   public static getValue(enchantedValue: string): string {
-    if(!enchantedValue) {
+    if (!enchantedValue) {
       return '';
     }
     const values = enchantedValue.split(MAGIC);
@@ -18,11 +18,11 @@ export class StringWithError {
   }
 
   public static getError(enchantedValue: string): string {
-    if(!enchantedValue) {
+    if (!enchantedValue) {
       return '';
     }
     const values = enchantedValue.split(MAGIC);
-    if(values.length == 1) {
+    if (values.length == 1) {
       return '';
     }
     return values[1];

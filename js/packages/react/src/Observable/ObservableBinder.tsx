@@ -1,12 +1,13 @@
 import React from "react";
 
 // noinspection ES6PreferShortImport
-import { SUIReactComponent } from '../SUIReactComponent';
+import {SUIReactComponent} from '../SUIReactComponent';
 
-import { Observable } from './Observable';
+import {Observable} from './Observable';
 
 export interface IObservableBinderProps<T> {
   observable: Observable<T>
+
   children(value: T): React.ReactNode
 }
 
@@ -17,7 +18,7 @@ export class ObservableBinder<T> extends SUIReactComponent<IObservableBinderProp
     super(props);
     this.state = {
       value: props.observable.getValue()
-    } ;
+    };
     this.registerObservableHandler(props.observable.subscribe(value => this.setState({value})));
   }
 

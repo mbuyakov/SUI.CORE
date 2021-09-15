@@ -1,7 +1,9 @@
 // Включение кеша ломает кеширование antd-pro-merge-less
 require = require("esm")(module, {cache: false});
 const fs = require('fs');
+const path = require("path");
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const findCacheDir = require('find-cache-dir');
 
 // Почему бы не попатчить чужую либу на лету?
 // После замены require на esm версию ноде становится плохо от наличия шеллбенга в файле
@@ -40,10 +42,19 @@ const {getMergedThemeConfigs} = require('../../react/es/themes/utils');
 
 const buildTime = new Date().toISOString();
 
+const cacheDirectory = path.resolve(
+  findCacheDir({
+    name: 'hard-source',
+    cwd: process.cwd(),
+  }),
+  `${process.env.npm_lifecycle_event}/[confighash]`,
+);
+
 function defaultChainWebpack(config) {
   config
     .plugin('hard-source')
     .use(HardSourceWebpackPlugin, [{
+      cacheDirectory,
       cachePrune: {
         // Caches younger than `maxAge` are not considered for deletion. They must
         // be at least this (default: 2 days) old in milliseconds.
@@ -55,7 +66,13 @@ function defaultChainWebpack(config) {
         // 1.5Gb
         sizeThreshold: 1500 * 1024 * 1024
       }
-    }]);
+    }])
+
+  config
+    .plugin('hard-source-exclude')
+    .use(HardSourceWebpackPlugin.ExcludeModulePlugin, [[{
+      test: /less-loader/
+    }]]);
 
   // Used in copy-webpack-plugin
   fs.writeFileSync('./build_time.txt', buildTime);
@@ -117,7 +134,7 @@ function generateUmiConfig(params) {
   }
 
   let umiConfig = {
-    publicPath: "/",
+    publicPath: "./",
     theme: commonWithLightTheme.lessVars,
     define: {
       "process.env.BUILD_TIME": buildTime,

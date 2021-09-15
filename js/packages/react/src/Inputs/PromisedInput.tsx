@@ -1,13 +1,12 @@
-import {Rendered} from "@/other";
-import {SUI_ROW_GRID} from '@/styles';
-import {SUIMaskedInput} from '@/SUIMaskedInput';
 import {CircularProgress, IconButton} from '@material-ui/core';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import {trimIfString} from '@sui/core';
-import Input, {InputProps} from 'antd/lib/input';
-import Tooltip from 'antd/lib/tooltip';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
+import {Input, InputProps, Tooltip} from 'antd';
+import {SUIMaskedInput} from '@/SUIMaskedInput';
+import {SUI_ROW_GRID} from '@/styles';
+import {Rendered} from "@/other";
 
 import {ComposeValidator, IPromisedBaseProps, IPromisedBaseState, PromisedBase, ValidatorFunction} from './PromisedBase';
 
@@ -62,11 +61,11 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
       </IconButton>
     );
     saveButton = (this.state.savedValue !== this.state.value
-      && (this.props.type === 'number' ? this.state.value as unknown !== '-' : true)
-      && (isEmptyAndEmptyNotAllowed
-          ? <Tooltip title="Нельзя сохранить пустое значение">{saveButton}</Tooltip>
-          : saveButton
-      ))
+        && (this.props.type === 'number' ? this.state.value as unknown !== '-' : true)
+        && (isEmptyAndEmptyNotAllowed
+            ? <Tooltip title="Нельзя сохранить пустое значение">{saveButton}</Tooltip>
+            : saveButton
+        ))
       || null;
 
     return (

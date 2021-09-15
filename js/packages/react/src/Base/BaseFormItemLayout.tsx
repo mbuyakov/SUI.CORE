@@ -1,21 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {IObjectWithIndex} from "@sui/core";
-import {Form} from 'antd';
-import {FormItemProps} from 'antd/lib/form';
+import {Form, FormItemProps} from 'antd';
 import {RuleItem} from 'async-validator';
 import autobind from 'autobind-decorator';
 import classNames from 'classnames';
 import * as React from 'react';
-
-// noinspection ES6PreferShortImport
-import {BASE_CARD_ITEM_LABEL_HORIZONTAL} from "../styles";
-// noinspection ES6PreferShortImport
-import {SUIMaskedInput} from '../SUIMaskedInput';
-// noinspection ES6PreferShortImport
-import {SUIReactComponent} from '../SUIReactComponent';
+import {SUIMaskedInput} from '@/SUIMaskedInput';
+import {BASE_CARD_ITEM_LABEL_HORIZONTAL} from "@/styles";
+import {SUIReactComponent} from '@/SUIReactComponent';
 
 import {DEFAULT_ITEM_RENDERER} from './BaseCardItemLayout';
-import {BaseForm, IFormField, SUBMITTED_FIELD, ValuesGetter} from './BaseForm';
+import {BaseForm, IFormField, ValuesGetter} from './BaseForm';
 import {BaseFormContext} from './BaseFormContext';
 
 const FILL_FIELD_TEXT = 'Заполните поле';
@@ -42,7 +37,7 @@ export interface IBaseFormItemLayoutBase {
   title?: string | React.ReactNode;
   valuePropName?: string;
 
-  afterChange?(value: any, form: BaseForm): void,
+  afterChange?(value: any, form: BaseForm, oldValue: any): void,
 
   getValueFromEvent?(...args: any[]): any;
 
@@ -110,7 +105,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
   public render(): React.ReactNode {
     return (
       <BaseFormContext.Consumer>
-        {({baseForm, verticalLabel, customInputNodesProps, customFinalInputNodesProps}): React.ReactNode => {
+        {({baseForm, customInputNodesProps, customFinalInputNodesProps, initialValues, verticalLabel}): React.ReactNode => {
           this.baseForm = baseForm;
           const item = this.props;
           const valuePropName = item.valuePropName || 'value';
@@ -121,8 +116,17 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
             this.formField = baseForm.getOrCreateFormField(this.formFieldName);
             this.registerObservableHandler(this.formField.value.subscribe(value => this.setState({value})));
             this.registerObservableHandler(this.formField.error.subscribe(error => this.setState({error})));
-            if (item.initialValue != null) {
+
+            // Initial value
+            if (initialValues?.hasOwnProperty?.(this.formFieldName)) {
+              this.formField.value.setValue(initialValues[this.formFieldName]);
+            } else if (item.initialValue != null) {
               this.formField.value.setValue(item.initialValue);
+            }
+            if (this.props.afterChange) {
+              this.registerObservableHandler(this.formField.value.subscribe((value, oldValue) => {
+                this.props.afterChange(value, this.baseForm, oldValue);
+              }));
             }
           }
 
@@ -151,14 +155,11 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
             </span>
           );
 
-          const isSubmitted = baseForm.getFieldValue(SUBMITTED_FIELD);
-          const fieldHasValue = baseForm.getFieldValue(item.fieldName) != null;
-          const isTouched = fieldHasValue || baseForm.isFieldTouched(item.fieldName);
           const errors = this.state.error;
 
           const formItemProps: Partial<FormItemProps> = {
-            help: (isTouched) ? errors : ((isSubmitted && required) ? FILL_FIELD_TEXT : ''),
-            validateStatus: (isTouched ? errors : (isSubmitted && required)) ? 'error' : '',
+            help: errors,
+            validateStatus: errors ? 'error' : '',
           };
 
           let additionalProps: IObjectWithIndex = {};
@@ -238,10 +239,6 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
     const value = _getValueFromEvent(e);
 
     this.formField.value.setValue(value);
-
-    if (this.props.afterChange) {
-      this.props.afterChange(value, this.baseForm);
-    }
   }
 
   @autobind
@@ -276,7 +273,7 @@ function getValueFromEvent(e: any): any {
   if (typeof e === 'object' && typeof e.persist === 'function') {
     e.persist();
   } else {
-    console.warn('Unknown event type', e);
+    console.debug('Unknown event type', e);
   }
   const {target} = e;
 

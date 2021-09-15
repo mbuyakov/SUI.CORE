@@ -7,6 +7,7 @@ const defaultPasteFormatter = (it: string): string => it.replace(/[^0-9a-zа-я�
 
 export interface ISUIMaskedInputProps extends Omit<MaskedInputProps, "id" | "onChange"> {
   onChange?(value: string): void;
+
   pasteFormatter?(value: string): string;
 }
 

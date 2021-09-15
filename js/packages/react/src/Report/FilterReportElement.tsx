@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import IconButton from '@material-ui/core/IconButton';
 import SettingsIcon from '@material-ui/icons/Settings';
-import {Popover} from 'antd';
-import {PopoverProps} from "antd/lib/popover";
+import {Popover, PopoverProps} from 'antd';
 import autobind from "autobind-decorator";
 import React from "react";
 
@@ -23,8 +22,11 @@ export interface IFilterReportElementProps<TData, TFilter>
   extends Omit<ExtractProps<ReportElement>, "children"> {
   initialFilter: TFilter;
   popoverProps?: Omit<PopoverProps, "children" | "content" | "trigger">;
+
   children(data: TData, filter: TFilter): JSX.Element;
+
   fetchData(filter: TFilter): Promise<TData>;
+
   popoverContent(filter: TFilter, filterChangeHandler: FilterChangeHandler<TFilter>): JSX.Element;
 }
 

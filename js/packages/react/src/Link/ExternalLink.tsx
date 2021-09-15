@@ -1,5 +1,6 @@
-import Button, {ButtonType} from 'antd/lib/button/button';
+import {Button} from 'antd';
 import * as React from 'react';
+import {ButtonType} from "@/antdMissedExport";
 
 import {RouterLinkType} from "./RouterLink";
 

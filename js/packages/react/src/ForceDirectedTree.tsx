@@ -3,7 +3,7 @@ import autobind from 'autobind-decorator';
 import React from "react";
 import {AMCHARTS} from "@sui/charts";
 
-import { ForceDirectedTreeWrapper } from './ChartWrapper';
+import {ForceDirectedTreeWrapper} from './ChartWrapper';
 
 export type IForceDirectedTreeDataElement<T extends {} = {}> = T & {
   children?: Array<IForceDirectedTreeDataElement<T>>;
@@ -22,6 +22,7 @@ interface IForceDirectedTreeProps<T> {
   nodesLabelText?: string;
   nodesTooltipText?: string;
   style?: React.CSSProperties;
+
   additionalSetting?(props: IForceDirectedTreeAdditionalSettingProps): void;
 }
 

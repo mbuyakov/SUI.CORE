@@ -1,11 +1,11 @@
-import {SUI_ROW_GRID} from '@/styles';
 import {CircularProgress, IconButton} from '@material-ui/core';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import {trimIfString} from '@sui/core';
-import Input, {TextAreaProps} from "antd/lib/input";
-import Tooltip from "antd/lib/tooltip";
 import autobind from "autobind-decorator";
 import * as React from "react";
+import {Input, Tooltip} from 'antd';
+import {SUI_ROW_GRID} from '@/styles';
+import {TextAreaProps} from '@/antdMissedExport';
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 

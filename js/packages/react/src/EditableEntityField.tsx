@@ -2,7 +2,7 @@
 import {notification} from 'antd';
 import * as React from 'react';
 
-import {NO_DATA_TEXT, generateUpdate, PossibleId, PossibleValue, formatRawForGraphQL, IObjectWithIndex} from '@sui/core';
+import {formatRawForGraphQL, generateUpdate, IObjectWithIndex, NO_DATA_TEXT, PossibleId, PossibleValue} from '@sui/core';
 import {errorNotification} from './drawUtils';
 
 import {EditablePromisedComponent, IEditablePromisedComponentProps, IPromisedBaseProps} from './Inputs';

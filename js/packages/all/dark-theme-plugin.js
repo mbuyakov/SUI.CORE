@@ -1,14 +1,14 @@
-import { join } from 'path';
-import { existsSync, mkdirSync } from 'fs';
+import {join} from 'path';
+import {existsSync, mkdirSync} from 'fs';
 import serveStatic from 'serve-static';
 import rimraf from 'rimraf';
 import buildCss from 'antd-pro-merge-less';
 
-export default function(
+export default function (
   api,
   options
 ) {
-  const { cwd, outputPath, absNodeModulesPath } = api.paths;
+  const {cwd, outputPath, absNodeModulesPath} = api.paths;
   const tempMergeLessFolder = api.winPath(join(absNodeModulesPath, 'antd-pro-merge-less', '.temp'));
   const tempThemeFolder = api.winPath(join(absNodeModulesPath, '.dark-theme-plugin'));
 

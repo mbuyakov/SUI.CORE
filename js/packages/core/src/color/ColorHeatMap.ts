@@ -1,7 +1,7 @@
 import autobind from 'autobind-decorator';
 
-import { clamp } from '@/math';
-import { Color, findColorBetween } from '@/color';
+import {clamp} from '@/math';
+import {Color, findColorBetween} from '@/color';
 
 export interface IColorHeatMapSettings {
   /**
@@ -11,7 +11,7 @@ export interface IColorHeatMapSettings {
   /**
    * 50%
    */
-center: Color,
+  center: Color,
   /**
    * 100%
    */
@@ -20,13 +20,13 @@ center: Color,
 
 
 export class ColorHeatMap {
-  private readonly cache: Map<number, Color> =  new Map<number, Color>();
+  private readonly cache: Map<number, Color> = new Map<number, Color>();
 
   public constructor(settings: IColorHeatMapSettings) {
     for (let i = 0; i < 100; i++) {
       const left = i >= 50 ? settings.center : settings.left;
       const right = i >= 50 ? settings.right : settings.center;
-      this.cache.set(i, findColorBetween(left, right, Math.pow(Math.cos(Math.PI / 100 * (50 - (i >= 50 ? (i - 50) * 2 : i * 2) / 2)), 2)  * 100));
+      this.cache.set(i, findColorBetween(left, right, Math.pow(Math.cos(Math.PI / 100 * (50 - (i >= 50 ? (i - 50) * 2 : i * 2) / 2)), 2) * 100));
     }
   }
 

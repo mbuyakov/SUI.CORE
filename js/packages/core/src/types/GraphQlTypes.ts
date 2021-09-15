@@ -6,7 +6,8 @@ export interface IGraphQLConnection<T> {
   // noinspection SpellCheckingInspection
   edges: any[];
   // noinspection SpellCheckingInspection
-  pageInfo: any /*PageInfo*/;
+  pageInfo: any /*PageInfo*/
+  ;
   // noinspection SpellCheckingInspection
   totalCount: number;
 }
@@ -25,9 +26,11 @@ export interface ITableInfo {
   // noinspection SpellCheckingInspection
   foreignLinkColumnInfoId?: string;
   // noinspection SpellCheckingInspection
-  cardRenderParams?: any /*JSON*/;
+  cardRenderParams?: any /*JSON*/
+  ;
   // noinspection SpellCheckingInspection
-  colorSettings?: any /*JSON*/;
+  colorSettings?: any /*JSON*/
+  ;
   // noinspection SpellCheckingInspection
   isCatalog: boolean;
   // noinspection SpellCheckingInspection
@@ -72,7 +75,8 @@ export interface IColumnInfo {
   // noinspection SpellCheckingInspection
   order?: number;
   // noinspection SpellCheckingInspection
-  tableRenderParams?: any /*JSON*/;
+  tableRenderParams?: any /*JSON*/
+  ;
   // noinspection SpellCheckingInspection
   defaultGrouping: boolean;
   // noinspection SpellCheckingInspection
@@ -223,9 +227,11 @@ export interface IUser<TDetails = any> {
   // noinspection SpellCheckingInspection
   password: string;
   // noinspection SpellCheckingInspection
-  created: any /*Datetime*/;
+  created: any /*Datetime*/
+  ;
   // noinspection SpellCheckingInspection
-  updated?: any /*Datetime*/;
+  updated?: any /*Datetime*/
+  ;
   // noinspection SpellCheckingInspection
   deleted: boolean;
   // noinspection SpellCheckingInspection
@@ -274,7 +280,8 @@ export interface ITableExportLog {
   // noinspection SpellCheckingInspection
   userByUserId?: IUser;
   // noinspection SpellCheckingInspection
-  ts: any /*Datetime*/;
+  ts: any /*Datetime*/
+  ;
   // noinspection SpellCheckingInspection
   rowCount: number;
 }
@@ -289,7 +296,8 @@ export interface IUserSetting {
   // noinspection SpellCheckingInspection
   tableInfoId: string;
   // noinspection SpellCheckingInspection
-  content: any /*JSON*/;
+  content: any /*JSON*/
+  ;
   // noinspection SpellCheckingInspection
   userByUserId?: IUser;
   // noinspection SpellCheckingInspection

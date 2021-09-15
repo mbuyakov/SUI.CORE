@@ -17,8 +17,12 @@
     "baseUrl": ".",
     "paths": {
       // ./node_modules/@sui/all/src -> ./src
-      "@/*": ["../../../src/*"],
-      "@@/*": ["../../../src/.umi/*"]
+      "@/*": [
+        "../../../src/*"
+      ],
+      "@@/*": [
+        "../../../src/.umi/*"
+      ]
     },
     "allowSyntheticDefaultImports": true
   }

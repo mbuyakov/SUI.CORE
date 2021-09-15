@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any,no-restricted-imports */
-import Icon, {CustomIconComponentProps} from '@ant-design/icons/lib/components/Icon';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as H from "history";
 import * as React from "react";
+import {CustomIconComponentProps} from "@/antdMissedExport";
 
 export * from "./AddressFlag";
 export * from "./BlockUIConditionally";
@@ -19,5 +19,3 @@ export interface location<QueryParams extends { [K in keyof QueryParams]?: strin
 }
 
 export type IAntIconComponent = React.ComponentType<CustomIconComponentProps | React.SVGProps<SVGSVGElement>>;
-
-export const AntdIcon = Icon;

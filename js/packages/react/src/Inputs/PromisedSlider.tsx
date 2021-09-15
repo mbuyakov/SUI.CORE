@@ -1,10 +1,9 @@
 /* tslint:disable:no-magic-numbers */
-import {SUI_ROW_GRID} from "@/styles";
 import {CircularProgress, IconButton} from '@material-ui/core';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
-import {Slider} from "antd";
-import {SliderSingleProps} from "antd/lib/slider";
+import {Slider, SliderSingleProps} from "antd";
 import * as React from "react";
+import {SUI_ROW_GRID} from "@/styles";
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
 export type PromisedSliderProps = Omit<IPromisedBaseProps<number>, "validator"> & Omit<SliderSingleProps, "value" | "onChange">;

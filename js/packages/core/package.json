@@ -1,6 +1,6 @@
 {
   "name": "@sui/core",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "module": "es/index.js",
   "typings": "es/index.d.ts",
   "files": [
@@ -10,8 +10,8 @@
     "test": "jest",
     "test-watch": "jest --watch",
     "lint": "sui-linter",
-    "build": "cd ../.. && cross-env PACKAGE=core father-build && cd ./packages/core && npx tsc-alias -p tsconfig.json",
-    "ci": "run-s lint build"
+    "build": "node ../../lcm.js",
+    "ci": "node ../../lcm.js"
   },
   "devDependencies": {
     "@types/jsonpack": "^1.1.0",

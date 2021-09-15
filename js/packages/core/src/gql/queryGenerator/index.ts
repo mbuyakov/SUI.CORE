@@ -4,7 +4,7 @@ import {addQuotesIfString, camelCase, capitalize, formatRawForGraphQL} from "@/s
 
 // noinspection ES6PreferShortImport
 import {IGqlFilter} from "../types";
-import { mutate, query } from '../wrapper';
+import {mutate, query} from '../wrapper';
 
 export type PossibleId = string | number;
 export type PossibleValue = string | number | boolean;
@@ -129,7 +129,7 @@ export function generateCreateText(entity: string, fields: object): string {
  * Add quotes and some magic
  */
 function formatString(value: string): string {
-  if(ILLEGAL_QUERY_SYMBOLS.test(value)) {
+  if (ILLEGAL_QUERY_SYMBOLS.test(value)) {
     value = formatRawForGraphQL(value);
   }
 
@@ -204,7 +204,7 @@ export function generateDeleteFn(entity: string): (id: PossibleId) => Promise<vo
 /**
  * Stringify GraphQL filter for query
  */
-export function stringifyGqlFilter<T = {}>(filter: {filter: IGqlFilter<T>}): string {
+export function stringifyGqlFilter<T = {}>(filter: { filter: IGqlFilter<T> }): string {
   return `filter: ${JSON.stringify(filter.filter).replace(/"([^"]+)":/g, "$1:")}`;
 }
 
@@ -225,7 +225,7 @@ export async function concatAndMutate<T = void>(queries: string[]): Promise<T> {
  * @return joint mutation query consists of all the incoming queries.
  */
 export function concatQueryTexts(queries: string[]): string {
-  if(queries) {
+  if (queries) {
     const queriesInside = queries
       .map(unpackQueryTextFromCurlyBrackets)
       .filter(Boolean)
@@ -248,7 +248,7 @@ export function concatQueryTexts(queries: string[]): string {
 function unpackQueryTextFromCurlyBrackets(queryText: string): string {
   const start: number = queryText.indexOf('{');
   const end: number = queryText.lastIndexOf('}');
-  if(start === -1 || start >= end) {
+  if (start === -1 || start >= end) {
     return null;
   }
 

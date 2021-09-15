@@ -1,471 +1,349 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {CustomInputWithRegex, CustomInputWithRegexProps} from "@/Inputs/CustomInputWithRegex";
-import {Alert, DatePicker} from "antd";
-import locale from "antd/es/date-picker/locale/ru_RU";
-import {Rules} from "async-validator";
-import autobind from "autobind-decorator";
-import {isEqual} from "lodash";
-import moment, {Moment} from 'moment';
-import * as React from 'react';
-import {BaseFormProps} from "@/MutableBackendTable";
-import {DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, disableDocDate, formatRawForGraphQL, IObjectWithIndex, OneOrArrayWithNulls} from "@sui/core";
-import {BaseForm, clearFields, IBaseCardRowLayout, IBaseFormItemLayout, IFormField, ValuesGetter} from "@/Base";
+import * as React from "react";
+import {dateDisabledForIssueDate, DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, IObjectWithIndex, Nullable} from "@sui/core";
+import moment, {Moment} from "moment";
+import {DatePicker, DatePickerProps} from "antd";
+import {IBaseCardRowLayout, IBaseFormItemLayout, ValuesGetter} from "@/Base";
+import {CustomInputWithRegex, CustomInputWithRegexProps, DulTypeSelector, IDulTypeSelectorProps} from "@/Inputs";
 import {DulService, IallDocTypes} from "@/soctech/DulService";
-import {DulTypeSelector} from "@/Inputs";
-import {BASE_FORM_CLASS} from "@/styles";
-import {ObservableHandler, ObservableHandlerStub} from "@/Observable";
-import {StringWithError} from "@/utils";
-
+import {datePickerLocaleRu} from "@/antdMissedExport";
 
 export const RUSSIAN_PASSPORT_DOC_CODE = 21;
 export const issuedByRegex = "^[0-9А-Яа-я\\s№.\\-\"\'()]{1,250}$";
 export const issuedByDesc = "Разрешены русские буквы, цифры и символы №.-\"\'() до 250 знаков";
 
-const DUL_FIELDS_NAMES = [
-  "date",
-  "departmentCode",
-  "docTypeId",
-  "issuedBy",
-  "number",
-  "series",
-];
-
-export interface IDulFields {
-  date?: Moment;
-  departmentCode?: string;
-  docTypeId?: string;
-  issuedBy?: string;
-  number?: string;
-  series?: string;
-}
-
-
-export interface IDulValues {
-  date: string;
-  departmentCode: string;
-  docTypeId: string;
-  issuedBy: string;
-  number: string;
-  personId: string;
-  series: string;
-}
-
-export interface IDulCardOptions {
-  birthday?: string;
-  disabled?: boolean;
-  isEdit?: boolean;
-  alreadyFilled?: boolean;
-  narrowMode?: boolean;
-  personAge?: number;
-  required?: boolean;
-  uuid: string;
-}
-
-export interface IDulCardProps extends IDulCardOptions {
+export interface IDulCardFormItemsProps<T = any> {
+  birthday?: Nullable<string> | ((get: ValuesGetter) => Nullable<string>);
   checkDisabled?: boolean;
-  value?: IDulFields;
-  onChange?(value: IDulFields): void;
-  onErrorCheck?(hasError: boolean): void;
+  disabled?: boolean | ((get: ValuesGetter) => boolean | undefined);
+  disableDocTypeSelect?: boolean;
+  required?: boolean;
+  fieldNames?: {
+    docTypeId?: string;
+    series?: string;
+    number?: string;
+    date?: string;
+    departmentCode?: string;
+    issuedBy?: string;
+  };
+  layout?: "default" | "narrow" | DulCardLayout<T>;
 }
 
-export interface IDulCardState {
-  hasError: boolean,
-  initFormProps: BaseFormProps<any>,
-  rows: OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseFormItemLayout>>,
+export interface IDulCardLayoutParams {
+  docTypeItem: IBaseFormItemLayout;
+  seriesItem: IBaseFormItemLayout;
+  numberItem: IBaseFormItemLayout;
+  dateItem: IBaseFormItemLayout;
+  departmentCodeItem: IBaseFormItemLayout;
+  issuedByItem: IBaseFormItemLayout;
 }
 
-const DATE_FORMATS = ['DD.MM.YYYY', 'DDMMYYYY', 'DDMMYY'];
+export type DulCardLayout<T = any> = (params: IDulCardLayoutParams) => Array<IBaseCardRowLayout<T, IBaseFormItemLayout>>;
 
+export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Array<IBaseCardRowLayout<T, IBaseFormItemLayout>> {
+  const docTypeIdFieldName = props.fieldNames?.docTypeId || "docTypeId";
+  const seriesFieldName = props.fieldNames?.series || "series";
+  const numberFieldName = props.fieldNames?.number || "number";
+  const dateFieldName = props.fieldNames?.date || "date";
+  const departmentCodeFieldName = props.fieldNames?.departmentCode || "departmentCode";
+  const issuedByFieldName = props.fieldNames?.issuedBy || "issuedBy";
 
-export class DulCard extends React.Component<IDulCardProps, IDulCardState> {
+  const propsDisabled = (get: ValuesGetter): { disabled?: boolean } => {
+    let value: boolean;
 
-  private static readonly allDocTypes: IallDocTypes[] = DulService.allDocTypes();
-  private static propsMap: Map<string, IDulCardProps> = new Map<string, IDulCardProps>();
+    if (typeof (props.disabled) === "function") {
+      value = props.disabled(get);
+    } else {
+      value = props.disabled;
+    }
 
-  public static allFieldsFilledValidator = (rule: Rules, value: IDulFields, cb: (error: string | string[]) => void): void => {
-    const notFulfilled = Object.values(value).some(v =>
-      v === null || v === undefined || StringWithError.hasError(v)
-    );
-    cb(notFulfilled ? "  " : "");
+    return typeof (value) === "boolean" ? {disabled: value} : {};
   };
 
-  public static formValuesToChangeDul(personId: string, values: IDulFields): IDulValues {
-    return ({
-      date: values.date?.format(moment.HTML5_FMT.DATE),
-      departmentCode: values.departmentCode,
-      docTypeId: values.docTypeId,
-      issuedBy: formatRawForGraphQL(values.issuedBy),
-      number: values.number,
-      personId,
-      series: values.series === '' ? null : values.series
-    });
-  }
+  const docTypeItem: IBaseFormItemLayout = {
+    title: "Тип документа",
+    fieldName: docTypeIdFieldName,
+    mapFormValuesToRequired: (): boolean => trueIfEmpty(props.required),
+    mapFormValuesToInputNodeProps: (get: ValuesGetter): Partial<IDulTypeSelectorProps> => props.disableDocTypeSelect ? {disabled: true} : propsDisabled(get),
+    afterChange: (value, form): void => {
+      const docType = getDocTypeById(value);
 
-  public static getDocTypeById(docTypeId?: string): IallDocTypes {
-    return docTypeId && DulCard.allDocTypes.find(ridt => ridt.id === docTypeId) || null;
-  }
+      if (docType) {
+        const isRussianDocTypeValue = isRussianDocType(docType.id);
 
-  public static getDulFormProps(dulCardProps: IDulCardProps): BaseFormProps<any> {
-    return ({
-      ...DulCard.getInitDulFormProps(dulCardProps),
-      rows: DulCard.getDulFormRows(dulCardProps),
-    });
-  }
-
-  public static trueIfEmpty(required: boolean): boolean {
-    return required !== false;
-  }
-
-  public static getDulFormRows(dulCardProps: Readonly<IDulCardProps>): OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseFormItemLayout>> {
-    const dulCardUuid = dulCardProps.uuid || "main";
-    DulCard.propsMap.set(dulCardUuid, dulCardProps);
-
-    const typeItem = {
-      title: 'Тип документа',
-      fieldName: 'docTypeId',
-      mapFormValuesToRequired: (): boolean => {
-        const props = DulCard.propsMap.get(dulCardUuid);
-        return DulCard.trueIfEmpty(props.required);
-      },
-      mapFormValuesToInputNodeProps: (): any => {
-        const props = DulCard.propsMap.get(dulCardUuid);
-        return {
-          disabled: props.isEdit || props.disabled,
-        };
-      },
-      afterChange: (value, form): void => {
-        const docType = DulCard.getDocTypeById(value);
-        const cleanFields = DulCard.getFieldsToCleanByDocType(docType);
-        if (!!cleanFields) {
-          clearFields(form, undefined, ...cleanFields);
-        }
-      },
-      inputNode: <DulTypeSelector allowClear={!DulCard.trueIfEmpty(DulCard.propsMap.get(dulCardUuid).required)}/>
-    };
-
-    const dateItem = {
-      title: 'Дата выдачи',
-      fieldName: 'date',
-      mapFormValuesToRequired: (get: ValuesGetter): boolean => {
-        const props = DulCard.propsMap.get(dulCardUuid);
-        const {docTypeId} = get(["docTypeId"]);
-        return DulCard.trueIfEmpty(props.required) || !!docTypeId;
-      },
-      mapFormValuesToInputNodeProps: (get: ValuesGetter): any => {
-        const {docTypeId} = get(["docTypeId"]);
-        const props = DulCard.propsMap.get(dulCardUuid);
-        const res = DulCard.getIssuedDateDisabler(docTypeId, props.birthday, props.personAge)
-        res.disabled = props.disabled;
-        return docTypeId ? res : {disabled: true};
-      },
-      inputNode: (<DatePicker locale={locale as any} format={DATE_FORMATS}/>),
-    };
-
-    const seriesItem = {
-      title: 'Серия',
-      fieldName: 'series',
-      mapFormValuesToRequired: (get: ValuesGetter): boolean => {
-        const values: { docTypeId?: string } = get(["docTypeId"]);
-        const docType = DulCard.getDocTypeById(values.docTypeId);
-        return !!docType && (!docType?.seriesRegex || docType?.seriesRegex == "");
-      },
-      inputNode: <CustomInputWithRegex checkDisabled={dulCardProps.checkDisabled}/>,
-      rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
-      mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
-        const values: { docTypeId?: string } = get(["docTypeId"]);
-        const props = DulCard.propsMap.get(dulCardUuid);
-        const docType = DulCard.getDocTypeById(values.docTypeId);
-        return docType
-          ? {
-            regex: docType.seriesRegex,
-            desc: docType.seriesRegexDesc,
-            disabled: props.disabled,
-          }
-          : {disabled: true};
+        form.setFieldsValues({
+          [seriesFieldName]: docType.seriesRegex ? form.getFieldValue(seriesFieldName) : undefined,
+          [numberFieldName]: docType.numberRegex ? form.getFieldValue(numberFieldName) : undefined,
+          [departmentCodeFieldName]: isRussianDocTypeValue ? form.getFieldValue(departmentCodeFieldName) : undefined,
+          [issuedByFieldName]: isRussianDocTypeValue ? form.getFieldValue(issuedByFieldName) : undefined
+        });
+      } else {
+        form.setFieldsValues({
+          [seriesFieldName]: undefined,
+          [numberFieldName]: undefined,
+          [dateFieldName]: undefined,
+          [departmentCodeFieldName]: undefined,
+          [issuedByFieldName]: undefined
+        });
       }
-    };
-
-    const departmentCodeItem = {
-      title: 'Код подразделения',
-      fieldName: 'departmentCode',
-      inputNode: <CustomInputWithRegex checkDisabled={dulCardProps.checkDisabled}/>,
-      rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
-      mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
-        const values: { docTypeId?: string } = get(["docTypeId"]);
-        const props = DulCard.propsMap.get(dulCardUuid);
-        return DulCard.isRussianDocType(values.docTypeId)
-          ? {
-            regex: DEPARTMENT_CODE_REGEX,
-            desc: DEPARTMENT_CODE_DESC,
-            disabled: props.disabled,
-          }
-          : {disabled: true};
-      }
-    };
-
-    const numberItem = {
-      title: 'Номер',
-      fieldName: 'number',
-      inputNode: <CustomInputWithRegex checkDisabled={dulCardProps.checkDisabled}/>,
-      rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
-      mapFormValuesToRequired: (get: ValuesGetter): boolean => {
-        const values: { docTypeId?: string } = get(["docTypeId"]);
-        const docType = DulCard.getDocTypeById(values.docTypeId);
-        return !!docType && (!docType?.numberRegex || docType?.numberRegex == "");
-      },
-      mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
-        const values: { docTypeId?: string } = get(["docTypeId"]);
-        const props = DulCard.propsMap.get(dulCardUuid);
-        const docType = DulCard.getDocTypeById(values.docTypeId);
-        return docType
-          ? {
-            regex: docType.numberRegex,
-            desc: docType.numberRegexDesc,
-            disabled: props.disabled,
-          }
-          : {disabled: true};
-      }
-    };
-
-    const issuedByItem = {
-      title: 'Кем выдан',
-      fieldName: 'issuedBy',
-      inputNode: <CustomInputWithRegex checkDisabled={dulCardProps.checkDisabled}/>,
-      rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
-      mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
-        const values: { docTypeId?: string } = get(["docTypeId"]);
-        const props = DulCard.propsMap.get(dulCardUuid);
-        return DulCard.isRussianDocType(values.docTypeId)
-          ? {
-            regex: issuedByRegex,
-            desc: issuedByDesc,
-            disabled: props.disabled,
-          }
-          : {disabled: true};
-      }
-    };
-
-    let rows: IBaseCardRowLayout<any, IBaseFormItemLayout>[];
-
-    if (dulCardProps.narrowMode) {
-      rows = [
-        {
-          cols: {
-            items: typeItem
-          }
-        },
-        {
-          cols: [
-            {
-              items: seriesItem,
-            },
-            {
-              items: numberItem,
-            }
-          ]
-        },
-        {
-          cols: [
-            {
-              items: dateItem,
-            },
-            {
-              items: departmentCodeItem,
-            }
-          ]
-        },
-        {
-          cols: {
-            items: issuedByItem,
-          }
-        }
-      ];
-    } else {
-      rows = [
-        {
-          cols: [
-            {
-              items: [
-                typeItem,
-                dateItem,
-              ]
-            },
-            {
-              items: [
-                seriesItem,
-                departmentCodeItem,
-              ]
-            },
-            {
-              items: [
-                numberItem,
-                issuedByItem,
-              ]
-            },
-          ]
-        }
-      ];
-    }
-
-    if (dulCardProps.alreadyFilled) {
-      rows.unshift({
-        cols: {
-          items: {
-            fieldName: "_alert",
-            inputNode: <Alert type="success" message="ДУЛ гражданина заполнен в ИС СДУ, будет добавлен в анкету при выгрузке результатов диагностики"/>
-          }
-        }
-      })
-    }
-
-    return rows;
-  }
-
-  public static getInitDulFormProps(dulCardProps: Readonly<IDulCardProps>): BaseFormProps<any> {
-    const editSuffix = dulCardProps.isEdit ? 'edit' : 'create';
-    const uuidSuffix = dulCardProps.uuid && typeof dulCardProps.uuid === 'string' && dulCardProps.uuid.length > 0
-      ? `-${dulCardProps.uuid}` : '';
-    return ({
-      uuid: `iddoc-${editSuffix}-form${uuidSuffix}`,
-      momentFields: ["date"],
-      initialValues: dulCardProps.value || {docTypeId: ''},
-      verticalLabel: true,
-      noCard: true,
-      cardStyle: {padding: 0},
-      className: BASE_FORM_CLASS,
-    });
-  }
-
-  public static getIssuedDateDisabler(docTypeId: string, birthday: string, personAge: number): IObjectWithIndex {
-    const docType = DulCard.getDocTypeById(docTypeId);
-    return docTypeId
-      ? {
-        disabledDate: ((current: Moment): boolean => disableDocDate(docType.docCode, birthday, personAge, current))
-      }
-      : {disabled: true};
-  }
-
-  public static isRussianDocType(docTypeId: string): boolean {
-    return docTypeId && DulCard.getDocTypeById(docTypeId)?.docCode === RUSSIAN_PASSPORT_DOC_CODE || false;
-  }
-
-  private static dulCardOptionsIsNotEqual(options1: IDulCardOptions, options2: IDulCardOptions): boolean {
-    return options1.personAge !== options2.personAge
-      || options1.birthday !== options2.birthday
-      || options1.required !== options2.required
-      || options1.isEdit !== options2.isEdit
-      || options1.disabled !== options2.disabled;
-  }
-
-  private static getFieldsToCleanByDocType(docType: IallDocTypes): string[] {
-    if (!docType) {
-      return DUL_FIELDS_NAMES.filter(name => name !== 'docTypeId');
-    }
-    const result = [];
-    if (!docType.seriesRegex) {
-      result.push('series');
-    }
-    if (!docType.numberRegex) {
-      result.push('number');
-    }
-    if (!DulCard.isRussianDocType(docType.id)) {
-      result.push('departmentCode');
-      result.push('issuedBy');
-    }
-    return result;
-  }
-
-  private formRef: React.RefObject<BaseForm> = React.createRef();
-  private fieldsHandlers: ObservableHandlerStub[] = [];
-  private readonly formFields: Map<string, IFormField> = new Map();
-
-  public constructor(props: Readonly<IDulCardProps>) {
-    super(props);
-    this.state = {
-      hasError: false,
-      initFormProps: DulCard.getInitDulFormProps(props),
-      rows: DulCard.getDulFormRows(props),
-    };
-  }
-
-  public componentDidUpdate(prevProps: Readonly<IDulCardProps>, prevState: Readonly<IDulCardState>): void {
-    if (DulCard.dulCardOptionsIsNotEqual(prevProps, this.props)) {
-      this.setState({
-        rows: DulCard.getDulFormRows(this.props)
-      });
-    }
-
-    this.updateValueFields(prevProps.value, this.props.value);
-
-    if (prevProps.isEdit !== this.props.isEdit || prevProps.uuid !== this.props.uuid) {
-      this.setState({initFormProps: DulCard.getInitDulFormProps(this.props)});
-    }
-
-    const onErrorCheckerChanged = prevProps.onErrorCheck !== this.props.onErrorCheck;
-    const hasErrorChanged = this.state.hasError !== prevState?.hasError;
-
-    if (!!this.props.onErrorCheck && (onErrorCheckerChanged || hasErrorChanged)) {
-      this.props.onErrorCheck(this.state.hasError);
-      this.props.onChange?.(this.formRef.current.getFieldsValue())
-    }
-  }
-
-  public componentWillUnmount(): void {
-    this.fieldsHandlers?.forEach(handler => handler.unsubscribe());
-  }
-
-  public render(): JSX.Element {
-    return (
-      <BaseForm
-        {...this.state?.initFormProps}
-        onInitialized={this.onInitializedForm}
-        onSubmit={this.onSubmit}
-        rows={this.state?.rows}
-        ref={this.formRef}
+    },
+    inputNode: (
+      <DulTypeSelector
+        allowClear={!trueIfEmpty(props.required)}
       />
-    );
-  }
+    )
+  };
 
-  @autobind
-  private getOnFieldChange(fieldName: string, form: BaseForm): ObservableHandler<any> {
-    return (newValue: any, oldValue?: any): void => {
-      if (!!this.props.onChange
-        && !isEqual(newValue, oldValue)
-        && !isEqual(newValue, this.props.value?.[fieldName])
-      ) {
-        return this.props?.onChange(form.getFieldsValue());
+  const seriesItem: IBaseFormItemLayout = {
+    title: "Серия",
+    fieldName: seriesFieldName,
+    mapFormValuesToRequired: (get: ValuesGetter): boolean => {
+      const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
+      const docType = getDocTypeById(docTypeId);
+      // Есть тип, но нету регулярки (для регулярки отдельный валидатор)
+      return !!docType && !docType.seriesRegex;
+    },
+    mapFormValuesToInputNodeProps: (get: ValuesGetter): Partial<CustomInputWithRegexProps> => {
+      const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
+      const docType = getDocTypeById(docTypeId);
+      return docType
+        ? {
+          regex: docType.seriesRegex,
+          desc: docType.seriesRegexDesc,
+          ...propsDisabled(get)
+        }
+        : {disabled: true};
+    },
+    rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
+    inputNode: (
+      <CustomInputWithRegex
+        checkDisabled={props.checkDisabled}
+      />
+    )
+  };
+
+  const numberItem: IBaseFormItemLayout = {
+    title: "Номер",
+    fieldName: numberFieldName,
+    mapFormValuesToRequired: (get: ValuesGetter): boolean => {
+      const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
+      const docType = getDocTypeById(docTypeId);
+      // Есть тип, но нету регулярки (для регулярки отдельный валидатор)
+      return !!docType && !docType.numberRegex;
+    },
+    mapFormValuesToInputNodeProps: (get: ValuesGetter): Partial<CustomInputWithRegexProps> => {
+      const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
+      const docType = getDocTypeById(docTypeId);
+      return docType
+        ? {
+          regex: docType.numberRegex,
+          desc: docType.numberRegexDesc,
+          ...propsDisabled(get)
+        }
+        : {disabled: true};
+    },
+    rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
+    inputNode: (
+      <CustomInputWithRegex
+        checkDisabled={props.checkDisabled}
+      />
+    )
+  };
+
+  const dateItem: IBaseFormItemLayout = {
+    title: "Дата выдачи",
+    fieldName: dateFieldName,
+    mapFormValuesToRequired: (get: ValuesGetter): boolean => {
+      const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
+      return trueIfEmpty(props.required) || !!docTypeId;
+    },
+    mapFormValuesToInputNodeProps: (get: ValuesGetter): Partial<IStringValueDatePickerProps> => {
+      const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
+
+      if (!docTypeId) {
+        return {disabled: true};
       }
-    };
+
+      const birthday = typeof (props.birthday) === "function" ? props.birthday(get) : props.birthday;
+
+      return {
+        ...getIssuedDateDisabler(docTypeId, birthday),
+        ...propsDisabled(get)
+      };
+    },
+    inputNode: (
+      <StringValueDatePicker
+        locale={datePickerLocaleRu as any}
+        format={['DD.MM.YYYY', 'DDMMYYYY', 'DDMMYY']}
+      />
+    ),
+  };
+
+  const departmentCodeItem: IBaseFormItemLayout = {
+    title: "Код подразделения",
+    fieldName: departmentCodeFieldName,
+    mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
+      const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
+      return isRussianDocType(docTypeId)
+        ? {
+          regex: DEPARTMENT_CODE_REGEX,
+          desc: DEPARTMENT_CODE_DESC,
+          ...propsDisabled(get)
+        }
+        : {disabled: true};
+    },
+    rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
+    inputNode: (
+      <CustomInputWithRegex
+        checkDisabled={props.checkDisabled}
+      />
+    )
+  };
+
+  const issuedByItem: IBaseFormItemLayout = {
+    title: "Кем выдан",
+    fieldName: issuedByFieldName,
+    mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
+      const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
+      return isRussianDocType(docTypeId)
+        ? {
+          regex: issuedByRegex,
+          desc: issuedByDesc,
+          ...propsDisabled(get)
+        }
+        : {disabled: true};
+    },
+    rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
+    inputNode: (
+      <CustomInputWithRegex
+        checkDisabled={props.checkDisabled}
+      />
+    )
+  };
+
+  const layoutParams: IDulCardLayoutParams = {
+    docTypeItem,
+    seriesItem,
+    numberItem,
+    dateItem,
+    departmentCodeItem,
+    issuedByItem
+  };
+
+  if (typeof (props.layout) === "function") {
+    return props.layout(layoutParams);
   }
 
-  @autobind
-  private onInitializedForm(form: BaseForm): void {
-    this.fieldsHandlers = [];
-    DUL_FIELDS_NAMES.forEach(name => {
-      const field = form.getFormField(name);
-      this.formFields.set(name, field);
-      this.fieldsHandlers.push(field.value.subscribe(this.getOnFieldChange(name, form)));
-    });
-
-    form.subscribeOnHasError((hasError => this.setState({hasError})), true);
+  if (props.layout === "narrow") {
+    return narrowDulCardLayout(layoutParams);
   }
 
-  @autobind
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private onSubmit(): Promise<boolean> {
-    // Stub function
-    return Promise.resolve(true);
-  }
-
-  @autobind
-  private updateValueFields(oldValues: IDulFields, newValues: IDulFields): void {
-    this.formFields.forEach((field, name) => {
-      const newValue = newValues && newValues[name];
-      const oldValue = oldValues && oldValues[name];
-      if (oldValue !== newValue) {
-        field.value.setValue(newValue);
-      }
-    });
-  }
-
+  return defaultDulCardLayout(layoutParams);
 }
+
+export function getDocTypeById(docTypeId: Nullable<string>): IallDocTypes | null {
+  return docTypeId && DulService.allDocTypes().find(ridt => ridt.id === docTypeId) || null;
+}
+
+export function isRussianDocType(docTypeId: Nullable<string>): boolean {
+  return !!docTypeId && getDocTypeById(docTypeId)?.docCode === RUSSIAN_PASSPORT_DOC_CODE;
+}
+
+function trueIfEmpty(value: boolean): boolean {
+  return value !== false;
+}
+
+function getIssuedDateDisabler(docTypeId: string, birthday: Nullable<string>): IObjectWithIndex {
+  const docType = getDocTypeById(docTypeId);
+  return docType && birthday
+    ? {disabledDate: dateDisabledForIssueDate(docType.docCode, moment(birthday))}
+    : {disabled: true};
+}
+
+function defaultDulCardLayout<T>(params: IDulCardLayoutParams): Array<IBaseCardRowLayout<T, IBaseFormItemLayout>> {
+  return [
+    {
+      cols: [
+        {
+          items: [
+            params.docTypeItem,
+            params.dateItem,
+          ]
+        },
+        {
+          items: [
+            params.seriesItem,
+            params.departmentCodeItem,
+          ]
+        },
+        {
+          items: [
+            params.numberItem,
+            params.issuedByItem,
+          ]
+        },
+      ]
+    }
+  ];
+}
+
+function narrowDulCardLayout<T>(params: IDulCardLayoutParams): Array<IBaseCardRowLayout<T, IBaseFormItemLayout>> {
+  return [
+    {
+      cols: {
+        items: params.docTypeItem
+      }
+    },
+    {
+      cols: [
+        {
+          items: params.seriesItem
+        },
+        {
+          items: params.numberItem
+        }
+      ]
+    },
+    {
+      cols: [
+        {
+          items: params.dateItem
+        },
+        {
+          items: params.departmentCodeItem
+        }
+      ]
+    },
+    {
+      cols: {
+        items: params.issuedByItem
+      }
+    }
+  ];
+}
+
+interface IStringValueDatePickerProps extends Omit<DatePickerProps, "picker" | "defaultValue" | "value" | "onChange"> {
+  value?: Nullable<string>;
+
+  onChange?(value: Nullable<string>): void;
+}
+
+function StringValueDatePicker(props: IStringValueDatePickerProps): JSX.Element {
+  const {value, onChange, ...restPickerProps} = props;
+
+  const newOnChange = (newValue: Nullable<Moment>): void => {
+    if (onChange) {
+      onChange(newValue?.format(moment.HTML5_FMT.DATE) ?? null);
+    }
+  };
+
+  return (
+    <DatePicker
+      {...restPickerProps}
+      picker="date"
+      value={value ? moment(value) : undefined}
+      onChange={newOnChange}
+    />
+  )
+}
+

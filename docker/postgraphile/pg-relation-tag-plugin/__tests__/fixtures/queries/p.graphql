@@ -1,0 +1,17 @@
+query {
+  allPosts {
+    nodes {
+      headline
+      body
+      userByUserId {
+        name
+      }
+      userByReviewedBy {
+        name
+      }
+      userByPublishedByAndEmailTo {
+        name
+      }
+    }
+  }
+}

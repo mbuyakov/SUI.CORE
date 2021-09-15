@@ -1,6 +1,6 @@
 import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 import * as React from "react";
-import Tabs from "antd/lib/tabs";
+import {Tabs} from "antd";
 import {BaseCardBlock, IBaseCardBlockLayout} from "@/Base/BaseCardBlockLayout";
 import {IBaseCardTabLayout} from "@/Base/BaseCardTab/BaseCardTab"
 

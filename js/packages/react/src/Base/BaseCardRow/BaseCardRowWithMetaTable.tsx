@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React from "react";
-import {BackendTable} from "@/BackendTable";
 import {addQuotesIfString, getDataByKey} from "@sui/core";
+import {BackendTable} from "@/BackendTable";
 import {BaseCardRowParent} from '@/Base/BaseCardRow/types';
 import {IBaseCardRowLayout} from "@/Base/BaseCardRow/BaseCardRow";
 
@@ -58,6 +58,6 @@ export const BaseCardRowWithMetaTable: <T>(props: IBaseCardRowWithMetaTableLayou
   />
 );
 
-export function isRowWithMetaTable<T,ITEM>(row: IBaseCardRowLayout<T, ITEM>): row is IBaseCardRowWithMetaTableLayout {
+export function isRowWithMetaTable<T, ITEM>(row: IBaseCardRowLayout<T, ITEM>): row is IBaseCardRowWithMetaTableLayout {
   return "metaTableProps" in row;
 }

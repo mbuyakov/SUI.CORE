@@ -7,7 +7,7 @@ export interface SuiThemeConfig {
   baseTableMaterialThemeConfig?: ThemeOptions | ((muiTheme: Theme) => ThemeOptions)
 }
 
-export type CompiledSuiThemeConfig  = Merge<SuiThemeConfig, {
+export type CompiledSuiThemeConfig = Merge<SuiThemeConfig, {
   materialThemeConfig?: ThemeOptions
   baseTableMaterialThemeConfig?: ThemeOptions
 }>;

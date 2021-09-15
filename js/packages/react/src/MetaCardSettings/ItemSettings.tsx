@@ -4,11 +4,7 @@ import {Chip} from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 import SettingsIcon from '@material-ui/icons/Settings';
 import {capitalize, ColumnInfo, ColumnInfoManager, IName, Merge, NameManager, TableInfoManager} from "@sui/core";
-import {Spin, Tooltip} from 'antd';
-import Input from 'antd/lib/input';
-import Popover from 'antd/lib/popover';
-import Select from 'antd/lib/select';
-import Switch from 'antd/lib/switch';
+import {Input, Popover, Select, Spin, Switch, Tooltip} from 'antd';
 import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';
@@ -74,8 +70,8 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
                 label={
                   <>
                     <DnDDragHandler/>
-                    {(debugMode ? this.state.originalTitle : (this.state.title || (this.state.nameId ? this.state.nameFromNameId : this.state.nameFromColId) || this.state.originalTitle)) || (<Spin style={{ marginTop: 6 }}/>)}
-                    {isVersionNotLast && <OldVersionWarning ids={isVersionNotLast} style={{ marginLeft: 8, marginRight: 0 }}/>}
+                    {(debugMode ? this.state.originalTitle : (this.state.title || (this.state.nameId ? this.state.nameFromNameId : this.state.nameFromColId) || this.state.originalTitle)) || (<Spin style={{marginTop: 6}}/>)}
+                    {isVersionNotLast && <OldVersionWarning ids={isVersionNotLast} style={{marginLeft: 8, marginRight: 0}}/>}
                     {this.props.onDelete && <>
                       <Popover
                         getPopupContainer={getPopupContainer}
@@ -96,7 +92,7 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
                                 unCheckedChildren={<OrderedListOutlined/>}
                                 checkedChildren={<EditOutlined/>}
                                 checked={this.state.freeTitleEnabled}
-                                style={{ marginRight: 8 }}
+                                style={{marginRight: 8}}
                                 onChange={this.onFreeTitleEnabledChanged}
                               />
                             </Tooltip>
@@ -151,7 +147,7 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
                               <span>
                               <Switch
                                 checked={this.state.linkEnabled}
-                                style={{ marginRight: 8 }}
+                                style={{marginRight: 8}}
                                 onChange={this.onLinkEnabledChanged}
                               />
                             </span>
@@ -213,22 +209,22 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
 
       return camelCase(col.columnName);
     }));
-    this.setState({ dataKey, colId, nameFromColId, nameFromNameId, originalTitle });
+    this.setState({dataKey, colId, nameFromColId, nameFromNameId, originalTitle});
   }
 
   @autobind
   private onFormatTimeChanged(formatType: ItemSettingsFormatType): void {
-    this.setState({ formatType });
+    this.setState({formatType});
   }
 
   @autobind
   private onFreeTitleEnabledChanged(freeTitleEnabled: boolean): void {
-    this.setState({ freeTitleEnabled });
+    this.setState({freeTitleEnabled});
   }
 
   @autobind
   private onLinkEnabledChanged(linkEnabled: boolean): void {
-    this.setState({ linkEnabled });
+    this.setState({linkEnabled});
   }
 
   @autobind
@@ -238,12 +234,12 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
       const name = await NameManager.getById(nameId);
       nameFromNameId = name.name;
     }
-    this.setState({ nameId, nameFromNameId });
+    this.setState({nameId, nameFromNameId});
   }
 
   @autobind
   private onTitleChanged(e: React.ChangeEvent<HTMLInputElement>): void {
-    this.setState({ title: e.target.value });
+    this.setState({title: e.target.value});
   }
 
 }

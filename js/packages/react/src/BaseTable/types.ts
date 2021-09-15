@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {TableRenderParamsPlugin} from "@/TableRenderSettings";
 import {Filter, FilterOperation, Grouping, GroupKey, Sorting, Table as TableBase, TableBandHeader as TableBandHeaderBase, TableFilterRow, TableRowDetail} from '@devexpress/dx-react-grid';
 import {DataKey, IObjectWithIndex} from '@sui/core';
-import {CardType} from 'antd/lib/card';
 import * as React from 'react';
+import {TableRenderParamsPlugin} from "@/TableRenderSettings";
 
 // noinspection ES6PreferShortImport
 import {IBaseTableUserSettings} from "./extends/UserSettingsPlugin";
+import {CardType} from '@/antdMissedExport';
 
 export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode;
 export type TableSearchType = 'select' | 'date' | 'boolean' | 'string' | 'none';
@@ -18,7 +18,8 @@ export type LazyTableFilterRowCellProps = Omit<TableFilterRow.CellProps, "filter
   onFilter(filter: LazyFilter | null): void;
 }
 
-export interface ISearchProps /*extends TableFilterRow.CellProps*/ {
+export interface ISearchProps /*extends TableFilterRow.CellProps*/
+{
   data?: any[];
   dataKey?: DataKey;
   nameProperty?: string;
@@ -27,6 +28,7 @@ export interface ISearchProps /*extends TableFilterRow.CellProps*/ {
   placeholder?: string;
   query?: string;
   valueProperty?: string;
+
   optionFilter?(option: any): boolean;
 }
 
@@ -75,6 +77,7 @@ export interface IBaseTableColLayout {
   tableRenderParams?: any;
 
   comparator?(a: any, b: any): number;
+
   groupingCriteria?(value: any): any;
 }
 
@@ -100,6 +103,7 @@ export interface IRemoteBaseTableFields {
 
 export interface IRemoteBaseTableFunctions {
   customFilterComponent?(props: LazyTableFilterRowCellProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
+
   getChildGroups?(currentRows: any[], grouping: Grouping, rootRows: any[]): Array<{ childRows?: any[], key: number | string, value?: any }>; // Remote grouping
   onCurrentPageChange?(currentPage: number): void; // Remote paging
   onExpandedGroupsChange?(expandedGroups: GroupKey[]): void; // Remote grouping
@@ -157,13 +161,22 @@ export interface IBaseTableProps<TSelection = any> {
 
   beforeExport?(): Promise<boolean>; // TODO: Костыль, удалить при переводе экспорта на бек
   cellStyler?(row: any, value: any, column: IBaseTableColLayout): React.CSSProperties;
+
   customFilterComponent?(props: TableFilterRow.CellProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
+
   customSubtotalInfo?(subtotalData: IGroupSubtotalData): JSX.Element;
+
   expandableFilter?(row: any): boolean;
+
   exportValueFormatter?(col: IBaseTableColLayout, value: any, row: IObjectWithIndex): any;
+
   getRowId?(row: any): any;
+
   onSelectionChange?(selection: TSelection[]): void;
+
   onSettingsChange?(settings: IBaseTableUserSettings): void;
+
   rowStyler?(row: any): React.CSSProperties;
+
   selectionFilter?(row: any): boolean;
 }

@@ -1,4 +1,4 @@
-import Button, {ButtonProps} from "antd/lib/button/button";
+import {Button, ButtonProps} from "antd";
 import * as React from "react";
 
 import {IPromisedBaseState, PromisedBase} from "./PromisedBase";

@@ -13,4 +13,5 @@ export * from "./PromisedSlider";
 export * from "./PromisedSwitch";
 export * from "./PromisedTextArea";
 export * from "./SelectWithWaitData";
+export * from "./SuiRangePicker";
 export * from "./TreeSelectWithWaitData";

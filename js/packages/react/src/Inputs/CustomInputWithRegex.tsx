@@ -1,5 +1,4 @@
-import {Input} from 'antd';
-import {InputProps} from 'antd/lib/input';
+import {Input, InputProps} from 'antd';
 import autobind from "autobind-decorator";
 import React, {ChangeEvent} from "react";
 import {Rules} from "async-validator";
@@ -13,7 +12,7 @@ export type CustomInputWithRegexProps = InputProps & {
   onChange?(value: string): void
 }
 
-export class CustomInputWithRegex extends React.Component<CustomInputWithRegexProps>{
+export class CustomInputWithRegex extends React.Component<CustomInputWithRegexProps> {
 
   public static stringWithErrorValidator(rule: Rules, value: string, callback: (error: (string | string[])) => void): void {
     callback(StringWithError.getError(value));
@@ -44,7 +43,7 @@ export class CustomInputWithRegex extends React.Component<CustomInputWithRegexPr
   private getValue(): string | undefined {
     const value = this.props.value;
 
-    return value && typeof(value === "string") && StringWithError.getValue(value as string) || "";
+    return value && typeof (value === "string") && StringWithError.getValue(value as string) || "";
   }
 
   @autobind

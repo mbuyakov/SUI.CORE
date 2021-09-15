@@ -1,4 +1,4 @@
-import {ColumnInfo, TableInfo, TableInfoManager,query,addPluralEnding, camelCase, capitalize, IObjectWithIndex} from "@sui/core";
+import {addPluralEnding, camelCase, capitalize, ColumnInfo, IObjectWithIndex, query, TableInfo, TableInfoManager} from "@sui/core";
 
 // noinspection ES6PreferShortImport
 import {getReferencedTableInfo} from "../utils";

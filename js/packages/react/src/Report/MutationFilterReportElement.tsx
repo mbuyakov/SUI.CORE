@@ -2,7 +2,7 @@
 import autobind from "autobind-decorator";
 import React from "react";
 
-import {mutate, IObjectWithIndex} from "@sui/core";
+import {IObjectWithIndex, mutate} from "@sui/core";
 
 import {FilterReportElement, IFilterReportElementProps} from "./FilterReportElement";
 
@@ -33,14 +33,12 @@ export async function jsonMutationDataFetcher<TRaw = any, TData = any>(
   return formatter ? formatter(data) : data;
 }
 
-export type IMutationFilterReportElementProps<TData, TFilter, TRaw = any> = Omit<
-  IFilterReportElementProps<TData, TFilter> & {
-    mutationName: string;
-    filterFormatter?(filter: TFilter): IObjectWithIndex;
-    formatter?(data: TRaw): TData;
-  },
-  "fetchData"
->;
+export type IMutationFilterReportElementProps<TData, TFilter, TRaw = any> = Omit<IFilterReportElementProps<TData, TFilter> & {
+  mutationName: string;
+  filterFormatter?(filter: TFilter): IObjectWithIndex;
+  formatter?(data: TRaw): TData;
+},
+  "fetchData">;
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export class MutationFilterReportElement<TData, TFilter = {}, TRaw = any>

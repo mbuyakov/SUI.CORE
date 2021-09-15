@@ -1,7 +1,7 @@
 import React from "react";
 import {wrapInArrayWithoutNulls} from "@sui/core";
+import {Collapse} from "antd";
 import {IBaseCardCollapseLayout, renderIBaseCardCollapseLayout} from "@/Base/BaseCardCollapseLayout";
-import Collapse from "antd/lib/collapse";
 import {IBaseCardRowLayout} from "@/Base/BaseCardRow/BaseCardRow";
 
 export interface IBaseCardRowWithCollapseLayout<T, ITEM> {
@@ -30,6 +30,6 @@ export const BaseCardRowWithCollapse: <T, ITEM>(props: IBaseCardRowWithCollapseL
   </Collapse>
 );
 
-export function isRowWithCollapse<T,ITEM>(row: IBaseCardRowLayout<T, ITEM>): row is IBaseCardRowWithCollapseLayout<T, ITEM> {
+export function isRowWithCollapse<T, ITEM>(row: IBaseCardRowLayout<T, ITEM>): row is IBaseCardRowWithCollapseLayout<T, ITEM> {
   return "collapsePanels" in row;
 }

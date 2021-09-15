@@ -36,7 +36,7 @@ class CustomRender<T> extends React.Component<ICustomRenderProps<T>, {
   public componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
     console.error(error);
     console.error(errorInfo);
-    this.setState({ error: true });
+    this.setState({error: true});
   }
 
   public render(): React.ReactNode {
@@ -45,7 +45,7 @@ class CustomRender<T> extends React.Component<ICustomRenderProps<T>, {
         <Tooltip title="Произошла ошибка при рендере компонента">
           <WarningTwoTone
             twoToneColor="#cf1322"
-            style={{ fontSize: 20 }}
+            style={{fontSize: 20}}
           />
         </Tooltip>
       );
@@ -54,7 +54,7 @@ class CustomRender<T> extends React.Component<ICustomRenderProps<T>, {
       return this.props.render(this.props.value, this.props.item);
     } catch (e) {
       console.error(e);
-      this.setState({ error: true });
+      this.setState({error: true});
 
       return null;
     }
@@ -75,7 +75,7 @@ export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayou
     data = (
       <BaseTable
         cardType="inner"
-        paperStyle={{ margin: 0 }}
+        paperStyle={{margin: 0}}
         {...(item.tableProps)}
         rows={data}
       />
@@ -89,8 +89,8 @@ export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayou
 
   if (typeof (data) === 'boolean') {
     data = data
-      ? <CheckOutlined />
-      : <CloseOutlined />;
+      ? <CheckOutlined/>
+      : <CloseOutlined/>;
   }
 
   if (data === null || data === undefined) {

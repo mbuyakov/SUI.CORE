@@ -1,5 +1,5 @@
 import {IFrame, StompConfig} from '@stomp/stompjs';
-import {getSUISettings, IObjectWithIndex, Logger, sleep } from "@sui/core";
+import {getSUISettings, IObjectWithIndex, Logger, sleep} from "@sui/core";
 
 // noinspection ES6PreferShortImport
 import {Socket} from '../Socket';

@@ -1,11 +1,11 @@
 import autobind from "autobind-decorator";
 
-import { ICacheEntry } from '@/cacheManager';
-import { getDataByKey } from '@/dataKey';
-import { GqlCacheManager, query } from '@/gql';
-import { Logger } from "@/ioc/utils";
-import { asyncMap } from '@/other';
-import { IColumnInfo, IGraphQLConnection, ITableInfo } from '@/types';
+import {ICacheEntry} from '@/cacheManager';
+import {getDataByKey} from '@/dataKey';
+import {GqlCacheManager, query} from '@/gql';
+import {Logger} from "@/ioc/utils";
+import {asyncMap} from '@/other';
+import {IColumnInfo, IGraphQLConnection, ITableInfo} from '@/types';
 
 import {ColumnInfo, ColumnInfoManager} from "./ColumnInfo";
 import {Name} from "./Name";
@@ -105,7 +105,7 @@ class _TableInfoManager extends GqlCacheManager<ITableInfo, TableInfo> {
           true,
         ), "nodes", 0, "id");
 
-if (id == null) {
+      if (id == null) {
         throw new Error(`TableInfoManager: couldn't find TableInfo with tableName = ${id}`);
       }
     }

@@ -1,7 +1,7 @@
 import {Sorting} from "@devexpress/dx-react-grid";
 import jsonpack from "jsonpack";
 import pako from "pako";
-import {OneOrArray, wrapInArray, getSUISettings } from "@sui/core";
+import {getSUISettings, OneOrArray, wrapInArray} from "@sui/core";
 
 
 import {BackendFilter, SimpleBackendFilter} from "./BackendTable";
@@ -136,8 +136,8 @@ function putTableStateToLocation(
       return simpleFilter;
     }),
     filter: state.filter && wrapInArray(state.filter),
-    mergeFilters: typeof(state.mergeFilters) === "boolean" ? state.mergeFilters : false,
-    pageInfo: state.pageInfo || { pageNumber: 0 },
+    mergeFilters: typeof (state.mergeFilters) === "boolean" ? state.mergeFilters : false,
+    pageInfo: state.pageInfo || {pageNumber: 0},
     sorting: state.sorting
   };
 

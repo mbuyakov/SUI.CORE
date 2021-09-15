@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {Select} from 'antd';
-import {SelectProps, SelectValue} from "antd/lib/select";
+import {Select, SelectProps} from 'antd';
 import autobind from 'autobind-decorator';
 import isEqual from 'lodash/isEqual';
 import * as React from 'react';
 
 import {getDataByKey} from "@sui/core";
 import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from '../types';
+import {SelectValue} from '@/antdMissedExport';
 
 
 export interface ISelectColumnFilterData {

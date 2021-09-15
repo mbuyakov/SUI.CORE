@@ -11,8 +11,8 @@ import JSzip from 'jszip';
 import difference from 'lodash/difference';
 import moment from 'moment';
 import * as React from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import {wrapInArray, getSUISettings, DEFAULT_PAGE_SIZES, generateCreate, IObjectWithIndex, ColumnInfo, defaultIfNotBoolean, TableInfo, getDataByKey, camelCase, ColumnInfoManager, TableInfoManager, IUserSetting, query, formatRawForGraphQL, mutate, asyncMap, toMap} from "@sui/core";
+import {v4 as uuidv4} from 'uuid';
+import {asyncMap, camelCase, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, formatRawForGraphQL, generateCreate, getDataByKey, getSUISettings, IObjectWithIndex, IUserSetting, mutate, query, TableInfo, TableInfoManager, toMap, wrapInArray} from "@sui/core";
 import {LazyStubNoDataCell, LazyStubNoDataCellSmall} from "@/BackendTable/LazyStubNoDataCell";
 import {LoadingNoDataCell, LoadingNoDataCellSmall} from "@/BackendTable/LoadingNoDataCell";
 
@@ -394,7 +394,7 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private changeRaw(): void {
-    this.setState({ rawMode: !this.state.rawMode }); // , this.updateData);
+    this.setState({rawMode: !this.state.rawMode}); // , this.updateData);
   }
 
   @autobind
@@ -460,7 +460,7 @@ export class BackendTable<TSelection = defaultSelection>
     const stylers = [this.state.colorSettingsRowStyler, this.props.rowStyler].filter(Boolean);
 
     if (stylers.length) {
-      return (row): React.CSSProperties => stylers.reduce((result, styler) => ({ ...result, ...styler(row) }), {});
+      return (row): React.CSSProperties => stylers.reduce((result, styler) => ({...result, ...styler(row)}), {});
     }
 
     return undefined;
@@ -565,7 +565,7 @@ export class BackendTable<TSelection = defaultSelection>
   @autobind
   private onCurrentPageChange(currentPage: number): void {
     if (currentPage !== this.state.currentPage) {
-      const content = { currentPage };
+      const content = {currentPage};
       // noinspection JSIgnoredPromiseFromCall
       this.sendMessage('PAGE_CHANGE', content, content);
     }
@@ -573,7 +573,7 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private onError(message: IObjectWithIndex): void {
-    this.setState({ error: message.message, loading: false });
+    this.setState({error: message.message, loading: false});
   }
 
   @autobind
@@ -616,7 +616,7 @@ export class BackendTable<TSelection = defaultSelection>
             const groupKeyPrefix = `${group.key}${DX_REACT_GROUP_SEPARATOR}`;
             return groups.every(element => !element.key.startsWith(groupKeyPrefix));
           })
-          .map(expandedGroup => ({ group: expandedGroup.path })),
+          .map(expandedGroup => ({group: expandedGroup.path})),
       },
       {
         customGrouping: this.state.grouping,
@@ -624,7 +624,7 @@ export class BackendTable<TSelection = defaultSelection>
         expandedGroups,
         realExpandedGroups,
       },
-      { customExpandedGroups: null, customGrouping: null },
+      {customExpandedGroups: null, customGrouping: null},
     );
   }
 
@@ -662,9 +662,9 @@ export class BackendTable<TSelection = defaultSelection>
     // noinspection JSIgnoredPromiseFromCall
     this.sendMessage(
       'GROUPING_CHANGE',
-      { groupings },
-      { grouping: groupings, customGrouping: this.state.grouping, customExpandedGroups: this.state.customExpandedGroups },
-      { customGrouping: null, customExpandedGroups: null },
+      {groupings},
+      {grouping: groupings, customGrouping: this.state.grouping, customExpandedGroups: this.state.customExpandedGroups},
+      {customGrouping: null, customExpandedGroups: null},
     );
   }
 
@@ -708,7 +708,7 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private onOpen(): void {
-    if(!this.state.lazyStub) {
+    if (!this.state.lazyStub) {
       this.sendInitMessage(this.state.tableInfo);
     }
   }
@@ -716,7 +716,7 @@ export class BackendTable<TSelection = defaultSelection>
   @autobind
   private onPageSizeChange(pageSize: number): void {
     // noinspection JSIgnoredPromiseFromCall
-    this.sendMessage('PAGE_SIZE_CHANGE', { pageSize }, { pageSize });
+    this.sendMessage('PAGE_SIZE_CHANGE', {pageSize}, {pageSize});
   }
 
   @autobind
@@ -744,7 +744,7 @@ export class BackendTable<TSelection = defaultSelection>
 
   @autobind
   private onSortingChange(sorting: Sorting[]): void {
-    const newState = { sorting };
+    const newState = {sorting};
     const prevSorting = this.state.sorting || [];
 
     let shouldNotUpdate = false;
@@ -799,7 +799,9 @@ export class BackendTable<TSelection = defaultSelection>
 
         return new Promise<void>((resolve): void => resolve());
       })
-      .then(() => {location.reload()})
+      .then(() => {
+        location.reload()
+      })
       .then(() => {
         notification.info({
           message: "Таблица успешно сброшена к виду по умолчанию",
@@ -868,7 +870,7 @@ export class BackendTable<TSelection = defaultSelection>
           sorting,
           grouping: sortedColumns
             .filter(columnInfo => columnInfo.defaultGrouping)
-            .map(columnInfo => ({ columnName: columnInfo.columnName })),
+            .map(columnInfo => ({columnName: columnInfo.columnName})),
           filters: defaultFilter,
           ...additionalState,
         });
@@ -890,7 +892,7 @@ export class BackendTable<TSelection = defaultSelection>
     let selection = null;
 
     if (this.backendDataSource) {
-      const messageContent: any = { content, type };
+      const messageContent: any = {content, type};
 
       if (this.props.selectionEnabled) {
         selection = this.getSelection() || [];
@@ -907,7 +909,7 @@ export class BackendTable<TSelection = defaultSelection>
     }
 
     this.setState(
-      { loading: true, ...newState, ...(selection ? { lastSendSelection: selection } : null) },
+      {loading: true, ...newState, ...(selection ? {lastSendSelection: selection} : null)},
       // Плохое место, но лучше не нашел
       () => {
         if (this.props.id && (type !== "INIT" || this.props.lazyMode)) {
@@ -944,7 +946,7 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private showAll():void {
+  private showAll(): void {
     this.sendInitMessage(this.state.tableInfo, {lazyStub: false});
   }
 
@@ -959,10 +961,10 @@ export class BackendTable<TSelection = defaultSelection>
         if (this.state.rawMode) {
           title += ` (${tableInfo.schemaName}.${tableInfo.tableName})`;
         }
-        this.setState({ title });
+        this.setState({title});
       }
       if (this.state.title && !(this.state.rawMode || this.props.titleEnabled)) {
-        this.setState({ title: null });
+        this.setState({title: null});
       }
 
       const cols = await tableInfo.getColumns();
@@ -1002,7 +1004,7 @@ export class BackendTable<TSelection = defaultSelection>
           colorSettingsRowStyler = (row: any): React.CSSProperties => {
             try {
               const result = eval(expression);
-              return typeof(result) === "object" ? result : null;
+              return typeof (result) === "object" ? result : null;
             } catch (e) {
               return null;
             }
@@ -1114,7 +1116,7 @@ export class BackendTable<TSelection = defaultSelection>
     return axios.post(
       `${exportApiUri}/init`,
       null,
-      { headers: commonHeaders }
+      {headers: commonHeaders}
     )
       // eslint-disable-next-line no-async-promise-executor
       .then((): Promise<void> => new Promise<void>(async (resolve, reject): Promise<void> => {
@@ -1127,7 +1129,7 @@ export class BackendTable<TSelection = defaultSelection>
         try {
           // eslint-disable-next-line no-constant-condition
           while (true) {
-            modal.update({ content: `Обработано ${processedCount} из ${totalCount}` });
+            modal.update({content: `Обработано ${processedCount} из ${totalCount}`});
 
             const response = await axios.get<Blob>(
               `${exportApiUri}/data?fileCount=${fileCount}&fileSize=${fileSize}`,
@@ -1165,14 +1167,14 @@ export class BackendTable<TSelection = defaultSelection>
                 }
               );
 
-              zip.file(`${filename}.xlsx`, xlsx, { binary: true });
+              zip.file(`${filename}.xlsx`, xlsx, {binary: true});
 
               processedCount += data.length;
               totalElements += data.length;
             }
 
             const body = new FormData();
-            body.append("file", await zip.generateAsync({ type: "blob" }), "part.zip");
+            body.append("file", await zip.generateAsync({type: "blob"}), "part.zip");
 
             await axios.post(
               `${exportApiUri}/importParts`,
@@ -1190,7 +1192,7 @@ export class BackendTable<TSelection = defaultSelection>
             }
           }
 
-          modal.update({ content: `Формирование и скачивание результата` });
+          modal.update({content: `Формирование и скачивание результата`});
 
           const resultData = await axios.get(
             `${exportApiUri}/joinParts`,

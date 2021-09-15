@@ -1,5 +1,5 @@
-import {ThemesConfig} from "@/themes/types";
 import {createMuiTheme} from "@material-ui/core/styles";
+import {ThemesConfig} from "@/themes/types";
 
 export const defaultMuiTheme = createMuiTheme();
 

@@ -1,10 +1,9 @@
-import {PromisedButton} from '@/Inputs';
 import {formatRawForGraphQL, generateUpdate, TableInfo} from '@sui/core';
-import {Card, Space} from "antd";
-import Input from "antd/lib/input";
+import {Card, Input, Space} from "antd";
 import autobind from 'autobind-decorator';
 import * as React from "react";
 import {ChangeEvent} from "react";
+import {PromisedButton} from '@/Inputs';
 
 interface IAdditionalTabProps {
   tableInfo: TableInfo;
@@ -26,9 +25,7 @@ export class AdditionalTab extends React.Component<IAdditionalTabProps, IAdditio
       <Card
         type="inner"
         title="Покраска строк таблицы"
-        bodyStyle={{
-
-        }}
+        bodyStyle={{}}
       >
         <Space direction="vertical" style={{width: "100%"}}>
           <Input.TextArea

@@ -1,8 +1,8 @@
 import {getDataByKey, IGqlFilter, NO_DATA_TEXT, TableInfoManager} from "@sui/core";
-import {Select} from 'antd';
-import {SelectProps, SelectValue} from 'antd/lib/select';
+import {Select, SelectProps} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
+import {SelectValue} from "@/antdMissedExport";
 
 // noinspection ES6PreferShortImport
 import {ExtractProps} from "../other";
@@ -39,7 +39,7 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
     return this.updateData();
   }
 
-  public async componentDidUpdate(prevProps: Readonly<ISelectWithWaitDataProps<TValueType, TGroupType>> ): Promise<void> {
+  public async componentDidUpdate(prevProps: Readonly<ISelectWithWaitDataProps<TValueType, TGroupType>>): Promise<void> {
     if (this.props.watchFilter) {
       if (JSON.stringify(this.props.valueTableFilter) !== JSON.stringify(prevProps.valueTableFilter)) {
         await this.updateData();

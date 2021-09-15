@@ -7,6 +7,8 @@ export type ISerializable<P extends {} = {}> = P & {
 
 export interface ISerializableComponent<P extends ISerializable> {
   props: { plain?: P };
+
   getCurrentVersion(): number;
+
   toPlainObject(): P;
 }

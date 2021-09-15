@@ -1,7 +1,5 @@
 import {CloseOutlined, SettingOutlined} from '@ant-design/icons';
-import {Button} from 'antd';
-import Card, {CardProps} from 'antd/lib/card';
-import Popover from 'antd/lib/popover';
+import {Button, Card, CardProps, Popover} from 'antd';
 import * as React from 'react';
 
 import {DnDDragHandler} from './Draggable';
@@ -13,7 +11,7 @@ export const DeletableSmallCard: React.FC<Omit<CardProps, 'size' | 'type'> & {
   isVersionNotLast?: false | [number, number]
   settingsPopover?: React.ReactNode
   onDelete?(): void
-}> = ({ title, extra, draggable, onDelete, settingsPopover, isVersionNotLast, ...rest }) => (
+}> = ({title, extra, draggable, onDelete, settingsPopover, isVersionNotLast, ...rest}) => (
   <Card
     size="small"
     type="inner"
@@ -40,7 +38,7 @@ export const DeletableSmallCard: React.FC<Omit<CardProps, 'size' | 'type'> & {
                 href={null}
                 size="small"
                 icon={<SettingOutlined/>}
-                style={{ marginRight: 8 }}
+                style={{marginRight: 8}}
               />
             </Popover>
           )}

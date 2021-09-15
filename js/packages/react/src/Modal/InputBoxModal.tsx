@@ -1,7 +1,6 @@
 import {Input} from "antd";
-import {TextAreaProps} from "antd/lib/input/TextArea";
 import React from "react";
-
+import {TextAreaProps} from "@/antdMissedExport";
 // noinspection ES6PreferShortImport
 import {draw} from "../utils";
 

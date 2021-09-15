@@ -1,5 +1,5 @@
 import {Chip} from "@material-ui/core";
-import Input from 'antd/lib/input';
+import {Input} from "antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
@@ -23,7 +23,7 @@ export class FreeText extends SerializableDnDChild<SerializedFreeText> {
   public constructor(props: IFreeTextProps) {
     super(props);
 
-    if(this.isNew) {
+    if (this.isNew) {
       this.state = {
         ...this.state,
         text: "",

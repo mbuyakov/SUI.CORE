@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {PlusCircleOutlined} from "@ant-design/icons";
 import {unCapitalize} from '@sui/core';
-import {Dropdown, Menu} from "antd";
-import Button from "antd/lib/button";
-import {MenuItemProps} from "antd/lib/menu/MenuItem";
+import {Button, Dropdown, Menu, MenuItemProps} from "antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {Container, ContainerOptions, Draggable, DropResult} from "react-smooth-dnd";
@@ -33,6 +31,7 @@ export interface IDnDListProps<T extends React.Component> extends IBaseDnDChildP
   style?: React.CSSProperties
   title?: string
   type: string
+
   shouldAcceptDrop?(sourceContainerOptions: ContainerOptions, payload: any): boolean;
 }
 

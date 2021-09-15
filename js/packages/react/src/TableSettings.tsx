@@ -4,11 +4,7 @@ import {ThemeProvider, withTheme} from '@material-ui/core';
 import IconButton from "@material-ui/core/IconButton";
 import {Cached, Edit} from '@material-ui/icons';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import {Table} from 'antd';
-import Button from 'antd/lib/button';
-import Popover from 'antd/lib/popover';
-import Select from 'antd/lib/select';
-import Column from 'antd/lib/table/Column';
+import {Button, Popover, Select, Table} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
@@ -499,11 +495,11 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                         bordered={true}
                                         onOrderChanged={(sortedDataSource: any): Promise<any> => Promise.all(sortedDataSource.map((line: any, index: any): Promise<any> => this.updateColField(line.id, 'order', index, false, false, (sortedDataSource.length - 1) === index)))}
                                       >
-                                        <Column<IColumnInfo>
+                                        <Table.Column<IColumnInfo>
                                           title="Имя в БД"
                                           render={(_, record): string => record.columnName}
                                         />
-                                        <Column<IColumnInfo>
+                                        <Table.Column<IColumnInfo>
                                           title="Ссылается на поле"
                                           render={(_, record): React.ReactNode => {
                                             const refColInfo = getDataByKey<IColumnInfo>(record, 'columnInfoReferencesByColumnInfoId', 'nodes', 0, 'columnInfoByForeignColumnInfoId');
@@ -522,21 +518,21 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                               : null;
                                           }}
                                         />
-                                        <Column<IColumnInfo>
+                                        <Table.Column<IColumnInfo>
                                           title="Тип"
                                           render={(_, record): string => record.columnType}
                                         />
-                                        <Column<IColumnInfo>
+                                        <Table.Column<IColumnInfo>
                                           title="Обязательность"
                                           render={(_, record): JSX.Element => (
                                             record.isNullable ? <CloseOutlined style={{fontSize: 18}}/> : <CheckOutlined style={{fontSize: 18}}/>
                                           )}
                                         />
-                                        <Column<IColumnInfo>
+                                        <Table.Column<IColumnInfo>
                                           title="Значение по умолчанию"
                                           render={(_, record): string => record.defaultValue}
                                         />
-                                        <Column<IColumnInfo>
+                                        <Table.Column<IColumnInfo>
                                           title="Имя"
                                           render={(_, record): JSX.Element => (
                                             <div className={SUI_ROW_GROW_LEFT}>
@@ -579,7 +575,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                             </div>
                                           )}
                                         />
-                                        <Column<IColumnInfo>
+                                        <Table.Column<IColumnInfo>
                                           title="Теги"
                                           render={(_, record): JSX.Element => (
                                             <div className={SUI_ROW_GROW_LEFT}>
@@ -620,7 +616,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                             </div>
                                           )}
                                         />
-                                        <Column<IColumnInfo>
+                                        <Table.Column<IColumnInfo>
                                           title="Доступна"
                                           dataIndex="id"
                                           width={120}
@@ -714,11 +710,11 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       dataSource={value.sort((a, b): number => a.order - b.order)}
                                       bordered={true}
                                     >
-                                      <Column<IColumnInfo>
+                                      <Table.Column<IColumnInfo>
                                         title="Имя"
                                         render={(_, record): string => (record.nameByNameId && record.nameByNameId.name) || record.columnName}
                                       />
-                                      <Column<IColumnInfo>
+                                      <Table.Column<IColumnInfo>
                                         title="Настройки рендера"
                                         render={(_, record): JSX.Element => (
                                           <div className={SUI_ROW}>
@@ -731,7 +727,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           </div>
                                         )}
                                       />
-                                      <Column<IColumnInfo>
+                                      <Table.Column<IColumnInfo>
                                         title="Отображается по умолчанию"
                                         width={130}
                                         render={(_, record): JSX.Element => (
@@ -743,7 +739,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           </div>
                                         )}
                                       />
-                                      <Column<IColumnInfo>
+                                      <Table.Column<IColumnInfo>
                                         title="Группировка по умолчанию"
                                         width={120}
                                         render={(_, record): JSX.Element => (
@@ -755,7 +751,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           </div>
                                         )}
                                       />
-                                      <Column<IColumnInfo>
+                                      <Table.Column<IColumnInfo>
                                         title="Сортировка по умолчанию"
                                         width={120}
                                         render={(_, record): JSX.Element => (
@@ -780,7 +776,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           </div>
                                         )}
                                       />
-                                      <Column<IColumnInfo>
+                                      <Table.Column<IColumnInfo>
                                         title="Ширина"
                                         width={150}
                                         render={(_, record): JSX.Element => (
@@ -791,7 +787,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           />
                                         )}
                                       />
-                                      <Column<IColumnInfo>
+                                      <Table.Column<IColumnInfo>
                                         title="Перенос слов"
                                         width={120}
                                         render={(_, record): JSX.Element => (
@@ -801,7 +797,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           />
                                         )}
                                       />
-                                      <Column<IColumnInfo>
+                                      <Table.Column<IColumnInfo>
                                         width={150}
                                         title="Фильтр"
                                         render={(_, record): JSX.Element => (
@@ -818,7 +814,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           </PromisedSelect>
                                         )}
                                       />
-                                      <Column<IColumnInfo>
+                                      <Table.Column<IColumnInfo>
                                         width={150}
                                         title="Подытог"
                                         render={(_, record): JSX.Element => (

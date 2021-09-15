@@ -1,6 +1,6 @@
 {
   "name": "@sui/charts",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "module": "es/index.js",
   "typings": "es/index.d.ts",
   "files": [
@@ -10,12 +10,13 @@
   "sideEffects": [
     "*.less"
   ],
-  "scripts": {    "lint": "sui-linter",
-    "build": "cd ../.. && cross-env PACKAGE=charts father-build && cd ./packages/charts && npx tsc-alias -p tsconfig.json",
-    "ci": "run-s lint build"
+  "scripts": {
+    "lint": "sui-linter",
+    "build": "node ../../lcm.js",
+    "ci": "node ../../lcm.js"
   },
   "dependencies": {
     "@amcharts/amcharts4": "4.10.15",
-    "@sui/core": "8.0.0"
+    "@sui/core": "9.0.0"
   }
 }

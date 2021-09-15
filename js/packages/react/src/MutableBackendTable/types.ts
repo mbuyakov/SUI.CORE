@@ -1,5 +1,5 @@
 import {IObjectWithIndex} from "@sui/core";
-import {ButtonProps} from "antd/lib/button";
+import {ButtonProps} from "antd";
 
 // noinspection ES6PreferShortImport
 import {BackendTable} from "../BackendTable";

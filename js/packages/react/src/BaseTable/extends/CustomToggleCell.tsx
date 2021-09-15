@@ -62,4 +62,4 @@ class TableDetailToggleCellBase extends React.Component<ITableDetailToggleCellBa
 
 }
 
-export const CustomToggleCell = withStyles(styles, { name: "TableDetailToggleCell" })(TableDetailToggleCellBase);
+export const CustomToggleCell = withStyles(styles, {name: "TableDetailToggleCell"})(TableDetailToggleCellBase);

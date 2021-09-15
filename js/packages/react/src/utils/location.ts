@@ -5,7 +5,7 @@ export interface ILocation {
   host: string
 }
 
-export function getLocation(fallbackHostname: string):ILocation {
+export function getLocation(fallbackHostname: string): ILocation {
   let host = '';
   if (typeof location === 'undefined') {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

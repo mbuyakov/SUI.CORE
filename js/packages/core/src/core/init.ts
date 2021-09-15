@@ -4,9 +4,9 @@ import {setContext} from 'apollo-link-context';
 import {Container} from 'typescript-ioc';
 
 import {ColorHeatMap, IColorHeatMapSettings} from '@/color';
-import { ICoreUser } from '@/user';
+import {ICoreUser} from '@/user';
 import {UserService} from "@/ioc";
-import { IRawRoute, RouteType } from '@/tmp';
+import {IRawRoute, RouteType} from '@/tmp';
 
 declare let window: Window & {
   SUI: ISUISettings | undefined;
@@ -28,11 +28,14 @@ export interface IInitSUISettings {
   percentToColorSettings: IColorHeatMapSettings;
   permissions?: { exportAll?: Permission };
   routes: IRawRoute[];
-  chart?: {queue: boolean, onlyShowOnViewport: boolean};
+  chart?: { queue: boolean, onlyShowOnViewport: boolean };
 
   defaultGetLinkForTable?(tableName: string, type: RouteType, id?: string | number): string | null;
+
   metaschemaRefreshPromise(): Promise<void>;
+
   routerPushFn(link: any): void;
+
   routerReplaceFn(link: any): void;
 }
 

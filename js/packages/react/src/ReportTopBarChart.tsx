@@ -171,8 +171,8 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
           (relativeValue > 85)
             ? {dx: 6, horizontalCenter: "right"}
             : (relativeValue < 15)
-            ? {dx: -6, horizontalCenter: "left"}
-            : {dx: 0, horizontalCenter: "middle"}
+              ? {dx: -6, horizontalCenter: "left"}
+              : {dx: 0, horizontalCenter: "middle"}
         )
       }
     });

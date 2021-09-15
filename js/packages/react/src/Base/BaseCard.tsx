@@ -10,7 +10,7 @@ import {BaseCardRow, IBaseCardRowLayout, IBaseCardRowWithTabsLayout} from '@/Bas
 import {BaseCardTabContextConsumer, BaseCardTabContextProvider, IBaseCardTabWithBlocks, isCustomTab, isTabWithBlocks, renderIBaseCardTabLayout} from '@/Base/BaseCardTab';
 import {BaseCardBlock, IBaseCardBlockLayout} from "@/Base/BaseCardBlockLayout";
 import {BASE_CARD, BASE_CARD_HEADER_ONLY} from "@/styles";
-import { ChangedEditModeContext } from '@/ChangedEditModeContext';
+import {ChangedEditModeContext} from '@/ChangedEditModeContext';
 
 
 const renderTabBar = (): React.ReactElement => <React.Fragment/>;

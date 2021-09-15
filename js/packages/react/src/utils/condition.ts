@@ -9,11 +9,11 @@ export function checkCondition(
   filterValue: any
 ): boolean {
   const hasFieldValue = fieldValue != null;
-  let formattedFieldValue = hasFieldValue && (typeof(filterValue) === "string" || (Array.isArray(filterValue) && typeof(filterValue[0]) === "string"))
+  let formattedFieldValue = hasFieldValue && (typeof (filterValue) === "string" || (Array.isArray(filterValue) && typeof (filterValue[0]) === "string"))
     ? String(fieldValue)
     : fieldValue;
 
-  if (typeof(formattedFieldValue) === "string") {
+  if (typeof (formattedFieldValue) === "string") {
     if (filterType === FilterType.DATE) {
       formattedFieldValue = formattedFieldValue.substr("YYYY-MM-DD".length);
     }

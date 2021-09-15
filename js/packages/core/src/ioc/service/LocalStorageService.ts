@@ -5,7 +5,7 @@ export class LocalStorageService {
   private projectKey = Container.getValue("sui.projectKey");
 
   public getItem(key: string): string {
-    return localStorage.getItem(`${this.projectKey}_${key}`);
+    return localStorage.getItem(`${this.projectKey}_${key}`) || localStorage.getItem(`undefined_${key}`);
   }
 
   public setItem(key: string, value: string): void {

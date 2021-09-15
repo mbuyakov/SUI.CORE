@@ -1,4 +1,4 @@
-import { sleep } from "./other";
+import {sleep} from "./other";
 
 const WAIT_TIME: number = 100;
 
@@ -8,8 +8,8 @@ export type CacheHandler<ID, T> = (id: ID, item: T | null) => void;
  * Cache entry
  */
 export interface ICacheEntry<T, ID> {
-key: ID;
-value: T;
+  key: ID;
+  value: T;
 }
 
 /**
@@ -126,7 +126,7 @@ export abstract class CacheManager<T, ID = string> {
    * Subscibe to update in cache
    */
   public subscribe(handler: CacheHandler<ID, T>): number {
-const id = this.subscribersCounter++;
+    const id = this.subscribersCounter++;
     this.subscribersStore.set(id, handler);
 
     return id;
