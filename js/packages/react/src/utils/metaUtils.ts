@@ -99,7 +99,8 @@ export async function getAllowedColumnInfos(tableInfo: TableInfo, roles: string[
 }
 
 export function isAllowedColumnInfo(columnInfo: ColumnInfo, roles: string[]): boolean {
-  return columnInfo.visible && roles.some(role => columnInfo.roles.includes(role));
+  return columnInfo.visible
+    && (getSUISettings().ignoreColumnRoleRestriction || roles.some(role => columnInfo.roles.includes(role)));
 }
 
 export async function getReferenceRenderColumnInfo(

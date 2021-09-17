@@ -1,5 +1,7 @@
 package ru.sui.suisecurity.base.utils
 
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Component
 import ru.sui.suientity.entity.suimeta.ColumnInfo
 import ru.sui.suientity.entity.suimeta.TableInfo
 import ru.sui.suientity.entity.suisecurity.Role
@@ -9,7 +11,19 @@ import java.util.stream.Collectors
 
 class MetaSchemaUtils {
 
+    @Component
+    private class IgnoreColumnRoleRestrictionFiller(@Value("\${security.disable-column-role-restriction:false}") ignoreColumnRoleRestriction: Boolean) {
+
+        init {
+            Companion.ignoreColumnRoleRestriction = ignoreColumnRoleRestriction
+        }
+
+    }
+
     companion object {
+
+        private var ignoreColumnRoleRestriction: Boolean = false
+
         @JvmStatic
         fun getFullTableInfoName(tableInfo: TableInfo): String {
             return String.format("%s.%s", tableInfo.schemaName, tableInfo.tableName)
@@ -94,8 +108,11 @@ class MetaSchemaUtils {
 
         @JvmStatic
         fun isAllowedColumnInfo(columnInfo: ColumnInfo, userRoles: Set<Role>): Boolean {
-            return ("sui_meta".equals(columnInfo.tableInfo.schemaName, ignoreCase = true) // TODO: костыль?
-                    || columnInfo.visible!! && columnInfo.roles.any { userRoles.contains(it) })
+            if ("sui_meta".equals(columnInfo.tableInfo.schemaName, ignoreCase = true)) {
+                return true
+            }
+
+            return columnInfo.visible && (ignoreColumnRoleRestriction || columnInfo.roles.any { userRoles.contains(it) })
         }
 
         @JvmStatic
@@ -103,4 +120,5 @@ class MetaSchemaUtils {
             return tableInfo.columnInfos.firstOrNull { TextUtils.toCamelCase(it.columnName) == camelCaseName }
         }
     }
+
 }

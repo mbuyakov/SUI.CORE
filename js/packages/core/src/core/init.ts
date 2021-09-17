@@ -22,6 +22,7 @@ export interface IInitSUISettings {
   checkVersionMismatchUrl: string;
   enableDoubleVerticalScrollForAllTables?: boolean;
   graphqlUri: string;
+  ignoreColumnRoleRestriction?: boolean;
   restUri: string;
   rusName: string;
   offlineMode?: boolean;
