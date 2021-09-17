@@ -86,6 +86,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
   colspan?: number
 }, {
   error?: any
+  hasErrorLatch?: boolean // Если хоть раз была ошибка - ставим true, не чистится никогда. Нужно на случай когда задисейбленное поле надо отредактировать(прилетела ошибка валидации)
   subscribedFormFieldValues: IObjectWithIndex
   value?: any
 }> {
@@ -115,7 +116,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
             this.formFieldName = item.fieldName;
             this.formField = baseForm.getOrCreateFormField(this.formFieldName);
             this.registerObservableHandler(this.formField.value.subscribe(value => this.setState({value})));
-            this.registerObservableHandler(this.formField.error.subscribe(error => this.setState({error})));
+            this.registerObservableHandler(this.formField.error.subscribe(error => this.setState({error, hasErrorLatch: this.state.hasErrorLatch || !!error})));
 
             // Initial value
             if (initialValues?.hasOwnProperty?.(this.formFieldName)) {
@@ -156,6 +157,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
           );
 
           const errors = this.state.error;
+          const hasErrorLatch = this.state.hasErrorLatch;
 
           const formItemProps: Partial<FormItemProps> = {
             help: errors,
@@ -183,7 +185,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
                 ...customInputNodesProps,
                 ...item.inputNode.props,
                 onChange: this.onChange,
-                ...(errors ? {disabled: false} : {}),
+                ...(hasErrorLatch ? {disabled: false} : {}),
                 ...additionalProps,
                 ...customFinalInputNodesProps,
                 style: {
