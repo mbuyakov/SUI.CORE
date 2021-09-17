@@ -12,7 +12,7 @@ import java.util.stream.Collectors
 class MetaSchemaUtils {
 
     @Component
-    private class IgnoreColumnRoleRestrictionFiller(@Value("\${security.disable-column-role-restriction:false}") ignoreColumnRoleRestriction: Boolean) {
+    internal class IgnoreColumnRoleRestrictionFiller(@Value("\${security.disable-column-role-restriction:false}") ignoreColumnRoleRestriction: Boolean) {
 
         init {
             Companion.ignoreColumnRoleRestriction = ignoreColumnRoleRestriction
