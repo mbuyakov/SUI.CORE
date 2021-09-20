@@ -2,6 +2,7 @@ package ru.sui.suibackend.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.common.cache.CacheBuilder
+import mu.KotlinLogging
 import org.apache.commons.compress.archivers.zip.Zip64Mode
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.Row
@@ -10,9 +11,12 @@ import org.apache.poi.ss.usermodel.WorkbookFactory
 import org.apache.poi.xssf.streaming.SXSSFWorkbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.springframework.context.ApplicationContext
+import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody
 import org.springframework.web.socket.WebSocketSession
 import org.springframework.web.socket.messaging.SubProtocolWebSocketHandler
 import ru.sui.suibackend.cache.UserStateCache
@@ -27,13 +31,13 @@ import java.util.concurrent.TimeUnit
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
-import javax.servlet.http.HttpServletResponse
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.isAccessible
 
+private val log = KotlinLogging.logger { }
 
 private const val NO_CACHED_SESSION_ERROR_MESSAGE = "Please call /init method first"
 private const val MAX_DB_FETCH_SIZE = 50_000L
@@ -140,14 +144,12 @@ class ExportController(
     fun rawData(
             @RequestHeader(INIT_SESSION_ID_KEY) sessionId: String,
             @RequestParam("fileCount") @Min(1) fileCount: Int,
-            @RequestParam("fileSize") @Min(1) @Max(MAX_DB_FETCH_SIZE) fileSize: Int,
-            response: HttpServletResponse
-    ) {
+            @RequestParam("fileSize") @Min(1) @Max(MAX_DB_FETCH_SIZE) fileSize: Int
+    ): ResponseEntity<StreamingResponseBody> {
         val userState = exportInfoCache.getIfPresent(sessionId)?.userState ?: error(NO_CACHED_SESSION_ERROR_MESSAGE)
+        val tmpFile = createTempFile()
 
-        response.contentType = MediaType.APPLICATION_JSON_VALUE
-
-        ZipOutputStream(response.outputStream).use { zipOutputStream ->
+        ZipOutputStream(tmpFile.outputStream()).use { zipOutputStream ->
             objectMapper.writer().writeValues(zipOutputStream).use { writer ->
                 var partNumber = 1
 
@@ -175,6 +177,17 @@ class ExportController(
                 }
             }
         }
+
+        val body = StreamingResponseBody { outputStream ->
+            // Пишем ответ
+            tmpFile.inputStream().copyTo(outputStream)
+            // Удаляем временный файл (если получится)
+            kotlin.runCatching { tmpFile.delete() }.onFailure { log.error(it) { "Unable delete tmp file ${tmpFile.name}" } }
+        }
+
+        return ResponseEntity.ok()
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(body)
     }
 
     @PostMapping("/importParts")
@@ -206,10 +219,12 @@ class ExportController(
     }
 
     @GetMapping("/joinParts")
-    fun joinParts(@RequestHeader(INIT_SESSION_ID_KEY) sessionId: String, response: HttpServletResponse) {
+    fun joinParts(@RequestHeader(INIT_SESSION_ID_KEY) sessionId: String): ResponseEntity<StreamingResponseBody> {
         val exportInfo = exportInfoCache.getIfPresent(sessionId)
 
         if (exportInfo != null) {
+            val tmpFile = createTempFile()
+
             try {
                 val rowIterator = iterator {
                     exportInfo.parts.forEachIndexed { partIndex, part ->
@@ -229,8 +244,6 @@ class ExportController(
                         }
                     }
                 }
-
-                response.contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
                 SXSSFWorkbook(XSSFWorkbook()).use { workbook ->
                     workbook.setZip64Mode(Zip64Mode.Always)
@@ -252,7 +265,7 @@ class ExportController(
                         }
                     }
 
-                    ZipOutputStream(response.outputStream).use {
+                    ZipOutputStream(tmpFile.outputStream()).use {
                         it.putNextEntry(ZipEntry("table.xlsx"))
                         workbook.write(it)
                         it.closeEntry()
@@ -262,6 +275,17 @@ class ExportController(
                 exportInfo.parts.forEach { kotlin.runCatching { it.delete() } }
                 exportInfoCache.invalidate(sessionId)
             }
+
+            val body = StreamingResponseBody { outputStream ->
+                // Пишем ответ
+                tmpFile.inputStream().copyTo(outputStream)
+                // Удаляем временный файл (если получится)
+                kotlin.runCatching { tmpFile.delete() }.onFailure { log.error(it) { "Unable delete tmp file ${tmpFile.name}" } }
+            }
+
+            return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .body(body)
         } else {
             error(NO_CACHED_SESSION_ERROR_MESSAGE)
         }
