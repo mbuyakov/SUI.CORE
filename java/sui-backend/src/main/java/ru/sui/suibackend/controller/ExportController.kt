@@ -2,6 +2,7 @@ package ru.sui.suibackend.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.common.cache.CacheBuilder
+import org.apache.commons.compress.archivers.zip.Zip64Mode
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
@@ -232,6 +233,8 @@ class ExportController(
                 response.contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
                 SXSSFWorkbook(XSSFWorkbook()).use { workbook ->
+                    workbook.setZip64Mode(Zip64Mode.Always)
+
                     if (rowIterator.hasNext()) {
                         val headerRow = rowIterator.next()
 
