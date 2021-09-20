@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.common.cache.CacheBuilder
 import mu.KotlinLogging
 import org.apache.commons.compress.archivers.zip.Zip64Mode
+import org.apache.poi.openxml4j.util.ZipSecureFile
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
@@ -93,6 +94,10 @@ class ExportController(
         private val userStateCache: UserStateCache,
         private val applicationContext: ApplicationContext
 ) {
+
+    init {
+        ZipSecureFile.setMinInflateRatio(0.0)
+    }
 
     private val exportInfoCache = CacheBuilder
             .newBuilder()
