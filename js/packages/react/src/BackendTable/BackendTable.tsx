@@ -1123,7 +1123,7 @@ export class BackendTable<TSelection = defaultSelection>
         const totalCount = getters.totalCount as number;
         let processedCount = 0;
 
-        const fileSize = 10000;
+        const fileSize = 5000;
         const fileCount = 5;
 
         try {
