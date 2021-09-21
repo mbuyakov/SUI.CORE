@@ -15,7 +15,7 @@ export type IBackendTableInputNodeProps<TSelection> =
   Omit<ExtractProps<BackendTable<TSelection>>, "singleSelection" | "initialSelection">
   & IFormItemBackendTableInputNodeProps<TSelection>;
 
-export default class BackendTableInputNode<TSelection = string> extends React.Component<IBackendTableInputNodeProps<TSelection>, {}> {
+export class BackendTableInputNode<TSelection = string> extends React.Component<IBackendTableInputNodeProps<TSelection>, {}> {
 
   public render(): React.ReactNode {
     return (
