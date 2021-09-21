@@ -1,0 +1,118 @@
+// Copy part of antd/es/form/style/status.less
+// @error-color -> @border-color-base
+@import "~antd/es/style/themes/default";
+@import '~antd/es/form/style/mixin';
+
+.@{form-item-prefix-cls}-has-error .sui-backend-table-input-node {
+  .form-control-validation(@input-color; @input-border-color; @input-bg);
+
+  &.@{form-item-prefix-cls}-has-feedback .@{form-item-prefix-cls}-children-icon {
+    color: @border-color-base;
+    animation-name: diffZoomIn2 !important;
+  }
+
+  // Select
+  .@{ant-prefix}-select:not(.@{ant-prefix}-select-disabled):not(.@{ant-prefix}-select-customize-input) {
+    .@{ant-prefix}-select-selector {
+      background-color: @form-error-input-bg;
+      border-color: @border-color-base !important;
+    }
+
+    &.@{ant-prefix}-select-open .@{ant-prefix}-select-selector,
+    &.@{ant-prefix}-select-focused .@{ant-prefix}-select-selector {
+      .active(@border-color-base);
+    }
+  }
+
+  // fixes https://github.com/ant-design/ant-design/issues/20482
+  .@{ant-prefix}-input-group-addon .@{ant-prefix}-select {
+    &.@{ant-prefix}-select-single:not(.@{ant-prefix}-select-customize-input)
+    .@{ant-prefix}-select-selector {
+      background-color: inherit;
+      border: 0;
+      box-shadow: none;
+    }
+  }
+
+  .@{ant-prefix}-select.@{ant-prefix}-select-auto-complete {
+    .@{ant-prefix}-input:focus {
+      border-color: @border-color-base;
+    }
+  }
+
+  // InputNumber, TimePicker
+  .@{ant-prefix}-input-number,
+  .@{ant-prefix}-picker {
+    background-color: @form-error-input-bg;
+    border-color: @border-color-base;
+
+    &-focused,
+    &:focus {
+      .active(@border-color-base);
+    }
+
+    &:not([disabled]):hover {
+      background-color: @form-error-input-bg;
+      border-color: @border-color-base;
+    }
+  }
+
+  .@{ant-prefix}-mention-wrapper {
+    .@{ant-prefix}-mention-editor {
+      &,
+      &:not([disabled]):hover {
+        background-color: @form-error-input-bg;
+        border-color: @border-color-base;
+      }
+    }
+
+    &.@{ant-prefix}-mention-active:not([disabled]) .@{ant-prefix}-mention-editor,
+    .@{ant-prefix}-mention-editor:not([disabled]):focus {
+      .active(@border-color-base);
+    }
+  }
+
+  // cascader
+  .@{ant-prefix}-cascader-picker {
+    &:hover
+    .@{ant-prefix}-cascader-picker-label:hover
+    + .@{ant-prefix}-cascader-input.@{ant-prefix}-input {
+      border-color: @border-color-base;
+    }
+
+    &:focus .@{ant-prefix}-cascader-input {
+      background-color: @form-error-input-bg;
+      .active(@border-color-base);
+    }
+  }
+
+  // transfer
+  .@{ant-prefix}-transfer {
+    &-list {
+      border-color: @border-color-base;
+
+      &-search:not([disabled]) {
+        border-color: @input-border-color;
+
+        &:hover {
+          .hover();
+        }
+
+        &:focus {
+          .active();
+        }
+      }
+    }
+  }
+
+  // RadioGroup
+  .@{ant-prefix}-radio-button-wrapper {
+    border-color: @border-color-base !important;
+
+    &:not(:first-child) {
+      &::before {
+        background-color: @border-color-base;
+      }
+    }
+  }
+}

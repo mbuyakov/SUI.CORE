@@ -1,0 +1,35 @@
+import {BackendTable, ExtractProps} from "@sui/all";
+import * as React from 'react';
+import classNames from 'classnames';
+
+// TODO: Мусор - переделать
+export interface IFormItemBackendTableInputNodeProps<TSelection> {
+  value?: string | string[]
+  multiSelection?: boolean
+  onChange?(value: string | string[]): void
+}
+
+export type IBackendTableInputNodeProps<TSelection> =
+  Omit<ExtractProps<BackendTable<TSelection>>, "singleSelection" | "initialSelection">
+  & IFormItemBackendTableInputNodeProps<TSelection>;
+
+export default class BackendTableInputNode<TSelection = string> extends React.Component<IBackendTableInputNodeProps<TSelection>, {}> {
+
+  public render(): React.ReactNode {
+    return (
+      <BackendTable<TSelection>
+        paperStyle={{width: "calc(100% - 12px)"}}
+        className={classNames(this.props.className, "sui-backend-table-input-node")}
+        {...this.props}
+        selectionEnabled={this.props.selectionEnabled ?? true}
+        singleSelection={!this.props.multiSelection}
+        onSelectionChange={values => {
+          this.props.onChange(!!values.filter(Boolean) && (!!this.props.multiSelection ? values.filter(Boolean).map(value => value.toString()) : values[0]?.toString()));
+          if (this.props.onSelectionChange) {
+            this.props.onSelectionChange(values)
+          }
+        }}
+      />
+    );
+  }
+}
