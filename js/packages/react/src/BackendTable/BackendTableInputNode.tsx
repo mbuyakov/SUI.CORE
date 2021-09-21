@@ -1,11 +1,13 @@
-import {BackendTable, ExtractProps} from "@sui/all";
 import * as React from 'react';
 import classNames from 'classnames';
+import {BackendTable} from "@/BackendTable/BackendTable";
+import {ExtractProps} from '@/other';
 
 // TODO: Мусор - переделать
 export interface IFormItemBackendTableInputNodeProps<TSelection> {
   value?: string | string[]
   multiSelection?: boolean
+
   onChange?(value: string | string[]): void
 }
 
