@@ -303,7 +303,7 @@ export class BaseTable<TSelection = defaultSelection>
               type={this.props.cardType}
               extra={this.props.extra}
               bordered={!borderless}
-              className={classnames(BASE_TABLE, !paginationEnabled && BASE_TABLE_NO_PAGINATION, theme.name)}
+              className={classnames(BASE_TABLE, !paginationEnabled && BASE_TABLE_NO_PAGINATION, theme.name, this.props.className)}
             >
               {cols.length === 0 && <>
                 {this.props.noColsContent}

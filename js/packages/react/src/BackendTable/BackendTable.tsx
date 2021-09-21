@@ -80,6 +80,7 @@ export interface IBackendTableUserSettings extends Omit<IBaseTableUserSettings, 
 }
 
 export interface IBackendTableProps {
+  className?: string;
   defaultFilter?: SimpleBackendFilter | SimpleBackendFilter[];
   disableDeletedFilter?: boolean;
   filter?: BackendFilter | BackendFilter[];

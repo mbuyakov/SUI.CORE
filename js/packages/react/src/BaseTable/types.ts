@@ -117,6 +117,7 @@ export interface IBaseTableProps<TSelection = any> {
   allowExport?: boolean;
   borderless?: boolean;
   cardType?: CardType;
+  className?: string;
   cols: IBaseTableColLayout[];
   columnBands?: TableBandHeaderBase.ColumnBands[];
   defaultCurrentPage?: number;
