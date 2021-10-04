@@ -51,28 +51,30 @@ const cacheDirectory = path.resolve(
 );
 
 function defaultChainWebpack(config) {
-  config
-    .plugin('hard-source')
-    .use(HardSourceWebpackPlugin, [{
-      cacheDirectory,
-      cachePrune: {
-        // Caches younger than `maxAge` are not considered for deletion. They must
-        // be at least this (default: 2 days) old in milliseconds.
-        // 2 Hrs
-        maxAge: 2 * 60 * 60 * 1000,
-        // All caches together must be larger than `sizeThreshold` before any
-        // caches will be deleted. Together they must be at least this
-        // (default: 50 MB) big in bytes.
-        // 1.5Gb
-        sizeThreshold: 1500 * 1024 * 1024
-      }
-    }])
+  if (!process.env.DISABLE_HARD_SOURCE) {
+    config
+      .plugin('hard-source')
+      .use(HardSourceWebpackPlugin, [{
+        cacheDirectory,
+        cachePrune: {
+          // Caches younger than `maxAge` are not considered for deletion. They must
+          // be at least this (default: 2 days) old in milliseconds.
+          // 2 Hrs
+          maxAge: 2 * 60 * 60 * 1000,
+          // All caches together must be larger than `sizeThreshold` before any
+          // caches will be deleted. Together they must be at least this
+          // (default: 50 MB) big in bytes.
+          // 1.5Gb
+          sizeThreshold: 1500 * 1024 * 1024
+        }
+      }])
 
-  config
-    .plugin('hard-source-exclude')
-    .use(HardSourceWebpackPlugin.ExcludeModulePlugin, [[{
-      test: /less-loader/
-    }]]);
+    config
+      .plugin('hard-source-exclude')
+      .use(HardSourceWebpackPlugin.ExcludeModulePlugin, [[{
+        test: /less-loader/
+      }]]);
+  }
 
   // Used in copy-webpack-plugin
   fs.writeFileSync('./build_time.txt', buildTime);
