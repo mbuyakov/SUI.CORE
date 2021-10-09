@@ -5,6 +5,7 @@ dependencies {
   // Kotlin
   compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
   compile "org.jetbrains.kotlin:kotlin-reflect"
+  compile "io.github.microutils:kotlin-logging:${muLoggerVersion}"
   // Spring
   compile "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
   compile ("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}") {
