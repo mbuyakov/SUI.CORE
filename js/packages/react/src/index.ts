@@ -41,6 +41,7 @@ export * from "./EditableEntityField";
 export * from "./ForceDirectedTree";
 export * from "./FullScreenModal";
 export * from "./GlobalRoutesWrapper";
+export * from "./hooks";
 export * from "./InputWithApostropheValidation";
 export * from "./ReportTopBarChart";
 export * from "./RoleVisibilityWrapper";
