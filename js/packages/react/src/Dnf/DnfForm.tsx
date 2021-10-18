@@ -32,7 +32,7 @@ export interface IDnfFormProps {
   rowCreator(meta: IRowCreatorMeta): JSX.Element;
 }
 
-export default class DnfForm extends React.Component<IDnfFormProps> {
+export class DnfForm extends React.Component<IDnfFormProps> {
 
   // tslint:disable-next-line:typedef
   public static DEFAULT_GAP = 8;
