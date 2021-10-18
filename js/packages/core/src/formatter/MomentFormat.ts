@@ -11,6 +11,8 @@ export class MomentFormat {
 
   private constructor(f: string) {
     this.f = f;
+    this.fromUtc = this.fromUtc.bind(this);
+    this.fromLocal = this.fromLocal.bind(this);
   }
 
   public fromLocal(date: Nullable<string | Moment>): Nullable<string> {
