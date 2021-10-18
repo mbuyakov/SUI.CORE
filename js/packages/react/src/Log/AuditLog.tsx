@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {GET_DEFAULT_CALENDAR_RANGES, query, TableInfoManager} from "@sui/core";
+import {GET_DEFAULT_CALENDAR_RANGES, query, TableInfoManager, MomentFormat} from "@sui/core";
 import {DatePicker, Input, InputNumber, Select} from "antd";
 import autobind from "autobind-decorator";
 import moment from 'moment';
@@ -102,7 +102,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
                               allowClear={false}
                               ranges={GET_DEFAULT_CALENDAR_RANGES()}
                               value={latestLogValues.period}
-                              format={"DD.MM.YYYY"}
+                              format={MomentFormat.DATE.f}
                               onChange={this.onLatestLogValuesChangeFn("period")}
                             />
                             <InputNumber

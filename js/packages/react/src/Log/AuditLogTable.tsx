@@ -1,7 +1,7 @@
 import autobind from "autobind-decorator";
 import moment from 'moment';
 import React from 'react';
-import {IObjectWithIndex} from '@sui/core';
+import {IObjectWithIndex, MomentFormat} from '@sui/core';
 
 // noinspection ES6PreferShortImport
 import {BaseTable} from "../BaseTable";
@@ -102,8 +102,8 @@ export class AuditLogTable extends React.Component<IAuditLogTableProps> {
             id: "created",
             title: "Дата/время операции",
             width: 250,
-            search: {type: "date", format: "DD.MM.YYYY"},
-            render: (created: string | undefined): string | undefined => created ? moment.utc(created).local().format("DD.MM.YYYY HH:mm:ss") : created,
+            search: {type: "date", format: MomentFormat.DATE.f},
+            render: MomentFormat.DATETIME.fromUtc,
           },
         ]}
         rowDetailComponent={this.rowDetails}

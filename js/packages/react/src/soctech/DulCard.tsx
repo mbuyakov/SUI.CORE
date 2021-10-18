@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
-import {dateDisabledForIssueDate, DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, IObjectWithIndex, Nullable} from "@sui/core";
+import {dateDisabledForIssueDate, DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, IObjectWithIndex, MomentFormat, Nullable} from "@sui/core";
 import moment, {Moment} from "moment";
 import {DatePicker, DatePickerProps} from "antd";
 import {IBaseCardRowLayout, IBaseFormItemLayout, ValuesGetter} from "@/Base";
@@ -174,7 +174,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
     inputNode: (
       <StringValueDatePicker
         locale={datePickerLocaleRu as any}
-        format={['DD.MM.YYYY', 'DDMMYYYY', 'DDMMYY']}
+        format={MomentFormat.DATE_PICKER_FORMATS}
       />
     ),
   };

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import {IObjectWithIndex} from "@/other";
-import {addQuotesIfString, camelCase, capitalize, formatRawForGraphQL} from "@/stringFormatters";
+import {addQuotesIfString, camelCase, capitalize, formatRawForGraphQL} from "@/formatter/stringFormatters";
 
 // noinspection ES6PreferShortImport
 import {IGqlFilter} from "../types";

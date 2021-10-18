@@ -126,61 +126,6 @@ export function removePluralEnding(str: string | null | undefined): string {
   return ret;
 }
 
-const sqlTimestampRegexp: RegExp = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.?\d*/;
-const sqlDateRegexp: RegExp = /(\d{4})-(\d{2})-(\d{2})/;
-
-/**
- * Format sql timestamp (2019-01-01T23:59:59.99999) to (2019-01-01 23:59:59)
- * If input is null - return empty string
- * If input cannot be formatted- return original string
- */
-export function formatSqlTimestamp(timestamp: string | null | undefined): string {
-  if (!timestamp) {
-    return "";
-  }
-
-  return timestamp.replace(sqlTimestampRegexp, "$1-$2-$3 $4:$5:$6");
-}
-
-/**
- * Format sql timestamp (2019-01-01T23:59:59.99999) to (2019-01-01)
- * If input is null - return empty string
- * If input cannot be formatted- return original string
- */
-export function formatSqlTimestampToDate(timestamp: string | null | undefined): string {
-  if (!timestamp) {
-    return "";
-  }
-
-  return timestamp.replace(sqlTimestampRegexp, "$1-$2-$3");
-}
-
-/**
- * Format sql timestamp (2019-01-01T23:59:59.99999) to (23:59:59)
- * If input is null - return empty string
- * If input cannot be formatted - return original string
- */
-export function formatSqlTimestampToTime(timestamp: string | null | undefined): string {
-  if (!timestamp) {
-    return "";
-  }
-
-  return timestamp.replace(sqlTimestampRegexp, "$4:$5:$6");
-}
-
-/**
- * Format sql timestamp (2019-01-01) to (01.01.2019)
- * If input is null - return empty string
- * If input cannot be formatted - return original string
- */
-export function formatSqlDate(timestamp: string | null | undefined): string {
-  if (!timestamp) {
-    return "";
-  }
-
-  return timestamp.replace(sqlDateRegexp, "$3.$2.$1");
-}
-
 /**
  * Replace \n to \\n and replace \t to \\t
  * If input is null - return empty string

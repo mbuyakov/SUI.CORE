@@ -1,4 +1,4 @@
-import * as stringFormatters from "./index";
+import * as stringFormatters from "./stringFormatters";
 
 test("CamelCase null", () => {
   expect(stringFormatters.camelCase(null)).toBe("");
@@ -105,58 +105,6 @@ test("Remove plural ending people", () => {
 });
 test("Remove plural ending docPeople", () => {
   expect(stringFormatters.removePluralEnding("docPeople")).toBe("docPerson");
-});
-
-test("Format SQL timestamp null", () => {
-  expect(stringFormatters.formatSqlTimestamp(null)).toBe("");
-});
-test('Format SQL timestamp " "', () => {
-  expect(stringFormatters.formatSqlTimestamp(" ")).toBe(" ");
-});
-test("Format SQL timestamp 2019-01-01T23:59:59.99999", () => {
-  expect(stringFormatters.formatSqlTimestamp("2019-01-01T23:59:59.99999")).toBe("2019-01-01 23:59:59");
-});
-test("Format SQL timestamp aaaa", () => {
-  expect(stringFormatters.formatSqlTimestamp("aaaa")).toBe("aaaa");
-});
-
-test("Format SQL timestamp to date null", () => {
-  expect(stringFormatters.formatSqlTimestampToDate(null)).toBe("");
-});
-test('Format SQL timestamp to date " "', () => {
-  expect(stringFormatters.formatSqlTimestampToDate(" ")).toBe(" ");
-});
-test("Format SQL timestamp to date 2019-01-01T23:59:59.99999", () => {
-  expect(stringFormatters.formatSqlTimestampToDate("2019-01-01T23:59:59.99999")).toBe("2019-01-01");
-});
-test("Format SQL timestamp to date aaaa", () => {
-  expect(stringFormatters.formatSqlTimestampToDate("aaaa")).toBe("aaaa");
-});
-
-test("Format SQL timestamp to time null", () => {
-  expect(stringFormatters.formatSqlTimestampToTime(null)).toBe("");
-});
-test('Format SQL timestamp to time " "', () => {
-  expect(stringFormatters.formatSqlTimestampToTime(" ")).toBe(" ");
-});
-test("Format SQL timestamp to time 2019-01-01T23:59:59.99999", () => {
-  expect(stringFormatters.formatSqlTimestampToTime("2019-01-01T23:59:59.99999")).toBe("23:59:59");
-});
-test("Format SQL timestamp to time aaaa", () => {
-  expect(stringFormatters.formatSqlTimestampToTime("aaaa")).toBe("aaaa");
-});
-
-test("Format SQL date null", () => {
-  expect(stringFormatters.formatSqlDate(null)).toBe("");
-});
-test('Format SQL date " "', () => {
-  expect(stringFormatters.formatSqlDate(" ")).toBe(" ");
-});
-test("Format SQL date 2019-01-01", () => {
-  expect(stringFormatters.formatSqlDate("2019-01-01")).toBe("01.01.2019");
-});
-test("Format SQL date aaaa", () => {
-  expect(stringFormatters.formatSqlDate("aaaa")).toBe("aaaa");
 });
 
 test("Line feed screening null", () => {
