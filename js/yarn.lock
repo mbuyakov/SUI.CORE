@@ -2407,10 +2407,10 @@
   resolved "https://registry.yarnpkg.com/@stomp/stompjs/-/stompjs-5.4.4.tgz#f51d2edf9a00fac645dde3a494738d96ca17e5aa"
   integrity sha512-RIzQ7MLRSJLUpTHcje1ZclnHH982amJSKC9bDxGO0wyu5OF9ROuuiLf7TxKxo1zUu7lGEYNedg9SEi87uMWDqg==
 
-"@sui/linter@^1.0.12":
-  version "1.0.12"
-  resolved "https://nexus.suilib.ru/repository/npm-sui/@sui/linter/-/linter-1.0.12.tgz#887433bcf094799c3caf2cb9512bf0f96688eb8b"
-  integrity sha512-JsBD4ZubW2SzdqcY/SdM2wXgz3whNdcGfi6S45zElsXg//iNBNsXjnegQMPwsHHyxaa/A6EVBzCzZMt3dF+OFw==
+"@sui/linter@^1.0.13":
+  version "1.0.13"
+  resolved "https://nexus.suilib.ru/repository/npm-sui/@sui/linter/-/linter-1.0.13.tgz#e1351845d6dfd4c8c7de62b7eb6180118ef191b5"
+  integrity sha512-//0ekAeg6g9FCZXGC+qFcpOK+DMq7sj1HAg1vUClA9xyTiWbabtbVL+t9A04Ff87vwIId5awAx/aPrg4Xx+Pig==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^4.30.0"
     "@typescript-eslint/parser" "^4.30.0"
