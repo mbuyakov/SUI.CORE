@@ -149,3 +149,10 @@ export type TOrCallback<T> = NotFunction<T> | (() => T)
 export function getTOrCall<T>(value: TOrCallback<T>): T {
   return typeof value == 'function' ? (value as (() => T))() : (value as T);
 }
+
+export function normFile(e: any): any {
+  if (Array.isArray(e)) {
+    return e;
+  }
+  return e && e.fileList.slice(-1);
+}
