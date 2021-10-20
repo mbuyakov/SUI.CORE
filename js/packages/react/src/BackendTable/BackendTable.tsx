@@ -1013,26 +1013,28 @@ export class BackendTable<TSelection = defaultSelection>
         }
       }
 
-      const _serviceColumns = (this.props.serviceColumns ? wrapInArray(this.props.serviceColumns) : []);
+      const _serviceColumns = wrapInArray(this.props.serviceColumns ?? []);
 
       if (this.props.cardLinkFn) {
         const _cardLinkFnIcon = this.props.cardLinkFnIcon ? this.props.cardLinkFnIcon : <LinkIcon/>;
         _serviceColumns.push({
           id: '__link__',
           title: ' ',
-          width: 80,
+          width: 64,
           dataKey: 'id',
           render: (value: any, row: IObjectWithIndex): JSX.Element => (<RouterLink to={this.props.cardLinkFn(value, row)} type="link" text={<IconButton>{_cardLinkFnIcon}</IconButton>}/>),
         });
       }
 
-      const serviceColumns = _serviceColumns.map(serviceColumn => ({
+      const serviceColumns = _serviceColumns.map<IBaseTableColLayout>((serviceColumn, i) => ({
         ...serviceColumn,
+        // 24 - default padding for first column. If selection enabled first column is checkbox
+        width: (i == 0 && typeof serviceColumn.width === 'number' && !this.props.selectionEnabled) ? serviceColumn.width + 24 : serviceColumn.width,
         exportable: false,
         groupingEnabled: false,
         sortingEnabled: false,
         search: {type: 'none'},
-      } as IBaseTableColLayout));
+      }));
 
       let allColumns = serviceColumns.concat(allowedCols);
 

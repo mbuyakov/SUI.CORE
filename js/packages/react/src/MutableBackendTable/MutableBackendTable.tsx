@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {DeleteOutlined, PlusCircleOutlined} from "@ant-design/icons";
 import CreateIcon from '@material-ui/icons/CreateOutlined';
-import {defaultIfNotBoolean, getDataByKey, IObjectWithIndex, sleep, unCapitalize} from "@sui/core";
+import {defaultIfNotBoolean, getDataByKey, IObjectWithIndex, sleep, unCapitalize, wrapInArray} from "@sui/core";
 import {Button, notification} from 'antd';
 import autobind from "autobind-decorator";
 import * as React from "react";
@@ -85,8 +85,30 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
               : this.props.editBaseFormProps
             : {...this.props.createBaseFormProps, uuid: `${getDataByKey(this.props.createBaseFormProps, "uuid") || ""}__EDIT`};
 
-          const width = (this.props.width && {width: DEFAULT_MODAL_WIDTH_VARIANT[this.props.width]});
+          const _serviceColumns = wrapInArray(serviceColumns ?? []);
 
+          if (rowEditable) {
+            _serviceColumns.unshift({
+              id: "__edit",
+              render: (_: null, row: IObjectWithIndex): JSX.Element =>
+                (!editableFilter || editableFilter(row))
+                  ? (
+                    <PromisedMaterialIconButton
+                      style={{
+                        marginBottom: -12,
+                        marginTop: -12
+                      }}
+                      icon={<CreateIcon/>}
+                      promise={this.handleEditClickFn(row)}
+                    />
+                  )
+                  : (<div/>),
+              title: " ",
+              width: 64,
+            });
+          }
+
+          const width = (this.props.width && {width: DEFAULT_MODAL_WIDTH_VARIANT[this.props.width]});
           return (
             <>
               <BackendTable<TSelection>
@@ -94,28 +116,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
                 innerRef={this.tableRef}
                 selectionEnabled={defaultIfNotBoolean(this.props.selectionEnabled, true)}
                 extra={extra}
-                serviceColumns={!rowEditable
-                  ? serviceColumns
-                  : [{
-                    id: "__edit",
-                    render: (_: null, row: IObjectWithIndex): JSX.Element =>
-                      (!editableFilter || editableFilter(row))
-                        ? (
-                          <PromisedMaterialIconButton
-                            style={{
-                              marginBottom: -12,
-                              marginTop: -12
-                            }}
-                            icon={<CreateIcon/>}
-                            promise={this.handleEditClickFn(row)}
-                          />
-                        )
-                        : (<div/>),
-                    title: " ",
-                    width: defaultIfNotBoolean(this.props.selectionEnabled, true) ? 80 : (80 + 32),
-                  }]
-                    .concat((serviceColumns || []) as any[])
-                }
+                serviceColumns={_serviceColumns}
               />
               {/* Create modal */}
               <PromisedBaseFormModal<TValues>
