@@ -1028,8 +1028,8 @@ export class BackendTable<TSelection = defaultSelection>
 
       const serviceColumns = _serviceColumns.map<IBaseTableColLayout>((serviceColumn, i) => ({
         ...serviceColumn,
-        // 24 - default padding for first column(-8, because it's default padding for every column). If selection enabled first column is checkbox
-        width: (i == 0 && typeof serviceColumn.width === 'number' && !this.props.selectionEnabled) ? serviceColumn.width + 16 : serviceColumn.width,
+        // 24 - default padding for first column(-8, because it's default padding for every column). If selection or expanding enabled first column is checkbox
+        width: (i == 0 && typeof serviceColumn.width === 'number' && !(this.props.selectionEnabled || this.props.rowDetailComponent)) ? serviceColumn.width + 16 : serviceColumn.width,
         exportable: false,
         groupingEnabled: false,
         sortingEnabled: false,
