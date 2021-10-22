@@ -9,7 +9,7 @@ import {hasAnyRole} from "@/RoleVisibilityWrapper";
 import {PromisedBaseFormModal} from "@/Modal";
 import {errorNotification} from "@/drawUtils";
 import {DisableEditContext} from '@/DisableEditContext';
-import {BackendTable} from "@/BackendTable";
+import {BackendTable, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE, DEFAULT_SERVICE_COLUMN_WIDTH} from "@/BackendTable";
 import {PromisedButton, PromisedMaterialIconButton} from '../Inputs';
 
 import {IMutableBackendTableProps} from "./types";
@@ -94,17 +94,14 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
                 (!editableFilter || editableFilter(row))
                   ? (
                     <PromisedMaterialIconButton
-                      style={{
-                        marginBottom: -12,
-                        marginTop: -12
-                      }}
+                      style={DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE}
                       icon={<CreateIcon/>}
                       promise={this.handleEditClickFn(row)}
                     />
                   )
                   : (<div/>),
               title: " ",
-              width: 64,
+              width: DEFAULT_SERVICE_COLUMN_WIDTH,
             });
           }
 

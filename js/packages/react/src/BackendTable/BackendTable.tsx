@@ -21,7 +21,7 @@ import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
 // noinspection ES6PreferShortImport
 import {exportToXlsx} from "../BaseTable/utils";
 // noinspection ES6PreferShortImport
-import {BaseTable, colToBaseTableCol, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from '../index';
+import {BaseTable, colToBaseTableCol, defaultSelection, DEFAULT_SERVICE_COLUMN_WIDTH, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE} from '../index';
 // noinspection ES6PreferShortImport
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 // noinspection ES6PreferShortImport
@@ -1020,9 +1020,20 @@ export class BackendTable<TSelection = defaultSelection>
         _serviceColumns.push({
           id: '__link__',
           title: ' ',
-          width: 64,
+          width: DEFAULT_SERVICE_COLUMN_WIDTH,
           dataKey: 'id',
-          render: (value: any, row: IObjectWithIndex): JSX.Element => (<RouterLink to={this.props.cardLinkFn(value, row)} type="link" text={<IconButton>{_cardLinkFnIcon}</IconButton>}/>),
+          render: (value: any, row: IObjectWithIndex): JSX.Element => (
+            <RouterLink
+              to={this.props.cardLinkFn(value, row)}
+              type="link"
+              text={
+                <IconButton
+                  style={DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE}
+                >
+                  {_cardLinkFnIcon}
+                </IconButton>
+              }
+            />),
         });
       }
 
