@@ -70,6 +70,7 @@ export interface IBaseTableColLayout {
   sortingEnabled?: boolean;
   subtotal?: { expression: string, name: string };
   title?: string;
+  resizingEnabled?: boolean;
   width?: number;
   wordWrapEnabled?: boolean;
 

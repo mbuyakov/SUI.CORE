@@ -220,6 +220,14 @@ export class BaseTable<TSelection = defaultSelection>
       .filter(value => !defaultIfNotBoolean(value.defaultVisible, true))
       .map(value => value.id);
 
+    const resizingExtension = this.props.cols
+      .filter(value => !defaultIfNotBoolean(value.resizingEnabled, true) && value.width)
+      .map<TableColumnResizing.ColumnExtension>(col => ({
+        columnName: col.id,
+        minWidth: col.width,
+        maxWidth: col.width,
+      }));
+
     function pagingContainerComponent(props: any): JSX.Element {
       return (
         <PagingPanelContainer
@@ -408,6 +416,7 @@ export class BaseTable<TSelection = defaultSelection>
                   <TableColumnResizing
                     minColumnWidth={this.props.minColumnWidth || 30}
                     defaultColumnWidths={defaultWidth}
+                    columnExtensions={resizingExtension}
                   />
                 )}
                 <TableColumnReordering defaultOrder={this.props.cols.map(value => value.id)}/>

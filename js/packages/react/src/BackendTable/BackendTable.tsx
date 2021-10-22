@@ -1033,6 +1033,7 @@ export class BackendTable<TSelection = defaultSelection>
         exportable: false,
         groupingEnabled: false,
         sortingEnabled: false,
+        resizingEnabled: false,
         search: {type: 'none'},
       }));
 
