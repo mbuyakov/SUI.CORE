@@ -72,6 +72,7 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
         {...props.buttonProps}
         style={{textTransform: 'none', ...props.buttonProps.style}}
         loading={loading}
+        tooltip={props.tooltip}
       />
     );
   }
@@ -82,22 +83,8 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
         {...bindHover(popupState)}
         {...props.iconButtonProps}
         loading={loading}
+        tooltip={props.tooltip}
       />
-    );
-  }
-
-  // Div required for tooltip on disabled button
-  button = (
-    <div>
-      {button}
-    </div>
-  );
-
-  if (props.tooltip) {
-    button = (
-      <Tooltip title={props.tooltip}>
-        {button}
-      </Tooltip>
     );
   }
 
