@@ -8,6 +8,7 @@ export * from "./Draggable";
 export * from "./Inputs";
 export * from "./Link";
 export * from "./Log";
+export * from "./Material";
 export * from "./Meta";
 export * from "./MetaCardSettings";
 export * from "./Modal";
