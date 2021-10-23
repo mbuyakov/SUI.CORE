@@ -273,7 +273,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           getSUISettings().routerPushFn(getLinkForTable(data.tableInfoById.tableName, 'card', value));
 
                                           // Stub
-                                          return new Promise((resolve): void => resolve());
+                                          return new Promise((resolve): void => resolve(undefined));
                                         }}
                                       />
                                     }
@@ -463,7 +463,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       defaultChecked={value.every(col => col.visible)}
                                       popconfirmSettings={true}
                                       promise={(newValue: boolean): Promise<any> => {
-                                        let promise = new Promise<any>((resolve): void => resolve());
+                                        let promise = new Promise<any>((resolve): void => resolve(undefined));
                                         value.map(col => {
                                           promise = promise.then(() => this.updateColField(col.id, 'visible', newValue, false));
                                         });
@@ -663,7 +663,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       defaultChecked={value.every(col => col.defaultVisible)}
                                       popconfirmSettings={true}
                                       promise={(newValue: boolean): Promise<any> => {
-                                        let promise = new Promise<any>((resolve): void => resolve());
+                                        let promise = new Promise<any>((resolve): void => resolve(undefined));
                                         value.map(col => {
                                           promise = promise.then(() => this.updateColField(col.id, 'defaultVisible', newValue, false));
                                         });
@@ -905,7 +905,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
         .then(() => {
           const tableInfoById = this.state.tableInfoById;
           tableInfoById.isAudited = value;
-          this.setState({tableInfoById}, () => resolve());
+          this.setState({tableInfoById}, () => resolve(undefined));
         })
         .catch(() => reject(`Ошибка при ${value ? 'включении' : 'выключении'} аудита`));
     });
@@ -920,7 +920,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
         }
       }`)
         .then(() => {
-          resolve();
+          resolve(undefined);
           this.waitDataRef.current.updateData();
         })
         .catch(() => reject('Ошибка при сохранении связи сущностей'));
@@ -940,7 +940,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
         return resolve(sleep(Number.MAX_VALUE));
       }
 
-      return resolve();
+      return resolve(undefined);
     });
 
     if (onlyState) {

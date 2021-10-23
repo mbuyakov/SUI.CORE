@@ -27,7 +27,7 @@ export abstract class TableRenderParamsPlugin<T> {
     this.useInSubtotal = useInSubtotal;
   }
 
-  public abstract async baseTableColGenerator(
+  public abstract baseTableColGenerator(
     result: IBaseTableColLayout,
     renderColumnInfo: ColumnInfo | null,
     props: IColumnInfoToBaseTableColProps,

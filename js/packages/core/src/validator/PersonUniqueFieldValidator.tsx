@@ -21,7 +21,7 @@ export async function PersonUniqueFieldValidator<T = string>(
         if (data.table.totalCount > 0) {
           reject(linkToEntity('id', data.table.nodes[0].__id, errMessage));
         } else {
-          resolve();
+          resolve(undefined);
         }
       })
       .catch(err => reject(`Ошибка чтения данных из БД. Попробуйте снова ввести значение\n${err}`));
