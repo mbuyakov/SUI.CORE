@@ -45,6 +45,15 @@ export const defaultThemesConfig: ThemesConfig = {
     materialThemeConfig: {
       palette: {
         type: "light"
+      },
+      overrides: {
+        MuiInput: {
+          input: {
+            "&:-webkit-autofill": {
+              WebkitBoxShadow: "0 0 0 1000px white inset" //Disable autofill
+            }
+          }
+        }
       }
     },
     baseTableMaterialThemeConfig: {
@@ -53,12 +62,23 @@ export const defaultThemesConfig: ThemesConfig = {
           selected: "#0000FF" // For highlighted row
         }
       }
-    }
+    },
   },
   dark: {
     materialThemeConfig: {
       palette: {
         type: "dark"
+      },
+      overrides: {
+        MuiInput: {
+          input: {
+            minHeight: 32, //TODO в темной теме инпут скукоживается, пока так закостылил
+            "&:-webkit-autofill": {
+              WebkitBoxShadow: "0 0 0 1000px #141414 inset", //Disable autofill
+              WebkitTextFillColor: "white"
+            }
+          }
+        }
       }
     }
   }
