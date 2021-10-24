@@ -67,12 +67,14 @@ export const defaultThemesConfig: ThemesConfig = {
   dark: {
     materialThemeConfig: {
       palette: {
-        type: "dark"
+        type: "dark",
+        background: {
+          paper: "#141414" // Match antd
+        }
       },
       overrides: {
         MuiInput: {
           input: {
-            minHeight: 32, //TODO в темной теме инпут скукоживается, пока так закостылил
             "&:-webkit-autofill": {
               WebkitBoxShadow: "0 0 0 1000px #141414 inset", //Disable autofill
               WebkitTextFillColor: "white"
