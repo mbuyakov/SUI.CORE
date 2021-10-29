@@ -18,6 +18,9 @@ export const KPP_MASK_LENGTH = 9;
 export const ORGANIZATION_INN_MASK = "1111111111";
 export const ORGANIZATION_INN_MASK_LENGTH = 10;
 
+export const IP_ORGANIZATION_INN_MASK = "111111111111"; // индивидуальные предприниматели
+export const IP_ORGANIZATION_INN_MASK_LENGTH = 12;
+
 export const OGRN_MASK = "1 11 11 1111111 1";
 export const OGRN_MASK_LENGTH = 13;
 
