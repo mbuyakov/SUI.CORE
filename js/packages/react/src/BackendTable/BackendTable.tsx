@@ -9,7 +9,6 @@ import autobind from 'autobind-decorator';
 import axios from 'axios';
 import JSzip from 'jszip';
 import difference from 'lodash/difference';
-import moment from 'moment';
 import * as React from 'react';
 import {v4 as uuidv4} from 'uuid';
 import {asyncMap, camelCase, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, formatRawForGraphQL, generateCreate, getDataByKey, getSUISettings, IObjectWithIndex, IUserSetting, mutate, query, TableInfo, TableInfoManager, toMap, wrapInArray} from "@sui/core";
@@ -31,10 +30,7 @@ import {LazyFilter} from "../BaseTable/types";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from './BackendDataSource';
 import {RestBackendDataSource} from './RestBackendDataSource';
-import {WsBackendDataSource} from './WsBackendDataSource';
 
-const IGNORE_WS_ACTUALITY_HOURS = 3;
-const LOCAL_STORAGE_IGNORE_WS_KEY = '__SUI_BACKEND_IGNORE_WS';
 const DX_REACT_GROUP_SEPARATOR = '|';
 const CHILDREN_KEY = '__children';
 const RECORDS_KEY = '__records';
@@ -516,21 +512,8 @@ export class BackendTable<TSelection = defaultSelection>
   @autobind
   // this.backendDataSource должно быть присвоено до вызова init()
   private async initDataSource(): Promise<void> {
-    let shouldIgnoreWS = this.shouldIgnoreWS();
-
-    if (!shouldIgnoreWS) {
-      this.backendDataSource = new WsBackendDataSource(this.onOpen, this.onMessage);
-
-      if (!(await this.backendDataSource.init())) {
-        shouldIgnoreWS = true;
-        localStorage.setItem(LOCAL_STORAGE_IGNORE_WS_KEY, moment().toISOString());
-      }
-    }
-
-    if (shouldIgnoreWS) {
-      this.backendDataSource = new RestBackendDataSource(this.onOpen, this.onMessage);
-      await this.backendDataSource.init();
-    }
+    this.backendDataSource = new RestBackendDataSource(this.onOpen, this.onMessage);
+    await this.backendDataSource.init();
   }
 
   @autobind
@@ -938,12 +921,6 @@ export class BackendTable<TSelection = defaultSelection>
       // noinspection JSConstantReassignment
       this.props.innerRef.current = value;
     }
-  }
-
-  @autobind
-  private shouldIgnoreWS(): boolean {
-    const ignoreWsItem = localStorage.getItem(LOCAL_STORAGE_IGNORE_WS_KEY);
-    return ignoreWsItem && moment().diff(moment(ignoreWsItem), 'hours') < IGNORE_WS_ACTUALITY_HOURS;
   }
 
   @autobind
