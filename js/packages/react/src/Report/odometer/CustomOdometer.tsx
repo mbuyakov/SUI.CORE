@@ -17,6 +17,7 @@ interface ICustomOdometerProps {
   className?: string;
   data?: ICustomOdometerData;
   disableDifferenceOdometer?: boolean;
+  format?: string;
 }
 
 const odometerAnimationDuration = 500;
@@ -32,7 +33,7 @@ export class CustomOdometer extends React.Component<ICustomOdometerProps> {
           <Odometer
             value={Math.abs(this.props.data && this.props.data.current || 0)}
             duration={odometerAnimationDuration}
-            format="(,ddd).dd"
+            format={this.props.format ?? "(,ddd).dd"}
           />
         </div>
         {!this.props.disableDifferenceOdometer && (

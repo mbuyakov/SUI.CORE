@@ -15,6 +15,7 @@ export interface IOdometersProps {
   containerStyle?: React.CSSProperties;
   data: Map<IOdometerDefinition["id"], ICustomOdometerData>;
   odometerDefinition: IOdometerDefinition[];
+  format?: string;
 }
 
 export const defaultSectionStyle = {
@@ -45,6 +46,7 @@ export class Odometers extends React.Component<IOdometersProps> {
                 {...customOdometerProps}
                 className={customOdometerProps.odometerClassName}
                 data={this.props.data.get(definition.id)}
+                format={this.props.format}
               />
               <div>{definition.title}</div>
             </div>
