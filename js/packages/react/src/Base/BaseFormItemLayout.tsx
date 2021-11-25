@@ -203,13 +203,13 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
             ? (
               <td colSpan={2 + (this.props.colspan - 1) * 2} style={{verticalAlign: 'top', paddingRight: 12}}>
                 {title && (<div style={TITLE_STYLE}>{title}</div>)}
-                <div>{formItem}</div>
+                <div aria-label={item.fieldName}>{formItem}</div>
               </td>
             )
             : (
               <>
                 {title && <td style={TITLE_STYLE}>{title}</td>}
-                <td colSpan={(title ? 1 : 2) + ((this.props.colspan - 1) * 2)} style={{verticalAlign: 'top', paddingBottom: 8}}>
+                <td aria-label={item.fieldName} colSpan={(title ? 1 : 2) + ((this.props.colspan - 1) * 2)} style={{verticalAlign: 'top', paddingBottom: 8}}>
                   {formItem}
                 </td>
               </>
