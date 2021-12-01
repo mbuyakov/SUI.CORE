@@ -25,6 +25,7 @@ const isDropdownItem = (it: IMaterialDropdownItem): it is DropdownItem => "key" 
 const isDividerItem = (it: IMaterialDropdownItem): it is DividerItem => "isDivider" in it;
 
 interface IMaterialDropdownPropsBase {
+  loading?: boolean;
   tooltip?: string;
   items: IMaterialDropdownItem[];
   menuProps?: Omit<MenuProps, 'open'>;
@@ -71,7 +72,7 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
         {...bindHover(popupState)}
         {...props.buttonProps}
         style={{textTransform: 'none', ...props.buttonProps.style}}
-        loading={loading}
+        loading={loading || props.loading}
         tooltip={props.tooltip}
       />
     );
@@ -82,7 +83,7 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
       <MaterialIconButton
         {...bindHover(popupState)}
         {...props.iconButtonProps}
-        loading={loading}
+        loading={loading || props.loading}
         tooltip={props.tooltip}
       />
     );
