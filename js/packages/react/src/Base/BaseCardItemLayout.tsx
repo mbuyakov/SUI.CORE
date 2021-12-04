@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {CheckOutlined, CloseOutlined, WarningTwoTone} from '@ant-design/icons';
-import {DataKey, defaultIfNotBoolean, getDataByKey, NO_DATA_TEXT} from '@sui/core';
+import {concatDataKey, DataKey, defaultIfNotBoolean, getDataByKey, NO_DATA_TEXT} from '@sui/core';
 import {Tooltip} from 'antd';
 import * as React from 'react';
 
@@ -20,6 +20,7 @@ export interface IBaseCardItemLayout<T> {
 }
 
 interface ICustomRenderProps<T> {
+  ariaLabel?: string;
   item: T
   render: CardItemRender<T>;
   value: any;
@@ -51,7 +52,15 @@ class CustomRender<T> extends React.Component<ICustomRenderProps<T>, {
       );
     }
     try {
-      return this.props.render(this.props.value, this.props.item);
+      let rendered = this.props.render(this.props.value, this.props.item);
+      if (typeof rendered !== "string" && this.props.ariaLabel) {
+        if (!Object.keys(rendered.props).includes("aria-label")) {
+          rendered = React.cloneElement(rendered, {
+            "aria-label": this.props.ariaLabel
+          });
+        }
+      }
+      return rendered;
     } catch (e) {
       console.error(e);
       this.setState({error: true});
@@ -68,9 +77,12 @@ export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayou
   // console.log(item);
   const required = defaultIfNotBoolean(item.required, true);
   let data = (item.dataKey !== null && item.dataKey !== undefined) && getDataByKey(sourceItem, item.dataKey);
+  let ariaLabel = (item.dataKey !== null && item.dataKey !== undefined) && concatDataKey(item.dataKey)
+    // || undefined to drop "" if keys empty
+    .join("-") || undefined;
 
   if (item.render) {
-    data = <CustomRender item={sourceItem} render={item.render} value={data}/>;
+    data = <CustomRender item={sourceItem} render={item.render} value={data} ariaLabel={ariaLabel?.toString()}/>;
   } else if (item.tableProps) {
     data = (
       <BaseTable
