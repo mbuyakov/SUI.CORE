@@ -27,7 +27,7 @@ export const MaterialIconButton: React.FC<MaterialIconButtonProps> = (
     if ((onClickRet as Promise<void>)?.then) {
       setPromise(onClickRet as Promise<void>);
     }
-  }, []);
+  }, [propsOnClick]);
 
   return tooltipWrapper(tooltip, (
     <IconButton
