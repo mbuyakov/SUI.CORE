@@ -1,3 +1,4 @@
+import autobind from "autobind-decorator";
 import React from 'react';
 import {IObjectWithIndex, MomentFormat} from '@sui/core';
 
@@ -9,7 +10,6 @@ import {RouterLink} from "../Link";
 import {ExtractProps} from "../other";
 // noinspection ES6PreferShortImport
 import {getLinkForTable} from "../utils";
-import autobind from "autobind-decorator";
 
 export interface IAuditLogTableRow {
   id: number;
