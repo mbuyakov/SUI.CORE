@@ -1,5 +1,3 @@
-import autobind from "autobind-decorator";
-import moment from 'moment';
 import React from 'react';
 import {IObjectWithIndex, MomentFormat} from '@sui/core';
 
@@ -11,6 +9,7 @@ import {RouterLink} from "../Link";
 import {ExtractProps} from "../other";
 // noinspection ES6PreferShortImport
 import {getLinkForTable} from "../utils";
+import autobind from "autobind-decorator";
 
 export interface IAuditLogTableRow {
   id: number;
@@ -20,9 +19,10 @@ export interface IAuditLogTableRow {
   userName?: string;
   dbUser: string;
   created: string;
+  content: Record<string, any>;
 }
 
-export type IAuditLogTableProps = Omit<ExtractProps<BaseTable>, "rows" | "cols" | "rowDetailComponent"> & {
+export type IAuditLogTableProps = Omit<ExtractProps<BaseTable<number>>, "rows" | "cols"> & {
   hideRowId?: boolean;
   rows: IAuditLogTableRow[];
 }
@@ -31,7 +31,8 @@ export class AuditLogTable extends React.Component<IAuditLogTableProps> {
 
   public render(): React.ReactNode {
     return (
-      <BaseTable
+      <BaseTable<number>
+        rowDetailComponent={this.rowDetails}
         {...this.props}
         cols={[
           {
@@ -106,13 +107,12 @@ export class AuditLogTable extends React.Component<IAuditLogTableProps> {
             render: MomentFormat.DATETIME.fromUtc,
           },
         ]}
-        rowDetailComponent={this.rowDetails}
       />
     );
   }
 
   @autobind
-  private rowDetails({row}: { row: { content: Record<string, unknown> } }): JSX.Element {
+  private rowDetails({row}: { row: IAuditLogTableRow }): JSX.Element {
     return (<pre>{JSON.stringify(row.content, null, 2)}</pre>);
   }
 
