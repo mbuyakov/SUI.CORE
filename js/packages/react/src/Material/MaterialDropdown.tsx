@@ -1,9 +1,9 @@
 import {ButtonProps, Divider, IconButtonProps, ListItemIcon, ListItemText, MenuItem, MenuItemProps, MenuProps, Tooltip} from "@material-ui/core";
-import React, {useCallback, useMemo, useState} from "react";
+import React, {useMemo} from "react";
 import HoverMenu from 'material-ui-popup-state/HoverMenu';
 import {bindHover, bindMenu, usePopupState} from 'material-ui-popup-state/hooks';
 import uuid from "uuid";
-import {usePromise} from "@/hooks";
+import {useOnClick} from "@/hooks";
 import {MaterialIconButton} from "@/Material/MaterialIconButton";
 import {MaterialButton} from "@/Material/MaterialButton";
 
@@ -46,23 +46,24 @@ const isIMaterialDropdownButtonProps = (it: IMaterialDropdownProps): it is IMate
 const isIMaterialDropdownIconButtonProps = (it: IMaterialDropdownProps): it is IMaterialDropdownIconButtonProps => "iconButtonProps" in it;
 
 export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
-  const [promise, setPromise] = useState<Promise<void[]>>(null);
-  const {loading} = usePromise(promise);
-
   const popupState = usePopupState({
     variant: 'popover',
     popupId: useMemo(() => uuid.v4(), [])
   });
 
-  const onClick = useCallback((key: string, itemOnClick?: () => void | Promise<void>) => {
-    const itemOnClickRet = itemOnClick?.();
-    const propsOnClickRet = props.onClick?.(key);
+  const {loading: onClickLoading, onClick} = useOnClick<{
+    key: string,
+    itemOnClick?:() => void | Promise<void>
+  }, void[]>((arg) => {
+    const itemOnClickRet = arg.itemOnClick?.();
+    const propsOnClickRet = props.onClick?.(arg.key);
     popupState.close();
 
     if ((itemOnClickRet as Promise<void>)?.then || (propsOnClickRet as Promise<void>)?.then) {
-      setPromise(Promise.all([itemOnClickRet, propsOnClickRet].filter(it => it)));
+      return Promise.all([itemOnClickRet, propsOnClickRet].filter(it => it));
     }
-  }, []);
+  });
+  const loading = onClickLoading || props.loading;
 
   let button: JSX.Element = null;
 
@@ -72,7 +73,7 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
         {...bindHover(popupState)}
         {...props.buttonProps}
         style={{textTransform: 'none', ...props.buttonProps.style}}
-        loading={loading || props.loading}
+        loading={loading}
         tooltip={props.tooltip}
       />
     );
@@ -83,7 +84,7 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
       <MaterialIconButton
         {...bindHover(popupState)}
         {...props.iconButtonProps}
-        loading={loading || props.loading}
+        loading={loading}
         tooltip={props.tooltip}
       />
     );
@@ -125,7 +126,7 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
             let menuItem = (
               <MenuItem
                 {...rest as any}
-                onClick={() => onClick(key, itemOnClick)}
+                onClick={() => onClick({key, itemOnClick})}
               >
                 {icon && (<ListItemIcon children={React.cloneElement(icon, {fontSize: "small"})}/>)}
                 {text && (<ListItemText children={text}/>)}

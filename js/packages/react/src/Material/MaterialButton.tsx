@@ -1,6 +1,6 @@
 import {Button, ButtonProps} from "@material-ui/core";
-import React, {useCallback, useState} from "react";
-import {usePromise} from "@/hooks";
+import React from "react";
+import {useOnClick} from "@/hooks";
 import {ProgressIcon} from "@/Material/ProgessIcon";
 import {tooltipWrapper} from "@/Material/utils";
 
@@ -17,16 +17,8 @@ export const MaterialButton: React.FC<MaterialButtonProps> = (
     loading: propsLoading,
     ...rest
   }) => {
-  const [promise, setPromise] = useState<Promise<void>>(null);
-  const {loading: promiseLoading} = usePromise(promise);
-  const loading = promiseLoading || propsLoading;
-
-  const onClick = useCallback(() => {
-    const onClickRet = propsOnClick?.();
-    if ((onClickRet as Promise<void>)?.then) {
-      setPromise(onClickRet as Promise<void>);
-    }
-  }, []);
+  const {loading: onClickLoading, onClick} = useOnClick(propsOnClick);
+  const loading = onClickLoading || propsLoading;
 
   return tooltipWrapper(tooltip, (
     <Button
