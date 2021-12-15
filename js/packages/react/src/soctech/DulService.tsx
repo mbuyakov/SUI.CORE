@@ -126,20 +126,20 @@ const data = {
         "id": "12",
         "docName": "Вид на жительство в РФ",
         "docCode": 12,
-        "seriesRegex": "^.{0,25}$",
-        "seriesRegexDesc": "до 25 знаков",
-        "numberRegex": "^.{0,25}$",
-        "numberRegexDesc": "до 25 знаков",
+        "seriesRegex": "^.{0,200}$",
+        "seriesRegexDesc": "до 200 знаков",
+        "numberRegex": "^.{0,200}$",
+        "numberRegexDesc": "до 200 знаков",
         "sorting": 10
       },
       {
         "id": "13",
         "docName": "Удостоверение беженца в РФ",
         "docCode": 13,
-        "seriesRegex": "^.{0,25}$",
-        "seriesRegexDesc": "до 25 знаков",
-        "numberRegex": "^.{0,25}$",
-        "numberRegexDesc": "до 25 знаков",
+        "seriesRegex": "^.{0,200}$",
+        "seriesRegexDesc": "до 200 знаков",
+        "numberRegex": "^.{0,200}$",
+        "numberRegexDesc": "до 200 знаков",
         "sorting": 16
       },
       {
