@@ -230,6 +230,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
     Modal.info({
       maskClosable: true,
       width: 1000,
+      transitionName: "ant-fade",
       ...transitionGraphModalProps,
       className: classNames(
         INFO_MODAL_FIX,
