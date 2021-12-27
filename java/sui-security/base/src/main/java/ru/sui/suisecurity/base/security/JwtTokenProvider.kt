@@ -76,17 +76,17 @@ class JwtTokenProvider {
 
             return true
         } catch (ex: SignatureException) {
-            log.error("Invalid JWT signature")
+            log.trace { "Invalid JWT signature" }
         } catch (ex: MalformedJwtException) {
-            log.error("Invalid JWT token")
+            log.trace { "Invalid JWT token" }
         } catch (ex: ExpiredJwtException) {
-            log.error("Expired JWT token")
+            log.trace { "Expired JWT token" }
         } catch (ex: UnsupportedJwtException) {
-            log.error("Unsupported JWT token")
+            log.trace { "Unsupported JWT token" }
         } catch (ex: IllegalArgumentException) {
-            log.error("JWT claims string is empty.")
+            log.trace { "JWT claims string is empty." }
         } catch (ex: Exception) {
-            log.error(ex.message, ex)
+            log.trace(ex) { ex.message }
         }
 
         return false
