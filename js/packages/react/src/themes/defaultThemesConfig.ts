@@ -37,12 +37,12 @@ export const defaultThemesConfig: ThemesConfig = {
               paddingRight: muiDefaultTheme.spacing(2)
             }
           }
-        }
-      },
-      MuiTooltip: {
-        tooltip: {
-          fontSize: "1em",
         },
+        MuiTooltip: {
+          tooltip: {
+            fontSize: "1em",
+          },
+        }
       }
     })
   },
