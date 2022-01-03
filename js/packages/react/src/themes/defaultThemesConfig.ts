@@ -38,6 +38,11 @@ export const defaultThemesConfig: ThemesConfig = {
             }
           }
         }
+      },
+      MuiTooltip: {
+        tooltip: {
+          fontSize: "1em",
+        },
       }
     })
   },

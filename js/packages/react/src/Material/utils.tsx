@@ -12,7 +12,10 @@ export const tooltipWrapper = (tooltip: Nullable<string>, component: JSX.Element
 
   if (tooltip) {
     component = (
-      <Tooltip title={tooltip}>
+      <Tooltip
+        title={tooltip}
+        arrow={true}
+      >
         {component}
       </Tooltip>
     );
