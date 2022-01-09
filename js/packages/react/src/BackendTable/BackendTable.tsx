@@ -20,7 +20,7 @@ import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
 // noinspection ES6PreferShortImport
 import {exportToXlsx} from "../BaseTable/utils";
 // noinspection ES6PreferShortImport
-import {BaseTable, colToBaseTableCol, defaultSelection, DEFAULT_SERVICE_COLUMN_WIDTH, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE} from '../index';
+import {BaseTable, colToBaseTableCol, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE, DEFAULT_SERVICE_COLUMN_WIDTH, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from '../index';
 // noinspection ES6PreferShortImport
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 // noinspection ES6PreferShortImport

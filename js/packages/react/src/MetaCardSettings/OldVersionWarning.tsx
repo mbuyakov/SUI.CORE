@@ -1,5 +1,5 @@
 import {WarningTwoTone} from '@ant-design/icons';
-import { Tooltip } from 'antd';
+import {Tooltip} from 'antd';
 import * as React from 'react';
 
 export function OldVersionWarning(props: {

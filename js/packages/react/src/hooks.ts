@@ -1,5 +1,5 @@
 import {Nullable, query} from "@sui/core";
-import {DependencyList, useCallback, useEffect, useMemo, useState} from "react";
+import {DependencyList, useEffect, useMemo, useState} from "react";
 import {Container} from "typescript-ioc";
 import {errorNotification} from "./drawUtils";
 

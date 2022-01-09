@@ -13,6 +13,7 @@ export type IPromisedBaseFormModalOnlyModalProps = Omit<IPromisedModalProps, "re
 export interface IPromisedBaseFormModalProps<TValues> extends IPromisedBaseFormModalOnlyModalProps {
   baseFormProps: Omit<IBaseFormProps, "children" | "onSubmit" | "ref">;
   modalHeader?: React.ReactNode;
+
   customFooter?(okButton: JSX.Element, cancelButton: JSX.Element, hasErrors: Observable<boolean>): React.ReactNode;
 
   onSubmit?(values: TValues): Promise<boolean>;
