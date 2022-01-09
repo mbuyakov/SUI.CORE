@@ -1,8 +1,8 @@
 import {Button, ButtonProps} from "@material-ui/core";
 import React from "react";
-import {useOnClick} from "@/hooks";
 import {ProgressIcon} from "@/Material/ProgessIcon";
-import {tooltipWrapper} from "@/Material/utils";
+import {tooltipWrapper} from "@/Material/utils/tooltipWrapper";
+import {useOnClick} from "@/Material/utils";
 
 export type MaterialButtonProps = Omit<ButtonProps, 'onClick'> & {
   tooltip?: string;

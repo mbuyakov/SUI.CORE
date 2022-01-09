@@ -3,9 +3,9 @@ import React, {useMemo} from "react";
 import HoverMenu from 'material-ui-popup-state/HoverMenu';
 import {bindHover, bindMenu, usePopupState} from 'material-ui-popup-state/hooks';
 import uuid from "uuid";
-import {useOnClick} from "@/hooks";
 import {MaterialIconButton} from "@/Material/MaterialIconButton";
 import {MaterialButton} from "@/Material/MaterialButton";
+import {IPopconfirmSettings, useOnClick, usePopconfirm} from "@/Material/utils";
 
 export type DropdownItem = Omit<MenuItemProps, 'onClick'> & {
   key: string;
@@ -29,7 +29,8 @@ interface IMaterialDropdownPropsBase {
   tooltip?: string;
   items: IMaterialDropdownItem[];
   menuProps?: Omit<MenuProps, 'open'>;
-  onClick?: (key: string) => void | Promise<void>
+  popconfirmSettings?: IPopconfirmSettings;
+  onClick?: (key: string) => void | Promise<void>;
 }
 
 type IMaterialDropdownButtonProps = IMaterialDropdownPropsBase & {
@@ -51,19 +52,26 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
     popupId: useMemo(() => uuid.v4(), [])
   });
 
+  const popconfirm = usePopconfirm(props.popconfirmSettings);
+
   const {loading: onClickLoading, onClick} = useOnClick<{
     key: string,
     itemOnClick?:() => void | Promise<void>
-  }, void[]>((arg) => {
-    const itemOnClickRet = arg.itemOnClick?.();
-    const propsOnClickRet = props.onClick?.(arg.key);
+  }, void>(async (arg) => {
     popupState.close();
 
+    const result = await popconfirm.getResult();
+    if (!result) {
+      return;
+    }
+
+    const itemOnClickRet = arg.itemOnClick?.();
+    const propsOnClickRet = props.onClick?.(arg.key);
     if ((itemOnClickRet as Promise<void>)?.then || (propsOnClickRet as Promise<void>)?.then) {
-      return Promise.all([itemOnClickRet, propsOnClickRet].filter(it => it));
+      await Promise.all([itemOnClickRet, propsOnClickRet].filter(it => it));
     }
   });
-  const loading = onClickLoading || props.loading;
+  const loading = onClickLoading || popconfirm.visible || props.loading;
 
   let button: JSX.Element = null;
 
@@ -90,7 +98,7 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
     );
   }
 
-  return (
+  return popconfirm.wrapper(
     <>
       {button}
       <HoverMenu
