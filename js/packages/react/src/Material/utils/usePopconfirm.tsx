@@ -3,19 +3,17 @@ import React, {useState} from "react";
 
 export type IPopconfirmSettings = Omit<PopconfirmProps, 'onConfirm' | 'onCancel' | 'visible'>;
 
-export interface usePopconfirmState {
-  visible: boolean;
-
+export interface IusePopconfirmState {
   wrapper(element: JSX.Element): JSX.Element;
 
   getResult(): Promise<boolean>;
 }
 
-export const usePopconfirm: (settings?: IPopconfirmSettings) => usePopconfirmState = (settings) => {
+export const usePopconfirm: (settings?: IPopconfirmSettings) => IusePopconfirmState = (settings) => {
   const [visible, setVisible] = useState(false);
   const [actions, setActions] = useState<{ onConfirm(): void, onCancel(): void }>();
 
-  const wrapper = (element) => settings
+  const wrapper = (element): JSX.Element => settings
     ? (
       <Popconfirm
         visible={visible}
@@ -28,7 +26,7 @@ export const usePopconfirm: (settings?: IPopconfirmSettings) => usePopconfirmSta
     )
     : element;
 
-  const getResult = () => new Promise<boolean>(resolve => {
+  const getResult = (): Promise<boolean> => new Promise(resolve => {
     if (!settings) {
       resolve(true);
     }
@@ -47,8 +45,7 @@ export const usePopconfirm: (settings?: IPopconfirmSettings) => usePopconfirmSta
   });
 
   return {
-    visible,
     wrapper,
     getResult
-  }
+  };
 }

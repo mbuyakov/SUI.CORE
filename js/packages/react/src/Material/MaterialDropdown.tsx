@@ -41,7 +41,7 @@ type IMaterialDropdownIconButtonProps = IMaterialDropdownPropsBase & {
   iconButtonProps: Omit<IconButtonProps, 'onClick'>;
 }
 
-export type IMaterialDropdownProps = IMaterialDropdownButtonProps | IMaterialDropdownIconButtonProps
+export type IMaterialDropdownProps = IMaterialDropdownButtonProps | IMaterialDropdownIconButtonProps;
 
 const isIMaterialDropdownButtonProps = (it: IMaterialDropdownProps): it is IMaterialDropdownButtonProps => "buttonProps" in it;
 const isIMaterialDropdownIconButtonProps = (it: IMaterialDropdownProps): it is IMaterialDropdownIconButtonProps => "iconButtonProps" in it;
@@ -57,7 +57,7 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
   const {loading: onClickLoading, onClick} = useOnClick<{
     key: string,
     itemOnClick?:() => void | Promise<void>
-  }, void>(async (arg) => {
+  }>(async (arg) => {
     popupState.close();
 
     const result = await popconfirm.getResult();
@@ -70,8 +70,8 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
     if ((itemOnClickRet as Promise<void>)?.then || (propsOnClickRet as Promise<void>)?.then) {
       await Promise.all([itemOnClickRet, propsOnClickRet].filter(it => it));
     }
-  });
-  const loading = onClickLoading || popconfirm.visible || props.loading;
+  }, popconfirm);
+  const loading = onClickLoading || props.loading;
 
   let button: JSX.Element = null;
 
@@ -133,7 +133,9 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
             } = it;
             let menuItem = (
               <MenuItem
+                // eslint-disable-next-line
                 {...rest as any}
+                // eslint-disable-next-line
                 onClick={() => onClick({key, itemOnClick})}
               >
                 {icon && (<ListItemIcon children={React.cloneElement(icon, {fontSize: "small"})}/>)}
@@ -149,6 +151,7 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
                 </Tooltip>
               );
             }
+
             return menuItem;
           }
         })}

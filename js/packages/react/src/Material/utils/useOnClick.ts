@@ -1,20 +1,29 @@
 import {useCallback, useState} from "react";
 import {usePromise, UsePromiseState} from "@/hooks";
+import {IusePopconfirmState} from "@/Material";
 
-export type UseOnClickState<T, R> = UsePromiseState<R> & {
-  onClick(arg?: T): R | Promise<R>;
+export type UseOnClickState<T> = UsePromiseState<void> & {
+  onClick(arg?: T): void | Promise<void>;
 }
 
-export function useOnClick<T = never, R = void>(onClick: (arg: T) => R | Promise<R>): UseOnClickState<T, R> {
-  const [promise, setPromise] = useState<Promise<R>>(null);
+export function useOnClick<T = never>(onClick: (arg: T) => void | Promise<void>, popconfirm?: IusePopconfirmState): UseOnClickState<T> {
+  const [promise, setPromise] = useState<Promise<void>>(null);
   const usePromiseState = usePromise(promise);
   const onClickCb = useCallback((arg) => {
-    const onClickRet = onClick?.(arg);
-    if ((onClickRet as Promise<R>)?.then) {
-      setPromise(onClickRet as Promise<R>);
-    }
-    return onClickRet;
-  }, [onClick]);
+    setPromise(async () => {
+      if (popconfirm) {
+        const result = await popconfirm.getResult();
+        if (!result) {
+          return;
+        }
+      }
+
+      const onClickRet = onClick?.(arg);
+      if ((onClickRet as Promise<void>)?.then) {
+        await onClickRet;
+      }
+    });
+  }, [onClick, popconfirm]);
 
   return {
     ...usePromiseState,
