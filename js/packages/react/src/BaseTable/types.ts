@@ -7,6 +7,7 @@ import {TableRenderParamsPlugin} from "@/TableRenderSettings";
 // noinspection ES6PreferShortImport
 import {IBaseTableUserSettings} from "./extends/UserSettingsPlugin";
 import {CardType} from '@/antdMissedExport';
+import { CompiledTheme } from '@/themes';
 
 export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode;
 export type TableSearchType = 'select' | 'date' | 'boolean' | 'string' | 'none';
@@ -178,7 +179,7 @@ export interface IBaseTableProps<TSelection = any> {
 
   onSettingsChange?(settings: IBaseTableUserSettings): void;
 
-  rowStyler?(row: any): React.CSSProperties;
+  rowStyler?(row: any, theme: CompiledTheme): React.CSSProperties;
 
   selectionFilter?(row: any): boolean;
 }

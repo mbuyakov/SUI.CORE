@@ -89,10 +89,14 @@ export class BaseTable<TSelection = defaultSelection>
   );
 
   private RowComponent = (props: any): JSX.Element => (
-    <TableRow
-      {...props}
-      style={this.props.rowStyler ? this.props.rowStyler(props.row) : undefined}
-    />
+    <SuiThemeContext.Consumer>
+      {theme => (
+        <TableRow
+          {...props}
+          style={this.props.rowStyler ? this.props.rowStyler(props.row, theme) : undefined}
+        />
+      )}
+    </SuiThemeContext.Consumer>
   );
 
   private ToggleCellComponent = (props: any): JSX.Element => (

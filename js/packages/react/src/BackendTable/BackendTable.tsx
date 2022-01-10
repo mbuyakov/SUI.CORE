@@ -20,7 +20,7 @@ import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
 // noinspection ES6PreferShortImport
 import {exportToXlsx} from "../BaseTable/utils";
 // noinspection ES6PreferShortImport
-import {BaseTable, colToBaseTableCol, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE, DEFAULT_SERVICE_COLUMN_WIDTH, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from '../index';
+import {BaseTable, colToBaseTableCol, CompiledTheme, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE, DEFAULT_SERVICE_COLUMN_WIDTH, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from '../index';
 // noinspection ES6PreferShortImport
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 // noinspection ES6PreferShortImport
@@ -116,7 +116,7 @@ type IBackendTableState<T> = {
   tableInfo?: TableInfo;
   title?: string;
   warnings?: Array<string | JSX.Element>;
-  colorSettingsRowStyler?(row: any): React.CSSProperties;
+  colorSettingsRowStyler?(row: any, theme: CompiledTheme): React.CSSProperties;
 } & IRemoteBaseTableFields;
 
 function calculateParentExpandedGroups(realExpandedGroupKeys: IExpandedGroup[], key: GroupKey): IExpandedGroup[] {
@@ -453,11 +453,11 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private generateRowStyler(): (row: any) => React.CSSProperties {
+  private generateRowStyler(): (row: any, theme: CompiledTheme) => React.CSSProperties {
     const stylers = [this.state.colorSettingsRowStyler, this.props.rowStyler].filter(Boolean);
 
     if (stylers.length) {
-      return (row): React.CSSProperties => stylers.reduce((result, styler) => ({...result, ...styler(row)}), {});
+      return (row, theme): React.CSSProperties => stylers.reduce((result, styler) => ({...result, ...styler(row, theme)}), {});
     }
 
     return undefined;
@@ -979,7 +979,7 @@ export class BackendTable<TSelection = defaultSelection>
 
         if (expression) {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          colorSettingsRowStyler = (row: any): React.CSSProperties => {
+          colorSettingsRowStyler = (row: any, theme: any): React.CSSProperties => {
             try {
               const result = eval(expression);
               return typeof (result) === "object" ? result : null;
