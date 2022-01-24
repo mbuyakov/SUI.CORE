@@ -96,14 +96,16 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
           columnName,
           lazy,
           operation: "in",
-          elements: value as any
+          elements: value as any,
+          raw: false
         };
       } else {
         filter = {
           columnName,
           lazy,
           operation: "equal",
-          value: undefined
+          value: undefined,
+          raw: false
         };
       }
     } else {
@@ -111,7 +113,8 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
         columnName,
         lazy,
         operation: "equal",
-        value: value as any
+        value: value as any,
+        raw: false
       };
     }
 
