@@ -154,7 +154,7 @@ public class FromWithGenerator {
 
     if (!raw && column.getRenderColumn() != null) {
       column = column.getRenderColumn();
-      val isCatalog = column.getRenderColumn().getFrom().getTableInfo().getIsCatalog();
+      val isCatalog = column.getFrom().getTableInfo().getIsCatalog();
       result = String.format("%s.%s", column.getFrom(), isCatalog ? "id" : column.getColumnName());
     } else {
       result = column.toString();
