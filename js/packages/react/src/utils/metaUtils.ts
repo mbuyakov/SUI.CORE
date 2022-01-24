@@ -82,7 +82,7 @@ export async function generateCatalogDataPromise(
     2
   );
 
-  return queryData.map((it) => ({title: it[titleColumn], value: it[titleColumn]}));
+  return queryData.map((it) => ({title: it[titleColumn], value: it.id}));
 }
 
 export function formatObjectName(objectName: string, pascalCase: boolean = false): string {
