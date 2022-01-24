@@ -66,26 +66,23 @@ export function getLinkForTable(
 
 export async function generateCatalogDataPromise(
   tableName: string,
-  valueColumnName?: string,
-  additionalColumns?: string[]
+  titleColumnName: string
 ): Promise<SelectData> {
-  const selectColumn = valueColumnName ? camelCase(valueColumnName) : 'id';
+  const titleColumn = titleColumnName ? camelCase(titleColumnName) : "id";
 
-  const queryData = await query(`{
-    all${capitalize(camelCase(addPluralEnding(tableName)))} {
-      nodes {
-        id
-        ${selectColumn}
-        ${(additionalColumns || []).map(camelCase)}
+  const queryData = await query<IObjectWithIndex[]>(
+    `{
+      all${capitalize(camelCase(addPluralEnding(tableName)))} {
+        nodes {
+          id
+          ${titleColumn}
+        }
       }
-    }
-  }`, true);
+    }`,
+    2
+  );
 
-  return (getDataByKey(queryData, 'nodes') || []).map((element: IObjectWithIndex) => ({
-    title: element[selectColumn || 'id'],
-    value: element.id,
-    src: element
-  }));
+  return queryData.map((it) => ({title: it[titleColumn], value: it[titleColumn]}));
 }
 
 export function formatObjectName(objectName: string, pascalCase: boolean = false): string {

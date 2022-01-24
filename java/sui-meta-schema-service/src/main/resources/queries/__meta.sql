@@ -22,8 +22,6 @@ AS $$
             SELECT 'column_info_reference', NULL
             UNION ALL
             SELECT 'column_info_role', NULL
-            UNION ALL
-            SELECT 'column_info_dependence', NULL
         ), meta_tables AS (
             SELECT table_name
             FROM information_schema.tables

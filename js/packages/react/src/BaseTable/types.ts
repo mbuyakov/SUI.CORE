@@ -40,7 +40,7 @@ export interface ICommonColumnSearchProps {
   placeholder?: string | [string, string];
 }
 
-export type SelectData = Array<{ src?: IObjectWithIndex; title?: string | JSX.Element; value: string | number; }>;
+export type SelectData = Array<{ title?: string | JSX.Element; value: string | number; }>;
 
 export type INewSearchProps = ICommonColumnSearchProps & {
   format?: string; // for datetime and date

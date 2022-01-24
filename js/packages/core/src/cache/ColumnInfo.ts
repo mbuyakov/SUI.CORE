@@ -7,18 +7,12 @@ import {formatRoleName} from '@/tmp';
 
 import {Name} from "./Name";
 
-export type ColumnInfoDependence = {
-  dependsOnColumnInfoId: string;
-  catalogColumnInfoId: string;
-}
-
 export class ColumnInfo {
   public columnName: string;
   public columnType: string | undefined;
   public defaultGrouping: boolean;
   public defaultSorting?: string;
   public defaultVisible: boolean;
-  public dependencies?: ColumnInfoDependence[];
   public filterTypeByFilterTypeId?: IFilterType;
   public foreignColumnInfo?: string[];
   public id: string;
@@ -48,7 +42,6 @@ export class ColumnInfo {
     this.defaultVisible = item.defaultVisible;
     this.defaultSorting = item.defaultSorting;
     this.defaultGrouping = item.defaultGrouping;
-    this.dependencies = item.columnInfoDependencesByColumnInfoId.nodes.length ? item.columnInfoDependencesByColumnInfoId.nodes : null;
     this.width = item.width;
     this.wordWrapEnabled = item.wordWrapEnabled;
     this.order = item.order;
@@ -122,12 +115,6 @@ class _ColumnInfoManager extends GqlCacheManager<IColumnInfo, ColumnInfo> {
       columnInfoReferencesByColumnInfoId {
         nodes {
           foreignColumnInfoId
-        }
-      }
-      columnInfoDependencesByColumnInfoId {
-        nodes {
-          dependsOnColumnInfoId
-          catalogColumnInfoId
         }
       }
     `;

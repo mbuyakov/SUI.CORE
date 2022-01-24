@@ -105,12 +105,6 @@ export interface IColumnInfo {
   tableInfosByLinkColumnInfoId: IGraphQLConnection<ITableInfo>;
   // noinspection SpellCheckingInspection
   tableInfosByForeignLinkColumnInfoId: IGraphQLConnection<ITableInfo>;
-  // noinspection SpellCheckingInspection
-  columnInfoDependencesByColumnInfoId: IGraphQLConnection<IColumnInfoDependence>;
-  // noinspection SpellCheckingInspection
-  columnInfoDependencesByDependsOnColumnInfoId: IGraphQLConnection<IColumnInfoDependence>;
-  // noinspection SpellCheckingInspection
-  columnInfoDependencesByCatalogColumnInfoId: IGraphQLConnection<IColumnInfoDependence>;
 }
 
 export interface ISubtotalType {
@@ -159,23 +153,6 @@ export interface IColumnInfoReference {
   columnInfoByColumnInfoId?: IColumnInfo;
   // noinspection SpellCheckingInspection
   columnInfoByForeignColumnInfoId?: IColumnInfo;
-}
-
-export interface IColumnInfoDependence {
-  // noinspection SpellCheckingInspection
-  id: string;
-  // noinspection SpellCheckingInspection
-  columnInfoId: string;
-  // noinspection SpellCheckingInspection
-  dependsOnColumnInfoId: string;
-  // noinspection SpellCheckingInspection
-  catalogColumnInfoId: string;
-  // noinspection SpellCheckingInspection
-  columnInfoByColumnInfoId?: IColumnInfo;
-  // noinspection SpellCheckingInspection
-  columnInfoByDependsOnColumnInfoId?: IColumnInfo;
-  // noinspection SpellCheckingInspection
-  columnInfoByCatalogColumnInfoId?: IColumnInfo;
 }
 
 export interface IColumnInfoRole {

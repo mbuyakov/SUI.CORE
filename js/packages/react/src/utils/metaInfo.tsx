@@ -1,4 +1,4 @@
-import {asyncMap, ColumnInfo, ColumnInfoManager, getDataByKey, TableInfoManager} from "@sui/core";
+import {ColumnInfo, ColumnInfoManager, getDataByKey, TableInfoManager} from "@sui/core";
 
 import {booleanRender, IBaseTableColLayout, SortingDirection} from '../BaseTable';
 import {TableRenderSettingsPluginManager, TableRenderSettingsPopover} from '../TableRenderSettings';
@@ -54,11 +54,7 @@ export async function colToBaseTableCol(
       if (foreignTableInfo.isCatalog) {
         result.search = {
           multiple: result.search && result.search.type === "multiple",
-          selectData: generateCatalogDataPromise(
-            renderTableInfo.tableName,
-            renderColumnInfo.columnName,
-            (await asyncMap(columnInfo?.dependencies || [], it => ColumnInfoManager.getById(it.catalogColumnInfoId))).map(it => it.columnName)
-          ),
+          selectData: generateCatalogDataPromise(renderTableInfo.tableName, renderColumnInfo.columnName),
           type: 'customSelect'
         };
       }
