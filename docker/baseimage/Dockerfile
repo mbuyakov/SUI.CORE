@@ -1,11 +1,10 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:8-jdk-slim
 
-# Utilities or file compression
-RUN apk add --no-cache file
-RUN apk --update add imagemagick
-RUN apk --update add ghostscript
-RUN apk add tiff-tools
+RUN apt-get update && \
+    # Utilities for file compression
+    apt-get install -y imagemagick ghostscript libtiff-tools && \
+    # https://github.com/AdoptOpenJDK/openjdk-build/issues/693
+    apt-get install -y fontconfig fonts-dejavu-core && \
+    rm -rf /var/lib/apt/lists/* \
 
-# https://github.com/AdoptOpenJDK/openjdk-build/issues/693
-RUN apk add --no-cache fontconfig ttf-dejavu
 EXPOSE 8080
