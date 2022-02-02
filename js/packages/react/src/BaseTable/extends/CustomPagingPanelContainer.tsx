@@ -55,7 +55,7 @@ export function CustomPagingPanelContainer(props: ICustomPagingContainer): React
     );
 
   return (
-    <div style={{display: "flex", justifyContent: "flex-end", borderTop: "1px solid rgba(224, 224, 224, 1)"}}>
+    <div style={{display: "flex", justifyContent: "flex-end"}}>
       <PagingPanel.Container
         {...props}
       />
