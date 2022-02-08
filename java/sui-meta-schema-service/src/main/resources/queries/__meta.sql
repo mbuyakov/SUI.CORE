@@ -46,12 +46,8 @@ AS $$
             SELECT string_agg(format('DELETE FROM sui_meta.%s;', table_name), E'\n')
             FROM (VALUES ('table_info'), ('name')) t (table_name)
             UNION ALL
-            SELECT t.*
-            FROM (
-                SELECT public.__dump('sui_meta', table_name, columns)
-                FROM insert_tables
-                ORDER BY table_name
-            ) t
+            SELECT public.__dump('sui_meta', table_name, columns)
+            FROM insert_tables
             UNION ALL
             SELECT string_agg(format('UPDATE sui_meta.table_info SET %s = %s WHERE id = %s;', column_name, column_info_id, id), E'\n')
             FROM (
