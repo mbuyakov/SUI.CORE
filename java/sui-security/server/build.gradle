@@ -2,7 +2,7 @@ apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
 
 dependencies {
-    compile project(":sui-security:sui-security-base")
+    api project(":sui-security:sui-security-base")
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {

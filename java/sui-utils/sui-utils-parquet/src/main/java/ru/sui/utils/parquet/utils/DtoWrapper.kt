@@ -101,7 +101,7 @@ class DtoFieldWrapper(val f: Field) {
         else -> Types.primitive(primitiveType, repetition)
     }
             .`as`(originalType)
-            .named(f.name)
+            .named(f.name) as Type
 
     fun addToGroup(group: Group, obj: Any) {
         val value = f.get(obj)

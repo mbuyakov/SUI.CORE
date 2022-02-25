@@ -3,25 +3,24 @@ apply plugin: 'kotlin-spring'
 
 dependencies {
   // Kotlin
-  compile project(":sui-utils:sui-utils-kotlin")
-  compile "io.github.microutils:kotlin-logging:${kotlinLoggingVersion}"
+  api project(":sui-utils:sui-utils-kotlin")
+  api "io.github.microutils:kotlin-logging"
   // Spring
-  compile "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
-  compile "org.springframework.boot:spring-boot-starter-cache:${springBootVersion}"
-  compile "org.springframework.data:spring-data-jpa:${springJpaVerison}"
-  compile "org.springframework:spring-aspects:${springVersion}" // don't delete
+  api "org.springframework.boot:spring-boot-autoconfigure"
+  api "org.springframework.boot:spring-boot-starter-cache"
+  api "org.springframework.data:spring-data-jpa"
+  api "org.springframework:spring-aspects"
   // Javax api
-  compile "javax.persistence:javax.persistence-api:${javaxPersistenceApiVersion}"
-  compile "javax.validation:validation-api:${javaxValidationVersion}"
+  api "javax.persistence:javax.persistence-api"
+  api "javax.validation:validation-api"
   // Hibernate+
-  compile "org.hibernate:hibernate-core:${hibernateVersion}"
-  compile "com.vladmihalcea:hibernate-types-52:${hibernateTypesVersion}"
+  api "org.hibernate:hibernate-core"
+  api "com.vladmihalcea:hibernate-types-52"
   // Jackson
-  compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
-  compile "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
+  api "com.fasterxml.jackson.core:jackson-databind"
+  api "com.fasterxml.jackson.core:jackson-annotations"
   // Other
-  compileOnly "org.projectlombok:lombok" // TODO: Delete
-  compile "com.github.ben-manes.caffeine:caffeine:2.8.2"
+  api "com.github.ben-manes.caffeine:caffeine:2.8.2"
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {

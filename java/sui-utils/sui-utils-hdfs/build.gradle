@@ -6,12 +6,12 @@ configurations {
 }
 
 dependencies {
-  compile project(":sui-utils:sui-utils-kotlin")
-  compile "org.apache.hadoop:hadoop-client:${hadoopVersion}"
-  compile "org.apache.hadoop:hadoop-hdfs:${hadoopVersion}"
-  compile "org.apache.hadoop:hadoop-hdfs-client:${hadoopVersion}"
-  compile "org.springframework:spring-beans:${springVersion}"
-  compile "org.springframework:spring-context:${springVersion}"
+  api project(":sui-utils:sui-utils-kotlin")
+  api "org.apache.hadoop:hadoop-client"
+  api "org.apache.hadoop:hadoop-hdfs"
+  api "org.apache.hadoop:hadoop-hdfs-client"
+  api "org.springframework:spring-beans"
+  api "org.springframework:spring-context"
 }
 
 compileKotlin {

@@ -54,8 +54,8 @@ public class GroupQueryGenerator {
       .collect(Collectors.toMap(
         Grouping::getColumnName,
         grouping -> {
-          val groupingIndex = groupings.indexOf(grouping);
-          val expandedRows = expandedGroupsGroupedBySize
+          int groupingIndex = groupings.indexOf(grouping);
+          List<ExpandedGroup> expandedRows = expandedGroupsGroupedBySize
             .keySet()
             .stream()
             .filter(key -> key > groupingIndex)
@@ -66,12 +66,12 @@ public class GroupQueryGenerator {
           if (expandedRows.isEmpty()) {
             return "FALSE";
           } else {
-            val limit = groupingIndex + 1;
+            int limit = groupingIndex + 1;
 
             return expandedRows
               .stream()
               .map(expandedRow -> {
-                val expandedRowElementIndex = new AtomicInteger(0);
+                AtomicInteger expandedRowElementIndex = new AtomicInteger(0);
 
                 return QueryUtils.joinFilters(
                   AND_FILTER_JOINER,

@@ -2,14 +2,14 @@ apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
 
 dependencies {
-  compile "org.springframework:spring-beans:${springVersion}"
-  compile "org.springframework:spring-context:${springVersion}"
-  compile "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
-  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-  compile "org.jetbrains.kotlin:kotlin-reflect"
-  compile "io.github.microutils:kotlin-logging:${muLoggerVersion}"
-  compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
-  compile "com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}"
+  api "org.springframework:spring-beans"
+  api "org.springframework:spring-context"
+  api "org.springframework.boot:spring-boot-autoconfigure"
+  api "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+  api "org.jetbrains.kotlin:kotlin-reflect"
+  api "io.github.microutils:kotlin-logging"
+  api "com.fasterxml.jackson.core:jackson-databind"
+  api "com.fasterxml.jackson.module:jackson-module-kotlin"
 }
 
 compileKotlin {

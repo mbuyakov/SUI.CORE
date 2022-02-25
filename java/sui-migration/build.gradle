@@ -3,16 +3,16 @@ apply plugin: 'kotlin-spring'
 
 dependencies {
   // Kotlin
-  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-  compile "org.jetbrains.kotlin:kotlin-reflect"
-  compile "io.github.microutils:kotlin-logging:${muLoggerVersion}"
+  api "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+  api "org.jetbrains.kotlin:kotlin-reflect"
+  api "io.github.microutils:kotlin-logging"
   // Spring
-  compile "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
-  compile ("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}") {
+  api "org.springframework.boot:spring-boot-autoconfigure"
+  api ("org.springframework.boot:spring-boot-starter-jdbc") {
     exclude module: "spring-boot-starter"
   }
   // Other
-  compile "org.flywaydb:flyway-core:${flywayVersion}"
+  api "org.flywaydb:flyway-core"
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {

@@ -43,7 +43,7 @@ fun Result.getVersions() = rawCells().map { it.timestamp }.toSet()
 
 fun Result.toDto(cols: Collection<HBaseColDesc>, version: Long) = HBaseDto(this.row, cols.map { it to getNearestVersion(it, version) }.toMap(), version)
 
-fun Result.toLatestVersionDto(cols: Collection<HBaseColDesc>): HBaseDto? = getVersions().max()?.let { toDto(cols, it) }
+fun Result.toLatestVersionDto(cols: Collection<HBaseColDesc>): HBaseDto? = getVersions().maxOrNull()?.let { toDto(cols, it) }
 
 fun Result.toDtos(cols: List<HBaseColDesc>) = getVersions().map { it to toDto(cols, it) }.toMap()
 
@@ -54,7 +54,7 @@ fun Result.getNearestVersion(col: HBaseColDesc, version: Long): ByteArray? {
                         && CellUtil.cloneFamily(it) contentEquals col.family
                         && CellUtil.cloneQualifier(it) contentEquals col.name
             }
-            .maxBy { it.timestamp }
+            .maxByOrNull { it.timestamp }
             ?.let { CellUtil.cloneValue(it) }
 }
 

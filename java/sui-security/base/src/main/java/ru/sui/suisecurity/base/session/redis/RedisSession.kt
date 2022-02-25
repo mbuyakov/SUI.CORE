@@ -18,8 +18,8 @@ import java.util.*
 import javax.annotation.PostConstruct
 
 
-private fun RedisConverter.toBytes(source: Any?) = this.conversionService.convert(source, ByteArray::class.java)
-private fun RedisConverter.toString(source: Any?) = this.conversionService.convert(source, String::class.java)
+private fun RedisConverter.toBytes(source: Any?) = this.conversionService.convert(source, ByteArray::class.java)!!
+private fun RedisConverter.toString(source: Any?) = this.conversionService.convert(source, String::class.java)!!
 
 @RedisHash("session")
 class RedisSession(
