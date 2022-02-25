@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-alpine
+FROM bellsoft/liberica-openjdk-alpine:17.0.2-9
 
 # Utilities for file compression
 # https://github.com/AdoptOpenJDK/openjdk-build/issues/693
