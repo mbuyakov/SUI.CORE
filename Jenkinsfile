@@ -61,7 +61,7 @@ pipeline {
           }
           agent {
             docker {
-              image 'gradle:6.7-jdk8'
+              image 'gradle:7.4-jdk8'
               reuseNode true
               args '-e HOME=$HOME'
             }
@@ -77,25 +77,13 @@ pipeline {
             }
             stage("[JVM] Publish") {
               environment {
-                NEXUS_PASS = credentials('suilib-nexus-pass')
+                ORG_GRADLE_PROJECT_nexusUsername = "nexus"
+                ORG_GRADLE_PROJECT_nexusPassword = credentials('suilib-nexus-pass')
               }
               steps {
                 sh """
                   cd java
-                  sh ./upload.sh sui-audit-common sui-audit/common
-                  sh ./upload.sh sui-audit-log-mover sui-audit/log-mover
-                  sh ./upload.sh sui-audit-manager sui-audit/manager
-                  sh ./upload.sh sui-backend
-                  sh ./upload.sh sui-entity
-                  sh ./upload.sh sui-security-base sui-security/base
-                  sh ./upload.sh sui-security-server sui-security/server
-                  sh ./upload.sh sui-meta-schema-service
-                  sh ./upload.sh sui-user-transaction
-                  sh ./upload.sh sui-migration
-                  sh ./upload.sh sui-utils-hbase sui-utils/sui-utils-hbase
-                  sh ./upload.sh sui-utils-hdfs sui-utils/sui-utils-hdfs
-                  sh ./upload.sh sui-utils-kotlin sui-utils/sui-utils-kotlin
-                  sh ./upload.sh sui-utils-parquet sui-utils/sui-utils-parquet
+                  gradle publish
                 """
               }
             }
