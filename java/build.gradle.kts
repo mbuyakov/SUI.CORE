@@ -100,6 +100,7 @@ subprojects {
       maven {
         name = "nexus"
         url = uri("https://nexus.suilib.ru/repository/mvn-sui/")
+        credentials(PasswordCredentials::class)
       }
     }
   }

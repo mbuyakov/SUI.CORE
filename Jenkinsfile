@@ -77,7 +77,7 @@ pipeline {
             }
             stage("[JVM] Publish") {
               environment {
-                ORG_GRADLE_PROJECT_nexusUsername = "nexus"
+                ORG_GRADLE_PROJECT_nexusUsername = "jenkins"
                 ORG_GRADLE_PROJECT_nexusPassword = credentials('suilib-nexus-pass')
               }
               steps {
