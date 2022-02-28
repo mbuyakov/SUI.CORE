@@ -118,7 +118,7 @@ pipeline {
                 sh """
                   npx npm-cli-adduser
                   cd js
-                  yarn lcm publish 9.0.${BUILD_NUMBER}${SUFFIX}
+                  yarn lcm publish 10.0.${BUILD_NUMBER}${SUFFIX}
                 """
               }
             }

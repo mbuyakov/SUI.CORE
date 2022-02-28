@@ -1,6 +1,6 @@
 {
   "name": "@sui/react",
-  "version": "9.0.0",
+  "version": "10.0.0",
   "main": "es/index.js",
   "module": "es/index.js",
   "typings": "es/index.d.ts",
@@ -39,8 +39,8 @@
     "@material-ui/core": "4.11.4",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
-    "@sui/charts": "9.0.0",
-    "@sui/core": "9.0.0",
+    "@sui/charts": "10.0.0",
+    "@sui/core": "10.0.0",
     "antd": "4.16.1",
     "antd-mask-input": "0.1.15",
     "classnames": "^2.2.6",

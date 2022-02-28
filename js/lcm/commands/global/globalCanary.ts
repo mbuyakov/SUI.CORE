@@ -14,7 +14,7 @@ export async function globalCanary(): Promise<void> {
     ("00" + date.getMinutes()).slice(-2) +
     ("00" + date.getSeconds()).slice(-2);
 
-  const version = `9.0.${dateStr}-canary`;
+  const version = `10.0.${dateStr}-canary`;
   await globalPublish(version);
   const command = `yarn add @sui/all@${version}`;
   clipboardy.writeSync(command);
