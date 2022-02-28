@@ -23,6 +23,7 @@ allprojects {
 
   apply(plugin = "java")
   apply(plugin = "kotlin")
+  apply(plugin = "maven-publish")
 
   apply(plugin = "io.spring.dependency-management")
 
@@ -36,10 +37,25 @@ allprojects {
     maven("https://repository.cloudera.com/artifactory/cloudera-repos/")
     maven("https://nexus.suilib.ru/repository/mvn-sui/")
   }
+
+  publishing {
+    publications {
+      create<MavenPublication>("nexus") {
+        from(components["java"])
+      }
+    }
+
+    repositories {
+      maven {
+        name = "nexus"
+        url = uri("https://nexus.suilib.ru/repository/mvn-sui/")
+        credentials(PasswordCredentials::class)
+      }
+    }
+  }
 }
 
 subprojects {
-  apply(plugin = "maven-publish")
 
   configurations(closureOf<ConfigurationContainer> {
     compileOnly {
@@ -87,21 +103,5 @@ subprojects {
 
   tasks.withType<Test> {
     useJUnitPlatform()
-  }
-
-  publishing {
-    publications {
-      create<MavenPublication>("nexus") {
-        from(components["java"])
-      }
-    }
-
-    repositories {
-      maven {
-        name = "nexus"
-        url = uri("https://nexus.suilib.ru/repository/mvn-sui/")
-        credentials(PasswordCredentials::class)
-      }
-    }
   }
 }
