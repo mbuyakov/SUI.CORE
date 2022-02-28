@@ -61,7 +61,7 @@ pipeline {
           }
           agent {
             docker {
-              image 'gradle:7.4-jdk8'
+              image 'gradle:7.4-jdk17'
               reuseNode true
               args '-e HOME=$HOME'
             }

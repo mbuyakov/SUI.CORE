@@ -1,3 +1,4 @@
+val sentryVersion = "5.1.2"
 val javaVersion = JavaVersion.VERSION_1_8
 
 plugins {
@@ -52,6 +53,8 @@ allprojects {
       dependency("org.apache.hadoop:hadoop-hdfs-client:3.0.0-cdh6.3.1")
       dependency("org.apache.parquet:parquet-hadoop:1.10.1")
       dependency("io.github.microutils:kotlin-logging:1.7.4")
+      dependency("io.sentry:sentry-spring-boot-starter:$sentryVersion")
+      dependency("io.sentry:sentry-logback:$sentryVersion")
     }
   }
 
@@ -86,6 +89,8 @@ subprojects {
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+    api("javax.annotation:javax.annotation-api")
+
   }
 
   java {
