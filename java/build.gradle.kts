@@ -35,7 +35,24 @@ allprojects {
   repositories {
     mavenCentral()
     maven("https://repository.cloudera.com/artifactory/cloudera-repos/")
-    maven("https://nexus.suilib.ru/repository/mvn-sui/")
+  }
+
+  dependencyManagement {
+    // https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies/2.6.3/spring-boot-dependencies-2.6.3.pom
+    imports {
+      mavenBom("org.springframework.boot:spring-boot-dependencies:2.6.3")
+    }
+
+    dependencies {
+      dependency("com.vladmihalcea:hibernate-types-52:2.3.2")
+      dependency("org.redisson:redisson-spring-boot-starter:3.16.8")
+      dependency("org.apache.hbase:hbase-client:2.1.0-cdh6.3.1")
+      dependency("org.apache.hadoop:hadoop-client:3.0.0-cdh6.3.1")
+      dependency("org.apache.hadoop:hadoop-hdfs:3.0.0-cdh6.3.1")
+      dependency("org.apache.hadoop:hadoop-hdfs-client:3.0.0-cdh6.3.1")
+      dependency("org.apache.parquet:parquet-hadoop:1.10.1")
+      dependency("io.github.microutils:kotlin-logging:1.7.4")
+    }
   }
 
   publishing {
@@ -62,24 +79,6 @@ subprojects {
       extendsFrom(configurations.annotationProcessor.get())
     }
   })
-
-  dependencyManagement {
-    // https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies/2.6.3/spring-boot-dependencies-2.6.3.pom
-    imports {
-      mavenBom("org.springframework.boot:spring-boot-dependencies:2.6.3")
-    }
-
-    dependencies {
-      dependency("com.vladmihalcea:hibernate-types-52:2.3.2")
-      dependency("org.redisson:redisson-spring-boot-starter:3.16.8")
-      dependency("org.apache.hbase:hbase-client:2.1.0-cdh6.3.1")
-      dependency("org.apache.hadoop:hadoop-client:3.0.0-cdh6.3.1")
-      dependency("org.apache.hadoop:hadoop-hdfs:3.0.0-cdh6.3.1")
-      dependency("org.apache.hadoop:hadoop-hdfs-client:3.0.0-cdh6.3.1")
-      dependency("org.apache.parquet:parquet-hadoop:1.10.1")
-      dependency("io.github.microutils:kotlin-logging:1.7.4")
-    }
-  }
 
   dependencies {
     api(kotlin("stdlib-jdk8"))
