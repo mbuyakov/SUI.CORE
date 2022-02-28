@@ -2,6 +2,7 @@ val javaVersion = JavaVersion.VERSION_1_8
 
 plugins {
   id("java")
+  id("maven-publish")
 
   val kotlinVersion = "1.6.10"
   kotlin("jvm") version kotlinVersion
@@ -38,6 +39,8 @@ allprojects {
 }
 
 subprojects {
+  apply(plugin = "maven-publish")
+
   configurations(closureOf<ConfigurationContainer> {
     compileOnly {
       extendsFrom(configurations.annotationProcessor.get())
@@ -84,5 +87,20 @@ subprojects {
 
   tasks.withType<Test> {
     useJUnitPlatform()
+  }
+
+  publishing {
+    publications {
+      create<MavenPublication>("nexus") {
+        from(components["java"])
+      }
+    }
+
+    repositories {
+      maven {
+        name = "nexus"
+        url = uri("https://nexus.suilib.ru/repository/mvn-sui/")
+      }
+    }
   }
 }
