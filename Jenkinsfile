@@ -66,27 +66,15 @@ pipeline {
               args '-e HOME=$HOME'
             }
           }
-          stages {
-            stage("[JVM] Build") {
-              steps {
-                sh """
-                  cd java
-                  gradle build
-                """
-              }
-            }
-            stage("[JVM] Publish") {
-              environment {
-                ORG_GRADLE_PROJECT_nexusUsername = "jenkins"
-                ORG_GRADLE_PROJECT_nexusPassword = credentials('suilib-nexus-pass')
-              }
-              steps {
-                sh """
-                  cd java
-                  gradle publish
-                """
-              }
-            }
+          environment {
+            ORG_GRADLE_PROJECT_nexusUsername = "jenkins"
+            ORG_GRADLE_PROJECT_nexusPassword = credentials('suilib-nexus-pass')
+          }
+          steps {
+            sh """
+              cd java
+              gradle publish --no-daemon
+            """
           }
         }
         stage("JS") {
