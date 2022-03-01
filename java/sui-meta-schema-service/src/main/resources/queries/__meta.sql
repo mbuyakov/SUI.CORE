@@ -31,10 +31,10 @@ AS $$
         FROM (
             SELECT 'BEGIN;' AS section
             UNION ALL
-            SELECT string_agg(format('DROP TRIGGER IF EXISTS populate_audit_columns_trigger ON sui_meta.%s;', table_name), E'\n')
+            SELECT string_agg(format('DROP TRIGGER IF EXISTS populate_audit_columns_trigger ON sui_meta.%s;', table_name), E'\n' ORDER BY table_name)
             FROM meta_tables
             UNION ALL
-            SELECT string_agg(format('DROP TRIGGER IF EXISTS audit_log_trigger ON sui_meta.%s;', table_name), E'\n')
+            SELECT string_agg(format('DROP TRIGGER IF EXISTS audit_log_trigger ON sui_meta.%s;', table_name), E'\n' ORDER BY table_name)
             FROM meta_tables
             UNION ALL
             SELECT 'ALTER TABLE log.audit_log DROP CONSTRAINT audit_log_table_info_id_fkey;'
@@ -44,7 +44,7 @@ AS $$
             SELECT 'ALTER TABLE sui_meta.user_settings DROP CONSTRAINT user_settings_table_info_id_fkey;'
             UNION ALL
             SELECT string_agg(format('DELETE FROM sui_meta.%s;', table_name), E'\n')
-            FROM (VALUES ('table_info'), ('name')) t(table_name)
+            FROM (VALUES ('table_info'), ('name')) t (table_name)
             UNION ALL
             SELECT public.__dump('sui_meta', table_name, columns)
             FROM insert_tables
@@ -64,6 +64,7 @@ AS $$
                 SELECT id, follow_column_info_id, 'follow_column_info_id'
                 FROM sui_meta.table_info
                 WHERE follow_column_info_id IS NOT NULL
+                ORDER BY id, column_name, column_info_id
             ) t
             UNION ALL
             SELECT string_agg(
@@ -74,6 +75,7 @@ AS $$
                 SELECT 'sui_meta' AS schemaname,
                        format('%s_id_seq', table_name) AS sequencename
                 FROM insert_tables
+                ORDER BY table_name
             ) t
             INNER JOIN pg_sequences USING(schemaname, sequencename)
             WHERE last_value IS NOT NULL
@@ -83,7 +85,9 @@ AS $$
                     || ' BEFORE UPDATE OR DELETE OR INSERT ON sui_meta.' || table_name
                     || ' FOR EACH ROW'
                     || ' EXECUTE PROCEDURE log.audit_table_modification();',
-                E'\n')
+                E'\n'
+                ORDER BY table_name
+            )
             FROM meta_tables
             UNION ALL
             SELECT string_agg(
@@ -91,7 +95,9 @@ AS $$
                     || ' BEFORE UPDATE OR DELETE OR INSERT ON sui_meta.' || table_name
                     || ' FOR EACH ROW'
                     || ' EXECUTE PROCEDURE log.populate_audit_columns();',
-                E'\n')
+                E'\n'
+                ORDER BY table_name
+            )
             FROM meta_tables
             UNION ALL
             SELECT 'ALTER TABLE log.audit_log ADD CONSTRAINT audit_log_table_info_id_fkey FOREIGN KEY (table_info_id) REFERENCES sui_meta.table_info ON DELETE CASCADE;'

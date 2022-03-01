@@ -6,6 +6,7 @@ dependencies {
   compile "org.springframework:spring-messaging:${springVersion}"
   compile "org.springframework.boot:spring-boot-starter-websocket:${springBootVersion}"
   compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+  compile "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
   compile "org.springframework.security:spring-security-messaging:${springVersion}"
   compile "org.postgresql:postgresql:${postgresVersion}"
   compile "org.json:json:20180130"
