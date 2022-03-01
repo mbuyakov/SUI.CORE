@@ -29,8 +29,8 @@ pipeline {
               steps {
                 sh """
                   cd docker
-                  docker build -t nexus.suilib.ru:10400/repository/docker-sui/sui-baseimage:${BUILD_NUMBER}${SUFFIX} baseimage
-                  docker build -t nexus.suilib.ru:10400/repository/docker-sui/sui-postgraphile:${BUILD_NUMBER}${SUFFIX} postgraphile
+                  docker build -t nexus.suilib.ru:10401/repository/docker-sui/sui-baseimage:${BUILD_NUMBER}${SUFFIX} baseimage
+                  docker build -t nexus.suilib.ru:10401/repository/docker-sui/sui-postgraphile:${BUILD_NUMBER}${SUFFIX} postgraphile
                 """
               }
             }
@@ -40,15 +40,15 @@ pipeline {
               }
               steps {
                 sh """
-                  docker login nexus.suilib.ru:10400/repository/docker-sui/ --username ${NEXUS_USR} --password ${NEXUS_PSW}
-                  docker push nexus.suilib.ru:10400/repository/docker-sui/sui-baseimage:${BUILD_NUMBER}${SUFFIX}
-                  docker push nexus.suilib.ru:10400/repository/docker-sui/sui-postgraphile:${BUILD_NUMBER}${SUFFIX}
+                  docker login nexus.suilib.ru:10401/repository/docker-sui/ --username ${NEXUS_USR} --password ${NEXUS_PSW}
+                  docker push nexus.suilib.ru:10401/repository/docker-sui/sui-baseimage:${BUILD_NUMBER}${SUFFIX}
+                  docker push nexus.suilib.ru:10401/repository/docker-sui/sui-postgraphile:${BUILD_NUMBER}${SUFFIX}
                 """
               }
               post {
                 always {
                   sh """
-                    docker logout nexus.suilib.ru:10400/repository/docker-sui/
+                    docker logout nexus.suilib.ru:10401/repository/docker-sui/
                   """
                 }
               }
