@@ -1,4 +1,4 @@
-FROM node:14.13.1-alpine3.12
+FROM nexus.suilib.ru/node:14.13.1-alpine3.12
 RUN npm install -g postgraphile@4.11.0
 COPY . .
 RUN cd pg-relation-tag-plugin && npm i -g && cd ..
