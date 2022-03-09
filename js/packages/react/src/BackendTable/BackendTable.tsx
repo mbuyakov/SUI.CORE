@@ -434,6 +434,12 @@ export class BackendTable<TSelection = defaultSelection>
       return this.getJsonFromValue(value).map(value => value.name).join(", ");
     }
 
+    if (Array.isArray(value)) {
+      return (value as any[])
+        .map(it => (it !== null && typeof(it) === "object") ? JSON.stringify(it) : it)
+        .toString();
+    }
+
     return value;
   }
 
