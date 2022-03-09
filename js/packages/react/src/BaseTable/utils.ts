@@ -41,6 +41,8 @@ export async function exportToXlsx(
         value = NO_DATA_TEXT;
       } else if (options.exportValueFormatter) {
         value = options.exportValueFormatter(col, value, row);
+      } else if (Array.isArray(value)) {
+        value = value.toString();
       }
 
       return [col.title, value]
