@@ -38,7 +38,7 @@ const data = {
         "docCode": 3,
         "seriesRegex": "^.{0,25}$",
         "seriesRegexDesc": "до 25 знаков",
-        "numberRegex": "^.{0,25}$",
+        "numberRegex": "^.{1,25}$",
         "numberRegexDesc": "до 25 знаков",
         "sorting": 3
       },
@@ -58,7 +58,7 @@ const data = {
         "docCode": 5,
         "seriesRegex": "^.{0,25}$",
         "seriesRegexDesc": "до 25 знаков",
-        "numberRegex": "^.{0,25}$",
+        "numberRegex": "^.{1,25}$",
         "numberRegexDesc": "до 25 знаков",
         "sorting": 7
       },
@@ -88,7 +88,7 @@ const data = {
         "docCode": 8,
         "seriesRegex": "^.{0,25}$",
         "seriesRegexDesc": "до 25 знаков",
-        "numberRegex": "^.{0,25}$",
+        "numberRegex": "^.{1,25}$",
         "numberRegexDesc": "до 25 знаков",
         "sorting": 19
       },
@@ -108,7 +108,7 @@ const data = {
         "docCode": 10,
         "seriesRegex": "^.{0,25}$",
         "seriesRegexDesc": "до 25 знаков",
-        "numberRegex": "^.{0,25}$",
+        "numberRegex": "^.{1,25}$",
         "numberRegexDesc": "до 25 знаков",
         "sorting": 11
       },
@@ -118,7 +118,7 @@ const data = {
         "docCode": 11,
         "seriesRegex": "^.{0,25}$",
         "seriesRegexDesc": "до 25 знаков",
-        "numberRegex": "^.{0,25}$",
+        "numberRegex": "^.{1,25}$",
         "numberRegexDesc": "до 25 знаков",
         "sorting": 14
       },
@@ -128,7 +128,7 @@ const data = {
         "docCode": 12,
         "seriesRegex": "^.{0,200}$",
         "seriesRegexDesc": "до 200 знаков",
-        "numberRegex": "^.{0,200}$",
+        "numberRegex": "^.{1,200}$",
         "numberRegexDesc": "до 200 знаков",
         "sorting": 10
       },
@@ -138,7 +138,7 @@ const data = {
         "docCode": 13,
         "seriesRegex": "^.{0,200}$",
         "seriesRegexDesc": "до 200 знаков",
-        "numberRegex": "^.{0,200}$",
+        "numberRegex": "^.{1,200}$",
         "numberRegexDesc": "до 200 знаков",
         "sorting": 16
       },
@@ -148,7 +148,7 @@ const data = {
         "docCode": 14,
         "seriesRegex": "^.{0,25}$",
         "seriesRegexDesc": "до 25 знаков",
-        "numberRegex": "^.{0,25}$",
+        "numberRegex": "^.{1,25}$",
         "numberRegexDesc": "до 25 знаков",
         "sorting": 4
       },
@@ -158,7 +158,7 @@ const data = {
         "docCode": 15,
         "seriesRegex": "^.{0,25}$",
         "seriesRegexDesc": "до 25 знаков",
-        "numberRegex": "^.{0,25}$",
+        "numberRegex": "^.{1,25}$",
         "numberRegexDesc": "до 25 знаков",
         "sorting": 12
       },
@@ -168,7 +168,7 @@ const data = {
         "docCode": 18,
         "seriesRegex": "^[0-9]{0,2}$",
         "seriesRegexDesc": "00, где 0 - любая десятичная цифра (необязательная)",
-        "numberRegex": "^[0-9]{0,7}$",
+        "numberRegex": "^[0-9]{1,7}$",
         "numberRegexDesc": "0000000, где 0 - любая десятичная цифра (необязательная)",
         "sorting": 13
       },
@@ -198,7 +198,7 @@ const data = {
         "docCode": 23,
         "seriesRegex": "^.{0,25}$",
         "seriesRegexDesc": "до 25 знаков",
-        "numberRegex": "^.{0,25}$",
+        "numberRegex": "^.{1,25}$",
         "numberRegexDesc": "до 25 знаков",
         "sorting": 15
       },
@@ -238,7 +238,7 @@ const data = {
         "docCode": 91,
         "seriesRegex": "^.{0,25}$",
         "seriesRegexDesc": "до 25 знаков",
-        "numberRegex": "^.{0,25}$",
+        "numberRegex": "^.{1,25}$",
         "numberRegexDesc": "до 25 знаков",
         "sorting": 22
       },
@@ -248,7 +248,7 @@ const data = {
         "docCode": null,
         "seriesRegex": "^.{0,25}$",
         "seriesRegexDesc": "до 25 знаков",
-        "numberRegex": "^.{0,25}$",
+        "numberRegex": "^.{1,25}$",
         "numberRegexDesc": "до 25 знаков",
         "sorting": 9
       },
@@ -258,7 +258,7 @@ const data = {
         "docCode": null,
         "seriesRegex": "^.{0,25}$",
         "seriesRegexDesc": "до 25 знаков",
-        "numberRegex": "^.{0,25}$",
+        "numberRegex": "^.{1,25}$",
         "numberRegexDesc": "до 25 знаков",
         "sorting": 21
       }
