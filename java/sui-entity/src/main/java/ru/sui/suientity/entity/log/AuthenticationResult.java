@@ -23,4 +23,6 @@ public class AuthenticationResult {
     private String code;
     private String name;
 
+    private Boolean success;
+
 }

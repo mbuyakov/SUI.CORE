@@ -1,3 +1,3 @@
 package ru.sui.suisecurity.base.exception
 
-class TooManyAttemptsException : RuntimeException("Too many authentication attempts")
+class TooManyAttemptsException : RuntimeException("Превышен лимит попыток аутентификации")

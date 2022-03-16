@@ -1,5 +1,6 @@
 package ru.sui.suientity.repository.log;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.sui.suientity.entity.log.AuthenticationLog;
@@ -19,6 +20,8 @@ public interface AuthenticationLogRepository extends JpaRepository<Authenticatio
             String formLogin,
             Date from
     );
+
+    List<AuthenticationLog> findAllByOperationAndUser(AuthenticationOperation operation, User user, Pageable pageable);
 
     List<AuthenticationLog> findTop2ByUserOrderByCreatedDesc(User user);
 
