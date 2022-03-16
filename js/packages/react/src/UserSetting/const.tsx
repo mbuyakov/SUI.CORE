@@ -10,5 +10,5 @@ export const MAX_PASSWORD_LENGTH = 50;
 export const MAX_PASSWORD_LENGTH_MESSAGE = 'Максимальная длина - 50 символов';
 
 // https://stackoverflow.com/a/21456918
-export const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!-*])[A-Za-z\d!-*]+$/;
+export const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!-*])[A-Za-z\d!\-*]+$/;
 export const PASSWORD_REGEX_MESSAGE = "Пароль должен состоять из заглавных и прописных латинских букв A-z, цифр 0-9 и специальных символов !-*";
