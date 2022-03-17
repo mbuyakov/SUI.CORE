@@ -7,18 +7,33 @@ export interface IBaseCardRowWithDividerLayout {
   dividerDashed?: boolean;
   dividerText?: string;
   isDivider: true;
-  orientationMargin?: string | number;
+  orientationMargin?: number;
 }
 
-export const BaseCardRowWithDivider: React.FC<IBaseCardRowWithDividerLayout> = props => (
-  <Divider
-    orientation="left"
-    dashed={props.dividerDashed}
-    style={props.orientationMargin ? {marginLeft: props.orientationMargin} : null}
-  >
-    {props.dividerText}
-  </Divider>
-);
+export const BaseCardRowWithDivider: React.FC<IBaseCardRowWithDividerLayout> = props => {
+
+  const css = `
+      .orientationMargin::before {
+        width: ${props.orientationMargin}px !important;
+      }
+    `
+
+  return (
+    <>
+      <style>
+        {css}
+      </style>
+      <Divider
+        orientation="left"
+        dashed={props.dividerDashed}
+        className={props.orientationMargin ? "orientationMargin" : null}
+      >
+        {props.dividerText}
+      </Divider>
+    </>
+  )
+
+};
 
 export function isRowWithDivider<T, ITEM>(row: IBaseCardRowLayout<T, ITEM>): row is IBaseCardRowWithDividerLayout {
   return "isDivider" in row && row.isDivider == true;
