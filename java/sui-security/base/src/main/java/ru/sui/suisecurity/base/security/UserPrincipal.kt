@@ -7,8 +7,8 @@ import ru.sui.suientity.entity.suisecurity.User
 import java.util.*
 
 class UserPrincipal(
-        val user: User,
-        private val authorities: Collection<GrantedAuthority> = user.roles.map { role -> SimpleGrantedAuthority(role.name) }
+    val user: User,
+    private val authorities: Collection<GrantedAuthority> = user.roles.map { role -> SimpleGrantedAuthority(role.name) }
 ) : UserDetails {
 
     @Deprecated("Use user getter", ReplaceWith("user"))
