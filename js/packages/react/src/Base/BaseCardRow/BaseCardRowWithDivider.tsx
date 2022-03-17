@@ -7,12 +7,14 @@ export interface IBaseCardRowWithDividerLayout {
   dividerDashed?: boolean;
   dividerText?: string;
   isDivider: true;
+  orientationMargin?: string | number;
 }
 
 export const BaseCardRowWithDivider: React.FC<IBaseCardRowWithDividerLayout> = props => (
   <Divider
     orientation="left"
     dashed={props.dividerDashed}
+    style={props.orientationMargin ? {marginLeft: props.orientationMargin} : null}
   >
     {props.dividerText}
   </Divider>
