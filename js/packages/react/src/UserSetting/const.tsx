@@ -1,4 +1,4 @@
-import {Nullable} from "@sui/core/src";
+import {Nullable} from "@sui/core";
 
 export const MIN_NAME_LENGTH = 2;
 export const MIN_NAME_LENGTH_MESSAGE = "Минимальная длина - 2 символа";
