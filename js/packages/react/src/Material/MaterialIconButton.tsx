@@ -2,23 +2,26 @@ import {IconButton, IconButtonProps} from "@material-ui/core";
 import React from "react";
 import {ProgressIcon} from "@/Material/ProgessIcon";
 import {tooltipWrapper} from "@/Material/utils/tooltipWrapper";
-import {useOnClick} from "@/Material/utils";
+import {IPopconfirmSettings, useOnClick, usePopconfirm} from "@/Material/utils";
 
 
 export type MaterialIconButtonProps = Omit<IconButtonProps, 'onClick'> & {
   tooltip?: string;
   loading?: boolean;
   onClick?: () => void | Promise<void>;
+  popconfirmSettings?: IPopconfirmSettings;
 }
 
 export const MaterialIconButton: React.FC<MaterialIconButtonProps> = (
   {
+    popconfirmSettings,
     tooltip,
     onClick: propsOnClick,
     loading: propsLoading,
     ...rest
   }) => {
-  const {loading: onClickLoading, onClick} = useOnClick(propsOnClick);
+  const popconfirm = usePopconfirm(popconfirmSettings);
+  const {loading: onClickLoading, onClick} = useOnClick(propsOnClick, {popconfirm});
   const loading = onClickLoading || propsLoading;
 
   return tooltipWrapper(tooltip, (

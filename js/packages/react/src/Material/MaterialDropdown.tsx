@@ -58,19 +58,12 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
     key: string,
     itemOnClick?:() => void | Promise<void>
   }>(async (arg) => {
-    popupState.close();
-
-    const result = await popconfirm.getResult();
-    if (!result) {
-      return;
-    }
-
     const itemOnClickRet = arg.itemOnClick?.();
     const propsOnClickRet = props.onClick?.(arg.key);
     if ((itemOnClickRet as Promise<void>)?.then || (propsOnClickRet as Promise<void>)?.then) {
       await Promise.all([itemOnClickRet, propsOnClickRet].filter(it => it));
     }
-  }, popconfirm);
+  }, {popconfirm, popupState});
   const loading = onClickLoading || props.loading;
 
   let button: JSX.Element = null;
