@@ -155,7 +155,7 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
     fieldName: dateFieldName,
     mapFormValuesToRequired: (get: ValuesGetter): boolean => {
       const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
-      return trueIfEmpty(props.required) || !!docTypeId;
+      return props.required ?? !!docTypeId;
     },
     mapFormValuesToInputNodeProps: (get: ValuesGetter): Partial<IStringValueDatePickerProps> => {
       const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
