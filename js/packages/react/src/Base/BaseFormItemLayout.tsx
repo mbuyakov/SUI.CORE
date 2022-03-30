@@ -38,7 +38,7 @@ export interface IBaseFormItemLayoutBase {
   valuePropName?: string;
   afterChange?(value: any, form: BaseForm, oldValue: any): void,
   getValueFromEvent?(...args: any[]): any;
-  helpRenderer(error: string): string | JSX.Element;
+  helpRenderer?(error: string): string | JSX.Element;
   mapFormValuesToInputNodeProps?(get: ValuesGetter): IObjectWithIndex;
   mapFormValuesToRequired?(get: ValuesGetter): boolean;
 }
