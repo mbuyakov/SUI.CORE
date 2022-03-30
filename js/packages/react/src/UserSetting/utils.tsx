@@ -57,13 +57,13 @@ export function handleUserRestError(reason: any, message?: string): void {
   ));
 }
 
-interface IPasswordValidatorParams {
+export interface IPasswordValidatorParams {
   password: Nullable<string>;
   username: Nullable<string>;
   email: Nullable<string>;
 }
 
-interface IPasswordValidatorResult {
+export interface IPasswordValidatorResult {
   minLength: boolean;
   maxLength: boolean;
   passwordRegex: boolean;
