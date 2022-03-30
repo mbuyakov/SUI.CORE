@@ -1,4 +1,3 @@
-import {Nullable} from "@sui/core";
 
 export const MIN_NAME_LENGTH = 2;
 export const MIN_NAME_LENGTH_MESSAGE = "Минимальная длина - 2 символа";
@@ -16,40 +15,6 @@ export const MAX_PASSWORD_LENGTH_MESSAGE = 'Максимальная длина 
 export const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!-*])[A-Za-z\d!\-*]+$/;
 export const PASSWORD_REGEX_MESSAGE = "Пароль должен состоять из заглавных и прописных латинских букв A-z, цифр 0-9 и специальных символов !-*";
 
-interface IPasswordValidatorParams {
-  password: Nullable<string>;
-  username: Nullable<string>;
-  email: Nullable<string>;
-  callback: (error: string | string[] | void) => void
-}
+export const PASSWORD_USERNAME_MATCH_MESSAGE = "Пароль не должен совпадать с именем пользователя";
 
-export function passwordValidator({password, username, email, callback}: IPasswordValidatorParams): void {
-  const notNullPassword = password || "";
-
-  if (notNullPassword.length < MIN_PASSWORD_LENGTH) {
-    callback(MIN_PASSWORD_LENGTH_MESSAGE);
-    return;
-  }
-
-  if (notNullPassword.length > MAX_PASSWORD_LENGTH) {
-    callback(MAX_PASSWORD_LENGTH_MESSAGE);
-    return;
-  }
-
-  if (!PASSWORD_REGEX.test(notNullPassword)) {
-    callback(PASSWORD_REGEX_MESSAGE);
-    return;
-  }
-
-  if (notNullPassword.trim() === username?.trim()) {
-    callback("Пароль не должен совпадать с именем пользователя");
-    return;
-  }
-
-  if (notNullPassword.trim() === email?.trim()) {
-    callback("Пароль не должен совпадать с адресом электронной почты");
-    return;
-  }
-
-  callback();
-}
+export const PASSWORD_EMAIL_MATCH_MESSAGE = "Пароль не должен совпадать с адресом электронной почты";
