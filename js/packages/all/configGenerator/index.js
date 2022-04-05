@@ -38,6 +38,142 @@ const findCacheDir = require('find-cache-dir');
 }
 // Во, теперь можно грузиться дальше
 
+
+let mixedCacheGroups = [
+  {
+    name: 'sui',
+    enforce: true,
+    test({resource}) {
+      return /[\\/]node_modules[\\/]@sui/.test(resource);
+    },
+    priority: 20,
+  },
+  {
+    name: 'material',
+    enforce: true,
+    test({resource}) {
+      return /[\\/]node_modules[\\/]@material-ui/.test(resource);
+    },
+    priority: 20,
+  },
+  {
+    name: 'material-icons',
+    enforce: true,
+    test({resource}) {
+      return /[\\/]node_modules[\\/]@material-ui[\\/]icons/.test(resource);
+    },
+    priority: 30,
+  },
+  {
+    name: 'antd',
+    enforce: true,
+    test({resource}) {
+      return /[\\/]node_modules[\\/]antd/.test(resource) || /[\\/]node_modules[\\/]rc-/.test(resource);
+    },
+    priority: 20,
+  },
+  {
+    name: 'antd-icons',
+    enforce: true,
+    test({resource}) {
+      return /[\\/]node_modules[\\/]@ant-design[\\/]icons/.test(resource);
+    },
+    priority: 30,
+  },
+  {
+    name: 'lodash',
+    enforce: true,
+    test({resource}) {
+      return /[\\/]node_modules[\\/]lodash/.test(resource);
+    },
+    priority: 20,
+  },
+  {
+    name: 'moment',
+    enforce: true,
+    test({resource}) {
+      return /[\\/]node_modules[\\/]moment/.test(resource);
+    },
+    priority: 20,
+  },
+  {
+    name: 'dx',
+    enforce: true,
+    test({resource}) {
+      return /[\\/]node_modules[\\/]@devexpress/.test(resource);
+    },
+    priority: 20,
+  },
+];
+
+let asyncOnlyCacheGroups = [
+  {
+    name: 'vendors',
+    test({resource}) {
+      return /[\\/]node_modules[\\/]/.test(resource);
+    },
+    priority: 10,
+  },
+  {
+    name: 'amcharts',
+    enforce: true,
+    test({resource}) {
+      return /[\\/]node_modules[\\/]@amcharts/.test(resource);
+    },
+    priority: 20,
+  },
+  {
+    name: 'pdfmake',
+    enforce: true,
+    test({resource}) {
+      return /[\\/]node_modules[\\/]pdfmake/.test(resource);
+    },
+    priority: 20,
+  },
+  {
+    name: 'xlsx',
+    enforce: true,
+    test({resource}) {
+      return /[\\/]node_modules[\\/]xlsx/.test(resource);
+    },
+    priority: 20,
+  },
+  {
+    name: 'sentry',
+    enforce: true,
+    test({resource}) {
+      return /[\\/]node_modules[\\/]@sentry/.test(resource);
+    },
+    priority: 20,
+  },
+]
+
+const cacheGroups = {};
+
+mixedCacheGroups.forEach(it => {
+  let key = it.name;
+  cacheGroups[key] = {...it};
+  cacheGroups[key].name += '-initial';
+  cacheGroups[key].chunks = 'initial';
+  key += '-async';
+  cacheGroups[key] = {...it};
+  cacheGroups[key].name += '-async';
+  cacheGroups[key].chunks = 'async';
+  cacheGroups[key].priority += 5;
+});
+
+asyncOnlyCacheGroups.forEach(it => {
+  let key = it.name;
+  // cacheGroups[key] = {...it};
+  // cacheGroups[key].name += '-initial';
+  // cacheGroups[key].chunks = 'initial';
+  key += '-async';
+  cacheGroups[key] = {...it};
+  cacheGroups[key].name += '-async';
+  cacheGroups[key].chunks = 'async';
+  cacheGroups[key].priority += 5;
+});
+
 const {getMergedThemeConfigs} = require('../../react/es/themes/utils');
 
 const buildTime = new Date().toISOString();
@@ -74,6 +210,19 @@ function defaultChainWebpack(config) {
       .use(HardSourceWebpackPlugin.ExcludeModulePlugin, [[{
         test: /less-loader/
       }]]);
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    config.merge({
+      optimization: {
+        minimize: true,
+        splitChunks: {
+          chunks: 'all',
+          automaticNameDelimiter: '.',
+          cacheGroups,
+        },
+      }
+    });
   }
 
   // Used in copy-webpack-plugin
@@ -118,6 +267,16 @@ function generateUmiConfig(params) {
       },
     },
   };
+
+  if (process.env.NODE_ENV === "production") {
+    umiPluginReactConfig.chunks = [
+      ...(Object.keys(cacheGroups)
+        .map(it => cacheGroups[it].name)
+        .filter(it => it.includes('initial'))
+      ),
+      'umi'
+    ];
+  }
 
   routes = [
     {
