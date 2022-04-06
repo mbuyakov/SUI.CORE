@@ -15,7 +15,7 @@ class LdapConfiguration(
     @Value("\${ldap.url}") private val ldapUrl: String,
     @Value("\${ldap.manager-dn:#{null}}") private val ldapManagerDn: String?,
     @Value("\${ldap.manager-password:#{null}}") private val ldapManagerPassword: String?,
-    @Value("\${ldap.user-search-base:}}") private val ldapUserSearchBase: String,
+    @Value("\${ldap.user-search-base:}") private val ldapUserSearchBase: String,
     @Value("\${ldap.user-search-filter}") private val userSearchFilter: String
 ) {
 
