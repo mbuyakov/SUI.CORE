@@ -111,7 +111,7 @@ class AuthenticationService(
         val result = authenticationResultRepository.get(loginResultCode)
 
         // Блокируем пользователя (если надо)
-        if (user != null && !user.blocked && !result.success) {
+        if (blockAttemptsCount > 0 && user != null && !user.blocked && !result.success) {
             val lastAuthLogs = getPrevNAuthenticationLogs(user, blockAttemptsCount - 1) // -1 т.к. текущая еще на сохранена
 
             if (lastAuthLogs.size == (blockAttemptsCount - 1) && lastAuthLogs.all { !it.result.success }) {
