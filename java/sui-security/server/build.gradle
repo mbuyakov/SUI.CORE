@@ -3,6 +3,9 @@ apply plugin: 'kotlin-spring'
 
 dependencies {
     compile project(":sui-security:sui-security-base")
+    compile("org.springframework.ldap:spring-ldap-core:${springLdapVerison}")
+    compile("org.springframework.security:spring-security-ldap:${springVersion}")
+    compile("com.unboundid:unboundid-ldapsdk:${ldapSdkVerison}")
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {

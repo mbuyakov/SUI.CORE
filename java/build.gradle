@@ -27,6 +27,8 @@ subprojects {
     springBootVersion = '2.2.3.RELEASE'
     springBootGradlePluginVersion = '2.1.6.RELEASE'
     springJpaVerison = '2.2.3.RELEASE'
+    springLdapVerison = '2.3.2.RELEASE'
+    ldapSdkVerison = '4.0.14'
     jacksonVersion = '2.9.9'
     javaxPersistenceApiVersion = '2.2'
     hibernateVersion = '5.4.1.Final'

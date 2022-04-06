@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.web.bind.annotation.*
 import ru.sui.suisecurity.base.security.CustomUserDetailsService
-import ru.sui.suisecurity.base.utils.sudirTmpToken
+import ru.sui.suisecurity.base.utils.skipPasswordCheckValue
 import ru.sui.suisecurity.server.model.LoginRequest
 import ru.sui.suisecurity.server.service.SudirService
 
@@ -37,6 +37,7 @@ class SudirController(
     } catch (e: UsernameNotFoundException) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Пользователь с email $email не найден")
     }
-    return suiAuthController.signin(LoginRequest(email, sudirTmpToken))
+    return suiAuthController.signin(LoginRequest(email, skipPasswordCheckValue))
   }
+
 }
