@@ -34,7 +34,7 @@ class LdapController(
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(WRONG_USERNAME_OR_PASSWORD_MESSAGE)
         }
 
-        if (ldapSupportService.checkPassword(req.password, searchResult)) {
+        if (!ldapSupportService.checkPassword(req.password, searchResult)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(WRONG_USERNAME_OR_PASSWORD_MESSAGE)
         }
 
