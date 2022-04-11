@@ -2,6 +2,7 @@ import {Nullable, query} from "@sui/core";
 import {DependencyList, useEffect, useMemo, useState} from "react";
 import {Container} from "typescript-ioc";
 import {errorNotification} from "./drawUtils";
+import {Observable, ObservableHandler} from "@/Observable";
 
 export function useAsyncEffect(effect: () => Promise<void>, deps: DependencyList): void {
   useEffect(() => {
@@ -51,3 +52,23 @@ export function usePromise<T>(promise: Nullable<Promise<T>>): UsePromiseState<T>
 
   return state;
 }
+
+export function useObservableSubscribe<T>(observable: Observable<T>, handler: ObservableHandler<T>): void {
+
+  useEffect(() => {
+    const handlerStub = observable.subscribe(handler);
+
+    return (): void => handlerStub.unsubscribe();
+
+  },[observable]);
+}
+
+export function useObservableValue<T>(observable: Observable<T>): T {
+  const [state, setState] = useState<T>(observable.getValue());
+
+  useObservableSubscribe(observable, it => setState(it));
+
+  return state;
+}
+
+
