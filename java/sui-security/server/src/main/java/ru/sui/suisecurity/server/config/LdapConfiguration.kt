@@ -46,7 +46,7 @@ class LdapConfiguration(
             override fun searchForGroups(userDn: String): List<DirContextOperations> {
                 val query = LdapQueryBuilder.query()
                     .base(ldapGroupSearchBase)
-                    .filter(ldapGroupSearchFilter, arrayOf(userDn))
+                    .filter(ldapGroupSearchFilter, userDn)
 
                 return ldapTemplate.search(query, ContextMapper { it as DirContextOperations })
             }
