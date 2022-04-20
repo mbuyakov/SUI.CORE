@@ -154,6 +154,7 @@ export class BackendTable<TSelection = defaultSelection>
     let pageNumber = 0;
     let pageSize = this.props.pageSize;
     let sorting: Sorting[] | null | undefined;
+    let grouping: Grouping[] | null | undefined;
 
     let urlState: IInnerTableStateDefinition | undefined;
     if (this.props.id) {
@@ -172,6 +173,7 @@ export class BackendTable<TSelection = defaultSelection>
         pageNumber = urlState.pageInfo.pageNumber;
         pageSize = urlState.pageInfo.pageSize;
         sorting = urlState.sorting;
+        grouping = urlState.grouping;
       }
     }
 
@@ -188,6 +190,7 @@ export class BackendTable<TSelection = defaultSelection>
       defaultCurrentPage,
       pageSize: resultPageSize,
       sorting,
+      grouping,
       totalCount: (defaultCurrentPage * resultPageSize) + 1
     };
   }
@@ -910,6 +913,7 @@ export class BackendTable<TSelection = defaultSelection>
               defaultFilter: this.state.filters,
               filter: this.state.filter,
               sorting: this.state.sorting,
+              grouping: this.state.grouping,
               pageInfo: {
                 pageNumber: this.state.currentPage,
                 pageSize: this.state.pageSize
