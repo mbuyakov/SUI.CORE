@@ -5,8 +5,8 @@ import ru.sui.suientity.entity.suisecurity.User
 
 interface LdapSupportService {
 
-    fun checkPassword(rawPassword: String, searchResult: DirContextOperations): Boolean
+    fun checkPassword(rawPassword: String, user: DirContextOperations): Boolean
 
-    fun createOrUpdateLocalUser(searchResult: DirContextOperations): User
+    fun createOrUpdateLocalUser(user: DirContextOperations, groups: List<DirContextOperations>): User
 
 }
