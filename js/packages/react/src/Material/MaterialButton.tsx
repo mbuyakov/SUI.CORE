@@ -20,7 +20,7 @@ export const MaterialButton: React.FC<MaterialButtonProps> = (
     ...rest
   }) => {
   const popconfirm = usePopconfirm(popconfirmSettings);
-  const {loading: onClickLoading, onClick} = useOnClick(propsOnClick, popconfirm);
+  const {loading: onClickLoading, onClick} = useOnClick(propsOnClick, {popconfirm});
   const loading = onClickLoading || propsLoading;
 
   return popconfirm.wrapper(

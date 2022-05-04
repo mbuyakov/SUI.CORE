@@ -1,4 +1,5 @@
-import {Popconfirm, PopconfirmProps, Popover} from 'antd';
+import {Nullable} from "@sui/core";
+import {Popconfirm, PopconfirmProps, Popover, PopoverProps} from 'antd';
 import asyncValidator from "async-validator";
 import autobind from 'autobind-decorator';
 import * as React from 'react';
@@ -13,6 +14,7 @@ export type ComposeValidator<V> = ValidatorFunction<V> | FixedRuleItem[] | null;
 
 export interface IPromisedBaseProps<V> {
   defaultValue?: V;
+  validationPopoverProps?: Omit<PopoverProps, "content"> & {content?(value: Nullable<string>): React.ReactNode};
   errorPopoverProps?: Omit<IPromisedErrorPopoverProps, "promise">;
   popconfirmSettings?: PopconfirmSettings | boolean;
   validator?: ComposeValidator<V>;
@@ -26,7 +28,7 @@ export interface IPromisedBaseState<V> {
   popconfirmVisible?: boolean;
   promise?: Promise<void>;
   savedValue?: V;
-  validatorText?: string | React.ReactNode;
+  validatorText?: string;
   value?: V;
 }
 
@@ -178,17 +180,27 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   }
 
   protected wrapInValidationPopover(child: JSX.Element | null): JSX.Element {
-    return this.getValidator()
-      ? (
-        <Popover
-          trigger="click"
-          visible={!this.isValidatorTextEmpty()}
-          content={this.state.validatorText}
-        >
-          {child}
-        </Popover>
-      )
-      : (child);
+    if (!this.getValidator()) {
+      return child;
+    }
+
+    const visible = !!this.props.validationPopoverProps?.visible || !this.isValidatorTextEmpty();
+
+    const content = visible
+      ? this.props.validationPopoverProps?.content
+        ? this.props.validationPopoverProps.content(this.state.validatorText)
+        : this.state.validatorText
+      : undefined;
+
+    return (
+      <Popover
+        {...this.props.validationPopoverProps}
+        visible={visible}
+        content={visible ? content : undefined}
+      >
+        {child}
+      </Popover>
+    );
   }
 
   @autobind

@@ -36,13 +36,10 @@ export interface IBaseFormItemLayoutBase {
   rules?: FixedRuleItem[];
   title?: string | React.ReactNode;
   valuePropName?: string;
-
   afterChange?(value: any, form: BaseForm, oldValue: any): void,
-
   getValueFromEvent?(...args: any[]): any;
-
+  helpRenderer?(error: string): string | JSX.Element;
   mapFormValuesToInputNodeProps?(get: ValuesGetter): IObjectWithIndex;
-
   mapFormValuesToRequired?(get: ValuesGetter): boolean;
 }
 
@@ -160,7 +157,9 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
           const hasErrorLatch = this.state.hasErrorLatch;
 
           const formItemProps: Partial<FormItemProps> = {
-            help: errors,
+            help: errors
+              ? (this.props.helpRenderer ? this.props.helpRenderer(errors) : errors)
+              : undefined,
             validateStatus: errors ? 'error' : '',
           };
 

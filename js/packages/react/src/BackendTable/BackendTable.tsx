@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/ban-ts-comment */
 import {Getters} from "@devexpress/dx-react-core";
 import {Grouping, GroupKey, Sorting, TableColumnWidthInfo, TableFilterRow} from '@devexpress/dx-react-grid';
-import IconButton from '@material-ui/core/IconButton';
+import {IconButton, Tooltip} from '@material-ui/core';
 import CloudDownloadOutlined from '@material-ui/icons/CloudDownloadOutlined';
 import LinkIcon from '@material-ui/icons/Link';
 import {Modal, notification} from 'antd';
@@ -87,6 +87,7 @@ export interface IBackendTableProps {
   watchFilters?: boolean;
   lazyMode?: boolean;
   cardLinkFnIcon?: JSX.Element;
+  cardLinkTooltip?: string;
 
   cardLinkFn?(id: string, row: IObjectWithIndex): string;
 
@@ -153,6 +154,7 @@ export class BackendTable<TSelection = defaultSelection>
     let pageNumber = 0;
     let pageSize = this.props.pageSize;
     let sorting: Sorting[] | null | undefined;
+    let grouping: Grouping[] | null | undefined;
 
     let urlState: IInnerTableStateDefinition | undefined;
     if (this.props.id) {
@@ -171,6 +173,7 @@ export class BackendTable<TSelection = defaultSelection>
         pageNumber = urlState.pageInfo.pageNumber;
         pageSize = urlState.pageInfo.pageSize;
         sorting = urlState.sorting;
+        grouping = urlState.grouping;
       }
     }
 
@@ -187,6 +190,7 @@ export class BackendTable<TSelection = defaultSelection>
       defaultCurrentPage,
       pageSize: resultPageSize,
       sorting,
+      grouping,
       totalCount: (defaultCurrentPage * resultPageSize) + 1
     };
   }
@@ -431,6 +435,12 @@ export class BackendTable<TSelection = defaultSelection>
 
     if (col.render && columnInfo?.parsedTableRenderParams?.renderType === "multilink") {
       return this.getJsonFromValue(value).map(value => value.name).join(", ");
+    }
+
+    if (Array.isArray(value)) {
+      return (value as any[])
+        .map(it => (it !== null && typeof(it) === "object") ? JSON.stringify(it) : it)
+        .toString();
     }
 
     return value;
@@ -903,6 +913,7 @@ export class BackendTable<TSelection = defaultSelection>
               defaultFilter: this.state.filters,
               filter: this.state.filter,
               sorting: this.state.sorting,
+              grouping: this.state.grouping,
               pageInfo: {
                 pageNumber: this.state.currentPage,
                 pageSize: this.state.pageSize
@@ -994,6 +1005,22 @@ export class BackendTable<TSelection = defaultSelection>
 
       if (this.props.cardLinkFn) {
         const _cardLinkFnIcon = this.props.cardLinkFnIcon ? this.props.cardLinkFnIcon : <LinkIcon/>;
+        let btn = (
+          <IconButton
+            style={DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE}
+          >
+            {_cardLinkFnIcon}
+          </IconButton>
+        );
+
+        if (this.props.cardLinkTooltip) {
+          btn = (
+            <Tooltip title={this.props.cardLinkTooltip} placement="bottom" enterDelay={300}>
+              {btn}
+            </Tooltip>
+          );
+        }
+
         _serviceColumns.push({
           id: '__link__',
           title: ' ',
@@ -1003,13 +1030,7 @@ export class BackendTable<TSelection = defaultSelection>
             <RouterLink
               to={this.props.cardLinkFn(value, row)}
               type="link"
-              text={
-                <IconButton
-                  style={DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE}
-                >
-                  {_cardLinkFnIcon}
-                </IconButton>
-              }
+              text={btn}
             />),
         });
       }

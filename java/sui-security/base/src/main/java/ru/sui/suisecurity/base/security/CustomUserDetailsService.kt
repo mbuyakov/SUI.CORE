@@ -12,7 +12,6 @@ import ru.sui.suisecurity.base.exception.ResourceNotFoundException
 import ru.sui.suisecurity.base.utils.LOAD_USER_BY_ID_CACHE
 import ru.sui.suisecurity.base.utils.LOAD_USER_BY_USERNAME_CACHE
 
-
 typealias UserPrincipalCustomizer = (UserPrincipal) -> UserPrincipal
 
 @Service

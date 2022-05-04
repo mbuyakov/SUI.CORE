@@ -17,14 +17,14 @@ import ru.sui.suisecurity.base.security.AuthorizeRequestsCustomizer
 import ru.sui.suisecurity.base.security.CustomUserDetailsService
 import ru.sui.suisecurity.base.security.JwtAuthenticationEntryPoint
 import ru.sui.suisecurity.base.security.JwtAuthenticationFilter
-import ru.sui.suisecurity.base.utils.SudirBCryptPasswordEncoder
+import ru.sui.suisecurity.base.utils.ExtendedBCryptPasswordEncoder
 import javax.annotation.PostConstruct
 
 @Configuration
 class SecurityConfig(
-        private val customUserDetailsService: CustomUserDetailsService,
-        private val unauthorizedHandler: JwtAuthenticationEntryPoint,
-        private val authorizeRequestsCustomizers: List<AuthorizeRequestsCustomizer>
+    private val customUserDetailsService: CustomUserDetailsService,
+    private val unauthorizedHandler: JwtAuthenticationEntryPoint,
+    private val authorizeRequestsCustomizers: List<AuthorizeRequestsCustomizer>
 ) : WebSecurityConfigurerAdapter() {
 
     @PostConstruct
@@ -49,7 +49,7 @@ class SecurityConfig(
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
-        return SudirBCryptPasswordEncoder()
+        return ExtendedBCryptPasswordEncoder()
     }
 
     @Throws(Exception::class)

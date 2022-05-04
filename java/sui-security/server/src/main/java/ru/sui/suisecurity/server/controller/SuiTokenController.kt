@@ -1,5 +1,6 @@
 package ru.sui.suisecurity.server.controller
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -12,12 +13,12 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
 import javax.validation.Valid
 
-
-private const val CHECK_TOKEN_TIMEOUT = 100_000L
-
 @RestController
 @RequestMapping("/api/token")
-class SuiTokenController(private val tokenProvider: JwtTokenProvider) {
+class SuiTokenController(
+    @Value("\${security.token-check-timeout:100000}") private val tokenCheckTimeout: Long,
+    private val tokenProvider: JwtTokenProvider
+) {
 
     private val requestIndex = AtomicLong()
     private val resultMap = ConcurrentHashMap<Long, Pair<String, DeferredResult<Boolean>>>()
@@ -27,7 +28,7 @@ class SuiTokenController(private val tokenProvider: JwtTokenProvider) {
 
     @PostMapping("/check")
     fun checkToken(@Valid @RequestBody token: String): DeferredResult<Boolean> {
-        val result = DeferredResult<Boolean>(CHECK_TOKEN_TIMEOUT, true)
+        val result = DeferredResult<Boolean>(tokenCheckTimeout, true)
         resultMap[requestIndex.incrementAndGet()] = token to result
         return result
     }
