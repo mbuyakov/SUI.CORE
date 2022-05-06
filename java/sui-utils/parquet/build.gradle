@@ -5,9 +5,3 @@ dependencies {
   api project(":sui-utils:sui-utils-hdfs")
   api "org.apache.parquet:parquet-hadoop"
 }
-
-compileKotlin {
-  kotlinOptions {
-    jvmTarget = "1.8"
-  }
-}

@@ -11,9 +11,3 @@ dependencies {
   api "com.fasterxml.jackson.core:jackson-databind"
   api "com.fasterxml.jackson.module:jackson-module-kotlin"
 }
-
-compileKotlin {
-  kotlinOptions {
-    jvmTarget = "1.8"
-  }
-}

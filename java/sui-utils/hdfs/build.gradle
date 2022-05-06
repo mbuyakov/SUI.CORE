@@ -13,9 +13,3 @@ dependencies {
   api "org.springframework:spring-beans"
   api "org.springframework:spring-context"
 }
-
-compileKotlin {
-  kotlinOptions {
-    jvmTarget = "1.8"
-  }
-}
