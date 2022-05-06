@@ -152,7 +152,7 @@ class ExportController(
             @RequestParam("fileSize") @Min(1) @Max(MAX_DB_FETCH_SIZE) fileSize: Int
     ): ResponseEntity<StreamingResponseBody> {
         val userState = exportInfoCache.getIfPresent(sessionId)?.userState ?: error(NO_CACHED_SESSION_ERROR_MESSAGE)
-        val tmpFile = createTempFile()
+        val tmpFile = kotlin.io.path.createTempFile().toFile()
 
         ZipOutputStream(tmpFile.outputStream()).use { zipOutputStream ->
             objectMapper.writer().writeValues(zipOutputStream).use { writer ->
@@ -228,7 +228,7 @@ class ExportController(
         val exportInfo = exportInfoCache.getIfPresent(sessionId)
 
         if (exportInfo != null) {
-            val tmpFile = createTempFile()
+            val tmpFile = kotlin.io.path.createTempFile().toFile()
 
             try {
                 val rowIterator = iterator {

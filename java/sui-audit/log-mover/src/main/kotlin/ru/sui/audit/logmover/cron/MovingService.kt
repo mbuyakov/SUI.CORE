@@ -101,7 +101,7 @@ class MovingService(
                             putsPerTable.add(supportHbaseTable to supportPuts)
                         }
 
-                auditLogRepository.deleteInBatch(logsToMove)
+                auditLogRepository.deleteAllInBatch(logsToMove)
                 putsPerTable.parallelStream().forEach { (table, puts) -> table.put(puts) }
 
                 logsToMoveCount -= logsToMove.size

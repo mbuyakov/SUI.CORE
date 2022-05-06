@@ -29,7 +29,6 @@ class FlywayMigrationApplier(private val jdbcTemplate: JdbcTemplate) {
         val flyway = Flyway
                 .configure()
                 .dataSource(jdbcTemplate.dataSource)
-                .ignoreFutureMigrations(true)
                 .baselineOnMigrate(true)
                 .table("sui_flyway_schema_history")
                 .locations("classpath:db/migration_sui")

@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package ru.sui.utils.parquet.utils
 
 import org.apache.parquet.example.data.Group

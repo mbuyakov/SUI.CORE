@@ -7,7 +7,7 @@ import java.util.*
 // Replace a?.let { ... } ?: "" to a.letOrEmpty { ... }
 inline fun <T> T?.letOrEmpty(block: (T) -> String) = this?.let(block) ?: ""
 
-fun <T> T?.toOptional(): Optional<T> = Optional.ofNullable(this)
+fun <T : Any> T?.toOptional(): Optional<T> = Optional.ofNullable(this)
 
 fun <T> T.check(predicate: (T) -> Boolean, lazyMessage: () -> String): T = apply { check(predicate(this), lazyMessage) }
 

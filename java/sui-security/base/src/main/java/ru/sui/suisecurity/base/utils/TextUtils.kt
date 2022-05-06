@@ -1,6 +1,7 @@
 package ru.sui.suisecurity.base.utils
 
 import org.apache.commons.text.CaseUtils
+import java.util.*
 
 import java.util.function.Function
 import java.util.regex.Matcher
@@ -16,7 +17,7 @@ class TextUtils {
             val matcher = camelCaseFixPatter.matcher(result.toString())
 
             while (matcher.find()) {
-                result.replace(matcher.start(), matcher.end(), matcher.group().toUpperCase())
+                result.replace(matcher.start(), matcher.end(), matcher.group().uppercase(Locale.getDefault()))
             }
 
             return result.toString()

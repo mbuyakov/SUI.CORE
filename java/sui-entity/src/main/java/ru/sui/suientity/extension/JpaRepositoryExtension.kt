@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformationSuppo
 import ru.sui.utils.kotlin.extension.getOrNotFound
 import java.lang.reflect.ParameterizedType
 
-fun <T, ID> JpaRepository<T, ID>.findByIdOrThrowNotFound(id: ID): T {
+fun <T, ID : Any> JpaRepository<T, ID>.findByIdOrThrowNotFound(id: ID): T {
   return this.findById(id).getOrNotFound(this.tableName(), "id" to id)
 }
 

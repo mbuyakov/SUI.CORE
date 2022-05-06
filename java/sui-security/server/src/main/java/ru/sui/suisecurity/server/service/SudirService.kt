@@ -1,7 +1,7 @@
 package ru.sui.suisecurity.server.service
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.databind.PropertyNamingStrategy
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
@@ -16,7 +16,7 @@ import java.util.*
 private val log = KotlinLogging.logger { }
 private val restTemplate = RestTemplate()
 
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy::class)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class TeResponse(
   val idToken: String,
   val accessToken: String,

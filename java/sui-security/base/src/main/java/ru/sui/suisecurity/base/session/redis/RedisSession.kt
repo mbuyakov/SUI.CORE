@@ -113,6 +113,7 @@ internal class TransactionalSaveRedisSessionRepositoryImpl(
 
         redisTemplate.execute(
             { connection ->
+                @Suppress("UNNECESSARY_NOT_NULL_ASSERTION")
                 val sessionKey = converter.toBytes(redisData.id)!!
                 val fullSessionKey = keyValueAdapter.createKey(redisData.keyspace!!, redisData.id!!)
 

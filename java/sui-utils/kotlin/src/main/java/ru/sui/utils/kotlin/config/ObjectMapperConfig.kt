@@ -22,7 +22,7 @@ class KotlinObjectMapperConfig(private val objectMapper: ObjectMapper) {
 
     @PostConstruct
     fun postConstruct() {
-        objectMapper.registerModule(KotlinModule())
+        objectMapper.registerModule(KotlinModule.Builder().build())
     }
 
 }

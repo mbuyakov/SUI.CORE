@@ -20,7 +20,7 @@ enum class SynchronizerStatus {
 }
 
 @Suppress("FunctionName")
-abstract class AbstractSynchronizer<K, V>(
+abstract class AbstractSynchronizer<K : Any, V : Any>(
         name: String,
         private val syncInterval: Long = 1000,
         private val isExceptionRetryable: (Exception) -> Boolean = { true }
@@ -117,10 +117,10 @@ abstract class AbstractSynchronizer<K, V>(
 
     // @Synchronized чтобы убрать возможность двойного start()
     @Synchronized private fun checkStatus() {
-        @Suppress("NON_EXHAUSTIVE_WHEN")
         when (status) {
             SynchronizerStatus.CREATED -> start()
             SynchronizerStatus.STOPPING, SynchronizerStatus.STOPPED, SynchronizerStatus.INTERRUPTED -> throw IllegalStateException("$threadName in $status stage")
+            else -> {}
         }
     }
 

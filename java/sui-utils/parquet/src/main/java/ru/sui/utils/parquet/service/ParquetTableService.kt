@@ -112,7 +112,8 @@ class ParquetTableWrapper<T : Any>(
 
     private fun write(path: Path, objects: List<T>) {
         log.info { "Write to $path" }
-        val writer = ParquetWriter<Group>(
+        @Suppress("DEPRECATION")
+        val writer = ParquetWriter(
                 path,
                 ParquetFileWriter.Mode.OVERWRITE,
                 GroupWriteSupport().hack(mapper.schema),

@@ -56,6 +56,7 @@ allprojects {
       dependency("com.unboundid:unboundid-ldapsdk:4.0.14")
       dependency("io.sentry:sentry-spring-boot-starter:$sentryVersion")
       dependency("io.sentry:sentry-logback:$sentryVersion")
+      dependency("com.google.code.findbugs:jsr305:3.0.2")
     }
   }
 
@@ -91,6 +92,7 @@ subprojects {
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
     api("javax.annotation:javax.annotation-api")
+    api("com.google.code.findbugs:jsr305")
 
   }
 
