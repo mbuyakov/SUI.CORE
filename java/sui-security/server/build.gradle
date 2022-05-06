@@ -7,9 +7,3 @@ dependencies {
     implementation("org.springframework.security:spring-security-ldap")
     implementation("com.unboundid:unboundid-ldapsdk")
 }
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}

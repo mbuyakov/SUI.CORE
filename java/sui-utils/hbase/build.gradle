@@ -8,10 +8,3 @@ dependencies {
   api "org.springframework:spring-context"
   api "javax.persistence:javax.persistence-api"
 }
-
-
-compileKotlin {
-  kotlinOptions {
-    jvmTarget = "1.8"
-  }
-}

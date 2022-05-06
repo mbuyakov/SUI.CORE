@@ -9,9 +9,3 @@ dependencies {
     api project(":sui-entity")
     api project(":sui-utils:sui-utils-hbase")
 }
-
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}

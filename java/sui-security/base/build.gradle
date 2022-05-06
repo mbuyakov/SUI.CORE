@@ -15,9 +15,3 @@ dependencies {
     api "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
     api "com.fasterxml.jackson.module:jackson-module-kotlin"
 }
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}

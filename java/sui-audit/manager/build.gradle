@@ -4,9 +4,3 @@ apply plugin: 'kotlin-spring'
 dependencies {
     api project(":sui-audit:sui-audit-common")
 }
-
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
