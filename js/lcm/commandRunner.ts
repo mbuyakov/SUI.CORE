@@ -6,6 +6,7 @@ import {updatePackageVersion} from "./commands/updatePackageVersion";
 import {publish} from "./commands/publish";
 import {globalCanary} from "./commands/global/globalCanary";
 import {globalPublish} from "./commands/global/globalPublish";
+
 const chalk = require(`${__dirname}/../node_modules/chalk`);
 
 export type Merge<T, K> = Pick<T, Exclude<keyof T, keyof K>> & K;

@@ -4,7 +4,6 @@ import mu.KotlinLogging
 import org.flywaydb.core.Flyway
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
-import java.lang.Exception
 import javax.annotation.PostConstruct
 
 private val log = KotlinLogging.logger { }

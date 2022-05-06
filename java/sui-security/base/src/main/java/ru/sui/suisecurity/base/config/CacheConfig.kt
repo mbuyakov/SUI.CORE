@@ -4,10 +4,6 @@ import org.springframework.context.annotation.Configuration
 import ru.sui.suientity.cache.SuiCacheManager
 import ru.sui.suientity.cache.SuiCacheSetting
 import ru.sui.suisecurity.base.utils.*
-import ru.sui.suisecurity.base.utils.LOAD_USER_BY_ID_CACHE
-import ru.sui.suisecurity.base.utils.LOAD_USER_BY_USERNAME_CACHE
-import ru.sui.suisecurity.base.utils.TABLE_INFO_BY_CAMEL_CASE_NAME_CACHE
-import ru.sui.suisecurity.base.utils.VALIDATE_TOKEN_CACHE_TIMEOUT
 import java.time.Duration
 import javax.annotation.PostConstruct
 

@@ -1,5 +1,6 @@
 import {ChildProcessWithoutNullStreams} from "child_process";
 import * as fs from "fs";
+
 const chalk = require(`${__dirname}/../node_modules/chalk`);
 
 export async function wrapSpawn(prefix: string, spawnedProcess: ChildProcessWithoutNullStreams): Promise<number> {

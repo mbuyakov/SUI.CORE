@@ -18,7 +18,6 @@ import ru.sui.utils.hdfs.extension.appendLeft
 import ru.sui.utils.parquet.extension.append
 import ru.sui.utils.parquet.utils.Directory
 import ru.sui.utils.parquet.utils.DtoWrapper
-import kotlin.collections.HashMap
 
 
 val log = KotlinLogging.logger { }

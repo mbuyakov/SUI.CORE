@@ -3,8 +3,6 @@ package ru.sui.suibackend.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.sui.suibackend.cache.UserStateCache;
 import ru.sui.suibackend.model.UserState;
 import ru.sui.suibackend.service.MessageHandlerService;
-
-import java.util.concurrent.TimeUnit;
 
 import static ru.sui.suibackend.utils.Constants.*;
 

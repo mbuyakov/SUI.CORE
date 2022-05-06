@@ -1,7 +1,7 @@
-import { dirname, join } from 'path';
-import { readFileSync } from 'fs';
-import { IApi, utils } from 'umi';
-import { ConfigProviderProps } from 'antd/es/config-provider';
+import {dirname, join} from 'path';
+import {readFileSync} from 'fs';
+import {IApi, utils} from 'umi';
+import {ConfigProviderProps} from 'antd/es/config-provider';
 
 const { Mustache } = utils;
 

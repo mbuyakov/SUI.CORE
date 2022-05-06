@@ -1,6 +1,7 @@
 // LifeCycleManager
 import {getCurPackage} from "./utils";
 import {runCommandForPackage, runGlobalCommand} from "./commandRunner";
+
 const chalk = require(`${__dirname}/../node_modules/chalk`);
 
 (async function main() {

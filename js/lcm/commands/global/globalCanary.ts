@@ -1,4 +1,5 @@
 import {globalPublish} from "./globalPublish";
+
 const clipboardy = require('clipboardy');
 const notifier = require('node-notifier');
 const chalk = require(`${__dirname}/../../../node_modules/chalk`);

@@ -6,7 +6,10 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.ldap.search.LdapUserSearch
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import ru.sui.suisecurity.base.utils.skipPasswordCheckValue
 import ru.sui.suisecurity.server.ldap.LdapGroupSearch
 import ru.sui.suisecurity.server.model.LoginRequest

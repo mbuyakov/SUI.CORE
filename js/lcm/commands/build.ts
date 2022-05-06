@@ -1,7 +1,8 @@
 import * as fs from "fs";
 import * as child_process from "child_process";
-const chalk = require(`${__dirname}/../../node_modules/chalk`);
 import {getPackagePath, wrapSpawn} from "../utils";
+
+const chalk = require(`${__dirname}/../../node_modules/chalk`);
 
 async function fatherBuild(packageName: string): Promise<number> {
   const spawnedProcess = child_process.spawn("father-build", {

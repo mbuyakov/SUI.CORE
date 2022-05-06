@@ -1,7 +1,6 @@
 package ru.sui.suisecurity.base.service
 
 import org.springframework.cache.annotation.Cacheable
-import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.stereotype.Service
 import ru.sui.suientity.entity.suimeta.TableInfo
 import ru.sui.suientity.repository.suimeta.TableInfoRepository

@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import ru.sui.suisecurity.server.service.AuthenticationService
 import ru.sui.suisecurity.server.model.LoginRequest
 import ru.sui.suisecurity.server.model.toResponseEntity
+import ru.sui.suisecurity.server.service.AuthenticationService
 import javax.validation.Valid
 
 

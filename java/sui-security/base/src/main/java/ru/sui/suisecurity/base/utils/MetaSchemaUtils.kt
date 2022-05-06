@@ -6,7 +6,6 @@ import ru.sui.suientity.entity.suimeta.ColumnInfo
 import ru.sui.suientity.entity.suimeta.TableInfo
 import ru.sui.suientity.entity.suisecurity.Role
 import ru.sui.suisecurity.base.exception.RecursiveRenderException
-import java.util.*
 import java.util.stream.Collectors
 
 class MetaSchemaUtils {
