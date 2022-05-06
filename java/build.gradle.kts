@@ -1,5 +1,5 @@
 val sentryVersion = "5.1.2"
-val javaVersion = JavaVersion.VERSION_1_8
+val javaVersion = JavaVersion.VERSION_17
 
 plugins {
   id("java")

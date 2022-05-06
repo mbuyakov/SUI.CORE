@@ -197,7 +197,7 @@ public class QueryUtils {
   private static String mapFilteringToQueryFilter(
     Filtering filtering, Function<ColumnFiltering, String> columnNameGetter) {
     val type = filtering.getType();
-    val resultColumnNameGetter = columnNameGetter != null
+    Function<ColumnFiltering, String> resultColumnNameGetter = columnNameGetter != null
       ? columnNameGetter
       : ColumnFiltering::getColumnName;
 

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import lombok.var;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import ru.sui.suibackend.message.model.Sorting;
