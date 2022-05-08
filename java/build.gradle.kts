@@ -5,7 +5,7 @@ plugins {
   id("java")
   id("maven-publish")
 
-  val kotlinVersion = "1.6.10"
+  val kotlinVersion = "1.6.20"
   kotlin("jvm") version kotlinVersion
   kotlin("plugin.spring") version kotlinVersion
   kotlin("plugin.jpa") version kotlinVersion
@@ -103,7 +103,7 @@ subprojects {
 
   tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
-      freeCompilerArgs = listOf("-Xjsr305=strict")
+      freeCompilerArgs = listOf("-Xjsr305=strict", "-Xbackend-threads=0")
       jvmTarget = javaVersion.toString()
     }
   }
