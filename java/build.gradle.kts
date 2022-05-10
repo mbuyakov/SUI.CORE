@@ -58,6 +58,10 @@ allprojects {
             dependency("io.sentry:sentry-spring-boot-starter:$sentryVersion")
             dependency("io.sentry:sentry-logback:$sentryVersion")
             dependency("com.google.code.findbugs:jsr305:3.0.2")
+            dependency("org.json:json:20180130")
+            dependency("com.google.guava:guava:28.1-jre")
+            dependency("org.apache.httpcomponents:httpclient:4.5.10")
+            dependency("org.apache.poi:poi-ooxml:4.1.1")
         }
     }
 
