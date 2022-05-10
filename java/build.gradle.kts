@@ -62,6 +62,11 @@ allprojects {
             dependency("com.google.guava:guava:28.1-jre")
             dependency("org.apache.httpcomponents:httpclient:4.5.10")
             dependency("org.apache.poi:poi-ooxml:4.1.1")
+            dependency("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6")
+            dependency("io.jsonwebtoken:jjwt:0.9.0")
+            dependency("org.apache.commons:commons-text:1.6")
+            dependency("commons-io:commons-io:2.6")
+            dependency("com.github.ben-manes.caffeine:caffeine:2.8.2")
         }
     }
 

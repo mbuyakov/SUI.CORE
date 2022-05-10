@@ -8,7 +8,7 @@ dependencies {
   api "org.postgresql:postgresql"
   api "org.json:json"
   // query logs
-  //  api "com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6"
+  //  api "com.github.gavlyukovskiy:p6spy-spring-boot-starter"
   api "com.fasterxml.jackson.datatype:jackson-datatype-json-org"
   api "com.google.guava:guava"
   api "org.apache.httpcomponents:httpclient"
