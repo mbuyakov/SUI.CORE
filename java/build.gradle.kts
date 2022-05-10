@@ -117,6 +117,10 @@ subprojects {
         withSourcesJar()
     }
 
+    tasks.withType<JavaCompile> {
+        options.isDeprecation = true
+    }
+
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict", "-Xbackend-threads=0")

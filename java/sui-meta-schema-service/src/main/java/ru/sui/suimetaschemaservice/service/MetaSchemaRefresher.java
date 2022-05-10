@@ -281,13 +281,13 @@ public class MetaSchemaRefresher {
                 (columnInfo, columnInfoReferences) -> columnInfo.getReferences().addAll(columnInfoReferences));
 
         if (!columnInfoReferenceMetaInfo.getNonexistentElements().isEmpty()) {
-            columnInfoReferenceRepository.deleteInBatch(columnInfoReferenceMetaInfo.getNonexistentElements());
+            columnInfoReferenceRepository.deleteAllInBatch(columnInfoReferenceMetaInfo.getNonexistentElements());
         }
         if (!columnInfoMetaInfo.getNonexistentElements().isEmpty()) {
-            columnInfoRepository.deleteInBatch(columnInfoMetaInfo.getNonexistentElements());
+            columnInfoRepository.deleteAllInBatch(columnInfoMetaInfo.getNonexistentElements());
         }
         if (!tableInfoMetaInfo.getNonexistentElements().isEmpty()) {
-            tableInfoRepository.deleteInBatch(tableInfoMetaInfo.getNonexistentElements());
+            tableInfoRepository.deleteAllInBatch(tableInfoMetaInfo.getNonexistentElements());
         }
 
         tableInfoRepository.saveAll(tableInfoMetaInfo.getMetaElementMap().values());

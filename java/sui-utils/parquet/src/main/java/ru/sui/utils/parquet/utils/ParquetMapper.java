@@ -14,6 +14,7 @@ import ru.sui.utils.parquet.exception.FormatException;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -90,10 +91,10 @@ public class ParquetMapper<T> {
         field.set(parquetObj, fieldValue);
     }
 
-    @SneakyThrows({IllegalAccessException.class, InstantiationException.class})
+    @SneakyThrows({IllegalAccessException.class, InstantiationException.class, NoSuchMethodException.class, InvocationTargetException.class})
     public T groupToObj(Path path, Group group) {
         log.trace("Create {} obj", genericClass.getName());
-        val parquetObj = genericClass.newInstance();
+        val parquetObj = genericClass.getDeclaredConstructor().newInstance();
 
         if (log.isTraceEnabled()) {
             log.trace("Parquet row: {}", group.toString());
