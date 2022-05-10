@@ -30,6 +30,7 @@ pipeline {
                 sh """
                   cd docker
                   docker build -t nexus.suilib.ru:10401/repository/docker-sui/sui-baseimage:${BUILD_NUMBER}${SUFFIX} baseimage
+                  docker build -t nexus.suilib.ru:10401/repository/docker-sui/sui-baseimage-extended:${BUILD_NUMBER}${SUFFIX} baseimage-extended
                   docker build -t nexus.suilib.ru:10401/repository/docker-sui/sui-postgraphile:${BUILD_NUMBER}${SUFFIX} postgraphile
                 """
               }
