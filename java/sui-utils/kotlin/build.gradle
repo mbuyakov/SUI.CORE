@@ -1,6 +1,3 @@
-apply plugin: 'kotlin'
-apply plugin: 'kotlin-spring'
-
 dependencies {
   api "org.springframework:spring-beans"
   api "org.springframework:spring-context"

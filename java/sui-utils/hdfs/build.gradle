@@ -1,10 +1,3 @@
-apply plugin: 'kotlin'
-apply plugin: 'kotlin-spring'
-
-configurations {
-  compile.exclude module: "slf4j-log4j12"
-}
-
 dependencies {
   api project(":sui-utils:sui-utils-kotlin")
   api "org.apache.hadoop:hadoop-client"

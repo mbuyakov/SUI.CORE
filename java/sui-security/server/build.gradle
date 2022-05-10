@@ -1,6 +1,3 @@
-apply plugin: 'kotlin'
-apply plugin: 'kotlin-spring'
-
 dependencies {
     api project(":sui-security:sui-security-base")
     implementation("org.springframework.ldap:spring-ldap-core")

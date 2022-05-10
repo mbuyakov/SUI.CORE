@@ -1,6 +1,3 @@
-apply plugin: 'kotlin'
-apply plugin: 'kotlin-spring'
-
 dependencies {
   api project(":sui-utils:sui-utils-kotlin")
   api "org.apache.hbase:hbase-client"
