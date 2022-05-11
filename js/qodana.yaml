@@ -1,0 +1,11 @@
+version: "1.0"
+linter: jetbrains/qodana-js:2021.3-eap
+exclude:
+  - name: All
+    paths:
+      - packages/all/es
+      - packages/charts/es
+      - packages/core/es
+      - packages/react/es
+      - packages/sentry/es
+      - SUI.DEVTOOLS
