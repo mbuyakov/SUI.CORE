@@ -103,7 +103,7 @@ export class DnfForm extends React.Component<IDnfFormProps> {
                                     >
                                       {this.props.rowCreator({
                                         formItemNameGenerator: (field: NamePath): NamePath => [andField.name, ...wrapInArray(field)],
-                                        formItemFieldKeyGenerator: (field: NamePath): NamePath => [andField.fieldKey, ...wrapInArray(field)],
+                                        formItemFieldKeyGenerator: (field: NamePath): NamePath => [andField.key, ...wrapInArray(field)],
                                         internalNamePathGenerator: (field: NamePath): NamePath => [
                                           this.props.orListProps.name as string,
                                           orIndex,

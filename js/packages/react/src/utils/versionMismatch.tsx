@@ -21,7 +21,7 @@ export function runCheckVersionMismatch(): void {
                     <div>Расхождение версий</div>
                     <div>Текущая версия: {process.env.BUILD_TIME}</div>
                     <div>Последняя версия: {lastBuildTime.data}</div>
-                    <Button size="small" onClick={(): void => location.reload(true)}>Для обновления нажмите сюда</Button>
+                    <Button size="small" onClick={(): void => location.reload()}>Для обновления нажмите сюда</Button>
                     <div style={{color: '#999', fontSize: 12}}>(Ctrl+F5 для Windows)</div>
                     <div style={{color: '#999', fontSize: 12}}>(Cmd+Shift+R для MacOS)</div>
                   </div>

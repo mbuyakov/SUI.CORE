@@ -17,11 +17,11 @@
     "ci": "node ../../lcm.js"
   },
   "peerDependencies": {
-    "@ant-design/icons": "4.6.2",
+    "@ant-design/icons": "4.7.0",
     "@material-ui/core": "4.11.4",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
-    "antd": "4.16.1",
+    "antd": "4.20.4",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
@@ -32,7 +32,7 @@
     "@types/react-router-dom": "^5.1.3"
   },
   "dependencies": {
-    "@ant-design/icons": "4.6.2",
+    "@ant-design/icons": "4.7.0",
     "@devexpress/dx-react-core": "2.6.1",
     "@devexpress/dx-react-grid": "2.6.1",
     "@devexpress/dx-react-grid-material-ui": "2.6.1",
@@ -41,7 +41,7 @@
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@sui/charts": "10.0.0",
     "@sui/core": "10.0.0",
-    "antd": "4.16.1",
+    "antd": "4.20.4",
     "antd-mask-input": "0.1.15",
     "classnames": "^2.2.6",
     "immutability-helper": "^3.0.2",
@@ -62,13 +62,14 @@
     "theme-switcher": "^1.0.2"
   },
   "resolutions": {
-    "@ant-design/icons": "4.6.2",
+    "@ant-design/icons": "4.7.0",
     "@material-ui/core": "4.11.4",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
-    "antd": "4.16.1",
+    "antd": "4.20.4",
+    "moment": "2.29.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "typescript": "4.3.2"
+    "typescript": "4.6.4"
   }
 }

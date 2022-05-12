@@ -134,7 +134,7 @@ export function xor(x: boolean, y: boolean): boolean {
   return x ? !y : y;
 }
 
-const UUID_REGEXP = /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.compile();
+const UUID_REGEXP = /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i;
 
 /**
  * UUID validator
