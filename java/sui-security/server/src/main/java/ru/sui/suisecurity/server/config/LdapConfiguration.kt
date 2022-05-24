@@ -20,6 +20,7 @@ class LdapConfiguration(
     @Value("\${ldap.url}") private val ldapUrl: String,
     @Value("\${ldap.manager-dn:#{null}}") private val ldapManagerDn: String?,
     @Value("\${ldap.manager-password:#{null}}") private val ldapManagerPassword: String?,
+    @Value("\${ldap.root-dn:#{null}}") private val ldapRootDn: String?,
     @Value("\${ldap.user-search-base:}") private val ldapUserSearchBase: String,
     @Value("\${ldap.user-search-filter}") private val ldapUserSearchFilter: String,
     @Value("\${ldap.group-search-base:}") private val ldapGroupSearchBase: String,
@@ -31,6 +32,7 @@ class LdapConfiguration(
         return DefaultSpringSecurityContextSource(ldapUrl).apply {
             ldapManagerDn?.let { this.userDn = it }
             ldapManagerPassword?.let { this.password = it }
+            ldapRootDn?.let { this.setBase(ldapRootDn) }
         }
     }
 
@@ -42,8 +44,13 @@ class LdapConfiguration(
     @Bean
     fun ldapGroupSearch(): LdapGroupSearch {
         val ldapTemplate = SpringSecurityLdapTemplate(contextSource())
+
         return object : LdapGroupSearch {
             override fun searchForGroups(userDn: String): List<DirContextOperations> {
+                if (ldapGroupSearchFilter.isBlank()) {
+                    return emptyList()
+                }
+
                 val query = LdapQueryBuilder.query()
                     .base(ldapGroupSearchBase)
                     .filter(ldapGroupSearchFilter, userDn)
