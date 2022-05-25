@@ -1106,7 +1106,7 @@ export class BackendTable<TSelection = defaultSelection>
   @autobind
   // tslint:disable-next-line:member-ordering
   private exportAll(getters: Getters): Promise<void> {
-    const exportApiUri = `${location.protocol}//${getSUISettings().backendUrl}/export`;
+    const exportApiUri = `${getSUISettings().backendUrl}/export`;
     const commonHeaders = {
       Authorization: `Bearer ${getUser().accessToken}`,
       initSessionId: this.backendDataSource.getSessionId()
