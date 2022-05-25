@@ -11,7 +11,6 @@ export * from "./draw";
 export * from "./filterType";
 export * from "./formUtils";
 export * from "./init";
-export * from "./location";
 export * from "./array";
 export * from "./StringWithError";
 export * from "./metaInfo";

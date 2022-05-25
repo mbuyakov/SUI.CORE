@@ -238,6 +238,7 @@ function generateUmiConfig(params) {
     title,
     themes,
     define,
+    proxy,
     patchUmiConfig
   } = params;
 
@@ -355,7 +356,8 @@ function generateUmiConfig(params) {
     ],
     chainWebpack: defaultChainWebpack,
     plugins,
-    routes
+    routes,
+    proxy
   }
 
   if (patchUmiConfig) {

@@ -51,7 +51,7 @@ export class WsBackendDataSource extends BackendDataSource {
   }
 
   public async init(): Promise<boolean> {
-    const backendURL = new URL(`ws${location.protocol === 'https:' ? 's' : ''}://${getSUISettings().backendUrl}`);
+    const backendURL = new URL(`ws${location.protocol === 'https:' ? 's' : ''}://${location.host}${getSUISettings().backendUrl}`);
     log.debug(backendURL);
 
     this.socket = new Socket({

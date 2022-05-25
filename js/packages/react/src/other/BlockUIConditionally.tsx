@@ -3,9 +3,6 @@ import autobind from "autobind-decorator";
 import axios from 'axios';
 import React, {ReactNode} from "react";
 
-// noinspection ES6PreferShortImport
-import {isLocalServer} from '../utils/location';
-
 export interface IBlockUIConditionallyProps {
   header?: string | ReactNode;
   intervalToCheckBlocked?: number;
@@ -107,9 +104,6 @@ export class BlockUIConditionally extends React.Component<IBlockUIConditionallyP
 }
 
 export async function checkBlockUIFile(): Promise<string> {
-  if (isLocalServer()) {
-    return null;
-  }
   const BLOCK_FILE_URL = '/static/block_ui.txt';
 
   return getFileText(BLOCK_FILE_URL);

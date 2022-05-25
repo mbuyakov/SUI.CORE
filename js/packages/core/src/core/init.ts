@@ -18,7 +18,6 @@ export type Permission = (user: ICoreUser) => boolean;
 export interface IInitSUISettings {
   projectKey: string;
   backendUrl: string;
-  basicAuthToken?: string;
   checkVersionMismatchUrl: string;
   enableDoubleVerticalScrollForAllTables?: boolean;
   graphqlUri: string;

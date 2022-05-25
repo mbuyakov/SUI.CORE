@@ -24,10 +24,7 @@ export function initSUI(settings: _IInitSUISettings): void {
     apolloClient: new ApolloClient({
       cache: new InMemoryCache(),
       link: authLink.concat(new HttpLink({
-        uri: settings.graphqlUri,
-        headers: {
-          ...(settings.basicAuthToken ? {authorization: settings.basicAuthToken} : undefined),
-        },
+        uri: settings.graphqlUri
       })),
     }),
   };

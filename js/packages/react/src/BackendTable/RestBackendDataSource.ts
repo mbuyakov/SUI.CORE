@@ -45,7 +45,7 @@ export class RestBackendDataSource extends BackendDataSource {
 
   private async __send<T>(body: T, headers?: IObjectWithIndex): Promise<IObjectWithIndex> {
     return axios.post(
-      `${location.protocol}//${getSUISettings().backendUrl}-http`,
+      `${getSUISettings().backendUrl}-http`,
       body,
       {
         headers: {
