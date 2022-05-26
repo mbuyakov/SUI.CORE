@@ -40,6 +40,8 @@ class LdapConfiguration(
     fun ldapAuthenticationHelper(): LdapAuthenticationHelper {
         val ldapTemplate = SpringSecurityLdapTemplate(contextSource())
 
+        ldapTemplate.setIgnorePartialResultException(true)
+
         return object : LdapAuthenticationHelper {
 
             @Suppress("LiftReturnOrAssignment")
