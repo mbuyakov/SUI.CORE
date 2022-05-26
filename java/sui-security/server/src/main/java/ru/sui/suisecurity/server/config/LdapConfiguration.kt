@@ -4,15 +4,14 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.ldap.core.AuthenticatedLdapEntryContextMapper
 import org.springframework.ldap.core.ContextMapper
 import org.springframework.ldap.core.DirContextOperations
 import org.springframework.ldap.core.support.LdapContextSource
 import org.springframework.ldap.query.LdapQueryBuilder
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource
 import org.springframework.security.ldap.SpringSecurityLdapTemplate
-import org.springframework.security.ldap.search.FilterBasedLdapUserSearch
-import org.springframework.security.ldap.search.LdapUserSearch
-import ru.sui.suisecurity.server.ldap.LdapGroupSearch
+import ru.sui.suisecurity.server.ldap.LdapAuthenticationHelper
 
 @Configuration
 @ConditionalOnProperty("ldap.url")
@@ -37,15 +36,25 @@ class LdapConfiguration(
     }
 
     @Bean
-    fun ldapUserSearch(): LdapUserSearch {
-        return FilterBasedLdapUserSearch(ldapUserSearchBase, ldapUserSearchFilter, contextSource())
-    }
-
-    @Bean
-    fun ldapGroupSearch(): LdapGroupSearch {
+    fun ldapAuthenticationHelper(): LdapAuthenticationHelper {
         val ldapTemplate = SpringSecurityLdapTemplate(contextSource())
 
-        return object : LdapGroupSearch {
+        return object : LdapAuthenticationHelper {
+
+            override fun authenticate(username: String, password: String): DirContextOperations? {
+                if (ldapUserSearchFilter.isBlank()) {
+                    return null
+                }
+
+                val query = LdapQueryBuilder.query()
+                    .base(ldapUserSearchBase)
+                    .filter(ldapUserSearchFilter, username)
+
+                val mapper = AuthenticatedLdapEntryContextMapper<DirContextOperations> { ctx, _ -> ctx as DirContextOperations }
+
+                return ldapTemplate.authenticate(query, password, mapper)
+            }
+
             override fun searchForGroups(userDn: String): List<DirContextOperations> {
                 if (ldapGroupSearchFilter.isBlank()) {
                     return emptyList()
@@ -57,6 +66,7 @@ class LdapConfiguration(
 
                 return ldapTemplate.search(query, ContextMapper { it as DirContextOperations })
             }
+
         }
     }
 
