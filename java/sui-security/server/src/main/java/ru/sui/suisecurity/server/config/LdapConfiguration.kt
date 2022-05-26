@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.ldap.core.AuthenticatedLdapEntryContextMapper
+import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.ldap.AuthenticationException
 import org.springframework.ldap.core.ContextMapper
 import org.springframework.ldap.core.DirContextOperations
 import org.springframework.ldap.core.support.LdapContextSource
@@ -41,6 +42,7 @@ class LdapConfiguration(
 
         return object : LdapAuthenticationHelper {
 
+            @Suppress("LiftReturnOrAssignment")
             override fun authenticate(username: String, password: String): DirContextOperations? {
                 if (ldapUserSearchFilter.isBlank()) {
                     return null
@@ -50,9 +52,14 @@ class LdapConfiguration(
                     .base(ldapUserSearchBase)
                     .filter(ldapUserSearchFilter, username)
 
-                val mapper = AuthenticatedLdapEntryContextMapper<DirContextOperations> { ctx, _ -> ctx as DirContextOperations }
-
-                return ldapTemplate.authenticate(query, password, mapper)
+                try {
+                    ldapTemplate.authenticate(query, password)
+                    return ldapTemplate.search(query, ContextMapper { it as DirContextOperations }).firstOrNull()
+                } catch (exception: AuthenticationException) {
+                    return null
+                } catch (exception: EmptyResultDataAccessException) {
+                    return null
+                }
             }
 
             override fun searchForGroups(userDn: String): List<DirContextOperations> {
