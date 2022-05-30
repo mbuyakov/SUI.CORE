@@ -5,14 +5,14 @@ plugins {
     id("java")
     id("maven-publish")
 
-    val kotlinVersion = "1.6.20"
+    val kotlinVersion = "1.6.21"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.spring") version kotlinVersion
     kotlin("plugin.jpa") version kotlinVersion
 
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
 
-    id("org.springframework.boot") version "2.6.3" apply false
+    id("org.springframework.boot") version "2.7.0" apply false
     id("com.google.cloud.tools.jib") version "3.1.4" apply false
 }
 
@@ -35,14 +35,13 @@ allprojects {
     java.sourceCompatibility = javaVersion
 
     repositories {
-        mavenCentral()
-        maven("https://repository.cloudera.com/artifactory/cloudera-repos/")
+        maven("https://nexus.suilib.ru/repository/mvn-public/")
     }
 
     dependencyManagement {
-        // https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies/2.6.3/spring-boot-dependencies-2.6.3.pom
+        // https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies/2.7.0/spring-boot-dependencies-2.7.0.pom
         imports {
-            mavenBom("org.springframework.boot:spring-boot-dependencies:2.6.3")
+            mavenBom("org.springframework.boot:spring-boot-dependencies:2.7.0")
         }
 
         dependencies {
@@ -67,6 +66,7 @@ allprojects {
             dependency("org.apache.commons:commons-text:1.6")
             dependency("commons-io:commons-io:2.6")
             dependency("com.github.ben-manes.caffeine:caffeine:2.8.2")
+            dependency("org.telegram:telegrambots-spring-boot-starter:4.1")
         }
     }
 
