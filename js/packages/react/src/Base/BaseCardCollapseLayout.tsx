@@ -7,6 +7,7 @@ import {COLLAPSE_PANEL_NO_PADDING} from "@/styles";
 
 
 export interface IBaseCardCollapseLayout<T, ITEM> {
+  id?: string,
   defaultOpened?: boolean;
   padding?: boolean;
   rows: OneOrArrayWithNulls<IBaseCardRowLayout<T, ITEM>>;
@@ -21,7 +22,7 @@ export function renderIBaseCardCollapseLayout<T, ITEM>(sourceItem: T, panel: IBa
       style={{
         borderRadius: fitCollapsePanel && rowsCount === 1 ? 0 : undefined,
       }}
-      key={panel.title}
+      key={panel.title + panel.id}
       header={panel.title}
       className={padding ? "" : COLLAPSE_PANEL_NO_PADDING}
     >
