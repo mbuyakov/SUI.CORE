@@ -24,13 +24,15 @@ export const MaterialIconButton: React.FC<MaterialIconButtonProps> = (
   const {loading: onClickLoading, onClick} = useOnClick(propsOnClick, {popconfirm});
   const loading = onClickLoading || propsLoading;
 
-  return tooltipWrapper(tooltip, (
-    <IconButton
-      {...rest}
-      onClick={onClick}
-      disabled={loading || rest.disabled}
-    >
-      {loading ? <ProgressIcon type="iconButton" size={rest.size}/> : rest.children}
-    </IconButton>
-  ));
+  return popconfirm.wrapper(
+    tooltipWrapper(tooltip, (
+      <IconButton
+        {...rest}
+        onClick={onClick}
+        disabled={loading || rest.disabled}
+      >
+        {loading ? <ProgressIcon type="iconButton" size={rest.size}/> : rest.children}
+      </IconButton>
+    ))
+  );
 }
