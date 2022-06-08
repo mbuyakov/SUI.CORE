@@ -284,9 +284,9 @@ export class BackendTable<TSelection = defaultSelection>
 
   public render(): JSX.Element {
     const admin = isAdmin();
-    const allowExportAll = getSUISettings().permissions?.exportAll
-      ? getSUISettings().permissions?.exportAll(getUser())
-      : admin;
+    const suiSettings = getSUISettings();
+    const allowExportAll = suiSettings.permissions?.exportAll ? suiSettings.permissions.exportAll(getUser()) : admin;
+    const hideTableSettings = !!suiSettings.hideTableSettings;
     const virtual = this.props.virtual;
     const lazyStub = this.state.lazyStub;
 
@@ -343,7 +343,7 @@ export class BackendTable<TSelection = defaultSelection>
             (<RefreshMetaTablePlugin handleClick={this.refresh}/>),
             (<ResetUserSettingsPlugin onClick={this.resetUserSettings}/>),
             // admin && (<RawModePlugin enabled={this.state.rawMode} onClick={this.changeRaw}/>),
-            admin && (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
+            admin && !hideTableSettings && (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
           ].filter(Boolean)}
           rowStyler={this.generateRowStyler()}
           warnings={admin ? this.state.warnings : undefined}
