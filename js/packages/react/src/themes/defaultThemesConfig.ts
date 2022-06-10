@@ -49,7 +49,10 @@ export const defaultThemesConfig: ThemesConfig = {
   light: {
     materialThemeConfig: {
       palette: {
-        type: "light"
+        type: "light",
+        background: {
+          default: "#f0f2f5" // Match antd
+        }
       },
       overrides: {
         MuiInput: {
@@ -74,7 +77,8 @@ export const defaultThemesConfig: ThemesConfig = {
       palette: {
         type: "dark",
         background: {
-          paper: "#141414" // Match antd
+          default: "#000000", // Match antd
+          paper: "#141414"
         }
       },
       overrides: {
