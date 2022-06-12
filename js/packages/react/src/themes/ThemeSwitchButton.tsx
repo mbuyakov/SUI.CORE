@@ -16,6 +16,7 @@ interface IThemeSwitchButtonState {
 
 export class ThemeSwitchButton extends SUIReactComponent<IThemeSwitchButtonProps, IThemeSwitchButtonState> {
   private themeService = Container.get(ThemeService);
+  private noDark = Container.getValue("sui.noDark");
 
   public constructor(props: IThemeSwitchButtonProps) {
     super(props);
@@ -24,6 +25,9 @@ export class ThemeSwitchButton extends SUIReactComponent<IThemeSwitchButtonProps
   }
 
   public render(): JSX.Element {
+    if (this.noDark) {
+      return null;
+    }
     return (
       <IconButton onClick={this.changeTheme}>
         {this.state.theme == "dark" ? (<Brightness7Icon/>) : (<Brightness4Icon/>)}
