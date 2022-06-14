@@ -45,14 +45,36 @@ export const defaultThemesConfig: ThemesConfig = {
         }
       }
     }),
-    drawerMaterialThemeConfig: {
-      overrides: {
-        MuiListItemIcon: {
-          root: {
-            color: "inherit"
+    // Antd style
+    drawerMaterialThemeConfig: (theme) => {
+      const textColor = "rgba(255,255,255,0.65)";
+      const hoverTextColor = "rgba(255,255,255,0.95)";
+
+      return {
+        overrides: {
+          MuiListItem: {
+            root: {
+              color: textColor,
+              "&:hover": {
+                transition: theme.transitions.create('color'),
+                color: hoverTextColor,
+              },
+              "&$selected": {
+                color: hoverTextColor,
+              }
+            }
           },
-        },
-      },
+          MuiIconButton: {
+            label: {
+              color: textColor,
+              "&:hover": {
+                transition: theme.transitions.create('color'),
+                color: hoverTextColor,
+              }
+            }
+          }
+        }
+      };
     },
   },
   light: {
@@ -81,39 +103,17 @@ export const defaultThemesConfig: ThemesConfig = {
       }
     },
     // Antd style
-    drawerMaterialThemeConfig: (theme) => {
-      const textColor = "rgba(255,255,255,0.65)";
-      const hoverTextColor = "rgba(255,255,255,0.95)";
-
-      return {
-        palette: {
-          background: {
-            paper: "#001529",
-            default: "#000c17",
-          }
+    drawerMaterialThemeConfig: theme => ({
+      palette: {
+        background: {
+          paper: "#001529",
+          default: "#000c17",
         },
-        overrides: {
-          MuiListItem: {
-            root: {
-              transition: theme.transitions.create('color'),
-              color: textColor,
-              "&:hover": {
-                color: hoverTextColor,
-              },
-            }
-          },
-          MuiIconButton: {
-            label: {
-              transition: theme.transitions.create('color'),
-              color: textColor,
-              "&:hover": {
-                color: hoverTextColor,
-              }
-            }
-          }
+        action: {
+          selected: theme.palette.primary.main
         }
-      };
-    },
+      },
+    }),
   },
   dark: {
     materialThemeConfig: {
