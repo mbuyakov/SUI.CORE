@@ -1,72 +1,62 @@
 import merge from 'lodash/merge';
-import {createMuiTheme} from '@material-ui/core/styles';
+import {createMuiTheme, Theme} from '@material-ui/core/styles';
 
-import {CompiledSuiThemeConfig, CompiledThemes, MergedThemeConfigs, SuiThemeConfig, ThemesConfig} from "@/themes/types";
+import {CompiledTheme, CompiledThemeBase, CompiledThemes, SuiThemeConfig, ThemeOptionsGetter, ThemesConfig} from "@/themes/types";
 import {defaultMuiTheme, defaultThemesConfig} from "@/themes/defaultThemesConfig";
 import {getThemeVariables} from '@/antdMissedExport';
 
 const lightAntdTheme = getThemeVariables({dark: false});
 const darkAntdTheme = getThemeVariables({dark: true});
 
-function compileThemeConfig(theme?: SuiThemeConfig): CompiledSuiThemeConfig {
-  if (!theme) {
-    return {};
+function getMuiTheme(baseTheme: Theme, options?: ThemeOptionsGetter): Theme {
+  if (!options) {
+    return defaultMuiTheme;
   }
 
-  if (typeof theme.materialThemeConfig === 'function') {
-    theme.materialThemeConfig = theme.materialThemeConfig(defaultMuiTheme);
+  if (typeof options == 'function') {
+    return createMuiTheme(options(baseTheme));
   }
-
-  if (typeof theme.baseTableMaterialThemeConfig === 'function') {
-    theme.baseTableMaterialThemeConfig = theme.baseTableMaterialThemeConfig(defaultMuiTheme);
-  }
-  if (typeof theme.drawerMaterialThemeConfig === 'function') {
-    theme.drawerMaterialThemeConfig = theme.drawerMaterialThemeConfig(defaultMuiTheme);
-  }
-
-  return theme as CompiledSuiThemeConfig;
+  return createMuiTheme(options);
 }
 
-function compileAndMerge(...themes: SuiThemeConfig[]): CompiledSuiThemeConfig {
-  const compiledThemes = themes.map(compileThemeConfig);
-  return merge({}, ...compiledThemes);
-}
-
-export function getMergedThemeConfigs(themes: ThemesConfig): MergedThemeConfigs {
-  const commonTheme = compileAndMerge(defaultThemesConfig.common, themes.common);
-  const lightTheme = compileAndMerge(defaultThemesConfig.light, themes.light);
-  const darkTheme = compileAndMerge(defaultThemesConfig.dark, themes.dark);
-
-  const commonWithLightTheme = merge({
-    lessVars: lightAntdTheme
-  }, commonTheme, lightTheme);
-  const commonWithDarkTheme = merge({
-    lessVars: darkAntdTheme
-  }, commonTheme, darkTheme);
-
+function compileSuiTheme(theme: SuiThemeConfig, base: CompiledThemeBase): CompiledTheme {
+  const muiTheme = getMuiTheme(base.muiTheme, theme.materialThemeConfig);
   return {
-    commonWithLightTheme,
-    commonWithDarkTheme
+    name: base.name,
+    lessVars: merge({}, base.lessVars),
+    muiTheme,
+    baseTableMuiTheme: getMuiTheme(muiTheme, theme.baseTableMaterialThemeConfig),
+    drawerMaterialTheme: getMuiTheme(muiTheme, theme.drawerMaterialThemeConfig)
   }
 }
 
 export function getCompiledThemes(themes: ThemesConfig): CompiledThemes {
-  const mergedThemes = getMergedThemeConfigs(themes);
+  const commonBaseTheme = compileSuiTheme(defaultThemesConfig.common, {
+    // Stub
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    name: "common",
+    lessVars: {},
+    muiTheme: defaultMuiTheme
+  });
+  const commonTheme = compileSuiTheme(themes.common, commonBaseTheme);
+
+  const lightBaseTheme = compileSuiTheme(defaultThemesConfig.light, {
+    ...commonTheme,
+    name: "light",
+    lessVars: merge({}, lightAntdTheme, commonTheme.lessVars)
+  });
+  const lightTheme = compileSuiTheme(themes.light, lightBaseTheme);
+
+  const darkBaseTheme = compileSuiTheme(defaultThemesConfig.dark, {
+    ...commonTheme,
+    name: "dark",
+    lessVars: merge({}, darkAntdTheme, commonTheme.lessVars)
+  });
+  const darkTheme = compileSuiTheme(themes.dark, darkBaseTheme);
 
   return {
-    light: {
-      name: "light",
-      lessVars: mergedThemes.commonWithLightTheme.lessVars,
-      muiTheme: createMuiTheme(mergedThemes.commonWithLightTheme.materialThemeConfig),
-      baseTableMuiTheme: createMuiTheme(merge({}, mergedThemes.commonWithLightTheme.materialThemeConfig, mergedThemes.commonWithLightTheme.baseTableMaterialThemeConfig)),
-      drawerMaterialTheme: createMuiTheme(merge({}, mergedThemes.commonWithLightTheme.materialThemeConfig, mergedThemes.commonWithLightTheme.drawerMaterialThemeConfig)),
-    },
-    dark: {
-      name: "dark",
-      lessVars: mergedThemes.commonWithDarkTheme.lessVars,
-      muiTheme: createMuiTheme(mergedThemes.commonWithDarkTheme.materialThemeConfig),
-      baseTableMuiTheme: createMuiTheme(merge({}, mergedThemes.commonWithDarkTheme.materialThemeConfig, mergedThemes.commonWithDarkTheme.baseTableMaterialThemeConfig)),
-      drawerMaterialTheme: createMuiTheme(merge({}, mergedThemes.commonWithDarkTheme.materialThemeConfig, mergedThemes.commonWithDarkTheme.drawerMaterialThemeConfig)),
-    }
+    light: lightTheme,
+    dark: darkTheme
   }
 }
