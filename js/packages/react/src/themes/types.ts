@@ -33,7 +33,7 @@ export interface CompiledTheme {
   lessVars: { [key: string]: string },
   muiTheme: Theme,
   baseTableMuiTheme: Theme,
-  drawerMaterialThemeConfig: Theme,
+  drawerMaterialTheme: Theme,
 }
 
 export interface CompiledThemes {

@@ -59,14 +59,14 @@ export function getCompiledThemes(themes: ThemesConfig): CompiledThemes {
       lessVars: mergedThemes.commonWithLightTheme.lessVars,
       muiTheme: createMuiTheme(mergedThemes.commonWithLightTheme.materialThemeConfig),
       baseTableMuiTheme: createMuiTheme(merge({}, mergedThemes.commonWithLightTheme.materialThemeConfig, mergedThemes.commonWithLightTheme.baseTableMaterialThemeConfig)),
-      drawerMaterialThemeConfig: createMuiTheme(merge({}, mergedThemes.commonWithLightTheme.materialThemeConfig, mergedThemes.commonWithLightTheme.drawerMaterialThemeConfig)),
+      drawerMaterialTheme: createMuiTheme(merge({}, mergedThemes.commonWithLightTheme.materialThemeConfig, mergedThemes.commonWithLightTheme.drawerMaterialThemeConfig)),
     },
     dark: {
       name: "dark",
       lessVars: mergedThemes.commonWithDarkTheme.lessVars,
       muiTheme: createMuiTheme(mergedThemes.commonWithDarkTheme.materialThemeConfig),
       baseTableMuiTheme: createMuiTheme(merge({}, mergedThemes.commonWithDarkTheme.materialThemeConfig, mergedThemes.commonWithDarkTheme.baseTableMaterialThemeConfig)),
-      drawerMaterialThemeConfig: createMuiTheme(merge({}, mergedThemes.commonWithDarkTheme.materialThemeConfig, mergedThemes.commonWithDarkTheme.drawerMaterialThemeConfig)),
+      drawerMaterialTheme: createMuiTheme(merge({}, mergedThemes.commonWithDarkTheme.materialThemeConfig, mergedThemes.commonWithDarkTheme.drawerMaterialThemeConfig)),
     }
   }
 }
