@@ -16,23 +16,28 @@ export interface ThemesConfig {
   dark?: SuiThemeConfig
 }
 
+export interface ThemeAndOptions {
+  theme: Theme,
+  options: ThemeOptions
+}
+
 export type AntdThemeVars = { [key: string]: string }
 
 export interface AntdTheme {
   lessVars: AntdThemeVars
 }
 
-export interface CompiledThemeBase {
-  name: ThemeVariant
-  muiTheme: Theme
+export interface PreCompiledTheme {
+  muiTheme: ThemeAndOptions
+  baseTableMuiTheme: ThemeAndOptions
+  drawerMaterialTheme: ThemeAndOptions
 }
 
-export type CompiledThemeWithoutAntd = CompiledThemeBase & {
-  baseTableMuiTheme: Theme
-  drawerMaterialTheme: Theme
+export type CompiledTheme = AntdTheme & {
+  [key in keyof PreCompiledTheme]: Theme
+} & {
+  name: ThemeVariant;
 }
-
-export type CompiledTheme = CompiledThemeWithoutAntd & AntdTheme
 
 export interface CompiledThemes {
   light: CompiledTheme
