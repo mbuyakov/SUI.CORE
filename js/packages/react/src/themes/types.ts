@@ -27,14 +27,16 @@ export interface CompiledThemeBase {
   muiTheme: Theme
 }
 
-export type CompiledTheme = CompiledThemeBase & {
+export type CompiledThemeWithoutAntd = CompiledThemeBase & {
   baseTableMuiTheme: Theme
   drawerMaterialTheme: Theme
 }
 
+export type CompiledTheme = CompiledThemeWithoutAntd & AntdTheme
+
 export interface CompiledThemes {
-  light: CompiledTheme & AntdTheme
-  dark: CompiledTheme & AntdTheme
+  light: CompiledTheme
+  dark: CompiledTheme
 }
 
 export type ThemeVariant = keyof CompiledThemes;

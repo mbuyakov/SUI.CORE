@@ -1,7 +1,7 @@
 import merge from 'lodash/merge';
 import {createMuiTheme, Theme} from '@material-ui/core/styles';
 
-import {AntdTheme, AntdThemeVars, CompiledTheme, CompiledThemeBase, CompiledThemes, SuiThemeConfig, ThemeOptionsGetter, ThemesConfig, ThemeVariant} from "@/themes/types";
+import {AntdTheme, AntdThemeVars, CompiledTheme, CompiledThemeBase, CompiledThemes, CompiledThemeWithoutAntd, SuiThemeConfig, ThemeOptionsGetter, ThemesConfig, ThemeVariant} from "@/themes/types";
 import {defaultMuiTheme, defaultThemesConfig} from "@/themes/defaultThemesConfig";
 import {getThemeVariables} from '@/antdMissedExport';
 
@@ -19,7 +19,7 @@ function getMuiTheme(baseTheme: Theme, options?: ThemeOptionsGetter): Theme {
   return createMuiTheme(options);
 }
 
-function compileSuiTheme(theme: SuiThemeConfig, base: CompiledThemeBase): CompiledTheme {
+function compileSuiTheme(theme: SuiThemeConfig, base: CompiledThemeBase): CompiledThemeWithoutAntd {
   const muiTheme = getMuiTheme(base.muiTheme, theme.materialThemeConfig);
   return {
     name: base.name,
