@@ -34,7 +34,7 @@ export function getAntdVars(themes: ThemesConfig): {
 } {
   return {
     light: merge({}, lightAntdTheme, themes.common.lessVars, themes.light.lessVars),
-    dark: merge({}, lightAntdTheme, themes.common.lessVars, themes.dark.lessVars),
+    dark: merge({}, darkAntdTheme, themes.common.lessVars, themes.dark.lessVars),
   }
 }
 
