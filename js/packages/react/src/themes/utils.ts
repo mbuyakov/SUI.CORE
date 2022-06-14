@@ -23,7 +23,7 @@ function compileSuiTheme(theme: SuiThemeConfig, base: CompiledThemeBase): Compil
   const muiTheme = getMuiTheme(base.muiTheme, theme.materialThemeConfig);
   return {
     name: base.name,
-    lessVars: merge({}, base.lessVars),
+    lessVars: merge({}, base.lessVars, theme.lessVars),
     muiTheme,
     baseTableMuiTheme: getMuiTheme(muiTheme, theme.baseTableMaterialThemeConfig),
     drawerMaterialTheme: getMuiTheme(muiTheme, theme.drawerMaterialThemeConfig)
