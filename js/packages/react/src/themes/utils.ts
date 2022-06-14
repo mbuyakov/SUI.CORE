@@ -10,7 +10,7 @@ const darkAntdTheme = getThemeVariables({dark: true});
 
 function getMuiTheme(baseTheme: Theme, options?: ThemeOptionsGetter): Theme {
   if (!options) {
-    return defaultMuiTheme;
+    return baseTheme;
   }
 
   if (typeof options == 'function') {
@@ -33,8 +33,8 @@ export function getAntdVars(themes: ThemesConfig): {
   [theme in ThemeVariant]: AntdThemeVars
 } {
   return {
-    light: merge({}, lightAntdTheme, themes.common.lessVars, themes.light.lessVars),
-    dark: merge({}, darkAntdTheme, themes.common.lessVars, themes.dark.lessVars),
+    light: merge({}, lightAntdTheme, themes.common?.lessVars ?? {}, themes.light?.lessVars ?? {}),
+    dark: merge({}, darkAntdTheme, themes.common?.lessVars ?? {}, themes.dark?.lessVars ?? {}),
   }
 }
 
