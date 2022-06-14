@@ -174,7 +174,7 @@ asyncOnlyCacheGroups.forEach(it => {
   cacheGroups[key].priority += 5;
 });
 
-const {getMergedThemeConfigs} = require('../../react/es/themes/utils');
+const {getAntdVars} = require('../../react/es/themes/utils');
 
 const buildTime = new Date().toISOString();
 
@@ -247,9 +247,9 @@ function generateUmiConfig(params) {
   } = params;
 
   const {
-    commonWithLightTheme,
-    commonWithDarkTheme
-  } = getMergedThemeConfigs(themes);
+    light,
+    dark
+  } = getAntdVars(themes);
 
 
   const umiPluginReactConfig = {
@@ -292,12 +292,12 @@ function generateUmiConfig(params) {
   ];
 
   if (!process.env.NO_DARK) {
-    plugins.push(['@sui/all/dark-theme-plugin.js', commonWithDarkTheme.lessVars]);
+    plugins.push(['@sui/all/dark-theme-plugin.js', dark]);
   }
 
   let umiConfig = {
     publicPath: "./",
-    theme: commonWithLightTheme.lessVars,
+    theme: light,
     define: {
       "process.env.BUILD_TIME": buildTime,
       "process.env.NO_DARK": process.env.NO_DARK,

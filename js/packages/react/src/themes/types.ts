@@ -16,9 +16,14 @@ export interface ThemesConfig {
   dark?: SuiThemeConfig
 }
 
+export type AntdThemeVars = { [key: string]: string }
+
+export interface AntdTheme {
+  lessVars: AntdThemeVars
+}
+
 export interface CompiledThemeBase {
   name: ThemeVariant
-  lessVars: { [key: string]: string }
   muiTheme: Theme
 }
 
@@ -28,8 +33,8 @@ export type CompiledTheme = CompiledThemeBase & {
 }
 
 export interface CompiledThemes {
-  light: CompiledTheme
-  dark: CompiledTheme
+  light: CompiledTheme & AntdTheme
+  dark: CompiledTheme & AntdTheme
 }
 
 export type ThemeVariant = keyof CompiledThemes;

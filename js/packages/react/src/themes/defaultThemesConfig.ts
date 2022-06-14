@@ -22,7 +22,7 @@ export const defaultThemesConfig: ThemesConfig = {
       "border-color-base": "rgba(217, 217, 217, 0.6)",
       "btn-shadow": "none"
     },
-    materialThemeConfig: muiDefaultTheme => ({
+    materialThemeConfig: theme => ({
       palette: {
         primary: {
           main: "#56CBF8",
@@ -32,9 +32,9 @@ export const defaultThemesConfig: ThemesConfig = {
       overrides: {
         MuiToolbar: {
           gutters: {
-            [muiDefaultTheme.breakpoints.up('sm')]: {
-              paddingLeft: muiDefaultTheme.spacing(2), // 3 -> 2
-              paddingRight: muiDefaultTheme.spacing(2)
+            [theme.breakpoints.up('sm')]: {
+              paddingLeft: theme.spacing(2), // 3 -> 2
+              paddingRight: theme.spacing(2)
             }
           }
         },
@@ -90,9 +90,6 @@ export const defaultThemesConfig: ThemesConfig = {
           background: {
             paper: "#001529",
             default: "#000c17",
-          },
-          action: {
-            hover: "rgba(0,0,0,0.5)"
           }
         },
         overrides: {

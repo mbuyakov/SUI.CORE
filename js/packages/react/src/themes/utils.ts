@@ -1,7 +1,7 @@
 import merge from 'lodash/merge';
 import {createMuiTheme, Theme} from '@material-ui/core/styles';
 
-import {CompiledTheme, CompiledThemeBase, CompiledThemes, SuiThemeConfig, ThemeOptionsGetter, ThemesConfig} from "@/themes/types";
+import {AntdTheme, AntdThemeVars, CompiledTheme, CompiledThemeBase, CompiledThemes, SuiThemeConfig, ThemeOptionsGetter, ThemesConfig, ThemeVariant} from "@/themes/types";
 import {defaultMuiTheme, defaultThemesConfig} from "@/themes/defaultThemesConfig";
 import {getThemeVariables} from '@/antdMissedExport';
 
@@ -23,14 +23,23 @@ function compileSuiTheme(theme: SuiThemeConfig, base: CompiledThemeBase): Compil
   const muiTheme = getMuiTheme(base.muiTheme, theme.materialThemeConfig);
   return {
     name: base.name,
-    lessVars: merge({}, base.lessVars, theme.lessVars),
     muiTheme,
     baseTableMuiTheme: getMuiTheme(muiTheme, theme.baseTableMaterialThemeConfig),
     drawerMaterialTheme: getMuiTheme(muiTheme, theme.drawerMaterialThemeConfig)
   }
 }
 
+export function getAntdVars(themes: ThemesConfig): {
+  [theme in ThemeVariant]: AntdThemeVars
+} {
+  return {
+    light: merge({}, lightAntdTheme, themes.common.lessVars, themes.light.lessVars),
+    dark: merge({}, lightAntdTheme, themes.common.lessVars, themes.dark.lessVars),
+  }
+}
+
 export function getCompiledThemes(themes: ThemesConfig): CompiledThemes {
+  const antdVars = getAntdVars(themes);
   const commonBaseTheme = compileSuiTheme(defaultThemesConfig.common, {
     // Stub
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -44,19 +53,23 @@ export function getCompiledThemes(themes: ThemesConfig): CompiledThemes {
   const lightBaseTheme = compileSuiTheme(defaultThemesConfig.light, {
     ...commonTheme,
     name: "light",
-    lessVars: merge({}, lightAntdTheme, commonTheme.lessVars)
   });
   const lightTheme = compileSuiTheme(themes.light, lightBaseTheme);
 
   const darkBaseTheme = compileSuiTheme(defaultThemesConfig.dark, {
     ...commonTheme,
     name: "dark",
-    lessVars: merge({}, darkAntdTheme, commonTheme.lessVars)
   });
   const darkTheme = compileSuiTheme(themes.dark, darkBaseTheme);
 
   return {
-    light: lightTheme,
-    dark: darkTheme
+    light: {
+      ...lightTheme,
+      lessVars: antdVars.light,
+    },
+    dark: {
+      ...darkTheme,
+      lessVars: antdVars.dark
+    }
   }
 }
