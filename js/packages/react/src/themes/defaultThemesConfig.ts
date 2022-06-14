@@ -71,6 +71,19 @@ export const defaultThemesConfig: ThemesConfig = {
         }
       }
     },
+    // Antd style
+    drawerMaterialThemeConfig: {
+      palette: {
+        text: {
+          primary: "hsla(0,0%,100%,.65)",
+          secondary: "#FFF" // Highlight hover
+        },
+        background: {
+          paper: "#001529",
+          default: "#000c17"
+        }
+      }
+    }
   },
   dark: {
     materialThemeConfig: {
@@ -89,6 +102,14 @@ export const defaultThemesConfig: ThemesConfig = {
               WebkitTextFillColor: "white"
             }
           }
+        }
+      }
+    },
+    // Antd style
+    drawerMaterialThemeConfig: {
+      palette: {
+        text: {
+          secondary: "#FFF" // Highlight hover
         }
       }
     }
