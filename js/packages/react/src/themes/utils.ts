@@ -19,13 +19,13 @@ function getMuiTheme(baseTheme: Theme, options?: ThemeOptionsGetter): Theme {
   return createMuiTheme(options);
 }
 
-function compileSuiTheme(theme: SuiThemeConfig, base: CompiledThemeBase): CompiledThemeWithoutAntd {
-  const muiTheme = getMuiTheme(base.muiTheme, theme.materialThemeConfig);
+function compileSuiTheme(base: CompiledThemeBase, theme?: SuiThemeConfig): CompiledThemeWithoutAntd {
+  const muiTheme = getMuiTheme(base.muiTheme, theme?.materialThemeConfig);
   return {
     name: base.name,
     muiTheme,
-    baseTableMuiTheme: getMuiTheme(muiTheme, theme.baseTableMaterialThemeConfig),
-    drawerMaterialTheme: getMuiTheme(muiTheme, theme.drawerMaterialThemeConfig)
+    baseTableMuiTheme: getMuiTheme(muiTheme, theme?.baseTableMaterialThemeConfig),
+    drawerMaterialTheme: getMuiTheme(muiTheme, theme?.drawerMaterialThemeConfig)
   }
 }
 
@@ -40,27 +40,27 @@ export function getAntdVars(themes: ThemesConfig): {
 
 export function getCompiledThemes(themes: ThemesConfig): CompiledThemes {
   const antdVars = getAntdVars(themes);
-  const commonBaseTheme = compileSuiTheme(defaultThemesConfig.common, {
+  const commonBaseTheme = compileSuiTheme({
     // Stub
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     name: "common",
     lessVars: {},
     muiTheme: defaultMuiTheme
-  });
-  const commonTheme = compileSuiTheme(themes.common, commonBaseTheme);
+  }, defaultThemesConfig.common);
+  const commonTheme = compileSuiTheme(commonBaseTheme, themes.common);
 
-  const lightBaseTheme = compileSuiTheme(defaultThemesConfig.light, {
+  const lightBaseTheme = compileSuiTheme({
     ...commonTheme,
     name: "light",
-  });
-  const lightTheme = compileSuiTheme(themes.light, lightBaseTheme);
+  }, defaultThemesConfig.light);
+  const lightTheme = compileSuiTheme(lightBaseTheme, themes.light);
 
-  const darkBaseTheme = compileSuiTheme(defaultThemesConfig.dark, {
+  const darkBaseTheme = compileSuiTheme({
     ...commonTheme,
     name: "dark",
-  });
-  const darkTheme = compileSuiTheme(themes.dark, darkBaseTheme);
+  }, defaultThemesConfig.dark);
+  const darkTheme = compileSuiTheme(darkBaseTheme, themes.dark);
 
   return {
     light: {
