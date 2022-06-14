@@ -44,7 +44,16 @@ export const defaultThemesConfig: ThemesConfig = {
           },
         }
       }
-    })
+    }),
+    drawerMaterialThemeConfig: {
+      overrides: {
+        MuiListItemIcon: {
+          root: {
+            color: "inherit"
+          },
+        },
+      },
+    },
   },
   light: {
     materialThemeConfig: {
@@ -72,18 +81,42 @@ export const defaultThemesConfig: ThemesConfig = {
       }
     },
     // Antd style
-    drawerMaterialThemeConfig: {
-      palette: {
-        text: {
-          primary: "hsla(0,0%,100%,.65)",
-          secondary: "#FFF" // Highlight hover
+    drawerMaterialThemeConfig: (theme) => {
+      const textColor = "rgba(255,255,255,0.65)";
+      const hoverTextColor = "rgba(255,255,255,0.95)";
+
+      return {
+        palette: {
+          background: {
+            paper: "#001529",
+            default: "#000c17",
+          },
+          action: {
+            hover: "rgba(0,0,0,0.5)"
+          }
         },
-        background: {
-          paper: "#001529",
-          default: "#000c17"
+        overrides: {
+          MuiListItem: {
+            root: {
+              transition: theme.transitions.create('color'),
+              color: textColor,
+              "&:hover": {
+                color: hoverTextColor,
+              },
+            }
+          },
+          MuiIconButton: {
+            label: {
+              transition: theme.transitions.create('color'),
+              color: textColor,
+              "&:hover": {
+                color: hoverTextColor,
+              }
+            }
+          }
         }
-      }
-    }
+      };
+    },
   },
   dark: {
     materialThemeConfig: {
@@ -102,14 +135,6 @@ export const defaultThemesConfig: ThemesConfig = {
               WebkitTextFillColor: "white"
             }
           }
-        }
-      }
-    },
-    // Antd style
-    drawerMaterialThemeConfig: {
-      palette: {
-        text: {
-          secondary: "#FFF" // Highlight hover
         }
       }
     }
