@@ -29,10 +29,14 @@ function prepareMuiTheme(base: ThemeAndOptions, options?: ThemeOptionsGetter): T
 }
 
 function mergePreCompiledSuiTheme(base: PreCompiledTheme, theme?: SuiThemeConfig): PreCompiledTheme {
+  const muiTheme = prepareMuiTheme(base.muiTheme, theme?.materialThemeConfig);
+  const themeWithBaseBaseTable = prepareMuiTheme(muiTheme, base.baseTableMuiTheme.options);
+  const themeWithBaseDrawer = prepareMuiTheme(muiTheme, base.drawerMaterialTheme.options);
+
   return {
-    muiTheme: prepareMuiTheme(base.muiTheme, theme?.materialThemeConfig),
-    baseTableMuiTheme: prepareMuiTheme(base.baseTableMuiTheme, theme?.baseTableMaterialThemeConfig),
-    drawerMaterialTheme: prepareMuiTheme(base.drawerMaterialTheme, theme?.drawerMaterialThemeConfig)
+    muiTheme,
+    baseTableMuiTheme: prepareMuiTheme(themeWithBaseBaseTable, theme?.baseTableMaterialThemeConfig),
+    drawerMaterialTheme: prepareMuiTheme(themeWithBaseDrawer, theme?.drawerMaterialThemeConfig)
   }
 }
 
