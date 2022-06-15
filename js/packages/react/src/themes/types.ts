@@ -1,5 +1,4 @@
 import {Theme, ThemeOptions} from "@material-ui/core/styles";
-import {Merge} from "@sui/core";
 
 export type ThemeOptionsGetter = ThemeOptions | ((theme: Theme) => ThemeOptions);
 
