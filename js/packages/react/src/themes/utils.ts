@@ -1,14 +1,52 @@
 import merge from 'lodash/merge';
 import {createMuiTheme, ThemeOptions} from '@material-ui/core/styles';
 
-import {AntdThemeVars, CompiledThemes, PreCompiledTheme, SuiThemeConfig, ThemeAndOptions, ThemeOptionsGetter, ThemesConfig, ThemeVariant} from "@/themes/types";
+import {AntdThemeVars, CompiledTheme, CompiledThemes, PreCompiledTheme, SuiThemeConfig, ThemeAndOptions, ThemeOptionsGetter, ThemesConfig, ThemeVariant} from "@/themes/types";
 import {defaultMuiTheme, defaultThemesConfig} from "@/themes/defaultThemesConfig";
 import {getThemeVariables} from '@/antdMissedExport';
+import {Nullable} from "@sui/core";
 
 const lightAntdTheme = getThemeVariables({dark: false});
 const darkAntdTheme = getThemeVariables({dark: true});
 
-function prepareMuiTheme(base: ThemeAndOptions, options?: ThemeOptionsGetter): ThemeAndOptions {
+/* antd theme merging magic
+* ------------ LIGHT
+* default antd light theme
+* + common SUI defaultTheme
+*   + common project SUI theme
+*     + light SUI defaultTheme
+*       + light project SUI theme
+* ------------ DARK
+* default antd dark theme
+* + common SUI defaultTheme
+*   + common project SUI theme
+*     + dark SUI defaultTheme
+*       + dark project SUI theme
+*/
+export function getAntdVars(themes: ThemesConfig): {
+  [theme in ThemeVariant]: AntdThemeVars
+} {
+  return {
+    light: merge(
+      {},
+      lightAntdTheme,
+      defaultThemesConfig.common?.lessVars ?? {},
+      themes.common?.lessVars ?? {},
+      defaultThemesConfig.light?.lessVars ?? {},
+      themes.light?.lessVars ?? {}
+    ),
+    dark: merge(
+      {},
+      darkAntdTheme,
+      defaultThemesConfig.common?.lessVars ?? {},
+      themes.common?.lessVars ?? {},
+      defaultThemesConfig.dark?.lessVars ?? {},
+      themes.dark?.lessVars ?? {}
+    ),
+  }
+}
+
+function mergeMuiTheme(base: ThemeAndOptions, options?: ThemeOptionsGetter): ThemeAndOptions {
   if (!options) {
     return base;
   }
@@ -28,61 +66,76 @@ function prepareMuiTheme(base: ThemeAndOptions, options?: ThemeOptionsGetter): T
   };
 }
 
-function mergePreCompiledSuiTheme(base: PreCompiledTheme, theme?: SuiThemeConfig): PreCompiledTheme {
-  const muiTheme = prepareMuiTheme(base.muiTheme, theme?.materialThemeConfig);
-  const themeWithBaseBaseTable = prepareMuiTheme(muiTheme, base.baseTableMuiTheme.options);
-  const themeWithBaseDrawer = prepareMuiTheme(muiTheme, base.drawerMaterialTheme.options);
-
-  return {
-    muiTheme,
-    baseTableMuiTheme: prepareMuiTheme(themeWithBaseBaseTable, theme?.baseTableMaterialThemeConfig),
-    drawerMaterialTheme: prepareMuiTheme(themeWithBaseDrawer, theme?.drawerMaterialThemeConfig)
-  }
+function mergeMuiThemes(base: ThemeAndOptions, options: Nullable<ThemeOptionsGetter>[]): ThemeAndOptions {
+  return options
+    .filter(Boolean)
+    .reduce<ThemeAndOptions>((prev, cur) => mergeMuiTheme(prev, cur), base);
 }
 
-export function getAntdVars(themes: ThemesConfig): {
-  [theme in ThemeVariant]: AntdThemeVars
-} {
-  return {
-    light: merge({}, lightAntdTheme, themes.common?.lessVars ?? {}, themes.light?.lessVars ?? {}),
-    dark: merge({}, darkAntdTheme, themes.common?.lessVars ?? {}, themes.dark?.lessVars ?? {}),
-  }
+function getArrayForCustom(themes: ThemesConfig, variant: ThemeVariant, customName: keyof Omit<SuiThemeConfig, 'lessVars' | 'materialThemeConfig'>): Nullable<ThemeOptionsGetter>[] {
+  return [
+    defaultThemesConfig[variant]?.materialThemeConfig,
+    themes[variant]?.materialThemeConfig,
+    defaultThemesConfig.common?.[customName],
+    themes.common?.[customName],
+    defaultThemesConfig[variant]?.[customName],
+    themes[variant]?.[customName],
+  ];
 }
 
+/* MUI theme merging magic
+* default MUI theme
+* + common SUI defaultTheme
+*   + common project SUI theme
+* ------------ CUSTOM (baseTable, drawer)
+*   | + (color) common SUI defaultTheme
+*   |   + (color) common project SUI theme
+*   |     + CUSTOM common SUI defaultTheme
+*   |       + CUSTOM common project SUI theme
+*   |         + (color) CUSTOM SUI defaultTheme
+*   |           + (color) CUSTOM project SUI theme
+* ------------ COLOR
+*   | + COLOR SUI defaultTheme
+*   |   + COLOR project SUI
+*/
 export function getCompiledThemes(themes: ThemesConfig): CompiledThemes {
-  const defaultThemeAndOptions: ThemeAndOptions = {
+  const common = mergeMuiThemes({
     theme: defaultMuiTheme,
     options: {}
-  };
+  }, [
+    defaultThemesConfig.common?.materialThemeConfig,
+    themes.common?.materialThemeConfig
+  ]);
 
-  const commonBaseTheme = mergePreCompiledSuiTheme({
-    muiTheme: defaultThemeAndOptions,
-    baseTableMuiTheme: defaultThemeAndOptions,
-    drawerMaterialTheme: defaultThemeAndOptions,
-  }, defaultThemesConfig.common);
-  const commonTheme = mergePreCompiledSuiTheme(commonBaseTheme, themes.common);
+  const light = mergeMuiThemes(common, [
+    defaultThemesConfig.light?.materialThemeConfig,
+    themes.light?.baseTableMaterialThemeConfig
+  ]);
+  const lightBT = mergeMuiThemes(common, getArrayForCustom(themes, "light", "baseTableMaterialThemeConfig"));
+  const lightD = mergeMuiThemes(common, getArrayForCustom(themes, "light", "baseTableMaterialThemeConfig"));
 
-  const lightBaseTheme = mergePreCompiledSuiTheme(commonTheme, defaultThemesConfig.light);
-  const lightTheme = mergePreCompiledSuiTheme(lightBaseTheme, themes.light);
-
-  const darkBaseTheme = mergePreCompiledSuiTheme(commonTheme, defaultThemesConfig.dark);
-  const darkTheme = mergePreCompiledSuiTheme(darkBaseTheme, themes.dark);
+  const dark = mergeMuiThemes(common, [
+    defaultThemesConfig.light?.materialThemeConfig,
+    themes.light?.baseTableMaterialThemeConfig
+  ]);
+  const darkBT = mergeMuiThemes(common, getArrayForCustom(themes, "dark", "baseTableMaterialThemeConfig"));
+  const darkD = mergeMuiThemes(common, getArrayForCustom(themes, "dark", "baseTableMaterialThemeConfig"));
 
   const antdVars = getAntdVars(themes);
 
   return {
     light: {
       name: "light",
-      muiTheme: lightTheme.muiTheme.theme,
-      baseTableMuiTheme: lightTheme.baseTableMuiTheme.theme,
-      drawerMaterialTheme: lightTheme.drawerMaterialTheme.theme,
+      muiTheme: light.theme,
+      baseTableMuiTheme: lightBT.theme,
+      drawerMaterialTheme: lightD.theme,
       lessVars: antdVars.light,
     },
     dark: {
       name: "dark",
-      muiTheme: darkTheme.muiTheme.theme,
-      baseTableMuiTheme: darkTheme.baseTableMuiTheme.theme,
-      drawerMaterialTheme: darkTheme.drawerMaterialTheme.theme,
+      muiTheme: dark.theme,
+      baseTableMuiTheme: darkBT.theme,
+      drawerMaterialTheme: darkD.theme,
       lessVars: antdVars.dark
     }
   }
