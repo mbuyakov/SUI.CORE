@@ -52,6 +52,11 @@ export const defaultThemesConfig: ThemesConfig = {
 
       return {
         overrides: {
+          MuiListItemIcon: {
+            root: {
+              color: "inherit"
+            },
+          },
           MuiListItem: {
             root: {
               color: textColor,
