@@ -111,14 +111,14 @@ export function getCompiledThemes(themes: ThemesConfig): CompiledThemes {
     themes.light?.baseTableMaterialThemeConfig
   ]);
   const lightBT = mergeMuiThemes(common, getArrayForCustom(themes, "light", "baseTableMaterialThemeConfig"));
-  const lightD = mergeMuiThemes(common, getArrayForCustom(themes, "light", "baseTableMaterialThemeConfig"));
+  const lightD = mergeMuiThemes(common, getArrayForCustom(themes, "light", "drawerMaterialThemeConfig"));
 
   const dark = mergeMuiThemes(common, [
     defaultThemesConfig.light?.materialThemeConfig,
     themes.light?.baseTableMaterialThemeConfig
   ]);
   const darkBT = mergeMuiThemes(common, getArrayForCustom(themes, "dark", "baseTableMaterialThemeConfig"));
-  const darkD = mergeMuiThemes(common, getArrayForCustom(themes, "dark", "baseTableMaterialThemeConfig"));
+  const darkD = mergeMuiThemes(common, getArrayForCustom(themes, "dark", "drawerMaterialThemeConfig"));
 
   const antdVars = getAntdVars(themes);
 
