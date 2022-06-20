@@ -139,6 +139,14 @@ export const defaultThemesConfig: ThemesConfig = {
           }
         }
       }
+    },
+    drawerMaterialThemeConfig: {
+      palette: {
+        background: {
+          default: "#141414",
+          paper: "#1f1f1f"
+        }
+      }
     }
   }
 };
