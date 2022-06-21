@@ -23,6 +23,10 @@ export const defaultThemesConfig: ThemesConfig = {
       "btn-shadow": "none"
     },
     materialThemeConfig: theme => ({
+      zIndex: Object.keys(theme.zIndex).reduce((prev, cur) => {
+        prev[cur] = theme.zIndex[cur] - 900;
+        return prev;
+      }, {}),
       palette: {
         primary: {
           main: "#56CBF8",
