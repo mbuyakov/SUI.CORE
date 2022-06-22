@@ -1,24 +1,35 @@
-import {Collapse, CollapseProps, withStyles} from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar';
-import Dialog, {DialogProps} from '@material-ui/core/Dialog';
-import IconButton from '@material-ui/core/IconButton';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import autobind from 'autobind-decorator';
 import React from 'react';
-import {v4 as uuidv4} from 'uuid';
 import {sleep} from '@sui/core';
+import {AppBar, Dialog, DialogProps, IconButton, Slide, Toolbar} from '@material-ui/core';
+import {Theme, withStyles} from '@material-ui/core/styles';
+import {TransitionProps} from '@material-ui/core/transitions';
+import {ClassNameMap} from "@material-ui/styles";
+import {AppBarElevator} from '@/Material';
 
-import {Z_999} from './styles';
 
 type ChildrenWithPopupContainer = (getPopupContainer?: () => HTMLElement) => JSX.Element
 
-function Transition(props: CollapseProps): JSX.Element {
-  return <Collapse {...props}/>;
-}
+const styles = (theme: Theme) => ({
+  toolbar: {
+    ...theme.mixins.toolbar
+  },
+  container: {
+    overflow: "auto"
+  }
+});
+
+const Transition = React.forwardRef((
+  props: TransitionProps & { children?: React.ReactElement },
+  ref: React.Ref<unknown>,
+) => {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 interface IFullScreenModalProps {
+  classes?: ClassNameMap<'toolbar' | 'container'>,
   children: JSX.Element | ChildrenWithPopupContainer,
   defaultOpen?: boolean;
   dialogProps?: Omit<DialogProps, "children" | "fullScreen" | "open" | "onClose">;
@@ -28,16 +39,14 @@ interface IFullScreenModalProps {
   onClose?(): void;
 }
 
-class FullScreenDialogImpl extends React.Component<IFullScreenModalProps, {
+class FullScreenModalImpl extends React.Component<IFullScreenModalProps, {
   open?: boolean;
+  containerRef?: HTMLElement;
 }> {
-
-  private readonly id: string;
 
   public constructor(props: IFullScreenModalProps) {
     super(props);
     this.state = {open: this.props.defaultOpen};
-    this.id = uuidv4();
   }
 
   public open(): void {
@@ -45,19 +54,21 @@ class FullScreenDialogImpl extends React.Component<IFullScreenModalProps, {
   }
 
   public render(): JSX.Element {
+
     return (
       <Dialog
-        classes={{root: Z_999}}
         fullScreen={true}
         open={this.state.open || false}
-        onClose={this.handleClose}
+        onClose={this.close}
+        scroll="paper"
         TransitionComponent={this.props.withoutTransition ? undefined : Transition}
         {...this.props.dialogProps}
       >
-        <div id={this.id} style={{maxHeight: '100%'}}>
-          <AppBar className="appBar" style={{zIndex: 1000, position: "relative"}}>
+
+        <AppBarElevator target={this.state.containerRef ?? undefined}>
+          <AppBar>
             <Toolbar>
-              <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
+              <IconButton color="inherit" onClick={this.close} aria-label="Close">
                 <CloseIcon/>
               </IconButton>
               <Typography variant="h6" color="inherit" style={{flex: 1}}>
@@ -65,19 +76,16 @@ class FullScreenDialogImpl extends React.Component<IFullScreenModalProps, {
               </Typography>
             </Toolbar>
           </AppBar>
-          <div
-            style={{
-              maxHeight: 'calc(100vh - 64px)',
-              minHeight: 'calc(100vh - 64px)',
-              overflowY: 'auto'
-            }}
-          >
-            {
-              typeof (this.props.children) === "function"
-                ? this.props.children(this.getPopupContainer)
-                : this.props.children
-            }
-          </div>
+        </AppBarElevator>
+        <div className={this.props.classes.toolbar}/>
+        <div
+          className={this.props.classes.container}
+          ref={containerRef => !this.state.containerRef && this.setState({containerRef})}>
+          {
+            typeof (this.props.children) === "function"
+              ? this.props.children(this.getPopupContainer)
+              : this.props.children
+          }
         </div>
       </Dialog>
     );
@@ -85,11 +93,11 @@ class FullScreenDialogImpl extends React.Component<IFullScreenModalProps, {
 
   @autobind
   private getPopupContainer(): HTMLElement {
-    return document.getElementById(this.id);
+    return this.state.containerRef;
   }
 
   @autobind
-  public handleClose(): void {
+  public close(): void {
     this.setState({open: false});
     sleep(500).then(() => {
       if (this.props.onClose) {
@@ -100,31 +108,5 @@ class FullScreenDialogImpl extends React.Component<IFullScreenModalProps, {
 
 }
 
-const FullScreenDialogImplWithStyles = withStyles({})(FullScreenDialogImpl);
-
-export class FullScreenModal extends React.Component<IFullScreenModalProps> {
-
-  private readonly innerRef: React.RefObject<FullScreenDialogImpl> = React.createRef<FullScreenDialogImpl>();
-
-  public open(): void {
-    if (this.innerRef.current) {
-      this.innerRef.current.open();
-    }
-  }
-
-  public close(): void {
-    if (this.innerRef.current) {
-      this.innerRef.current.handleClose();
-    }
-  }
-
-  public render(): JSX.Element {
-    return (
-      <FullScreenDialogImplWithStyles
-        innerRef={this.innerRef}
-        {...this.props}
-      />
-    );
-  }
-
-}
+export type FullScreenModalClass = FullScreenModalImpl;
+export const FullScreenModal = withStyles(styles)(FullScreenModalImpl);

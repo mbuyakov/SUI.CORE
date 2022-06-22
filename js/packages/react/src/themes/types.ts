@@ -1,41 +1,45 @@
 import {Theme, ThemeOptions} from "@material-ui/core/styles";
-import {Merge} from "@sui/core";
+
+export type ThemeOptionsGetter = ThemeOptions | ((theme: Theme) => ThemeOptions);
 
 export interface SuiThemeConfig {
-  lessVars?: { [key: string]: string },
-  materialThemeConfig?: ThemeOptions | ((muiDefaultTheme: Theme) => ThemeOptions),
-  baseTableMaterialThemeConfig?: ThemeOptions | ((muiTheme: Theme) => ThemeOptions)
+  lessVars?: { [key: string]: string }
+  materialThemeConfig?: ThemeOptionsGetter
+  baseTableMaterialThemeConfig?: ThemeOptionsGetter
+  drawerMaterialThemeConfig?: ThemeOptionsGetter
 }
 
-export type CompiledSuiThemeConfig = Merge<SuiThemeConfig, {
-  materialThemeConfig?: ThemeOptions
-  baseTableMaterialThemeConfig?: ThemeOptions
-}>;
-
 export interface ThemesConfig {
-  common?: SuiThemeConfig,
-  light?: SuiThemeConfig,
+  common?: SuiThemeConfig
+  light?: SuiThemeConfig
   dark?: SuiThemeConfig
 }
 
-export type CompiledThemesConfig = {
-  [Name in keyof ThemesConfig]?: CompiledSuiThemeConfig
+export interface ThemeAndOptions {
+  theme: Theme,
+  options: ThemeOptions
 }
 
-export interface MergedThemeConfigs {
-  commonWithLightTheme: CompiledSuiThemeConfig,
-  commonWithDarkTheme: CompiledSuiThemeConfig
+export type AntdThemeVars = { [key: string]: string }
+
+export interface AntdTheme {
+  lessVars: AntdThemeVars
 }
 
-export interface CompiledTheme {
-  name: ThemeVariant
-  lessVars: { [key: string]: string },
-  muiTheme: Theme,
-  baseTableMuiTheme: Theme
+export interface PreCompiledTheme {
+  muiTheme: ThemeAndOptions
+  baseTableMuiTheme: ThemeAndOptions
+  drawerMaterialTheme: ThemeAndOptions
+}
+
+export type CompiledTheme = AntdTheme & {
+  [key in keyof PreCompiledTheme]: Theme
+} & {
+  name: ThemeVariant;
 }
 
 export interface CompiledThemes {
-  light: CompiledTheme,
+  light: CompiledTheme
   dark: CompiledTheme
 }
 

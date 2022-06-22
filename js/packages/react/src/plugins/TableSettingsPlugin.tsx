@@ -6,7 +6,7 @@ import autobind from "autobind-decorator";
 import React from 'react';
 
 // noinspection ES6PreferShortImport
-import {FullScreenModal} from '../FullScreenModal';
+import {FullScreenModalClass} from '../FullScreenModal';
 // noinspection ES6PreferShortImport
 import {FullScreenTableSettings} from '../TableSettings';
 
@@ -18,7 +18,7 @@ interface ITableSettingsDialogProps {
 
 export class TableSettingsDialog extends React.Component<ITableSettingsDialogProps> {
 
-  private readonly dialogRef: React.RefObject<FullScreenModal> = React.createRef<FullScreenModal>();
+  private readonly dialogRef: React.RefObject<FullScreenModalClass> = React.createRef<FullScreenModalClass>();
 
   public render(): JSX.Element {
     return (

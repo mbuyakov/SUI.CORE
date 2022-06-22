@@ -22,7 +22,11 @@ export const defaultThemesConfig: ThemesConfig = {
       "border-color-base": "rgba(217, 217, 217, 0.6)",
       "btn-shadow": "none"
     },
-    materialThemeConfig: muiDefaultTheme => ({
+    materialThemeConfig: theme => ({
+      zIndex: Object.keys(theme.zIndex).reduce((prev, cur) => {
+        prev[cur] = theme.zIndex[cur] - 900;
+        return prev;
+      }, {}),
       palette: {
         primary: {
           main: "#56CBF8",
@@ -32,9 +36,9 @@ export const defaultThemesConfig: ThemesConfig = {
       overrides: {
         MuiToolbar: {
           gutters: {
-            [muiDefaultTheme.breakpoints.up('sm')]: {
-              paddingLeft: muiDefaultTheme.spacing(2), // 3 -> 2
-              paddingRight: muiDefaultTheme.spacing(2)
+            [theme.breakpoints.up('sm')]: {
+              paddingLeft: theme.spacing(2), // 3 -> 2
+              paddingRight: theme.spacing(2)
             }
           }
         },
@@ -44,12 +48,51 @@ export const defaultThemesConfig: ThemesConfig = {
           },
         }
       }
-    })
+    }),
+    // Antd style
+    drawerMaterialThemeConfig: (theme) => {
+      const textColor = "rgba(255,255,255,0.65)";
+      const hoverTextColor = "rgba(255,255,255,0.95)";
+
+      return {
+        overrides: {
+          MuiListItemIcon: {
+            root: {
+              color: "inherit"
+            },
+          },
+          MuiListItem: {
+            root: {
+              color: textColor,
+              "&:hover": {
+                transition: theme.transitions.create('color'),
+                color: hoverTextColor,
+              },
+              "&$selected": {
+                color: hoverTextColor,
+              }
+            }
+          },
+          MuiIconButton: {
+            label: {
+              color: textColor,
+              "&:hover": {
+                transition: theme.transitions.create('color'),
+                color: hoverTextColor,
+              }
+            }
+          }
+        }
+      };
+    },
   },
   light: {
     materialThemeConfig: {
       palette: {
-        type: "light"
+        type: "light",
+        background: {
+          default: "#f0f2f5" // Match antd
+        }
       },
       overrides: {
         MuiInput: {
@@ -68,13 +111,26 @@ export const defaultThemesConfig: ThemesConfig = {
         }
       }
     },
+    // Antd style
+    drawerMaterialThemeConfig: theme => ({
+      palette: {
+        background: {
+          paper: "#001529",
+          default: "#000c17",
+        },
+        action: {
+          selected: theme.palette.primary.main
+        }
+      },
+    }),
   },
   dark: {
     materialThemeConfig: {
       palette: {
         type: "dark",
         background: {
-          paper: "#141414" // Match antd
+          default: "#000000", // Match antd
+          paper: "#141414"
         }
       },
       overrides: {
@@ -85,6 +141,14 @@ export const defaultThemesConfig: ThemesConfig = {
               WebkitTextFillColor: "white"
             }
           }
+        }
+      }
+    },
+    drawerMaterialThemeConfig: {
+      palette: {
+        background: {
+          default: "#141414",
+          paper: "#1f1f1f"
         }
       }
     }

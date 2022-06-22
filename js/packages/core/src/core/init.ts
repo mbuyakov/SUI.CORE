@@ -25,6 +25,7 @@ export interface IInitSUISettings {
   restUri: string;
   rusName: string;
   offlineMode?: boolean;
+  hideTableSettings?: boolean;
   percentToColorSettings: IColorHeatMapSettings;
   permissions?: { exportAll?: Permission };
   routes: IRawRoute[];

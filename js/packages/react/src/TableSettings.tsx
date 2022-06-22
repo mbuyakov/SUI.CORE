@@ -14,7 +14,7 @@ import {AdditionalTab} from './additionalTabs';
 import {BaseCard} from './Base';
 import {SortingDirection} from './BaseTable';
 import {DraggableRowTable} from './DraggableRowTable';
-import {FullScreenModal} from './FullScreenModal';
+import {FullScreenModal, FullScreenModalClass} from './FullScreenModal';
 import {PromisedInput, PromisedMaterialIconButton, PromisedSelect, PromisedSwitch} from './Inputs';
 import {MainSettings} from './MetaCardSettings';
 import {NamePopover, TagsPopover, VisibleByRolesPopover} from './Popover';
@@ -31,14 +31,14 @@ const SAVE_SLEEP_DELAY = 1000;
 
 export function FullScreenTableSettings(props: {
   defaultOpen?: boolean
-  dialogRef?: React.RefObject<FullScreenModal>,
+  dialogRef?: React.RefObject<FullScreenModalClass>,
   id: string,
 }): JSX.Element {
   const {id, dialogRef, defaultOpen} = props;
 
   return (
     <FullScreenModal
-      ref={dialogRef}
+      innerRef={dialogRef}
       title={<div style={{display: 'grid', gridTemplateColumns: 'max-content max-content auto', alignItems: 'center'}}>
         <span>Настройки таблицы&nbsp;</span>
         <WaitData<string>

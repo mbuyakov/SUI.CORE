@@ -44,6 +44,7 @@ export * from "./FullScreenModal";
 export * from "./GlobalRoutesWrapper";
 export * from "./hooks";
 export * from "./InputWithApostropheValidation";
+export * from "./LoginPage";
 export * from "./ReportTopBarChart";
 export * from "./RoleVisibilityWrapper";
 export * from "./Socket";
