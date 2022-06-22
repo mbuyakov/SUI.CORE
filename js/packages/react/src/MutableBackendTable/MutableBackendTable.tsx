@@ -193,7 +193,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
             if (!defaultIfNotBoolean(this.props.disableDeleteNotification, false)) {
               notification.success({message: "Записи успешно удалены"});
             }
-            this.tableRef.current.clearSelection();
+            this.tableRef.current?.clearSelection?.();
 
             return this.tableRef.current.refresh();
           })
