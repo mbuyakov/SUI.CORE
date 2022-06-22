@@ -195,7 +195,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
             }
             this.tableRef.current?.clearSelection?.();
 
-            return this.tableRef.current.refresh();
+            return this.tableRef?.current?.refresh?.();
           })
           .catch(err => {
             if (err) {
