@@ -3,9 +3,7 @@ import jsonpack from "jsonpack";
 import pako from "pako";
 import {getSUISettings, OneOrArray, wrapInArray} from "@sui/core";
 
-
-import {BackendFilter, SimpleBackendFilter} from "./BackendTable";
-
+import {BackendFilter, IExpandedGroup, SimpleBackendFilter} from "./BackendTable";
 
 // Interfaces
 
@@ -21,6 +19,7 @@ export interface ITableStateDefinition {
   pageInfo?: IPageInfo;
   sorting?: Sorting[];
   grouping?: Grouping[];
+  expandedGroups?: IExpandedGroup[];
 }
 
 export interface IInnerTableStateDefinition {
@@ -30,6 +29,7 @@ export interface IInnerTableStateDefinition {
   pageInfo: IPageInfo;
   sorting?: Sorting[];
   grouping?: Grouping[];
+  expandedGroups?: IExpandedGroup[];
 }
 
 interface ISimpleLocation {
@@ -134,14 +134,14 @@ function putTableStateToLocation(
   urlStateDefinition[tableId] = {
     defaultFilter: state.defaultFilter && wrapInArray(state.defaultFilter).map(simpleFilter => {
       delete simpleFilter.lazy;
-
       return simpleFilter;
     }),
     filter: state.filter && wrapInArray(state.filter),
     mergeFilters: typeof (state.mergeFilters) === "boolean" ? state.mergeFilters : false,
     pageInfo: state.pageInfo || {pageNumber: 0},
     sorting: state.sorting,
-    grouping: state.grouping
+    grouping: state.grouping,
+    expandedGroups: state.expandedGroups
   };
 
   location.searchParams.set(STATE_URL_PARAM, encodeState(urlStateDefinition));

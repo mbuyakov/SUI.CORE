@@ -13,24 +13,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import ru.sui.suibackend.message.model.Grouping;
-import ru.sui.suibackend.message.model.Sorting;
-import ru.sui.suibackend.message.model.SortingDirection;
 import ru.sui.suibackend.message.request.*;
 import ru.sui.suibackend.message.response.ResponseMessageType;
 import ru.sui.suibackend.model.ResponseMessage;
 import ru.sui.suibackend.model.UserState;
-import ru.sui.suientity.entity.suimeta.ColumnInfo;
 import ru.sui.suisecurity.base.security.UserPrincipal;
-import ru.sui.suisecurity.base.utils.MetaSchemaUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -66,30 +63,7 @@ public class MessageHandlerService {
             throw new IllegalArgumentException("TableInfo with id " + initMessage.getTableInfoId() + " not found");
           }
 
-          @SuppressWarnings("ConstantConditions")
-          val orderSortedColumnInfos = new TreeSet<>(Comparator
-            .comparing(
-              ColumnInfo::getOrder,
-              Comparator.nullsLast(Comparator.naturalOrder()))
-            .thenComparingLong(ColumnInfo::getId));
-
-          orderSortedColumnInfos.addAll(MetaSchemaUtils.getAllowedColumnInfos(tableInfo, user.getRoles()));
-
           val pageNumber = Optional.ofNullable(initMessage.getCurrentPage()).orElse(0L);
-
-          // else - Поддержка старого UI
-          val sorts = Optional.ofNullable(initMessage.getSorts())
-            .filter(it -> !it.isEmpty())
-            .orElse(
-              orderSortedColumnInfos
-                .stream()
-                .filter(columnInfo -> columnInfo.getDefaultSorting() != null)
-                .map(columnInfo -> Sorting.builder()
-                  .columnName(columnInfo.getColumnName())
-                  .direction(SortingDirection.valueOf(columnInfo.getDefaultSorting().toUpperCase()))
-                  .build())
-                .collect(Collectors.toList())
-            );
 
           userState.clear();
           userState.setMetaData(metaData);
@@ -97,12 +71,9 @@ public class MessageHandlerService {
           userState.setPageSize(initMessage.getPageSize());
           userState.setFilters(initMessage.getDefaultFilters());
           userState.setGlobalFilters(initMessage.getGlobalFilters());
-          userState.setSorts(sorts);
-          userState.setGroupings(orderSortedColumnInfos
-            .stream()
-            .filter(columnInfo -> Boolean.TRUE.equals(columnInfo.getDefaultGrouping()))
-            .map(columnInfo -> Grouping.builder().columnName(columnInfo.getColumnName()).build())
-            .collect(Collectors.toList()));
+          userState.setSorts(initMessage.getSorts());
+          userState.setGroupings(initMessage.getGroupings());
+          userState.setExpandedGroups(initMessage.getExpandedGroups());
           break;
         case PAGE_CHANGE:
           val pageChangeMessage = parsedTreeToMessage(parsedPayload, PageChangeMessage.class);
