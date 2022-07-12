@@ -852,7 +852,7 @@ export class BackendTable<TSelection = defaultSelection>
           defaultFilters,
           globalFilters,
           sorts: sorting.map(sort => ({columnName: sort.columnName, direction: sort.direction.toUpperCase()})),
-          grouping,
+          groupings: grouping,
           expandedGroups: expandedGroups?.map?.(it => ({group: it.path}))
         },
         {
