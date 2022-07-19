@@ -6,6 +6,6 @@ RUN apk --update add \
     fontconfig  \
     ttf-dejavu
 
-ENV JAVA_TOOL_OPTIONS "-XX:+UseShenandoahGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=30"
+ENV JAVA_TOOL_OPTIONS "-XX:+AlwaysActAsServerClassMachine -XX:+UseShenandoahGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=30"
 
 EXPOSE 8080
