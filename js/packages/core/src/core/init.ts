@@ -24,6 +24,7 @@ export interface IInitSUISettings {
   ignoreColumnRoleRestriction?: boolean;
   restUri: string;
   rusName: string;
+  buildTime: string;
   offlineMode?: boolean;
   hideTableSettings?: boolean;
   percentToColorSettings: IColorHeatMapSettings;
