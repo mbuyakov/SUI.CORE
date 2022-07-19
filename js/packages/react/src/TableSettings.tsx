@@ -9,6 +9,7 @@ import autobind from 'autobind-decorator';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import {generateUpdate, generateUpdateFn, getDataByKey, getSUISettings, IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IObjectWithIndex, IRole, ISubtotalType, ITableInfo, mutate, query, sleep, TableInfo, TableInfoManager} from "@sui/core";
+import axios from "axios";
 
 import {AdditionalTab} from './additionalTabs';
 import {BaseCard} from './Base';
@@ -21,7 +22,7 @@ import {NamePopover, TagsPopover, VisibleByRolesPopover} from './Popover';
 import {SUI_ROW, SUI_ROW_GROW_LEFT} from './styles';
 import {TableRenderSettingsPopover} from './TableRenderSettings';
 import {TooltipIcon} from './TooltipIcon';
-import {draw, fullReloadTableInfo, getLinkForTable} from './utils';
+import {draw, fullReloadTableInfo, getLinkForTable, getUser} from './utils';
 import {WaitData} from './WaitData';
 
 
@@ -48,7 +49,10 @@ export function FullScreenTableSettings(props: {
         </WaitData>
         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
           <PromisedMaterialIconButton
-            promise={getSUISettings().metaschemaRefreshPromise}
+            promise={() => axios.get(
+              getSUISettings().metaschemaRefreshUrl,
+              {headers: {"Authorization": `Bearer ${getUser().accessToken}`}}
+            )}
             tooltipText="Обновить метасхему"
             progressColor="secondary"
           >

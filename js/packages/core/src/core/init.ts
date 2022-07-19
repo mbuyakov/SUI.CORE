@@ -34,7 +34,9 @@ export interface IInitSUISettings {
 
   defaultGetLinkForTable?(tableName: string, type: RouteType, id?: string | number): string | null;
 
-  metaschemaRefreshPromise(): Promise<void>;
+  metaschemaRefreshUrl: string;
+  metaschemaExportUrl?: string;
+  dropUserSettingsUrl?: string;
 
   routerPushFn(link: any): void;
 
