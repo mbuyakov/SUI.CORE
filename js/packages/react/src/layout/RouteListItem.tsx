@@ -38,22 +38,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const RouteListItem: React.FC<ListItemProps<'div'> & {
-  route: IRawRoute,
-  customListItemContent?: React.ReactNode;
-  base?: string;
-}> = ({
-        route,
-        customListItemContent,
-        base = 'app.route',
-        ...rest
-      }) => {
-  // Fast-fail path #1
+function shouldShowRouteListItem(route: IRawRoute, customListItemContent?: React.ReactNode): boolean {
   if (!route.name && !customListItemContent) {
-    return null;
+    return false;
   }
 
-  // Fast-fail path #2
   const authority = route.authority;
   if (authority) {
     // For old projects
@@ -66,12 +55,30 @@ export const RouteListItem: React.FC<ListItemProps<'div'> & {
 
     try {
       if (!checkAuthority(authority)) {
-        return null;
+        return false;
       }
     } catch (e) {
       console.error('Can\'t get state: ', e);
-      return null;
+      return false;
     }
+  }
+
+  return true;
+}
+
+export const RouteListItem: React.FC<ListItemProps<'div'> & {
+  route: IRawRoute,
+  customListItemContent?: React.ReactNode;
+  base?: string;
+}> = ({
+        route,
+        customListItemContent,
+        base = 'app.route',
+        ...rest
+      }) => {
+  // Fast-fail path
+  if (!shouldShowRouteListItem(route, customListItemContent)) {
+    return null;
   }
 
   // Hooks
@@ -101,15 +108,17 @@ export const RouteListItem: React.FC<ListItemProps<'div'> & {
 
   // Has subitems
   if (route.routes && !route.tabs && !route.group) {
-    const childs = route.routes.map(it => (
-      <RouteListItem
-        route={it}
-        base={newBase}
-      />
-    ));
+    const childs = route.routes
+      .filter(it => shouldShowRouteListItem(it))
+      .map(it => (
+        <RouteListItem
+          route={it}
+          base={newBase}
+        />
+      ));
 
     // No any subroutes available
-    if (childs.every(it => !it)) {
+    if (!childs.length) {
       return null;
     }
 
