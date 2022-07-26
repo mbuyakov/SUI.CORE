@@ -1,3 +1,5 @@
+export type AuthorityList = { [key in "and" | "or"]: string[]; };
+
 export const ROLE_PREFIX = 'ROLE_';
 
 export function formatRoleName(roleName: string): string {
@@ -7,23 +9,22 @@ export function formatRoleName(roleName: string): string {
 export type RouteType = 'card' | 'table';
 
 export interface IRawRoute {
-  actions: {
+  actions?: {
     title: string;
     onClick(): void;
   }
-  authority: string[];
-  breadcrumb: string;
-  breadcrumbFn: Promise<string>;
+  authority?: AuthorityList;
+  breadcrumb?: string;
+  breadcrumbFn?: Promise<string>;
   cardForEntity?: string[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component: any;
-  group: true;
-  icon: string;
-  name: string;
-  notTab: boolean;
+  component?: any;
+  group?: true;
+  icon?: string;
+  name?: string;
+  notTab?: boolean;
   path: string;
-  pathFn: string;
+  pathFn?: string;
   routes?: IRawRoute[];
   tableForEntity?: string[];
-  tabs: boolean;
+  tabs?: boolean;
 }

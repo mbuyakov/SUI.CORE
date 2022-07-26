@@ -45,7 +45,7 @@ function generateIndex(path) {
     .sort(naturalSorter);
 
   const files = allContent
-    .filter(it => isFile(`${path}/${it}`) && it !== "index.ts" && !it.endsWith(".test.ts"))
+    .filter(it => isFile(`${path}/${it}`) && it !== "index.ts" && !it.endsWith(".test.ts") && !it.endsWith(".less"))
     .sort(naturalSorter);
 
   let indexBody = "";
