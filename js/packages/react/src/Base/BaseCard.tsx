@@ -128,7 +128,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
                   tabList={tabList}
                   tabBarExtraContent={tabBarExtraContent}
                   activeTabKey={baseCardTabContext?.tab}
-                  defaultActiveTabKey={baseCardTabContext ? undefined : tabList[0]?.key}
+                  defaultActiveTabKey={baseCardTabContext ? undefined : tabList?.[0]?.key}
                   onTabChange={baseCardTabContext?.setTab}
                   extra={this.props.extra}
                   style={this.props.cardStyle}
@@ -149,7 +149,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
                 tabList={tabList}
                 tabBarExtraContent={tabBarExtraContent}
                 activeTabKey={baseCardTabContext?.tab}
-                defaultActiveTabKey={baseCardTabContext ? undefined : tabList[0]?.key}
+                defaultActiveTabKey={baseCardTabContext ? undefined : tabList?.[0]?.key}
                 onTabChange={baseCardTabContext?.setTab}
                 extra={this.props.extra}
                 style={this.props.cardStyle}
@@ -168,7 +168,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
       ret = (
         <BaseCardTabContextProvider
           routeKey={firstTabRouteKey}
-          defaultTab={tabList[0]?.key ?? "0"}
+          defaultTab={tabList?.[0]?.key ?? "0"}
         >
           {ret}
         </BaseCardTabContextProvider>
