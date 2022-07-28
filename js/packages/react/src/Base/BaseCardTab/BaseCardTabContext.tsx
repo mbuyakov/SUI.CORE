@@ -6,10 +6,11 @@ const BaseCardTabContext = React.createContext<{ setTab(tab: string): void, tab:
 
 type BaseCardTabContextProps = RouteComponentProps & {
   routeKey?: string;
+  defaultTab: string;
 };
 
 class BaseCardTabContextProviderInner extends React.Component<BaseCardTabContextProps, {
-  tab: string
+  tab: string;
 }> {
   public constructor(props: BaseCardTabContextProps) {
     super(props);

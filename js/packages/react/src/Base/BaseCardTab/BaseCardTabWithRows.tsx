@@ -9,6 +9,7 @@ import {BaseCardRow, IBaseCardRowLayout} from '../BaseCardRow/BaseCardRow';
 import {IBaseCardTabLayout} from './BaseCardTab';
 
 export interface IBaseCardTabWithRows<T, ITEM> {
+  key?: string;
   rows: OneOrArrayWithNulls<IBaseCardRowLayout<T, ITEM>>;
   title: string;
 }
@@ -19,7 +20,11 @@ export const BaseCardTabWithRows: <T, ITEM>(props: IBaseCardTabWithRows<T, ITEM>
   tabIndex: number,
   forceRenderTabs: boolean
 }) => JSX.Element = props => (
-  <Tabs.TabPane key={props.tabIndex.toString()} tab={<span>{props.title}</span>} forceRender={props.forceRenderTabs}>
+  <Tabs.TabPane
+    key={props.key ?? props.tabIndex.toString()}
+    tab={<span>{props.title}</span>}
+    forceRender={props.forceRenderTabs}
+  >
     {wrapInArrayWithoutNulls(props.rows).map((row, index, arr) => (
       <BaseCardRow
         key={index.toString()}
