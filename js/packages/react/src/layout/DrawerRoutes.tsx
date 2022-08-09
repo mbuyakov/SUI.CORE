@@ -10,6 +10,7 @@ export const DrawerRoutes: React.FC = () => {
     <List disablePadding={true}>
       {routes.map(it => (
         <RouteListItem
+          isSubItem={false}
           route={it}
           key={it.path}
         />

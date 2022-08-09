@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import {createStyles, makeStyles} from "@material-ui/core/styles";
 import {ListItem, ListItemIcon, ListItemProps, ListItemText, Theme, Tooltip} from "@material-ui/core";
-import {useLocation, useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import {matchPath as matchPathRR} from "react-router";
 import {Location} from "history"
 import {getSUISettings, IRawRoute} from "@sui/core";
@@ -67,11 +67,13 @@ function shouldShowRouteListItem(route: IRawRoute, customListItemContent?: React
 }
 
 export const RouteListItem: React.FC<ListItemProps<'div'> & {
-  route: IRawRoute,
+  route: IRawRoute;
+  isSubItem: boolean;
   customListItemContent?: React.ReactNode;
   base?: string;
 }> = ({
         route,
+        isSubItem,
         customListItemContent,
         base = 'app.route',
         ...rest
@@ -106,12 +108,13 @@ export const RouteListItem: React.FC<ListItemProps<'div'> & {
     </>
   );
 
-  // Has subitems
-  if (route.routes && !route.tabs && !route.group) {
+  const hasSubItems = route.routes && !route.tabs && !route.group;
+  if (hasSubItems) {
     const childs = route.routes
       .filter(it => shouldShowRouteListItem(it))
       .map(it => (
         <RouteListItem
+          isSubItem={true}
           route={it}
           base={newBase}
         />
@@ -122,12 +125,12 @@ export const RouteListItem: React.FC<ListItemProps<'div'> & {
       return null;
     }
 
-    const hasActiveSubpaths = route.routes.some(it => matchPath(location, it.path));
+    const hasActiveSubPaths = route.routes.some(it => matchPath(location, it.path));
 
     listItem = (
       <DrawerListSubmenu
         hoverMode={!drawerOpen}
-        active={hasActiveSubpaths}
+        active={hasActiveSubPaths}
         title={title}
         items={childs}
         CollapseProps={{className: classes.listSubmenu}}
@@ -151,7 +154,11 @@ export const RouteListItem: React.FC<ListItemProps<'div'> & {
   }
 
   // And add tooltip <3
-  if (!drawerOpen || (route.icon && title.length >= 21 || title.length >= 22)) {
+  if (
+    (!drawerOpen && !isSubItem) // Drawer closed, item in main menu
+    || (drawerOpen && (route.icon && title.length >= 21 || title.length >= 22)) // Drawer open, item in main menu
+    // Items in hover submenu (when drawer closed) has autowidth
+  ) {
     listItem = (
       <Tooltip title={title} placement="right" arrow={true}>
         {listItem}
