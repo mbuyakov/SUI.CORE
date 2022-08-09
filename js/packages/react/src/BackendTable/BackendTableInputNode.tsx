@@ -1,5 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import autobind from 'autobind-decorator';
 import {BackendTable} from "@/BackendTable/BackendTable";
 import {ExtractProps} from '@/other';
 
@@ -16,6 +17,7 @@ export type IBackendTableInputNodeProps<TSelection> =
   & IFormItemBackendTableInputNodeProps<TSelection>;
 
 export class BackendTableInputNode<TSelection = string> extends React.Component<IBackendTableInputNodeProps<TSelection>, {}> {
+  private baseTableRef: React.RefObject<BackendTable<TSelection>> = React.createRef<BackendTable<TSelection>>();
 
   public render(): React.ReactNode {
     return (
@@ -34,4 +36,10 @@ export class BackendTableInputNode<TSelection = string> extends React.Component<
       />
     );
   }
+
+  @autobind
+  public refresh(): Promise<void> {
+   return this.baseTableRef.current.refresh();
+  }
 }
+
