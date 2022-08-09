@@ -1,5 +1,9 @@
 const fs = require("fs");
 
+const naturalSorter = (a, b) => a.toLowerCase().localeCompare(b.toLowerCase());
+const isDirectory = it => fs.statSync(it).isDirectory();
+const isFile = it => fs.statSync(it).isFile();
+
 fs.readdirSync(".").forEach(packageName => {
   if (fs.statSync(packageName).isDirectory()) {
     console.log(`Processing package ${packageName}`);
@@ -7,54 +11,42 @@ fs.readdirSync(".").forEach(packageName => {
   }
 });
 
-function recursiveProcess(path) {
+async function recursiveProcess(path) {
   console.log(`Processing path ${path}`);
 
-  if (path === "react/src/styles" || path === "all/src") {
-    console.warn(`Ignore ${path}`);
-    return;
-  }
-
-  if (!fs.existsSync(path)) {
-    console.warn(`${path} not exist`);
-    return;
-  }
-
-  fs.readdirSync(path).forEach(item => {
-    const pathWithItem = `${path}/${item}`;
-    if (fs.statSync(pathWithItem).isDirectory()) {
-      recursiveProcess(pathWithItem);
-    }
-  });
+  await Promise.all(fs.readdirSync(path)
+    .map(item => `${path}/${item}`)
+    .filter(isDirectory)
+    .map(recursiveProcess));
 
   generateIndex(path);
 }
 
 function generateIndex(path) {
   console.log(`Generating index for ${path}`);
-  const pathWithIndex = `${path}/index.ts`;
-  let hasSmthExcludeExpropts = false;
 
-  if (fs.existsSync(pathWithIndex)) {
-    fs.readFileSync(pathWithIndex).toString().split("\n").forEach(row => {
-      if (!row.startsWith("export * from") && row.length) {
-        hasSmthExcludeExpropts = true;
-      }
-    });
+  const indexFilePath = `${path}/index.ts`;
+  if (fs.existsSync(indexFilePath)) {
+    const isCustom = fs.readFileSync(indexFilePath)
+      .toString()
+      .split("\n")
+      .some(row => !row.startsWith("export * from") && row.length);
+
+    if (isCustom) {
+      console.warn(`File ${indexFilePath} has something other than "export * from...". Ignore`);
+      return;
+    }
   }
 
-  if (hasSmthExcludeExpropts) {
-    console.warn(`File ${pathWithIndex} has something other than "export * from...". Ignore`);
-    return;
-  }
+  const allContent = fs.readdirSync(path);
 
-  const folders = fs.readdirSync(path)
-    .filter(it => fs.statSync(`${path}/${it}`).isDirectory())
-    .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+  const folders = allContent
+    .filter(it => isDirectory(`${path}/${it}`))
+    .sort(naturalSorter);
 
-  const files = fs.readdirSync(path)
-    .filter(it => fs.statSync(`${path}/${it}`).isFile() && it !== "index.ts" && !it.endsWith(".test.ts"))
-    .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+  const files = allContent
+    .filter(it => isFile(`${path}/${it}`) && it !== "index.ts" && !it.endsWith(".test.ts") && !it.endsWith(".less"))
+    .sort(naturalSorter);
 
   let indexBody = "";
 
@@ -69,5 +61,7 @@ function generateIndex(path) {
     files.forEach(it => indexBody += `export * from "./${it.split(".")[0]}";\n`)
   }
 
-  fs.writeFileSync(pathWithIndex, indexBody);
+  if (indexBody.length) {
+    fs.writeFileSync(indexFilePath, indexBody);
+  }
 }

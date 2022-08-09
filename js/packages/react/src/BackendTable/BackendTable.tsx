@@ -95,7 +95,7 @@ export interface IBackendTableProps {
   customFilterComponent?(props: ICustomFilterProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
 }
 
-interface IExpandedGroup {
+export interface IExpandedGroup {
   key: GroupKey;
   path: string[];
 }
@@ -155,8 +155,10 @@ export class BackendTable<TSelection = defaultSelection>
     let pageSize = this.props.pageSize;
     let sorting: Sorting[] | null | undefined;
     let grouping: Grouping[] | null | undefined;
+    let expandedGroups: IExpandedGroup[] | null | undefined;
 
     let urlState: IInnerTableStateDefinition | undefined;
+
     if (this.props.id) {
       urlState = getStateFromUrlParam(this.props.id);
 
@@ -166,7 +168,6 @@ export class BackendTable<TSelection = defaultSelection>
         defaultFilter = shouldMergeFilters
           ? mergeDefaultFilters(defaultFilter, urlState.defaultFilter)
           : urlState.defaultFilter;
-
         filter = shouldMergeFilters
           ? (urlState.filter || filter ? (urlState.filter || []).concat(filter || []) : undefined)
           : urlState.filter;
@@ -174,6 +175,7 @@ export class BackendTable<TSelection = defaultSelection>
         pageSize = urlState.pageInfo.pageSize;
         sorting = urlState.sorting;
         grouping = urlState.grouping;
+        expandedGroups = urlState.expandedGroups;
       }
     }
 
@@ -191,6 +193,8 @@ export class BackendTable<TSelection = defaultSelection>
       pageSize: resultPageSize,
       sorting,
       grouping,
+      expandedGroups: expandedGroups?.map?.(it => it.key),
+      realExpandedGroups: expandedGroups,
       totalCount: (defaultCurrentPage * resultPageSize) + 1
     };
   }
@@ -814,35 +818,29 @@ export class BackendTable<TSelection = defaultSelection>
       // TODO: Сейчас надо как-то дождатьзя загрузки инфы колонок что бы получить возможность тыкаться в directGetById. Куда ещё положить - не придумал
       await ColumnInfoManager.getAllValues();
 
-      const pageSize = this.state.pageSize;
-      const currentPage = resetPage ? 0 : (this.state.currentPage || this.state.defaultCurrentPage);
       const sortedColumns = await getAllowedColumnInfos(tableInfo, getUser().roles);
-
-      let defaultFilter = this.mapFilters(this.state.defaultFilter || [], true);
 
       const addDeletedFilter = !this.props.disableDeletedFilter
         && sortedColumns.find(column => column.columnName === DELETED_COLUMN)
         && (!this.state.defaultFilter || this.state.defaultFilter.every(it => it.columnName !== DELETED_COLUMN));
+      const defaultSorting: Sorting[] = sortedColumns
+        .filter(columnInfo => columnInfo.defaultSorting)
+        .map(columnInfo => ({columnName: columnInfo.columnName, direction: columnInfo.defaultSorting as 'asc' | 'desc'}));
+      const defaultGrouping: Grouping[] = sortedColumns
+        .filter(columnInfo => columnInfo.defaultGrouping)
+        .map(columnInfo => ({columnName: columnInfo.columnName}));
+
+      const pageSize = this.state.pageSize;
+      const currentPage = resetPage ? 0 : (this.state.currentPage || this.state.defaultCurrentPage);
+      const defaultFilters = [...this.mapFilters(this.state.defaultFilter || [], true)]; // разложение для пуша
+      const globalFilters = this.mapFilters(this.state.filter && wrapInArray(this.state.filter) || [], true);
+      const sorting = this.state.sorting || defaultSorting;
+      const grouping = this.state.grouping || defaultGrouping;
+      const expandedGroups = this.state.realExpandedGroups;
 
       if (addDeletedFilter) {
-        defaultFilter = [
-          ...defaultFilter,
-          {
-            columnName: DELETED_COLUMN,
-            value: 'false',
-            raw: true,
-          },
-        ];
+        defaultFilters.push({columnName: DELETED_COLUMN, value: "false", raw: true});
       }
-
-      const defaultSorting = sortedColumns
-        .filter(columnInfo => columnInfo.defaultSorting)
-        .map(columnInfo => ({
-          columnName: columnInfo.columnName,
-          direction: columnInfo.defaultSorting as 'asc' | 'desc',
-        }));
-
-      const sorting = this.state.sorting || defaultSorting;
 
       // noinspection JSIgnoredPromiseFromCall
       this.sendMessage(
@@ -851,21 +849,20 @@ export class BackendTable<TSelection = defaultSelection>
           pageSize,
           currentPage,
           tableInfoId: tableInfo.id,
-          defaultFilters: defaultFilter,
-          globalFilters: this.mapFilters(
-            this.state.filter && wrapInArray(this.state.filter) || [],
-            true,
-          ),
-          sorts: sorting.map(sort => ({columnName: sort.columnName, direction: sort.direction.toUpperCase()}))
+          defaultFilters,
+          globalFilters,
+          sorts: sorting.map(sort => ({columnName: sort.columnName, direction: sort.direction.toUpperCase()})),
+          groupings: grouping,
+          expandedGroups: expandedGroups?.map?.(it => ({group: it.path}))
         },
         {
           pageSize,
           currentPage,
+          filters: defaultFilters,
           sorting,
-          grouping: sortedColumns
-            .filter(columnInfo => columnInfo.defaultGrouping)
-            .map(columnInfo => ({columnName: columnInfo.columnName})),
-          filters: defaultFilter,
+          grouping,
+          expandedGroups: expandedGroups?.map?.(it => it.key),
+          realExpandedGroups: expandedGroups,
           ...additionalState,
         });
     }
@@ -913,11 +910,12 @@ export class BackendTable<TSelection = defaultSelection>
               defaultFilter: this.state.filters,
               filter: this.state.filter,
               sorting: this.state.sorting,
-              grouping: this.state.grouping,
               pageInfo: {
                 pageNumber: this.state.currentPage,
                 pageSize: this.state.pageSize
-              }
+              },
+              grouping: this.state.grouping,
+              expandedGroups: this.state.realExpandedGroups
             }
           )
         }

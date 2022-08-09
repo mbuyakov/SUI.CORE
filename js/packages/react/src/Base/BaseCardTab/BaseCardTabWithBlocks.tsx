@@ -5,6 +5,7 @@ import {BaseCardBlock, IBaseCardBlockLayout} from "@/Base/BaseCardBlockLayout";
 import {IBaseCardTabLayout} from "@/Base/BaseCardTab/BaseCardTab"
 
 export interface IBaseCardTabWithBlocks<T, ITEM> {
+  key?: string;
   blocks: OneOrArrayWithNulls<IBaseCardBlockLayout<T, ITEM>>;
   title: string;
 }
@@ -15,7 +16,11 @@ export const BaseCardTabWithBlocks: <T, ITEM>(props: IBaseCardTabWithBlocks<T, I
   tabIndex: number,
   forceRenderTabs: boolean
 }) => JSX.Element = props => (
-  <Tabs.TabPane key={props.tabIndex.toString()} tab={<span>{props.title}</span>} forceRender={props.forceRenderTabs}>
+  <Tabs.TabPane
+    key={props.key ?? props.tabIndex.toString()}
+    tab={<span>{props.title}</span>}
+    forceRender={props.forceRenderTabs}
+  >
     {wrapInArrayWithoutNulls(props.blocks).map((block, index) => (
       <BaseCardBlock
         {...block}

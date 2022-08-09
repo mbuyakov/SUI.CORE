@@ -15,6 +15,13 @@ declare let window: Window & {
 
 export type Permission = (user: ICoreUser) => boolean;
 
+interface MessageDescriptor {
+  id: string;
+  description?: string;
+  defaultMessage?: string;
+}
+declare type MessageValue = string | number | boolean | Date | null | undefined;
+
 export interface IInitSUISettings {
   projectKey: string;
   backendUrl: string;
@@ -24,16 +31,28 @@ export interface IInitSUISettings {
   ignoreColumnRoleRestriction?: boolean;
   restUri: string;
   rusName: string;
+  buildTime: string;
   offlineMode?: boolean;
   hideTableSettings?: boolean;
   percentToColorSettings: IColorHeatMapSettings;
   permissions?: { exportAll?: Permission };
   routes: IRawRoute[];
   chart?: { queue: boolean, onlyShowOnViewport: boolean };
-
+  ACCESS_RIGHTS: {
+    [role: string]: any[];
+  };
+  layout: {
+    getIcon(icon: string): JSX.Element;
+    formatMessage(
+      messageDescriptor: MessageDescriptor,
+      values?: { [key: string]: MessageValue },
+    ): string
+  }
   defaultGetLinkForTable?(tableName: string, type: RouteType, id?: string | number): string | null;
 
-  metaschemaRefreshPromise(): Promise<void>;
+  metaschemaRefreshUrl: string;
+  metaschemaExportUrl?: string;
+  dropUserSettingsUrl?: string;
 
   routerPushFn(link: any): void;
 

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.sui.suibackend.message.model.ExpandedGroup;
+import ru.sui.suibackend.message.model.Grouping;
 import ru.sui.suibackend.message.model.Sorting;
 import ru.sui.suibackend.message.model.filtering.Filtering;
 
@@ -26,5 +28,9 @@ public class InitMessage {
   private List<Filtering> globalFilters;
 
   private List<Sorting> sorts;
+
+  private List<Grouping> groupings;
+
+  private List<ExpandedGroup> expandedGroups;
 
 }

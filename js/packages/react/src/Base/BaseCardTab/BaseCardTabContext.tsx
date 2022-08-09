@@ -6,14 +6,15 @@ const BaseCardTabContext = React.createContext<{ setTab(tab: string): void, tab:
 
 type BaseCardTabContextProps = RouteComponentProps & {
   routeKey?: string;
+  defaultTab: string;
 };
 
 class BaseCardTabContextProviderInner extends React.Component<BaseCardTabContextProps, {
-  tab: string
+  tab: string;
 }> {
   public constructor(props: BaseCardTabContextProps) {
     super(props);
-    let tab = "0";
+    let tab = this.props.defaultTab;
     if (props.routeKey) {
       // Backward compatibility
       if (props.match.params[props.routeKey] == null || props.match.params[props.routeKey] == `:${props.routeKey}`) {
@@ -40,7 +41,7 @@ class BaseCardTabContextProviderInner extends React.Component<BaseCardTabContext
   @autobind
   public setTab(tab: string): void {
     if (tab == `:${this.props.routeKey}`) {
-      tab = "0";
+      tab = this.props.defaultTab;
     }
     this.setState({tab});
     if (this.props.routeKey) {

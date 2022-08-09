@@ -61,6 +61,12 @@ export const defaultThemesConfig: ThemesConfig = {
               color: "inherit"
             },
           },
+          // Title for hover submenu
+          MuiTypography: {
+            body2: {
+              color: hoverTextColor,
+            }
+          },
           MuiListItem: {
             root: {
               color: textColor,
