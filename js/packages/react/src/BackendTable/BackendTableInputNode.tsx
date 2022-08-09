@@ -17,8 +17,6 @@ export type IBackendTableInputNodeProps<TSelection> =
   & IFormItemBackendTableInputNodeProps<TSelection>;
 
 export class BackendTableInputNode<TSelection = string> extends React.Component<IBackendTableInputNodeProps<TSelection>, {}> {
-  private baseTableRef: React.RefObject<BackendTable<TSelection>> = React.createRef<BackendTable<TSelection>>();
-
   public render(): React.ReactNode {
     return (
       <BackendTable<TSelection>
@@ -35,11 +33,6 @@ export class BackendTableInputNode<TSelection = string> extends React.Component<
         }}
       />
     );
-  }
-
-  @autobind
-  public refresh(): Promise<void> {
-   return this.baseTableRef.current.refresh();
   }
 }
 
