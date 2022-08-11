@@ -17,4 +17,6 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
   @EntityGraph(Role.WITH_USERS)
   Optional<Role> findWithUsersByName(String name);
 
+  Optional<Role> findByName(String name);
+
 }
