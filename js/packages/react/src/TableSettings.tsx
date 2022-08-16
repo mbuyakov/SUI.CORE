@@ -806,6 +806,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                         title="Фильтр"
                                         render={(_, record): JSX.Element => (
                                           <PromisedSelect
+                                            getPopupContainer={this.props.getPopupContainer}
                                             defaultValue={record.filterTypeId}
                                             promise={this.updateColFieldFn(record.id, 'filterTypeId')}
                                           >
@@ -823,6 +824,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                         title="Подытог"
                                         render={(_, record): JSX.Element => (
                                           <PromisedSelect
+                                            getPopupContainer={this.props.getPopupContainer}
                                             defaultValue={record.subtotalTypeId}
                                             promise={this.updateColFieldFn(record.id, 'subtotalTypeId')}
                                           >
