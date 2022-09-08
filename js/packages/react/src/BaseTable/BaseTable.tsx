@@ -15,7 +15,7 @@ import {SuiThemeContext} from '@/themes';
 import {BASE_TABLE, BASE_TABLE_NO_PAGINATION, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '@/styles';
 import {ColumnChooserContainer, CustomPagingPanelContainer, CustomToggleCell, DoubleScrollbar, EmptyMessageComponent, ExportPlugin, ExtendedIntegratedSelection, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, UserSettingsPlugin, UserSettingsSupportPlugin, WarningPlugin} from "@/BaseTable/extends";
 
-import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter} from './filters';
+import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter, SnilsColumnFilter} from './filters';
 import {defaultSelection, ISelectionTable} from './ISelectionTable';
 import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout, IGroupSubtotalData, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
 import {exportToXlsx, mapColumns} from "./utils";
@@ -519,6 +519,8 @@ export class BaseTable<TSelection = defaultSelection>
         return (<BooleanColumnFilter {...searchProps} />);
       case "number":
         return (<NumberIntervalColumnFilter {...searchProps} />);
+      case "snils":
+        return (<SnilsColumnFilter {...searchProps} />);
       case "none":
         return null;
       default:

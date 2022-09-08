@@ -5,4 +5,5 @@ export * from "./CustomSelectFilter";
 export * from "./DateColumnFilter";
 export * from "./DatetimeColumnFilter";
 export * from "./NumberIntervalColumnFilter";
+export * from "./SnilsColumnFilter";
 export * from "./StringColumnFilter";

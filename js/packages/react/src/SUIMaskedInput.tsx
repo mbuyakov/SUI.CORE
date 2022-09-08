@@ -6,7 +6,7 @@ import {v4 as uuidv4} from 'uuid';
 const defaultPasteFormatter = (it: string): string => it.replace(/[^0-9a-zа-яё]/gi, '');
 
 export interface ISUIMaskedInputProps extends Omit<MaskedInputProps, "id" | "onChange"> {
-  onChange?(value: string): void;
+  onChange?(value: string, event?: React.ChangeEvent<HTMLInputElement>): void;
 
   pasteFormatter?(value: string): string;
 }
@@ -17,9 +17,9 @@ export function SUIMaskedInput(props: ISUIMaskedInputProps): JSX.Element {
   const id = React.useMemo(() => `SUIMaskedInput-${uuidv4()}`, []);
   const inputRef = React.useRef<MaskedInput>();
 
-  const onChange = (): void => {
+  const onChange = (event?: React.ChangeEvent<HTMLInputElement>): void => {
     if (inputProps.onChange) {
-      inputProps.onChange(inputRef.current.state.mask.getRawValue().replace(/_/g, ''))
+      inputProps.onChange(inputRef.current.state.mask.getRawValue().replace(/_/g, ''), event)
     }
   };
 
