@@ -1,8 +1,8 @@
+import * as React from 'react';
+import {Input} from "antd";
 import {ITableRenderParams, TableRenderParamsPlugin, TableRenderSettingsPluginManager, TableRenderSettingsPopover} from "@/TableRenderSettings";
 import {IBaseTableColLayout} from "@/BaseTable";
 import {IColumnInfoToBaseTableColProps} from "@/utils";
-import * as React from "react";
-import {Input} from "antd";
 import {formatByMaskFn} from "@/tmp";
 
 export interface IStringFormatByMaskPluginTRP {
@@ -24,6 +24,8 @@ export class StringFormatByMaskPlugin extends TableRenderParamsPlugin<IStringFor
 
       return formatByMaskFn(mask)(value);
     };
+
+    return;
   }
 
   public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<IStringFormatByMaskPluginTRP>): React.ReactNode {
