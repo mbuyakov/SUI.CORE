@@ -14,8 +14,5 @@ export function draw(element: React.ReactElement, containerRef?: React.RefObject
     ? ReactDOM.findDOMNode(containerRef.current)
     : document.createElement('div');
 
-  ReactDOM.render(
-    React.createElement(SuiThemeContext.Provider, {value: theme},
-      React.createElement(ConfigProvider, {locale: localeRu},
-        React.createElement(ThemeProvider, {theme: theme.muiTheme, children: element}))), elementContainer);
+  ReactDOM.render(React.createElement(SuiThemeContext.Provider, {value: theme}, React.createElement(ConfigProvider, {locale: localeRu}, React.createElement(ThemeProvider, {theme: theme.muiTheme, children: element}))), elementContainer);
 }

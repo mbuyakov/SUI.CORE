@@ -40,6 +40,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   private afterChange: () => void;
 
   @autobind
+  // eslint-disable-next-line react/no-unused-class-component-methods
   protected setAfterChange(afterChange: () => void): void {
     this.afterChange = afterChange;
   }
@@ -71,6 +72,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   }
 
   @autobind
+  // eslint-disable-next-line react/no-unused-class-component-methods
   public saveWithoutValue(): void {
     // Workaround for button handler
     this.save();
@@ -143,11 +145,13 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   }
 
   @autobind
+  // eslint-disable-next-line react/no-unused-class-component-methods
   protected onChange(value: V): void {
     this.setState({value});
     this.validate(value);
   }
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   protected wrapConfirmAndError(child: JSX.Element | null): JSX.Element {
     const childWithErrorPopover = (
       <PromisedErrorPopover
@@ -179,6 +183,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
       : (childWithErrorPopover);
   }
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   protected wrapInValidationPopover(child: JSX.Element | null): JSX.Element {
     if (!this.getValidator()) {
       return child;

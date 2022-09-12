@@ -32,7 +32,7 @@ export class RestBackendDataSource extends BackendDataSource {
     this.initSessionId = uuidv4();
     this.onOpen();
 
-    return new Promise<boolean>((resolve): void => resolve(true));
+    return Promise.resolve(true);
   }
 
   public async send<T>(messageId: string, body: T, headers?: IObjectWithIndex): Promise<void> {

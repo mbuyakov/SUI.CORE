@@ -125,10 +125,12 @@ export class BaseTable<TSelection = defaultSelection>
     };
   }
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   public clearSelection(): void {
     return this.setState({selection: []});
   }
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   public getSelection(): TSelection[] {
     return this.state && this.state.selection || [];
   }

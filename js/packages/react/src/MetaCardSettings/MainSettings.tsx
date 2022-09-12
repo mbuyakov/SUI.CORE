@@ -119,6 +119,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
     this.setState({fields});
   }
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   public getCurrentVersion(): number {
     return LAST_MAIN_SETTINGS_VERSION;
   }

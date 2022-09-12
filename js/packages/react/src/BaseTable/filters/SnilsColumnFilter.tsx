@@ -2,8 +2,8 @@ import autobind from 'autobind-decorator';
 import * as React from 'react';
 
 import {SNILS_MASK} from "@sui/core";
-import {INewSearchProps, LazyTableFilterRowCellProps} from '../types';
 import {SUIMaskedInput} from "@/SUIMaskedInput";
+import {INewSearchProps, LazyTableFilterRowCellProps} from '../types';
 
 export type SnilsColumnFilterProps = LazyTableFilterRowCellProps & INewSearchProps;
 

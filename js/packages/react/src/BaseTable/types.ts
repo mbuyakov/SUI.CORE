@@ -5,9 +5,9 @@ import * as React from 'react';
 import {TableRenderParamsPlugin} from "@/TableRenderSettings";
 
 // noinspection ES6PreferShortImport
-import {IBaseTableUserSettings} from "./extends/UserSettingsPlugin";
 import {CardType} from '@/antdMissedExport';
 import { CompiledTheme } from '@/themes';
+import {IBaseTableUserSettings} from "./extends/UserSettingsPlugin";
 
 export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode;
 export type TableSearchType = 'select' | 'date' | 'boolean' | 'string' | 'none';

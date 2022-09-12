@@ -47,7 +47,8 @@ export class InputWithApostropheValidation extends React.Component<InputWithApos
     if (prevState.acceptState != this.state.acceptState) {
       const hasApostrophe = countApostrophes(this.props.value as string) > 0;
       this.props.onChange(getPrefixedValue(this.props.value as string,
-        this.state.acceptState, hasApostrophe));
+        this.state.acceptState,
+        hasApostrophe));
     }
   }
 

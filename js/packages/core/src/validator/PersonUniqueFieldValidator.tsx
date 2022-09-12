@@ -6,6 +6,7 @@ export async function PersonUniqueFieldValidator<T = string>(
   fieldName: string,
   fieldValue: T,
   errMessage: string,
+  // eslint-disable-next-line default-param-last
   excludePersonId: string = null,
   linkToEntity: (idFieldName: string, entityId: string, errMessage: string) => void,
   excludeDeletedPeople?: boolean

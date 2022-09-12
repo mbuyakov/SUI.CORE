@@ -25,6 +25,7 @@ export type ITableRenderParams<T extends {} = {}> = Omit<T, 'renderType'> & {
 }
 
 export interface ITableRenderSettingsPopoverProps {
+  // eslint-disable-next-line react/no-unused-prop-types
   tableInfo: ITableInfo;
   tableRenderParams?: string;
 

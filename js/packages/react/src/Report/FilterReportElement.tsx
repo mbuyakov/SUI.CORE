@@ -95,7 +95,7 @@ export class FilterReportElement<TData, TFilter = {}>
               gridTemplateColumns: "1fr max-content"
             }}
           >
-            <>{restProps.header}</>
+            {restProps.header}
             {filterButton}
           </div>
         )}

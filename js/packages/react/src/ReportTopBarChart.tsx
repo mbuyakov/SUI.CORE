@@ -15,8 +15,10 @@ interface ITopBarChartProps {
   categoryDataField: string;
   customLabelText?: string;
   data?: any[];
+  // eslint-disable-next-line react/no-unused-prop-types
   decimalValues?: boolean;
   labelPanelWidth?: number;
+  // eslint-disable-next-line react/no-unused-prop-types
   labelTemplate?: string;
   maxPrecision?: number;
   maxValue?: number;
@@ -68,6 +70,7 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
         {!!length && (
           <div style={{width: this.props.labelPanelWidth || defaultLabelPanelWidth, marginTop: 14, height: 286}}>
             {data.map((element: IObjectWithIndex, index) => (<div
+              // eslint-disable-next-line react/no-array-index-key
               key={index.toString()}
               style={{height: 230 / (length || 1), display: 'flex', alignItems: 'center', ...labelStyle}}
             >

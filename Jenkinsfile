@@ -140,6 +140,7 @@ pipeline {
               }
               steps {
                 sh """
+                  echo '@sui:registry = https://nexus.suilib.ru/repository/npm-sui/' > .npmrc
                   npx npm-cli-adduser
                   cd js
                   yarn lcm publish 9.0.${BUILD_NUMBER}${SUFFIX}

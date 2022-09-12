@@ -49,6 +49,7 @@ class FullScreenModalImpl extends React.Component<IFullScreenModalProps, {
     this.state = {open: this.props.defaultOpen};
   }
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   public open(): void {
     this.setState({open: true});
   }

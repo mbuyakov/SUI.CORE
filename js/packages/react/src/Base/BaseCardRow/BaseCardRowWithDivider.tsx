@@ -6,6 +6,7 @@ import {IBaseCardRowLayout} from "@/Base/BaseCardRow/BaseCardRow";
 export interface IBaseCardRowWithDividerLayout {
   dividerDashed?: boolean;
   dividerText?: string;
+  // eslint-disable-next-line react/no-unused-prop-types
   isDivider: true;
   orientationMargin?: number;
 }

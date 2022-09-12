@@ -1,5 +1,4 @@
-import {getSUISettings} from "@sui/core/es/core";
-import {AuthorityList} from "@sui/core";
+import {AuthorityList, getSUISettings} from "@sui/core";
 import {getUser, isAdmin} from "@/utils";
 
 //

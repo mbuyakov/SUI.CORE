@@ -26,7 +26,7 @@ export class ColorHeatMap {
     for (let i = 0; i < 100; i++) {
       const left = i >= 50 ? settings.center : settings.left;
       const right = i >= 50 ? settings.right : settings.center;
-      this.cache.set(i, findColorBetween(left, right, Math.pow(Math.cos(Math.PI / 100 * (50 - (i >= 50 ? (i - 50) * 2 : i * 2) / 2)), 2) * 100));
+      this.cache.set(i, findColorBetween(left, right, (Math.cos(Math.PI / 100 * (50 - (i >= 50 ? (i - 50) * 2 : i * 2) / 2)) ** 2) * 100));
     }
   }
 

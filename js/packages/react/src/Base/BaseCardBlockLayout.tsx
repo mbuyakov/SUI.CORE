@@ -17,6 +17,7 @@ export const BaseCardBlock: <T, ITEM>(props: IBaseCardBlockLayout<T, ITEM> & {
     <Card title={props.title} style={{margin: "12px 0"}} bodyStyle={noPadding ? {padding: 0} : {}}>
       {rows.map((row, index, arr) => (
         <BaseCardRow
+          // eslint-disable-next-line react/no-array-index-key
           key={index.toString()}
           sourceItem={props.sourceItem}
           row={row}

@@ -104,7 +104,7 @@ export class PromisedModal
   }
 
   @autobind
-  public setModalVisibility(visible: boolean = true, callback?: () => void): void {
+  public setModalVisibility(visible: boolean, callback?: () => void): void {
     console.log("setModalVisibility", visible);
     this.setState({visible}, async (): Promise<void> => {
       if (callback) {

@@ -109,9 +109,8 @@ export async function checkBlockUIFile(): Promise<string> {
   return getFileText(BLOCK_FILE_URL);
 }
 
-export async function getFileText(filename: string): Promise<string> {
-  return new Promise<string>((resolve: (message: string) => void,
-                              reject: () => void): Promise<void> =>
+export function getFileText(filename: string): Promise<string> {
+  return new Promise<string>((resolve: (message: string) => void, reject: () => void) => {
     axios.get(filename)
       .then(response => {
         const successStatusCode = 200;
@@ -121,6 +120,6 @@ export async function getFileText(filename: string): Promise<string> {
           reject();
         }
       })
-      .catch(reject)
-  );
+      .catch(reject);
+  });
 }

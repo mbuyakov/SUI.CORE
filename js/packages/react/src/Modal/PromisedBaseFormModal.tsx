@@ -19,7 +19,7 @@ export interface IPromisedBaseFormModalProps<TValues> extends IPromisedBaseFormM
   onSubmit?(values: TValues): Promise<boolean>;
 }
 
-const FAKE_PROMISE = (): Promise<void> => new Promise((resolve): void => resolve());
+const FAKE_PROMISE = (): Promise<void> => Promise.resolve();
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromisedBaseFormModalProps<T>> {

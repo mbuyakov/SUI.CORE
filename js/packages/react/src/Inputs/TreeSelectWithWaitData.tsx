@@ -49,6 +49,7 @@ export class TreeSelectWithWaitData<TValue = DefaultValueType, TValueType = {}, 
     }
   }
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   public getData(): IDataSet[] {
     return this.state.dataSet;
   }

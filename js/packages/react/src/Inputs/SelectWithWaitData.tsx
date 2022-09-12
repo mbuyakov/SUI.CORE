@@ -47,6 +47,7 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
     }
   }
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   public getData(): IDataSet[] {
     return this.state.dataSet;
   }

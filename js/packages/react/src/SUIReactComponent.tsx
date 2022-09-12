@@ -1,10 +1,11 @@
+/* eslint-disable react/no-unused-class-component-methods */
 import autobind from 'autobind-decorator';
 import React from 'react';
 
 import {ObservableHandlerStub} from './Observable';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export class SUIReactComponent<P = {}, S = {}> extends React.Component<P, S> {
+export abstract class SUIReactComponent<P = {}, S = {}> extends React.Component<P, S> {
   private readonly intervals: NodeJS.Timeout[] = [];
   private readonly observableCallbackStubs: ObservableHandlerStub[] = [];
   private readonly timeouts: NodeJS.Timeout[] = [];

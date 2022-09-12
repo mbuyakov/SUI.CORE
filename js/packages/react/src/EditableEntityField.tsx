@@ -91,6 +91,7 @@ export class EditableEntityField<T = any> extends React.Component<IEditableEntit
     );
   }
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   public async updateData(): Promise<void> {
     return this.waitDataRef.current.updateData();
   }

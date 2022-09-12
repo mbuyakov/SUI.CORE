@@ -24,6 +24,7 @@ export const BaseCardTabWithBlocks: <T, ITEM>(props: IBaseCardTabWithBlocks<T, I
     {wrapInArrayWithoutNulls(props.blocks).map((block, index) => (
       <BaseCardBlock
         {...block}
+        // eslint-disable-next-line react/no-array-index-key
         key={index.toString()}
         sourceItem={props.sourceItem}
       />

@@ -251,6 +251,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                         render: (): JSX.Element =>
                           (
                             this.props.popupMode
+                              // eslint-disable-next-line react/jsx-no-useless-fragment
                               ? <></>
                               : <>
                                 <div>
@@ -277,7 +278,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           getSUISettings().routerPushFn(getLinkForTable(data.tableInfoById.tableName, 'card', value));
 
                                           // Stub
-                                          return new Promise((resolve): void => resolve(undefined));
+                                          return Promise.resolve();
                                         }}
                                       />
                                     }
@@ -467,7 +468,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       defaultChecked={value.every(col => col.visible)}
                                       popconfirmSettings={true}
                                       promise={(newValue: boolean): Promise<any> => {
-                                        let promise = new Promise<any>((resolve): void => resolve(undefined));
+                                        let promise = Promise.resolve();
                                         value.map(col => {
                                           promise = promise.then(() => this.updateColField(col.id, 'visible', newValue, false));
                                         });
@@ -491,118 +492,117 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                 {
                                   dataKey: ['columnInfosByTableInfoId', 'nodes'],
                                   render: (value: IColumnInfo[]): JSX.Element => (
-                                    <>
-                                      <DraggableRowTable
-                                        scroll={{x: true}}
-                                        pagination={false}
-                                        dataSource={value.sort((a, b): number => a.order - b.order)}
-                                        bordered={true}
-                                        onOrderChanged={(sortedDataSource: any): Promise<any> => Promise.all(sortedDataSource.map((line: any, index: any): Promise<any> => this.updateColField(line.id, 'order', index, false, false, (sortedDataSource.length - 1) === index)))}
-                                      >
-                                        <Table.Column<IColumnInfo>
-                                          title="Имя в БД"
-                                          render={(_, record): string => record.columnName}
-                                        />
-                                        <Table.Column<IColumnInfo>
-                                          title="Ссылается на поле"
-                                          render={(_, record): React.ReactNode => {
-                                            const refColInfo = getDataByKey<IColumnInfo>(record, 'columnInfoReferencesByColumnInfoId', 'nodes', 0, 'columnInfoByForeignColumnInfoId');
-                                            const refTableInfo = refColInfo && refColInfo.tableInfoByTableInfoId;
+                                    <DraggableRowTable
+                                      scroll={{x: true}}
+                                      pagination={false}
+                                      dataSource={value.sort((a, b): number => a.order - b.order)}
+                                      bordered={true}
+                                      onOrderChanged={(sortedDataSource: any): Promise<any> => Promise.all(sortedDataSource.map((line: any, index: any): Promise<any> => this.updateColField(line.id, 'order', index, false, false, (sortedDataSource.length - 1) === index)))}
+                                    >
+                                      <Table.Column<IColumnInfo>
+                                        title="Имя в БД"
+                                        render={(_, record): string => record.columnName}
+                                      />
+                                      <Table.Column<IColumnInfo>
+                                        title="Ссылается на поле"
+                                        render={(_, record): React.ReactNode => {
+                                          const refColInfo = getDataByKey<IColumnInfo>(record, 'columnInfoReferencesByColumnInfoId', 'nodes', 0, 'columnInfoByForeignColumnInfoId');
+                                          const refTableInfo = refColInfo && refColInfo.tableInfoByTableInfoId;
 
-                                            return refColInfo
+                                          return refColInfo
+                                            ? (
+                                              <Button
+                                                size="small"
+                                                type="ghost"
+                                                onClick={(): void => draw(<ThemeProvider theme={this.props.theme}><FullScreenTableSettings id={refColInfo.tableInfoId} defaultOpen={true}/></ThemeProvider>)}
+                                              >
+                                                {`${refTableInfo.nameByNameId ? refTableInfo.nameByNameId.name : refTableInfo.tableName}.${refColInfo.nameByNameId ? refColInfo.nameByNameId.name : refColInfo.columnName}`}
+                                              </Button>
+                                            )
+                                            : null;
+                                        }}
+                                      />
+                                      <Table.Column<IColumnInfo>
+                                        title="Тип"
+                                        render={(_, record): string => record.columnType}
+                                      />
+                                      <Table.Column<IColumnInfo>
+                                        title="Обязательность"
+                                        render={(_, record): JSX.Element => (
+                                          record.isNullable ? <CloseOutlined style={{fontSize: 18}}/> : <CheckOutlined style={{fontSize: 18}}/>
+                                        )}
+                                      />
+                                      <Table.Column<IColumnInfo>
+                                        title="Значение по умолчанию"
+                                        render={(_, record): string => record.defaultValue}
+                                      />
+                                      <Table.Column<IColumnInfo>
+                                        title="Имя"
+                                        render={(_, record): JSX.Element => (
+                                          <div className={SUI_ROW_GROW_LEFT}>
+                                            {record.nameByNameId
                                               ? (
-                                                <Button
-                                                  size="small"
-                                                  type="ghost"
-                                                  onClick={(): void => draw(<ThemeProvider theme={this.props.theme}><FullScreenTableSettings id={refColInfo.tableInfoId} defaultOpen={true}/></ThemeProvider>)}
-                                                >
-                                                  {`${refTableInfo.nameByNameId ? refTableInfo.nameByNameId.name : refTableInfo.tableName}.${refColInfo.nameByNameId ? refColInfo.nameByNameId.name : refColInfo.columnName}`}
-                                                </Button>
-                                              )
-                                              : null;
-                                          }}
-                                        />
-                                        <Table.Column<IColumnInfo>
-                                          title="Тип"
-                                          render={(_, record): string => record.columnType}
-                                        />
-                                        <Table.Column<IColumnInfo>
-                                          title="Обязательность"
-                                          render={(_, record): JSX.Element => (
-                                            record.isNullable ? <CloseOutlined style={{fontSize: 18}}/> : <CheckOutlined style={{fontSize: 18}}/>
-                                          )}
-                                        />
-                                        <Table.Column<IColumnInfo>
-                                          title="Значение по умолчанию"
-                                          render={(_, record): string => record.defaultValue}
-                                        />
-                                        <Table.Column<IColumnInfo>
-                                          title="Имя"
-                                          render={(_, record): JSX.Element => (
-                                            <div className={SUI_ROW_GROW_LEFT}>
-                                              {record.nameByNameId
-                                                ? (
-                                                  <span>
+                                                <span>
                                                     {record.nameByNameId.name}
-                                                    {record.nameByNameId.description && <TooltipIcon>{record.nameByNameId.description}</TooltipIcon>}
+                                                  {record.nameByNameId.description && <TooltipIcon>{record.nameByNameId.description}</TooltipIcon>}
                                                   </span>
-                                                )
-                                                : <span>Не выбрано</span>
-                                              }
-                                              <NamePopover
-                                                getPopupContainer={this.props.getPopupContainer}
-                                                id={record.nameByNameId && record.nameByNameId.id}
-                                                onChanged={(newId): Promise<any> =>
-                                                  generateUpdate('columnInfo', record.id, 'nameId', newId)
-                                                    .then<IName>(() => {
-                                                      if (newId === null) {
-                                                        return {} as IName;
-                                                      }
+                                              )
+                                              : <span>Не выбрано</span>
+                                            }
+                                            <NamePopover
+                                              getPopupContainer={this.props.getPopupContainer}
+                                              id={record.nameByNameId && record.nameByNameId.id}
+                                              onChanged={(newId): Promise<any> =>
+                                                generateUpdate('columnInfo', record.id, 'nameId', newId)
+                                                  .then<IName>(() => {
+                                                    if (newId === null) {
+                                                      return {} as IName;
+                                                    }
 
-                                                      return query(`{
+                                                    return query(`{
                                                         nameById(id: "${newId}") {
                                                           name
                                                           description
                                                         }
                                                       }`, true);
-                                                    })
-                                                    .then(newName => {
-                                                      const name = {
-                                                        id: newId,
-                                                        name: newName.name,
-                                                        description: newName.description,
-                                                      } as IName;
+                                                  })
+                                                  .then(newName => {
+                                                    const name = {
+                                                      id: newId,
+                                                      name: newName.name,
+                                                      description: newName.description,
+                                                    } as IName;
 
-                                                      return this.updateColField(record.id, 'nameByNameId', name, false, true);
-                                                    })}
-                                              />
-                                            </div>
-                                          )}
-                                        />
-                                        <Table.Column<IColumnInfo>
-                                          title="Теги"
-                                          render={(_, record): JSX.Element => (
-                                            <div className={SUI_ROW_GROW_LEFT}>
-                                              {record.columnInfoTagsByColumnInfoId.nodes.length > 0
-                                                ? <ul style={{paddingLeft: 16, marginBottom: 0}}>
-                                                  {record.columnInfoTagsByColumnInfoId.nodes.map(con => (
-                                                    <li>
-                                                      {con.tagByTagId.code} {con.tagByTagId.name && `(${con.tagByTagId.name})`}
-                                                    </li>
-                                                  ))}
-                                                </ul>
-                                                : <span>Не выбрано</span>
-                                              }
-                                              <TagsPopover
-                                                getPopupContainer={this.props.getPopupContainer}
-                                                colTagsConnection={record.columnInfoTagsByColumnInfoId}
-                                                onChanged={(newIds): Promise<any> =>
-                                                  Promise.all(record.columnInfoTagsByColumnInfoId.nodes.map((columnInfoTag: IColumnInfoTag) => mutate(`mutation {
+                                                    return this.updateColField(record.id, 'nameByNameId', name, false, true);
+                                                  })}
+                                            />
+                                          </div>
+                                        )}
+                                      />
+                                      <Table.Column<IColumnInfo>
+                                        title="Теги"
+                                        render={(_, record): JSX.Element => (
+                                          <div className={SUI_ROW_GROW_LEFT}>
+                                            {record.columnInfoTagsByColumnInfoId.nodes.length > 0
+                                              ? <ul style={{paddingLeft: 16, marginBottom: 0}}>
+                                                {record.columnInfoTagsByColumnInfoId.nodes.map(con => (
+                                                  <li>
+                                                    {con.tagByTagId.code} {con.tagByTagId.name && `(${con.tagByTagId.name})`}
+                                                  </li>
+                                                ))}
+                                              </ul>
+                                              : <span>Не выбрано</span>
+                                            }
+                                            <TagsPopover
+                                              getPopupContainer={this.props.getPopupContainer}
+                                              colTagsConnection={record.columnInfoTagsByColumnInfoId}
+                                              onChanged={(newIds): Promise<any> =>
+                                                Promise.all(record.columnInfoTagsByColumnInfoId.nodes.map((columnInfoTag: IColumnInfoTag) => mutate(`mutation {
                                                     deleteColumnInfoTagById(input: {id: "${columnInfoTag.id}"}) {
                                                       clientMutationId
                                                     }
                                                   }`)))
-                                                    .then(() => Promise.all(newIds.map(tagId => mutate<{ columnInfoTag: IColumnInfoTag }>(`mutation {
+                                                  .then(() => Promise.all(newIds.map(tagId => mutate<{ columnInfoTag: IColumnInfoTag }>(`mutation {
                                                       createColumnInfoTag(input: {columnInfoTag: {columnInfoId: "${record.id}", tagId: "${tagId}"}}) {
                                                         columnInfoTag {
                                                           id
@@ -614,36 +614,35 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                         }
                                                       }
                                                     }`, true))))
-                                                    .then(columnInfoTags => this.updateColField(record.id, 'columnInfoTagsByColumnInfoId', {nodes: columnInfoTags.map(value => value.columnInfoTag)}, false, true))
-                                                }
-                                              />
-                                            </div>
-                                          )}
-                                        />
-                                        <Table.Column<IColumnInfo>
-                                          title="Доступна"
-                                          dataIndex="id"
-                                          width={120}
-                                          filterMultiple={true}
-                                          filters={
-                                            data.allRoles.nodes.map(role => ({
-                                              text: role.name,
-                                              value: role.id.toString(),
-                                            }))
-                                          }
-                                          onFilter={(f: any, record): boolean => record.columnInfoRolesByColumnInfoId.nodes.some(node => f.includes(node.roleId))}
-                                          render={(_, record): JSX.Element => (
-                                            <VisibleByRolesPopover
-                                              getPopupContainer={this.props.getPopupContainer}
-                                              roles={data.allRoles.nodes}
-                                              visiblePromise={this.updateColFieldFn(record.id, 'visible')}
-                                              afterRolesPromise={(roles): Promise<any> => this.updateColField(record.id, 'columnInfoRolesByColumnInfoId', {nodes: roles || []}, false, true)}
-                                              columnInfo={record}
+                                                  .then(columnInfoTags => this.updateColField(record.id, 'columnInfoTagsByColumnInfoId', {nodes: columnInfoTags.map(value => value.columnInfoTag)}, false, true))
+                                              }
                                             />
-                                          )}
-                                        />
-                                      </DraggableRowTable>
-                                    </>
+                                          </div>
+                                        )}
+                                      />
+                                      <Table.Column<IColumnInfo>
+                                        title="Доступна"
+                                        dataIndex="id"
+                                        width={120}
+                                        filterMultiple={true}
+                                        filters={
+                                          data.allRoles.nodes.map(role => ({
+                                            text: role.name,
+                                            value: role.id.toString(),
+                                          }))
+                                        }
+                                        onFilter={(f: any, record): boolean => record.columnInfoRolesByColumnInfoId.nodes.some(node => f.includes(node.roleId))}
+                                        render={(_, record): JSX.Element => (
+                                          <VisibleByRolesPopover
+                                            getPopupContainer={this.props.getPopupContainer}
+                                            roles={data.allRoles.nodes}
+                                            visiblePromise={this.updateColFieldFn(record.id, 'visible')}
+                                            afterRolesPromise={(roles): Promise<any> => this.updateColField(record.id, 'columnInfoRolesByColumnInfoId', {nodes: roles || []}, false, true)}
+                                            columnInfo={record}
+                                          />
+                                        )}
+                                      />
+                                    </DraggableRowTable>
                                   ),
                                 },
                               ],
@@ -667,7 +666,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       defaultChecked={value.every(col => col.defaultVisible)}
                                       popconfirmSettings={true}
                                       promise={(newValue: boolean): Promise<any> => {
-                                        let promise = new Promise<any>((resolve): void => resolve(undefined));
+                                        let promise = Promise.resolve();
                                         value.map(col => {
                                           promise = promise.then(() => this.updateColField(col.id, 'defaultVisible', newValue, false));
                                         });
@@ -943,10 +942,12 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
         this.setState({tableInfoById});
       }
       if (sleepAtEnd) {
-        return resolve(sleep(Number.MAX_VALUE));
+        resolve(sleep(Number.MAX_VALUE));
+        return;
       }
 
-      return resolve(undefined);
+      resolve(undefined);
+      return;
     });
 
     if (onlyState) {

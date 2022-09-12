@@ -13,6 +13,7 @@ import {BASE_CARD, BASE_CARD_HEADER_ONLY} from "@/styles";
 import {ChangedEditModeContext} from '@/ChangedEditModeContext';
 
 
+// eslint-disable-next-line react/jsx-no-useless-fragment
 const renderTabBar = (): React.ReactElement => <React.Fragment/>;
 
 export interface IBaseCardProps<T, ITEM> {
@@ -45,6 +46,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
       body = blocks.map((block, rowIndex) => (
         <BaseCardBlock
           {...block}
+          // eslint-disable-next-line react/no-array-index-key
           key={rowIndex.toString()}
           sourceItem={this.props.item}
         />
@@ -86,6 +88,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
         // Body = rows
         body = rows.map((row, rowIndex, arr) => (
           <BaseCardRow
+            // eslint-disable-next-line react/no-array-index-key
             key={rowIndex.toString()}
             sourceItem={this.props.item}
             row={row}
@@ -176,6 +179,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
     }
 
     return (
+      // eslint-disable-next-line react/jsx-no-constructed-context-values
       <BaseCardContext.Provider value={{forceRenderTabs: this.props.forceRenderTabs, itemRenderer: this.props.itemRenderer || DEFAULT_ITEM_RENDERER}}>
         {ret}
       </BaseCardContext.Provider>

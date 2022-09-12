@@ -27,6 +27,7 @@ export const BaseCardTabWithRows: <T, ITEM>(props: IBaseCardTabWithRows<T, ITEM>
   >
     {wrapInArrayWithoutNulls(props.rows).map((row, index, arr) => (
       <BaseCardRow
+        // eslint-disable-next-line react/no-array-index-key
         key={index.toString()}
         sourceItem={props.sourceItem}
         row={row}

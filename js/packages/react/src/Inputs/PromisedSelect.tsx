@@ -5,8 +5,8 @@ import {Select, SelectProps} from "antd";
 import {SUI_ROW_GRID} from '@/styles';
 import {DisableEditContext} from "@/DisableEditContext";
 
-import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 import {SelectValue} from '@/antdMissedExport';
+import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
 export type PromisedSelectProps<T> = IPromisedBaseProps<T> & Omit<SelectProps<T>, "onChange" | "value">
 
@@ -37,6 +37,8 @@ export class PromisedSelect<T extends SelectValue> extends PromisedBase<Promised
         {(disableEdit): JSX.Element => {
           return this.wrapInValidationPopover(
             <Select<T>
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
               {...selectProps as SelectProps<T> as unknown}
               disabled={disableEdit || this.props.disabled || this.props.loading || this.state.loading || false}
               onChange={this.onChange}

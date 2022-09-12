@@ -10,6 +10,7 @@ import {getSUISettings} from '@/core';
 import {_LocalStorageValue} from '../annotation/LocalStorageValue';
 // noinspection ES6PreferShortImport
 import {Logger} from '../utils';
+// eslint-disable-next-line import/order
 import {UserNotInitializedError} from "@/errors";
 
 

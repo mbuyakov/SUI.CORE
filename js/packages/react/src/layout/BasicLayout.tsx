@@ -104,6 +104,7 @@ export const BasicLayout: React.FC<{
   return (
     <div className={classes.root}>
       <CssBaseline/>
+      {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
       <BasicLayoutContext.Provider value={{drawerOpen: drawerState, setDrawerState, openDrawerWidth, drawerWidth, routes}}>
         <Header isMobile={isMobile}>
           {header}

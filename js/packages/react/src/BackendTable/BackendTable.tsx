@@ -208,6 +208,7 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
+  // eslint-disable-next-line react/no-unused-class-component-methods
   public clearSelection(): void {
     return this.baseTableRef
       && this.baseTableRef.current
@@ -250,6 +251,7 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
+  // eslint-disable-next-line react/no-unused-class-component-methods
   public getData(): any[] {
     return this.state && this.state.data || [];
   }
@@ -398,6 +400,7 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
+  // eslint-disable-next-line react/no-unused-class-component-methods
   private changeRaw(): void {
     this.setState({rawMode: !this.state.rawMode}); // , this.updateData);
   }
@@ -795,7 +798,7 @@ export class BackendTable<TSelection = defaultSelection>
           }`);
         }
 
-        return new Promise<void>((resolve): void => resolve());
+        return Promise.resolve();
       })
       .then(() => {
         location.reload()

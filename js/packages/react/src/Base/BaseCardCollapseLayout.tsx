@@ -28,6 +28,7 @@ export function renderIBaseCardCollapseLayout<T, ITEM>(sourceItem: T, panel: IBa
     >
       {wrapInArrayWithoutNulls(panel.rows).map((row, rowIndex, arr) => (
         <BaseCardRow
+          // eslint-disable-next-line react/no-array-index-key
           key={rowIndex.toString()}
           sourceItem={sourceItem}
           row={row}

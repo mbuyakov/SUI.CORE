@@ -31,6 +31,7 @@ export class CardSettings extends React.Component<ICardSettingsProps> implements
   private readonly rowsRef: React.RefObject<DnDList<RowSettings>> = React.createRef();
   private readonly titleListRef: React.RefObject<DnDList<ItemSettings | FreeText>> = React.createRef();
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   public getCurrentVersion(): number {
     return LAST_CARD_SETTINGS_VERSION;
   }
@@ -96,6 +97,7 @@ export class CardSettings extends React.Component<ICardSettingsProps> implements
   }
 
   @autobind
+  // eslint-disable-next-line react/no-unused-class-component-methods
   public toPlainObject(): SerializedCardSettings {
     return {
       id: this.props.id,
