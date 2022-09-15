@@ -138,11 +138,7 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
             );
 
             if (tooltip) {
-              menuItem = (
-                <Tooltip title={tooltip} placement="right">
-                  {menuItem}
-                </Tooltip>
-              );
+              menuItem = (<Tooltip title={tooltip} placement="right"><div>{menuItem}</div></Tooltip>);
             }
 
             return menuItem;
