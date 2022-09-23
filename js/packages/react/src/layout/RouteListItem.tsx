@@ -142,16 +142,14 @@ export const RouteListItem: React.FC<ListItemProps<'div'> & {
     );
   } else {
     listItem = (
-      <RouterLink to={route.pathFn ? route.pathFn : route.path}>
-        <ListItem
-          {...rest}
-          selected={matchPath(location, route.path)}
-          button={true}
-          key={route.path}
-        >
-          {listItemContent}
-        </ListItem>
-      </RouterLink>
+      <ListItem
+        {...rest}
+        selected={matchPath(location, route.path)}
+        button={true}
+        key={route.path}
+      >
+        {listItemContent}
+      </ListItem>
     );
   }
 
@@ -165,6 +163,14 @@ export const RouteListItem: React.FC<ListItemProps<'div'> & {
       <Tooltip title={title} placement="right" arrow={true}>
         {listItem}
       </Tooltip>
+    );
+  }
+
+  if (!hasSubItems) {
+    listItem = (
+      <RouterLink to={route.pathFn ? route.pathFn : route.path}>
+        {listItem}
+      </RouterLink>
     );
   }
 
