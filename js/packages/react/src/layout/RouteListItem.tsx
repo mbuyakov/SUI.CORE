@@ -8,6 +8,7 @@ import {getSUISettings, IRawRoute} from "@sui/core";
 import {BasicLayoutContext} from "@/layout/BasicLayoutContext";
 import {DrawerListSubmenu} from "@/layout/DrawerListSubmenu";
 import {checkAuthority} from "@/access";
+import {RouterLink} from "@/Link";
 
 function matchPath(location: Location<unknown>, path: string): boolean {
   return !!matchPathRR(location.pathname, {
@@ -141,15 +142,16 @@ export const RouteListItem: React.FC<ListItemProps<'div'> & {
     );
   } else {
     listItem = (
-      <ListItem
-        {...rest}
-        selected={matchPath(location, route.path)}
-        button={true}
-        key={route.path}
-        onClick={() => history.push(route.pathFn ? route.pathFn : route.path)}
-      >
-        {listItemContent}
-      </ListItem>
+      <RouterLink to={route.pathFn ? route.pathFn : route.path}>
+        <ListItem
+          {...rest}
+          selected={matchPath(location, route.path)}
+          button={true}
+          key={route.path}
+        >
+          {listItemContent}
+        </ListItem>
+      </RouterLink>
     );
   }
 
