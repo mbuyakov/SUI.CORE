@@ -88,6 +88,7 @@ export interface IBackendTableProps {
   lazyMode?: boolean;
   cardLinkFnIcon?: JSX.Element;
   cardLinkTooltip?: string;
+  ignoreFilterFromUrlState?: boolean;
 
   cardLinkFn?(id: string, row: IObjectWithIndex): string;
 
@@ -165,17 +166,18 @@ export class BackendTable<TSelection = defaultSelection>
       if (urlState) {
         const shouldMergeFilters = urlState.mergeFilters;
 
-        defaultFilter = shouldMergeFilters
-          ? mergeDefaultFilters(defaultFilter, urlState.defaultFilter)
-          : urlState.defaultFilter;
-        filter = shouldMergeFilters
-          ? (urlState.filter || filter ? (urlState.filter || []).concat(filter || []) : undefined)
-          : urlState.filter;
+        defaultFilter = shouldMergeFilters ? mergeDefaultFilters(defaultFilter, urlState.defaultFilter) : urlState.defaultFilter;
         pageNumber = urlState.pageInfo.pageNumber;
         pageSize = urlState.pageInfo.pageSize;
         sorting = urlState.sorting;
         grouping = urlState.grouping;
         expandedGroups = urlState.expandedGroups;
+
+        if (this.props.ignoreFilterFromUrlState !== true) {
+          filter = shouldMergeFilters
+            ? (urlState.filter || filter ? (urlState.filter || []).concat(filter || []) : undefined)
+            : urlState.filter;
+        }
       }
     }
 
