@@ -1,20 +1,20 @@
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 
-import {SNILS_MASK} from "@sui/core";
+import {OMS_MASK} from "@sui/core";
 import {SUIMaskedInput} from "@/SUIMaskedInput";
 import {INewSearchProps, LazyTableFilterRowCellProps} from '../types';
 
-export type ISnilsColumnFilterProps = LazyTableFilterRowCellProps & INewSearchProps;
+export type IOmsColumnFilterProps = LazyTableFilterRowCellProps & INewSearchProps;
 
-export interface ISnilsColumnFilterState {
+export interface IOmsColumnFilterState {
   lastFilterValue?: string;
   value?: string;
 }
 
-export class SnilsColumnFilter extends React.Component<ISnilsColumnFilterProps, ISnilsColumnFilterState> {
+export class OmsColumnFilter extends React.Component<IOmsColumnFilterProps, IOmsColumnFilterState> {
 
-  public constructor(props: ISnilsColumnFilterProps) {
+  public constructor(props: IOmsColumnFilterProps) {
     super(props);
 
     const value = this.props.filter?.value || "";
@@ -41,7 +41,7 @@ export class SnilsColumnFilter extends React.Component<ISnilsColumnFilterProps, 
       <SUIMaskedInput
         {...clearProps}
         allowClear={true}
-        mask={SNILS_MASK}
+        mask={OMS_MASK}
         placeholder={this.props.placeholder as string || 'Фильтр...'}
         value={this.state.value}
         onChange={this.onChange}
