@@ -1,3 +1,4 @@
+export * from "./BooleanTooltipPlugin";
 export * from "./DateFormatterPlugin";
 export * from "./LinkPlugin";
 export * from "./MultipleLinkPlugin";
@@ -6,5 +7,4 @@ export * from "./RoundPlugin";
 export * from "./StringFormatByMaskPlugin";
 export * from "./SparklinePlugin";
 export * from "./TableRenderParamsPlugin";
-export * from "./TooltipPlugin";
 export * from "./UnknownPlugin";
