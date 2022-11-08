@@ -6,4 +6,5 @@ export * from "./RoundPlugin";
 export * from "./StringFormatByMaskPlugin";
 export * from "./SparklinePlugin";
 export * from "./TableRenderParamsPlugin";
+export * from "./TooltipPlugin";
 export * from "./UnknownPlugin";
