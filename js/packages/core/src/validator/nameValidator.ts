@@ -32,7 +32,7 @@ export function nameValidator(field: "firstName" | "middleName" | "lastName", al
 function allSymbolValidatorAndWhiteSpace(name: string): string {
   return ALL_SYMBOL_DIGIT_REGEXP.test(name)
     ? ALL_SYMBOL_DIGIT_MESSAGE
-    : (name === name.toLowerCase() || name === name.toLocaleUpperCase())
+    : name.length > 1 && (name === name.toLowerCase() || name === name.toLocaleUpperCase())
       ? ALL_SYMBOL_MESSAGE
       : WHITESPACE_REGEXP.test(name)
         ? WHITESPACE_MESSAGE
