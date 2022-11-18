@@ -81,8 +81,7 @@ export function runCheckVersionMismatch(currentVersion: string): void {
       .catch((): void => {/* Бывает, пофиг */});
   }
 
-  checkVersionMismatchIteration();
-
+  setTimeout(checkVersionMismatchIteration, 5000);
   setInterval(checkVersionMismatchIteration, 60000);
 }
 
