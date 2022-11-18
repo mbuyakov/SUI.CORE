@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, notification} from "antd";
+import {notification} from "antd";
 import axios from "axios";
 import {getSUISettings, IObjectWithIndex, sleep, UserService} from "@sui/core";
 import {Container} from "typescript-ioc";
@@ -13,34 +13,40 @@ function checkVersionMismatch(currentVersion: string): Promise<false | { newVers
 
 function showVersionMismatchNotification(currentVersion: string, newVersion: string, isLoggedIn: boolean): void {
   notification.warn({
+    key: "__SUI_VERSION_MISMATCH_NOTIFICATION_KEY",
     duration: 0,
-    message: (
+    style: {width: isLoggedIn ? 650 : 450},
+    message: "Установлена новая версия системы",
+    description: (
       <div>
-        <div>Установлена новая версия системы</div>
         <div>Текущая версия: {currentVersion}</div>
         <div>Последняя версия: {newVersion}</div>
+        {!isLoggedIn && (<div>Пожалуйста, обновитесь</div>)}
         {isLoggedIn && (<div>Если в течение минуты Вы не обновитесь, то Вас автоматически разлогинит</div>)}
-        <Button size="small" onClick={(): void => location.reload(true)}>Для обновления нажмите сюда</Button>
         <div style={{color: '#999', fontSize: 12}}>(Ctrl+F5 для Windows)</div>
         <div style={{color: '#999', fontSize: 12}}>(Cmd+Shift+R для MacOS)</div>
       </div>
-    ),
+    )
   });
 }
 
 export function runCheckVersionMismatch(currentVersion: string): void {
+  if (process.env.NODE_ENV !== "production") {
+    return;
+  }
+
   const userService = Container.get(UserService);
 
   let logoutInProgress = false;
 
   function checkVersionMismatchIteration(): void {
-    if (process.env.NODE_ENV !== "production") {
-      return;
-    }
-
     checkVersionMismatch(currentVersion)
       .then(async (checkVersionMismatchResult): Promise<void> => {
         if (!checkVersionMismatchResult) {
+          return;
+        }
+
+        if (logoutInProgress) {
           return;
         }
 
@@ -49,7 +55,7 @@ export function runCheckVersionMismatch(currentVersion: string): void {
 
         showVersionMismatchNotification(currentVersion, newVersion, isLoggedIn);
 
-        if (!isLoggedIn || logoutInProgress) {
+        if (!isLoggedIn) {
           return;
         }
 
