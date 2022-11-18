@@ -34,6 +34,10 @@ export function runCheckVersionMismatch(currentVersion: string): void {
   let logoutInProgress = false;
 
   function checkVersionMismatchIteration(): void {
+    if (process.env.NODE_ENV !== "production") {
+      return;
+    }
+
     checkVersionMismatch(currentVersion)
       .then(async (checkVersionMismatchResult): Promise<void> => {
         if (!checkVersionMismatchResult) {
