@@ -4,7 +4,7 @@ export * from "./LinkPlugin";
 export * from "./MultipleLinkPlugin";
 export * from "./RawPlugin";
 export * from "./RoundPlugin";
-export * from "./StringFormatByMaskPlugin";
 export * from "./SparklinePlugin";
+export * from "./StringFormatByMaskPlugin";
 export * from "./TableRenderParamsPlugin";
 export * from "./UnknownPlugin";
