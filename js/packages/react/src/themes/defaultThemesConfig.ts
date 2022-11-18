@@ -112,6 +112,9 @@ export const defaultThemesConfig: ThemesConfig = {
     },
     baseTableMaterialThemeConfig: {
       palette: {
+        background: {
+          default: "#FFFFFF"
+        },
         action: {
           selected: "#0000FF" // For highlighted row
         }
