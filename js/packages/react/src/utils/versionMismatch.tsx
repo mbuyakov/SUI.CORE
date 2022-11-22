@@ -4,25 +4,25 @@ import axios from "axios";
 import {getSUISettings, IObjectWithIndex, sleep, UserService} from "@sui/core";
 import {Container} from "typescript-ioc";
 
-function checkVersionMismatch(currentVersion: string): Promise<false | { newVersion: string }> {
+export function checkVersionMismatch(): Promise<false | { newVersion: string }> {
   // Timestamp to disable chrome disk cache
   return axios.get(`${getSUISettings().checkVersionMismatchUrl}?timestamp=${new Date().getTime()}`)
-    .then(response => (response.data !== currentVersion) ? {newVersion: response.data} : false)
+    .then(response => (response.data !== getCurrentVersion()) ? {newVersion: response.data} : false)
     .catch((): false => false);
 }
 
-function showVersionMismatchNotification(currentVersion: string, newVersion: string, isLoggedIn: boolean): void {
+export function showVersionMismatchNotification(newVersion: string, isLoggedIn: boolean): void {
   notification.warn({
     key: "__SUI_VERSION_MISMATCH_NOTIFICATION_KEY",
     duration: 0,
-    style: {width: isLoggedIn ? 650 : 450},
+    style: {width: isLoggedIn ? 600 : 450},
     message: "Установлена новая версия системы",
     description: (
       <div>
-        <div>Текущая версия: {currentVersion}</div>
+        <div>Текущая версия: {getCurrentVersion()}</div>
         <div>Последняя версия: {newVersion}</div>
-        {!isLoggedIn && (<div>Пожалуйста, обновитесь</div>)}
-        {isLoggedIn && (<div>Если в течение минуты Вы не обновитесь, то Вас автоматически разлогинит</div>)}
+        {!isLoggedIn && (<div>Пожалуйста, обновите страницу</div>)}
+        {isLoggedIn && (<div>У вас есть минута на сохранение данных и выход из системы</div>)}
         <div style={{color: '#999', fontSize: 12}}>(Ctrl+F5 для Windows)</div>
         <div style={{color: '#999', fontSize: 12}}>(Cmd+Shift+R для MacOS)</div>
       </div>
@@ -30,7 +30,7 @@ function showVersionMismatchNotification(currentVersion: string, newVersion: str
   });
 }
 
-export function runCheckVersionMismatch(currentVersion: string): void {
+export function runCheckVersionMismatch(): void {
   if (process.env.NODE_ENV !== "production") {
     return;
   }
@@ -40,24 +40,15 @@ export function runCheckVersionMismatch(currentVersion: string): void {
   let logoutInProgress = false;
 
   function checkVersionMismatchIteration(): void {
-    checkVersionMismatch(currentVersion)
+    checkVersionMismatch()
       .then(async (checkVersionMismatchResult): Promise<void> => {
-        if (!checkVersionMismatchResult) {
-          return;
-        }
-
-        if (logoutInProgress) {
+        if (!checkVersionMismatchResult || logoutInProgress || !userService.isLoggedIn()) {
           return;
         }
 
         const newVersion = checkVersionMismatchResult.newVersion;
-        const isLoggedIn = userService.isLoggedIn();
 
-        showVersionMismatchNotification(currentVersion, newVersion, isLoggedIn);
-
-        if (!isLoggedIn) {
-          return;
-        }
+        showVersionMismatchNotification(newVersion, true);
 
         logoutInProgress = true;
 
@@ -66,7 +57,7 @@ export function runCheckVersionMismatch(currentVersion: string): void {
           await sleep(60000);
 
           // Определяем обновился ли пользователь
-          const updated = await checkVersionMismatch(currentVersion) === false;
+          const updated = await checkVersionMismatch() === false;
 
           // Разлогиниваем, если не обновился
           if (!updated) {
@@ -82,7 +73,11 @@ export function runCheckVersionMismatch(currentVersion: string): void {
   }
 
   setTimeout(checkVersionMismatchIteration, 1000);
-  setInterval(checkVersionMismatchIteration, 60000);
+  setInterval(checkVersionMismatchIteration, 20000);
+}
+
+function getCurrentVersion(): string {
+  return getSUISettings().buildTime;
 }
 
 //Костыль для вызова этой балалайки в init из core

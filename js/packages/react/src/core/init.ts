@@ -41,5 +41,5 @@ export function initSUI(settings: _IInitSUISettings): void {
 
   window.SUI_CORE_PTC_CACHE = new ColorHeatMap(settings.percentToColorSettings);
 
-  runCheckVersionMismatch(settings.buildTime);
+  runCheckVersionMismatch();
 }
