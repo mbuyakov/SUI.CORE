@@ -12,6 +12,7 @@ import {Footer} from "@/layout";
 export const LoginPage: React.FC<{
   title: string;
   loading: boolean;
+  disabled?: boolean;
   inputMode?: HTMLAttributes<any>["inputMode"];
   warnText?: string;
   errorText?: string;
@@ -26,6 +27,7 @@ export const LoginPage: React.FC<{
   const {
     title,
     loading,
+    disabled,
     inputMode,
     warnText,
     errorText,
@@ -96,7 +98,7 @@ export const LoginPage: React.FC<{
                 {errorText && <Alert children={errorText} severity="error" icon={false}/>}
                 <TextField
                   inputRef={usernameRef}
-                  disabled={loading}
+                  disabled={loading || disabled}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -109,7 +111,7 @@ export const LoginPage: React.FC<{
                 />
                 <TextField
                   inputRef={passwordRef}
-                  disabled={loading}
+                  disabled={loading || disabled}
                   inputProps={{
                     inputMode
                   }}
@@ -130,7 +132,7 @@ export const LoginPage: React.FC<{
                   variant="contained"
                   color="primary"
                   style={{width: "100%"}}
-                  disabled={loading}
+                  disabled={loading || disabled}
                   onClick={onLogin}
                 >
                   Войти
