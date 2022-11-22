@@ -5,6 +5,10 @@ import {getSUISettings, IObjectWithIndex, sleep, UserService} from "@sui/core";
 import {Container} from "typescript-ioc";
 
 export function checkVersionMismatch(): Promise<false | { newVersion: string }> {
+  if (process.env.NODE_ENV !== "production") {
+    return Promise.resolve(false);
+  }
+
   // Timestamp to disable chrome disk cache
   return axios.get(`${getSUISettings().checkVersionMismatchUrl}?timestamp=${new Date().getTime()}`)
     .then(response => (response.data !== getCurrentVersion()) ? {newVersion: response.data} : false)
@@ -31,10 +35,6 @@ export function showVersionMismatchNotification(newVersion: string, isLoggedIn: 
 }
 
 export function runCheckVersionMismatch(): void {
-  if (process.env.NODE_ENV !== "production") {
-    return;
-  }
-
   const userService = Container.get(UserService);
 
   let logoutInProgress = false;
