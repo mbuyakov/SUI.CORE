@@ -15,8 +15,8 @@ export const ISSUE_DATE_FROM_14_MSG = "Данный документ выдае�
 export const ISSUE_DATE_FROM_18_MSG = "Данный документ выдается с 18 лет";
 
 // Common stub for all variants. Algorithm:
-// If age >= 45 years + 30 days, then issue date > 45 years
-// If age >= 20 years + 30 days, then issue date > 20 years
+// If age >= 45 years + 90 days, then issue date > 45 years
+// If age >= 20 years + 90 days, then issue date > 20 years
 // Else issue date > 14 years
 export const PASSPORT_ISSUE_DATE_BROKEN_MSG = "Недопустимая дата выдача паспорта";
 
@@ -75,9 +75,9 @@ export function issueDateValidator(issueDate: Moment, docCode: number, birthday:
       const birthdayPlus20y = birthday.clone().add(20, 'years');
       const birthdayPlus14y = birthday.clone().add(14, 'years');
       if (
-        birthdayPlus45y.clone().add(30, "days") <= current && issueDate < birthdayPlus45y ||
-        birthdayPlus20y.clone().add(30, "days") <= current && issueDate < birthdayPlus20y ||
-        birthdayPlus14y.clone().add(30, "days") <= current && issueDate < birthdayPlus14y
+        birthdayPlus45y.clone().add(90, "days") <= current && issueDate < birthdayPlus45y ||
+        birthdayPlus20y.clone().add(90, "days") <= current && issueDate < birthdayPlus20y ||
+        issueDate < birthdayPlus14y
       ) {
         return PASSPORT_ISSUE_DATE_BROKEN_MSG;
       } else {
