@@ -1,5 +1,6 @@
 package ru.sui.suisecurity.server.config
 
+import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
@@ -13,6 +14,8 @@ import org.springframework.ldap.query.LdapQueryBuilder
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource
 import org.springframework.security.ldap.SpringSecurityLdapTemplate
 import ru.sui.suisecurity.server.ldap.LdapAuthenticationHelper
+
+private val log = KotlinLogging.logger { }
 
 @Configuration
 @ConditionalOnProperty("ldap.url")
@@ -58,8 +61,10 @@ class LdapConfiguration(
                     ldapTemplate.authenticate(query, password)
                     return ldapTemplate.search(query, ContextMapper { it as DirContextOperations }).firstOrNull()
                 } catch (exception: AuthenticationException) {
+                    log.warn(exception) { "LDAP authentication error" }
                     return null
                 } catch (exception: EmptyResultDataAccessException) {
+                    log.warn(exception) { "LDAP authentication error" }
                     return null
                 }
             }
