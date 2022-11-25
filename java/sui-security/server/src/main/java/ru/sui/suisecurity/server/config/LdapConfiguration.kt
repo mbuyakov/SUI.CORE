@@ -66,6 +66,9 @@ class LdapConfiguration(
                 } catch (exception: EmptyResultDataAccessException) {
                     log.warn(exception) { "LDAP authentication error" }
                     return null
+                } catch (exception: Exception) {
+                    log.warn(exception) { "LDAP authentication error" }
+                    throw exception
                 }
             }
 
