@@ -30,6 +30,11 @@ export class Observable<T> {
   }
 
   @autobind
+  public forceTrigger(): void {
+    this.setValue(this.value)
+  }
+
+  @autobind
   public subscribe(cb: ObservableHandler<T>, triggerOnSubscribe: boolean = false): ObservableHandlerStub {
     const id = uuidv4();
 
