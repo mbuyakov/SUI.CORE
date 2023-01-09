@@ -110,17 +110,6 @@ class AuthenticationService(
         val user = principal?.user ?: findUserByFormLogin(formLogin!!)
         val result = authenticationResultRepository.get(loginResultCode)
 
-        // Блокируем пользователя (если надо)
-        if (blockAttemptsCount > 0 && user != null && !user.blocked && !result.success) {
-            val lastAuthLogs = getPrevNAuthenticationLogs(user, blockAttemptsCount - 1) // -1 т.к. текущая еще на сохранена
-
-            if (lastAuthLogs.size == (blockAttemptsCount - 1) && lastAuthLogs.all { !it.result.success }) {
-                user.blocked = true
-                userRepository.save(user)
-                sessionManager.disableByUserId(user.id, SUCCESS_LOGOUT_COMMAND_RESULT_CODE)
-            }
-        }
-
         // TODO: add clientInfo
         authenticationLogService.create(
             operation = AuthenticationOperation.LOGIN,
@@ -130,6 +119,17 @@ class AuthenticationService(
             remoteAddress = remoteAddress,
             formLogin = formLogin
         )
+
+        // Блокируем пользователя (если надо)
+        if (blockAttemptsCount > 0 && user != null && !user.blocked && result.code == WRONG_PASSWORD_AUTH_RESULT_CODE) {
+            val lastAuthLogs = getPrevNAuthenticationLogs(user, blockAttemptsCount)
+
+            if (lastAuthLogs.size == blockAttemptsCount && lastAuthLogs.all { it.result.code == WRONG_PASSWORD_AUTH_RESULT_CODE }) {
+                user.blocked = true
+                userRepository.save(user)
+                sessionManager.disableByUserId(user.id, SUCCESS_LOGOUT_COMMAND_RESULT_CODE)
+            }
+        }
 
         when {
             loginException == null -> return LoginResult(principal = principal!!, jwt = jwt!!)
