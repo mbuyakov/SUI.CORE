@@ -11,7 +11,6 @@ fun LoginResult.toResponseEntity(): ResponseEntity<JwtAuthenticationResponse> {
     val tokenCookie = ResponseCookie.from("_sui_token", this.jwt)
         .maxAge(Duration.ofDays(3650))
         .path("/")
-        .secure(true)
         .httpOnly(true)
         .build()
         .toString()
