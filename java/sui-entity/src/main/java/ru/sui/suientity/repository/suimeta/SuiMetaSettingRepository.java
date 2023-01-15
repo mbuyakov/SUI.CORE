@@ -9,6 +9,7 @@ public interface SuiMetaSettingRepository {
 
     String get(String settingKey);
     Map<String, String> get(Iterable<String> settingKeys);
+    Map<String, String> getAll();
 
     Optional<TableInfo> getRestrictionTable();
 

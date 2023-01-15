@@ -62,6 +62,16 @@ public class SuiMetaSettingRepositoryImpl implements SuiMetaSettingRepository {
     }
 
     @Override
+    public Map<String, String> getAll() {
+        return jdbcTemplate
+                .queryForList("SELECT key, value FROM sui_meta.sui_settings_kv")
+                .stream()
+                .collect(Collectors.toMap(
+                        element -> (String) element.get("key"),
+                        element -> (String) element.get("value")));
+    }
+
+    @Override
     public Optional<TableInfo> getRestrictionTable() {
         return Optional
                 .ofNullable(get(SettingKeys.RESTRICTION_TABLE.getValue()))
