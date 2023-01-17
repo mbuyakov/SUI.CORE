@@ -55,6 +55,7 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
         <InputNumber
           placeholder="С"
           style={{width: "100%"}}
+          precision={0}
           value={this.state.value[0]}
           onBlur={this.onBlur(0)}
           onFocus={(): void => this.onFocusChanged(0, true)}
@@ -65,6 +66,7 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
         <InputNumber
           placeholder="По"
           style={{width: "100%"}}
+          precision={0}
           value={this.state.value[1]}
           onBlur={this.onBlur(1)}
           onFocus={(): void => this.onFocusChanged(1, true)}
