@@ -108,7 +108,7 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
       // tslint:disable-next-line:switch-default
       switch (typeof (value)) {
         case "number":
-          numberValue = value;
+          numberValue = Math.trunc(value);
           break;
         case "string":
           let stringValue = value;
