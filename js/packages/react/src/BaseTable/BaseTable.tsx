@@ -440,13 +440,15 @@ export class BaseTable<TSelection = defaultSelection>
                   }}
                 />}
                 {(selectionEnabled || highlightEnabled) && (
-                  <TableSelection
-                    highlightRow={highlightEnabled}
-                    selectByRowClick={highlightEnabled}
-                    showSelectionColumn={!highlightEnabled}
-                    cellComponent={this.SelectionCellComponent}
-                    showSelectAll={!this.props.singleSelection && !highlightEnabled}
-                  />
+                  <div style={{zIndex:1000}}>
+                    <TableSelection
+                      highlightRow={highlightEnabled}
+                      selectByRowClick={highlightEnabled}
+                      showSelectionColumn={!highlightEnabled}
+                      cellComponent={this.SelectionCellComponent}
+                      showSelectAll={!this.props.singleSelection && !highlightEnabled}
+                    />
+                  </div>
                 )}
                 {groupingEnabled && <TableGroupRow contentComponent={tableGroupRowContentComponent}/>}
                 {groupingEnabled && !this.props.hideSubtotalRow && this.props.groupSubtotalData && hasSubtotals && <GroupSummaryRow subtotalData={this.props.groupSubtotalData}/>}
