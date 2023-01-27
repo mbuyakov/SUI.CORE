@@ -238,6 +238,7 @@ export class BaseTable<TSelection = defaultSelection>
       return (
         <PagingPanelContainer
           {...props}
+          style={{zIndex: 2000}}
           className={classnames(props.className, virtual ? HIDE_BUTTONS : undefined)}
         />
       );
@@ -440,7 +441,6 @@ export class BaseTable<TSelection = defaultSelection>
                   }}
                 />}
                 {(selectionEnabled || highlightEnabled) && (
-                  <div style={{zIndex:1000}}>
                     <TableSelection
                       highlightRow={highlightEnabled}
                       selectByRowClick={highlightEnabled}
@@ -448,7 +448,6 @@ export class BaseTable<TSelection = defaultSelection>
                       cellComponent={this.SelectionCellComponent}
                       showSelectAll={!this.props.singleSelection && !highlightEnabled}
                     />
-                  </div>
                 )}
                 {groupingEnabled && <TableGroupRow contentComponent={tableGroupRowContentComponent}/>}
                 {groupingEnabled && !this.props.hideSubtotalRow && this.props.groupSubtotalData && hasSubtotals && <GroupSummaryRow subtotalData={this.props.groupSubtotalData}/>}
