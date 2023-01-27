@@ -238,7 +238,6 @@ export class BaseTable<TSelection = defaultSelection>
       return (
         <PagingPanelContainer
           {...props}
-          style={{zIndex: 2000}}
           className={classnames(props.className, virtual ? HIDE_BUTTONS : undefined)}
         />
       );
