@@ -62,7 +62,7 @@ export class EditablePromisedComponent<T>
                             className={EDITABLE_PROMISED_COMPONENT_CHILDREN}
                           >
                             {editMode ? React.cloneElement(this.props.children, {promise: this.getPromise}) : (this.props.nonEditRender || this.DEFAULT_RENDERER).apply(null, [this.props.children.props.defaultValue])}
-                            {editAllowed && (
+                            {(editMode || editAllowed) && (
                               <IconButton
                                 onClick={this.switchEdit}
                                 style={{marginLeft: 6}}
