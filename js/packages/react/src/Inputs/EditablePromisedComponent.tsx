@@ -48,7 +48,8 @@ export class EditablePromisedComponent<T>
                       const editAllowed = !this.props.disableEdit
                         && (!disableEdit || !!this.state?.editMode)
                         && (!this.props.editRoles || hasAnyRole(this.props.editRoles));
-                      const editMode = editAllowed && !!this.state?.editMode;
+
+                      const editMode = !!this.state?.editMode;
 
                       return (
                         <DisableEditContext.Provider value={editModeValue.outerDisable}>
