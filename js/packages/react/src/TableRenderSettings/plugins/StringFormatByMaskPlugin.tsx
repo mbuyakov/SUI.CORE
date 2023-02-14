@@ -32,7 +32,7 @@ export class StringFormatByMaskPlugin extends TableRenderParamsPlugin<IStringFor
         return value;
       }
 
-      return formatByMaskFn(mask)(value);
+      return formatByMaskFn(mask, "")(value);
     };
 
     return Promise.resolve();
