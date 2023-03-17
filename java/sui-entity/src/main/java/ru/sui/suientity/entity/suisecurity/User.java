@@ -12,7 +12,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant
 import java.util.Set;
 
 @Getter
@@ -44,7 +44,7 @@ public class User implements Serializable {
     private Long id;
 
     @CreatedDate
-    private Date created;
+    private Instant created;
 
     @NotBlank
     @Email
@@ -57,7 +57,7 @@ public class User implements Serializable {
     private String password;
 
     @LastModifiedDate
-    private Date updated;
+    private Instant updated;
 
     @NotBlank
     private String username;
