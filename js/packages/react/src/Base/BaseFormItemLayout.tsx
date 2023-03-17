@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {IObjectWithIndex} from "@sui/core";
 import {Form, FormItemProps} from 'antd';
-import {RuleItem} from 'async-validator';
+import {RuleItem, RuleType} from 'async-validator';
 import autobind from 'autobind-decorator';
 import classNames from 'classnames';
 import * as React from 'react';
@@ -33,6 +33,7 @@ export interface IBaseFormItemLayoutBase {
   initialValue?: any;
   inputNode?: JSX.Element; // Required. Mark as non-required because IBaseFormItemLayoutMask
   required?: boolean;
+  requiredType?: RuleType;
   rules?: FixedRuleItem[];
   title?: string | React.ReactNode;
   valuePropName?: string;
@@ -108,6 +109,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
           const item = this.props;
           const valuePropName = item.valuePropName || 'value';
           const required = item.required || (item.mapFormValuesToRequired && item.mapFormValuesToRequired(this.valueGetter));
+          const requiredType = item.requiredType;
 
           if (!this.formField || this.formFieldName != item.fieldName) {
             this.formFieldName = item.fieldName;
@@ -134,7 +136,14 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
 
           if (required) {
             if (this.formField.rules.findIndex(rule => rule.required || false) < 0) {
-              this.formField.rules.unshift({required: true, message: FILL_FIELD_TEXT});
+              const requiredRule: RuleItem = {required: true, message: FILL_FIELD_TEXT};
+
+              if (requiredType) {
+                requiredRule.type = requiredType;
+              }
+
+              this.formField.rules.unshift(requiredRule);
+
               this.baseForm.validateField(item.fieldName);
             }
           }

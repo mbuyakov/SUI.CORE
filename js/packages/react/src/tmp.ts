@@ -14,10 +14,10 @@ export async function queryWrapper<T>(originalQuery: Promise<T>): Promise<T> {
 }
 
 
-export function formatByMaskFn(pattern: string): (value: string | null | undefined) => string {
+export function formatByMaskFn(pattern: string, emptyValue: string = NO_DATA_TEXT): (value: string | null | undefined) => string {
   return (value: string | null | undefined): string => {
     if (!value) {
-      return NO_DATA_TEXT;
+      return emptyValue;
     }
 
     return new InputMask({

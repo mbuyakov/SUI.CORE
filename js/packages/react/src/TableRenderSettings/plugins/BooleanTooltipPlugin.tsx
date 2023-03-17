@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Input, Tooltip} from "antd";
 import {ColumnInfo} from "@sui/core";
-import {formatByMaskFn} from "@/tmp";
 
 // noinspection ES6PreferShortImport
 import {booleanRender, IBaseTableColLayout} from '../../BaseTable';
