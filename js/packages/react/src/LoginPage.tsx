@@ -1,8 +1,9 @@
 import React, {HTMLAttributes, KeyboardEvent, useContext} from "react";
-import {Backdrop, Card, CardContent, CircularProgress, Divider, InputAdornment, TextField} from "@material-ui/core";
+import {Backdrop, Card, CardContent, CircularProgress, Divider, IconButton, InputAdornment, TextField} from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import {Visibility, VisibilityOff} from "@material-ui/icons";
 import {SuiThemeContext, ThemeSwitchButton} from "@/themes";
 import {BlockUIConditionally} from "@/other";
 import {SUI_ROW_CONTAINER} from "@/styles";
@@ -41,6 +42,12 @@ export const LoginPage: React.FC<{
   } = props;
 
   const theme = useContext(SuiThemeContext);
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = React.useCallback(() => setShowPassword((show) => !show), [setShowPassword]);
+
+  const handleMouseDownPassword = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault(), []);
 
   return (
     <>
@@ -112,9 +119,7 @@ export const LoginPage: React.FC<{
                 <TextField
                   inputRef={passwordRef}
                   disabled={loading || disabled}
-                  inputProps={{
-                    inputMode
-                  }}
+                  inputProps={{inputMode}}
                   // inputProps and InputProps is NOT same props
                   // eslint-disable-next-line react/jsx-no-duplicate-props
                   InputProps={{
@@ -122,9 +127,20 @@ export const LoginPage: React.FC<{
                       <InputAdornment position="start">
                         <LockOutlinedIcon/>
                       </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff/> : <Visibility/>}
+                        </IconButton>
+                      </InputAdornment>
                     )
                   }}
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   label={inputMode == "numeric" ? "ПИН-код" : "Пароль"}
                   onKeyDown={onKeyDown}
                 />
