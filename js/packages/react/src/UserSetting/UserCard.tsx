@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {DeleteOutlined, IssuesCloseOutlined} from "@ant-design/icons";
+import {Typography} from "@material-ui/core";
 import {EMAIL_REGEXP, IRole, IUser, IUserRole, NO_DATA_TEXT, OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/core";
 import {Card, Select, Tooltip} from "antd";
 import * as React from "react";
@@ -59,7 +60,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                 gridTemplateColumns: "1fr max-content"
               }}
             >
-              <h2 style={{width: "100%"}}>{userData.name}</h2>
+              <Typography variant="h2" style={{width: "100%"}}>{userData.name}</Typography>
               <div>
                 {this.props.extraHeader}
                 {(typeof this.props.allowDeleteOperations === "boolean" ? this.props.allowDeleteOperations : isAdmin())
