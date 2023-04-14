@@ -69,7 +69,7 @@ interface RedisSessionRepository : CrudRepository<RedisSession, UUID>, Transacti
     fun findAllByActiveIsTrue(): List<RedisSession>
 
     fun findAllByActiveIsTrueAndUserId(userId: Long): List<RedisSession>
-
+    fun findByUserId(userId: Long): List<RedisSession>
 }
 
 interface TransactionalSaveRedisSessionRepository {
