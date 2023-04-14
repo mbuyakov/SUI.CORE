@@ -2,6 +2,7 @@ apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
 
 dependencies {
+    implementation project(path: ':sui-backend')
     compile project(":sui-security:sui-security-base")
     compile("org.springframework.ldap:spring-ldap-core:${springLdapVerison}")
     compile("org.springframework.security:spring-security-ldap:${springVersion}")

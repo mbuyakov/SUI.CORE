@@ -9,13 +9,13 @@ import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.DisabledException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Service
+import ru.sui.suibackend.service.SuiMetaSettingService
 import ru.sui.suientity.entity.log.AuthenticationLog
 import ru.sui.suientity.entity.suisecurity.User
 import ru.sui.suientity.enums.AuthenticationOperation
 import ru.sui.suientity.repository.log.AuthenticationLogRepository
 import ru.sui.suientity.repository.log.AuthenticationResultRepository
 import ru.sui.suientity.repository.suisecurity.UserRepository
-import ru.sui.suientity.repository.suimeta.SuiMetaSettingRepository;
 import ru.sui.suisecurity.base.exception.TooManyAttemptsException
 import ru.sui.suisecurity.base.exception.UserBlockedException
 import ru.sui.suisecurity.base.extension.clientIp
@@ -33,7 +33,7 @@ import java.time.Duration
 import java.util.*
 import java.time.LocalDateTime
 
-private val log = KotlinLogging.logger {  }
+private val log = KotlinLogging.logger { }
 
 @Service
 @Suppress("ThrowableNotThrown", "UNCHECKED_CAST")
@@ -49,11 +49,11 @@ class AuthenticationService(
     private val authenticationLogService: AuthenticationLogService,
     private val customUserDetailsService: CustomUserDetailsService,
     private val sessionService: SessionService,
+    private val suiMetaSettingService: SuiMetaSettingService,
     // repos
     private val authenticationResultRepository: AuthenticationResultRepository,
     private val authenticationLogRepository: AuthenticationLogRepository,
-    private val userRepository: UserRepository,
-    private val suiMetaSettingRepository: SuiMetaSettingRepository
+    private val userRepository: UserRepository
 ) {
 
     fun login(token: UsernamePasswordAuthenticationToken): LoginResult {
@@ -65,6 +65,8 @@ class AuthenticationService(
 
         var principal: UserPrincipal? = null
         var jwt: String? = null
+
+        val blockAttempts = suiMetaSettingService.getInt("max_unsuccessful_auth_attempts") ?: blockAttemptsCount
 
         try {
             formLogin = token.principal as String
@@ -81,27 +83,31 @@ class AuthenticationService(
 
             val user = findUserByFormLogin(formLogin)
 
-            blockAttemptsCount = suiMetaSettingRepository.getInt("max_unsuccessful_auth_attempts") ?: blockAttemptsCount
-            // Разблокируем пользователя (если надо)
-            if (blockAttemptsCount > 0 && user != null && user.blocked) {
-                val lastAuthLogs = getPrevNAuthenticationLogs(user, blockAttemptsCount + 1)
 
-                if (lastAuthLogs.size == (blockAttemptsCount + 1) && lastAuthLogs.slice(0 until lastAuthLogs.size - 1).all { it.result.code == WRONG_PASSWORD_AUTH_RESULT_CODE }
-                    && !Date.valueOf(LocalDateTime.now().minusMinutes(30)).after(lastAuthLogs.last().created)) {
+            // Разблокируем пользователя (если надо)
+            if (blockAttempts > 0 && user != null && user.blocked) {
+                val lastAuthLogs = getPrevNAuthenticationLogs(user, blockAttempts + 1)
+
+                if (lastAuthLogs.size == (blockAttempts + 1) && lastAuthLogs.slice(0 until lastAuthLogs.size - 1)
+                        .all { it.result.code == WRONG_PASSWORD_AUTH_RESULT_CODE }
+                    && !suiMetaSettingService.toDate(LocalDateTime.now().minusMinutes(30)).before(lastAuthLogs.last().created)
+                ) {
                     user.blocked = false
                     userRepository.save(user)
                 }
             }
 
+            if (user != null && !user.blocked && !suiMetaSettingService.getDuration("allowable_user_inactivity_days")
+                    .after(sessionService.findLastActivity(user.id).created)
+            ) {
+                user.blocked = true
+                userRepository.save(user)
+            }
+
+
             // Проверяем, что пользователь не заблокирован
             if (user != null && user.blocked) {
                 throw UserBlockedException(user)
-            }
-
-            if (!suiMetaSettingRepository.getDuration("allowable_user_inactivity_days").after(sessionService.findLastActivity(user.id))) {
-                user.blocked = true
-                userRepository.save(user)
-                sessionManager.disableByUserId(user.id, SUCCESS_LOGOUT_COMMAND_RESULT_CODE)
             }
 
             // Аутентифицируем пользователя
@@ -144,10 +150,10 @@ class AuthenticationService(
         )
 
         // Блокируем пользователя (если надо)
-        if (blockAttemptsCount > 0 && user != null && !user.blocked && result.code == WRONG_PASSWORD_AUTH_RESULT_CODE) {
-            val lastAuthLogs = getPrevNAuthenticationLogs(user, blockAttemptsCount)
+        if (blockAttempts > 0 && user != null && !user.blocked && result.code == WRONG_PASSWORD_AUTH_RESULT_CODE) {
+            val lastAuthLogs = getPrevNAuthenticationLogs(user, blockAttempts)
 
-            if (lastAuthLogs.size == blockAttemptsCount && lastAuthLogs.all { it.result.code == WRONG_PASSWORD_AUTH_RESULT_CODE }) {
+            if (lastAuthLogs.size == blockAttempts && lastAuthLogs.all { it.result.code == WRONG_PASSWORD_AUTH_RESULT_CODE }) {
                 user.blocked = true
                 userRepository.save(user)
                 sessionManager.disableByUserId(user.id, SUCCESS_LOGOUT_COMMAND_RESULT_CODE)
@@ -172,11 +178,11 @@ class AuthenticationService(
 
             userId?.let { userRepository.findById(it) }?.ifPresent {
                 authenticationLogService.create(
-                        operation = AuthenticationOperation.LOGOUT,
-                        resultCode = SUCCESS_LOGOUT_COMMAND_RESULT_CODE,
-                        sessionId = sessionId,
-                        user = it,
-                        remoteAddress = getRequest().clientIp
+                    operation = AuthenticationOperation.LOGOUT,
+                    resultCode = SUCCESS_LOGOUT_COMMAND_RESULT_CODE,
+                    sessionId = sessionId,
+                    user = it,
+                    remoteAddress = getRequest().clientIp
                 )
             }
         }

@@ -17,5 +17,8 @@ class RedisSessionService(private val redisSessionRepository: RedisSessionReposi
 
     override fun findAllActiveByUserId(userId: Long) = redisSessionRepository.findAllByActiveIsTrueAndUserId(userId).map { it.toSession() }
 
-    override fun findLastActivity(userId: Long) = redisSessionRepository.findByUserId(userId).stream().max(Comparator.comparing(Session::lastUserActivity)).get()
+    override fun findLastActivity(userId: Long) = redisSessionRepository.findByUserId(userId)
+        .stream()
+        .map { it.toSession() }
+        .max(Comparator.comparing(Session::lastUserActivity)).get()
 }
