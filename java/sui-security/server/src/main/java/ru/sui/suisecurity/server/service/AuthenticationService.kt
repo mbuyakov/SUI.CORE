@@ -81,7 +81,7 @@ class AuthenticationService(
                 }
             }
 
-            val user = findUserByFormLogin(formLogin)
+            val user = principal?.user ?: findUserByFormLogin(formLogin!!)
 
 
             // Разблокируем пользователя (если надо)
