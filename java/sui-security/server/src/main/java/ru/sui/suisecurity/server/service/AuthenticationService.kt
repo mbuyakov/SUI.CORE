@@ -9,7 +9,6 @@ import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.DisabledException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Service
-import ru.sui.suibackend.service.SuiMetaSettingService
 import ru.sui.suientity.entity.log.AuthenticationLog
 import ru.sui.suientity.entity.suisecurity.User
 import ru.sui.suientity.enums.AuthenticationOperation
@@ -26,6 +25,7 @@ import ru.sui.suisecurity.base.security.CustomUserDetailsService
 import ru.sui.suisecurity.base.security.JwtTokenProvider
 import ru.sui.suisecurity.base.security.UserPrincipal
 import ru.sui.suisecurity.base.service.AuthenticationLogService
+import ru.sui.suisecurity.base.service.SuiMetaSettingService
 import ru.sui.suisecurity.base.session.SessionManager
 import ru.sui.suisecurity.base.session.SessionService
 import ru.sui.suisecurity.base.utils.*
@@ -90,15 +90,15 @@ class AuthenticationService(
 
                 if (lastAuthLogs.size == (blockAttempts + 1) && lastAuthLogs.slice(0 until lastAuthLogs.size - 1)
                         .all { it.result.code == WRONG_PASSWORD_AUTH_RESULT_CODE }
-                    && !suiMetaSettingService.toDate(LocalDateTime.now().minusMinutes(30)).before(lastAuthLogs.last().created)
+                    && with (suiMetaSettingService) { !(LocalDateTime.now().minusMinutes(30).toDate()).before(lastAuthLogs.last().created) }
                 ) {
                     user.blocked = false
                     userRepository.save(user)
                 }
             }
 
-            if (user != null && !user.blocked && !suiMetaSettingService.getDuration("allowable_user_inactivity_days")
-                    .after(sessionService.findLastActivity(user.id).created)
+            if ((user != null) && !user.blocked && !suiMetaSettingService.getDuration("allowable_user_inactivity_days")
+                    ?.after(sessionService.findLastActivity(user.id).created)!!
             ) {
                 user.blocked = true
                 userRepository.save(user)
