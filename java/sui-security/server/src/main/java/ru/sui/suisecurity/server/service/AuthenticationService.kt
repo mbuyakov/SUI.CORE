@@ -97,8 +97,8 @@ class AuthenticationService(
                 }
             }
 
-            if ((user != null) && !user.blocked && !suiMetaSettingService.getDuration("allowable_user_inactivity_days")
-                    ?.after(sessionService.findLastActivity(user.id).created)!!
+            if ((user != null) && !user.blocked && suiMetaSettingService.getDuration("allowable_user_inactivity_days")
+                    ?.after(sessionService.findLastActivity(user.id).lastUserActivity)!!
             ) {
                 user.blocked = true
                 userRepository.save(user)
