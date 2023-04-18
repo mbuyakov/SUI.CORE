@@ -18,5 +18,5 @@ class SuiMetaSettingService(
 
     fun getLong(settingKey: String): Long? = suiMetaSettingRepository.get(settingKey).toLongOrNull()
 
-    fun getDuration(settingKey: String): Date? = getLong(suiMetaSettingRepository.get(settingKey))?.let { LocalDateTime.now().minusDays(it).toDate() }
+    fun getDuration(settingKey: String): Date? = getLong(settingKey)?.let { LocalDateTime.now().minusDays(it).toDate() }
 }
