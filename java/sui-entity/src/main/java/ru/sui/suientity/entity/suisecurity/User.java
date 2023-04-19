@@ -65,6 +65,8 @@ public class User implements Serializable {
     private Boolean deleted;
 
     private Boolean blocked;
+    private Instant unblockDate;
+    private String blockReason;
 
     //bi-directional many-to-many association to Role
     @ManyToMany
