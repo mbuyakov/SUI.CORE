@@ -15,6 +15,7 @@ import ru.sui.suientity.enums.AuthenticationOperation
 import ru.sui.suientity.repository.log.AuthenticationLogRepository
 import ru.sui.suientity.repository.log.AuthenticationResultRepository
 import ru.sui.suientity.repository.suisecurity.UserRepository
+import ru.sui.suisecurity.base.exception.BlockAttemptsException
 import ru.sui.suisecurity.base.exception.TooManyAttemptsException
 import ru.sui.suisecurity.base.exception.UserBlockedException
 import ru.sui.suisecurity.base.extension.clientIp
@@ -30,8 +31,10 @@ import ru.sui.suisecurity.base.session.SessionManager
 import ru.sui.suisecurity.base.session.SessionService
 import ru.sui.suisecurity.base.utils.*
 import java.time.Duration
-import java.util.*
+import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.util.*
 
 private val log = KotlinLogging.logger { }
 
@@ -55,6 +58,9 @@ class AuthenticationService(
     private val authenticationLogRepository: AuthenticationLogRepository,
     private val userRepository: UserRepository
 ) {
+
+    private val INCORRECT_PASSWORD_ENTRY_LIMIT = "incorrect_password_entry_limit"
+    private val TOO_MANY_INACTIVITY_DAYS = "too_many_inactivity_days"
 
     fun login(token: UsernamePasswordAuthenticationToken): LoginResult {
         var loginResultCode: String = SUCCESS_LOGIN_AUTH_RESULT_CODE
@@ -81,33 +87,31 @@ class AuthenticationService(
                 }
             }
 
-            val user = principal?.user ?: findUserByFormLogin(formLogin!!)
-
-
-            // Разблокируем пользователя (если надо)
-            if (blockAttempts > 0 && user != null && user.blocked) {
-                val lastAuthLogs = getPrevNAuthenticationLogs(user, blockAttempts + 1)
-
-                if (lastAuthLogs.size == (blockAttempts + 1) && lastAuthLogs.slice(0 until lastAuthLogs.size - 1)
-                        .all { it.result.code == WRONG_PASSWORD_AUTH_RESULT_CODE }
-                    && with (suiMetaSettingService) { !(LocalDateTime.now().minusMinutes(30).toDate()).before(lastAuthLogs.last().created) }
-                ) {
-                    user.blocked = false
-                    userRepository.save(user)
-                }
-            }
+            val user = findUserByFormLogin(formLogin)
 
             if ((user != null) && !user.blocked && suiMetaSettingService.getDuration("allowable_user_inactivity_days")
                     ?.after(sessionService.findLastActivity(user.id).lastUserActivity)!!
             ) {
                 user.blocked = true
+                user.blockReason = TOO_MANY_INACTIVITY_DAYS
                 userRepository.save(user)
             }
 
 
             // Проверяем, что пользователь не заблокирован
-            if (user != null && user.blocked) {
-                throw UserBlockedException(user)
+            if (blockAttempts > 0 && user != null && user.blocked) {
+                if (!LocalDateTime.now().isAfter(LocalDateTime.ofInstant(user.unblockDate, ZoneOffset.UTC))) {
+                    if (user.blockReason.equals(INCORRECT_PASSWORD_ENTRY_LIMIT)) {
+                        throw BlockAttemptsException()
+                    } else {
+                        throw UserBlockedException(user)
+                    }
+                } else {
+                    user.blocked     = false
+                    user.unblockDate = null
+                    user.blockReason = null
+                    userRepository.save(user)
+                }
             }
 
             // Аутентифицируем пользователя
@@ -127,6 +131,9 @@ class AuthenticationService(
         } catch (exception: UserBlockedException) {
             loginException = exception
             loginResultCode = FAILURE_BLOCKED_AUTH_RESULT_CODE
+        } catch (exception: BlockAttemptsException) {
+            loginException = exception
+            loginResultCode = FAILURE_BLOCK_ATTEMPTS_AUTH_RESULT_CODE
         } catch (exception: Exception) {
             loginException = exception
             loginResultCode = ERROR_RESULT_CODE
@@ -154,7 +161,9 @@ class AuthenticationService(
             val lastAuthLogs = getPrevNAuthenticationLogs(user, blockAttempts)
 
             if (lastAuthLogs.size == blockAttempts && lastAuthLogs.all { it.result.code == WRONG_PASSWORD_AUTH_RESULT_CODE }) {
-                user.blocked = true
+                user.blocked     = true
+                user.unblockDate = Instant.now().plusSeconds(1800)
+                user.blockReason = INCORRECT_PASSWORD_ENTRY_LIMIT
                 userRepository.save(user)
                 sessionManager.disableByUserId(user.id, SUCCESS_LOGOUT_COMMAND_RESULT_CODE)
             }

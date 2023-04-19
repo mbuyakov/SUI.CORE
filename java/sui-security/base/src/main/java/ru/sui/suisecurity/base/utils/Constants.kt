@@ -17,6 +17,7 @@ internal const val TABLE_INFO_BY_CAMEL_CASE_NAME_CACHE = "__sui_table_info_by_ca
 const val SUCCESS_LOGIN_AUTH_RESULT_CODE = "success login"
 const val WRONG_PASSWORD_AUTH_RESULT_CODE = "wrong password"
 const val FAILURE_TOO_MANY_ATTEMPTS_AUTH_RESULT_CODE = "failure (too many attempts)"
+const val FAILURE_BLOCK_ATTEMPTS_AUTH_RESULT_CODE = "failure (block attempts)"
 // const val FAILURE_NO_RIGHTS_AUTH_RESULT_CODE = "failure (no rights)"
 const val FAILURE_DELETED_AUTH_RESULT_CODE = "failure (deleted)"
 const val FAILURE_BLOCKED_AUTH_RESULT_CODE = "failure (blocked)"
