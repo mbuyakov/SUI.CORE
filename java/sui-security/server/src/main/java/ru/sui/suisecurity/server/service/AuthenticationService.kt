@@ -32,8 +32,6 @@ import ru.sui.suisecurity.base.session.SessionService
 import ru.sui.suisecurity.base.utils.*
 import java.time.Duration
 import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 import java.util.*
 
 private val log = KotlinLogging.logger { }
@@ -100,7 +98,7 @@ class AuthenticationService(
 
             // Проверяем, что пользователь не заблокирован
             if (blockAttempts > 0 && user != null && user.blocked) {
-                if (!LocalDateTime.now().isAfter(LocalDateTime.ofInstant(user.unblockDate, ZoneOffset.UTC))) {
+                if (!Instant.now().isAfter(user.unblockDate)) {
                     if (user.blockReason.equals(INCORRECT_PASSWORD_ENTRY_LIMIT)) {
                         throw BlockAttemptsException()
                     } else {
@@ -108,7 +106,6 @@ class AuthenticationService(
                     }
                 } else {
                     user.blocked     = false
-                    user.unblockDate = null
                     user.blockReason = null
                     userRepository.save(user)
                 }
@@ -160,7 +157,9 @@ class AuthenticationService(
         if (blockAttempts > 0 && user != null && !user.blocked && result.code == WRONG_PASSWORD_AUTH_RESULT_CODE) {
             val lastAuthLogs = getPrevNAuthenticationLogs(user, blockAttempts)
 
-            if (lastAuthLogs.size == blockAttempts && lastAuthLogs.all { it.result.code == WRONG_PASSWORD_AUTH_RESULT_CODE }) {
+            if (lastAuthLogs.size == blockAttempts && lastAuthLogs.all { it.result.code == WRONG_PASSWORD_AUTH_RESULT_CODE }
+                && (user.unblockDate == null || ((user.unblockDate != null) && lastAuthLogs.first().created.after(Date.from(user.unblockDate)))))
+            {
                 user.blocked     = true
                 user.unblockDate = Instant.now().plusSeconds(1800)
                 user.blockReason = INCORRECT_PASSWORD_ENTRY_LIMIT
