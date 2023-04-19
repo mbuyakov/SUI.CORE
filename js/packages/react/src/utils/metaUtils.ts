@@ -82,7 +82,9 @@ export async function generateCatalogDataPromise(
     2
   );
 
-  return queryData.map((it) => ({title: it[titleColumn], value: it.id}));
+  return queryData
+    .map((it) => ({title: it[titleColumn], value: it.id}))
+    .sort((a, b) => a.title.localeCompare(b.title));
 }
 
 export function formatObjectName(objectName: string, pascalCase: boolean = false): string {
