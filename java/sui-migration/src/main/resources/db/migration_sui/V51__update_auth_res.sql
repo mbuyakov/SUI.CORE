@@ -1,0 +1,2 @@
+INSERT INTO log.authentication_result(code, name, success)
+VALUES ('failure (block attempts)', 'Отказ (пользователь заблокирован на 30 минут [превышен лимит неуспешных попыток аутентификации])', FALSE);
