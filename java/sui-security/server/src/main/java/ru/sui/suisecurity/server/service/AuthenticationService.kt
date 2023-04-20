@@ -97,8 +97,10 @@ class AuthenticationService(
 
 
             // Проверяем, что пользователь не заблокирован
-            if (blockAttempts > 0 && user != null && user.blocked) {
-                if (!Instant.now().isAfter(user.unblockDate)) {
+            if (user != null && user.blocked) {
+                if (user.unblockDate == null) {
+                    throw UserBlockedException(user)
+                } else if (!Instant.now().isAfter(user.unblockDate)) {
                     if (user.blockReason.equals(INCORRECT_PASSWORD_ENTRY_LIMIT)) {
                         throw BlockAttemptsException()
                     } else {
