@@ -88,7 +88,7 @@ class AuthenticationService(
             val user = findUserByFormLogin(formLogin)
 
             if ((user != null) && !user.blocked && suiMetaSettingService.getDuration("allowable_user_inactivity_days")
-                    ?.after(sessionService.findLastActivity(user.id).lastUserActivity)!!
+                    ?.after(sessionService.findLastActivity(user.id)?.lastUserActivity)!!
             ) {
                 user.blocked = true
                 user.blockReason = TOO_MANY_INACTIVITY_DAYS

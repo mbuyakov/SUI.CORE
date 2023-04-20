@@ -19,8 +19,8 @@ class JpaSessionService(
 
     override fun findAllActiveByUserId(userId: Long) = jpaSessionRepository.findAllByActiveIsTrueAndUserId(userId).map { it.toSession() }
 
-    override fun findLastActivity(userId: Long) = jpaSessionRepository.findByUserId(userId)
+    override fun findLastActivity(userId: Long): Session? = jpaSessionRepository.findByUserId(userId)
         .stream()
         .map { it.toSession() }
-        .max(Comparator.comparing(Session::lastUserActivity)).get()
+        .max(Comparator.comparing(Session::lastUserActivity)).orElse(null)
 }
