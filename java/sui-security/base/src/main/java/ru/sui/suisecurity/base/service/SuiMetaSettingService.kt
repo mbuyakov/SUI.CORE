@@ -12,7 +12,7 @@ import java.util.*
 class SuiMetaSettingService(
     val suiMetaSettingRepository: SuiMetaSettingRepository
 ) {
-    fun LocalDateTime.toDate(): Date = Date.from(this.toInstant(ZoneOffset.UTC))
+    fun LocalDateTime?.toDate(): Date? = if (this != null) Date.from(this.toInstant(ZoneOffset.UTC)) else null
 
     fun getInt(settingKey: String): Int? = suiMetaSettingRepository.get(settingKey)?.toIntOrNull()
 
