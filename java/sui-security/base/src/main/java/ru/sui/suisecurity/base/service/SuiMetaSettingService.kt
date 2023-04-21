@@ -14,9 +14,9 @@ class SuiMetaSettingService(
 ) {
     fun LocalDateTime.toDate(): Date = Date.from(this.toInstant(ZoneOffset.UTC))
 
-    fun getInt(settingKey: String): Int? = suiMetaSettingRepository.get(settingKey).toIntOrNull()
+    fun getInt(settingKey: String): Int? = suiMetaSettingRepository.get(settingKey)?.toIntOrNull()
 
-    fun getLong(settingKey: String): Long? = suiMetaSettingRepository.get(settingKey).toLongOrNull()
+    fun getLong(settingKey: String): Long? = suiMetaSettingRepository.get(settingKey)?.toLongOrNull()
 
     fun getDuration(settingKey: String): Date? = getLong(settingKey)?.let { LocalDateTime.now().minusDays(it).toDate() }
 }
