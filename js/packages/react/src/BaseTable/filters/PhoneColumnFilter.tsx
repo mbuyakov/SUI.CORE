@@ -1,7 +1,7 @@
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-import {INewSearchProps, LazyTableFilterRowCellProps} from '../types';
 import {SUIPhoneInput} from "@/SUIPhoneInput";
+import {INewSearchProps, LazyTableFilterRowCellProps} from '../types';
 
 export type IPhoneColumnFilterProps = LazyTableFilterRowCellProps & INewSearchProps;
 
