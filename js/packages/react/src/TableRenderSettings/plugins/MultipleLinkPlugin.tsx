@@ -73,7 +73,7 @@ export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPlu
           value={trsp.state.tableRenderParams.linkTableName || ''}
           onChange={onChangeLinkTableName}
           suffix={
-            <Tooltip title="Укажите имя таблицы в БД. Если оставиь пустым, то вместо ссылок будут отображаться их представления разделенные ;">
+            <Tooltip title="Укажите имя таблицы в БД. Если оставить пустым, то вместо ссылок будут отображаться их представления разделенные ;">
               <InfoCircleOutlined style={{color: 'rgba(0,0,0,.45)'}}/>
             </Tooltip>
           }
