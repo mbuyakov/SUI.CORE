@@ -1,6 +1,7 @@
 package ru.sui.suisecurity.server.controller
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -17,13 +18,15 @@ import ru.sui.suisecurity.server.service.SudirService
 class SudirController(
   val sudirService: SudirService,
   val suiAuthController: SuiAuthController,
-  val customUserDetailsService: CustomUserDetailsService
+  val customUserDetailsService: CustomUserDetailsService,
+  @Value("\${sudir.redirect_uri}")
+  val redirectUri: String
 ) {
 
   @GetMapping("/callback")
   fun callback(@RequestParam code: String): ResponseEntity<*> {
     val headers = HttpHeaders()
-    headers.add("Location", "/#/login?sudirCode=$code")
+    headers.add("Location", "${redirectUri.replace("callback", "")}#/login?sudirCode=$code")
     return ResponseEntity<String>(headers, HttpStatus.FOUND)
   }
 
