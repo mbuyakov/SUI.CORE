@@ -11,7 +11,7 @@ const PHONE_MASKS = [
 ];
 
 export type SUIPhoneInputProps = Omit<MaskedInputProps, 'onChange' | 'mask'> & {
-  onChange?(value: string): void
+  onChange?(value: string, event?: React.ChangeEvent<HTMLInputElement>): void
 }
 
 export class SUIPhoneInput extends React.Component<SUIPhoneInputProps> {
@@ -68,9 +68,9 @@ export class SUIPhoneInput extends React.Component<SUIPhoneInputProps> {
   }
 
   @autobind
-  private onChange(): void {
+  private onChange(event?: React.ChangeEvent<HTMLInputElement>): void {
     // this.props.onChange(this.inputRef.current.mask.getRawValue().replace(/[^\d]/g, ''));
-    this.props.onChange(this.inputRef.current.state.mask.getRawValue().replace(/_/g, ''));
+    this.props.onChange(this.inputRef.current.state.mask.getRawValue().replace(/_/g, ''), event);
   }
 
   @autobind

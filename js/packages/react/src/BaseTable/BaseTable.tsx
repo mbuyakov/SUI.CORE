@@ -15,7 +15,7 @@ import {SuiThemeContext} from '@/themes';
 import {BASE_TABLE, BASE_TABLE_NO_PAGINATION, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '@/styles';
 import {ColumnChooserContainer, CustomPagingPanelContainer, CustomToggleCell, DoubleScrollbar, EmptyMessageComponent, ExportPlugin, ExtendedIntegratedSelection, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, UserSettingsPlugin, UserSettingsSupportPlugin, WarningPlugin} from "@/BaseTable/extends";
 
-import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter, SnilsColumnFilter, OmsColumnFilter} from './filters';
+import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter, SnilsColumnFilter, OmsColumnFilter, InnColumnFilter, PhoneColumnFilter} from './filters';
 import {defaultSelection, ISelectionTable} from './ISelectionTable';
 import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout, IGroupSubtotalData, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
 import {exportToXlsx, mapColumns} from "./utils";
@@ -525,6 +525,10 @@ export class BaseTable<TSelection = defaultSelection>
         return (<SnilsColumnFilter {...searchProps} />);
       case "oms":
         return (<OmsColumnFilter {...searchProps} />);
+      case "inn":
+        return (<InnColumnFilter {...searchProps} />);
+      case "phone":
+        return (<PhoneColumnFilter {...searchProps} />);
       case "none":
         return null;
       default:
