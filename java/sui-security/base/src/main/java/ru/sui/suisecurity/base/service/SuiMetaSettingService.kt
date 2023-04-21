@@ -14,7 +14,7 @@ class SuiMetaSettingService(
 ) {
     fun LocalDateTime.toDate(): Date = Date.from(this.toInstant(ZoneOffset.UTC))
 
-    fun getInt(settingKey: String): Int? = Integer.valueOf(suiMetaSettingRepository.get(settingKey)) ?: null
+    fun getInt(settingKey: String): Int? = suiMetaSettingRepository.get(settingKey).toIntOrNull()
 
     fun getLong(settingKey: String): Long? = suiMetaSettingRepository.get(settingKey).toLongOrNull()
 
