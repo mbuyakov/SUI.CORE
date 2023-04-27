@@ -8,7 +8,7 @@ import {Button, Popover, Select, Table} from 'antd';
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
-import {generateUpdate, generateUpdateFn, getDataByKey, getSUISettings, IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IObjectWithIndex, IRole, ISubtotalType, ITableInfo, mutate, query, sleep, TableInfo, TableInfoManager} from "@sui/core";
+import {generateMultiUpdate, generateUpdate, generateUpdateFn, getDataByKey, getSUISettings, IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IObjectWithIndex, IRole, ISubtotalType, ITableInfo, mutate, query, sleep, TableInfo, TableInfoManager} from "@sui/core";
 import axios from "axios";
 
 import {AdditionalTab} from './additionalTabs';
@@ -138,6 +138,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
           schemaName
           tableName
           isCatalog
+          isAlphabetSort
           isAudited
           linkColumnInfoId
           foreignLinkColumnInfoId
@@ -239,6 +240,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
           }
 
           const auditable = (getDataByKey(data, 'tableInfoById', 'type') === 'BASE TABLE' && !['audit', 'meta'].includes(getDataByKey(data, 'tableInfoById', 'schemaName')));
+          const isCatalog = !!data.tableInfoById?.isCatalog;
 
           return (
             <BaseCard<ITableInfo>
@@ -432,7 +434,24 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                           render: (value: boolean): JSX.Element => (
                             <PromisedSwitch
                               defaultChecked={value}
-                              promise={generateUpdateFn('tableInfo', this.props.id, 'isCatalog')}
+                              promise={value => {
+                                if (value) {
+                                  return generateUpdate('tableInfo', this.props.id, 'isCatalog', value)
+                                } else {
+                                  return generateMultiUpdate('tableInfo', this.props.id, {isCatalog: false, isAlphabetSort: false})
+                                }
+                              }}
+                            />
+                          ),
+                        },
+                        {
+                          title: 'По алфавиту',
+                          dataKey: 'isAlphabetSort',
+                          render: (value: boolean): JSX.Element => (
+                            <PromisedSwitch
+                              disabled={!isCatalog}
+                              defaultChecked={value}
+                              promise={generateUpdateFn('tableInfo', this.props.id, 'isAlphabetSort')}
                             />
                           ),
                         },
@@ -445,8 +464,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                               promise={this.onIsAuditedChangeFn}
                             />
                           ),
-                        },
-                        {render: (): string => ""}
+                        }
                       ]
                     },
                   ],

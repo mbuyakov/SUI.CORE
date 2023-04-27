@@ -1,0 +1,1 @@
+ALTER TABLE sui_meta.table_info ADD is_alphabet_sort BOOLEAN NOT NULL DEFAULT FALSE;
