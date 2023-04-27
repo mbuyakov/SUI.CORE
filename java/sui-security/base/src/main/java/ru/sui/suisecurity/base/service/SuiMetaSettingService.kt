@@ -12,11 +12,11 @@ import java.util.*
 class SuiMetaSettingService(
     val suiMetaSettingRepository: SuiMetaSettingRepository
 ) {
-    fun LocalDateTime.toDate(): Date = Date.from(this.toInstant(ZoneOffset.UTC))
+    fun LocalDateTime?.toDate(): Date? = if (this != null) Date.from(this.toInstant(ZoneOffset.UTC)) else null
 
-    fun getInt(settingKey: String): Int? = Integer.valueOf(suiMetaSettingRepository.get(settingKey)) ?: null
+    fun getInt(settingKey: String): Int? = suiMetaSettingRepository.get(settingKey)?.toIntOrNull()
 
-    fun getLong(settingKey: String): Long? = suiMetaSettingRepository.get(settingKey).toLongOrNull()
+    fun getLong(settingKey: String): Long? = suiMetaSettingRepository.get(settingKey)?.toLongOrNull()
 
     fun getDuration(settingKey: String): Date? = getLong(settingKey)?.let { LocalDateTime.now().minusDays(it).toDate() }
 }
