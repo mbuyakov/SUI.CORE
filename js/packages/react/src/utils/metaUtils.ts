@@ -67,6 +67,7 @@ export function getLinkForTable(
 export async function generateCatalogDataPromise(
   tableName: string,
   titleColumnName: string,
+  isAlphabetSort: boolean
 ): Promise<SelectData> {
   const titleColumn = titleColumnName ? camelCase(titleColumnName) : "id";
 
@@ -82,7 +83,11 @@ export async function generateCatalogDataPromise(
     2
   );
 
-  return  queryData.map((it) => ({title: it[titleColumn], value: it.id}));
+  const catalogData = queryData.map((it) => ({title: it[titleColumn], value: it.id}));
+
+  return isAlphabetSort
+    ? catalogData.sort((a, b) => a.title.localeCompare(b.title))
+    : catalogData
 }
 
 export function formatObjectName(objectName: string, pascalCase: boolean = false): string {
