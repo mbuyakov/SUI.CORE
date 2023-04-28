@@ -67,6 +67,8 @@ public class TableInfo implements Persistable<Long> {
     private Boolean isCatalog = false;
     @Builder.Default
     private Boolean isAudited = false;
+    @Builder.Default
+    private Boolean isAlphabetSort = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Name name;

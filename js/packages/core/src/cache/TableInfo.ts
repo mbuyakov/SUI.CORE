@@ -21,6 +21,7 @@ export class TableInfo {
   public foreignLinkColumnInfoId?: string;
   public id: string;
   public isCatalog: boolean;
+  public isAlphabetSort: boolean;
   public linkColumnInfoId?: string;
   public nameId?: string;
   public pageSizes: number[];
@@ -43,6 +44,7 @@ export class TableInfo {
     this.colorSettings = item.colorSettings;
     this.nameId = getDataByKey(item, "nameByNameId", "id");
     this.type = item.type;
+    this.isAlphabetSort = item.isAlphabetSort;
 
     try {
       this.pageSizes = item.pageSizes.split(",").map(e => e.trim()).map(e => Number(e));
@@ -121,6 +123,7 @@ class _TableInfoManager extends GqlCacheManager<ITableInfo, TableInfo> {
       linkColumnInfoId
       foreignLinkColumnInfoId
       isCatalog
+      isAlphabetSort
       pageSizes
       cardRenderParams
       colorSettings

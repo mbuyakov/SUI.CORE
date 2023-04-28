@@ -36,6 +36,8 @@ export interface ITableInfo {
   // noinspection SpellCheckingInspection
   isAudited: boolean;
   // noinspection SpellCheckingInspection
+  isAlphabetSort: boolean;
+  // noinspection SpellCheckingInspection
   type?: string;
   // noinspection SpellCheckingInspection
   pageSizes: string;
