@@ -435,12 +435,10 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                             <PromisedSwitch
                               defaultChecked={value}
                               promise={value => {
-                                if (value) {
-                                  return generateUpdate('tableInfo', this.props.id, 'isCatalog', value)
-                                } else {
-                                  return generateMultiUpdate('tableInfo', this.props.id, {isCatalog: false, isAlphabetSort: false})
-                                    .then(() => this.componentDidMount())
-                                }
+                                const updatePromise = value
+                                  ? generateUpdate('tableInfo', this.props.id, 'isCatalog', value)
+                                  : generateMultiUpdate('tableInfo', this.props.id, {isCatalog: false, isAlphabetSort: false});
+                                return updatePromise.then(() => this.componentDidMount());
                               }}
                             />
                           ),
@@ -448,10 +446,10 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                         {
                           title: 'По алфавиту',
                           dataKey: 'isAlphabetSort',
-                          render: (value: boolean): JSX.Element => (
+                          render: (): JSX.Element => (
                             <PromisedSwitch
                               disabled={!isCatalog}
-                              defaultChecked={value}
+                              defaultChecked={!!data.tableInfoById?.isAlphabetSort}
                               promise={generateUpdateFn('tableInfo', this.props.id, 'isAlphabetSort')}
                             />
                           ),
