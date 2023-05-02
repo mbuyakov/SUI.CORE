@@ -439,6 +439,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                   return generateUpdate('tableInfo', this.props.id, 'isCatalog', value)
                                 } else {
                                   return generateMultiUpdate('tableInfo', this.props.id, {isCatalog: false, isAlphabetSort: false})
+                                    .then(() => this.componentDidMount())
                                 }
                               }}
                             />
