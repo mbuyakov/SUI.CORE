@@ -434,22 +434,23 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                           render: (value: boolean): JSX.Element => (
                             <PromisedSwitch
                               defaultChecked={value}
-                              promise={value => {
-                                const updatePromise = value
-                                  ? generateUpdate('tableInfo', this.props.id, 'isCatalog', value)
-                                  : generateMultiUpdate('tableInfo', this.props.id, {isCatalog: false, isAlphabetSort: false});
-                                return updatePromise.then(() => this.componentDidMount());
-                              }}
+                              promise={isCatalog => (
+                                isCatalog
+                                  ? generateUpdate('tableInfo', this.props.id, 'isCatalog', true)
+                                    .then(() => this.setState({tableInfoById: {...this.state.tableInfoById, isCatalog: true}}))
+                                  : generateMultiUpdate('tableInfo', this.props.id, {isCatalog: false, isAlphabetSort: false})
+                                    .then(() => this.setState({tableInfoById: {...this.state.tableInfoById, isCatalog: false, isAlphabetSort: false}}))
+                              )}
                             />
                           ),
                         },
                         {
                           title: 'По алфавиту',
                           dataKey: 'isAlphabetSort',
-                          render: (): JSX.Element => (
+                          render: (value: boolean): JSX.Element => (
                             <PromisedSwitch
                               disabled={!isCatalog}
-                              defaultChecked={!!data.tableInfoById?.isAlphabetSort}
+                              defaultChecked={value}
                               promise={generateUpdateFn('tableInfo', this.props.id, 'isAlphabetSort')}
                             />
                           ),
