@@ -444,12 +444,11 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                             />
                           ),
                         },
-                        {
+                        isCatalog && {
                           title: 'По алфавиту',
                           dataKey: 'isAlphabetSort',
                           render: (value: boolean): JSX.Element => (
                             <PromisedSwitch
-                              allowDisableEdit={isCatalog}
                               defaultChecked={value}
                               promise={generateUpdateFn('tableInfo', this.props.id, 'isAlphabetSort')}
                             />
