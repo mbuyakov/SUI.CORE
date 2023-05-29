@@ -109,7 +109,7 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
         result = result.utc()
       }
 
-      return result.format(moment.HTML5_FMT.DATETIME_LOCAL_MS);
+      return result.toISOString();
     }
 
     return null
