@@ -65,7 +65,7 @@ export class EditablePromisedComponent<T>
                             {(editMode || editAllowed) && (
                               <IconButton
                                 onClick={this.switchEdit}
-                                style={{marginLeft: 6}}
+                                style={{marginLeft: 6, padding: 0}}
                                 size="small"
                               >
                                 {editMode ? (<CloseIcon/>) : (<CreateIcon/>)}
