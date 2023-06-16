@@ -117,7 +117,7 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
 
     const convertValue = (momentValue: Moment): string => {
       return (this.props.column as any)?.__SUI_columnInfo?.columnType === "date"
-        ? momentValue.clone().local().format(moment.HTML5_FMT.DATE)
+        ? momentValue.format(moment.HTML5_FMT.DATE)
         : momentValue.toISOString();
     };
 
@@ -125,8 +125,8 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
       columnName: this.props.column.name,
       operation: "interval",
       value: [
-        (value && value[0]) ? convertValue(value[0]) : null,
-        (value && value[1]) ? convertValue(value[1]) : null
+        (value && value[0]) ? convertValue(value[0].clone().local().startOf("day")) : null,
+        (value && value[1]) ? convertValue(value[1].clone().local().endOf("day")) : null
       ] as any
     });
   }
