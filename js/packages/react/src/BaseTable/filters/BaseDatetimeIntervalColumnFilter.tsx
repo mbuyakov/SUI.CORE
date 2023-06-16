@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import autobind from "autobind-decorator";
-import moment from "moment";
+import moment, {Moment} from "moment";
 import * as React from "react";
 import {GET_DEFAULT_CALENDAR_RANGES} from "@sui/core";
 import {RangePickerValue} from "@/compatibleTypes";
@@ -115,14 +115,18 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
   private triggerFilter(value: RangePickerValue): void {
     this.setState({lastSavedValue: value});
 
-    const isDatePickMode = this.props.pickerMode === "date";
+    const convertValue = (momentValue: Moment): string => {
+      return (this.props.column as any)?.__SUI_columnInfo?.columnType === "date"
+        ? momentValue.clone().local().format(moment.HTML5_FMT.DATE)
+        : momentValue.toISOString();
+    };
 
     this.props.onFilter({
       columnName: this.props.column.name,
       operation: "interval",
       value: [
-        (value && value[0]) ? (isDatePickMode ? value[0].clone().local().format(moment.HTML5_FMT.DATE) : value[0].clone().local().toISOString(true)) : null,
-        (value && value[1]) ? (isDatePickMode ? value[1].clone().local().format(moment.HTML5_FMT.DATE) : value[1].clone().local().toISOString(true)) : null
+        (value && value[0]) ? convertValue(value[0]) : null,
+        (value && value[1]) ? convertValue(value[1]) : null
       ] as any
     });
   }
