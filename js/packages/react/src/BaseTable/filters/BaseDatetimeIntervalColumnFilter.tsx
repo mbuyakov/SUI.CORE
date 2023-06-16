@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import autobind from "autobind-decorator";
-import moment, {Moment} from "moment";
-import * as React from 'react';
-import {GET_DEFAULT_CALENDAR_RANGES, getDataByKey} from '@sui/core';
+import moment from "moment";
+import * as React from "react";
+import {GET_DEFAULT_CALENDAR_RANGES} from "@sui/core";
 import {RangePickerValue} from "@/compatibleTypes";
 import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from "@/BaseTable";
 import {SuiRangePicker} from "@/Inputs/SuiRangePicker";
@@ -80,42 +80,6 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
   }
 
   @autobind
-  // Костыль
-  private callUtc(): boolean {
-    return getDataByKey(this.props.column, "__SUI_columnInfo", "columnType") !== "date"
-  }
-
-  @autobind
-  private formatFilterToMoment(value: string | null): Moment | null {
-    return value
-      ? this.callUtc()
-        ? moment.utc(value).local()
-        : moment(value)
-      : null
-  }
-
-  @autobind
-  private formatMomentToFilter(ts: Moment | null, roundDay: "start" | "end" | null): string | null {
-    if (ts) {
-      let result = ts;
-
-      if (roundDay === "start") {
-        result = result.startOf('day');
-      } else if (roundDay === "end") {
-        result = result.endOf('day');
-      }
-
-      if (this.callUtc()) {
-        result = result.utc()
-      }
-
-      return result.toISOString();
-    }
-
-    return null
-  }
-
-  @autobind
   private onChange(filterValue: RangePickerValue): void {
     if (!filterValue || !filterValue.length) {
       // clear filter
@@ -141,9 +105,10 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
 
   @autobind
   private propsFilterValueToStateFilterValue(value?: string[]): RangePickerValue {
-    const formattedValue = (value || []).map(it => this.formatFilterToMoment(it));
-
-    return [formattedValue[0] ?? null, formattedValue[1] ?? null];
+    return [
+      (value && value[0]) ? moment(value[0]).local() : null,
+      (value && value[1]) ? moment(value[1]).local() : null
+    ];
   }
 
   @autobind
@@ -156,8 +121,8 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
       columnName: this.props.column.name,
       operation: "interval",
       value: [
-        this.formatMomentToFilter(value && value[0] && value[0].clone(), isDatePickMode ? 'start' : null),
-        this.formatMomentToFilter(value && value[1] && value[1].clone(), isDatePickMode ? 'end' : null)
+        (value && value[0]) ? (isDatePickMode ? value[0].clone().local().format(moment.HTML5_FMT.DATE) : value[0].clone().local().toISOString(true)) : null,
+        (value && value[1]) ? (isDatePickMode ? value[1].clone().local().format(moment.HTML5_FMT.DATE) : value[1].clone().local().toISOString(true)) : null
       ] as any
     });
   }
