@@ -17,6 +17,8 @@ export interface IBaseCardItemLayout<T> {
   tableProps?: Omit<IBaseTableProps, 'rows'>;
   title?: React.ReactNode;
   titleVerticalAlign?: "baseline" | "bottom" | "middle" | "sub" | "super" | "text-bottom" | "text-top" | "top";
+  titleStyle?: React.CSSProperties;
+  dataStyle?: React.CSSProperties;
 }
 
 interface ICustomRenderProps<T> {
@@ -114,10 +116,25 @@ export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayou
 
   const title = item.title && `${item.title as string}: `;
 
+  const titleStyle = {
+    verticalAlign: item.titleVerticalAlign,
+    paddingRight: 12,
+    color: "rgba(121, 119, 119, 0.65)",
+    wordWrap: "break-word",
+    paddingBottom: 8,
+    ...item.titleStyle
+  } as React.CSSProperties;
+
+  const dataStyle = {
+    verticalAlign: item.dataVerticalAlign,
+    paddingBottom: 8,
+    ...item.dataStyle
+  };
+
   data = (
     <>
-      {title && <td style={{verticalAlign: item.titleVerticalAlign, paddingRight: 12, color: "rgba(121, 119, 119, 0.65)", wordWrap: "break-word", paddingBottom: 8}}>{title}</td>}
-      <td colSpan={(title ? 1 : 2) + ((colspan - 1) * 2)} style={{verticalAlign: item.dataVerticalAlign, paddingBottom: 8}}>{data}</td>
+      {title && <td style={titleStyle}>{title}</td>}
+      <td colSpan={(title ? 1 : 2) + ((colspan - 1) * 2)} style={dataStyle}>{data}</td>
     </>
   );
 
