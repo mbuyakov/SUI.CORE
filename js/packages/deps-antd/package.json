@@ -1,0 +1,8 @@
+{
+  "name": "@sui/deps-antd",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "dependencies": {
+    "antd": "5.1.5"
+  }
+}

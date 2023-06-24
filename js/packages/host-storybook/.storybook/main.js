@@ -1,0 +1,27 @@
+const rootMain = require("../../../.storybook/main");
+
+module.exports = {
+  ...rootMain,
+  core: { ...rootMain.core, builder: "webpack5" },
+  stories: [
+    ...rootMain.stories,
+    "../../**/src/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+  ],
+  addons: [
+    // eslint-disable-next-line storybook/no-uninstalled-addons
+    "@storybook/addon-essentials",
+    ...rootMain.addons,
+    // eslint-disable-next-line storybook/no-uninstalled-addons
+    "@nx/react/plugins/storybook",
+  ],
+  webpackFinal: async (config, { configType }) => {
+    // apply any global webpack configs that might have been specified in .storybook/main.js
+    if (rootMain.webpackFinal) {
+      config = await rootMain.webpackFinal(config, { configType });
+    }
+
+    // add your own webpack tweaks if needed
+
+    return config;
+  },
+};

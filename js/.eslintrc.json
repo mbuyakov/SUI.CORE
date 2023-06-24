@@ -1,0 +1,67 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nx"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "type:host",
+                "onlyDependOnLibsWithTags": [
+                  "type:deps",
+                  "type:util",
+                  "type:lib",
+                  "type:ui",
+                  "type:host"
+                ]
+              },
+              {
+                "sourceTag": "type:ui",
+                "onlyDependOnLibsWithTags": [
+                  "type:deps",
+                  "type:util",
+                  "type:lib",
+                  "type:ui"
+                ]
+              },
+              {
+                "sourceTag": "type:lib",
+                "onlyDependOnLibsWithTags": [
+                  "type:deps",
+                  "type:util",
+                  "type:lib"
+                ]
+              },
+              {
+                "sourceTag": "type:util",
+                "onlyDependOnLibsWithTags": ["type:deps", "type:util"]
+              },
+              {
+                "sourceTag": "type:deps",
+                "onlyDependOnLibsWithTags": ["type:util"]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nx/typescript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nx/javascript"],
+      "rules": {}
+    }
+  ],
+  "extends": ["plugin:storybook/recommended"]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "@sui/deps-ioc",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "dependencies": {
+    "typescript-ioc": "3.2.2"
+  }
+}

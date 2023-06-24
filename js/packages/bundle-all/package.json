@@ -1,0 +1,22 @@
+{
+  "name": "@sui/bundle-all",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "dependencies": {
+    "@sui/deps-antd": "0.0.1",
+    "@sui/deps-ioc": "0.0.1",
+    "@sui/deps-material": "0.0.1",
+    "@sui/lib-event-manager": "0.0.1",
+    "@sui/lib-hooks": "0.0.1",
+    "@sui/lib-module-manager": "0.0.1",
+    "@sui/lib-notification-dispatcher": "0.0.1",
+    "@sui/lib-storage": "0.0.1",
+    "@sui/ui-actions": "0.0.1",
+    "@sui/ui-material": "0.0.1",
+    "@sui/ui-module-manager": "0.0.1",
+    "@sui/ui-notification-handler": "0.0.1",
+    "@sui/ui-themes": "0.0.1",
+    "@sui/util-chore": "0.0.1",
+    "@sui/util-types": "0.0.1"
+  }
+}

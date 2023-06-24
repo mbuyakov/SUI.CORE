@@ -1,0 +1,9 @@
+{
+  "name": "@sui/ui-old-sentry",
+  "version": "0.0.1",
+  "dependencies": {
+    "@sentry/react": "^5.27.1",
+    "@sentry/integrations": "^5.27.1",
+    "@sentry/tracing": "^5.27.1"
+  }
+}

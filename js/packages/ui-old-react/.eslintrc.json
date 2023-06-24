@@ -1,0 +1,41 @@
+{
+  "extends": ["plugin:@nx/react", "../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {}
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "rules": {}
+    }
+  ],
+  "rules": {
+    "eqeqeq": 0,
+    "array-callback-return": 0,
+    "@typescript-eslint/no-inferrable-types": 0,
+    "react/no-direct-mutation-state": 0,
+    "@typescript-eslint/no-unused-vars": 0,
+    "no-throw-literal": 0,
+    "no-prototype-builtins": 0,
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "no-fallthrough": 0,
+    "react-hooks/rules-of-hooks": 0,
+    "no-useless-escape": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "prefer-const": 0,
+    "@typescript-eslint/ban-ts-comment": 0,
+    "react-hooks/exhaustive-deps": 0,
+    "@typescript-eslint/ban-types": 0,
+    "no-cond-assign": 0,
+    "@typescript-eslint/no-use-before-define": 0,
+    "no-extra-boolean-cast": 0,
+    "no-restricted-globals": 0,
+    "no-case-declarations": 0
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "@sui/deps-amcharts",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "dependencies": {
+    "@amcharts/amcharts4": "4.10.15"
+  }
+}
