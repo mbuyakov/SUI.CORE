@@ -2,7 +2,7 @@
 import * as React from "react";
 
 import {IObjectWithIndex} from '@sui/ui-old-core';
-import {AMCHARTS, getAmcharts} from '@sui/ui-old-charts';
+import {AMCHARTS, getAmcharts} from '@sui/deps-amcharts';
 import {XYChartWrapper} from "./ChartWrapper";
 import {ColorHeatMap} from "@sui/lib-color";
 import {Container} from "@sui/deps-ioc";

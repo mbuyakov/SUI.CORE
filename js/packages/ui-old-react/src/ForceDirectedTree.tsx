@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import autobind from 'autobind-decorator';
 import React from "react";
-import {AMCHARTS} from "@sui/ui-old-charts";
+import {AMCHARTS} from "@sui/deps-amcharts";
 
 import {ForceDirectedTreeWrapper} from './ChartWrapper';
 

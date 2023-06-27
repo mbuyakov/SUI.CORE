@@ -1,4 +1,4 @@
-import {getXlsx, WritingOptions} from "@sui/ui-old-charts";
+import {getXlsx, WritingOptions} from "@sui/deps-amcharts";
 import {defaultIfNotBoolean, getDataByKey, IObjectWithIndex, NO_DATA_TEXT} from "@sui/ui-old-core";
 
 // noinspection ES6PreferShortImport

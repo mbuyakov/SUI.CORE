@@ -1,7 +1,7 @@
 import autobind from "autobind-decorator";
 import React from "react";
 import {IObjectWithIndex} from '@sui/ui-old-core';
-import {AMCHARTS} from '@sui/ui-old-charts';
+import {AMCHARTS} from '@sui/deps-amcharts';
 import {XYChartWrapper} from './ChartWrapper';
 import {Color} from "@sui/lib-color";
 
