@@ -14,30 +14,15 @@
             "depConstraints": [
               {
                 "sourceTag": "type:host",
-                "onlyDependOnLibsWithTags": [
-                  "type:deps",
-                  "type:util",
-                  "type:lib",
-                  "type:ui",
-                  "type:host"
-                ]
+                "onlyDependOnLibsWithTags": ["type:deps", "type:util", "type:lib", "type:ui", "type:host"]
               },
               {
                 "sourceTag": "type:ui",
-                "onlyDependOnLibsWithTags": [
-                  "type:deps",
-                  "type:util",
-                  "type:lib",
-                  "type:ui"
-                ]
+                "onlyDependOnLibsWithTags": ["type:deps", "type:util", "type:lib", "type:ui"]
               },
               {
                 "sourceTag": "type:lib",
-                "onlyDependOnLibsWithTags": [
-                  "type:deps",
-                  "type:util",
-                  "type:lib"
-                ]
+                "onlyDependOnLibsWithTags": ["type:deps", "type:util", "type:lib"]
               },
               {
                 "sourceTag": "type:util",
@@ -50,14 +35,17 @@
             ]
           }
         ],
-        "no-restricted-imports": ["error", {
-          "patterns": [
-            {
-              "group": ["antd", "antd/*", "antd5", "antd5/*"],
-              "message": "Please use @sui/deps-antd instead."
-            }
-          ]
-        }]
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["antd", "antd/*", "antd5", "antd5/*"],
+                "message": "Please use @sui/deps-antd instead."
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -68,6 +56,11 @@
     {
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:@nx/javascript"],
+      "rules": {}
+    },
+    {
+      "files": "*.json",
+      "parser": "jsonc-eslint-parser",
       "rules": {}
     }
   ],
