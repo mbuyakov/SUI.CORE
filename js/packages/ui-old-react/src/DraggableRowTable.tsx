@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {IObjectWithIndex} from '@sui/ui-old-core';
-import {Table, TableProps} from 'antd';
+import {Table, TableProps} from "@sui/deps-antd";
 import autobind from 'autobind-decorator';
 import update from 'immutability-helper';
 import * as React from 'react';

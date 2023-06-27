@@ -1,5 +1,5 @@
 import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
-import {Tabs} from "antd";
+import {Tabs} from "@sui/deps-antd";
 import * as React from "react";
 
 // noinspection ES6PreferShortImport

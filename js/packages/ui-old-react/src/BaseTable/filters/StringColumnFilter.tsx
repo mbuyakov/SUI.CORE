@@ -1,4 +1,4 @@
-import {Input} from 'antd';
+import {Input} from "@sui/deps-antd";
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 

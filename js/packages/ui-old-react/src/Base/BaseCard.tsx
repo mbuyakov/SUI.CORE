@@ -1,4 +1,4 @@
-import {Card, Tabs} from 'antd';
+import {Card, Tabs} from "@sui/deps-antd";
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import classNames from 'classnames';

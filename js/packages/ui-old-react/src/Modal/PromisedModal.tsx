@@ -1,4 +1,4 @@
-import {Button, Modal, ModalProps} from "antd";
+import {Button, Modal, ModalProps} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 

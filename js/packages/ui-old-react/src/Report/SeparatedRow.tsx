@@ -1,4 +1,4 @@
-import {Card, Divider} from "antd";
+import {Card, Divider} from "@sui/deps-antd";
 import * as React from "react";
 
 interface ISeparatedRowProps {

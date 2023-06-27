@@ -1,4 +1,4 @@
-import {Result} from "antd";
+import {Result} from "@sui/deps-antd";
 import React from 'react';
 import {Button} from "@mui/material";
 import {ArrowBackOutlined} from "@mui/icons-material";

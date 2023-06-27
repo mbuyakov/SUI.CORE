@@ -1,4 +1,4 @@
-import {Switch} from "antd";
+import {Switch} from "@sui/deps-antd";
 import * as React from "react";
 
 export class AddressFlag extends React.Component<{

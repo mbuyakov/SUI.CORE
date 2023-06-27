@@ -3,7 +3,7 @@ import {CheckOutlined, CloseOutlined, QuestionOutlined} from '@ant-design/icons'
 import {Getter, Getters, Mui} from '@sui/deps-dx-react-grid';
 import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@sui/deps-dx-react-grid';
 import {defaultIfNotBoolean, getDataByKey, getSUISettings} from "@sui/ui-old-core";
-import {Card, Result, Spin} from 'antd';
+import {Card, Result, Spin} from "@sui/deps-antd";
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import * as React from 'react';

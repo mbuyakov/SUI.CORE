@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {notification} from 'antd';
+import {notification} from "@sui/deps-antd";
 import * as React from 'react';
 
 import {formatRawForGraphQL, generateUpdate, IObjectWithIndex, NO_DATA_TEXT, PossibleId, PossibleValue} from '@sui/ui-old-core';

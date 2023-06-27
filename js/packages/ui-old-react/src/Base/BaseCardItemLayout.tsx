@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {CheckOutlined, CloseOutlined, WarningTwoTone} from '@ant-design/icons';
 import {concatDataKey, DataKey, defaultIfNotBoolean, getDataByKey, NO_DATA_TEXT} from '@sui/ui-old-core';
-import {Tooltip} from 'antd';
+import {Tooltip} from "@sui/deps-antd";
 import * as React from 'react';
 
 import {BaseTable, IBaseTableProps} from '../BaseTable';

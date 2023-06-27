@@ -1,4 +1,4 @@
-import {Button, InputProps, Popover} from 'antd';
+import {Button, InputProps, Popover} from "@sui/deps-antd";
 import autobind from 'autobind-decorator';
 import React, {ChangeEvent} from 'react';
 import {ExtractProps} from "@/other";

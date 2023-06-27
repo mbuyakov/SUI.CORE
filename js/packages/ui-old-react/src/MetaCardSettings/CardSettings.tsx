@@ -1,4 +1,4 @@
-import {Menu} from "antd";
+import {Menu} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from 'react-dom';
 import {Container} from "typescript-ioc";
-import {ConfigProvider} from "antd";
+import {ConfigProvider} from "@sui/deps-antd";
 import {SuiThemeContext, ThemeService} from "@/themes";
 import {localeRu} from "@/antdMissedExport";
 import {ThemeProvider} from "@sui/deps-material";

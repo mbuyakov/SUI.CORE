@@ -1,4 +1,4 @@
-import {ButtonProps, DropDownProps, MenuItemProps, MenuProps, PopconfirmProps, TooltipProps} from "antd";
+import {ButtonProps, DropDownProps, MenuItemProps, MenuProps, PopconfirmProps, TooltipProps} from "@sui/deps-antd";
 import React from 'react';
 
 export type TransitionButtonProps = Omit<ButtonProps, "children" | "disabled" | "onClick">;

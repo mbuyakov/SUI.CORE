@@ -1,7 +1,7 @@
 import {CircularProgress, IconButton} from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import * as React from "react";
-import {Select, SelectProps} from "antd";
+import {Select, SelectProps} from "@sui/deps-antd";
 import {SUI_ROW_GRID} from '@/styles';
 import {DisableEditContext} from "@/DisableEditContext";
 

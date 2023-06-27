@@ -1,4 +1,4 @@
-import {Popconfirm, PopconfirmProps} from "antd";
+import {Popconfirm, PopconfirmProps} from "@sui/deps-antd";
 import React, {useState} from "react";
 
 export type IPopconfirmSettings = Omit<PopconfirmProps, 'onConfirm' | 'onCancel' | 'visible'>;

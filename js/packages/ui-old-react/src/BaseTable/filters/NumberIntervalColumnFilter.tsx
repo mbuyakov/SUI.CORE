@@ -2,7 +2,7 @@ import autobind from "autobind-decorator";
 import * as React from 'react';
 
 import {Nullable} from "@sui/ui-old-core";
-import {InputNumber} from "antd";
+import {InputNumber} from "@sui/deps-antd";
 import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 type INumberIntervalColumnFilterProps = LazyTableFilterRowCellProps & INewSearchProps;

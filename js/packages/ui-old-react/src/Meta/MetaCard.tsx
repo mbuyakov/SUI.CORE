@@ -3,7 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import {Cached} from '@mui/icons-material';
 import {addPluralEnding, addQuotesIfString, capitalize, ColumnInfoManager, DataKey, dataKeysToDataTree, getDataByKey, isValidUuid, NameManager, NO_DATA_TEXT, normalizeDataKey, query, TableInfoManager, wrapInArray, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
-import {Card} from 'antd';
+import {Card} from "@sui/deps-antd";
 import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';

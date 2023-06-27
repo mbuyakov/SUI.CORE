@@ -1,4 +1,4 @@
-import {Select} from "antd";
+import {Select} from "@sui/deps-antd";
 import * as React from 'react';
 import {DulService} from "@/soctech";
 

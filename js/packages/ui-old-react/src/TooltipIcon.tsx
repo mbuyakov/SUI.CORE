@@ -1,6 +1,6 @@
 import Icon from '@ant-design/icons';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import {Tooltip} from 'antd';
+import {Tooltip} from "@sui/deps-antd";
 import * as React from 'react';
 
 import {IAntIconComponent} from './other';

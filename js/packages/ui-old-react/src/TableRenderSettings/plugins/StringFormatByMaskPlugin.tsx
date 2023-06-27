@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Input} from "antd";
+import {Input} from "@sui/deps-antd";
 import {ColumnInfo} from "@sui/ui-old-core";
 import {formatByMaskFn} from "@/tmp";
 

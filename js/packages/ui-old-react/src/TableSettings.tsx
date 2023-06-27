@@ -4,7 +4,7 @@ import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material';
 import IconButton from "@mui/material/IconButton";
 import {Cached, Edit} from '@mui/icons-material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import {Button, Popover, Select, Table} from 'antd';
+import {Button, Popover, Select, Table} from "@sui/deps-antd";
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import {Link} from 'react-router-dom';

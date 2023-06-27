@@ -1,4 +1,4 @@
-import {Tabs, TabsProps} from "antd";
+import {Tabs, TabsProps} from "@sui/deps-antd";
 import * as React from "react";
 import {BaseCardTabContextConsumer, BaseCardTabContextProvider} from "@/Base/BaseCardTab/BaseCardTabContext";
 

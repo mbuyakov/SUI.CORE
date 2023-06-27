@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/ban-types */
 import {ExperimentOutlined, WarningTwoTone} from '@ant-design/icons';
 import {chain, ITableInfo, sleep} from '@sui/ui-old-core';
-import {Button, Popover, Select, Tooltip} from 'antd';
+import {Button, Popover, Select, Tooltip} from "@sui/deps-antd";
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 

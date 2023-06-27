@@ -1,5 +1,5 @@
 import {PrinterOutlined} from '@ant-design/icons';
-import {Button, Card} from 'antd';
+import {Button, Card} from "@sui/deps-antd";
 import * as React from 'react';
 import ReactToPrint from 'react-to-print';
 

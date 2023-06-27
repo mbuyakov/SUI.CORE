@@ -4,7 +4,7 @@ import {Chip} from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SettingsIcon from '@mui/icons-material/Settings';
 import {capitalize, ColumnInfo, ColumnInfoManager, IName, Merge, NameManager, TableInfoManager} from "@sui/ui-old-core";
-import {Input, Popover, Select, Spin, Switch, Tooltip} from 'antd';
+import {Input, Popover, Select, Spin, Switch, Tooltip} from "@sui/deps-antd";
 import autobind from 'autobind-decorator';
 import camelCase from 'lodash/camelCase';
 import * as React from 'react';

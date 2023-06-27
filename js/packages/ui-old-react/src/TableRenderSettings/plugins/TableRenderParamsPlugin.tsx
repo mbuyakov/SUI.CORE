@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {WarningTwoTone} from '@ant-design/icons';
 import {ColumnInfo} from '@sui/ui-old-core';
-import {Tooltip} from 'antd';
+import {Tooltip} from "@sui/deps-antd";
 import * as React from 'react';
 
 // noinspection ES6PreferShortImport

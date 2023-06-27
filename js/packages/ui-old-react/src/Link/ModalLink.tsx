@@ -1,4 +1,4 @@
-import {Button} from 'antd';
+import {Button} from "@sui/deps-antd";
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import {RouteComponentProps, Router, withRouter} from 'react-router';

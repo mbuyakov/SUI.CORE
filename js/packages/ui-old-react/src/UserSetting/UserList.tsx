@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {EMAIL_REGEXP, IObjectWithIndex, OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
-import {Input} from "antd";
+import {Input} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import React from "react";
 

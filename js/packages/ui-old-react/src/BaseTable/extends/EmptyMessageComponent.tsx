@@ -1,4 +1,4 @@
-import {Empty} from 'antd';
+import {Empty} from "@sui/deps-antd";
 import * as React from 'react';
 
 export const EmptyMessageComponent = (): JSX.Element => (

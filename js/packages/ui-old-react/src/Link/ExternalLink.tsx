@@ -1,4 +1,4 @@
-import {Button} from 'antd';
+import {Button} from "@sui/deps-antd";
 import * as React from 'react';
 import {ButtonType} from "@/antdMissedExport";
 

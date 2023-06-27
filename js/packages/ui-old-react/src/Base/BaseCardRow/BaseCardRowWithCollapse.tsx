@@ -1,6 +1,6 @@
 import React from "react";
 import {wrapInArrayWithoutNulls} from "@sui/ui-old-core";
-import {Collapse} from "antd";
+import {Collapse} from "@sui/deps-antd";
 import {IBaseCardCollapseLayout, renderIBaseCardCollapseLayout} from "@/Base/BaseCardCollapseLayout";
 import {IBaseCardRowLayout} from "@/Base/BaseCardRow/BaseCardRow";
 

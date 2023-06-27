@@ -3,7 +3,7 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import {trimIfString} from '@sui/ui-old-core';
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {Input, Tooltip} from 'antd';
+import {Input, Tooltip} from "@sui/deps-antd";
 import {SUI_ROW_GRID} from '@/styles';
 import {TextAreaProps} from '@/antdMissedExport';
 

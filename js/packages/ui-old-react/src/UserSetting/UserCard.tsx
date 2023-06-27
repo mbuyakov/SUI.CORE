@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {DeleteOutlined, IssuesCloseOutlined} from "@ant-design/icons";
 import {EMAIL_REGEXP, IRole, IUser, IUserRole, NO_DATA_TEXT, OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
-import {Card, Select, Tooltip, Typography} from "antd";
+import {Card, Select, Tooltip, Typography} from "@sui/deps-antd";
 import * as React from "react";
 
 // noinspection ES6PreferShortImport

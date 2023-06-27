@@ -1,7 +1,7 @@
 /* eslint-disable no-console,@typescript-eslint/no-explicit-any */
 import {Container} from 'typescript-ioc';
 import {getDataByKey, ICoreUser, IObjectWithIndex, UserService} from '@sui/ui-old-core';
-import {notification} from "antd";
+import {notification} from "@sui/deps-antd";
 
 
 export * from "./actionType";

@@ -49,7 +49,15 @@
               }
             ]
           }
-        ]
+        ],
+        "no-restricted-imports": ["error", {
+          "patterns": [
+            {
+              "group": ["antd", "antd/*", "antd5", "antd5/*"],
+              "message": "Please use @sui/deps-antd instead."
+            }
+          ]
+        }]
       }
     },
     {

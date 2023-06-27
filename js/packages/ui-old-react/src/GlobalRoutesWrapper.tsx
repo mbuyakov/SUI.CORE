@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Container} from "typescript-ioc"
 import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material/styles';
-import {ConfigProvider} from 'antd';
+import {ConfigProvider} from "@sui/deps-antd";
 import {SuiThemeContext, ThemeService, ThemeVariant} from "@/themes";
 import {localeRu} from "@/antdMissedExport";
 

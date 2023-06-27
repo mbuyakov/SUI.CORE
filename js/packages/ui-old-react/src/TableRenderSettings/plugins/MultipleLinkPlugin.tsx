@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {InfoCircleOutlined} from "@ant-design/icons";
 import {ColumnInfo} from "@sui/ui-old-core";
-import {Checkbox, Input, Tooltip} from "antd";
+import {Checkbox, Input, Tooltip} from "@sui/deps-antd";
 import * as React from 'react';
 
 // noinspection ES6PreferShortImport

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {Select, SelectProps} from 'antd';
+import {Select, SelectProps} from "@sui/deps-antd";
 import autobind from 'autobind-decorator';
 import isEqual from 'lodash/isEqual';
 import * as React from 'react';

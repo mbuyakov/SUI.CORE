@@ -1,5 +1,5 @@
 import {ColumnInfo} from "@sui/ui-old-core";
-import {InputNumber} from 'antd';
+import {InputNumber} from "@sui/deps-antd";
 import * as React from 'react';
 
 // noinspection ES6PreferShortImport

@@ -3,6 +3,6 @@
   "version": "0.0.1",
   "type": "commonjs",
   "dependencies": {
-    "antd": "5.1.5"
+    "antd5": "npm:antd@5.1.5"
   }
 }

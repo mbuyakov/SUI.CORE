@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Input, Tooltip} from "antd";
+import {Input, Tooltip} from "@sui/deps-antd";
 import {ColumnInfo} from "@sui/ui-old-core";
 
 // noinspection ES6PreferShortImport

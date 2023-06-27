@@ -1,5 +1,5 @@
 import {Merge} from '@sui/ui-old-core';
-import {Checkbox, Input} from "antd";
+import {Checkbox, Input} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {CheckboxChangeEvent} from "@/antdMissedExport";

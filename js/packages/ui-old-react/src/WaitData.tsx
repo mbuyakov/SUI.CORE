@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/ban-ts-comment */
 import {CloseCircleTwoTone} from '@ant-design/icons';
 import {defaultIfNotBoolean, mutate, query} from "@sui/ui-old-core";
-import {Spin} from 'antd';
+import {Spin} from "@sui/deps-antd";
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import {queryWrapper} from "@/tmp";

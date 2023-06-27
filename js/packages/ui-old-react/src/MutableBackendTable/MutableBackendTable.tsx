@@ -2,7 +2,7 @@
 import {DeleteOutlined, PlusCircleOutlined} from "@ant-design/icons";
 import CreateIcon from '@mui/icons-material/CreateOutlined';
 import {defaultIfNotBoolean, getDataByKey, IObjectWithIndex, sleep, unCapitalize, wrapInArray} from "@sui/ui-old-core";
-import {Button, notification} from 'antd';
+import {Button, notification} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {hasAnyRole} from "@/RoleVisibilityWrapper";

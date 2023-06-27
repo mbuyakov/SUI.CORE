@@ -1,4 +1,4 @@
-import {message, notification} from "antd";
+import {message, notification} from "@sui/deps-antd";
 import * as React from "react";
 
 const MESSAGE_TIMEOUT = 3;

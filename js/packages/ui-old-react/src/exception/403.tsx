@@ -1,6 +1,6 @@
 import {ArrowBackOutlined} from "@mui/icons-material";
 import React from 'react';
-import {Result} from "antd";
+import {Result} from "@sui/deps-antd";
 import {Button} from "@mui/material";
 import {useHistory} from "react-router-dom";
 

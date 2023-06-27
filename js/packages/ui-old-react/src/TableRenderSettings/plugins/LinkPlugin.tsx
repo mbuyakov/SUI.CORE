@@ -1,5 +1,5 @@
 import {ColumnInfo, ColumnInfoManager, getDataByKey} from "@sui/ui-old-core";
-import {Select} from "antd";
+import {Select} from "@sui/deps-antd";
 import * as React from 'react';
 import {RouterLink} from '@/Link';
 import {IBaseTableColLayout} from '@/BaseTable';

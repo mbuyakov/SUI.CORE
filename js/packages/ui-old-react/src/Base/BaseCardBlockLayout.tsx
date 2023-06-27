@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Card} from 'antd';
+import {Card} from "@sui/deps-antd";
 import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from '@sui/ui-old-core';
 import {BaseCardRow, IBaseCardRowLayout, isRowWithCollapse} from "@/Base/BaseCardRow";
 

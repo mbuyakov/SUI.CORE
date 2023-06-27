@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {camelCase, Merge} from '@sui/ui-old-core';
-import {Button, Checkbox, Input, Mentions, Menu} from 'antd';
+import {Button, Checkbox, Input, Mentions, Menu} from "@sui/deps-antd";
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import {CheckboxChangeEvent} from '@/antdMissedExport';

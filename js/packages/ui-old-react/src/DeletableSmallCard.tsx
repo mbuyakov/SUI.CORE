@@ -1,5 +1,5 @@
 import {CloseOutlined, SettingOutlined} from '@ant-design/icons';
-import {Button, Card, CardProps, Popover} from 'antd';
+import {Button, Card, CardProps, Popover} from "@sui/deps-antd";
 import * as React from 'react';
 
 import {DnDDragHandler} from './Draggable';

@@ -1,4 +1,4 @@
-import {Input, InputProps} from 'antd';
+import {Input, InputProps} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import React, {ChangeEvent} from "react";
 import {Rules} from "async-validator";

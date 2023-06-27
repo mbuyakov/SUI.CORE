@@ -2,7 +2,7 @@
 import {SaveOutlined} from "@ant-design/icons";
 
 import {ColumnInfoManager, TableInfoManager} from '@sui/ui-old-core';
-import {Switch, Tooltip, Tree} from 'antd';
+import {Switch, Tooltip, Tree} from "@sui/deps-antd";
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 

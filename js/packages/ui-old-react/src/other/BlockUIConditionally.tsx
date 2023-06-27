@@ -1,4 +1,4 @@
-import {Result} from "antd";
+import {Result} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import axios from 'axios';
 import React, {ReactNode} from "react";

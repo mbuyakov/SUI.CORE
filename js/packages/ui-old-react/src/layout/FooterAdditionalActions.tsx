@@ -2,7 +2,7 @@ import React from "react";
 import BugReportIcon from '@mui/icons-material/BugReport';
 import {useTheme} from "@mui/material/styles";
 import axios from "axios";
-import {notification} from "antd";
+import {notification} from "@sui/deps-antd";
 import moment from "moment";
 import {getSUISettings} from "@sui/ui-old-core";
 import {IMaterialDropdownItem, MaterialDropdown} from "@/Material";

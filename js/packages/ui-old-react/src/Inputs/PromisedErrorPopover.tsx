@@ -1,4 +1,4 @@
-import {Popover, PopoverProps} from "antd";
+import {Popover, PopoverProps} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 

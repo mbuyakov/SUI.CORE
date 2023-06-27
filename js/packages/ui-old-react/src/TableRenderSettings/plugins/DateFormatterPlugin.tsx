@@ -1,5 +1,5 @@
 import {ColumnInfo} from "@sui/ui-old-core";
-import {Checkbox, Input} from 'antd';
+import {Checkbox, Input} from "@sui/deps-antd";
 import moment from 'moment';
 import * as React from 'react';
 

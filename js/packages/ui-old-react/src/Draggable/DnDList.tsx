@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {PlusCircleOutlined} from "@ant-design/icons";
 import {unCapitalize} from '@sui/ui-old-core';
-import {Button, Dropdown, Menu, MenuItemProps} from "antd";
+import {Button, Dropdown, Menu, MenuItemProps} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {Container, Draggable} from "./react18fix";
