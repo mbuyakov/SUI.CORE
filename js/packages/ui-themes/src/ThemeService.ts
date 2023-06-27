@@ -24,6 +24,7 @@ export class ThemeServiceImpl extends ThemeService {
     if (!this.themeVariant.get()) {
       this.themeVariant.set(this.getBrowserTheme());
     }
+    document.body.setAttribute('data-theme', this.themeVariant.get()!);
   }
 
   getBrowserTheme(): SuiThemeVariants {
@@ -36,6 +37,7 @@ export class ThemeServiceImpl extends ThemeService {
     this.themeVariant.set(theme);
     // noinspection JSIgnoredPromiseFromCall
     this.dispatch(ThemeChangedEvent, new ThemeChangedEvent(theme));
+    document.body.setAttribute('data-theme', theme);
   }
 
   getCurrentTheme(): SuiThemeVariants {

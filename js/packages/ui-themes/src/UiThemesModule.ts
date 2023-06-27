@@ -15,7 +15,6 @@ export class UiThemesModule extends SuiModule {
   constructor(themeConfig: SuiThemeConfig) {
     super("UiThemesModule", ["LocalStorageModule"]);
     this.themeConfig = themeConfig;
-    Container.bind(ThemeService).to(ThemeServiceImpl);
   }
 
   async init(): Promise<void> {
