@@ -1,4 +1,4 @@
-import {lazyInit} from "@sui/util-chore";
+import {addCss, lazyInit} from "@sui/util-chore";
 
 export interface AMCHARTS {
   am4core: typeof import('@amcharts/amcharts4/core'),
@@ -49,6 +49,20 @@ export const getAmcharts = lazyInit<Promise<AMCHARTS>>(() => Promise.all([
 
     am4core.useTheme(am4themes_animated.default);
     am4core.options.minPolylineStep = 5;
+
+    addCss('amcharts', `
+      g[opacity="0.4"], g[opacity="0.3"] {
+        display: none !important;
+      }
+
+      .amcharts-amexport-item a {
+        color: black;
+      }
+
+      body[data-theme='dark'] .amcharts-amexport-item a {
+        color: white !important;
+      }
+    `);
 
     return {
       am4core,
