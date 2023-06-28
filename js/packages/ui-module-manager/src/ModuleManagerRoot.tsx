@@ -8,13 +8,15 @@ import {Container} from "@sui/deps-ioc";
 export const ModuleManagerRoot: React.FC<{
   children: React.ReactNode,
   projectKey: string,
+  restUrl: string,
   settings: (mm: ModuleManager) => Promise<void>
 }> = ({
         children,
         projectKey,
+        restUrl,
         settings
       }) => {
-  const moduleManager = useMemo(() => new ModuleManager(projectKey), [projectKey]);
+  const moduleManager = useMemo(() => new ModuleManager(projectKey, restUrl), [projectKey, restUrl]);
   const [settingsApplied, setSettingsApplied] = useState(false);
   const [modulesInitialized, setModulesInitialized] = useState(false);
   const [error, setError] = useState<Error>();
