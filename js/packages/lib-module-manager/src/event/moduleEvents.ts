@@ -1,4 +1,4 @@
-import {ModuleErrorEvent, ModuleEvent, ModuleWithDurationEvent} from "./ModuleEventTypes";
+import {ModuleErrorEvent, ModuleEvent, ModuleWithDurationEvent} from "./moduleEventTypes";
 
 export class ModuleDiscoveredEvent extends ModuleEvent {
   constructor(moduleName: string) {

@@ -1,2 +1,2 @@
-export * from "./ModuleEvents";
-export * from "./ModuleEventTypes";
+export * from "./moduleEvents";
+export * from "./moduleEventTypes";
