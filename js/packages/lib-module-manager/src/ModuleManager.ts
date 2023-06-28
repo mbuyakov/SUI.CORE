@@ -18,9 +18,10 @@ export class ModuleManager extends EventManager<
   private readonly initializedModules: string[] = [];
   private readonly modulesInstances: Map<string, SuiModule> = new Map();
 
-  constructor(projectKey: string) {
+  constructor(projectKey: string, restUrl: string) {
     super();
     Container.bindName("sui.projectKey").to(projectKey);
+    Container.bindName("sui.restUrl").to(restUrl);
     this.modulesInstances.set('MainModule', new MainModule());
 
     this.addHandler(ModuleDiscoveredEvent, (it) => console.log(`Module ${it.moduleName} discovered`));

@@ -40,7 +40,7 @@ class FailedModule extends SuiModule {
 
 describe('ModuleManager', () => {
   test('Module with deps', async () => {
-    const moduleManager = new ModuleManager("test");
+    const moduleManager = new ModuleManager("test", "test");
     const discoveredEventHandler = jest.fn();
     const moduleInitEventHandler = jest.fn();
     const depsInitEventHandler = jest.fn();
@@ -62,7 +62,7 @@ describe('ModuleManager', () => {
   });
 
   test('Failed module event fired', async () => {
-    const moduleManager = new ModuleManager("test");
+    const moduleManager = new ModuleManager("test", "test");
     const failedEventHandler = jest.fn();
     moduleManager.addHandler(ModuleFailedEvent, failedEventHandler);
     moduleManager.addModule(new FailedModule());
@@ -71,7 +71,7 @@ describe('ModuleManager', () => {
   });
 
   test('Duplicated module event fired', async () => {
-    const moduleManager = new ModuleManager("test");
+    const moduleManager = new ModuleManager("test", "test");
     const duplicatedEventHandler = jest.fn();
     moduleManager.addHandler(ModuleDuplicateEvent, duplicatedEventHandler);
     moduleManager.addModule(new DuplicatedModule());
@@ -80,7 +80,7 @@ describe('ModuleManager', () => {
   });
 
   test('Root modified by modules', async () => {
-    const moduleManager = new ModuleManager("test");
+    const moduleManager = new ModuleManager("test", "test");
     moduleManager.addModule(new Module1());
     moduleManager.addModule(new Module2());
     await moduleManager.init();
