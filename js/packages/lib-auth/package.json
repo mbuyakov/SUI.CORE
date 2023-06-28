@@ -1,0 +1,8 @@
+{
+  "name": "@sui/lib-auth",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "dependencies": {
+    "react-idle-timer": "5.7.2"
+  }
+}
