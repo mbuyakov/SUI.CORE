@@ -1,6 +1,6 @@
-import * as React from 'react';
-import {useState} from 'react';
-import {DisableEditContext} from './DisableEditContext';
+import * as React from "react";
+import {useState} from "react";
+import {DisableEditContext} from "./DisableEditContext";
 
 export interface IEditModeContext {
   outerDisable: boolean,

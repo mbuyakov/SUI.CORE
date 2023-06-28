@@ -1,27 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import {Cached} from '@mui/icons-material';
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import {Cached} from "@mui/icons-material";
 import {addPluralEnding, addQuotesIfString, capitalize, ColumnInfoManager, DataKey, dataKeysToDataTree, getDataByKey, isValidUuid, NameManager, NO_DATA_TEXT, normalizeDataKey, query, TableInfoManager, wrapInArray, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
 import {Card} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import camelCase from 'lodash/camelCase';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import camelCase from "lodash/camelCase";
+import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {BaseCard, DATA_KEY_REGEXP, IBaseCardItemLayout, IBaseCardRowLayout, IBaseCardRowWithColsLayout} from '../Base';
+import {BaseCard, DATA_KEY_REGEXP, IBaseCardItemLayout, IBaseCardRowLayout, IBaseCardRowWithColsLayout} from "../Base";
 // noinspection ES6PreferShortImport
-import {RouterLink} from '../Link';
+import {RouterLink} from "../Link";
 // noinspection ES6PreferShortImport
 import {SerializedCardSettings, SerializedFreeText, SerializedItemSettings, SerializedRowSettings} from "../MetaCardSettings";
 // noinspection ES6PreferShortImport
-import {TableSettingsDialog} from '../plugins';
+import {TableSettingsDialog} from "../plugins";
 // noinspection ES6PreferShortImport
-import {getLinkForTable, getReferencedTableInfo, isAdmin} from '../utils';
+import {getLinkForTable, getReferencedTableInfo, isAdmin} from "../utils";
 // noinspection ES6PreferShortImport
-import {WaitData} from '../WaitData';
+import {WaitData} from "../WaitData";
 
-import {MetaCardConfigurator} from './MetaCardConfigurator';
+import {MetaCardConfigurator} from "./MetaCardConfigurator";
 
 export interface IMetaCardProps {
   itemId: string;
@@ -31,7 +31,7 @@ export interface IMetaCardProps {
 function getIdDataKey(dataKey: DataKey): DataKey {
   const ndk = normalizeDataKey(dataKey).slice();
   ndk.pop();
-  ndk.push('id');
+  ndk.push("id");
 
   return ndk;
 }
@@ -75,18 +75,18 @@ export class MetaCard extends React.Component<IMetaCardProps, {
           this.state.schema.title &&
           this.state.schema.title.map(title => {
             // noinspection SuspiciousTypeOfGuard
-            if (typeof (title as SerializedFreeText).text === 'string') {
+            if (typeof (title as SerializedFreeText).text === "string") {
               return (title as SerializedFreeText).text;
             }
 
             const data = getDataByKey(this.state.item && this.state.item.nodes[0], (title as SerializedItemSettings).dataKey);
             return data == null ? NO_DATA_TEXT : data;
-          }).join(' ')
+          }).join(" ")
         }
         extra={
           <div
             style={{
-              display: 'flex',
+              display: "flex",
             }}
           >
             <Tooltip
@@ -153,7 +153,7 @@ export class MetaCard extends React.Component<IMetaCardProps, {
     const schema: SerializedCardSettings = object.cardRenderParams && JSON.parse(object.cardRenderParams);
 
     if (schema == null || !((schema.rows && schema.rows.length) || (schema.title && schema.title.length))) {
-      this.setState({error: 'Схема не настроена'});
+      this.setState({error: "Схема не настроена"});
 
       return;
     }
@@ -184,7 +184,7 @@ export class MetaCard extends React.Component<IMetaCardProps, {
           await Promise.all(wrapInArray(col.items).map(async (item) => {
             const columnInfo = item.colId && (await ColumnInfoManager.getById(item.colId));
 
-            let title = 'UNKNOWN';
+            let title = "UNKNOWN";
             if (item.title) {
               title = item.title as string;
             } else if (item.nameId) {
@@ -195,12 +195,12 @@ export class MetaCard extends React.Component<IMetaCardProps, {
             item.title = title;
 
             if (item.linkEnabled) {
-              const link = getLinkForTable((await TableInfoManager.getById(columnInfo.tableInfoId)).tableName, 'card', ':id');
+              const link = getLinkForTable((await TableInfoManager.getById(columnInfo.tableInfoId)).tableName, "card", ":id");
               if (link) {
                 item.render = (value: any, obj: any): JSX.Element => value && (
                   <RouterLink
                     to={link.replace(
-                      ':id',
+                      ":id",
                       getDataByKey(obj, getIdDataKey(item.dataKey)),
                     )}
                     text={value}
@@ -247,7 +247,7 @@ export class MetaCard extends React.Component<IMetaCardProps, {
 
     return `{
       all${capitalize(camelCase(addPluralEnding(table)))}(filter: {id: {equalTo: ${addQuotesIfString(itemId)}}}) {
-        nodes ${dataKeysToDataTree([...dataKeys, '__typename']).toString()}
+        nodes ${dataKeysToDataTree([...dataKeys, "__typename"]).toString()}
       }
     }`;
   }
@@ -262,11 +262,11 @@ export class MetaCard extends React.Component<IMetaCardProps, {
         [row.metaTableProps.filter, row.metaTableProps.globalFilter]
           .filter(Boolean)
           .forEach(filter => {
-            if (typeof filter === 'string') {
+            if (typeof filter === "string") {
               const regexp = new RegExp(DATA_KEY_REGEXP);
               let result;
               while (result = regexp.exec(filter)) { // All ok, use assign here. Not typo
-                ret.push(result[1].split('|'));
+                ret.push(result[1].split("|"));
               }
             }
           });
@@ -303,7 +303,7 @@ export class MetaCard extends React.Component<IMetaCardProps, {
 
     await Promise.all(schema.title.map(async t => {
       const cols = await Promise.all<string>(t.id
-        .split('|')
+        .split("|")
         .filter(id => !isNaN(id as unknown as number) || !isValidUuid(id))
         .map(async (id, index, array) => {
           const columnInfo = await ColumnInfoManager.getById(id);

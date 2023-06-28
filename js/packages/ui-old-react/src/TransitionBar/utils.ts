@@ -43,7 +43,7 @@ export async function fetchJoinTable(
 }
 
 export function joinTableNames(...tableNames: string[]): string {
-  return tableNames.join('_');
+  return tableNames.join("_");
 }
 
 export async function findColumnsByReferencedTable(

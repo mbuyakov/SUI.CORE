@@ -17,4 +17,4 @@ export const DrawerRoutes: React.FC = () => {
       ))}
     </List>
   );
-}
+};

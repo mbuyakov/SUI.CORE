@@ -1,10 +1,10 @@
-import type {ComponentMeta, ComponentStory} from '@storybook/react';
+import type {ComponentMeta, ComponentStory} from "@storybook/react";
 import {XYChart3DWrapper as _ChartWrapper} from "./ChartWrapper";
 import React from "react";
-import {Stack} from '@sui/deps-material';
+import {Stack} from "@sui/deps-material";
 
 const meta: ComponentMeta<typeof _ChartWrapper> = {
-  title: 'charts/ChartWrapper',
+  title: "charts/ChartWrapper",
   component: _ChartWrapper,
   parameters: {
     controls: {

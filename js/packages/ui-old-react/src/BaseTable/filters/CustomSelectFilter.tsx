@@ -5,8 +5,8 @@ import * as React from "react";
 // noinspection ES6PreferShortImport
 import {SimpleBackendFilter} from "../../BackendTable";
 // noinspection ES6PreferShortImport
-import {WaitData} from '../../WaitData';
-import {INewSearchProps, LazyFilter, SelectData} from '../types';
+import {WaitData} from "../../WaitData";
+import {INewSearchProps, LazyFilter, SelectData} from "../types";
 
 import {BaseSelectFilter, IBaseSelectFilterProps} from "./BaseSelectFilter";
 
@@ -27,7 +27,7 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public static isPromise(element: any): boolean {
-    return !!element && (typeof (element) === 'object' || typeof (element) === 'function') && typeof (element.then) === 'function'
+    return !!element && (typeof (element) === "object" || typeof (element) === "function") && typeof (element.then) === "function";
   }
 
   public constructor(props: ICustomSelectFilterProps<T>) {

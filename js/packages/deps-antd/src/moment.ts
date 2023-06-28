@@ -1,6 +1,6 @@
-import type {Moment} from 'moment';
-import momentGenerateConfig from 'rc-picker/lib/generate/moment';
-import generatePicker, {PickerProps} from 'antd5/es/date-picker/generatePicker';
+import type {Moment} from "moment";
+import momentGenerateConfig from "rc-picker/lib/generate/moment";
+import generatePicker, {PickerProps} from "antd5/es/date-picker/generatePicker";
 import generateCalendar from "antd5/es/calendar/generateCalendar";
 import {RangePickerProps as BaseRangePickerProps} from "antd5/es/date-picker/generatePicker";
 

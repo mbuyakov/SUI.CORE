@@ -4,7 +4,7 @@ import React, {useContext} from "react";
 import {ListItem, ListItemIcon, ListItemProps, ListItemText, Theme, Tooltip} from "@mui/material";
 import {useHistory, useLocation} from "react-router-dom";
 import {matchPath as matchPathRR} from "react-router";
-import {Location} from "history"
+import {Location} from "history";
 import {getSUISettings, IRawRoute} from "@sui/ui-old-core";
 import {BasicLayoutContext} from "@/layout/BasicLayoutContext";
 import {DrawerListSubmenu} from "@/layout/DrawerListSubmenu";
@@ -16,7 +16,7 @@ function matchPath(location: Location<unknown>, path: string): boolean {
     path,
     exact: false,
     strict: false,
-  })
+  });
 }
 
 // const useStyles = makeStyles((theme: Theme) =>
@@ -51,7 +51,7 @@ function shouldShowRouteListItem(route: IRawRoute, customListItemContent?: React
     // @ts-ignore
     if (authority.length) {
       // eslint-disable-next-line no-alert
-      alert('You routes has authority as array. Please switch to or-and construction');
+      alert("You routes has authority as array. Please switch to or-and construction");
       return null;
     }
 
@@ -60,7 +60,7 @@ function shouldShowRouteListItem(route: IRawRoute, customListItemContent?: React
         return false;
       }
     } catch (e) {
-      console.error('Can\'t get state: ', e);
+      console.error("Can't get state: ", e);
       return false;
     }
   }
@@ -68,7 +68,7 @@ function shouldShowRouteListItem(route: IRawRoute, customListItemContent?: React
   return true;
 }
 
-export const RouteListItem: React.FC<ListItemProps<'div'> & {
+export const RouteListItem: React.FC<ListItemProps<"div"> & {
   route: IRawRoute;
   isSubItem: boolean;
   customListItemContent?: React.ReactNode;
@@ -77,7 +77,7 @@ export const RouteListItem: React.FC<ListItemProps<'div'> & {
         route,
         isSubItem,
         customListItemContent,
-        base = 'app.route',
+        base = "app.route",
         ...rest
       }) => {
   // Fast-fail path
@@ -176,4 +176,4 @@ export const RouteListItem: React.FC<ListItemProps<'div'> & {
   }
 
   return listItem;
-}
+};

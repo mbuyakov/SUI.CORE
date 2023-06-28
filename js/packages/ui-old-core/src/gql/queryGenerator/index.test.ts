@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-test("I'm disabled", () => {})
+test("I'm disabled", () => {});
 // import * as queryGenerator from "./index";
 //
 // test("GenerateUpdateText", () => {

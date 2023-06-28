@@ -3,12 +3,12 @@ import {Button as MuiButton, ButtonProps as MuiButtonProps} from "@sui/deps-mate
 import {ProgressIcon, TooltipWrapper} from "@sui/ui-material";
 import {PopconfirmSettings, useOnClick, usePopconfirm} from "./hooks";
 
-export type ButtonProps = Omit<MuiButtonProps, 'onClick'> & {
+export type ButtonProps = Omit<MuiButtonProps, "onClick"> & {
   tooltip?: string;
   loading?: boolean;
   popconfirmSettings?: PopconfirmSettings;
   onClick: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>;
-}
+};
 export const Button: React.FC<ButtonProps> =
   (
     {
@@ -35,4 +35,4 @@ export const Button: React.FC<ButtonProps> =
         />
       </TooltipWrapper>
     );
-  }
+  };

@@ -1,4 +1,4 @@
-import {DropResult} from 'react-smooth-dnd';
+import {DropResult} from "react-smooth-dnd";
 
 export function applyDrag<T>(arr: T[], dragResult: DropResult, mapFn?: (item: T) => T): T[] {
 

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import autobind from "autobind-decorator";
 import moment, {Moment} from "moment";
-import * as React from 'react';
-import {GET_DEFAULT_CALENDAR_RANGES, getDataByKey} from '@sui/ui-old-core';
+import * as React from "react";
+import {GET_DEFAULT_CALENDAR_RANGES, getDataByKey} from "@sui/ui-old-core";
 import {RangePickerValue} from "@/compatibleTypes";
 import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from "@/BaseTable";
 import {SuiRangePicker} from "@/Inputs/SuiRangePicker";
@@ -134,7 +134,7 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
 }
 
 function formatter(value: string, format: string, insert: boolean): string {
-  const valueDigits = value.replace(/[^0-9]+/g, '');
+  const valueDigits = value.replace(/[^0-9]+/g, "");
 
   if (!insert && valueDigits.length == 0) {
     return "";

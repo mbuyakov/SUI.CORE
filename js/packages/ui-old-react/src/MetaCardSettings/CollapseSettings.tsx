@@ -1,11 +1,11 @@
-import {Merge} from '@sui/ui-old-core';
+import {Merge} from "@sui/ui-old-core";
 import {Checkbox, Input} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {CheckboxChangeEvent} from "@/antdMissedExport";
 
 // noinspection ES6PreferShortImport
-import {IBaseCardCollapseLayout, IBaseCardItemLayout} from '../Base';
+import {IBaseCardCollapseLayout, IBaseCardItemLayout} from "../Base";
 // noinspection ES6PreferShortImport
 import {DeletableSmallCard} from "../DeletableSmallCard";
 // noinspection ES6PreferShortImport
@@ -37,7 +37,7 @@ export class CollapseSettings extends SerializableDnDChild<SerializedCollapseSet
       this.state = {
         ...this.state,
         rows: []
-      }
+      };
     }
   }
 

@@ -8,7 +8,7 @@ function convertValue(value?: string): string | null | undefined {
   return value && fioConverterWithoutTrim(value);
 }
 
-export type CustomFioInputProps = InputProps
+export type CustomFioInputProps = InputProps;
 
 export class CustomFioInput extends React.Component<CustomFioInputProps> {
 

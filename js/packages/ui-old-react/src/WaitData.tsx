@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/ban-ts-comment */
-import {CloseCircleTwoTone} from '@ant-design/icons';
+import {CloseCircleTwoTone} from "@ant-design/icons";
 import {defaultIfNotBoolean, mutate, query} from "@sui/ui-old-core";
 import {Spin} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import * as React from "react";
 import {queryWrapper} from "@/tmp";
 
-import {loadingErrorNotification} from './drawUtils';
-import {SPIN_WRAPPER} from './styles';
+import {loadingErrorNotification} from "./drawUtils";
+import {SPIN_WRAPPER} from "./styles";
 
 const SPIN_DELAY = 300;
 
@@ -53,7 +53,7 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
   public render(): JSX.Element {
     const data = (this.state && this.state.data) || this.props.data;
     // @ts-ignore
-    const children = (): JSX.Element => (this.props.children instanceof Function) ? this.props.children(data === '__NULL__' ? null : data, this.updateData) : this.props.children;
+    const children = (): JSX.Element => (this.props.children instanceof Function) ? this.props.children(data === "__NULL__" ? null : data, this.updateData) : this.props.children;
     const hasErrors = this.props.error || (this.state && this.state.error);
     const spinning = hasErrors || !data || !!this.props.spinning;
 
@@ -64,14 +64,14 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
     return (
       <Spin
         wrapperClassName={SPIN_WRAPPER}
-        delay={typeof this.props.delay === 'number' ? this.props.delay : SPIN_DELAY}
+        delay={typeof this.props.delay === "number" ? this.props.delay : SPIN_DELAY}
         spinning={spinning}
         indicator={hasErrors ? errorIcon : undefined}
         tip={hasErrors && (<span style={{color: "red"}}>{this.props.errorTip}</span> as any)}
       >
         {(data || !defaultIfNotBoolean(this.props.hideChildren, true))
           ? children()
-          : <div style={{height: '100%', width: '100%'}}/>
+          : <div style={{height: "100%", width: "100%"}}/>
         }
       </Spin>
     );
@@ -109,7 +109,7 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
     let promise = this.props.promise;
     if (this.props.query) {
       if (promise) {
-        console.error('[WaitData]Props conflict! Defined promise and query. Props:', this.props);
+        console.error("[WaitData]Props conflict! Defined promise and query. Props:", this.props);
         this.setState({error: true});
 
         return;
@@ -118,7 +118,7 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
     }
     if (this.props.mutation) {
       if (promise) {
-        console.error('[WaitData]Props conflict! Defined promise and mutation. Props:', this.props);
+        console.error("[WaitData]Props conflict! Defined promise and mutation. Props:", this.props);
         this.setState({error: true});
 
         return;
@@ -131,9 +131,9 @@ export class WaitData<T = any> extends React.Component<IWaitDataProps<T>, {
           // Workaround. Null in data are ok
           if (data === null) {
             // @ts-ignore
-            data = '__NULL__';
+            data = "__NULL__";
           }
-          if (typeof data === 'object') {
+          if (typeof data === "object") {
             // Magic. May have false-positive error
             const keys = Object.keys(data);
             if (keys.length === 1) {

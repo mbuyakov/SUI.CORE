@@ -2,21 +2,21 @@
 import {InfoCircleOutlined} from "@ant-design/icons";
 import {ColumnInfo} from "@sui/ui-old-core";
 import {Checkbox, Input, Tooltip} from "@sui/deps-antd";
-import * as React from 'react';
+import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {IBaseTableColLayout} from '../../BaseTable';
+import {IBaseTableColLayout} from "../../BaseTable";
 // noinspection ES6PreferShortImport
-import {RouterLink} from '../../Link';
+import {RouterLink} from "../../Link";
 // noinspection ES6PreferShortImport
-import {getLinkForTable, IColumnInfoToBaseTableColProps} from '../../utils';
+import {getLinkForTable, IColumnInfoToBaseTableColProps} from "../../utils";
 // noinspection ES6PreferShortImport
 import {TableRenderSettingsPluginManager} from "../TableRenderSettingsPluginManager";
 // noinspection ES6PreferShortImport
-import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
+import {ITableRenderParams, TableRenderSettingsPopover} from "../TableRenderSettingsPopover";
 
 // noinspection ES6PreferShortImport
-import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
+import {TableRenderParamsPlugin} from "./TableRenderParamsPlugin";
 
 export interface IMultipleLinkPluginParams {
   linkTableName: string
@@ -25,7 +25,7 @@ export interface IMultipleLinkPluginParams {
 
 export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPluginParams> {
   public constructor() {
-    super('multilink', 'Множественная ссылка', true);
+    super("multilink", "Множественная ссылка", true);
   }
 
   public async baseTableColGenerator(result: IBaseTableColLayout,
@@ -33,8 +33,8 @@ export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPlu
                                      props: IColumnInfoToBaseTableColProps,
                                      tableRenderParams: ITableRenderParams<IMultipleLinkPluginParams>
   ): Promise<void> {
-    const linkTableName = tableRenderParams.linkTableName || ' ';
-    const linkTemplate = !isBlank(linkTableName) && getLinkForTable(linkTableName, 'card', ':id') || null;
+    const linkTableName = tableRenderParams.linkTableName || " ";
+    const linkTemplate = !isBlank(linkTableName) && getLinkForTable(linkTableName, "card", ":id") || null;
     result.render = (value: any): JSX.Element => {
       const [isExpanded, setExpanded] = React.useState(false);
       let links = getLinkFromJsonValue(value);
@@ -47,7 +47,7 @@ export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPlu
           {!!linkTemplate ? links.map(link => (
               <RouterLink
                 key={link.id}
-                to={linkTemplate.replace(':id', link.id)}
+                to={linkTemplate.replace(":id", link.id)}
                 text={link.name}
                 type="button"
                 monospace={false}
@@ -58,30 +58,30 @@ export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPlu
           {tableRenderParams.limitCount && linksLength > 5 && (<a style={{whiteSpace: "nowrap"}} onClick={() => setExpanded(!isExpanded)}>{isExpanded ? " скрыть" : " показать все"}</a>)}
         </>
       );
-    }
+    };
 
     return Promise.resolve();
   }
 
   public getSettingsPopoverContent(trsp: TableRenderSettingsPopover<IMultipleLinkPluginParams>): React.ReactNode {
-    const onChangeLinkTableName = (event): Promise<void> => trsp.updateField('linkTableName')(event.target.value);
+    const onChangeLinkTableName = (event): Promise<void> => trsp.updateField("linkTableName")(event.target.value);
 
     return (
       <>
         <span>Таблица для ссылок</span>
         <Input
-          value={trsp.state.tableRenderParams.linkTableName || ''}
+          value={trsp.state.tableRenderParams.linkTableName || ""}
           onChange={onChangeLinkTableName}
           suffix={
             <Tooltip title="Укажите имя таблицы в БД. Если оставить пустым, то вместо ссылок будут отображаться их представления разделенные ;">
-              <InfoCircleOutlined style={{color: 'rgba(0,0,0,.45)'}}/>
+              <InfoCircleOutlined style={{color: "rgba(0,0,0,.45)"}}/>
             </Tooltip>
           }
         />
         <span>Ограничить кол-во выводимых значений?</span>
         <Checkbox
           checked={trsp.state.tableRenderParams.limitCount || undefined}
-          onChange={(e): Promise<void> => trsp.updateField('limitCount')(e.target.checked)}
+          onChange={(e): Promise<void> => trsp.updateField("limitCount")(e.target.checked)}
         />
       </>
     );
@@ -98,7 +98,7 @@ function getLinkFromJsonValue(value?: any): Array<{ id: string, name: string }> 
 }
 
 function isBlank(s: string): boolean {
-  return !s || typeof s !== 'string' || s.trim() === "";
+  return !s || typeof s !== "string" || s.trim() === "";
 }
 
 TableRenderSettingsPluginManager.register(new MultipleLinkPlugin());

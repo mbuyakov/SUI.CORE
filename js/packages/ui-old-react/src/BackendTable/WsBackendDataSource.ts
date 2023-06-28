@@ -1,31 +1,31 @@
-import {IFrame, StompConfig} from '@stomp/stompjs';
+import {IFrame, StompConfig} from "@stomp/stompjs";
 import {getSUISettings, IObjectWithIndex, Logger, sleep} from "@sui/ui-old-core";
 
 // noinspection ES6PreferShortImport
-import {Socket} from '../Socket';
+import {Socket} from "../Socket";
 // noinspection ES6PreferShortImport
-import {getUser} from '../utils';
+import {getUser} from "../utils";
 
-import {BackendDataSource, MESSAGE_ID_KEY} from './BackendDataSource';
+import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
 
 
-const SEND_DESTINATION = '/data';
+const SEND_DESTINATION = "/data";
 
 const log = new Logger("WsBackendDataSource");
 
 const maximizeLogConfig: Partial<StompConfig> = {
   debug: (msg): void => log.debug(msg),
   logRawCommunication: true,
-  onDisconnect: (frame): void => log.debug(['onDisconnect', frame]),
-  onStompError: (frame): void => log.debug(['onStompError', frame]),
-  onUnhandledFrame: (frame): void => log.debug(['onUnhandledFrame', frame]),
-  onUnhandledMessage: (message): void => log.debug(['onUnhandledMessage', message]),
-  onUnhandledReceipt: (frame): void => log.debug(['onUnhandledReceipt', frame]),
-  onWebSocketClose: (closeEvent): void => log.debug(['onWebSocketClose', closeEvent]),
-  onWebSocketError: (event): void => log.debug(['onWebSocketError', event]),
+  onDisconnect: (frame): void => log.debug(["onDisconnect", frame]),
+  onStompError: (frame): void => log.debug(["onStompError", frame]),
+  onUnhandledFrame: (frame): void => log.debug(["onUnhandledFrame", frame]),
+  onUnhandledMessage: (message): void => log.debug(["onUnhandledMessage", message]),
+  onUnhandledReceipt: (frame): void => log.debug(["onUnhandledReceipt", frame]),
+  onWebSocketClose: (closeEvent): void => log.debug(["onWebSocketClose", closeEvent]),
+  onWebSocketError: (event): void => log.debug(["onWebSocketError", event]),
 };
 
-const SUBSCRIBE_DESTINATION_PREFIX = '/user/queue/response/';
+const SUBSCRIBE_DESTINATION_PREFIX = "/user/queue/response/";
 const RECONNECT_DELAY = 50;
 const MAX_RECONNECT_ATTEMPTS = 3;
 
@@ -51,7 +51,7 @@ export class WsBackendDataSource extends BackendDataSource {
   }
 
   public async init(): Promise<boolean> {
-    const backendURL = new URL(`ws${location.protocol === 'https:' ? 's' : ''}://${location.host}${getSUISettings().backendUrl}`);
+    const backendURL = new URL(`ws${location.protocol === "https:" ? "s" : ""}://${location.host}${getSUISettings().backendUrl}`);
     log.debug(backendURL);
 
     this.socket = new Socket({
@@ -78,7 +78,7 @@ export class WsBackendDataSource extends BackendDataSource {
         }
 
         // Add new parameter to connection URL for reconnection
-        backendURL.searchParams.set('previousSessionId', frame.body);
+        backendURL.searchParams.set("previousSessionId", frame.body);
         client.brokerURL = backendURL.toString();
       },
       onWebSocketClose: (config): void => {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types */
-import * as React from 'react';
-import {useEffect, useMemo, useState} from 'react';
+import * as React from "react";
+import {useEffect, useMemo, useState} from "react";
 import {AMCHARTS, getAmcharts} from "@sui/deps-amcharts";
 import {useAsyncEffect, useHandler, useService} from "@sui/lib-hooks";
 import {ThemeChangedEvent, ThemeService} from "@sui/ui-themes";
@@ -62,18 +62,18 @@ export function ChartWrapper<T extends { new(): any }>(getType: (amcharts: AMCHA
 
     }, [chart, props.data]);
 
-    const styles = props.style || {width: '100%', height: '100%'};
+    const styles = props.style || {width: "100%", height: "100%"};
     const hasData = props.data.length > 0;
 
     return (
       <>
-        <div id={`chartdiv_${id}`} style={{...(hasData ? {} : {display: 'none'}), ...styles}}/>
-        <div style={{display: hasData ? 'none' : 'flex', alignItems: 'center', justifyContent: 'center', ...styles}}>
+        <div id={`chartdiv_${id}`} style={{...(hasData ? {} : {display: "none"}), ...styles}}/>
+        <div style={{display: hasData ? "none" : "flex", alignItems: "center", justifyContent: "center", ...styles}}>
           <span style={{fontSize: 16}}>Данные отсутствуют</span>
         </div>
       </>
     );
-  }
+  };
 }
 
 

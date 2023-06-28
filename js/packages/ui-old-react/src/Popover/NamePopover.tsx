@@ -1,14 +1,14 @@
 import {ArrowLeftOutlined, CloseOutlined} from "@ant-design/icons";
-import {IGraphQLConnection, IName, mutate, query} from '@sui/ui-old-core';
+import {IGraphQLConnection, IName, mutate, query} from "@sui/ui-old-core";
 import {Alert, Button, Input, Popover, Select} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import gql from 'graphql-tag';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import gql from "graphql-tag";
+import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT} from '../styles';
+import {SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT} from "../styles";
 // noinspection ES6PreferShortImport
-import {WaitData} from '../WaitData';
+import {WaitData} from "../WaitData";
 
 export type NamePopoverRenderType = "choose" | "edit";
 
@@ -113,7 +113,7 @@ export class NamePopover extends React.Component<INamePopoverProps, {
                   <div className={SUI_ROW_GROW_LEFT}>
                     <Select<string>
                       showSearch={true}
-                      style={{width: '100%'}}
+                      style={{width: "100%"}}
                       onSelect={this.onSelect}
                       value={data && this.state.selectedNameId}
                       disabled={this.state.savingInProcess}
@@ -137,7 +137,7 @@ export class NamePopover extends React.Component<INamePopoverProps, {
               </WaitData>
               <Button
                 type="primary"
-                disabled={typeof this.state.selectedNameId === 'undefined' || this.state.selectedNameId === this.props.id}
+                disabled={typeof this.state.selectedNameId === "undefined" || this.state.selectedNameId === this.props.id}
                 onClick={this.onSave}
                 loading={this.state.savingInProcess}
               >
@@ -157,9 +157,9 @@ export class NamePopover extends React.Component<INamePopoverProps, {
           ? this.props.render(renderType)
           : (
             <Button
-              type={renderType === "choose" ? 'primary' : 'default'}
+              type={renderType === "choose" ? "primary" : "default"}
             >
-              {renderType === "choose" ? 'Выбрать' : 'Изменить'}
+              {renderType === "choose" ? "Выбрать" : "Изменить"}
             </Button>
           )
         }
@@ -212,11 +212,11 @@ export class NamePopover extends React.Component<INamePopoverProps, {
     }`)
       .then(value => {
         if (value.allNames.totalCount > 0) {
-          throw 'Запись с таким именем уже существует';
+          throw "Запись с таким именем уже существует";
         }
       })
       .then(() => mutate<{ createName: { name: { id: string } } }>(gql`mutation {
-        createName(input: {name: {name: "${this.state.name.replace(/"/g, "\\\"")}", description: "${(this.state.description || '').replace(/ "/g, "\\\"")}"}}) {
+        createName(input: {name: {name: "${this.state.name.replace(/"/g, "\\\"")}", description: "${(this.state.description || "").replace(/ "/g, "\\\"")}"}}) {
           name {
             id
           }
@@ -224,7 +224,7 @@ export class NamePopover extends React.Component<INamePopoverProps, {
       }`))
       .then(value => value.createName.name.id)
       .then(newId => this.setState({selectedNameId: newId}, this.onSave))
-      .catch(reason => this.setState({savingInProcess: false, errorText: reason.toString() || 'Ошибка при сохранении'}));
+      .catch(reason => this.setState({savingInProcess: false, errorText: reason.toString() || "Ошибка при сохранении"}));
   }
 
   @autobind
@@ -234,7 +234,7 @@ export class NamePopover extends React.Component<INamePopoverProps, {
     if (promise) {
       promise
         .then(this.cleanAndClose)
-        .catch(reason => this.setState({savingInProcess: false, errorText: reason.toString() || 'Ошибка при сохранении'}));
+        .catch(reason => this.setState({savingInProcess: false, errorText: reason.toString() || "Ошибка при сохранении"}));
     } else {
       this.cleanAndClose();
     }

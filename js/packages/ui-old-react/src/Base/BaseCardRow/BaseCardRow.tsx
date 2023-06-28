@@ -1,8 +1,8 @@
-import * as React from 'react';
+import * as React from "react";
 
 import {BaseCardRowWithDivider, IBaseCardRowWithDividerLayout, isRowWithDivider} from "@/Base/BaseCardRow/BaseCardRowWithDivider";
-import {BaseCardRowWithTabs, IBaseCardRowWithTabsLayout, isRowWithTabs} from '@/Base/BaseCardRow/BaseCardRowWithTabs';
-import {BaseCardRowWithMetaTable, IBaseCardRowWithMetaTableLayout, isRowWithMetaTable} from '@/Base/BaseCardRow/BaseCardRowWithMetaTable';
+import {BaseCardRowWithTabs, IBaseCardRowWithTabsLayout, isRowWithTabs} from "@/Base/BaseCardRow/BaseCardRowWithTabs";
+import {BaseCardRowWithMetaTable, IBaseCardRowWithMetaTableLayout, isRowWithMetaTable} from "@/Base/BaseCardRow/BaseCardRowWithMetaTable";
 import {BaseCardRowWithCollapse, IBaseCardRowWithCollapseLayout, isRowWithCollapse} from "@/Base/BaseCardRow/BaseCardRowWithCollapse";
 import {BaseCardRowWithCols, IBaseCardRowWithColsLayout, isRowWithCols} from "@/Base/BaseCardRow/BaseCardRowWithCols";
 import {BaseCardRowParent} from "@/Base/BaseCardRow/types";
@@ -47,7 +47,7 @@ export const BaseCardRow: <T, ITEM>(props: {
         parent={props.parent}
         sourceItem={props.rowsLength}
       />
-    )
+    );
   } else if (isRowWithCollapse(row)) {
     return (
       <BaseCardRowWithCollapse
@@ -67,4 +67,4 @@ export const BaseCardRow: <T, ITEM>(props: {
   } else {
     return (<h3>UNKNOWN ROW TYPE</h3>);
   }
-}
+};

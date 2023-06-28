@@ -1,13 +1,13 @@
 import {Nullable} from "@sui/ui-old-core";
 import {Popconfirm, PopconfirmProps, Popover, PopoverProps} from "@sui/deps-antd";
 import asyncValidator from "async-validator";
-import autobind from 'autobind-decorator';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import * as React from "react";
 
 // noinspection ES6PreferShortImport
 import {FixedRuleItem} from "../Base";
 
-import {IPromisedErrorPopoverProps, PromisedErrorPopover} from './PromisedErrorPopover';
+import {IPromisedErrorPopoverProps, PromisedErrorPopover} from "./PromisedErrorPopover";
 
 export type ValidatorFunction<V> = (value: V) => string | void;
 export type ComposeValidator<V> = ValidatorFunction<V> | FixedRuleItem[] | null;
@@ -32,7 +32,7 @@ export interface IPromisedBaseState<V> {
   value?: V;
 }
 
-type PopconfirmSettings = Omit<PopconfirmProps, 'onConfirm' | 'onCancel'>;
+type PopconfirmSettings = Omit<PopconfirmProps, "onConfirm" | "onCancel">;
 
 export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extends React.Component<IPromisedBaseProps<V> & P, S> {
 
@@ -50,7 +50,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.state = {
-      validatorText: ''
+      validatorText: ""
     };
   }
 
@@ -96,7 +96,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
       const notEmptyErrors = errors?.filter(e => Boolean(e.message));
       const validatorResult = notEmptyErrors && notEmptyErrors.length > 0
         ? notEmptyErrors[0].message  //errors.map(error => error.message).join(", ")
-        : '';
+        : "";
       if (this.validatorId === timestamp) {
         this.setState({validatorText: validatorResult});
       }
@@ -119,7 +119,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     return {
       "validator": (_, value, cb): void => {
         const validationMsg = validator(value);
-        return cb(validationMsg ? validationMsg : '');
+        return cb(validationMsg ? validationMsg : "");
       }
     };
   }
@@ -136,7 +136,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
 
     return value === null
       || value === undefined
-      || (typeof value === 'string' && value.length === 0);
+      || (typeof value === "string" && value.length === 0);
   }
 
   @autobind
@@ -163,8 +163,8 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
     );
 
     const popconfirmSettings = this.props.popconfirmSettings
-      ? typeof this.props.popconfirmSettings === 'boolean'
-        ? {title: 'Вы уверены?'}
+      ? typeof this.props.popconfirmSettings === "boolean"
+        ? {title: "Вы уверены?"}
         : (this.props.popconfirmSettings as PopconfirmSettings)
       : undefined;
 

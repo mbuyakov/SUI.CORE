@@ -1,6 +1,6 @@
 import {Client, IPublishParams, StompConfig} from "@stomp/stompjs";
 import autobind from "autobind-decorator";
-import {sleep} from '@sui/ui-old-core';
+import {sleep} from "@sui/ui-old-core";
 
 
 const CONNECTED_AWAIT_TIMEOUT = 100;

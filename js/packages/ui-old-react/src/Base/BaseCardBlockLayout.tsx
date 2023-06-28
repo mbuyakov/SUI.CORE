@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React from "react";
 import {Card} from "@sui/deps-antd";
-import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from '@sui/ui-old-core';
+import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
 import {BaseCardRow, IBaseCardRowLayout, isRowWithCollapse} from "@/Base/BaseCardRow";
 
 export interface IBaseCardBlockLayout<T, ITEM> {
@@ -28,5 +28,5 @@ export const BaseCardBlock: <T, ITEM>(props: IBaseCardBlockLayout<T, ITEM> & {
       ))}
     </Card>
   );
-}
+};
 

@@ -16,9 +16,9 @@ test("Group by name", () => {
 
   expect(JSON.stringify([...other.groupBy(data, element => element.name)])).toEqual(JSON.stringify(
     [...new Map([
-      ['name1', [{name: "name1", value: "value1"}, {name: "name1", value: "value3"}, {name: "name1", value: "value5"}]],
-      ['name2', [{name: "name2", value: "value2"}, {name: "name2", value: "value4"},]],
-      ['name3', [{name: "name3", value: "value6"}]]
+      ["name1", [{name: "name1", value: "value1"}, {name: "name1", value: "value3"}, {name: "name1", value: "value5"}]],
+      ["name2", [{name: "name2", value: "value2"}, {name: "name2", value: "value4"},]],
+      ["name3", [{name: "name3", value: "value6"}]]
     ])]
   ));
 });
@@ -35,9 +35,9 @@ test("Group sum", () => {
 
   expect(JSON.stringify([...other.groupBy<string, { name: string, value: number }, number>(data, element => element.name, (element, lastValue) => element.value + (lastValue || 0))]))
     .toEqual(JSON.stringify([...new Map([
-      ['name1', 11],
-      ['name2', 8],
-      ['name3', 7]
+      ["name1", 11],
+      ["name2", 8],
+      ["name3", 7]
     ])]));
 });
 
@@ -53,12 +53,12 @@ test("toMap", () => {
 
   expect(JSON.stringify([...other.toMap(data, v => v.name)]))
     .toEqual(JSON.stringify([...new Map([
-      ['name1', {name: "name1", value: 1}],
-      ['name2', {name: "name2", value: 2}],
-      ['name3', {name: "name3", value: 3}],
-      ['name4', {name: "name4", value: 4}],
-      ['name5', {name: "name5", value: 5}],
-      ['name6', {name: "name6", value: 6}]
+      ["name1", {name: "name1", value: 1}],
+      ["name2", {name: "name2", value: 2}],
+      ["name3", {name: "name3", value: 3}],
+      ["name4", {name: "name4", value: 4}],
+      ["name5", {name: "name5", value: 5}],
+      ["name6", {name: "name6", value: 6}]
     ])]));
 });
 
@@ -74,12 +74,12 @@ test("toMap with valueExtractor", () => {
 
   expect(JSON.stringify([...other.toMap(data, v => v.name, v => v.value)]))
     .toEqual(JSON.stringify([...new Map([
-      ['name1', 1],
-      ['name2', 2],
-      ['name3', 3],
-      ['name4', 4],
-      ['name5', 5],
-      ['name6', 6]
+      ["name1", 1],
+      ["name2", 2],
+      ["name3", 3],
+      ["name4", 4],
+      ["name5", 5],
+      ["name6", 6]
     ])]));
 });
 
@@ -113,14 +113,14 @@ test("findByValue with non-existing value", () => {
 
 test("distinctValues with string[]", () => {
   expect(JSON.stringify(other.distinctValues({array: ["1", "2", "2", "1", null, "1", "3", null, "1", "4"]})))
-    .toEqual(JSON.stringify(["1", "2", "3", "4"]))
+    .toEqual(JSON.stringify(["1", "2", "3", "4"]));
 });
 
 test("distinctValues with string[] and includeNulls", () => {
   expect(JSON.stringify(other.distinctValues({
     array: ["1", "2", "2", "1", null, "1", "3", null, "1", "4"],
     includeNulls: true
-  }))).toEqual(JSON.stringify(["1", "2", null, "3", "4"]))
+  }))).toEqual(JSON.stringify(["1", "2", null, "3", "4"]));
 });
 
 test("distinctValues with object[] and mapper", () => {
@@ -138,7 +138,7 @@ test("distinctValues with object[] and mapper", () => {
         }
       ],
       mapper: obj => obj.value
-    }))).toEqual(JSON.stringify(["1", "2"]))
+    }))).toEqual(JSON.stringify(["1", "2"]));
 });
 
 test("distinctValues with object[] and equals", () => {
@@ -164,5 +164,5 @@ test("distinctValues with object[] and equals", () => {
     {
       value: "2"
     }
-  ]))
+  ]));
 });

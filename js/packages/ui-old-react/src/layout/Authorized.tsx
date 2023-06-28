@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import {IRawRoute, UserService} from "@sui/ui-old-core";
 import {Redirect} from "react-router-dom";
-import {Location} from 'history';
+import {Location} from "history";
 import {checkAuthority} from "@/access";
 import {Exception403} from "@/exception";
 import {useService} from "@/hooks";
@@ -37,6 +37,6 @@ export const Authorized: React.FC<{
           : (<Exception403/>)
       ) : redirect
   );
-}
+};
 
 export default Authorized;

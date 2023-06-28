@@ -7,7 +7,7 @@ import {ExpandMore} from "@mui/icons-material";
 import clsx from "clsx";
 import {bindHover, bindMenu, usePopupState} from "material-ui-popup-state/hooks";
 import HoverMenu from "material-ui-popup-state/HoverMenu";
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuidv4} from "uuid";
 import {UpendRotator} from "@/Material";
 
 // const useStyles = makeStyles((theme: Theme) =>
@@ -26,12 +26,12 @@ import {UpendRotator} from "@/Material";
 //   }),
 // );
 
-export const DrawerListSubmenu: React.FC<ListItemProps<'div'> & {
+export const DrawerListSubmenu: React.FC<ListItemProps<"div"> & {
   active: boolean;
   hoverMode: boolean;
   items: JSX.Element[];
-  CollapseProps?: Omit<CollapseProps, 'in' | 'timeout' | 'children'>;
-  MenuProps?: Omit<MenuProps, 'children' | 'open'>;
+  CollapseProps?: Omit<CollapseProps, "in" | "timeout" | "children">;
+  MenuProps?: Omit<MenuProps, "children" | "open">;
 }> = ({
         active,
         hoverMode,
@@ -45,7 +45,7 @@ export const DrawerListSubmenu: React.FC<ListItemProps<'div'> & {
   // const classes = useStyles();
   const [isOpen, setOpen] = useState(false);
   const popupState = usePopupState({
-    variant: 'popover',
+    variant: "popover",
     popupId: useMemo(() => uuidv4(), [])
   });
 
@@ -99,4 +99,4 @@ export const DrawerListSubmenu: React.FC<ListItemProps<'div'> & {
       </HoverMenu>
     </>
   );
-}
+};

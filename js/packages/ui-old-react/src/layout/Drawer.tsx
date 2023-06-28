@@ -103,4 +103,4 @@ export const Drawer: React.FC<{
       />
     </SwipeableDrawer>
   );
-}
+};

@@ -1,6 +1,6 @@
-import {IObjectWithIndex} from '@sui/ui-old-core';
+import {IObjectWithIndex} from "@sui/ui-old-core";
 
-export const MESSAGE_ID_KEY = '__messageId';
+export const MESSAGE_ID_KEY = "__messageId";
 
 export abstract class BackendDataSource {
 
@@ -14,7 +14,7 @@ export abstract class BackendDataSource {
 
   public abstract disconnect(): void;
 
-  public abstract getSessionId(): string
+  public abstract getSessionId(): string;
 
   public abstract init(): Promise<boolean>;
 

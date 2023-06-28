@@ -1,4 +1,4 @@
-import {defaultIfNotNumber} from '@sui/ui-old-core';
+import {defaultIfNotNumber} from "@sui/ui-old-core";
 import {DnDChild, IBaseDnDChildProps} from "../DnDChild";
 
 import {ISerializable, ISerializableComponent} from "./ISerializable";
@@ -6,7 +6,7 @@ import {ISerializable, ISerializableComponent} from "./ISerializable";
 export type SerializableDnDChildProps<T> = IBaseDnDChildProps & {
   __type?: string
   plain?: T
-}
+};
 
 export abstract class SerializableDnDChild<S extends ISerializable, P extends SerializableDnDChildProps<S> = SerializableDnDChildProps<S>> extends DnDChild<P, S> implements ISerializableComponent<S> {
 

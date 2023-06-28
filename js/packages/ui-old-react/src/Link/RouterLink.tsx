@@ -1,14 +1,14 @@
 import {Button} from "@sui/deps-antd";
-import * as React from 'react';
-import {Link} from 'react-router-dom';
-import {ButtonType, SizeType} from '@/antdMissedExport';
+import * as React from "react";
+import {Link} from "react-router-dom";
+import {ButtonType, SizeType} from "@/antdMissedExport";
 
 // noinspection ES6PreferShortImport
 import {appendStateToLink, ITableStateDefinition} from "../BackendTable";
 // noinspection ES6PreferShortImport
-import {ROUTER_LINK_BTN} from '../styles';
+import {ROUTER_LINK_BTN} from "../styles";
 
-export type RouterLinkType = 'button' | 'button-primary' | 'link';
+export type RouterLinkType = "button" | "button-primary" | "link";
 
 export interface IRouterLinkProps {
   children?: React.ReactNode;
@@ -30,19 +30,19 @@ export class RouterLink extends React.Component<IRouterLinkProps> {
   public render(): JSX.Element {
     return (
       <Link
-        style={{...(this.props.monospace ? {fontFamily: 'monospace'} : {}), ...(this.props.style || {})}}
+        style={{...(this.props.monospace ? {fontFamily: "monospace"} : {}), ...(this.props.style || {})}}
         to={this.props.tableStates
           ? appendStateToLink(this.props.to, this.props.tableStates)
           : this.props.to
         }
       >
-        {(this.props.type && this.props.type.startsWith('button'))
+        {(this.props.type && this.props.type.startsWith("button"))
           ? (
             <Button
               className={ROUTER_LINK_BTN}
               style={this.props.buttonStyle}
               size={this.props.size || "small"}
-              type={this.props.type.replace('button-', '') as ButtonType}
+              type={this.props.type.replace("button-", "") as ButtonType}
               disabled={this.props.disabled}
               ghost={this.props.ghost}
               icon={this.props.icon}

@@ -1,6 +1,6 @@
-import {SuiModule} from './SuiModule';
-import {ModuleDepsInitEvent, ModuleDepsInitializedEvent, ModuleDiscoveredEvent, ModuleDuplicateEvent, ModuleFailedEvent, ModuleInitEvent, ModuleInitializedEvent,} from './event';
-import {MainModule} from './MainModule';
+import {SuiModule} from "./SuiModule";
+import {ModuleDepsInitEvent, ModuleDepsInitializedEvent, ModuleDiscoveredEvent, ModuleDuplicateEvent, ModuleFailedEvent, ModuleInitEvent, ModuleInitializedEvent,} from "./event";
+import {MainModule} from "./MainModule";
 import {EventManager} from "@sui/lib-event-manager";
 import {Container} from "@sui/deps-ioc";
 import * as React from "react";
@@ -22,7 +22,7 @@ export class ModuleManager extends EventManager<
     super();
     Container.bindName("sui.projectKey").to(projectKey);
     Container.bindName("sui.restUrl").to(restUrl);
-    this.modulesInstances.set('MainModule', new MainModule());
+    this.modulesInstances.set("MainModule", new MainModule());
 
     this.addHandler(ModuleDiscoveredEvent, (it) => console.log(`Module ${it.moduleName} discovered`));
     this.addHandler(ModuleInitEvent, (it) => console.log(`Module ${it.moduleName} init`));
@@ -43,13 +43,13 @@ export class ModuleManager extends EventManager<
     }
 
     this.modulesInstances.set(name, module);
-    (this.modulesInstances.get('MainModule') as MainModule).deps.push(name);
+    (this.modulesInstances.get("MainModule") as MainModule).deps.push(name);
     // noinspection JSIgnoredPromiseFromCall
     this.dispatch(ModuleDiscoveredEvent, new ModuleDiscoveredEvent(name));
   }
 
   public async init(): Promise<void> {
-    return this.initModule('MainModule');
+    return this.initModule("MainModule");
   }
 
   public modifyRoot(root: React.ReactNode): React.ReactNode {
@@ -61,7 +61,8 @@ export class ModuleManager extends EventManager<
       return;
     }
 
-    await this.dispatch(ModuleInitEvent, new ModuleInitEvent(name));
+    // noinspection ES6MissingAwait
+    this.dispatch(ModuleInitEvent, new ModuleInitEvent(name));
     const loadStartTime = new Date().getTime();
     const module = this.modulesInstances.get(name);
 

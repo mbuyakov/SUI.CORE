@@ -1,5 +1,5 @@
 import autobind from "autobind-decorator";
-import React from 'react';
+import React from "react";
 
 // noinspection ES6PreferShortImport
 import {BackendTable} from "../BackendTable";

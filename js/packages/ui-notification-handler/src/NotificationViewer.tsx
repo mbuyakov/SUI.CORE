@@ -69,4 +69,4 @@ export const NotificationViewer: React.FC<{
       {children}
     </>
   );
-}
+};

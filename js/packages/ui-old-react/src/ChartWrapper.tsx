@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types */
-import * as React from 'react';
+import * as React from "react";
 import {Container} from "typescript-ioc";
 import {AMCHARTS, getAmcharts} from "@sui/deps-amcharts";
 import {SUIReactComponent} from "@/SUIReactComponent";
-import {ThemeService} from './themes';
+import {ThemeService} from "./themes";
 
 export interface IChartWrapperProps<T extends { new(): any }> {
   data: any[];
@@ -77,13 +77,13 @@ export abstract class ChartWrapper<T extends { new(): any }> extends SUIReactCom
   // public abstract onChartCreated(chart: T, amcharts: AMCHARTS): void;
 
   public render(): JSX.Element {
-    const styles = this.props.style || {width: '100%', height: '100%'};
+    const styles = this.props.style || {width: "100%", height: "100%"};
     const hasData: boolean = this.props.data.length > 0;
 
     return (
       <>
-        <div id={`chartdiv_${this.id}`} style={{...(hasData ? {} : {display: 'none'}), ...(this.props.style || ({width: '100%', height: '100%'}))}}/>
-        <div style={{display: hasData ? 'none' : 'flex', alignItems: 'center', justifyContent: 'center', ...styles}}>
+        <div id={`chartdiv_${this.id}`} style={{...(hasData ? {} : {display: "none"}), ...(this.props.style || ({width: "100%", height: "100%"}))}}/>
+        <div style={{display: hasData ? "none" : "flex", alignItems: "center", justifyContent: "center", ...styles}}>
           <span style={{fontSize: 16}}>Данные отсутствуют</span>
         </div>
       </>

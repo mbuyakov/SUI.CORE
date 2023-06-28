@@ -1,10 +1,10 @@
 import {ColumnInfo, ColumnInfoManager, getDataByKey, TableInfoManager} from "@sui/ui-old-core";
 
-import {booleanRender, IBaseTableColLayout, SortingDirection} from '../BaseTable';
-import {TableRenderSettingsPluginManager, TableRenderSettingsPopover} from '../TableRenderSettings';
+import {booleanRender, IBaseTableColLayout, SortingDirection} from "../BaseTable";
+import {TableRenderSettingsPluginManager, TableRenderSettingsPopover} from "../TableRenderSettings";
 
-import {IColumnInfoToBaseTableColProps} from './init';
-import {generateCatalogDataPromise, getReferenceRenderColumnInfo} from './metaUtils';
+import {IColumnInfoToBaseTableColProps} from "./init";
+import {generateCatalogDataPromise, getReferenceRenderColumnInfo} from "./metaUtils";
 
 export async function colToBaseTableCol(
   props: IColumnInfoToBaseTableColProps,
@@ -22,7 +22,7 @@ export async function colToBaseTableCol(
     groupingCriteria: (value: any) => value,
     id: columnInfo.columnName,
     subtotal: columnInfo.subtotalTypeBySubtotalTypeId,
-    title: `${columnName}${rawMode ? ` (${columnInfo.columnName})` : ''}`,
+    title: `${columnName}${rawMode ? ` (${columnInfo.columnName})` : ""}`,
     width: columnInfo.width,
     wordWrapEnabled: columnInfo.wordWrapEnabled,
     ...(isJson ? {groupingEnabled: false, sortingEnabled: false} : {}),
@@ -34,7 +34,7 @@ export async function colToBaseTableCol(
     result.search = {type: columnInfo.filterTypeByFilterTypeId.type};
   }
 
-  const ref = getDataByKey(columnInfo, 'foreignColumnInfo', 'length')
+  const ref = getDataByKey(columnInfo, "foreignColumnInfo", "length")
     ? await ColumnInfoManager.getById(columnInfo!.foreignColumnInfo![0])
     : null;
   const foreignTableInfo = ref && (await TableInfoManager.getById(ref.tableInfoId));
@@ -55,15 +55,15 @@ export async function colToBaseTableCol(
         result.search = {
           multiple: result.search && result.search.type === "multiple",
           selectData: generateCatalogDataPromise(renderTableInfo.tableName, renderColumnInfo.columnName, !!foreignTableInfo?.isAlphabetSort),
-          type: 'customSelect'
+          type: "customSelect"
         };
       }
 
       result.subtotal = renderColumnInfo.subtotalTypeBySubtotalTypeId;
     }
-  } else if (columnInfo.columnType && ['boolean', 'bit'].includes(columnInfo.columnType.toLowerCase())) {
+  } else if (columnInfo.columnType && ["boolean", "bit"].includes(columnInfo.columnType.toLowerCase())) {
     result.render = booleanRender;
-    result.groupingCriteria = (value: boolean | number | null | undefined): string => value ? 'Истина' : 'Ложь';
+    result.groupingCriteria = (value: boolean | number | null | undefined): string => value ? "Истина" : "Ложь";
   }
 
   // const metaInitProps = getMetaInitProps();

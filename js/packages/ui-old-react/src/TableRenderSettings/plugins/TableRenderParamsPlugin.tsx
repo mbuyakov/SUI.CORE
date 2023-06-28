@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {WarningTwoTone} from '@ant-design/icons';
-import {ColumnInfo} from '@sui/ui-old-core';
+import {WarningTwoTone} from "@ant-design/icons";
+import {ColumnInfo} from "@sui/ui-old-core";
 import {Tooltip} from "@sui/deps-antd";
-import * as React from 'react';
+import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {IBaseTableColLayout} from '../../BaseTable';
+import {IBaseTableColLayout} from "../../BaseTable";
 // noinspection ES6PreferShortImport
-import {IColumnInfoToBaseTableColProps} from '../../utils';
+import {IColumnInfoToBaseTableColProps} from "../../utils";
 // noinspection ES6PreferShortImport
-import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
+import {ITableRenderParams, TableRenderSettingsPopover} from "../TableRenderSettingsPopover";
 
 export abstract class TableRenderParamsPlugin<T> {
 
@@ -32,7 +32,7 @@ export abstract class TableRenderParamsPlugin<T> {
     renderColumnInfo: ColumnInfo | null,
     props: IColumnInfoToBaseTableColProps,
     tableRenderParams: ITableRenderParams<T>,
-  ): Promise<void>
+  ): Promise<void>;
 
   // For link
   public extraActivationKostyl(
@@ -50,7 +50,7 @@ export abstract class TableRenderParamsPlugin<T> {
         title="Для данного режима нет настроек"
       >
         <WarningTwoTone
-          style={{transform: 'scale(1.5)'}}
+          style={{transform: "scale(1.5)"}}
           twoToneColor="#ad4e00"
         />
       </Tooltip>
@@ -62,7 +62,7 @@ export abstract class TableRenderParamsPlugin<T> {
   }
 
   public formatSubtotal(value: unknown, tableRenderParams: ITableRenderParams<T>): string {
-    return "Кажется, метод забыли переопределить("
+    return "Кажется, метод забыли переопределить(";
   }
 
 }

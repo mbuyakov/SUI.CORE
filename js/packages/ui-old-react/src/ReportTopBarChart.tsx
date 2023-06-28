@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 
-import {IObjectWithIndex} from '@sui/ui-old-core';
-import {AMCHARTS, getAmcharts} from '@sui/deps-amcharts';
+import {IObjectWithIndex} from "@sui/ui-old-core";
+import {AMCHARTS, getAmcharts} from "@sui/deps-amcharts";
 import {XYChartWrapper} from "./ChartWrapper";
 import {ColorHeatMap} from "@sui/lib-color";
 import {Container} from "@sui/deps-ioc";
@@ -10,7 +10,7 @@ import {Container} from "@sui/deps-ioc";
 const defaultLabelPanelWidth = 150;
 
 const labelStyle: React.CSSProperties = {
-  textAlign: 'right'
+  textAlign: "right"
 };
 
 interface ITopBarChartProps {
@@ -68,15 +68,15 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
     const length = data.length;
 
     return (
-      <div style={{display: 'flex'}}>
+      <div style={{display: "flex"}}>
         {!!length && (
           <div style={{width: this.props.labelPanelWidth || defaultLabelPanelWidth, marginTop: 14, height: 286}}>
             {data.map((element: IObjectWithIndex, index) => (<div
               // eslint-disable-next-line react/no-array-index-key
               key={index.toString()}
-              style={{height: 230 / (length || 1), display: 'flex', alignItems: 'center', ...labelStyle}}
+              style={{height: 230 / (length || 1), display: "flex", alignItems: "center", ...labelStyle}}
             >
-              <div style={{width: '100%'}}>
+              <div style={{width: "100%"}}>
                 {this.props.categoryAxisLabelGenerator(element)}
               </div>
             </div>))}
@@ -98,7 +98,7 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
               valueAxis.renderer.minGridDistance = 40;
               valueAxis.min = 0;
 
-              if (typeof this.props.maxPrecision === 'number') {
+              if (typeof this.props.maxPrecision === "number") {
                 valueAxis.maxPrecision = this.props.maxPrecision;
               }
 
@@ -179,7 +179,7 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
               ? {dx: -6, horizontalCenter: "left"}
               : {dx: 0, horizontalCenter: "middle"}
         )
-      }
+      };
     });
   }
 

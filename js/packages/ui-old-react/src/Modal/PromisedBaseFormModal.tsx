@@ -105,7 +105,7 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
   private onOpen(): Promise<void> {
     const onOpen = this.props.onOpen ?? FAKE_PROMISE;
 
-    return onOpen().then((): void => this.forceUpdate())
+    return onOpen().then((): void => this.forceUpdate());
   }
 
 }

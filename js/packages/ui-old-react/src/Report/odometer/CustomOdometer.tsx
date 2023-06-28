@@ -28,7 +28,7 @@ export class CustomOdometer extends React.Component<ICustomOdometerProps> {
     const difference = this.props.data && this.props.data.difference || 0;
 
     return (
-      <div className={this.props.className || undefined} style={{display: 'flex'}}>
+      <div className={this.props.className || undefined} style={{display: "flex"}}>
         <div className={MAIN_ODOMETER}>
           <Odometer
             value={Math.abs(this.props.data && this.props.data.current || 0)}

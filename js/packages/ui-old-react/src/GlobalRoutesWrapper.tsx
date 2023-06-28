@@ -1,6 +1,6 @@
 import * as React from "react";
-import {Container} from "typescript-ioc"
-import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material/styles';
+import {Container} from "typescript-ioc";
+import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
 import {ConfigProvider} from "@sui/deps-antd";
 import {SuiThemeContext, ThemeService, ThemeVariant} from "@/themes";
 import {localeRu} from "@/antdMissedExport";
@@ -21,8 +21,8 @@ export default class GlobalRoutesWrapper extends React.Component<IGlobalRoutesWr
       theme: this.themeService.getValue()
     };
     this.themeService.subscribe(theme => {
-      this.setState({theme})
-    })
+      this.setState({theme});
+    });
   }
 
   public render(): JSX.Element {

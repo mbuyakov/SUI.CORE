@@ -22,7 +22,7 @@ export function usePromise<T>(promise: Nullable<Promise<T>>): UsePromiseState<T>
       .catch(e => {
         setState({loading: false, error: e});
         throw e;
-      })
+      });
   }, [promise]);
 
   return state;

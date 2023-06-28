@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from 'react';
+import * as React from "react";
 
-import {concatDataKey, DataKey, getDataByKey} from '@sui/ui-old-core';
+import {concatDataKey, DataKey, getDataByKey} from "@sui/ui-old-core";
 
-import {RouterLink, RouterLinkType} from './RouterLink';
+import {RouterLink, RouterLinkType} from "./RouterLink";
 
 interface IRouterLinkCellRenderRet {
   dataKey?: DataKey
@@ -23,7 +23,7 @@ export function routerLinkCellRender(
     type?: RouterLinkType,
     valueKey?: DataKey,
   }): IRouterLinkCellRenderRet {
-  const idKey = (params && params.idKey && [params.baseKey, params.idKey]) || ['id'];
+  const idKey = (params && params.idKey && [params.baseKey, params.idKey]) || ["id"];
   const renderKey = params && (params.renderKey || params.valueKey);
   const textKey = params && renderKey && [params.baseKey, renderKey];
   const ret: IRouterLinkCellRenderRet = {

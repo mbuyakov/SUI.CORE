@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import autobind from "autobind-decorator";
-import {Singleton} from 'typescript-ioc';
-import {Nullable} from '@/other';
+import {Singleton} from "typescript-ioc";
+import {Nullable} from "@/other";
 
 // noinspection ES6PreferShortImport
-import {ROOT_LOGGER_KEY} from '../const';
+import {ROOT_LOGGER_KEY} from "../const";
 // noinspection ES6PreferShortImport
-import {LoggerLevel} from '../enum';
+import {LoggerLevel} from "../enum";
 
 @Singleton
 export class LogLevelService {

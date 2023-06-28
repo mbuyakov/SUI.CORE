@@ -1,13 +1,13 @@
-import {UsergroupAddOutlined} from '@ant-design/icons';
-import {IColumnInfo, IColumnInfoRole, IRole, mutate} from '@sui/ui-old-core';
+import {UsergroupAddOutlined} from "@ant-design/icons";
+import {IColumnInfo, IColumnInfoRole, IRole, mutate} from "@sui/ui-old-core";
 import {Button, Divider, Popover, Select} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {PromisedButton, PromisedSwitch} from '../Inputs';
+import {PromisedButton, PromisedSwitch} from "../Inputs";
 // noinspection ES6PreferShortImport
-import {SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT} from '../styles';
+import {SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT} from "../styles";
 
 
 export interface IVisibleByRolesPopoverProps {
@@ -112,7 +112,7 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
               </Select>
               <PromisedButton
                 ref={this.saveButtonRef}
-                style={{width: '100%'}}
+                style={{width: "100%"}}
                 promise={this.generateSavePromise}
                 disabled={!this.state.selectedRoles}
                 type="primary"
@@ -122,7 +122,7 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
             </div>}
         >
           <Button
-            style={!(this.state.selectedRoles || this.props.columnInfo.columnInfoRolesByColumnInfoId.nodes.length > 0) ? {color: '#f5f5f5', backgroundColor: '#f5222d'} : {}}
+            style={!(this.state.selectedRoles || this.props.columnInfo.columnInfoRolesByColumnInfoId.nodes.length > 0) ? {color: "#f5f5f5", backgroundColor: "#f5222d"} : {}}
             icon={<UsergroupAddOutlined/>}
             onClick={this.openPopover}
           />
@@ -136,7 +136,7 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
     return (
       <div>
         {menu}
-        <Divider style={{margin: '4px 0'}}/>
+        <Divider style={{margin: "4px 0"}}/>
         <div style={{padding: 8, paddingTop: 4}}>
           <Button
             onMouseDown={this.onMouseDown}

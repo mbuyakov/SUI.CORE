@@ -1,8 +1,8 @@
-import type {ComponentStory, Meta} from '@storybook/react';
+import type {ComponentStory, Meta} from "@storybook/react";
 import {ProgressIcon as _ProgressIcon} from "./ProgressIcon";
 
 const meta: Meta<typeof _ProgressIcon> = {
-  title: 'material/ProgressIcon',
+  title: "material/ProgressIcon",
   component: _ProgressIcon,
 };
 

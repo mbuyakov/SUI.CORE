@@ -74,7 +74,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                         promise={this.props.handleDeleteChange}
                         popconfirmSettings={{
                           placement: "topRight",
-                          title: `Вы уверены, что хотите ${userData.deleted ? 'восстановить' : 'удалить'} данного пользователя?`,
+                          title: `Вы уверены, что хотите ${userData.deleted ? "восстановить" : "удалить"} данного пользователя?`,
                         }}
                       />
                     </Tooltip>
@@ -118,7 +118,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                           <PromisedInput
                             promise={this.props.updateMainInfoPartFn("email")}
                             defaultValue={email}
-                            validator={[{pattern: EMAIL_REGEXP, message: 'Невалидный адрес электронной почты'}]}
+                            validator={[{pattern: EMAIL_REGEXP, message: "Невалидный адрес электронной почты"}]}
                           />
                         </EditablePromisedComponent>
                       )

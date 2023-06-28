@@ -3,9 +3,9 @@ import type {BrowserOptions} from "@sentry/react";
 import type {RouteConfig, RouterHistory} from "@sentry/react/dist/reactrouter";
 
 export interface ISentry {
-  sentryReact: typeof import('@sentry/react'),
-  sentryIntegrations: typeof import('@sentry/integrations'),
-  sentryTracing: typeof import('@sentry/tracing'),
+  sentryReact: typeof import("@sentry/react"),
+  sentryIntegrations: typeof import("@sentry/integrations"),
+  sentryTracing: typeof import("@sentry/tracing"),
 }
 
 // Copy from @sentry/react. This types doesn't exported
@@ -31,9 +31,9 @@ export async function getSentry(): Promise<ISentry> {
     return sentryInstance;
   }
   sentryInitPromise = Promise.all([
-    import('@sentry/react'),
-    import('@sentry/integrations'),
-    import('@sentry/tracing'),
+    import("@sentry/react"),
+    import("@sentry/integrations"),
+    import("@sentry/tracing"),
   ]).then(([
              sentryReact,
              sentryIntegrations,
@@ -43,7 +43,7 @@ export async function getSentry(): Promise<ISentry> {
       sentryReact,
       sentryIntegrations,
       sentryTracing
-    }
+    };
   });
   await sentryInitPromise;
   return sentryInstance;
@@ -59,14 +59,14 @@ export async function initSentry(getOptions: (libs: ISentry) => BrowserOptions &
   const options = getOptions(sentry);
 
   if (typeof options.integrations === "function") {
-    throw new Error("Function in integrations not supported. Please, use array")
+    throw new Error("Function in integrations not supported. Please, use array");
   }
 
   options.integrations = options.integrations || [];
 
   options.integrations.push(
     new sentry.sentryIntegrations.CaptureConsole({
-      levels: ['error', 'warn']
+      levels: ["error", "warn"]
     })
   );
   options.integrations.push(
@@ -81,7 +81,7 @@ export async function initSentry(getOptions: (libs: ISentry) => BrowserOptions &
   // To enable tracing
   options.tracesSampleRate = options.tracesSampleRate || 1.0;
   // Why not?
-  options.autoSessionTracking = typeof options.autoSessionTracking === 'boolean' ? options.autoSessionTracking : true;
+  options.autoSessionTracking = typeof options.autoSessionTracking === "boolean" ? options.autoSessionTracking : true;
 
   sentry.sentryReact.init(options);
 }

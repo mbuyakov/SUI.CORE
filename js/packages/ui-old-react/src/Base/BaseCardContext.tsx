@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React from "react";
 
-import {DEFAULT_ITEM_RENDERER} from './BaseCardItemLayout';
+import {DEFAULT_ITEM_RENDERER} from "./BaseCardItemLayout";
 
 export interface IBaseCardContext {
   forceRenderTabs: boolean;

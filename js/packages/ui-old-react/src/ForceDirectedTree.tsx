@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import autobind from 'autobind-decorator';
+import autobind from "autobind-decorator";
 import React from "react";
 import {AMCHARTS} from "@sui/deps-amcharts";
 
-import {ForceDirectedTreeWrapper} from './ChartWrapper';
+import {ForceDirectedTreeWrapper} from "./ChartWrapper";
 
 export type IForceDirectedTreeDataElement<T extends {} = {}> = T & {
   children?: Array<IForceDirectedTreeDataElement<T>>;
   linkWith?: Array<IForceDirectedTreeDataElement<T>["name"]>;
   name: string;
   value?: number;
-}
+};
 
 export interface IForceDirectedTreeAdditionalSettingProps {
   chart: InstanceType<AMCHARTS["am4forceDirected"]["ForceDirectedTree"]>;

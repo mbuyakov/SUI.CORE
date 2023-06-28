@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {getDataByKey, Merge} from '@sui/ui-old-core';
-import autobind from 'autobind-decorator';
-import * as React from 'react';
-import {ContainerOptions} from 'react-smooth-dnd';
+import {getDataByKey, Merge} from "@sui/ui-old-core";
+import autobind from "autobind-decorator";
+import * as React from "react";
+import {ContainerOptions} from "react-smooth-dnd";
 
 // noinspection ES6PreferShortImport
-import {IBaseCardColLayout, IBaseCardItemLayout} from '../Base';
+import {IBaseCardColLayout, IBaseCardItemLayout} from "../Base";
 // noinspection ES6PreferShortImport
 import {DnDList} from "../Draggable";
 // noinspection ES6PreferShortImport
@@ -77,11 +77,11 @@ export class ColSettings extends SerializableDnDChild<SerializedColSettings> {
   @autobind
   private shouldAcceptDrop(sourceContainerOptions: ContainerOptions, payload: any): boolean {
     console.log(this, sourceContainerOptions, payload);
-    const payloadId = getDataByKey(payload, 'props', 'id');
+    const payloadId = getDataByKey(payload, "props", "id");
     // console.log(this.itemsRef.current.getChildRefs());
 
-    console.log(sourceContainerOptions.groupName === 'ItemSettings' && (sourceContainerOptions.behaviour === 'copy' ? !this.itemsRef.current.getChildRefs().map(ref => ref.props.id).includes(payloadId) : true));
+    console.log(sourceContainerOptions.groupName === "ItemSettings" && (sourceContainerOptions.behaviour === "copy" ? !this.itemsRef.current.getChildRefs().map(ref => ref.props.id).includes(payloadId) : true));
 
-    return sourceContainerOptions.groupName === 'ItemSettings' && (sourceContainerOptions.behaviour === 'copy' ? !this.itemsRef.current.getChildRefs().map(ref => ref.props.id).includes(payloadId) : true);
+    return sourceContainerOptions.groupName === "ItemSettings" && (sourceContainerOptions.behaviour === "copy" ? !this.itemsRef.current.getChildRefs().map(ref => ref.props.id).includes(payloadId) : true);
   }
 }

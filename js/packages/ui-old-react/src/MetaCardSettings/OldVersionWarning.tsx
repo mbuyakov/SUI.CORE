@@ -1,6 +1,6 @@
-import {WarningTwoTone} from '@ant-design/icons';
+import {WarningTwoTone} from "@ant-design/icons";
 import {Tooltip} from "@sui/deps-antd";
-import * as React from 'react';
+import * as React from "react";
 
 export function OldVersionWarning(props: {
   ids: [number, number]

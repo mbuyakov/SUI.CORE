@@ -1,23 +1,23 @@
 import {ButtonProps, Divider, IconButtonProps, ListItemIcon, ListItemText, MenuItem, MenuItemProps, MenuProps, Tooltip} from "@mui/material";
 import React, {useMemo} from "react";
-import HoverMenu from 'material-ui-popup-state/HoverMenu';
-import {bindHover, bindMenu, usePopupState} from 'material-ui-popup-state/hooks';
-import {v4 as uuidv4} from 'uuid';
+import HoverMenu from "material-ui-popup-state/HoverMenu";
+import {bindHover, bindMenu, usePopupState} from "material-ui-popup-state/hooks";
+import {v4 as uuidv4} from "uuid";
 import {MaterialIconButton} from "@/Material/MaterialIconButton";
 import {MaterialButton} from "@/Material/MaterialButton";
 import {IPopconfirmSettings, useOnClick, usePopconfirm} from "@/Material/utils";
 
-export type DropdownItem = Omit<MenuItemProps, 'onClick'> & {
+export type DropdownItem = Omit<MenuItemProps, "onClick"> & {
   key: string;
   tooltip?: string;
   icon?: JSX.Element;
   text?: React.ReactNode;
   onClick?: () => void;
-}
+};
 
 export type DividerItem = {
   isDivider: true;
-}
+};
 
 export type IMaterialDropdownItem = DropdownItem | DividerItem;
 
@@ -28,18 +28,18 @@ interface IMaterialDropdownPropsBase {
   loading?: boolean;
   tooltip?: string;
   items: IMaterialDropdownItem[];
-  menuProps?: Omit<MenuProps, 'open'>;
+  menuProps?: Omit<MenuProps, "open">;
   popconfirmSettings?: IPopconfirmSettings;
   onClick?: (key: string) => void | Promise<void>;
 }
 
 type IMaterialDropdownButtonProps = IMaterialDropdownPropsBase & {
-  buttonProps: Omit<ButtonProps, 'onClick'>;
-}
+  buttonProps: Omit<ButtonProps, "onClick">;
+};
 
 type IMaterialDropdownIconButtonProps = IMaterialDropdownPropsBase & {
-  iconButtonProps: Omit<IconButtonProps, 'onClick'>;
-}
+  iconButtonProps: Omit<IconButtonProps, "onClick">;
+};
 
 export type IMaterialDropdownProps = IMaterialDropdownButtonProps | IMaterialDropdownIconButtonProps;
 
@@ -48,7 +48,7 @@ const isIMaterialDropdownIconButtonProps = (it: IMaterialDropdownProps): it is I
 
 export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
   const popupState = usePopupState({
-    variant: 'popover',
+    variant: "popover",
     popupId: useMemo(() => uuidv4(), [])
   });
 
@@ -73,7 +73,7 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
       <MaterialButton
         {...bindHover(popupState)}
         {...props.buttonProps}
-        style={{textTransform: 'none', ...props.buttonProps.style}}
+        style={{textTransform: "none", ...props.buttonProps.style}}
         loading={loading}
         tooltip={props.tooltip}
       />
@@ -98,12 +98,12 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
         {...bindMenu(popupState)}
         getContentAnchorEl={null}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left'
+          vertical: "bottom",
+          horizontal: "left"
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left'
+          vertical: "top",
+          horizontal: "left"
         }}
         {...props.menuProps}
       >
@@ -147,4 +147,4 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
       </HoverMenu>
     </>
   );
-}
+};

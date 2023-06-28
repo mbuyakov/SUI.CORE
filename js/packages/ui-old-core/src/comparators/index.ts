@@ -32,8 +32,8 @@ const datePattern = /(\d{2})\.(\d{2})\.(\d{4})/;
  * Try to parse a and b to date and compare it
  */
 export function formattedDateComparator(a: any, b: any, nullFirst: boolean = true): number {
-  const dateA = new Date(String(a).replace(datePattern, '$3-$2-$1'));
-  const dateB = new Date(String(b).replace(datePattern, '$3-$2-$1'));
+  const dateA = new Date(String(a).replace(datePattern, "$3-$2-$1"));
+  const dateB = new Date(String(b).replace(datePattern, "$3-$2-$1"));
 
   const dateATime = dateA.getTime() || 0;
   const dateBTime = dateB.getTime() || 0;

@@ -2,8 +2,8 @@
 import { DatePicker, RangePickerProps } from "@sui/deps-antd";
 import {Nullable, wrapInArray} from "@sui/ui-old-core";
 import classNames from "classnames";
-import * as React from 'react';
-import {v4 as uuidv4} from 'uuid';
+import * as React from "react";
+import {v4 as uuidv4} from "uuid";
 
 export type ISuiRangePickerProps = RangePickerProps & { formatter?(value: string, event: InputEvent): string };
 
@@ -25,7 +25,7 @@ export function SuiRangePicker(props: ISuiRangePickerProps): JSX.Element {
             const newValue = formatter(value, event);
 
             if (value !== newValue) {
-              (event.target as any).value = newValue
+              (event.target as any).value = newValue;
             }
           }
         }
@@ -34,7 +34,7 @@ export function SuiRangePicker(props: ISuiRangePickerProps): JSX.Element {
       Array.from(pickerRoot.getElementsByClassName("ant-picker-input"))
         .flatMap(it => Array.from(it.children) as HTMLInputElement[])
         .forEach(it => {
-          it.oninput = onInput
+          it.oninput = onInput;
         });
     }
   });

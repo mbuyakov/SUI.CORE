@@ -146,7 +146,7 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
     for (const item of renderSettings) {
       if (item.table && (item.elements && item.elements.length)) {
         const dataSetMap = toMap(await getDataSet(currentUserRoles, item.table), element => element.id);
-        item.elements.forEach(element => element[NAME_FIELD] = getDataSetRender(dataSetMap.get(element.id)))
+        item.elements.forEach(element => element[NAME_FIELD] = getDataSetRender(dataSetMap.get(element.id)));
       }
     }
 
@@ -204,7 +204,7 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
     actionStatuses.forEach(actionStatus => {
       let isAllowed = true;
 
-      if (!currentUserRoles.includes('ADMIN') && actionStatusRoleTable) {
+      if (!currentUserRoles.includes("ADMIN") && actionStatusRoleTable) {
         // TODO: не тестил, так как не было примера (Выглядит валидно)
         isAllowed = (actionStatusRoleMap.get(actionStatus.id) || [])
           .map(actionStatusRole => roleMap.get(actionStatusRole[actionStatusRoleRoleId]))

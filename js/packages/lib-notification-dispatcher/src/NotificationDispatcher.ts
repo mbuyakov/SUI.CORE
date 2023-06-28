@@ -5,17 +5,17 @@ import {NotificationArgsProps} from "./types";
 import {ErrorEvent, NotificationCloseEvent, NotificationEvent} from "./events";
 
 export abstract class NotificationDispatcher extends EventManager<NotificationEvent | ErrorEvent | NotificationCloseEvent> {
-  public abstract success(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps): void
+  public abstract success(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps): void;
 
-  public abstract info(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps): void
+  public abstract info(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps): void;
 
-  public abstract warning(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps): void
+  public abstract warning(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps): void;
 
-  public abstract error(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps): void
+  public abstract error(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps): void;
 
-  public abstract handleError(e: Error, title?: string): void
+  public abstract handleError(e: Error, title?: string): void;
 
-  public abstract close(key: string): void
+  public abstract close(key: string): void;
 }
 
 class NotificationDispatcherImpl extends NotificationDispatcher {

@@ -1,9 +1,9 @@
-import MaskedInput from 'antd-mask-input';
-import {MaskedInputProps} from 'antd-mask-input/build/main/lib/MaskedInput';
-import React from 'react';
-import {v4 as uuidv4} from 'uuid';
+import MaskedInput from "antd-mask-input";
+import {MaskedInputProps} from "antd-mask-input/build/main/lib/MaskedInput";
+import React from "react";
+import {v4 as uuidv4} from "uuid";
 
-const defaultPasteFormatter = (it: string): string => it.replace(/[^0-9a-zа-яё]/gi, '');
+const defaultPasteFormatter = (it: string): string => it.replace(/[^0-9a-zа-яё]/gi, "");
 
 export interface ISUIMaskedInputProps extends Omit<MaskedInputProps, "id" | "onChange"> {
   onChange?(value: string, event?: React.ChangeEvent<HTMLInputElement>): void;
@@ -19,7 +19,7 @@ export function SUIMaskedInput(props: ISUIMaskedInputProps): JSX.Element {
 
   const onChange = (event?: React.ChangeEvent<HTMLInputElement>): void => {
     if (inputProps.onChange) {
-      inputProps.onChange(inputRef.current.state.mask.getRawValue().replace(/_/g, ''), event)
+      inputProps.onChange(inputRef.current.state.mask.getRawValue().replace(/_/g, ""), event);
     }
   };
 
@@ -40,7 +40,7 @@ export function SUIMaskedInput(props: ISUIMaskedInputProps): JSX.Element {
         } else {
           throw new Error(`Unexpected format: ${format}`);
         }
-      }
+      };
     };
   });
 

@@ -6,7 +6,7 @@ export function snilsValidator(snils: string): string {
     const innNumber = snils.split("").map(Number);
     const check = 10 * innNumber[9] + innNumber[10];
     const sum = checkSumMaskSnils.map((value, index) => value * innNumber[index]).reduce((previousValue, currentValue) => previousValue + currentValue);
-    let checkDigit = 0
+    let checkDigit = 0;
 
     if (sum < 100) {
       checkDigit = sum;
@@ -16,8 +16,8 @@ export function snilsValidator(snils: string): string {
         checkDigit = 0;
       }
     }
-    return snils.length < 11 ? '' : checkDigit == check ? '' : "Ошибка. Некорректный СНИЛС";
+    return snils.length < 11 ? "" : checkDigit == check ? "" : "Ошибка. Некорректный СНИЛС";
   } else {
-    return '';
+    return "";
   }
 }

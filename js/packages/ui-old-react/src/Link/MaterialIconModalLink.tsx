@@ -1,11 +1,11 @@
-import {IconButton} from '@mui/material';
-import LinkIcon from '@mui/icons-material/Link';
-import autobind from 'autobind-decorator';
-import * as React from 'react';
-import {RouteComponentProps, Router, withRouter} from 'react-router';
+import {IconButton} from "@mui/material";
+import LinkIcon from "@mui/icons-material/Link";
+import autobind from "autobind-decorator";
+import * as React from "react";
+import {RouteComponentProps, Router, withRouter} from "react-router";
 
 // noinspection ES6PreferShortImport
-import {draw} from '../utils';
+import {draw} from "../utils";
 
 export interface IMaterialIconModalLinkProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

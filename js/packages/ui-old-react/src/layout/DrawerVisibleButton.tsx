@@ -5,7 +5,7 @@ import {IconButtonProps} from "@mui/material/IconButton";
 import {BasicLayoutContext} from "@/layout/BasicLayoutContext";
 import {UpendRotator} from "@/Material";
 
-export const DrawerVisibleButton: React.FC<Omit<IconButtonProps, 'onClick'> & {
+export const DrawerVisibleButton: React.FC<Omit<IconButtonProps, "onClick"> & {
   forceDrawerOpen?: boolean;
   disableRotate?: boolean;
   icon?: JSX.Element;
@@ -25,4 +25,4 @@ export const DrawerVisibleButton: React.FC<Omit<IconButtonProps, 'onClick'> & {
       </UpendRotator>
     </IconButton>
   );
-}
+};

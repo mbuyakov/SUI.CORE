@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import ApolloClient from 'apollo-client';
-import {setContext} from 'apollo-link-context';
-import {Container} from 'typescript-ioc';
+import ApolloClient from "apollo-client";
+import {setContext} from "apollo-link-context";
+import {Container} from "typescript-ioc";
 
-import {ICoreUser} from '@/user';
+import {ICoreUser} from "@/user";
 import {UserService} from "@/ioc";
-import {IRawRoute, RouteType} from '@/tmp';
+import {IRawRoute, RouteType} from "@/tmp";
 
 declare let window: Window & {
   SUI: ISUISettings | undefined;
@@ -60,7 +60,7 @@ export interface IInitSUISettings {
 export type ISUISettings = IInitSUISettings & {
   // eslint-disable-next-line @typescript-eslint/ban-types
   apolloClient: ApolloClient<{}>;
-}
+};
 
 export const authLink = setContext((_, {headers}) => {
   const userService = Container.get(UserService);
@@ -69,7 +69,7 @@ export const authLink = setContext((_, {headers}) => {
   return {
     headers: {
       ...headers,
-      ...(user ? {'user-id': user.id} : {}),
+      ...(user ? {"user-id": user.id} : {}),
     },
   };
 });
@@ -78,7 +78,7 @@ export const authLink = setContext((_, {headers}) => {
 export function getSUISettings(): ISUISettings {
   const settings = window.SUI;
   if (!settings) {
-    throw new Error('SUI not initialized');
+    throw new Error("SUI not initialized");
   }
 
   return settings;

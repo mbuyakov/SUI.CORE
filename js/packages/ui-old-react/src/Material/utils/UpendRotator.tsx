@@ -35,5 +35,5 @@ export const UpendRotator: React.FC<{
     //   [classes.upendRotatorTrue]: rotate
     // })
   });
-}
+};
 

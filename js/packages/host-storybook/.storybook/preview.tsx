@@ -1,5 +1,5 @@
 import React from "react";
-import {DecoratorFn} from '@storybook/react';
+import {DecoratorFn} from "@storybook/react";
 import {ModuleManagerRoot} from "@sui/ui-module-manager";
 import {UiNotificationHandlerModule} from "@sui/ui-notification-handler";
 import {LibNotificationDispatcherModule} from "@sui/lib-notification-dispatcher";
@@ -10,6 +10,7 @@ const withModuleRoot: DecoratorFn = (Story) => {
   return (
     <ModuleManagerRoot
       projectKey="storybook"
+      restUrl="restUrl"
       settings={async (mm) => {
         mm.addModule(new LibNotificationDispatcherModule());
         mm.addModule(new UiNotificationHandlerModule());
@@ -19,15 +20,15 @@ const withModuleRoot: DecoratorFn = (Story) => {
     >
       <Story />
     </ModuleManagerRoot>
-  )
-}
+  );
+};
 
 
 const withTheme: DecoratorFn = (Story, context) => (
   <KludgeForStorybook.Provider value={context.globals.theme}>
     <Story/>
   </KludgeForStorybook.Provider>
-)
+);
 export const decorators = [withModuleRoot, withTheme];
 
 export const globalTypes = {

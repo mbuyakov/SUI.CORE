@@ -5,13 +5,13 @@ export class StringWithError {
     return String(value).startsWith(MAGIC);
   }
 
-  public static pack(value: string, error: string = ''): string {
+  public static pack(value: string, error: string = ""): string {
     return MAGIC + error + MAGIC + value;
   }
 
   public static getValue(enchantedValue: string): string {
     if (!enchantedValue) {
-      return '';
+      return "";
     }
     const values = enchantedValue.split(MAGIC);
     return values[values.length - 1];
@@ -19,11 +19,11 @@ export class StringWithError {
 
   public static getError(enchantedValue: string): string {
     if (!enchantedValue) {
-      return '';
+      return "";
     }
     const values = enchantedValue.split(MAGIC);
     if (values.length == 1) {
-      return '';
+      return "";
     }
     return values[1];
   }

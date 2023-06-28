@@ -1,6 +1,6 @@
 /* eslint-disable no-console,@typescript-eslint/no-explicit-any */
-import {Container} from 'typescript-ioc';
-import {getDataByKey, ICoreUser, IObjectWithIndex, UserService} from '@sui/ui-old-core';
+import {Container} from "typescript-ioc";
+import {getDataByKey, ICoreUser, IObjectWithIndex, UserService} from "@sui/ui-old-core";
 import {notification} from "@sui/deps-antd";
 
 
@@ -27,7 +27,7 @@ function errorWhileSaving(e: Error | string | IObjectWithIndex): void {
   notification.error({
     message: "Ошибка при сохранении файла",
     description: e instanceof Error ? e.message : (typeof e === "string" ? e : JSON.stringify(e))
-  })
+  });
 }
 
 
@@ -46,10 +46,10 @@ function writeFile(fileEntry: any, blob: Blob, fileName: string): void {
       notification.success({
         message: "Файл сохранён",
         description: `Файл с именем ${fileName} успешно добавлен в папку "Загрузки"`
-      })
-    }
+      });
+    };
     fileWriter.write(blob);
-  })
+  });
 }
 
 function saveBlob2File(blob: Blob, fileName: string): void {
@@ -57,14 +57,14 @@ function saveBlob2File(blob: Blob, fileName: string): void {
   (window as IObjectWithIndex).resolveLocalFileSystemURL(folder, (dirEntry) => {
     console.log(`file system open: ${dirEntry.name}`);
     createFile(dirEntry, blob, fileName);
-  }, errorWhileSaving)
+  }, errorWhileSaving);
 }
 
 export function downloadFile(file: Blob, fileName: string): void {
-  if (typeof cordova !== 'undefined' && cordova.platformId !== "browser") {
+  if (typeof cordova !== "undefined" && cordova.platformId !== "browser") {
     saveBlob2File(file, fileName);
   } else {
-    const element = document.createElement('a');
+    const element = document.createElement("a");
     element.href = URL.createObjectURL(file);
     element.download = fileName;
     document.body.appendChild(element);

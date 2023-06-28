@@ -1,1 +1,1 @@
-export * from './LibAuthModule';
+export * from "./LibAuthModule";

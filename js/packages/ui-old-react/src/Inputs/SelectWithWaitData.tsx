@@ -1,7 +1,7 @@
 import {getDataByKey, IGqlFilter, NO_DATA_TEXT, TableInfoManager} from "@sui/ui-old-core";
 import {Select, SelectProps} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import * as React from "react";
 import {SelectValue} from "@/antdMissedExport";
 
 // noinspection ES6PreferShortImport
@@ -9,7 +9,7 @@ import {ExtractProps} from "../other";
 // noinspection ES6PreferShortImport
 import {getDataSet, getDataSetRender, getUser, IDataSet} from "../utils";
 
-export type ISelectWithWaitDataProps<TValueType, TGroupType> = Omit<SelectProps<SelectValue>, 'mode'> & {
+export type ISelectWithWaitDataProps<TValueType, TGroupType> = Omit<SelectProps<SelectValue>, "mode"> & {
   groupTableFilter?: IGqlFilter<TGroupType>;
   groupTableIdentifier?: string;
   multiple?: boolean;
@@ -17,7 +17,7 @@ export type ISelectWithWaitDataProps<TValueType, TGroupType> = Omit<SelectProps<
   valueTableIdentifier: string;
   watchFilter?: boolean;
   customOptionRender?(element: IDataSet): React.ReactNode;
-}
+};
 
 export interface ISelectWithWaitDataState {
   dataSet?: IDataSet[];
@@ -61,7 +61,7 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
         showSearch={true}
         {...this.props}
         value={(this.props.value != null) ? this.props.value : undefined}
-        style={{...this.props.style, ...(!ready && {filter: 'blur(1px)'})}}
+        style={{...this.props.style, ...(!ready && {filter: "blur(1px)"})}}
         mode={this.props.multiple ? "multiple" : undefined}
         disabled={(this.state.dataSet && !ready) || this.props.disabled}
         optionFilterProp="children"
@@ -84,7 +84,7 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
       >
         {optionRender(element) || NO_DATA_TEXT}
       </Select.Option>
-    ))
+    ));
   }
 
   @autobind

@@ -1,5 +1,5 @@
-import TableCell from '@mui/material/TableCell';
-import * as React from 'react';
+import TableCell from "@mui/material/TableCell";
+import * as React from "react";
 import {Empty} from "@sui/deps-antd";
 import {TABLE_NO_DATA_CELL_SMALL} from "@/styles";
 
@@ -9,7 +9,7 @@ export const LazyStubNoDataCell = (showAll: () => void) => ({colSpan}: { colSpan
     colSpan={colSpan}
   >
     <Empty
-      style={{width: '100%', position: 'absolute', marginTop: -65}}
+      style={{width: "100%", position: "absolute", marginTop: -65}}
       description={(
         <span>
           <span>Заполните фильтры или </span>

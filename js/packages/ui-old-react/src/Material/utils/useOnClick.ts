@@ -5,12 +5,12 @@ import {IusePopconfirmState} from "@/Material";
 
 export type UseOnClickState<T> = UsePromiseState<void> & {
   onClick(arg?: T): void | Promise<void>;
-}
+};
 
 export type IOnClickIntegration = {
   popupState?: PopupState,
   popconfirm?: IusePopconfirmState
-}
+};
 
 export function useOnClick<T = never>(onClick: (arg: T) => void | Promise<void>, integration?: IOnClickIntegration): UseOnClickState<T> {
   const [promise, setPromise] = useState<Promise<void>>(null);

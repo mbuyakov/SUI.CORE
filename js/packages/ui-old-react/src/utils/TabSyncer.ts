@@ -14,12 +14,12 @@ export class TabSyncer<T> {
 
   public constructor(keyPrefix: string) {
     this.keyPrefix = keyPrefix;
-    window.addEventListener('storage', e => {
-      if ((typeof e.newValue === 'string' && e.newValue === 'DELETE') || (typeof e.oldValue === 'string' && e.oldValue === 'DELETE')) {
+    window.addEventListener("storage", e => {
+      if ((typeof e.newValue === "string" && e.newValue === "DELETE") || (typeof e.oldValue === "string" && e.oldValue === "DELETE")) {
         return;
       }
       if (e.key && e.key.startsWith(`${this.keyPrefix}-`)) {
-        const key = e.key.replace(`${this.keyPrefix}-`, '');
+        const key = e.key.replace(`${this.keyPrefix}-`, "");
         const value = this.stringToT(e.newValue);
         this.handlers.forEach(handler => handler.cb(key, value));
       }
@@ -40,7 +40,7 @@ export class TabSyncer<T> {
   public pushValue(key: string, value: T): void {
     this.handlers.forEach(handler => handler.cb(key, value));
     localStorage.setItem(`${this.keyPrefix}-${key}`, this.tToString(value));
-    localStorage.setItem(`${this.keyPrefix}-${key}`, 'DELETE');
+    localStorage.setItem(`${this.keyPrefix}-${key}`, "DELETE");
     localStorage.removeItem(`${this.keyPrefix}-${key}`);
   }
 

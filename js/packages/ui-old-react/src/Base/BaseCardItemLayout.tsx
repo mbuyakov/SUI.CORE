@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {CheckOutlined, CloseOutlined, WarningTwoTone} from '@ant-design/icons';
-import {concatDataKey, DataKey, defaultIfNotBoolean, getDataByKey, NO_DATA_TEXT} from '@sui/ui-old-core';
+import {CheckOutlined, CloseOutlined, WarningTwoTone} from "@ant-design/icons";
+import {concatDataKey, DataKey, defaultIfNotBoolean, getDataByKey, NO_DATA_TEXT} from "@sui/ui-old-core";
 import {Tooltip} from "@sui/deps-antd";
-import * as React from 'react';
+import * as React from "react";
 
-import {BaseTable, IBaseTableProps} from '../BaseTable';
+import {BaseTable, IBaseTableProps} from "../BaseTable";
 
 
 export type CardItemRender<T> = (value: any, item: T) => JSX.Element | string;
@@ -14,7 +14,7 @@ export interface IBaseCardItemLayout<T> {
   dataVerticalAlign?: "baseline" | "bottom" | "middle" | "sub" | "super" | "text-bottom" | "text-top" | "top";
   render?: CardItemRender<T>;
   required?: boolean;
-  tableProps?: Omit<IBaseTableProps, 'rows'>;
+  tableProps?: Omit<IBaseTableProps, "rows">;
   title?: React.ReactNode;
   titleVerticalAlign?: "baseline" | "bottom" | "middle" | "sub" | "super" | "text-bottom" | "text-top" | "top";
   titleStyle?: React.CSSProperties;
@@ -98,10 +98,10 @@ export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayou
 
   // I hate JS
   if (data === 0) {
-    data = '0';
+    data = "0";
   }
 
-  if (typeof (data) === 'boolean') {
+  if (typeof (data) === "boolean") {
     data = data
       ? <CheckOutlined/>
       : <CloseOutlined/>;

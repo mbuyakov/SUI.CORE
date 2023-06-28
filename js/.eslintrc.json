@@ -34,17 +34,6 @@
               }
             ]
           }
-        ],
-        "no-restricted-imports": [
-          "error",
-          {
-            "patterns": [
-              {
-                "group": ["antd", "antd/*", "antd5", "antd5/*"],
-                "message": "Please use @sui/deps-antd instead."
-              }
-            ]
-          }
         ]
       }
     },
@@ -62,6 +51,24 @@
       "files": "*.json",
       "parser": "jsonc-eslint-parser",
       "rules": {}
+    },
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["antd", "antd/*", "antd5", "antd5/*"],
+                "message": "Please use @sui/deps-antd instead."
+              }
+            ]
+          }
+        ],
+        "@typescript-eslint/semi": ["error", "always"],
+        "@typescript-eslint/quotes": ["error", "double"]
+      }
     }
   ],
   "extends": ["plugin:storybook/recommended"]

@@ -1,10 +1,10 @@
-import {InMemoryCache} from 'apollo-cache-inmemory';
-import ApolloClient from 'apollo-client';
-import {HttpLink} from 'apollo-link-http';
-import {Container} from 'typescript-ioc';
-import {authLink, ColumnInfoManager, IInitSUISettings, ISUISettings, NameManager, TableInfoManager} from '@sui/ui-old-core';
+import {InMemoryCache} from "apollo-cache-inmemory";
+import ApolloClient from "apollo-client";
+import {HttpLink} from "apollo-link-http";
+import {Container} from "typescript-ioc";
+import {authLink, ColumnInfoManager, IInitSUISettings, ISUISettings, NameManager, TableInfoManager} from "@sui/ui-old-core";
 
-import {parseRoutes, runCheckVersionMismatch} from '@/utils';
+import {parseRoutes, runCheckVersionMismatch} from "@/utils";
 import {ThemesConfig} from "@/themes";
 
 declare let window: Window & {
@@ -14,7 +14,7 @@ declare let window: Window & {
 type _IInitSUISettings = IInitSUISettings & {
   themes: ThemesConfig,
   noDark?: boolean
-}
+};
 
 // noinspection JSUnusedGlobalSymbols
 export function initSUI(settings: _IInitSUISettings): void {
@@ -29,11 +29,11 @@ export function initSUI(settings: _IInitSUISettings): void {
   };
 
 
-  Container.bindName('sui').to(settings);
+  Container.bindName("sui").to(settings);
 
   parseRoutes(settings.routes);
   if (!settings.offlineMode) {
-    const timeLabel = 'MetaInfoManagers load';
+    const timeLabel = "MetaInfoManagers load";
     console.time(timeLabel);
     Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));
   }

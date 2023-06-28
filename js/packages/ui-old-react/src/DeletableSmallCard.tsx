@@ -1,12 +1,12 @@
-import {CloseOutlined, SettingOutlined} from '@ant-design/icons';
+import {CloseOutlined, SettingOutlined} from "@ant-design/icons";
 import {Button, Card, CardProps, Popover} from "@sui/deps-antd";
-import * as React from 'react';
+import * as React from "react";
 
-import {DnDDragHandler} from './Draggable';
-import {GetPopupContainerContext, OldVersionWarning} from './MetaCardSettings';
+import {DnDDragHandler} from "./Draggable";
+import {GetPopupContainerContext, OldVersionWarning} from "./MetaCardSettings";
 
 
-export const DeletableSmallCard: React.FC<Omit<CardProps, 'size' | 'type'> & {
+export const DeletableSmallCard: React.FC<Omit<CardProps, "size" | "type"> & {
   draggable?: boolean
   isVersionNotLast?: false | [number, number]
   settingsPopover?: React.ReactNode

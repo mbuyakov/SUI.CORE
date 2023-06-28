@@ -1,14 +1,14 @@
-import {CircularProgress, IconButton} from '@mui/material';
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
-import {trimIfString} from '@sui/ui-old-core';
-import autobind from 'autobind-decorator';
-import * as React from 'react';
+import {CircularProgress, IconButton} from "@mui/material";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import {trimIfString} from "@sui/ui-old-core";
+import autobind from "autobind-decorator";
+import * as React from "react";
 import {Input, InputProps, Tooltip} from "@sui/deps-antd";
-import {SUIMaskedInput} from '@/SUIMaskedInput';
-import {SUI_ROW_GRID} from '@/styles';
+import {SUIMaskedInput} from "@/SUIMaskedInput";
+import {SUI_ROW_GRID} from "@/styles";
 import {Rendered} from "@/other";
 
-import {ComposeValidator, IPromisedBaseProps, IPromisedBaseState, PromisedBase, ValidatorFunction} from './PromisedBase';
+import {ComposeValidator, IPromisedBaseProps, IPromisedBaseState, PromisedBase, ValidatorFunction} from "./PromisedBase";
 
 const NUMBER_REGEX: RegExp = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/;
 
@@ -20,9 +20,9 @@ export type PromisedInputProps<V> = {
   mask?: string;
   rowStyle?: React.CSSProperties;
   totalValueLength?: number;
-  type?: 'text' | 'number';
+  type?: "text" | "number";
 } & IPromisedBaseProps<V>
-  & Omit<InputProps, 'onChange' | 'value'>
+  & Omit<InputProps, "onChange" | "value">;
 
 export class PromisedInput<V = string | number> extends PromisedBase<PromisedInputProps<V>,
   IPromisedBaseState<V>, V> {
@@ -42,15 +42,15 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
       const strValue = value.toString();
 
       return ((strValue.length === totalValueLength) || (strValue.length === 0 && this.props.allowEmpty))
-        ? ''
+        ? ""
         : `Заполните поле по маске ${mask}`;
-    }
+    };
   }
 
   public render(): JSX.Element {
     const input = this.props.customInput || <Input/>;
 
-    const isEmptyAndEmptyNotAllowed = !this.props.allowEmpty && typeof this.state.value !== 'number' && !trimIfString(this.state.value);
+    const isEmptyAndEmptyNotAllowed = !this.props.allowEmpty && typeof this.state.value !== "number" && !trimIfString(this.state.value);
     let saveButton: JSX.Element | null = (
       <IconButton
         disabled={this.state.loading || isEmptyAndEmptyNotAllowed || !this.isValidatorTextEmpty()}
@@ -61,7 +61,7 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
       </IconButton>
     );
     saveButton = (this.state.savedValue !== this.state.value
-        && (this.props.type === 'number' ? this.state.value as unknown !== '-' : true)
+        && (this.props.type === "number" ? this.state.value as unknown !== "-" : true)
         && (isEmptyAndEmptyNotAllowed
             ? <Tooltip title="Нельзя сохранить пустое значение">{saveButton}</Tooltip>
             : saveButton
@@ -120,12 +120,12 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
 
   @autobind
   private handleNewValue(newValue: React.ChangeEvent<HTMLInputElement> | string): void {
-    const value = typeof newValue === 'string' ? newValue : newValue.target.value;
+    const value = typeof newValue === "string" ? newValue : newValue.target.value;
     this.validate(value as unknown as V);
-    if (this.props.type === 'number' && !((!Number.isNaN(value as unknown) && NUMBER_REGEX.test(value)) || value === '' || value === '-')) {
+    if (this.props.type === "number" && !((!Number.isNaN(value as unknown) && NUMBER_REGEX.test(value)) || value === "" || value === "-")) {
       return;
     }
-    this.setState({value: this.props.type === 'number' ? (value ? (value === '-' ? '-' : Number(value)) : undefined) : value} as unknown as V);
+    this.setState({value: this.props.type === "number" ? (value ? (value === "-" ? "-" : Number(value)) : undefined) : value} as unknown as V);
   }
 
 }

@@ -1,32 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {EditOutlined, OrderedListOutlined} from '@ant-design/icons';
-import {Chip} from '@mui/material';
-import CancelIcon from '@mui/icons-material/Cancel';
-import SettingsIcon from '@mui/icons-material/Settings';
+import {EditOutlined, OrderedListOutlined} from "@ant-design/icons";
+import {Chip} from "@mui/material";
+import CancelIcon from "@mui/icons-material/Cancel";
+import SettingsIcon from "@mui/icons-material/Settings";
 import {capitalize, ColumnInfo, ColumnInfoManager, IName, Merge, NameManager, TableInfoManager} from "@sui/ui-old-core";
 import {Input, Popover, Select, Spin, Switch, Tooltip} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import camelCase from 'lodash/camelCase';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import camelCase from "lodash/camelCase";
+import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {IBaseCardItemLayout} from '../Base';
+import {IBaseCardItemLayout} from "../Base";
 // noinspection ES6PreferShortImport
 import {DnDDragHandler} from "../Draggable";
 // noinspection ES6PreferShortImport
 import {ISerializable, SerializableDnDChild, SerializableDnDChildProps} from "../Draggable/Serializable";
 // noinspection ES6PreferShortImport
-import {NamePopover} from '../Popover';
+import {NamePopover} from "../Popover";
 // noinspection ES6PreferShortImport
 import {COMMON__GRID, ITEM_SETTINGS__DELETE_ICON, ITEM_SETTINGS__SETTINGS_ICON} from "../styles";
 // noinspection ES6PreferShortImport
-import {WaitData} from '../WaitData';
+import {WaitData} from "../WaitData";
 
 import {DebugModeContext} from "./DebugModeContext";
 import {GetPopupContainerContext} from "./GetPopupContainerContext";
 import {OldVersionWarning} from "./OldVersionWarning";
 
-export type ItemSettingsFormatType = null | 'ts' | 'date' | 'time';
+export type ItemSettingsFormatType = null | "ts" | "date" | "time";
 
 type ItemSettingsState = Merge<IBaseCardItemLayout<any>, {
   colId?: string
@@ -108,7 +108,7 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
                                 <span
                                   style={{
                                     marginRight: 8,
-                                    width: '100%',
+                                    width: "100%",
                                   }}
                                 >
                                   {this.state.nameId
@@ -121,7 +121,7 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
                                         {(name): string => name.name}
                                       </WaitData>
                                     )
-                                    : 'Не выбранно'
+                                    : "Не выбранно"
                                   }
                                 </span>
                                   <NamePopover
@@ -184,7 +184,7 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
 
   @autobind
   private async onCreate(): Promise<void> {
-    const colsInfo = await Promise.all<ColumnInfo>(this.state.id.split('|').map(col => ColumnInfoManager.getById(col)));
+    const colsInfo = await Promise.all<ColumnInfo>(this.state.id.split("|").map(col => ColumnInfoManager.getById(col)));
     const lastCol = colsInfo[colsInfo.length - 1];
     const colId = lastCol.id;
     const originalTitle = lastCol.columnName;

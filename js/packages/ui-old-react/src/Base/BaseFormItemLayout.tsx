@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {IObjectWithIndex} from "@sui/ui-old-core";
 import {Form, FormItemProps} from "@sui/deps-antd";
-import {RuleItem, RuleType} from 'async-validator';
-import autobind from 'autobind-decorator';
-import classNames from 'classnames';
-import * as React from 'react';
-import {SUIMaskedInput} from '@/SUIMaskedInput';
+import {RuleItem, RuleType} from "async-validator";
+import autobind from "autobind-decorator";
+import classNames from "classnames";
+import * as React from "react";
+import {SUIMaskedInput} from "@/SUIMaskedInput";
 import {BASE_CARD_ITEM_LABEL_HORIZONTAL} from "@/styles";
-import {SUIReactComponent} from '@/SUIReactComponent';
+import {SUIReactComponent} from "@/SUIReactComponent";
 
-import {DEFAULT_ITEM_RENDERER} from './BaseCardItemLayout';
-import {BaseForm, IFormField, ValuesGetter} from './BaseForm';
-import {BaseFormContext} from './BaseFormContext';
+import {DEFAULT_ITEM_RENDERER} from "./BaseCardItemLayout";
+import {BaseForm, IFormField, ValuesGetter} from "./BaseForm";
+import {BaseFormContext} from "./BaseFormContext";
 
-const FILL_FIELD_TEXT = 'Заполните поле';
+const FILL_FIELD_TEXT = "Заполните поле";
 
 const TITLE_STYLE: React.CSSProperties = {
-  verticalAlign: 'top',
+  verticalAlign: "top",
   paddingRight: 12,
   color: "rgba(121, 119, 119, 0.65)",
   wordWrap: "break-word",
@@ -24,9 +24,9 @@ const TITLE_STYLE: React.CSSProperties = {
   paddingTop: 6
 };
 
-export type FixedRuleItem = Omit<RuleItem, 'pattern'> & {
+export type FixedRuleItem = Omit<RuleItem, "pattern"> & {
   pattern?: string | RegExp
-}
+};
 
 export interface IBaseFormItemLayoutBase {
   fieldName: string;
@@ -44,10 +44,10 @@ export interface IBaseFormItemLayoutBase {
   mapFormValuesToRequired?(get: ValuesGetter): boolean;
 }
 
-export type IBaseFormItemLayoutMask = Omit<IBaseFormItemLayoutBase, 'inputNode' | 'valuePropName' | 'getValueFromEvent'> & {
+export type IBaseFormItemLayoutMask = Omit<IBaseFormItemLayoutBase, "inputNode" | "valuePropName" | "getValueFromEvent"> & {
   mask: string
   totalValueLength: number // Костыль
-}
+};
 
 export type IBaseFormItemLayout = IBaseFormItemLayoutBase | IBaseFormItemLayoutMask;
 
@@ -107,7 +107,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
         {({baseForm, customInputNodesProps, customFinalInputNodesProps, initialValues, verticalLabel}): React.ReactNode => {
           this.baseForm = baseForm;
           const item = this.props;
-          const valuePropName = item.valuePropName || 'value';
+          const valuePropName = item.valuePropName || "value";
           const required = item.required || (item.mapFormValuesToRequired && item.mapFormValuesToRequired(this.valueGetter));
           const requiredType = item.requiredType;
 
@@ -157,7 +157,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
           }
 
           const title = item.title && (
-            <span className={classNames({[BASE_CARD_ITEM_LABEL_HORIZONTAL]: !verticalLabel, 'ant-form-item-required': !!required})}>
+            <span className={classNames({[BASE_CARD_ITEM_LABEL_HORIZONTAL]: !verticalLabel, "ant-form-item-required": !!required})}>
              {item.title}:
             </span>
           );
@@ -169,7 +169,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
             help: errors
               ? (this.props.helpRenderer ? this.props.helpRenderer(errors) : errors)
               : undefined,
-            validateStatus: errors ? 'error' : '',
+            validateStatus: errors ? "error" : "",
           };
 
           let additionalProps: IObjectWithIndex = {};
@@ -197,7 +197,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
                 ...additionalProps,
                 ...customFinalInputNodesProps,
                 style: {
-                  width: '100%',
+                  width: "100%",
                   ...item.inputNode.props.style,
                   ...customInputNodesProps.style,
                   ...additionalProps.style,
@@ -209,7 +209,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
 
           const data = verticalLabel
             ? (
-              <td colSpan={2 + (this.props.colspan - 1) * 2} style={{verticalAlign: 'top', paddingRight: 12}}>
+              <td colSpan={2 + (this.props.colspan - 1) * 2} style={{verticalAlign: "top", paddingRight: 12}}>
                 {title && (<div style={TITLE_STYLE}>{title}</div>)}
                 <div aria-label={item.fieldName}>{formItem}</div>
               </td>
@@ -217,7 +217,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
             : (
               <>
                 {title && <td style={TITLE_STYLE}>{title}</td>}
-                <td aria-label={item.fieldName} colSpan={(title ? 1 : 2) + ((this.props.colspan - 1) * 2)} style={{verticalAlign: 'top', paddingBottom: 8}}>
+                <td aria-label={item.fieldName} colSpan={(title ? 1 : 2) + ((this.props.colspan - 1) * 2)} style={{verticalAlign: "top", paddingBottom: 8}}>
                   {formItem}
                 </td>
               </>
@@ -280,12 +280,12 @@ function getValueFromEvent(e: any): any {
   if (!e || !e.target) {
     return e;
   }
-  if (typeof e === 'object' && typeof e.persist === 'function') {
+  if (typeof e === "object" && typeof e.persist === "function") {
     e.persist();
   } else {
-    console.debug('Unknown event type', e);
+    console.debug("Unknown event type", e);
   }
   const {target} = e;
 
-  return target.type === 'checkbox' ? target.checked : target.value;
+  return target.type === "checkbox" ? target.checked : target.value;
 }

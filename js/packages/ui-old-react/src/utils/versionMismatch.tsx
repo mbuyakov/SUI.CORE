@@ -24,8 +24,8 @@ export function showVersionMismatchNotification(newVersion: string, isLoggedIn: 
         <div>Последняя версия: {newVersion}</div>
         {!isLoggedIn && (<div>Пожалуйста, обновите страницу</div>)}
         {isLoggedIn && (<div>У вас есть минута на сохранение данных и выход из системы</div>)}
-        <div style={{color: '#999', fontSize: 12}}>(Ctrl+F5 для Windows)</div>
-        <div style={{color: '#999', fontSize: 12}}>(Cmd+Shift+R для MacOS)</div>
+        <div style={{color: "#999", fontSize: 12}}>(Ctrl+F5 для Windows)</div>
+        <div style={{color: "#999", fontSize: 12}}>(Cmd+Shift+R для MacOS)</div>
       </div>
     ),
     {

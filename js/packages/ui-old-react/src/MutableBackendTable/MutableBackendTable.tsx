@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {DeleteOutlined, PlusCircleOutlined} from "@ant-design/icons";
-import CreateIcon from '@mui/icons-material/CreateOutlined';
+import CreateIcon from "@mui/icons-material/CreateOutlined";
 import {defaultIfNotBoolean, getDataByKey, IObjectWithIndex, sleep, unCapitalize, wrapInArray} from "@sui/ui-old-core";
 import {Button, notification} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
@@ -8,9 +8,9 @@ import * as React from "react";
 import {hasAnyRole} from "@/RoleVisibilityWrapper";
 import {PromisedBaseFormModal} from "@/Modal";
 import {errorNotification} from "@/drawUtils";
-import {DisableEditContext} from '@/DisableEditContext';
+import {DisableEditContext} from "@/DisableEditContext";
 import {BackendTable, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE, DEFAULT_SERVICE_COLUMN_WIDTH} from "@/BackendTable";
-import {PromisedButton, PromisedMaterialIconButton} from '../Inputs';
+import {PromisedButton, PromisedMaterialIconButton} from "../Inputs";
 
 import {IMutableBackendTableProps} from "./types";
 
@@ -156,7 +156,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
         icon={<DeleteOutlined/>}
         popconfirmSettings={{
           placement: "topRight",
-          title: `Вы уверены, что хотите ${typeof deleteButtonProps?.children === 'string' ?
+          title: `Вы уверены, что хотите ${typeof deleteButtonProps?.children === "string" ?
             unCapitalize(deleteButtonProps?.children) : "удалить"} выбранные записи?`
         }}
         {...deleteButtonProps}
@@ -210,7 +210,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
       }
     } else {
       errorNotification("Ничего не выбрано", `Пожалуйста, выберите записи, которые Вы хотите
-      ${typeof deleteButtonProps?.children === 'string' ? unCapitalize(deleteButtonProps?.children) : "удалить"}`);
+      ${typeof deleteButtonProps?.children === "string" ? unCapitalize(deleteButtonProps?.children) : "удалить"}`);
     }
   }
 
@@ -231,7 +231,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
       } else {
         throw new Error("getEditInitialValues can not be null");
       }
-    }
+    };
   }
 
   @autobind
@@ -242,7 +242,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
       if (baseFormModal && baseFormModal.modalRef.current) {
         baseFormModal.modalRef.current.setModalVisibility(true);
       }
-    }
+    };
   }
 
   @autobind
@@ -259,7 +259,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
       }
 
       return true;
-    }
+    };
   }
 
 }

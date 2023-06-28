@@ -5,12 +5,12 @@ import {tooltipWrapper} from "@/Material/utils/tooltipWrapper";
 import {IPopconfirmSettings, useOnClick, usePopconfirm} from "@/Material/utils";
 
 
-export type MaterialIconButtonProps = Omit<IconButtonProps, 'onClick'> & {
+export type MaterialIconButtonProps = Omit<IconButtonProps, "onClick"> & {
   tooltip?: string;
   loading?: boolean;
   onClick?: () => void | Promise<void>;
   popconfirmSettings?: IPopconfirmSettings;
-}
+};
 
 export const MaterialIconButton: React.FC<MaterialIconButtonProps> = (
   {
@@ -35,4 +35,4 @@ export const MaterialIconButton: React.FC<MaterialIconButtonProps> = (
       </IconButton>
     ))
   );
-}
+};

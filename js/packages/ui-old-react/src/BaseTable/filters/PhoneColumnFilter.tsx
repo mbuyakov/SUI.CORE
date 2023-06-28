@@ -1,7 +1,7 @@
-import autobind from 'autobind-decorator';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import * as React from "react";
 import {SUIPhoneInput} from "@/SUIPhoneInput";
-import {INewSearchProps, LazyTableFilterRowCellProps} from '../types';
+import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 export type IPhoneColumnFilterProps = React.PropsWithChildren<LazyTableFilterRowCellProps & INewSearchProps>;
 
@@ -39,7 +39,7 @@ export class PhoneColumnFilter extends React.Component<IPhoneColumnFilterProps, 
       <SUIPhoneInput
         {...clearProps}
         allowClear={true}
-        placeholder={this.props.placeholder as string || 'Фильтр...'}
+        placeholder={this.props.placeholder as string || "Фильтр..."}
         value={this.state.value}
         onChange={this.onChange}
         onPressEnter={this.onPressEnter}

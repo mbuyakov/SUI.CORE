@@ -8,5 +8,5 @@ export const ColumnChooserContainer: React.FC<{ children: JSX.Element[] }> = ({c
   >
     {children.filter(it => it.key[0] != "_")}
   </List>
-)
+);
 

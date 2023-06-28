@@ -1,8 +1,8 @@
 import {Input} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import * as React from "react";
 
-import {INewSearchProps, LazyTableFilterRowCellProps} from '../types';
+import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 export type StringColumnFilterProps = LazyTableFilterRowCellProps & INewSearchProps & {
   children?: React.ReactNode
@@ -42,7 +42,7 @@ export class StringColumnFilter extends React.Component<StringColumnFilterProps,
       <Input
         {...clearProps}
         allowClear={true}
-        placeholder={this.props.placeholder as string || 'Фильтр...'}
+        placeholder={this.props.placeholder as string || "Фильтр..."}
         value={this.state.value}
         onChange={this.onChange}
         onPressEnter={this.onPressEnter}

@@ -7,7 +7,7 @@ export function useAsyncEffect(effect: () => Promise<void>, deps: DependencyList
       console.error(e);
       const errorMessage = e.response?.data?.message ?? e.stack ?? e.toString();
       errorNotification("Ошибка при обработке запроса", errorMessage);
-    })
+    });
   }, deps);
 }
 

@@ -1,8 +1,8 @@
-import * as React from 'react';
-import classNames from 'classnames';
-import autobind from 'autobind-decorator';
+import * as React from "react";
+import classNames from "classnames";
+import autobind from "autobind-decorator";
 import {BackendTable} from "@/BackendTable/BackendTable";
-import {ExtractProps} from '@/other';
+import {ExtractProps} from "@/other";
 
 // TODO: Мусор - переделать
 export interface IFormItemBackendTableInputNodeProps<TSelection> {
@@ -28,7 +28,7 @@ export class BackendTableInputNode<TSelection = string> extends React.Component<
         onSelectionChange={values => {
           this.props.onChange(!!values.filter(Boolean) && (!!this.props.multiSelection ? values.filter(Boolean).map(value => value.toString()) : values[0]?.toString()));
           if (this.props.onSelectionChange) {
-            this.props.onSelectionChange(values)
+            this.props.onSelectionChange(values);
           }
         }}
       />

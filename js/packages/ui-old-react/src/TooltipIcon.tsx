@@ -1,9 +1,9 @@
-import Icon from '@ant-design/icons';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import Icon from "@ant-design/icons";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import {Tooltip} from "@sui/deps-antd";
-import * as React from 'react';
+import * as React from "react";
 
-import {IAntIconComponent} from './other';
+import {IAntIconComponent} from "./other";
 
 export class TooltipIcon extends React.Component<{
   children: React.ReactNode;

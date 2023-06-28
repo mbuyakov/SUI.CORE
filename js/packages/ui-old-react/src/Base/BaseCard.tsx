@@ -1,16 +1,16 @@
 import {Card, Tabs} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import * as React from 'react';
-import classNames from 'classnames';
+import autobind from "autobind-decorator";
+import * as React from "react";
+import classNames from "classnames";
 import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
 
-import {BaseCardContext} from '@/Base/BaseCardContext';
-import {DEFAULT_ITEM_RENDERER, IBaseCardItemLayout} from '@/Base/BaseCardItemLayout';
-import {BaseCardRow, IBaseCardRowLayout, IBaseCardRowWithTabsLayout} from '@/Base/BaseCardRow';
-import {BaseCardTabContextConsumer, BaseCardTabContextProvider, IBaseCardTabWithBlocks, isCustomTab, isTabWithBlocks, renderIBaseCardTabLayout} from '@/Base/BaseCardTab';
+import {BaseCardContext} from "@/Base/BaseCardContext";
+import {DEFAULT_ITEM_RENDERER, IBaseCardItemLayout} from "@/Base/BaseCardItemLayout";
+import {BaseCardRow, IBaseCardRowLayout, IBaseCardRowWithTabsLayout} from "@/Base/BaseCardRow";
+import {BaseCardTabContextConsumer, BaseCardTabContextProvider, IBaseCardTabWithBlocks, isCustomTab, isTabWithBlocks, renderIBaseCardTabLayout} from "@/Base/BaseCardTab";
 import {BaseCardBlock, IBaseCardBlockLayout} from "@/Base/BaseCardBlockLayout";
 import {BASE_CARD, BASE_CARD_HEADER_ONLY} from "@/styles";
-import {ChangedEditModeContext} from '@/ChangedEditModeContext';
+import {ChangedEditModeContext} from "@/ChangedEditModeContext";
 
 
 // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -70,7 +70,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
               delete tab.rows;
             }
             return tab;
-          })
+          });
         }
         tabList = firstChildrenTabs.map((tab, i) => ({key: tab.key ?? i.toString(), tab: (<span>{tab.title}</span>)}));
         tabBarExtraContent = firstRow.tabBarExtraContent;

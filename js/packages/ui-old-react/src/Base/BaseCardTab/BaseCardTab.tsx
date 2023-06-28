@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {BaseCardTabCustom, IBaseCardTabCustom, isCustomTab} from "@/Base/BaseCardTab/BaseCardTabCustom";
 import {BaseCardTabWithBlocks, IBaseCardTabWithBlocks, isTabWithBlocks} from "@/Base/BaseCardTab/BaseCardTabWithBlocks";
 import {BaseCardTabWithRows, IBaseCardTabWithRows, isTabWithRows} from "@/Base/BaseCardTab/BaseCardTabWithRows";
@@ -18,7 +18,7 @@ export function renderIBaseCardTabLayout<T, ITEM>(sourceItem: T, tab: IBaseCardT
         tabIndex,
         forceRenderTabs
       })
-    )
+    );
   } else if (isTabWithRows(tab)) {
     return (
       BaseCardTabWithRows({

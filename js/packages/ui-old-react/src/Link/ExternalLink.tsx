@@ -1,5 +1,5 @@
 import {Button} from "@sui/deps-antd";
-import * as React from 'react';
+import * as React from "react";
 import {ButtonType} from "@/antdMissedExport";
 
 import {RouterLinkType} from "./RouterLink";
@@ -17,14 +17,14 @@ export class ExternalLink extends React.Component<IExternalLinkProps> {
     return (
       <a
         href={this.props.to}
-        target="_blank"
+        target="_blank" rel="noreferrer"
       >
-        {(this.props.type && this.props.type.startsWith('button'))
+        {(this.props.type && this.props.type.startsWith("button"))
           ? (
             <Button
               href={undefined}
               size="small"
-              type={this.props.type.replace('button-', '') as ButtonType}
+              type={this.props.type.replace("button-", "") as ButtonType}
               ghost={this.props.ghost}>
               {this.props.text}
             </Button>

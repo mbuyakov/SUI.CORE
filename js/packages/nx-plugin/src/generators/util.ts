@@ -9,7 +9,7 @@ export const commonTweaks = (tree: Tree, type: string, name: string) => {
   projectConfiguration.tags = [`type:${type}`];
   projectConfiguration.targets.publish = {
     command: `node ${publishScriptPath} ${name} {args.ver} {args.tag}`,
-    dependsOn: ['build']
+    dependsOn: ["build"]
   };
   updateProjectConfiguration(
     tree,
@@ -21,4 +21,4 @@ export const commonTweaks = (tree: Tree, type: string, name: string) => {
   tree.delete(".prettierignore");
   tree.delete(".prettierrc");
   removeDependenciesFromPackageJson(tree, [], ["prettier"]);
-}
+};

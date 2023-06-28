@@ -7,5 +7,5 @@ export function fileSizeValidator(maxMegabytes: number): (rule: any, value: any,
     } else {
       callback();
     }
-  }
+  };
 }

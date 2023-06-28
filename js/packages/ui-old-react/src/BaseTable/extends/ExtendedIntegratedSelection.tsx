@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-function-return-type */
 // https://github.com/DevExpress/devextreme-reactive/blob/f2007142015d27482e45e96b60f2ec6536d3a9b9/packages/dx-grid-core/src/plugins/integrated-selection/computeds.ts#L8
-import {allSelected, someSelected, unwrapSelectedRows} from '@devexpress/dx-grid-core';
-import {Action, Actions, Getter, Getters, Plugin} from '@sui/deps-dx-react-grid';
+import {allSelected, someSelected, unwrapSelectedRows} from "@devexpress/dx-grid-core";
+import {Action, Actions, Getter, Getters, Plugin} from "@sui/deps-dx-react-grid";
 import {IntegratedSelectionProps} from "@sui/deps-dx-react-grid";
-import * as React from 'react';
+import * as React from "react";
 
 // НОВОЕ
 interface IExtendedIntegratedSelectionProps extends IntegratedSelectionProps {
@@ -38,7 +38,7 @@ const toggleSelectAll = (state, {rows: {availableToSelect}}: Getters, {toggleSel
 const unwrapRowsComputed = ({rows}: Getters) => unwrapSelectedRows(rows);
 
 const pluginDependencies = [
-  {name: 'SelectionState'},
+  {name: "SelectionState"},
 ];
 
 // eslint-disable-next-line react/prefer-stateless-function

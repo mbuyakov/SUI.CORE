@@ -48,7 +48,7 @@ export const ModuleManagerRoot: React.FC<{
         palette: {
           mode: kludgeForStorybook
             || localStorage.getItem(Container.getValue("sui.projectKey") + "_theme") as SuiThemeVariants
-            || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+            || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
               ? "dark"
               : "light")
         }
@@ -98,4 +98,4 @@ export const ModuleManagerRoot: React.FC<{
       </Card>
     </ThemeProvider>
   );
-}
+};

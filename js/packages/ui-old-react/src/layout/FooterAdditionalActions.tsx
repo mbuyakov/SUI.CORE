@@ -1,5 +1,5 @@
 import React from "react";
-import BugReportIcon from '@mui/icons-material/BugReport';
+import BugReportIcon from "@mui/icons-material/BugReport";
 import {useTheme} from "@mui/material/styles";
 import axios from "axios";
 import {notification} from "@sui/deps-antd";
@@ -59,4 +59,4 @@ export const FooterAdditionalActions: React.FC = () => {
     }}
     items={items}
   />);
-}
+};

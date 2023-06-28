@@ -96,11 +96,11 @@ export function getStateFromUrlParam(tableId: string): IInnerTableStateDefinitio
 // Private functions
 
 function encodeState(state: IUrlStateDefinition): string {
-  return btoa(pako.deflate(jsonpack.pack(state), {to: 'string'}));
+  return btoa(pako.deflate(jsonpack.pack(state), {to: "string"}));
 }
 
 function decodeState(stateString: string): IUrlStateDefinition {
-  return jsonpack.unpack(pako.inflate(atob(stateString), {to: 'string'}));
+  return jsonpack.unpack(pako.inflate(atob(stateString), {to: "string"}));
 }
 
 function locationToLink(location: ISimpleLocation): string {

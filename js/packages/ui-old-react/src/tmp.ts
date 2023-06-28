@@ -1,6 +1,6 @@
 import InputMask from "antd-mask-input/build/main/lib/inputmask-core";
 import {NO_DATA_TEXT} from "@sui/ui-old-core";
-import {loadingErrorNotification} from '@/drawUtils';
+import {loadingErrorNotification} from "@/drawUtils";
 
 
 /**
@@ -24,5 +24,5 @@ export function formatByMaskFn(pattern: string, emptyValue: string = NO_DATA_TEX
       pattern,
       value
     }).getValue();
-  }
+  };
 }

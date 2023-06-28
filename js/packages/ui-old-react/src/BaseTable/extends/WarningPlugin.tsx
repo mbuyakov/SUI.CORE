@@ -1,9 +1,9 @@
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import Warning from '@mui/icons-material/Warning';
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Warning from "@mui/icons-material/Warning";
 import {Divider, Popover} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
-import React from 'react';
+import React from "react";
 
 // noinspection ES6PreferShortImport
 import {YELLOW_BLINK} from "../../styles";

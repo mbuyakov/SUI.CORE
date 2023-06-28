@@ -2,7 +2,7 @@ import {Tabs, TabsProps} from "@sui/deps-antd";
 import * as React from "react";
 import {BaseCardTabContextConsumer, BaseCardTabContextProvider} from "@/Base/BaseCardTab/BaseCardTabContext";
 
-type ManagedTabsProps = Omit<TabsProps, 'onChange' | 'activeKey' | 'defaultActiveKey'> & {
+type ManagedTabsProps = Omit<TabsProps, "onChange" | "activeKey" | "defaultActiveKey"> & {
   routeKey?: string;
   defaultActiveKey: string;
 };

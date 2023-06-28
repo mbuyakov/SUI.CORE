@@ -1,12 +1,12 @@
 export type AuthorityList = { [key in "and" | "or"]: string[]; };
 
-export const ROLE_PREFIX = 'ROLE_';
+export const ROLE_PREFIX = "ROLE_";
 
 export function formatRoleName(roleName: string): string {
-  return roleName.replace(ROLE_PREFIX, '');
+  return roleName.replace(ROLE_PREFIX, "");
 }
 
-export type RouteType = 'card' | 'table';
+export type RouteType = "card" | "table";
 
 export interface IRawRoute {
   actions?: {

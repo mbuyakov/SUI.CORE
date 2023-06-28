@@ -1,11 +1,11 @@
-import {CircularProgress, IconButton} from '@mui/material';
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
-import {trimIfString} from '@sui/ui-old-core';
+import {CircularProgress, IconButton} from "@mui/material";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import {trimIfString} from "@sui/ui-old-core";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {Input, Tooltip} from "@sui/deps-antd";
-import {SUI_ROW_GRID} from '@/styles';
-import {TextAreaProps} from '@/antdMissedExport';
+import {SUI_ROW_GRID} from "@/styles";
+import {TextAreaProps} from "@/antdMissedExport";
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
@@ -16,7 +16,7 @@ export type PromisedTextAreaProps = {
   icon?: JSX.Element;
   rowClassName?: string;
   rowStyle?: React.CSSProperties;
-} & IPromisedBaseProps<string> & Omit<TextAreaProps, "onChange" | "value">
+} & IPromisedBaseProps<string> & Omit<TextAreaProps, "onChange" | "value">;
 
 export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromisedBaseState<string>, string> {
 

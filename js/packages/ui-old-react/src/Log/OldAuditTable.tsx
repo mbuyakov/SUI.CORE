@@ -1,5 +1,5 @@
 import autobind from "autobind-decorator";
-import React from 'react';
+import React from "react";
 
 // noinspection ES6PreferShortImport
 import {BackendTable} from "../BackendTable";
@@ -42,7 +42,7 @@ export class OldAuditTable extends React.Component<IOldAuditTableProps> {
       >
         {(content): JSX.Element => (
           <pre>
-            {JSON.stringify(JSON.parse(content || '{}'), null, 2)}
+            {JSON.stringify(JSON.parse(content || "{}"), null, 2)}
           </pre>
         )}
       </WaitData>

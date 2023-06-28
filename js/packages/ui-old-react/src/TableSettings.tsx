@@ -1,29 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {CheckOutlined, CloseOutlined, IdcardOutlined, ProfileOutlined, QuestionOutlined, SortAscendingOutlined, SortDescendingOutlined} from "@ant-design/icons";
-import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material';
+import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import {Cached, Edit} from '@mui/icons-material';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import {Cached, Edit} from "@mui/icons-material";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {Button, Popover, Select, Table} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import * as React from 'react';
-import {Link} from 'react-router-dom';
+import autobind from "autobind-decorator";
+import * as React from "react";
+import {Link} from "react-router-dom";
 import {generateMultiUpdate, generateUpdate, generateUpdateFn, getDataByKey, getSUISettings, IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IObjectWithIndex, IRole, ISubtotalType, ITableInfo, mutate, query, sleep, TableInfo, TableInfoManager} from "@sui/ui-old-core";
 import axios from "axios";
 
-import {AdditionalTab} from './additionalTabs';
-import {BaseCard} from './Base';
-import {SortingDirection} from './BaseTable';
-import {DraggableRowTable} from './DraggableRowTable';
-import {FullScreenModal, FullScreenModalClass} from './FullScreenModal';
-import {PromisedInput, PromisedMaterialIconButton, PromisedSelect, PromisedSwitch} from './Inputs';
-import {MainSettings} from './MetaCardSettings';
-import {NamePopover, TagsPopover, VisibleByRolesPopover} from './Popover';
-import {SUI_ROW, SUI_ROW_GROW_LEFT} from './styles';
-import {TableRenderSettingsPopover} from './TableRenderSettings';
-import {TooltipIcon} from './TooltipIcon';
-import {draw, fullReloadTableInfo, getLinkForTable, getUser} from './utils';
-import {WaitData} from './WaitData';
+import {AdditionalTab} from "./additionalTabs";
+import {BaseCard} from "./Base";
+import {SortingDirection} from "./BaseTable";
+import {DraggableRowTable} from "./DraggableRowTable";
+import {FullScreenModal, FullScreenModalClass} from "./FullScreenModal";
+import {PromisedInput, PromisedMaterialIconButton, PromisedSelect, PromisedSwitch} from "./Inputs";
+import {MainSettings} from "./MetaCardSettings";
+import {NamePopover, TagsPopover, VisibleByRolesPopover} from "./Popover";
+import {SUI_ROW, SUI_ROW_GROW_LEFT} from "./styles";
+import {TableRenderSettingsPopover} from "./TableRenderSettings";
+import {TooltipIcon} from "./TooltipIcon";
+import {draw, fullReloadTableInfo, getLinkForTable, getUser} from "./utils";
+import {WaitData} from "./WaitData";
 
 
 
@@ -42,14 +42,14 @@ export function FullScreenTableSettings(props: {
     <FullScreenModal
       // todo changed from innerRef, m.b. not work
       ref={dialogRef}
-      title={<div style={{display: 'grid', gridTemplateColumns: 'max-content max-content auto', alignItems: 'center'}}>
+      title={<div style={{display: "grid", gridTemplateColumns: "max-content max-content auto", alignItems: "center"}}>
         <span>Настройки таблицы&nbsp;</span>
         <WaitData<string>
           promise={TableInfoManager.getById(id).then(table => table.getNameOrTableName())}
         >
           {(name): JSX.Element => (<span>{name}</span>)}
         </WaitData>
-        <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+        <div style={{display: "flex", justifyContent: "flex-end"}}>
           <PromisedMaterialIconButton
             promise={() => axios.get(
               getSUISettings().metaschemaRefreshUrl,
@@ -58,7 +58,7 @@ export function FullScreenTableSettings(props: {
             tooltipText="Обновить метасхему"
             progressColor="secondary"
           >
-            <Cached style={{color: 'white'}}/>
+            <Cached style={{color: "white"}}/>
           </PromisedMaterialIconButton>
         </div>
       </div>}
@@ -95,9 +95,9 @@ interface ITableSettingsState {
 class _TableSettings extends React.Component<ITableSettingsProps, ITableSettingsState> {
 
   private static getElementBySortType<T>(sorting: SortingDirection, ascElement: T, descElement: T, emptyElement: T): T {
-    return (sorting === 'asc')
+    return (sorting === "asc")
       ? ascElement
-      : (sorting === 'desc')
+      : (sorting === "desc")
         ? descElement
         : emptyElement;
   }
@@ -241,7 +241,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
             return <div style={{height: 300}}/>;
           }
 
-          const auditable = (getDataByKey(data, 'tableInfoById', 'type') === 'BASE TABLE' && !['audit', 'meta'].includes(getDataByKey(data, 'tableInfoById', 'schemaName')));
+          const auditable = (getDataByKey(data, "tableInfoById", "type") === "BASE TABLE" && !["audit", "meta"].includes(getDataByKey(data, "tableInfoById", "schemaName")));
           const isCatalog = !!data.tableInfoById?.isCatalog;
 
           return (
@@ -259,7 +259,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                               ? <></>
                               : <>
                                 <div>
-                                  <Link to={getLinkForTable(data.tableInfoById.tableName, 'table')}>
+                                  <Link to={getLinkForTable(data.tableInfoById.tableName, "table")}>
                                     <Button
                                       href={null}
                                       icon={<ProfileOutlined/>}
@@ -279,7 +279,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                         icon={<ChevronRightIcon/>}
                                         type="number"
                                         promise={(value: any): any => {
-                                          getSUISettings().routerPushFn(getLinkForTable(data.tableInfoById.tableName, 'card', value));
+                                          getSUISettings().routerPushFn(getLinkForTable(data.tableInfoById.tableName, "card", value));
 
                                           // Stub
                                           return Promise.resolve();
@@ -338,24 +338,24 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                     {
                       items: [
                         {
-                          title: 'ID',
-                          dataKey: 'id',
+                          title: "ID",
+                          dataKey: "id",
                         },
                         {
-                          title: 'Хранилище',
-                          dataKey: ['engineByEngineId', 'name'],
+                          title: "Хранилище",
+                          dataKey: ["engineByEngineId", "name"],
                         },
                         {
-                          title: 'Имя схемы в БД',
-                          dataKey: 'schemaName',
+                          title: "Имя схемы в БД",
+                          dataKey: "schemaName",
                         },
                         {
-                          title: 'Имя таблицы в БД',
-                          dataKey: 'tableName',
+                          title: "Имя таблицы в БД",
+                          dataKey: "tableName",
                         },
                         {
-                          title: 'Имя таблицы в интерфейсе',
-                          dataKey: ['nameByNameId'],
+                          title: "Имя таблицы в интерфейсе",
+                          dataKey: ["nameByNameId"],
                           render: (value: IName | undefined): JSX.Element => (
                             <div
                               style={{
@@ -383,13 +383,13 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                           )
                         },
                         {
-                          title: 'Разбиение на страницы',
-                          dataKey: 'pageSizes',
+                          title: "Разбиение на страницы",
+                          dataKey: "pageSizes",
                           render: (value: string): JSX.Element => (
                             <PromisedInput<string>
                               defaultValue={value}
                               validator={(value): string | undefined => PAGE_SIZE_REGEXP.test(value) ? undefined : "Некорректный формат. Пример: 10,25,100"}
-                              promise={generateUpdateFn('tableInfo', this.props.id, "pageSizes")}
+                              promise={generateUpdateFn("tableInfo", this.props.id, "pageSizes")}
                             />
                           ),
                         }
@@ -400,15 +400,15 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                         ...[
                           {
                             title: "Поле ссылки на форме списка",
-                            dataKey: 'linkColumnInfoId',
+                            dataKey: "linkColumnInfoId",
                           },
                           {
                             title: "Поле ссылки из другого объекта",
-                            dataKey: 'foreignLinkColumnInfoId',
+                            dataKey: "foreignLinkColumnInfoId",
                           },
                           {
                             title: "Поле следования",
-                            dataKey: 'followColumnInfoId',
+                            dataKey: "followColumnInfoId",
                           }
                         ].map(setting => ({
                           ...setting,
@@ -416,7 +416,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                             <div style={{width: 500}}>
                               <PromisedSelect<string>
                                 defaultValue={value}
-                                promise={generateUpdateFn('tableInfo', this.props.id, setting.dataKey)}
+                                promise={generateUpdateFn("tableInfo", this.props.id, setting.dataKey)}
                               >
                                 <Select.Option value={null}>
                                   --Не задано--
@@ -431,34 +431,34 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                           ),
                         })),
                         {
-                          title: 'Справочник',
-                          dataKey: 'isCatalog',
+                          title: "Справочник",
+                          dataKey: "isCatalog",
                           render: (value: boolean): JSX.Element => (
                             <PromisedSwitch
                               defaultChecked={value}
                               promise={isCatalog => (
                                 isCatalog
-                                  ? generateUpdate('tableInfo', this.props.id, 'isCatalog', true)
+                                  ? generateUpdate("tableInfo", this.props.id, "isCatalog", true)
                                     .then(() => this.setState({tableInfoById: {...this.state.tableInfoById, isCatalog: true}}))
-                                  : generateMultiUpdate('tableInfo', this.props.id, {isCatalog: false, isAlphabetSort: false})
+                                  : generateMultiUpdate("tableInfo", this.props.id, {isCatalog: false, isAlphabetSort: false})
                                     .then(() => this.setState({tableInfoById: {...this.state.tableInfoById, isCatalog: false, isAlphabetSort: false}}))
                               )}
                             />
                           ),
                         },
                         isCatalog && {
-                          title: 'По алфавиту',
-                          dataKey: 'isAlphabetSort',
+                          title: "По алфавиту",
+                          dataKey: "isAlphabetSort",
                           render: (value: boolean): JSX.Element => (
                             <PromisedSwitch
                               defaultChecked={value}
-                              promise={generateUpdateFn('tableInfo', this.props.id, 'isAlphabetSort')}
+                              promise={generateUpdateFn("tableInfo", this.props.id, "isAlphabetSort")}
                             />
                           ),
                         },
                         auditable && {
-                          title: 'Вести аудит',
-                          dataKey: 'isAudited',
+                          title: "Вести аудит",
+                          dataKey: "isAudited",
                           render: (value: boolean): JSX.Element => (
                             <PromisedSwitch
                               defaultChecked={value}
@@ -473,15 +473,15 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                 {
                   tabs: [
                     {
-                      title: 'Общее',
+                      title: "Общее",
                       rows: [
                         {
                           cols: [
                             {
                               items: [
                                 {
-                                  title: 'Доступность для всех колонок',
-                                  dataKey: ['columnInfosByTableInfoId', 'nodes'],
+                                  title: "Доступность для всех колонок",
+                                  dataKey: ["columnInfosByTableInfoId", "nodes"],
                                   render: (value: IColumnInfo[]): JSX.Element => (
                                     <PromisedSwitch
                                       defaultChecked={value.every(col => col.visible)}
@@ -489,7 +489,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       promise={(newValue: boolean): Promise<any> => {
                                         let promise = Promise.resolve();
                                         value.map(col => {
-                                          promise = promise.then(() => this.updateColField(col.id, 'visible', newValue, false));
+                                          promise = promise.then(() => this.updateColField(col.id, "visible", newValue, false));
                                         });
 
                                         return promise;
@@ -509,14 +509,14 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                             {
                               items: [
                                 {
-                                  dataKey: ['columnInfosByTableInfoId', 'nodes'],
+                                  dataKey: ["columnInfosByTableInfoId", "nodes"],
                                   render: (value: IColumnInfo[]): JSX.Element => (
                                     <DraggableRowTable
                                       scroll={{x: true}}
                                       pagination={false}
                                       dataSource={value.sort((a, b): number => a.order - b.order)}
                                       bordered={true}
-                                      onOrderChanged={(sortedDataSource: any): Promise<any> => Promise.all(sortedDataSource.map((line: any, index: any): Promise<any> => this.updateColField(line.id, 'order', index, false, false, (sortedDataSource.length - 1) === index)))}
+                                      onOrderChanged={(sortedDataSource: any): Promise<any> => Promise.all(sortedDataSource.map((line: any, index: any): Promise<any> => this.updateColField(line.id, "order", index, false, false, (sortedDataSource.length - 1) === index)))}
                                     >
                                       <Table.Column<IColumnInfo>
                                         title="Имя в БД"
@@ -525,7 +525,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       <Table.Column<IColumnInfo>
                                         title="Ссылается на поле"
                                         render={(_, record): React.ReactNode => {
-                                          const refColInfo = getDataByKey<IColumnInfo>(record, 'columnInfoReferencesByColumnInfoId', 'nodes', 0, 'columnInfoByForeignColumnInfoId');
+                                          const refColInfo = getDataByKey<IColumnInfo>(record, "columnInfoReferencesByColumnInfoId", "nodes", 0, "columnInfoByForeignColumnInfoId");
                                           const refTableInfo = refColInfo && refColInfo.tableInfoByTableInfoId;
 
                                           return refColInfo
@@ -574,7 +574,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                               getPopupContainer={this.props.getPopupContainer}
                                               id={record.nameByNameId && record.nameByNameId.id}
                                               onChanged={(newId): Promise<any> =>
-                                                generateUpdate('columnInfo', record.id, 'nameId', newId)
+                                                generateUpdate("columnInfo", record.id, "nameId", newId)
                                                   .then<IName>(() => {
                                                     if (newId === null) {
                                                       return {} as IName;
@@ -594,7 +594,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                       description: newName.description,
                                                     } as IName;
 
-                                                    return this.updateColField(record.id, 'nameByNameId', name, false, true);
+                                                    return this.updateColField(record.id, "nameByNameId", name, false, true);
                                                   })}
                                             />
                                           </div>
@@ -635,7 +635,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                         }
                                                       }
                                                     }`, true))))
-                                                  .then(columnInfoTags => this.updateColField(record.id, 'columnInfoTagsByColumnInfoId', {nodes: columnInfoTags.map(value => value.columnInfoTag)}, false, true))
+                                                  .then(columnInfoTags => this.updateColField(record.id, "columnInfoTagsByColumnInfoId", {nodes: columnInfoTags.map(value => value.columnInfoTag)}, false, true))
                                               }
                                             />
                                           </div>
@@ -657,8 +657,8 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           <VisibleByRolesPopover
                                             getPopupContainer={this.props.getPopupContainer}
                                             roles={data.allRoles.nodes}
-                                            visiblePromise={this.updateColFieldFn(record.id, 'visible')}
-                                            afterRolesPromise={(roles): Promise<any> => this.updateColField(record.id, 'columnInfoRolesByColumnInfoId', {nodes: roles || []}, false, true)}
+                                            visiblePromise={this.updateColFieldFn(record.id, "visible")}
+                                            afterRolesPromise={(roles): Promise<any> => this.updateColField(record.id, "columnInfoRolesByColumnInfoId", {nodes: roles || []}, false, true)}
                                             columnInfo={record}
                                           />
                                         )}
@@ -673,15 +673,15 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                       ],
                     },
                     {
-                      title: 'Табличное представление',
+                      title: "Табличное представление",
                       rows: [
                         {
                           cols: [
                             {
                               items: [
                                 {
-                                  title: 'Отображение по умолчанию для всех колонок',
-                                  dataKey: ['columnInfosByTableInfoId', 'nodes'],
+                                  title: "Отображение по умолчанию для всех колонок",
+                                  dataKey: ["columnInfosByTableInfoId", "nodes"],
                                   render: (value: IColumnInfo[]): JSX.Element => (
                                     <PromisedSwitch
                                       defaultChecked={value.every(col => col.defaultVisible)}
@@ -689,7 +689,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       promise={(newValue: boolean): Promise<any> => {
                                         let promise = Promise.resolve();
                                         value.map(col => {
-                                          promise = promise.then(() => this.updateColField(col.id, 'defaultVisible', newValue, false));
+                                          promise = promise.then(() => this.updateColField(col.id, "defaultVisible", newValue, false));
                                         });
 
                                         return promise;
@@ -709,7 +709,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                             {
                               items: [
                                 {
-                                  dataKey: ['columnInfosByTableInfoId', 'nodes'],
+                                  dataKey: ["columnInfosByTableInfoId", "nodes"],
                                   render: (value: IColumnInfo[], item: any): JSX.Element => (
                                     <Table
                                       components={{
@@ -722,7 +722,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                                 {...props}
                                                 style={{
                                                   ...props.style,
-                                                  backgroundColor: !visible ? '#dadada' : (props.style && props.style.backgroundColor),
+                                                  backgroundColor: !visible ? "#dadada" : (props.style && props.style.backgroundColor),
                                                 }}
                                               />
                                             );
@@ -746,7 +746,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                               getPopupContainer={this.props.getPopupContainer}
                                               tableInfo={item}
                                               tableRenderParams={record.tableRenderParams}
-                                              promise={this.updateColFieldFn(record.id, 'tableRenderParams')}
+                                              promise={this.updateColFieldFn(record.id, "tableRenderParams")}
                                             />
                                           </div>
                                         )}
@@ -758,7 +758,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           <div className={SUI_ROW}>
                                             <PromisedSwitch
                                               defaultChecked={record.defaultVisible}
-                                              promise={this.updateColFieldFn(record.id, 'defaultVisible')}
+                                              promise={this.updateColFieldFn(record.id, "defaultVisible")}
                                             />
                                           </div>
                                         )}
@@ -770,7 +770,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           <div className={SUI_ROW}>
                                             <PromisedSwitch
                                               defaultChecked={record.defaultGrouping}
-                                              promise={this.updateColFieldFn(record.id, 'defaultGrouping')}
+                                              promise={this.updateColFieldFn(record.id, "defaultGrouping")}
                                             />
                                           </div>
                                         )}
@@ -785,14 +785,14 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                               htmlType="button"
                                               type={_TableSettings.getElementBySortType(
                                                 record.defaultSorting as SortingDirection,
-                                                'primary',
-                                                'primary',
+                                                "primary",
+                                                "primary",
                                                 undefined,
                                               )}
                                               icon={_TableSettings.getElementBySortType<React.ReactNode>(record.defaultSorting as SortingDirection, (<SortAscendingOutlined/>), (<SortDescendingOutlined/>), (<QuestionOutlined/>))}
                                               onClick={(): void => {
-                                                const sequence = [null, 'asc', 'desc'];
-                                                this.updateColFieldFn(record.id, 'defaultSorting')(
+                                                const sequence = [null, "asc", "desc"];
+                                                this.updateColFieldFn(record.id, "defaultSorting")(
                                                   sequence[(sequence.indexOf(record.defaultSorting || null) + 1) % sequence.length],
                                                 );
                                               }}
@@ -807,7 +807,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           <PromisedInput
                                             type="number"
                                             defaultValue={record.width}
-                                            promise={this.updateColFieldFn(record.id, 'width')}
+                                            promise={this.updateColFieldFn(record.id, "width")}
                                           />
                                         )}
                                       />
@@ -817,7 +817,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                         render={(_, record): JSX.Element => (
                                           <PromisedSwitch
                                             defaultChecked={record.wordWrapEnabled}
-                                            promise={this.updateColFieldFn(record.id, 'wordWrapEnabled')}
+                                            promise={this.updateColFieldFn(record.id, "wordWrapEnabled")}
                                           />
                                         )}
                                       />
@@ -828,7 +828,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           <PromisedSelect
                                             getPopupContainer={this.props.getPopupContainer}
                                             defaultValue={record.filterTypeId}
-                                            promise={this.updateColFieldFn(record.id, 'filterTypeId')}
+                                            promise={this.updateColFieldFn(record.id, "filterTypeId")}
                                           >
                                             <Select.Option value={null}>
                                               --Не задано--
@@ -846,7 +846,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           <PromisedSelect
                                             getPopupContainer={this.props.getPopupContainer}
                                             defaultValue={record.subtotalTypeId}
-                                            promise={this.updateColFieldFn(record.id, 'subtotalTypeId')}
+                                            promise={this.updateColFieldFn(record.id, "subtotalTypeId")}
                                           >
                                             <Select.Option value={null}>
                                               --Не задано--
@@ -885,7 +885,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                   getPopupContainer={this.props.getPopupContainer}
                                   tableId={item.id}
                                   onSave={(settings): Promise<unknown> => Promise.all([
-                                    generateUpdate('tableInfo', item.id, 'cardRenderParams', JSON.stringify(JSON.stringify(settings)).slice(1, -1)),
+                                    generateUpdate("tableInfo", item.id, "cardRenderParams", JSON.stringify(JSON.stringify(settings)).slice(1, -1)),
                                     sleep(SAVE_SLEEP_DELAY),
                                   ])}
                                   plain={plain}
@@ -896,7 +896,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                           },
                         },
                       },
-                      title: 'Карточка объекта',
+                      title: "Карточка объекта",
                     },
                     {
                       rows: {
@@ -906,7 +906,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                           },
                         },
                       },
-                      title: 'Дополнительно',
+                      title: "Дополнительно",
                     },
                   ],
                 },
@@ -920,7 +920,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
 
   @autobind
   private onIsAuditedChangeFn(value: boolean): Promise<any> {
-    const mutationName = value ? 'startAuditTable' : 'stopAuditTable';
+    const mutationName = value ? "startAuditTable" : "stopAuditTable";
 
     return new Promise((resolve, reject): void => {
       mutate(`mutation {
@@ -933,7 +933,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
           tableInfoById.isAudited = value;
           this.setState({tableInfoById}, () => resolve(undefined));
         })
-        .catch(() => reject(`Ошибка при ${value ? 'включении' : 'выключении'} аудита`));
+        .catch(() => reject(`Ошибка при ${value ? "включении" : "выключении"} аудита`));
     });
   }
 
@@ -949,7 +949,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
           resolve(undefined);
           this.waitDataRef.current.updateData();
         })
-        .catch(() => reject('Ошибка при сохранении связи сущностей'));
+        .catch(() => reject("Ошибка при сохранении связи сущностей"));
     });
   }
 
@@ -975,7 +975,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
       return updateState;
     }
 
-    return generateUpdate('columnInfo', id, field, value).then(() => updateState);
+    return generateUpdate("columnInfo", id, field, value).then(() => updateState);
   }
 
   @autobind

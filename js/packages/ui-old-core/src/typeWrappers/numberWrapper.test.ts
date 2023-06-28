@@ -10,17 +10,17 @@ test("Default if not number with number", () => {
   expect(numberWrapper.defaultIfNotNumberFn(10)(1)).toBe(1);
 });
 
-test('Fix if possible with "NaN"', () => {
+test("Fix if possible with \"NaN\"", () => {
   expect(numberWrapper.fixIfPossible("NaN", 10)).toBe("NaN");
   expect(numberWrapper.fixIfPossibleFn(10)("NaN")).toBe("NaN");
 });
 
-test('Fix if possible with "-Infinity"', () => {
+test("Fix if possible with \"-Infinity\"", () => {
   expect(numberWrapper.fixIfPossible("-Infinity", 10)).toBe("-Infinity");
   expect(numberWrapper.fixIfPossibleFn(10)("-Infinity")).toBe("-Infinity");
 });
 
-test('Fix if possible with "123"', () => {
+test("Fix if possible with \"123\"", () => {
   expect(numberWrapper.fixIfPossible("123", 10)).toBe("123.0000000000");
   expect(numberWrapper.fixIfPossibleFn(10)("123")).toBe("123.0000000000");
 });

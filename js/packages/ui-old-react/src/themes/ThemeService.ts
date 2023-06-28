@@ -1,6 +1,6 @@
-import {Container, Singleton} from 'typescript-ioc';
-import themeSwitcher from 'theme-switcher';
-import autobind from 'autobind-decorator';
+import {Container, Singleton} from "typescript-ioc";
+import themeSwitcher from "theme-switcher";
+import autobind from "autobind-decorator";
 import {Logger} from "@sui/ui-old-core";
 import {ObservableLocalStorageValue} from "@/Observable";
 import {CompiledTheme, CompiledThemes, ThemeVariant} from "@/themes/types";
@@ -19,7 +19,7 @@ export class ThemeService extends ObservableLocalStorageValue<ThemeVariant> {
       return "light";
     }
 
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
       return "dark";
     }
 
@@ -36,7 +36,7 @@ export class ThemeService extends ObservableLocalStorageValue<ThemeVariant> {
 
     const {switcher} = themeSwitcher({
       themeMap: {
-        dark: './theme/dark.css'
+        dark: "./theme/dark.css"
       }
     });
     this.themeSwitcher = switcher;

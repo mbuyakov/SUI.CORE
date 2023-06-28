@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {IObjectWithIndex} from '@sui/ui-old-core';
+import {IObjectWithIndex} from "@sui/ui-old-core";
 import {Table, TableProps} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import update from 'immutability-helper';
-import * as React from 'react';
-import {DragSource, DropTarget} from 'react-dnd';
+import autobind from "autobind-decorator";
+import update from "immutability-helper";
+import * as React from "react";
+import {DragSource, DropTarget} from "react-dnd";
 import {DndProvider} from "./react18dndfix";
-import HTML5Backend from 'react-dnd-html5-backend';
+import HTML5Backend from "react-dnd-html5-backend";
 
-import {ExtractProps} from './other';
-import {WaitData} from './WaitData';
+import {ExtractProps} from "./other";
+import {WaitData} from "./WaitData";
 
 let dragingIndex = -1;
 
@@ -24,15 +24,15 @@ class BodyRow extends React.Component<any> {
       ...restProps
     } = this.props;
 
-    const style = {...restProps.style, cursor: 'move'};
+    const style = {...restProps.style, cursor: "move"};
 
     let className = restProps.className;
     if (isOver) {
       if (restProps.index > dragingIndex) {
-        className += ' drop-over-downward';
+        className += " drop-over-downward";
       }
       if (restProps.index < dragingIndex) {
-        className += ' drop-over-upward';
+        className += " drop-over-upward";
       }
     }
 
@@ -80,7 +80,7 @@ const rowTarget = {
 };
 
 const DragableBodyRow = DropTarget(
-  'row',
+  "row",
   rowTarget,
   (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
@@ -88,7 +88,7 @@ const DragableBodyRow = DropTarget(
   }),
 )(
   DragSource(
-    'row',
+    "row",
     rowSource,
     (connect) => ({
       connectDragSource: connect.dragSource(),
@@ -96,7 +96,7 @@ const DragableBodyRow = DropTarget(
   )(BodyRow),
 );
 
-class DraggableRowTableClass<T extends IObjectWithIndex> extends React.Component<Omit<TableProps<T>, 'onRow'> & {
+class DraggableRowTableClass<T extends IObjectWithIndex> extends React.Component<Omit<TableProps<T>, "onRow"> & {
   onOrderChanged(sortedDataSource: T[]): Promise<any>
 }, {
   data: T[],

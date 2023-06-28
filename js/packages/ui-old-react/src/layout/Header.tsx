@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import {AppBar, Theme, Toolbar} from "@mui/material";
 // import createStyles from '@mui/styles/createStyles';
 // import makeStyles from '@mui/styles/makeStyles';
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 import {BasicLayoutContext} from "@/layout/BasicLayoutContext";
 import {DrawerVisibleButton} from "@/layout/DrawerVisibleButton";
 import {AppBarElevator} from "@/Material";
@@ -51,4 +51,4 @@ export const Header: React.FC<{
       </AppBar>
     </AppBarElevator>
   );
-}
+};

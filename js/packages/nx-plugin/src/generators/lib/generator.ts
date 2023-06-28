@@ -1,5 +1,5 @@
-import {Tree} from '@nx/devkit';
-import {LibGeneratorSchema} from './schema';
+import {Tree} from "@nx/devkit";
+import {LibGeneratorSchema} from "./schema";
 import * as jsGen from "@nx/js/src/generators/library/library";
 import {commonTweaks} from "../util";
 

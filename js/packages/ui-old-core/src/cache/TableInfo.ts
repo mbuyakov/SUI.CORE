@@ -1,10 +1,10 @@
 import autobind from "autobind-decorator";
 
-import {getDataByKey} from '@/dataKey';
-import {GqlCacheManager, query} from '@/gql';
+import {getDataByKey} from "@/dataKey";
+import {GqlCacheManager, query} from "@/gql";
 import {Logger} from "@/ioc/utils";
-import {asyncMap} from '@/other';
-import {IColumnInfo, IGraphQLConnection, ITableInfo} from '@/types';
+import {asyncMap} from "@/other";
+import {IColumnInfo, IGraphQLConnection, ITableInfo} from "@/types";
 
 import {ColumnInfo, ColumnInfoManager} from "./ColumnInfo";
 import {Name} from "./Name";
@@ -141,7 +141,7 @@ class _TableInfoManager extends GqlCacheManager<ITableInfo, TableInfo> {
   }
 
   protected getTableName(): string {
-    return 'tableInfo';
+    return "tableInfo";
   }
 
   protected mapRawItem(item: ITableInfo): ICacheEntry<string, TableInfo> {

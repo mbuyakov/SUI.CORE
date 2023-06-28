@@ -1,9 +1,9 @@
 // noinspection ES6PreferShortImport
 import {ISerializable, SerializableDnDChild} from "../Draggable/Serializable";
 // noinspection ES6PreferShortImport
-import {Rendered} from '../other';
+import {Rendered} from "../other";
 
-export type DEFAULT_ROOT_TYPES = 'root' | 'row' | string;
+export type DEFAULT_ROOT_TYPES = "root" | "row" | string;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface IMetaCardRenderParams<TProps, TItem = any> {

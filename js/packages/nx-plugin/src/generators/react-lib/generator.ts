@@ -20,7 +20,7 @@ export async function reactLibGenerator(tree: Tree, options: ReactLibGeneratorSc
     strict: true
   });
 
-  commonTweaks(tree, options.type, name)
+  commonTweaks(tree, options.type, name);
 }
 
 

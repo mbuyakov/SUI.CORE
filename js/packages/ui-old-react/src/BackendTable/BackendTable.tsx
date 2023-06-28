@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/ban-ts-comment */
 import {Getters} from "@sui/deps-dx-react-grid";
-import {Grouping, GroupKey, Sorting, TableColumnWidthInfo, TableFilterRow} from '@sui/deps-dx-react-grid';
+import {Grouping, GroupKey, Sorting, TableColumnWidthInfo, TableFilterRow} from "@sui/deps-dx-react-grid";
 import {Modal, notification} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import axios from 'axios';
-import JSzip from 'jszip';
-import difference from 'lodash/difference';
-import * as React from 'react';
-import {v4 as uuidv4} from 'uuid';
+import autobind from "autobind-decorator";
+import axios from "axios";
+import JSzip from "jszip";
+import difference from "lodash/difference";
+import * as React from "react";
+import {v4 as uuidv4} from "uuid";
 import {asyncMap, camelCase, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, formatRawForGraphQL, generateCreate, getDataByKey, getSUISettings, IObjectWithIndex, IUserSetting, mutate, query, TableInfo, TableInfoManager, toMap, wrapInArray} from "@sui/ui-old-core";
 import {LazyStubNoDataCell, LazyStubNoDataCellSmall} from "@/BackendTable/LazyStubNoDataCell";
 import {LoadingNoDataCell, LoadingNoDataCellSmall} from "@/BackendTable/LoadingNoDataCell";
@@ -17,7 +17,7 @@ import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
 // noinspection ES6PreferShortImport
 import {exportToXlsx} from "../BaseTable/utils";
 // noinspection ES6PreferShortImport
-import {BaseTable, colToBaseTableCol, CompiledTheme, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE, DEFAULT_SERVICE_COLUMN_WIDTH, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from '../index';
+import {BaseTable, colToBaseTableCol, CompiledTheme, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE, DEFAULT_SERVICE_COLUMN_WIDTH, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from "../index";
 // noinspection ES6PreferShortImport
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 // noinspection ES6PreferShortImport
@@ -25,37 +25,37 @@ import {ResetUserSettingsPlugin} from "../plugins/ResetUserSettingsPlugin";
 // noinspection ES6PreferShortImport
 import {LazyFilter} from "../BaseTable/types";
 
-import {BackendDataSource, MESSAGE_ID_KEY} from './BackendDataSource';
-import {RestBackendDataSource} from './RestBackendDataSource';
+import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
+import {RestBackendDataSource} from "./RestBackendDataSource";
 import {IconButton, MuiIcons } from "@sui/deps-material";
 import {Tooltip} from "@sui/deps-antd";
 
-const DX_REACT_GROUP_SEPARATOR = '|';
-const CHILDREN_KEY = '__children';
-const RECORDS_KEY = '__records';
-const SUBTOTALS_KEY = '__subtotals';
+const DX_REACT_GROUP_SEPARATOR = "|";
+const CHILDREN_KEY = "__children";
+const RECORDS_KEY = "__records";
+const SUBTOTALS_KEY = "__subtotals";
 
-const DELETED_COLUMN = 'deleted';
+const DELETED_COLUMN = "deleted";
 
 type RequestMessageType =
-  'INIT'
-  | 'PAGE_CHANGE'
-  | 'PAGE_SIZE_CHANGE'
-  | 'FILTER_CHANGE'
-  | 'SORT_CHANGE'
-  | 'GROUPING_CHANGE'
-  | 'EXPANDED_GROUP_CHANGE';
-type ResponseMessageType = 'DATA' | 'WITHOUT_UPDATE' | 'ERROR';
+  "INIT"
+  | "PAGE_CHANGE"
+  | "PAGE_SIZE_CHANGE"
+  | "FILTER_CHANGE"
+  | "SORT_CHANGE"
+  | "GROUPING_CHANGE"
+  | "EXPANDED_GROUP_CHANGE";
+type ResponseMessageType = "DATA" | "WITHOUT_UPDATE" | "ERROR";
 
 // Default operation filter = equals
-export type SimpleBackendFilter = Omit<LazyFilter, 'value'> & {
+export type SimpleBackendFilter = Omit<LazyFilter, "value"> & {
   elements?: any[];
   lazy?: boolean;
   raw?: boolean;
   value?: any;
-}
+};
 
-export type PredicateType = 'AND' | 'OR' | 'NOT' | string;
+export type PredicateType = "AND" | "OR" | "NOT" | string;
 
 export type BackendFilter = {
   filters: BackendFilter[];
@@ -63,9 +63,9 @@ export type BackendFilter = {
 } | SimpleBackendFilter;
 
 export type IServiceColumn = Pick<IBaseTableColLayout,
-  'id' | 'width' | 'title' | 'dataKey' | 'render' | 'defaultData'>;
+  "id" | "width" | "title" | "dataKey" | "render" | "defaultData">;
 
-export type ICustomFilterProps = Omit<TableFilterRow.CellProps, 'filter' | 'onFilter'> & {
+export type ICustomFilterProps = Omit<TableFilterRow.CellProps, "filter" | "onFilter"> & {
   filter: SimpleBackendFilter | null,
   onFilter(filter: SimpleBackendFilter | null): void
 };
@@ -137,7 +137,7 @@ function calculateParentExpandedGroups(realExpandedGroupKeys: IExpandedGroup[], 
 }
 
 export class BackendTable<TSelection = defaultSelection>
-  extends React.Component<Omit<IBaseTableProps<TSelection>, 'rows' | 'cols' | 'defaultFilters' | 'defaultCurrentPage' | 'customFilterComponent'> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable<TSelection>> }, IBackendTableState<TSelection>>
+  extends React.Component<Omit<IBaseTableProps<TSelection>, "rows" | "cols" | "defaultFilters" | "defaultCurrentPage" | "customFilterComponent"> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable<TSelection>> }, IBackendTableState<TSelection>>
   implements ISelectionTable<TSelection> {
 
   private additionalStateMap: Map<string, IBackendTableState<TSelection>> = new Map<string, IBackendTableState<TSelection>>();
@@ -328,8 +328,8 @@ export class BackendTable<TSelection = defaultSelection>
                 id={this.state.tableInfo && this.state.tableInfo.id}
                 style={{
                   height: 0,
-                  display: 'flex',
-                  justifyContent: 'flex-end',
+                  display: "flex",
+                  justifyContent: "flex-end",
                 }}
                 buttonStyle={{
                   margin: 16,
@@ -378,7 +378,7 @@ export class BackendTable<TSelection = defaultSelection>
     let beforeExportResult: boolean;
 
     beforeExportResult = await generateCreate(
-      'table_export_log',
+      "table_export_log",
       {
         tableInfoId: this.state.tableInfo.id,
         userId: `${getUser().id}`,
@@ -394,7 +394,7 @@ export class BackendTable<TSelection = defaultSelection>
       });
 
     if (beforeExportResult && this.props.beforeExport) {
-      beforeExportResult = await this.props.beforeExport()
+      beforeExportResult = await this.props.beforeExport();
     }
 
     return beforeExportResult;
@@ -544,7 +544,7 @@ export class BackendTable<TSelection = defaultSelection>
             filters: this.mapFilters(filter.filters || []),
           };
         } else {
-          return (filter.elements || (filter.value !== undefined && filter.value !== ''))
+          return (filter.elements || (filter.value !== undefined && filter.value !== ""))
             ? this.normalizeColumnName({
               ...filter,
               raw: includeRaw ? defaultIfNotBoolean(filter.raw, true) : filter.raw,
@@ -559,7 +559,7 @@ export class BackendTable<TSelection = defaultSelection>
       ...element,
       columnName: getDataByKey<string>(
         this.findColumnInfoByName(element.columnName) || this.findColumnInfoByCamelCaseName(element.columnName),
-        'columnName',
+        "columnName",
       ),
     };
   }
@@ -569,7 +569,7 @@ export class BackendTable<TSelection = defaultSelection>
     if (currentPage !== this.state.currentPage) {
       const content = {currentPage};
       // noinspection JSIgnoredPromiseFromCall
-      this.sendMessage('PAGE_CHANGE', content, content);
+      this.sendMessage("PAGE_CHANGE", content, content);
     }
   }
 
@@ -606,7 +606,7 @@ export class BackendTable<TSelection = defaultSelection>
 
     // noinspection JSIgnoredPromiseFromCall
     this.sendMessage(
-      'EXPANDED_GROUP_CHANGE',
+      "EXPANDED_GROUP_CHANGE",
       {
         expandedGroups: expandedGroups
           .map(groupKey => realExpandedGroups.find(realGroup => realGroup.key === groupKey))
@@ -647,7 +647,7 @@ export class BackendTable<TSelection = defaultSelection>
       } else {
         // noinspection JSIgnoredPromiseFromCall
         this.sendMessage(
-          'FILTER_CHANGE',
+          "FILTER_CHANGE",
           {
             filters: mappedFilters,
           },
@@ -663,7 +663,7 @@ export class BackendTable<TSelection = defaultSelection>
   private onGroupingChange(groupings: Grouping[]): void {
     // noinspection JSIgnoredPromiseFromCall
     this.sendMessage(
-      'GROUPING_CHANGE',
+      "GROUPING_CHANGE",
       {groupings},
       {grouping: groupings, customGrouping: this.state.grouping, customExpandedGroups: this.state.customExpandedGroups},
       {customGrouping: null, customExpandedGroups: null},
@@ -674,12 +674,12 @@ export class BackendTable<TSelection = defaultSelection>
   private onMessage(message: IObjectWithIndex): void {
     const type: ResponseMessageType = message.type;
 
-    if (type === 'ERROR') {
+    if (type === "ERROR") {
       this.onError(message);
     } else {
       const messageId = message[MESSAGE_ID_KEY];
 
-      if (type === 'DATA') {
+      if (type === "DATA") {
         const messageData = message as { currentPage: number, data: any[], totalCount: number };
 
         let groupSubtotalData;
@@ -690,7 +690,7 @@ export class BackendTable<TSelection = defaultSelection>
             groupSubtotalData,
             messageData.data,
             this.state.grouping.map(this.getGroupRowField),
-            '',
+            "",
           );
         }
 
@@ -718,7 +718,7 @@ export class BackendTable<TSelection = defaultSelection>
   @autobind
   private onPageSizeChange(pageSize: number): void {
     // noinspection JSIgnoredPromiseFromCall
-    this.sendMessage('PAGE_SIZE_CHANGE', {pageSize}, {pageSize});
+    this.sendMessage("PAGE_SIZE_CHANGE", {pageSize}, {pageSize});
   }
 
   @autobind
@@ -761,7 +761,7 @@ export class BackendTable<TSelection = defaultSelection>
     } else {
       // noinspection JSIgnoredPromiseFromCall
       this.sendMessage(
-        'SORT_CHANGE',
+        "SORT_CHANGE",
         {
           sorts: sorting.map(sort => ({
             columnName: sort.columnName,
@@ -802,7 +802,7 @@ export class BackendTable<TSelection = defaultSelection>
         return Promise.resolve();
       })
       .then(() => {
-        location.reload()
+        location.reload();
       })
       .then(() => {
         notification.info({
@@ -829,7 +829,7 @@ export class BackendTable<TSelection = defaultSelection>
         && (!this.state.defaultFilter || this.state.defaultFilter.every(it => it.columnName !== DELETED_COLUMN));
       const defaultSorting: Sorting[] = sortedColumns
         .filter(columnInfo => columnInfo.defaultSorting)
-        .map(columnInfo => ({columnName: columnInfo.columnName, direction: columnInfo.defaultSorting as 'asc' | 'desc'}));
+        .map(columnInfo => ({columnName: columnInfo.columnName, direction: columnInfo.defaultSorting as "asc" | "desc"}));
       const defaultGrouping: Grouping[] = sortedColumns
         .filter(columnInfo => columnInfo.defaultGrouping)
         .map(columnInfo => ({columnName: columnInfo.columnName}));
@@ -848,7 +848,7 @@ export class BackendTable<TSelection = defaultSelection>
 
       // noinspection JSIgnoredPromiseFromCall
       this.sendMessage(
-        'INIT',
+        "INIT",
         {
           pageSize,
           currentPage,
@@ -921,7 +921,7 @@ export class BackendTable<TSelection = defaultSelection>
               grouping: this.state.grouping,
               expandedGroups: this.state.realExpandedGroups
             }
-          )
+          );
         }
       }
     );
@@ -974,10 +974,10 @@ export class BackendTable<TSelection = defaultSelection>
       // Warnings
       const warnings = [];
       if (!tableInfo.nameId) {
-        warnings.push('Не задано имя таблицы');
+        warnings.push("Не задано имя таблицы");
       }
       if (!tableInfo.linkColumnInfoId) {
-        warnings.push('Не задано поле ссылки на форме списка');
+        warnings.push("Не задано поле ссылки на форме списка");
       }
       cols.forEach(col => {
         if (!col.nameId) {
@@ -999,7 +999,7 @@ export class BackendTable<TSelection = defaultSelection>
             } catch (e) {
               return null;
             }
-          }
+          };
         }
       }
 
@@ -1024,10 +1024,10 @@ export class BackendTable<TSelection = defaultSelection>
         }
 
         _serviceColumns.push({
-          id: '__link__',
-          title: ' ',
+          id: "__link__",
+          title: " ",
           width: DEFAULT_SERVICE_COLUMN_WIDTH,
-          dataKey: 'id',
+          dataKey: "id",
           render: (value: any, row: IObjectWithIndex): JSX.Element => (
             <RouterLink
               to={this.props.cardLinkFn(value, row)}
@@ -1040,12 +1040,12 @@ export class BackendTable<TSelection = defaultSelection>
       const serviceColumns = _serviceColumns.map<IBaseTableColLayout>((serviceColumn, i) => ({
         ...serviceColumn,
         // 24 - default padding for first column(-8, because it's default padding for every column). If selection or expanding enabled first column is checkbox
-        width: (i == 0 && typeof serviceColumn.width === 'number' && !(this.props.selectionEnabled || this.props.rowDetailComponent)) ? serviceColumn.width + 16 : serviceColumn.width,
+        width: (i == 0 && typeof serviceColumn.width === "number" && !(this.props.selectionEnabled || this.props.rowDetailComponent)) ? serviceColumn.width + 16 : serviceColumn.width,
         exportable: false,
         groupingEnabled: false,
         sortingEnabled: false,
         resizingEnabled: false,
-        search: {type: 'none'},
+        search: {type: "none"},
       }));
 
       let allColumns = serviceColumns.concat(allowedCols);
@@ -1061,7 +1061,7 @@ export class BackendTable<TSelection = defaultSelection>
 
           // columnWidth.metaWidth === column.width Мета не изменилась
           if (column && columnWidth.width && columnWidth.metaWidth === column.width) {
-            column.width = Number(columnWidth.width)
+            column.width = Number(columnWidth.width);
           }
         });
 
@@ -1207,7 +1207,7 @@ export class BackendTable<TSelection = defaultSelection>
             }
           }
 
-          modal.update({content: `Формирование и скачивание результата`});
+          modal.update({content: "Формирование и скачивание результата"});
 
           const resultData = await axios.get(
             `${exportApiUri}/joinParts`,

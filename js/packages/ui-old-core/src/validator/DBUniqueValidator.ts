@@ -2,7 +2,7 @@ import {query} from "@/gql";
 import {IObjectWithIndex} from "@/other";
 import {addQuotesIfString} from "@/formatter/stringFormatters";
 
-export type gqlCompareOperations = 'equalTo' | 'notEqualTo' | 'distinctFrom' | 'notDistinctFrom';
+export type gqlCompareOperations = "equalTo" | "notEqualTo" | "distinctFrom" | "notDistinctFrom";
 
 export interface IQueryResult {
   table: {
@@ -15,7 +15,7 @@ export interface IQueryResult {
 
 export async function DBUniqueValidator(gqTable: string,
                                         queryFields: IObjectWithIndex,
-                                        idFieldName: string = 'id',
+                                        idFieldName: string = "id",
                                         excludeId: string = null): Promise<IQueryResult> {
   const fieldsFilter = createFieldsFilter(queryFields, idFieldName, excludeId);
   if (!gqTable || !fieldsFilter || fieldsFilter.length === 0) {
@@ -36,9 +36,9 @@ export async function DBUniqueValidator(gqTable: string,
 
 
 function createFieldsFilter(fields: IObjectWithIndex, idFieldName: string, excludeId: string): string {
-  const filters = fieldsToFilterStrings(fields, 'equalTo', true);
+  const filters = fieldsToFilterStrings(fields, "equalTo", true);
   if (excludeId && excludeId.length > 0) {
-    filters.push(getFilterExpression(idFieldName, 'notEqualTo', excludeId));
+    filters.push(getFilterExpression(idFieldName, "notEqualTo", excludeId));
   }
   if (filters.length === 0) {
     return "";

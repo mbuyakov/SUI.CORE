@@ -1,8 +1,8 @@
 import autobind from "autobind-decorator";
 import React from "react";
-import {IObjectWithIndex} from '@sui/ui-old-core';
-import {AMCHARTS} from '@sui/deps-amcharts';
-import {XYChartWrapper} from './ChartWrapper';
+import {IObjectWithIndex} from "@sui/ui-old-core";
+import {AMCHARTS} from "@sui/deps-amcharts";
+import {XYChartWrapper} from "./ChartWrapper";
 import {Color} from "@sui/lib-color";
 
 export interface ICategoryColumnChartSeries {
@@ -122,8 +122,8 @@ export class CategoryColumnChart extends React.Component<ICategoryColumnChartPro
       series.columns.each(column => {
           column.tooltip.disabled = !enable;
         }
-      )
-    })
+      );
+    });
   }
 
 }

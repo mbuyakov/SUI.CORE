@@ -2,8 +2,8 @@
 import {GET_DEFAULT_CALENDAR_RANGES, MomentFormat, query, TableInfoManager} from "@sui/ui-old-core";
 import {DatePicker, Input, InputNumber, Select} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
-import moment from 'moment';
-import React from 'react';
+import moment from "moment";
+import React from "react";
 
 // noinspection ES6PreferShortImport
 import {BaseCard} from "../Base";
@@ -17,7 +17,7 @@ import {fetchAndFormatAuditLog, fetchTablesWithAuditLogs} from "./utils";
 
 type IAuditLogProps = Omit<IAuditLogTableProps, "rows" | "hideRows" | "extra"> & {
   auditApiUri: string;
-}
+};
 
 interface IAuditLogState {
   logByRowIdRows: IAuditLogTableRow[];
@@ -47,12 +47,12 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
       latestLogValues: {
         limit: 1000,
         period: [
-          moment().startOf('day').subtract(1, 'week'),
-          moment().endOf('day')
+          moment().startOf("day").subtract(1, "week"),
+          moment().endOf("day")
         ]
       },
       notMovedLogCount: 0
-    }
+    };
   }
 
   public async componentDidMount(): Promise<void> {
@@ -67,8 +67,8 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
         }))
         // Удаляем дубликаты (зачем ?????)
         .filter((option, index, array) => array.findIndex(it => it.value === option.value) === index),
-      notMovedLogCount: await query(`{ allAuditLogs { totalCount } }`, 2)
-    })
+      notMovedLogCount: await query("{ allAuditLogs { totalCount } }", 2)
+    });
   }
 
   public render(): React.ReactNode {
@@ -182,8 +182,8 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
         `${this.props.auditApiUri}/logs/${latestLogValues.tableInfoId}`,
         {
           params: {
-            start: latestLogValues.period[0].clone().startOf('day').format(moment.HTML5_FMT.DATE),
-            end: latestLogValues.period[1].clone().add(1, 'day').startOf('day').format(moment.HTML5_FMT.DATE),
+            start: latestLogValues.period[0].clone().startOf("day").format(moment.HTML5_FMT.DATE),
+            end: latestLogValues.period[1].clone().add(1, "day").startOf("day").format(moment.HTML5_FMT.DATE),
             limit: latestLogValues.limit
           }
         }
@@ -231,7 +231,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
         ...this.state.logByRowIdValues,
         [key]: value
       }
-    })
+    });
   }
 
   @autobind
@@ -241,7 +241,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
         ...this.state.latestLogValues,
         [key]: value
       }
-    })
+    });
   }
 
 }

@@ -2,7 +2,7 @@
 import React from "react";
 import {addQuotesIfString, getDataByKey} from "@sui/ui-old-core";
 import {BackendTable} from "@/BackendTable";
-import {BaseCardRowParent} from '@/Base/BaseCardRow/types';
+import {BaseCardRowParent} from "@/Base/BaseCardRow/types";
 import {IBaseCardRowLayout} from "@/Base/BaseCardRow/BaseCardRow";
 
 
@@ -24,9 +24,9 @@ export function mapFilters<T>(filters: string, sourceItem: T): string | null {
   let result = filters;
 
   // noinspection SuspiciousTypeOfGuard
-  if (typeof result === 'string') {
+  if (typeof result === "string") {
     result = result.replace(DATA_KEY_REGEXP, (_, key) => {
-      const dataKey = key.split('|');
+      const dataKey = key.split("|");
       let data = getDataByKey(sourceItem, dataKey);
       if (Array.isArray(data)) {
         data = data.map(addQuotesIfString);
@@ -51,8 +51,8 @@ export const BaseCardRowWithMetaTable: <T>(props: IBaseCardRowWithMetaTableLayou
     cardType="inner"
     {...props.metaTableProps}
     paperStyle={props.rowIndex !== 0 || props.rowsLength !== 1 ? {marginLeft: 0, marginRight: 0} : {}}
-    fitToCardBody={(props.parent === 'card' || props.parent === 'block') && props.rowIndex === 0 && props.rowsLength === 1}
-    fitToCollapseBody={props.parent === 'collapse' && props.rowIndex === 0 && props.rowsLength === 1}
+    fitToCardBody={(props.parent === "card" || props.parent === "block") && props.rowIndex === 0 && props.rowsLength === 1}
+    fitToCollapseBody={props.parent === "collapse" && props.rowIndex === 0 && props.rowsLength === 1}
     filter={JSON.parse(mapFilters(props.metaTableProps.globalFilter as string, props.sourceItem))}
     defaultFilter={JSON.parse(mapFilters(props.metaTableProps.filter as string, props.sourceItem))}
   />

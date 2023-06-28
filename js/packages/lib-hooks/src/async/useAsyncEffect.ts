@@ -7,7 +7,7 @@ export function useAsyncEffect(effect: () => Promise<void>, deps: DependencyList
     effect().catch(e => {
       console.error(e);
       Container.get(NotificationDispatcher).handleError(e);
-    })
+    });
   }, deps);
 }
 

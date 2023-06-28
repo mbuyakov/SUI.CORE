@@ -1,31 +1,31 @@
-import {Container, Singleton} from 'typescript-ioc';
-import axios from 'axios';
-import {Nullable, sleep} from '@/other';
-import {ICoreUser} from '@/user';
-import {getSUISettings} from '@/core';
+import {Container, Singleton} from "typescript-ioc";
+import axios from "axios";
+import {Nullable, sleep} from "@/other";
+import {ICoreUser} from "@/user";
+import {getSUISettings} from "@/core";
 import {NotificationDispatcher} from "@sui/lib-notification-dispatcher";
 
 // Don't touch import
 // noinspection ES6PreferShortImport
-import {_LocalStorageValue} from '../annotation/LocalStorageValue';
+import {_LocalStorageValue} from "../annotation/LocalStorageValue";
 // noinspection ES6PreferShortImport
-import {Logger} from '../utils';
+import {Logger} from "../utils";
 // eslint-disable-next-line import/order
 import {UserNotInitializedError} from "@/errors";
 
 
-export const USER_FORCIBLY_LOGOUT_MSG = 'Ваш сеанс был автоматически завершен.';
-const NOTIFICATION_KEY_USER_FORCIBLY_LOGOUT = 'connect__USER_FORCIBLYLOGOUT_BY_IDLE_TIME';
+export const USER_FORCIBLY_LOGOUT_MSG = "Ваш сеанс был автоматически завершен.";
+const NOTIFICATION_KEY_USER_FORCIBLY_LOGOUT = "connect__USER_FORCIBLYLOGOUT_BY_IDLE_TIME";
 
 @Singleton
 export class UserService<META = Record<string, never>> {
   private notificationDispatcher = Container.get(NotificationDispatcher);
 
-  private token = _LocalStorageValue('token');
+  private token = _LocalStorageValue("token");
 
-  private restUri: string = Container.getValue('sui.restUri');
+  private restUri: string = Container.getValue("sui.restUri");
 
-  private log = new Logger('UserService');
+  private log = new Logger("UserService");
 
   private user: Nullable<ICoreUser<META>>;
 
@@ -59,7 +59,7 @@ export class UserService<META = Record<string, never>> {
   }
 
   private async runTokenChecker(): Promise<void> {
-    this.log.info('Start token checker');
+    this.log.info("Start token checker");
 
     while (this.isLoggedIn()) {
       // @ts-ignore
@@ -79,11 +79,11 @@ export class UserService<META = Record<string, never>> {
             notification.warn({key: NOTIFICATION_KEY_USER_FORCIBLY_LOGOUT, message: USER_FORCIBLY_LOGOUT_MSG, duration: 0});
           }
         } catch (reason) {
-          this.log.error(reason, 'Token check error');
+          this.log.error(reason, "Token check error");
           // @ts-ignore
           notification.warn({
-            message: 'Ошибка при проверке токена',
-            key: 'TOKEN_CHECK_ERROR_NOTIFICATION'
+            message: "Ошибка при проверке токена",
+            key: "TOKEN_CHECK_ERROR_NOTIFICATION"
           });
           await sleep(1000);
         }
@@ -91,7 +91,7 @@ export class UserService<META = Record<string, never>> {
         await sleep(1000);
       }
     }
-    this.log.info('Token checker stopped due to logout');
+    this.log.info("Token checker stopped due to logout");
   }
 
   public async logout(userCommand: boolean): Promise<void> {
@@ -106,9 +106,9 @@ export class UserService<META = Record<string, never>> {
         this.user = null;
         getSUISettings().routerPushFn("/");
       } catch (e) {
-        this.log.error(e, 'Logout error');
+        this.log.error(e, "Logout error");
         // @ts-ignore
-        notification.warn({message: 'В процессе выхода произошла ошибка'});
+        notification.warn({message: "В процессе выхода произошла ошибка"});
       }
     } else {
       this.token.set(null);

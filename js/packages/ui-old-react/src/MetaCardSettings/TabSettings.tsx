@@ -1,15 +1,15 @@
 import {Input} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {IBaseCardItemLayout, IBaseCardTabLayout} from '../Base';
+import {IBaseCardItemLayout, IBaseCardTabLayout} from "../Base";
 // noinspection ES6PreferShortImport
 import {DeletableSmallCard} from "../DeletableSmallCard";
 // noinspection ES6PreferShortImport
-import {DnDList, IBaseDnDChildProps} from '../Draggable';
+import {DnDList, IBaseDnDChildProps} from "../Draggable";
 // noinspection ES6PreferShortImport
-import {ISerializable, SerializableDnDChild} from '../Draggable/Serializable';
+import {ISerializable, SerializableDnDChild} from "../Draggable/Serializable";
 // noinspection ES6PreferShortImport
 import {COMMON__GRID} from "../styles";
 
@@ -17,7 +17,7 @@ import {RowSettings, SerializedRowSettings} from "./RowSettings";
 import {RowsList} from "./RowsList";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type TabSettingsState = Omit<IBaseCardTabLayout<any, IBaseCardItemLayout<any>>, 'rows'> & {
+type TabSettingsState = Omit<IBaseCardTabLayout<any, IBaseCardItemLayout<any>>, "rows"> & {
   rows: SerializedRowSettings[];
 };
 

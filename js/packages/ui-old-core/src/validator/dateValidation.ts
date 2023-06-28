@@ -1,7 +1,7 @@
-import moment, {Moment} from 'moment';
+import moment, {Moment} from "moment";
 import {Nullable} from "@/other";
 
-export const MOMENT_01_01_1900 = moment('1900-01-01');
+export const MOMENT_01_01_1900 = moment("1900-01-01");
 
 export const BIRTHDAY_LESS_THAN_01_01_1900_MSG = "Дата рождения не может быть меньше 01.01.1900";
 export const BIRTHDAY_IN_FUTURE_MSG = "Дата рождения не может быть в будущем";
@@ -22,11 +22,11 @@ export const PASSPORT_ISSUE_DATE_BROKEN_MSG = "Недопустимая дата
 
 
 export function isFutureDate(target: Moment): boolean {
-  return target > moment().endOf('day');
+  return target > moment().endOf("day");
 }
 
 export function getAge(birthday: Moment): number {
-  return moment().diff(birthday, 'years');
+  return moment().diff(birthday, "years");
 }
 
 //**************
@@ -56,11 +56,11 @@ export function birthDayValidator(birthday: Moment, deathDate: Nullable<Moment>,
       return AGE_GREATER_THAN_150_MSG;
   }
 
-  return '';
+  return "";
 }
 
 export function dateDisabledForBirthday(deathDate: Nullable<Moment>, adultOnly: boolean): (target: Moment) => boolean {
-  return (target: Moment): boolean => birthDayValidator(target, deathDate, adultOnly) !== '';
+  return (target: Moment): boolean => birthDayValidator(target, deathDate, adultOnly) !== "";
 }
 
 export function issueDateValidator(issueDate: Moment, docCode: number, birthday: Moment): string {
@@ -71,9 +71,9 @@ export function issueDateValidator(issueDate: Moment, docCode: number, birthday:
       return ISSUE_DATE_LESS_BIRTHDAY_MSG;
     case docCode == 21: // Паспорт гражданина РФ
       const current = moment();
-      const birthdayPlus45y = birthday.clone().add(45, 'years');
-      const birthdayPlus20y = birthday.clone().add(20, 'years');
-      const birthdayPlus14y = birthday.clone().add(14, 'years');
+      const birthdayPlus45y = birthday.clone().add(45, "years");
+      const birthdayPlus20y = birthday.clone().add(20, "years");
+      const birthdayPlus14y = birthday.clone().add(14, "years");
       if (
         birthdayPlus45y.clone().add(90, "days") <= current && issueDate < birthdayPlus45y ||
         birthdayPlus20y.clone().add(90, "days") <= current && issueDate < birthdayPlus20y ||
@@ -81,17 +81,17 @@ export function issueDateValidator(issueDate: Moment, docCode: number, birthday:
       ) {
         return PASSPORT_ISSUE_DATE_BROKEN_MSG;
       } else {
-        return '';
+        return "";
       }
-    case docCode == 14 && issueDate.diff(birthday, 'years') < 14: // Временное удостоверение личности гражданина РФ
+    case docCode == 14 && issueDate.diff(birthday, "years") < 14: // Временное удостоверение личности гражданина РФ
       return ISSUE_DATE_FROM_14_MSG;
-    case [7, 8].includes(docCode) && issueDate.diff(birthday, 'years') < 18: // Военный билет солдата и Временное удостоверение, выданное взамен военного билета
+    case [7, 8].includes(docCode) && issueDate.diff(birthday, "years") < 18: // Военный билет солдата и Временное удостоверение, выданное взамен военного билета
       return ISSUE_DATE_FROM_18_MSG;
     case true:
-      return '';
+      return "";
   }
 }
 
 export function dateDisabledForIssueDate(docCode: number, birthday: Moment): (target: Moment) => boolean {
-  return (target: Moment): boolean => issueDateValidator(target, docCode, birthday) !== '';
+  return (target: Moment): boolean => issueDateValidator(target, docCode, birthday) !== "";
 }

@@ -1,6 +1,6 @@
 import {Button, InputProps, Popover} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import React, {ChangeEvent} from 'react';
+import autobind from "autobind-decorator";
+import React, {ChangeEvent} from "react";
 import {ExtractProps} from "@/other";
 import {CustomFioInput} from "@/Inputs";
 
@@ -11,11 +11,11 @@ export function apostropheValidator(value: string | null): string {
   if (value && value.trim().length) {
     const statePrefix = getAcceptStateFromPrefix(value);
     if (statePrefix !== null && statePrefix !== AcceptState.START) {
-      return 'Ошибочный апостроф в фамилии';
+      return "Ошибочный апостроф в фамилии";
     }
   }
 
-  return '';
+  return "";
 }
 
 export function wrapWithApostropheValidator(validator: ValidatorFunc): (value: string | null) => string {
@@ -26,7 +26,7 @@ export type InputWithApostropheValidationProps = InputProps & {
   errorPlacement: "top" | "right" | "bottom" | "left" | null,
   input: React.ComponentClass<ExtractProps<CustomFioInput>>
   onChange?(value: string): void,
-}
+};
 
 interface IInputWithApostropheValidationState {
   acceptState: AcceptState,
@@ -187,7 +187,7 @@ function addPrefix(s: string, prefix: string): string {
 
 function dropPrefix(s: string): string {
   if (s) {
-    return s.replace(PREFIX_REGEX, '');
+    return s.replace(PREFIX_REGEX, "");
   }
 
   return s;

@@ -1,19 +1,19 @@
-import * as React from 'react';
+import * as React from "react";
 import {Input} from "@sui/deps-antd";
 import {ColumnInfo} from "@sui/ui-old-core";
 import {formatByMaskFn} from "@/tmp";
 
 // noinspection ES6PreferShortImport
-import {IBaseTableColLayout} from '../../BaseTable';
+import {IBaseTableColLayout} from "../../BaseTable";
 // noinspection ES6PreferShortImport
-import {IColumnInfoToBaseTableColProps} from '../../utils';
+import {IColumnInfoToBaseTableColProps} from "../../utils";
 // noinspection ES6PreferShortImport
-import {TableRenderSettingsPluginManager} from '../TableRenderSettingsPluginManager';
+import {TableRenderSettingsPluginManager} from "../TableRenderSettingsPluginManager";
 // noinspection ES6PreferShortImport
-import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
+import {ITableRenderParams, TableRenderSettingsPopover} from "../TableRenderSettingsPopover";
 
 // noinspection ES6PreferShortImport
-import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
+import {TableRenderParamsPlugin} from "./TableRenderParamsPlugin";
 
 export interface IStringFormatByMaskPluginTRP {
   mask?: string;
@@ -22,7 +22,7 @@ export interface IStringFormatByMaskPluginTRP {
 export class StringFormatByMaskPlugin extends TableRenderParamsPlugin<IStringFormatByMaskPluginTRP> {
 
   public constructor() {
-    super('stringByMaskFormatter', 'Форматирование строки по маске', true);
+    super("stringByMaskFormatter", "Форматирование строки по маске", true);
   }
 
   baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, trp: ITableRenderParams<IStringFormatByMaskPluginTRP>): Promise<void> {
@@ -44,10 +44,10 @@ export class StringFormatByMaskPlugin extends TableRenderParamsPlugin<IStringFor
         <span>Маска:</span>
         <Input
           value={trsp.state.tableRenderParams.mask || undefined}
-          onChange={(e): Promise<void> => trsp.updateField('mask')(e.target.value)}
+          onChange={(e): Promise<void> => trsp.updateField("mask")(e.target.value)}
         />
       </>
-    )
+    );
   }
 }
 

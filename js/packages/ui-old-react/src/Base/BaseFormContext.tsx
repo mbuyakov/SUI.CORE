@@ -1,7 +1,7 @@
-import * as React from 'react';
+import * as React from "react";
 import {IObjectWithIndex} from "@sui/ui-old-core";
 
-import {BaseForm} from './BaseForm';
+import {BaseForm} from "./BaseForm";
 
 export interface IBaseFormContext {
   baseForm: BaseForm;

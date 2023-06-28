@@ -1,4 +1,4 @@
-import {toMap} from '@sui/ui-old-core';
+import {toMap} from "@sui/ui-old-core";
 import autobind from "autobind-decorator";
 import * as React from "react";
 

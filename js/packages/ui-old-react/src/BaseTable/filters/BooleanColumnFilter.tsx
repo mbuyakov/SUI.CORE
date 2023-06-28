@@ -1,11 +1,11 @@
-import {CheckOutlined, CloseOutlined} from '@ant-design/icons';
-import autobind from 'autobind-decorator';
-import * as React from 'react';
+import {CheckOutlined, CloseOutlined} from "@ant-design/icons";
+import autobind from "autobind-decorator";
+import * as React from "react";
 
 import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 // noinspection ES6PreferShortImport
-import {BaseSelectFilter} from './BaseSelectFilter';
+import {BaseSelectFilter} from "./BaseSelectFilter";
 
 
 export type BooleanColumnFilterProps = LazyTableFilterRowCellProps
@@ -25,10 +25,10 @@ export class BooleanColumnFilter extends React.Component<BooleanColumnFilterProp
         data={[
           {
             title: <CheckOutlined/>,
-            value: this.props.trueValue != null ? this.props.trueValue.toString() : 'true'
+            value: this.props.trueValue != null ? this.props.trueValue.toString() : "true"
           }, {
             title: <CloseOutlined/>,
-            value: this.props.falseValue != null ? this.props.falseValue.toString() : 'false'
+            value: this.props.falseValue != null ? this.props.falseValue.toString() : "false"
           }
         ]}
       />
@@ -37,7 +37,7 @@ export class BooleanColumnFilter extends React.Component<BooleanColumnFilterProp
 
   @autobind
   private convertBooleanStringToBoolean(boolString: string | undefined): boolean | null {
-    return boolString ? (boolString === (this.props.trueValue !== undefined ? this.props.trueValue.toString() : 'true')) : null;
+    return boolString ? (boolString === (this.props.trueValue !== undefined ? this.props.trueValue.toString() : "true")) : null;
   }
 
   @autobind
@@ -49,7 +49,7 @@ export class BooleanColumnFilter extends React.Component<BooleanColumnFilterProp
 
     event
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ? this.props.onFilter({columnName: this.props.column.name, value: value as any, operation: 'equal'})
+      ? this.props.onFilter({columnName: this.props.column.name, value: value as any, operation: "equal"})
       : this.props.onFilter(null);
   }
 

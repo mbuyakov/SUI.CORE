@@ -1,4 +1,4 @@
-import capitalize from 'lodash/capitalize';
+import capitalize from "lodash/capitalize";
 
 export const NAME_REGEXP = /^(?=(([А-ЯЁа-яё0-9().]+([\-'`](?!\s|$))?|\s)+))\1$/;
 export const LAST_NAME_REGEXP = /^(?=(([А-ЯЁа-яё0-9()]+([\-'`](?!\s|$))?|\s)+))\1$/;
@@ -14,9 +14,9 @@ export function nameValidator(field: "firstName" | "middleName" | "lastName", al
 
   return (name: string): string | null => {
     if (!name || !name.trim().length) {
-      return (field === "middleName" || allowNulls) ? '' : "Поле должно быть заполнено";
+      return (field === "middleName" || allowNulls) ? "" : "Поле должно быть заполнено";
     } else {
-      if (field === 'lastName') {
+      if (field === "lastName") {
         return LAST_NAME_REGEXP.test(name)
           ? allSymbolValidatorAndWhiteSpace(name)
           : LAST_REGEXP_MESSAGE;
@@ -26,7 +26,7 @@ export function nameValidator(field: "firstName" | "middleName" | "lastName", al
           : NAME_REGEXP_MESSAGE;
       }
     }
-  }
+  };
 }
 
 function allSymbolValidatorAndWhiteSpace(name: string): string {
@@ -36,7 +36,7 @@ function allSymbolValidatorAndWhiteSpace(name: string): string {
       ? ALL_SYMBOL_MESSAGE
       : WHITESPACE_REGEXP.test(name)
         ? WHITESPACE_MESSAGE
-        : '';
+        : "";
 }
 
 export function fioConverter(name: string): string {
@@ -44,5 +44,5 @@ export function fioConverter(name: string): string {
 }
 
 export function fioConverterWithoutTrim(name: string): string {
-  return name.replace(/\s\s+/g, ' ').replace(/\w+|[А-Яа-яёЁA-Za-z]+/g, capitalize);
+  return name.replace(/\s\s+/g, " ").replace(/\w+|[А-Яа-яёЁA-Za-z]+/g, capitalize);
 }

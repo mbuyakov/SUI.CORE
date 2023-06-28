@@ -6,8 +6,8 @@ export const defaultMuiTheme = createTheme();
 export const defaultThemesConfig: ThemesConfig = {
   common: {
     lessVars: {
-      'layout-header-height': '48px',
-      'card-padding-wider': '24px',
+      "layout-header-height": "48px",
+      "card-padding-wider": "24px",
       "primary-color": "#56CBF8",
       "info-color": "#56CBF8",
       "error-color": "#FF6565",
@@ -36,7 +36,7 @@ export const defaultThemesConfig: ThemesConfig = {
       overrides: {
         MuiToolbar: {
           gutters: {
-            [theme.breakpoints.up('sm')]: {
+            [theme.breakpoints.up("sm")]: {
               paddingLeft: theme.spacing(2), // 3 -> 2
               paddingRight: theme.spacing(2)
             }
@@ -71,7 +71,7 @@ export const defaultThemesConfig: ThemesConfig = {
             root: {
               color: textColor,
               "&:hover": {
-                transition: theme.transitions.create('color'),
+                transition: theme.transitions.create("color"),
                 color: hoverTextColor,
               },
               "&$selected": {

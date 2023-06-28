@@ -1,9 +1,9 @@
-import autobind from 'autobind-decorator';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import * as React from "react";
 
 import {INN_MASK} from "@sui/ui-old-core";
 import {SUIMaskedInput} from "@/SUIMaskedInput";
-import {INewSearchProps, LazyTableFilterRowCellProps} from '../types';
+import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 export type IInnColumnFilterProps = React.PropsWithChildren<LazyTableFilterRowCellProps & INewSearchProps>;
 
@@ -42,7 +42,7 @@ export class InnColumnFilter extends React.Component<IInnColumnFilterProps, IInn
         {...clearProps}
         allowClear={true}
         mask={INN_MASK}
-        placeholder={this.props.placeholder as string || 'Фильтр...'}
+        placeholder={this.props.placeholder as string || "Фильтр..."}
         value={this.state.value}
         onChange={this.onChange}
         onPressEnter={this.onPressEnter}

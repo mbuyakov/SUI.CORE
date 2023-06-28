@@ -1,14 +1,14 @@
-import {Plugin, Template, TemplateConnector, TemplatePlaceholder} from '@sui/deps-dx-react-grid';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import Build from '@mui/icons-material/Build';
+import {Plugin, Template, TemplateConnector, TemplatePlaceholder} from "@sui/deps-dx-react-grid";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Build from "@mui/icons-material/Build";
 import autobind from "autobind-decorator";
-import React from 'react';
+import React from "react";
 
 // noinspection ES6PreferShortImport
-import {FullScreenModalClass} from '../FullScreenModal';
+import {FullScreenModalClass} from "../FullScreenModal";
 // noinspection ES6PreferShortImport
-import {FullScreenTableSettings} from '../TableSettings';
+import {FullScreenTableSettings} from "../TableSettings";
 
 interface ITableSettingsDialogProps {
   buttonStyle?: React.CSSProperties

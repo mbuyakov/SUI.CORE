@@ -20,7 +20,7 @@ export class EventManager<T extends SuiEvent> {
       unsubscribe(): void {
         handlersByType?.delete(id);
       }
-    }
+    };
   }
 
   public dispatch<E extends T>(eventType: Class<E>, event: E): Promise<void[]> {

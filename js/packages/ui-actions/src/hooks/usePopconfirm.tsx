@@ -1,7 +1,7 @@
 import {Popconfirm, PopconfirmProps} from "@sui/deps-antd";
 import React, {useState} from "react";
 
-export type PopconfirmSettings = Omit<PopconfirmProps, 'onConfirm' | 'onCancel' | 'open'>;
+export type PopconfirmSettings = Omit<PopconfirmProps, "onConfirm" | "onCancel" | "open">;
 
 export interface IUsePopconfirmState {
   wrapper(element: JSX.Element): JSX.Element;
@@ -49,4 +49,4 @@ export const usePopconfirm: (settings?: PopconfirmSettings) => IUsePopconfirmSta
     wrapper,
     getResult
   };
-}
+};

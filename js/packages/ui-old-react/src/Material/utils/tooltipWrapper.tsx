@@ -24,4 +24,4 @@ export const tooltipWrapper = (tooltip: Nullable<string>, component: JSX.Element
   }
 
   return component;
-}
+};

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import IdleTimer from 'react-idle-timer';
+import * as React from "react";
+import IdleTimer from "react-idle-timer";
 import {ColumnInfo, TableInfo} from "@sui/ui-old-core";
 
 

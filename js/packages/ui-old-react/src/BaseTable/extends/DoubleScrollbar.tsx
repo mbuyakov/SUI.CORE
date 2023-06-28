@@ -1,5 +1,5 @@
 import autobind from "autobind-decorator";
-import * as React from 'react';
+import * as React from "react";
 
 // fixed https://github.com/umchee/react-double-scrollbar/blob/master/src/DoubleScrollbar.jsx
 export class DoubleScrollbar extends React.Component<{children: React.ReactNode}> {

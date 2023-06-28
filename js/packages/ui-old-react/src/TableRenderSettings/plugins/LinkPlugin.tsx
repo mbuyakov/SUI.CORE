@@ -1,18 +1,18 @@
 import {ColumnInfo, ColumnInfoManager, getDataByKey} from "@sui/ui-old-core";
 import {Select} from "@sui/deps-antd";
-import * as React from 'react';
-import {RouterLink} from '@/Link';
-import {IBaseTableColLayout} from '@/BaseTable';
+import * as React from "react";
+import {RouterLink} from "@/Link";
+import {IBaseTableColLayout} from "@/BaseTable";
 
 // noinspection ES6PreferShortImport
-import {getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps} from '../../utils';
+import {getLinkForTable, getReferencedTableInfo, IColumnInfoToBaseTableColProps} from "../../utils";
 // noinspection ES6PreferShortImport
 import {TableRenderSettingsPluginManager} from "../TableRenderSettingsPluginManager";
 // noinspection ES6PreferShortImport
-import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
+import {ITableRenderParams, TableRenderSettingsPopover} from "../TableRenderSettingsPopover";
 
 // noinspection ES6PreferShortImport
-import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
+import {TableRenderParamsPlugin} from "./TableRenderParamsPlugin";
 
 export interface ILinkPluginTRP {
   customColumnInfoId: string
@@ -20,7 +20,7 @@ export interface ILinkPluginTRP {
 
 export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
   public constructor() {
-    super('link', 'Ссылка', true);
+    super("link", "Ссылка", true);
   }
 
   public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams<ILinkPluginTRP>): Promise<void> {
@@ -37,7 +37,7 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
     }
 
 
-    const link = getLinkForTable(referencedTableInfo.tableName, 'card', ':id');
+    const link = getLinkForTable(referencedTableInfo.tableName, "card", ":id");
     if (link) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       result.render = (value: any, row: any): React.ReactNode => {
@@ -53,12 +53,12 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
           if (id || id === 0) {
             return (
               <RouterLink
-                to={link.replace(':id', id)}
+                to={link.replace(":id", id)}
                 text={value}
                 type="button"
                 monospace={false}
               />
-            )
+            );
           }
         }
 
@@ -71,11 +71,11 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
     const isLinkCol = props.isLinkCol;
     const renderType = getDataByKey<string>(tableRenderParams, "renderType");
 
-    if (isLinkCol && (!renderType || renderType === 'link' || renderType === 'raw')) {
+    if (isLinkCol && (!renderType || renderType === "link" || renderType === "raw")) {
       return true;
     }
 
-    return renderType === 'link' && getDataByKey(props.columnInfo, "foreignColumnInfo", "length");
+    return renderType === "link" && getDataByKey(props.columnInfo, "foreignColumnInfo", "length");
   }
 
 
@@ -88,7 +88,7 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
         <Select
           style={{minWidth: 250}}
           value={trsp.state.tableRenderParams.customColumnInfoId || undefined}
-          onChange={trsp.updateField('customColumnInfoId')}
+          onChange={trsp.updateField("customColumnInfoId")}
           allowClear={true}
         >
           {columns.map(column => (<Select.Option key={column.id} value={column.id}>{column.nameByNameId ? column.nameByNameId.name : column.columnName}</Select.Option>))}

@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import {CssBaseline, Theme} from "@mui/material";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import {IRawRoute} from "@sui/ui-old-core";
-import pathToRegexp from 'path-to-regexp';
+import pathToRegexp from "path-to-regexp";
 import {Location} from "history";
 import {Footer} from "@/layout/Footer";
 import {useMediaQuery} from "@/hooks";
@@ -137,4 +137,4 @@ export const BasicLayout: React.FC<{
       </main>
     </div>
   );
-}
+};

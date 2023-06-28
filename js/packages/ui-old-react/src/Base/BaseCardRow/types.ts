@@ -1,1 +1,1 @@
-export type BaseCardRowParent = 'card' | 'collapse' | 'tab' | 'block';
+export type BaseCardRowParent = "card" | "collapse" | "tab" | "block";

@@ -1,23 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {Filter, FilterOperation, Grouping, GroupKey, Sorting, Table as TableBase, TableBandHeader as TableBandHeaderBase, TableFilterRow, TableRowDetail} from '@sui/deps-dx-react-grid';
-import {DataKey, IObjectWithIndex} from '@sui/ui-old-core';
-import * as React from 'react';
+import {Filter, FilterOperation, Grouping, GroupKey, Sorting, Table as TableBase, TableBandHeader as TableBandHeaderBase, TableFilterRow, TableRowDetail} from "@sui/deps-dx-react-grid";
+import {DataKey, IObjectWithIndex} from "@sui/ui-old-core";
+import * as React from "react";
 import {TableRenderParamsPlugin} from "@/TableRenderSettings";
 
 // noinspection ES6PreferShortImport
-import { CompiledTheme } from '@/themes';
+import { CompiledTheme } from "@/themes";
 import {IBaseTableUserSettings} from "./extends/UserSettingsPlugin";
-import { CardType } from '@sui/deps-antd';
+import { CardType } from "@sui/deps-antd";
 
 export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode;
-export type TableSearchType = 'select' | 'date' | 'boolean' | 'string' | 'none';
+export type TableSearchType = "select" | "date" | "boolean" | "string" | "none";
 export type RowDetail = React.ComponentType<TableRowDetail.ContentProps>;
-export type SortingDirection = 'asc' | 'desc';
+export type SortingDirection = "asc" | "desc";
 export type LazyFilter = Filter & { lazy?: boolean };
 export type LazyTableFilterRowCellProps = Omit<TableFilterRow.CellProps, "filter" | "onFilter"> & {
   filter: LazyFilter | null;
   onFilter(filter: LazyFilter | null): void;
-}
+};
 
 export interface ISearchProps /*extends TableFilterRow.CellProps*/
 {
@@ -48,7 +48,7 @@ export type INewSearchProps = ICommonColumnSearchProps & {
   selectData?: SelectData | Promise<SelectData>; // for customSelect
   type?: "customSelect" | "datetime" | "date" | "boolean" | "none" | "default" | string;
   optionFilter?(option: any): boolean; // for selects
-}
+};
 
 export interface IBaseTableColLayout {
   dataKey?: DataKey;

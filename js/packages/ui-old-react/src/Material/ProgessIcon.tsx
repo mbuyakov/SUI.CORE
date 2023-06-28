@@ -5,10 +5,10 @@ import {Nullable} from "@sui/ui-old-core";
 import {CircularProgress, CircularProgressProps} from "@mui/material";
 import React from "react";
 
-export type ProgressIconProps = Omit<CircularProgressProps, 'size'> & {
+export type ProgressIconProps = Omit<CircularProgressProps, "size"> & {
   size: Nullable<"small" | "medium" | "large">;
   type: "icon" | "iconButton";
-}
+};
 
 export const ProgressIcon: React.FC<ProgressIconProps> = ({size, type, ...rest}) => {
   let _size = type === "icon" ? 16 : 24;
@@ -27,4 +27,4 @@ export const ProgressIcon: React.FC<ProgressIconProps> = ({size, type, ...rest})
       size={_size}
     />
   );
-}
+};

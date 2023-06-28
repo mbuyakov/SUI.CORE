@@ -1,7 +1,7 @@
-import * as React from 'react';
-import {defaultIfNotBoolean} from '@sui/ui-old-core';
+import * as React from "react";
+import {defaultIfNotBoolean} from "@sui/ui-old-core";
 
-import {BASE_CARD_ITEM, BASE_CARD_ITEM_LABEL_HORIZONTAL} from './styles';
+import {BASE_CARD_ITEM, BASE_CARD_ITEM_LABEL_HORIZONTAL} from "./styles";
 
 declare interface IDescriptionItemProps {
   children?: React.ReactNode;
@@ -17,7 +17,7 @@ export class DescriptionItem extends React.Component<IDescriptionItemProps> {
     return (
       <div style={this.props.containerStyle} className={BASE_CARD_ITEM}>
         <span style={this.props.labelStyle} className={BASE_CARD_ITEM_LABEL_HORIZONTAL}>
-          {this.props.title}{!defaultIfNotBoolean(this.props.noColon, false) && ':'}
+          {this.props.title}{!defaultIfNotBoolean(this.props.noColon, false) && ":"}
         </span>
         {this.props.children || this.props.content}
       </div>

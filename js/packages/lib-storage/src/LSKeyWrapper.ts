@@ -25,6 +25,6 @@ export class LSKeyWrapperImpl<T extends string = string> extends LSKeyWrapper<T>
   }
 
   override remove() {
-    this.localStorageService.removeItem(this.key)
+    this.localStorageService.removeItem(this.key);
   }
 }

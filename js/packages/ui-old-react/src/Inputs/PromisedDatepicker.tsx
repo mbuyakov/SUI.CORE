@@ -1,13 +1,13 @@
-import {CircularProgress, IconButton} from '@mui/material';
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
-import {DatePicker, DatePickerProps} from '@sui/deps-antd';
-import moment from 'moment';
-import * as React from 'react';
-import {SUI_ROW_GRID} from '@/styles';
+import {CircularProgress, IconButton} from "@mui/material";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import {DatePicker, DatePickerProps} from "@sui/deps-antd";
+import moment from "moment";
+import * as React from "react";
+import {SUI_ROW_GRID} from "@/styles";
 
-import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from './PromisedBase';
+import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
-export type PromisedDatepickerProps = IPromisedBaseProps<moment.Moment | null> & Omit<DatePickerProps, "onChange" | "value">
+export type PromisedDatepickerProps = IPromisedBaseProps<moment.Moment | null> & Omit<DatePickerProps, "onChange" | "value">;
 
 export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps,
   IPromisedBaseState<moment.Moment | null>,

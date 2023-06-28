@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import IconButton from '@mui/material/IconButton';
-import SettingsIcon from '@mui/icons-material/Settings';
+import IconButton from "@mui/material/IconButton";
+import SettingsIcon from "@mui/icons-material/Settings";
 import {Popover, PopoverProps} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import React from "react";

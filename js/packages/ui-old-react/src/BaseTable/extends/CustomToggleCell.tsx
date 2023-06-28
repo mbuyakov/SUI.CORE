@@ -1,12 +1,12 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'clsx';
-import { TableCell, styled, IconButton } from '@mui/material';
+import * as React from "react";
+import PropTypes from "prop-types";
+import classNames from "clsx";
+import { TableCell, styled, IconButton } from "@mui/material";
 
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
-const PREFIX = 'TableDetailToggleCell';
+const PREFIX = "TableDetailToggleCell";
 export const classes = {
   toggleCell: `${PREFIX}-toggleCell`,
   toggleCellButton: `${PREFIX}-toggleCellButton`,
@@ -14,8 +14,8 @@ export const classes = {
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${classes.toggleCell}`]: {
-    textAlign: 'center',
-    textOverflow: 'initial',
+    textAlign: "center",
+    textOverflow: "initial",
     paddingTop: 0,
     paddingBottom: 0,
     paddingLeft: theme.spacing(1),

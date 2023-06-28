@@ -7,5 +7,5 @@ export function lazyInit<T>(initializer: () => T): () => T {
       instance = initializer();
     }
     return instance;
-  }
+  };
 }

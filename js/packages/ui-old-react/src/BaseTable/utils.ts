@@ -12,7 +12,7 @@ export function mapColumns(cols: IBaseTableColLayout[]): IFormattedBaseTableColL
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getCellValue: (row: any): any => (col.dataKey && getDataByKey(row, col.dataKey)) || (col.defaultData !== undefined ? col.defaultData : row[col.id]),
     name: col.id,
-    title: col.title || translate(col.id, true) || translate(col.id.replace(/Id$/, '')),
+    title: col.title || translate(col.id, true) || translate(col.id.replace(/Id$/, "")),
   }));
 }
 
@@ -43,7 +43,7 @@ export async function exportToXlsx(
         value = options.exportValueFormatter(col, value, row);
       }
 
-      return [col.title, value]
+      return [col.title, value];
     }))
   );
 
@@ -51,10 +51,10 @@ export async function exportToXlsx(
 
   const wb = xlsx.utils.book_new();
 
-  xlsx.utils.book_append_sheet(wb, ws, '1');
+  xlsx.utils.book_append_sheet(wb, ws, "1");
 
   if (options.file) {
-    xlsx.writeFile(wb, 'table.xlsx', options.opts);
+    xlsx.writeFile(wb, "table.xlsx", options.opts);
     return undefined;
     // tslint:disable-next-line:unnecessary-else
   } else {

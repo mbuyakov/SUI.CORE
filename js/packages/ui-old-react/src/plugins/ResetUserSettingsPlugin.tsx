@@ -1,9 +1,9 @@
 /* tslint:disable:no-magic-numbers */
-import {Getters, Plugin, Template, TemplateConnector, TemplatePlaceholder} from '@sui/deps-dx-react-grid';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import RotateLeftIcon from '@mui/icons-material/RotateLeft';
-import React from 'react';
+import {Getters, Plugin, Template, TemplateConnector, TemplatePlaceholder} from "@sui/deps-dx-react-grid";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import RotateLeftIcon from "@mui/icons-material/RotateLeft";
+import React from "react";
 
 export interface IResetUserSettingsPluginProps {
   onClick(getters: Getters): void | Promise<void>;

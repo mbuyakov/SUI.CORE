@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React from "react";
 import {generatePath, match, RouteComponentProps, withRouter} from "react-router-dom";
-import autobind from 'autobind-decorator';
+import autobind from "autobind-decorator";
 import {ReactInstance} from "react";
 
 const BaseCardTabContext = React.createContext<{ setTab(tab: string): void, tab: string }>(null);
@@ -60,5 +60,5 @@ class BaseCardTabContextProviderInner extends React.Component<BaseCardTabContext
   }
 }
 
-export const BaseCardTabContextProvider: React.ComponentClass<Omit<BaseCardTabContextProps, 'history' | 'location' | 'match'>> = withRouter(BaseCardTabContextProviderInner);
+export const BaseCardTabContextProvider: React.ComponentClass<Omit<BaseCardTabContextProps, "history" | "location" | "match">> = withRouter(BaseCardTabContextProviderInner);
 export const BaseCardTabContextConsumer = BaseCardTabContext.Consumer;

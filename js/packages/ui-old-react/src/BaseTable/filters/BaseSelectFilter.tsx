@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {Select, SelectProps} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import isEqual from 'lodash/isEqual';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import isEqual from "lodash/isEqual";
+import * as React from "react";
 
 import {getDataByKey} from "@sui/ui-old-core";
-import {SelectValue} from '@/antdMissedExport';
-import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from '../types';
+import {SelectValue} from "@/antdMissedExport";
+import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 
 export interface ISelectColumnFilterData {
@@ -71,7 +71,7 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
         allowClear={true}
         disabled={this.props.disabled}
         virtual={false}
-        placeholder={<span style={{fontWeight: 400}}>{this.props.placeholder || 'Фильтр...'}</span>}
+        placeholder={<span style={{fontWeight: 400}}>{this.props.placeholder || "Фильтр..."}</span>}
         {...restProps}
         value={
           filterValue != null

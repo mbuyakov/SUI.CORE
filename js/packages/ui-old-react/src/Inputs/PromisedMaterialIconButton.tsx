@@ -1,12 +1,12 @@
-import {CircularProgress, IconButton, IconButtonProps, Tooltip} from '@mui/material';
-import * as React from 'react';
+import {CircularProgress, IconButton, IconButtonProps, Tooltip} from "@mui/material";
+import * as React from "react";
 
-import {IPromisedBaseState, PromisedBase} from './PromisedBase';
+import {IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
 interface IPromisedMaterialIconButtonProps extends IconButtonProps {
   icon?: JSX.Element;
   loading?: boolean;
-  progressColor?: 'primary' | 'secondary';
+  progressColor?: "primary" | "secondary";
   tooltipText?: string;
 }
 
@@ -16,7 +16,7 @@ export class PromisedMaterialIconButton extends PromisedBase<IPromisedMaterialIc
   public render(): JSX.Element {
     let btn = (
       <IconButton onClick={this.saveWithoutValue} {...this.props} size="large">
-        {(this.props.loading || this.state.loading) ? <CircularProgress size={this.props.size === 'small' ? 16 : 24} color={this.props.progressColor}/> : (this.props.children || this.props.icon)}
+        {(this.props.loading || this.state.loading) ? <CircularProgress size={this.props.size === "small" ? 16 : 24} color={this.props.progressColor}/> : (this.props.children || this.props.icon)}
       </IconButton>
     );
 

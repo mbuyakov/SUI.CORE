@@ -1,41 +1,41 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {camelCase, Merge} from '@sui/ui-old-core';
+import {camelCase, Merge} from "@sui/ui-old-core";
 import {Button, Checkbox, Input, Mentions, Menu} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import * as React from 'react';
-import {CheckboxChangeEvent} from '@/antdMissedExport';
+import autobind from "autobind-decorator";
+import * as React from "react";
+import {CheckboxChangeEvent} from "@/antdMissedExport";
 
 // noinspection ES6PreferShortImport
-import {IBaseCardItemLayout, IBaseCardRowLayout, IBaseCardRowWithCollapseLayout, IBaseCardRowWithColsLayout, IBaseCardRowWithDividerLayout, IBaseCardRowWithMetaTableLayout, IBaseCardRowWithTabsLayout, IMetaTableProps, isRowWithCollapse, isRowWithCols, isRowWithDivider, isRowWithMetaTable, isRowWithTabs} from '../Base';
+import {IBaseCardItemLayout, IBaseCardRowLayout, IBaseCardRowWithCollapseLayout, IBaseCardRowWithColsLayout, IBaseCardRowWithDividerLayout, IBaseCardRowWithMetaTableLayout, IBaseCardRowWithTabsLayout, IMetaTableProps, isRowWithCollapse, isRowWithCols, isRowWithDivider, isRowWithMetaTable, isRowWithTabs} from "../Base";
 // noinspection ES6PreferShortImport
-import {DeletableSmallCard} from '../DeletableSmallCard';
+import {DeletableSmallCard} from "../DeletableSmallCard";
 // noinspection ES6PreferShortImport
-import {DnDList, IBaseDnDChildProps} from '../Draggable';
+import {DnDList, IBaseDnDChildProps} from "../Draggable";
 // noinspection ES6PreferShortImport
-import {ISerializable, SerializableDnDChild} from '../Draggable/Serializable';
+import {ISerializable, SerializableDnDChild} from "../Draggable/Serializable";
 // noinspection ES6PreferShortImport
-import {COMMON__GRID} from '../styles';
+import {COMMON__GRID} from "../styles";
 
-import {CollapseSettings, SerializedCollapseSettings} from './CollapseSettings';
-import {ColSettings, SerializedColSettings} from './ColSettings';
-import {FieldsContext} from './FieldsContext';
-import {OldVersionWarning} from './OldVersionWarning';
-import {SerializedTabSettings, TabSettings} from './TabSettings';
+import {CollapseSettings, SerializedCollapseSettings} from "./CollapseSettings";
+import {ColSettings, SerializedColSettings} from "./ColSettings";
+import {FieldsContext} from "./FieldsContext";
+import {OldVersionWarning} from "./OldVersionWarning";
+import {SerializedTabSettings, TabSettings} from "./TabSettings";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type RowWithColsSettings = Merge<IBaseCardRowWithColsLayout<any, IBaseCardItemLayout<any>>, {
   cols: SerializedColSettings[]
-}>
+}>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type RowWithCollapseSettings = Merge<IBaseCardRowWithCollapseLayout<any, IBaseCardItemLayout<any>>, {
   collapsePanels: SerializedCollapseSettings[]
-}>
+}>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type RowWithTabsSettings = Merge<IBaseCardRowWithTabsLayout<any, IBaseCardItemLayout<any>>, {
   tabs: SerializedTabSettings[]
-}>
+}>;
 
 type RowSettingsState = Partial<RowWithColsSettings &
   RowWithCollapseSettings &
@@ -44,7 +44,7 @@ type RowSettingsState = Partial<RowWithColsSettings &
   RowWithTabsSettings>;
 
 export type SerializedRowSettings = ISerializable<RowSettingsState>;
-export type RowType = 'row' | 'tabs' | 'divider' | 'metatable' | 'collapse' | 'UNKNOWN';
+export type RowType = "row" | "tabs" | "divider" | "metatable" | "collapse" | "UNKNOWN";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyBaseCardRow = IBaseCardRowLayout<any, any>;
@@ -68,23 +68,23 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
       const preState: RowSettingsState = {};
       if (props.startType) {
         switch (props.startType) {
-          case 'divider':
+          case "divider":
             preState.isDivider = true;
             break;
-          case 'row':
+          case "row":
             preState.cols = [];
             break;
-          case 'tabs':
+          case "tabs":
             preState.tabs = [];
             break;
-          case 'metatable':
+          case "metatable":
             preState.metaTableProps = {} as IMetaTableProps;
             break;
-          case 'collapse':
+          case "collapse":
             preState.collapsePanels = [];
             break;
           default:
-            throw new Error('No startType impl');
+            throw new Error("No startType impl");
         }
       }
 
@@ -103,7 +103,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
     const isVersionNotLast = this.isVersionNotLast();
     const type = this.props.startType || this.detectType();
     switch (type) {
-      case 'row':
+      case "row":
         return (
           <DnDList<ColSettings>
             ref={this.colSettingsRef}
@@ -130,7 +130,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
             ]}
           />
         );
-      case 'divider':
+      case "divider":
         return (
           <DeletableSmallCard
             title="Разделитель"
@@ -146,7 +146,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
             </div>
           </DeletableSmallCard>
         );
-      case 'metatable':
+      case "metatable":
         return (
           <DeletableSmallCard
             title="Таблица"
@@ -159,12 +159,12 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
               <Input value={this.state.metaTableProps.table} onChange={this.onTableChanged}/>
               {[
                 {
-                  field: 'globalFilter',
-                  title: 'Глобальный фильтр',
+                  field: "globalFilter",
+                  title: "Глобальный фильтр",
                 },
                 {
-                  field: 'filter',
-                  title: 'Фильтр по умолчанию',
+                  field: "filter",
+                  title: "Фильтр по умолчанию",
                 },
               ].map(setting => [
                 (<span>{setting.title}</span>),
@@ -185,7 +185,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
             </div>
           </DeletableSmallCard>
         );
-      case 'tabs':
+      case "tabs":
         return (
           <DeletableSmallCard
             title="Вкладки"
@@ -222,7 +222,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
             />
           </DeletableSmallCard>
         );
-      case 'collapse':
+      case "collapse":
         return (
           <DeletableSmallCard
             title="Коллапс панели"
@@ -285,31 +285,31 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
 
     return {
       ...this.state,
-      collapsePanels: type === 'collapse' ? this.collapseSettingsRef.current.getChildRefs().map(collapse => collapse.toPlainObject()) : undefined,
-      cols: type === 'row' ? this.colSettingsRef.current.getChildRefs().map(col => col.toPlainObject()) : undefined,
-      tabs: type === 'tabs' ? this.tabSettingsRef.current.getChildRefs().map(tab => tab.toPlainObject()) : undefined,
+      collapsePanels: type === "collapse" ? this.collapseSettingsRef.current.getChildRefs().map(collapse => collapse.toPlainObject()) : undefined,
+      cols: type === "row" ? this.colSettingsRef.current.getChildRefs().map(col => col.toPlainObject()) : undefined,
+      tabs: type === "tabs" ? this.tabSettingsRef.current.getChildRefs().map(tab => tab.toPlainObject()) : undefined,
     };
   }
 
   @autobind
   private detectType(): RowType {
     if (isRowWithCols(this.state as AnyBaseCardRow)) {
-      return 'row';
+      return "row";
     }
     if (isRowWithTabs(this.state as AnyBaseCardRow)) {
-      return 'tabs';
+      return "tabs";
     }
     if (isRowWithDivider(this.state as AnyBaseCardRow)) {
-      return 'divider';
+      return "divider";
     }
     if (isRowWithMetaTable(this.state as AnyBaseCardRow)) {
-      return 'metatable';
+      return "metatable";
     }
     if (isRowWithCollapse(this.state as AnyBaseCardRow)) {
-      return 'collapse';
+      return "collapse";
     }
 
-    return 'UNKNOWN';
+    return "UNKNOWN";
   }
 
   @autobind

@@ -4,7 +4,7 @@ import {addQuotesIfString, camelCase, capitalize, formatRawForGraphQL} from "../
 
 // noinspection ES6PreferShortImport
 import {IGqlFilter} from "../types";
-import {mutate, query} from '../wrapper';
+import {mutate, query} from "../wrapper";
 
 export type PossibleId = string | number;
 export type PossibleValue = string | number | boolean;
@@ -141,7 +141,7 @@ function formatString(value: string): string {
  */
 function format(fields: object, excludeNulls: boolean): string {
   return Object.keys(fields)
-    .filter(key => !key.startsWith('_'))
+    .filter(key => !key.startsWith("_"))
     .filter(key => excludeNulls ? ((fields as IObjectWithIndex)[key] != null) : true)
     .map(key => {
       const value = (fields as IObjectWithIndex)[key];
@@ -246,8 +246,8 @@ export function concatQueryTexts(queries: string[]): string {
  *  }.
  */
 function unpackQueryTextFromCurlyBrackets(queryText: string): string {
-  const start: number = queryText.indexOf('{');
-  const end: number = queryText.lastIndexOf('}');
+  const start: number = queryText.indexOf("{");
+  const end: number = queryText.lastIndexOf("}");
   if (start === -1 || start >= end) {
     return null;
   }

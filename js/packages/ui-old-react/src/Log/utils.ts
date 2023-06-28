@@ -37,13 +37,13 @@ export function fetchAndFormatAuditLog(url: string, config?: AxiosRequestConfig)
       const rows = (response.data || []) as IObjectWithIndex[];
 
       const userMap = toMap(
-        await query<IUser[]>(`{ allUsers { nodes { id name } } }`, 2),
+        await query<IUser[]>("{ allUsers { nodes { id name } } }", 2),
         user => String(user.id)
       );
 
       rows.reverse().forEach((row, index) => {
         row.id = index;
-        row.userName = userMap.get(String(row.userId))?.name
+        row.userName = userMap.get(String(row.userId))?.name;
       });
 
       return rows as IAuditLogTableRow[];

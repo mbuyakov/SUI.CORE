@@ -1,6 +1,6 @@
 import {Result} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
-import axios from 'axios';
+import axios from "axios";
 import React, {ReactNode} from "react";
 
 export interface IBlockUIConditionallyProps {
@@ -21,7 +21,7 @@ const MIN_INTERVAL_TO_CHECK = 500;
 const DEFAULT_INTERVAL_TO_CHECK_IN_BLOCK_MODE = 60000;
 const DEFAULT_INTERVAL_TO_CHECK_IN_FREE_MODE = 20000;
 const DEFAULT_HEADER = "Работа системы заблокирована администратором";
-const DEFAULT_MSG = "Пожалуйста, попробуйте зайти попозже"
+const DEFAULT_MSG = "Пожалуйста, попробуйте зайти попозже";
 
 export class BlockUIConditionally extends React.Component<IBlockUIConditionallyProps, IBlockUIConditionallyState> {
   private readonly blockedInterval: number;
@@ -105,7 +105,7 @@ export class BlockUIConditionally extends React.Component<IBlockUIConditionallyP
 }
 
 export async function checkBlockUIFile(): Promise<string> {
-  const BLOCK_FILE_URL = '/static/block_ui.txt';
+  const BLOCK_FILE_URL = "/static/block_ui.txt";
 
   return getFileText(BLOCK_FILE_URL);
 }

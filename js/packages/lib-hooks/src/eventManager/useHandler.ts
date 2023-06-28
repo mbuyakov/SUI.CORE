@@ -5,6 +5,6 @@ export function useHandler(desc: EventListenerDescriptor, deps: DependencyList) 
   return useEffect(() => {
     return () => {
       desc.unsubscribe();
-    }
+    };
   }, [desc, ...deps]);
 }

@@ -19,9 +19,9 @@ export interface IOdometersProps {
 }
 
 export const defaultSectionStyle = {
-  alignItems: 'center',
-  display: 'flex',
-  flexFlow: 'column'
+  alignItems: "center",
+  display: "flex",
+  flexFlow: "column"
 };
 
 export class Odometers extends React.Component<IOdometersProps> {
@@ -50,7 +50,7 @@ export class Odometers extends React.Component<IOdometersProps> {
               />
               <div>{definition.title}</div>
             </div>
-          )
+          );
         })}
       </div>
     );

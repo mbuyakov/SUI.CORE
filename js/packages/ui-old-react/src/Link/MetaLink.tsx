@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {NO_DATA_TEXT, TableInfoManager} from '@sui/ui-old-core';
+import {NO_DATA_TEXT, TableInfoManager} from "@sui/ui-old-core";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {getLinkForTable, getRenderValue, getUser, RenderValue} from '../utils';
+import {getLinkForTable, getRenderValue, getUser, RenderValue} from "../utils";
 // noinspection ES6PreferShortImport
-import {WaitData} from '../WaitData';
+import {WaitData} from "../WaitData";
 
-import {RouterLink} from './RouterLink';
+import {RouterLink} from "./RouterLink";
 
 interface IMetaLinkProps {
   id: string | number;
@@ -43,7 +43,7 @@ export function renderMetaLinkArray(table: string, ids: Array<string | number>, 
         {/*TODO: Check. Old version: {...ids.map(render)}*/}
         {ids.map(render)}
       </div>
-    ) : NO_DATA_TEXT
+    ) : NO_DATA_TEXT;
 }
 
 export class MetaLink extends React.Component<IMetaLinkProps, IMetaLinkState> {
@@ -84,7 +84,7 @@ export class MetaLink extends React.Component<IMetaLinkProps, IMetaLinkState> {
     const tableInfo = this.props.tableInfoIdentifier && (await TableInfoManager.getById(this.props.tableInfoIdentifier));
 
     this.setState({
-      link: tableInfo && getLinkForTable(tableInfo.tableName, 'card', this.props.id) || undefined,
+      link: tableInfo && getLinkForTable(tableInfo.tableName, "card", this.props.id) || undefined,
       ready: true,
       renderValue: tableInfo
         && (await getRenderValue(tableInfo, getUser().roles, this.props.id))

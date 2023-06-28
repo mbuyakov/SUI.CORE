@@ -3,7 +3,7 @@ import * as stringFormatters from "./stringFormatters";
 test("CamelCase null", () => {
   expect(stringFormatters.camelCase(null)).toBe("");
 });
-test('CamelCase " "', () => {
+test("CamelCase \" \"", () => {
   expect(stringFormatters.camelCase(" ")).toBe("");
 });
 test("CamelCase a", () => {
@@ -19,7 +19,7 @@ test("CamelCase a-b", () => {
 test("Capitalize null", () => {
   expect(stringFormatters.capitalize(null)).toBe("");
 });
-test('Capitalize " "', () => {
+test("Capitalize \" \"", () => {
   expect(stringFormatters.capitalize(" ")).toBe(" ");
 });
 test("Capitalize a", () => {
@@ -41,7 +41,7 @@ test("Capitalize aa", () => {
 test("Uncapitalize null", () => {
   expect(stringFormatters.unCapitalize(null)).toBe("");
 });
-test('Uncapitalize " "', () => {
+test("Uncapitalize \" \"", () => {
   expect(stringFormatters.unCapitalize(" ")).toBe(" ");
 });
 test("Uncapitalize a", () => {
@@ -60,7 +60,7 @@ test("Uncapitalize AA", () => {
 test("Add plural ending null", () => {
   expect(stringFormatters.addPluralEnding(null)).toBe("");
 });
-test('Add plural ending " "', () => {
+test("Add plural ending \" \"", () => {
   expect(stringFormatters.addPluralEnding(" ")).toBe(" ");
 });
 test("Add plural ending a", () => {
@@ -85,7 +85,7 @@ test("Add plural ending docPerson (exclusion)", () => {
 test("Remove plural ending null", () => {
   expect(stringFormatters.removePluralEnding(null)).toBe("");
 });
-test('Remove plural ending " "', () => {
+test("Remove plural ending \" \"", () => {
   expect(stringFormatters.removePluralEnding(" ")).toBe(" ");
 });
 test("Remove plural ending as", () => {
@@ -110,52 +110,52 @@ test("Remove plural ending docPeople", () => {
 test("Line feed screening null", () => {
   expect(stringFormatters.lineFeedScreening(null)).toBe("");
 });
-test('Line feed screening " "', () => {
+test("Line feed screening \" \"", () => {
   expect(stringFormatters.lineFeedScreening(" ")).toBe(" ");
 });
-test('Line feed screening "\\n\\n"', () => {
+test("Line feed screening \"\\n\\n\"", () => {
   expect(stringFormatters.lineFeedScreening("\n\n")).toBe("\\n\\n");
 });
-test('Line feed screening "\\n\\t"', () => {
+test("Line feed screening \"\\n\\t\"", () => {
   expect(stringFormatters.lineFeedScreening("\n\t")).toBe("\\n\\t");
 });
 
 test("Quote screening null", () => {
   expect(stringFormatters.quoteScreening(null)).toBe("");
 });
-test('Quote screening " "', () => {
+test("Quote screening \" \"", () => {
   expect(stringFormatters.quoteScreening(" ")).toBe(" ");
 });
-test('Quote screening "\\"\\""', () => {
+test("Quote screening \"\\\"\\\"\"", () => {
   expect(stringFormatters.quoteScreening("\"\"")).toBe("\\\"\\\"");
 });
 
 test("Format raw for GraphQL null", () => {
   expect(stringFormatters.formatRawForGraphQL(null)).toBe("");
 });
-test('Format raw for GraphQL " "', () => {
+test("Format raw for GraphQL \" \"", () => {
   expect(stringFormatters.formatRawForGraphQL(" ")).toBe(" ");
 });
-test('Format raw for GraphQL "\\n\\""', () => {
+test("Format raw for GraphQL \"\\n\\\"\"", () => {
   expect(stringFormatters.formatRawForGraphQL("\n\"")).toBe("\\n\\\"");
 });
-test('Format raw for GraphQL "\\t\\""', () => {
+test("Format raw for GraphQL \"\\t\\\"\"", () => {
   expect(stringFormatters.formatRawForGraphQL("\t\"")).toBe("\\t\\\"");
 });
-test('Format raw for GraphQL "\\n\\t\\""', () => {
+test("Format raw for GraphQL \"\\n\\t\\\"\"", () => {
   expect(stringFormatters.formatRawForGraphQL("\n\t\"")).toBe("\\n\\t\\\"");
 });
 
 test("Add quotes if string null", () => {
   expect(stringFormatters.addQuotesIfString(null)).toBe(null);
 });
-test('Add quotes if string " "', () => {
-  expect(stringFormatters.addQuotesIfString(" ")).toBe('" "');
+test("Add quotes if string \" \"", () => {
+  expect(stringFormatters.addQuotesIfString(" ")).toBe("\" \"");
 });
 
 test("Trim if string null", () => {
   expect(stringFormatters.trimIfString(null)).toBe(null);
 });
-test('Trim if string " "', () => {
+test("Trim if string \" \"", () => {
   expect(stringFormatters.trimIfString(" ")).toBe("");
 });

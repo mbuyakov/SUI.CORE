@@ -1,9 +1,9 @@
 /* tslint:disable:no-magic-numbers */
-import {ComputedFn, Getter, Getters, Plugin} from '@sui/deps-dx-react-grid';
-import {TableColumnWidthInfo} from '@sui/deps-dx-react-grid';
+import {ComputedFn, Getter, Getters, Plugin} from "@sui/deps-dx-react-grid";
+import {TableColumnWidthInfo} from "@sui/deps-dx-react-grid";
 import autobind from "autobind-decorator";
-import debounce from 'lodash/debounce';
-import isEqual from 'lodash/isEqual';
+import debounce from "lodash/debounce";
+import isEqual from "lodash/isEqual";
 import React from "react";
 
 export interface IBaseTableUserSettings {
@@ -21,7 +21,7 @@ function generateUserSettings(getters: Getters): IBaseTableUserSettings {
     columnWidths: getters.fullColumnWidths,
     hiddenColumnNames: getters.hiddenColumnNames || [],
     order: getters.fullOrder,
-  }
+  };
 }
 
 export class UserSettingsPlugin extends React.Component<IUserSettingsPluginProps> {
@@ -59,7 +59,7 @@ export class UserSettingsPlugin extends React.Component<IUserSettingsPluginProps
       }
 
       return getters[property];
-    }
+    };
   }
 
   @autobind

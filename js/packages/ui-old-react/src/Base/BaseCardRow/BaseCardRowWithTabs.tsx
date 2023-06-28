@@ -40,7 +40,7 @@ export const BaseCardRowWithTabs: <T, ITEM>(props: IBaseCardRowWithTabsLayout<T,
         </BaseCardContext.Consumer>
       )
   );
-}
+};
 
 export function isRowWithTabs<T, ITEM>(row: IBaseCardRowLayout<T, ITEM>): row is IBaseCardRowWithTabsLayout<T, ITEM> {
   return "tabs" in row;

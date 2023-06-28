@@ -1,5 +1,5 @@
 import autobind from "autobind-decorator";
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuidv4} from "uuid";
 import {getTOrCall, TOrCallback} from "@sui/ui-old-core";
 
 export type ObservableHandler<T> = (newValue: T, oldValue?: T) => void;
@@ -31,7 +31,7 @@ export class Observable<T> {
 
   @autobind
   public forceTrigger(): void {
-    this.setValue(this.value)
+    this.setValue(this.value);
   }
 
   @autobind

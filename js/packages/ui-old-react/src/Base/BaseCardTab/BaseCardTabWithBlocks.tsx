@@ -2,7 +2,7 @@ import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
 import * as React from "react";
 import {Tabs} from "@sui/deps-antd";
 import {BaseCardBlock, IBaseCardBlockLayout} from "@/Base/BaseCardBlockLayout";
-import {IBaseCardTabLayout} from "@/Base/BaseCardTab/BaseCardTab"
+import {IBaseCardTabLayout} from "@/Base/BaseCardTab/BaseCardTab";
 
 export interface IBaseCardTabWithBlocks<T, ITEM> {
   key?: string;

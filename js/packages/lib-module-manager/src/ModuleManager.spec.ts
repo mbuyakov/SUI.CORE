@@ -38,8 +38,8 @@ class FailedModule extends SuiModule {
   }
 }
 
-describe('ModuleManager', () => {
-  test('Module with deps', async () => {
+describe("ModuleManager", () => {
+  test("Module with deps", async () => {
     const moduleManager = new ModuleManager("test", "test");
     const discoveredEventHandler = jest.fn();
     const moduleInitEventHandler = jest.fn();
@@ -61,16 +61,16 @@ describe('ModuleManager', () => {
     expect(moduleInitializedEventHandler).toBeCalledTimes(3);
   });
 
-  test('Failed module event fired', async () => {
+  test("Failed module event fired", async () => {
     const moduleManager = new ModuleManager("test", "test");
     const failedEventHandler = jest.fn();
     moduleManager.addHandler(ModuleFailedEvent, failedEventHandler);
     moduleManager.addModule(new FailedModule());
-    await expect(moduleManager.init()).rejects.toThrow("I'm failed")
+    await expect(moduleManager.init()).rejects.toThrow("I'm failed");
     expect(failedEventHandler).toBeCalledTimes(1);
   });
 
-  test('Duplicated module event fired', async () => {
+  test("Duplicated module event fired", async () => {
     const moduleManager = new ModuleManager("test", "test");
     const duplicatedEventHandler = jest.fn();
     moduleManager.addHandler(ModuleDuplicateEvent, duplicatedEventHandler);
@@ -79,7 +79,7 @@ describe('ModuleManager', () => {
     expect(duplicatedEventHandler).toBeCalledTimes(1);
   });
 
-  test('Root modified by modules', async () => {
+  test("Root modified by modules", async () => {
     const moduleManager = new ModuleManager("test", "test");
     moduleManager.addModule(new Module1());
     moduleManager.addModule(new Module2());

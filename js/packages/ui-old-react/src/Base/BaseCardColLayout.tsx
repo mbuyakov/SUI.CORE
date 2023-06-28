@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
-import React from 'react';
+import React from "react";
 import {SuiThemeContext} from "@/themes";
 
 // noinspection ES6PreferShortImport
-import {BASE_CARD_COL_TITLE, BASE_CARD_COLS} from '../styles';
+import {BASE_CARD_COL_TITLE, BASE_CARD_COLS} from "../styles";
 
-import {BaseCardContext} from './BaseCardContext';
+import {BaseCardContext} from "./BaseCardContext";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface IBaseCardColLayout<T, ITEM> {

@@ -1,5 +1,5 @@
-import {Getter, Getters, Plugin} from '@sui/deps-dx-react-grid';
-import {TableColumn, TableColumnWidthInfo} from '@sui/deps-dx-react-grid';
+import {Getter, Getters, Plugin} from "@sui/deps-dx-react-grid";
+import {TableColumn, TableColumnWidthInfo} from "@sui/deps-dx-react-grid";
 import React from "react";
 
 const fullOrderComputed = (getters: Getters): string[] => (getters.tableColumns as TableColumn[]).filter(it => it.column).map(it => it.column.name);

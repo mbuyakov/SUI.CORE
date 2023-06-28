@@ -61,7 +61,7 @@ export class FreeText extends SerializableDnDChild<SerializedFreeText> {
 
   @autobind
   private onTextChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    this.setState({text: e.target.value})
+    this.setState({text: e.target.value});
   }
 
 }

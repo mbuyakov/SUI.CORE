@@ -1,8 +1,8 @@
-import {getDataByKey} from '@/dataKey';
-import {GqlCacheManager} from '@/gql';
+import {getDataByKey} from "@/dataKey";
+import {GqlCacheManager} from "@/gql";
 import {IObjectWithIndex} from "@/other";
-import {IColumnInfo, IColumnInfoReference, IColumnInfoRole, IColumnInfoTag, IFilterType, ISubtotalType} from '@/types';
-import {formatRoleName} from '@/tmp';
+import {IColumnInfo, IColumnInfoReference, IColumnInfoRole, IColumnInfoTag, IFilterType, ISubtotalType} from "@/types";
+import {formatRoleName} from "@/tmp";
 
 import {Name} from "./Name";
 import {CacheManager, ICacheEntry} from "@sui/lib-cache-abstract";
@@ -47,7 +47,7 @@ export class ColumnInfo {
     this.wordWrapEnabled = item.wordWrapEnabled;
     this.order = item.order;
     this.tableRenderParams = item.tableRenderParams;
-    this.parsedTableRenderParams = item.tableRenderParams ? JSON.parse(item.tableRenderParams) : undefined
+    this.parsedTableRenderParams = item.tableRenderParams ? JSON.parse(item.tableRenderParams) : undefined;
     this.subtotalTypeBySubtotalTypeId = item.subtotalTypeBySubtotalTypeId;
     this.filterTypeByFilterTypeId = item.filterTypeByFilterTypeId;
     this.nameId = getDataByKey(item, "nameByNameId", "id");

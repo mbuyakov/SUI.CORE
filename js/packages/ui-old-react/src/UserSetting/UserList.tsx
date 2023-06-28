@@ -67,7 +67,7 @@ export class UserList<T extends {}> extends React.Component<IUserListProps<T>> {
                   fieldName: "email",
                   inputNode: <Input placeholder="Введите электронную почту"/>,
                   required: true,
-                  rules: [{pattern: EMAIL_REGEXP, message: 'Невалидный адрес электронной почты'}],
+                  rules: [{pattern: EMAIL_REGEXP, message: "Невалидный адрес электронной почты"}],
                   title: "Электронная почта"
                 }
               }

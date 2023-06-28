@@ -51,7 +51,7 @@ export const mergeSuiComponentThemes = (base: SuiComponentThemeCompiled, ...over
 
     return {mui, antd};
   }, base);
-}
+};
 
 export const getComponents = (theme: SuiThemeConfig): Set<SuiThemeComponents> => {
   const ret = new Set<SuiThemeComponents>();
@@ -69,7 +69,7 @@ export const getComponents = (theme: SuiThemeConfig): Set<SuiThemeComponents> =>
   });
 
   return ret;
-}
+};
 
 export const compileFinalTheme = (defaultTheme: SuiThemeConfig, projectTheme: SuiThemeConfig): SuiThemeCompiled => {
   const defaultThemeComponents = getComponents(defaultTheme);
@@ -112,4 +112,4 @@ export const compileFinalTheme = (defaultTheme: SuiThemeConfig, projectTheme: Su
     ));
 
   return {light, dark};
-}
+};

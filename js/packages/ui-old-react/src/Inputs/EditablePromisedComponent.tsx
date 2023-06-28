@@ -1,13 +1,13 @@
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import CreateIcon from '@mui/icons-material/CreateOutlined';
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import CreateIcon from "@mui/icons-material/CreateOutlined";
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {AfterChangeContext} from '@/AfterChangeContext';
+import {AfterChangeContext} from "@/AfterChangeContext";
 
 import {DisableEditContext} from "@/DisableEditContext";
 import {hasAnyRole} from "@/RoleVisibilityWrapper";
-import {EDITABLE_PROMISED_COMPONENT_CHILDREN} from '@/styles';
+import {EDITABLE_PROMISED_COMPONENT_CHILDREN} from "@/styles";
 
 import {ChangedEditModeContext} from "@/ChangedEditModeContext";
 import {IPromisedBaseProps} from "./PromisedBase";

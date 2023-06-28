@@ -6,12 +6,12 @@ import {usePromise, UsePromiseState} from "@sui/lib-hooks";
 
 export type UseOnClickState<T> = UsePromiseState<void> & {
   onClick(arg?: T): void;
-}
+};
 
 export type IOnClickIntegration = {
   // popupState?: PopupState,
   popconfirm?: IUsePopconfirmState
-}
+};
 
 export function useOnClick<T = never>(onClick: (arg: T) => void | Promise<void>, integration?: IOnClickIntegration): UseOnClickState<T> {
   const [promise, setPromise] = useState<Nullable<Promise<void>>>(null);

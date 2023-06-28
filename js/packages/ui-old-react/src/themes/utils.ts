@@ -1,5 +1,5 @@
-import merge from 'lodash/merge';
-import { createTheme, DeprecatedThemeOptions, adaptV4Theme } from '@mui/material/styles';
+import merge from "lodash/merge";
+import { createTheme, DeprecatedThemeOptions, adaptV4Theme } from "@mui/material/styles";
 import {Nullable} from "@sui/ui-old-core";
 import {AntdThemeVars, CompiledThemes, SuiThemeConfig, ThemeAndOptions, DeprecatedThemeOptionsGetter, ThemesConfig, ThemeVariant} from "@/themes/types";
 import {defaultMuiTheme, defaultThemesConfig} from "@/themes/defaultThemesConfig";
@@ -41,7 +41,7 @@ export function getAntdVars(themes: ThemesConfig): {
       defaultThemesConfig.dark?.lessVars ?? {},
       themes.dark?.lessVars ?? {}
     ),
-  }
+  };
 }
 
 function mergeMuiTheme(base: ThemeAndOptions, options?: DeprecatedThemeOptionsGetter): ThemeAndOptions {
@@ -50,7 +50,7 @@ function mergeMuiTheme(base: ThemeAndOptions, options?: DeprecatedThemeOptionsGe
   }
 
   let newOptions: DeprecatedThemeOptions;
-  if (typeof options == 'function') {
+  if (typeof options == "function") {
     newOptions = options(base.theme);
   } else {
     newOptions = options;
@@ -70,7 +70,7 @@ function mergeMuiThemes(base: ThemeAndOptions, options: Nullable<DeprecatedTheme
     .reduce<ThemeAndOptions>((prev, cur) => mergeMuiTheme(prev, cur), base);
 }
 
-function getArrayForCustom(themes: ThemesConfig, variant: ThemeVariant, customName: keyof Omit<SuiThemeConfig, 'lessVars' | 'materialThemeConfig'>): Nullable<DeprecatedThemeOptionsGetter>[] {
+function getArrayForCustom(themes: ThemesConfig, variant: ThemeVariant, customName: keyof Omit<SuiThemeConfig, "lessVars" | "materialThemeConfig">): Nullable<DeprecatedThemeOptionsGetter>[] {
   return [
     defaultThemesConfig[variant]?.materialThemeConfig,
     themes[variant]?.materialThemeConfig,
@@ -136,5 +136,5 @@ export function getCompiledThemes(themes: ThemesConfig): CompiledThemes {
       drawerMaterialTheme: darkD.theme,
       lessVars: antdVars.dark
     }
-  }
+  };
 }

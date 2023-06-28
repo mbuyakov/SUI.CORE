@@ -109,6 +109,6 @@ export class CardSettings extends React.Component<ICardSettingsProps> implements
 
   @autobind
   private onTextAddClicked(): void {
-    this.titleListRef.current.addItem(<FreeText/>)
+    this.titleListRef.current.addItem(<FreeText/>);
   }
 }

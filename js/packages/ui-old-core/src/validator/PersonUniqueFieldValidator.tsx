@@ -17,10 +17,10 @@ export async function PersonUniqueFieldValidator<T = string>(
       ...queryFields,
       [fieldName]: fieldValue
     };
-    DBUniqueValidator("allPeople", queryFields, 'id', excludePersonId)
+    DBUniqueValidator("allPeople", queryFields, "id", excludePersonId)
       .then(data => {
         if (data.table.totalCount > 0) {
-          reject(linkToEntity('id', data.table.nodes[0].__id, errMessage));
+          reject(linkToEntity("id", data.table.nodes[0].__id, errMessage));
         } else {
           resolve(undefined);
         }

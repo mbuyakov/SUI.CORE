@@ -1,6 +1,6 @@
-import {getSUISettings, IObjectWithIndex} from '@sui/ui-old-core';
+import {getSUISettings, IObjectWithIndex} from "@sui/ui-old-core";
 import axios from "axios";
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuidv4} from "uuid";
 
 // noinspection ES6PreferShortImport
 import {getUser} from "../utils";

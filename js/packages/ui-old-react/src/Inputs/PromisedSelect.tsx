@@ -1,14 +1,14 @@
-import {CircularProgress, IconButton} from '@mui/material';
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import {CircularProgress, IconButton} from "@mui/material";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import * as React from "react";
 import {Select, SelectProps} from "@sui/deps-antd";
-import {SUI_ROW_GRID} from '@/styles';
+import {SUI_ROW_GRID} from "@/styles";
 import {DisableEditContext} from "@/DisableEditContext";
 
-import {SelectValue} from '@/antdMissedExport';
+import {SelectValue} from "@/antdMissedExport";
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
-export type PromisedSelectProps<T> = IPromisedBaseProps<T> & Omit<SelectProps<T>, "onChange" | "value">
+export type PromisedSelectProps<T> = IPromisedBaseProps<T> & Omit<SelectProps<T>, "onChange" | "value">;
 
 export class PromisedSelect<T extends SelectValue> extends PromisedBase<PromisedSelectProps<T>, IPromisedBaseState<T>, T> {
 
@@ -44,7 +44,7 @@ export class PromisedSelect<T extends SelectValue> extends PromisedBase<Promised
               onChange={this.onChange}
               value={this.state.value}
             />
-          )
+          );
         }}
       </DisableEditContext.Consumer>
     );

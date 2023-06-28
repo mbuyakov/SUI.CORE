@@ -1,5 +1,5 @@
 import {Result} from "@sui/deps-antd";
-import React from 'react';
+import React from "react";
 import {Button} from "@mui/material";
 import {ArrowBackOutlined} from "@mui/icons-material";
 import {useHistory} from "react-router-dom";
@@ -22,6 +22,6 @@ export const Exception404: React.FC = () => {
       }
     />
   );
-}
+};
 
 export default Exception404;

@@ -1,13 +1,13 @@
 import {ArrowLeftOutlined, CloseOutlined} from "@ant-design/icons";
-import {IColumnInfoTag, IGraphQLConnection, ITag, mutate, query} from '@sui/ui-old-core';
+import {IColumnInfoTag, IGraphQLConnection, ITag, mutate, query} from "@sui/ui-old-core";
 import {Alert, Button, Input, Popover, Select} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT} from '../styles';
+import {SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT, SUI_ROW_GROW_RIGHT} from "../styles";
 // noinspection ES6PreferShortImport
-import {WaitData} from '../WaitData';
+import {WaitData} from "../WaitData";
 
 export interface ITagsPopoverProps {
   colTagsConnection?: IGraphQLConnection<IColumnInfoTag>;
@@ -106,7 +106,7 @@ export class TagsPopover extends React.Component<ITagsPopoverProps, {
                     <Select<string[]>
                       mode="multiple"
                       showSearch={true}
-                      style={{width: '100%'}}
+                      style={{width: "100%"}}
                       onChange={this.onChange}
                       value={data && this.state.selectedTags}
                       disabled={this.state.savingInProcess}
@@ -131,7 +131,7 @@ export class TagsPopover extends React.Component<ITagsPopoverProps, {
               <Button
                 type="primary"
                 disabled={
-                  typeof this.state.selectedTags === 'undefined'
+                  typeof this.state.selectedTags === "undefined"
                   || (
                     this.state.selectedTags.length === this.props.colTagsConnection.nodes.length &&
                     this.state.selectedTags.every(value => this.props.colTagsConnection.nodes.map(con => con.tagByTagId.id).includes(value))
@@ -153,9 +153,9 @@ export class TagsPopover extends React.Component<ITagsPopoverProps, {
         </div>}
       >
         <Button
-          type={!(this.props.colTagsConnection.nodes.length > 0) ? 'primary' : 'default'}
+          type={!(this.props.colTagsConnection.nodes.length > 0) ? "primary" : "default"}
         >
-          {(this.props.colTagsConnection.nodes.length > 0) ? 'Изменить' : 'Выбрать'}
+          {(this.props.colTagsConnection.nodes.length > 0) ? "Изменить" : "Выбрать"}
         </Button>
       </Popover>
     );
@@ -205,17 +205,17 @@ export class TagsPopover extends React.Component<ITagsPopoverProps, {
   private onNewTag(): void {
     this.setState({savingInProcess: true, errorText: null});
     query<IGraphQLConnection<ITag>>(`{
-      allTags(filter: {code: {equalTo: "${this.state.code.replace(/"/g, '\\"')}"}}) {
+      allTags(filter: {code: {equalTo: "${this.state.code.replace(/"/g, "\\\"")}"}}) {
         totalCount
       }
     }`, true)
       .then(value => {
         if (value.totalCount > 0) {
-          throw 'Запись с таким кодом уже существует';
+          throw "Запись с таким кодом уже существует";
         }
       })
       .then(() => mutate<{ createTag: { tag: { id: string } } }>(`mutation {
-        createTag(input: {tag: {code: "${this.state.code.replace(/"/g, '\\"')}", name: "${(this.state.name || '').replace(/"/g, '\\"')}"}}) {
+        createTag(input: {tag: {code: "${this.state.code.replace(/"/g, "\\\"")}", name: "${(this.state.name || "").replace(/"/g, "\\\"")}"}}) {
           tag {
             id
           }
@@ -230,7 +230,7 @@ export class TagsPopover extends React.Component<ITagsPopoverProps, {
         savingInProcess: false,
         selectedTags: [...this.state.selectedTags, newId],
       }))
-      .catch(reason => this.setState({savingInProcess: false, errorText: reason.toString() || 'Ошибка при сохранении'}));
+      .catch(reason => this.setState({savingInProcess: false, errorText: reason.toString() || "Ошибка при сохранении"}));
   }
 
   @autobind
@@ -240,7 +240,7 @@ export class TagsPopover extends React.Component<ITagsPopoverProps, {
     if (promise) {
       promise
         .then(this.cleanAndClose)
-        .catch(reason => this.setState({savingInProcess: false, errorText: reason.toString() || 'Ошибка при сохранении'}));
+        .catch(reason => this.setState({savingInProcess: false, errorText: reason.toString() || "Ошибка при сохранении"}));
     } else {
       this.cleanAndClose();
     }

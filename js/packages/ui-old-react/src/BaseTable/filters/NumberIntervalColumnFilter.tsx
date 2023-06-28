@@ -1,5 +1,5 @@
 import autobind from "autobind-decorator";
-import * as React from 'react';
+import * as React from "react";
 
 import {Nullable} from "@sui/ui-old-core";
 import {InputNumber} from "@sui/deps-antd";
@@ -97,7 +97,7 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
           this.triggerFilter(false);
         }
       }, 250);
-    }
+    };
   }
 
   @autobind
@@ -132,7 +132,7 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
 
   @autobind
   private onKeyUp(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       this.triggerFilter(false);
     }
   }

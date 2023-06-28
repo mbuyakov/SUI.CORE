@@ -1,6 +1,6 @@
 import autobind from "autobind-decorator";
-import React from 'react';
-import {IObjectWithIndex, MomentFormat} from '@sui/ui-old-core';
+import React from "react";
+import {IObjectWithIndex, MomentFormat} from "@sui/ui-old-core";
 
 // noinspection ES6PreferShortImport
 import {BaseTable} from "../BaseTable";
@@ -25,7 +25,7 @@ export interface IAuditLogTableRow {
 export type IAuditLogTableProps = Omit<ExtractProps<BaseTable<number>>, "rows" | "cols"> & {
   hideRowId?: boolean;
   rows: IAuditLogTableRow[];
-}
+};
 
 export class AuditLogTable extends React.Component<IAuditLogTableProps> {
 
@@ -81,7 +81,7 @@ export class AuditLogTable extends React.Component<IAuditLogTableProps> {
                   result = value;
               }
 
-              return result
+              return result;
             }
           },
           {

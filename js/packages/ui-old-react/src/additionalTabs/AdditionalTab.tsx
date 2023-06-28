@@ -1,9 +1,9 @@
-import {formatRawForGraphQL, generateUpdate, TableInfo} from '@sui/ui-old-core';
+import {formatRawForGraphQL, generateUpdate, TableInfo} from "@sui/ui-old-core";
 import {Card, Input, Space} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
+import autobind from "autobind-decorator";
 import * as React from "react";
 import {ChangeEvent} from "react";
-import {PromisedButton} from '@/Inputs';
+import {PromisedButton} from "@/Inputs";
 
 interface IAdditionalTabProps {
   tableInfo: TableInfo;
@@ -50,9 +50,9 @@ export class AdditionalTab extends React.Component<IAdditionalTabProps, IAdditio
     const expression = this.state?.value?.trim();
 
     return generateUpdate(
-      'tableInfo',
+      "tableInfo",
       this.props.tableInfo.id,
-      'colorSettings',
+      "colorSettings",
       expression ? formatRawForGraphQL(JSON.stringify({expression})) : null
     );
   }

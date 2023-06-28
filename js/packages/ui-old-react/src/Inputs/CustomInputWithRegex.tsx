@@ -10,7 +10,7 @@ export type CustomInputWithRegexProps = InputProps & {
   checkDisabled?: boolean;
 
   onChange?(value: string): void
-}
+};
 
 export class CustomInputWithRegex extends React.Component<CustomInputWithRegexProps> {
 

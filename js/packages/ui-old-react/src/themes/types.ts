@@ -20,7 +20,7 @@ export interface ThemeAndOptions {
   options: DeprecatedThemeOptions
 }
 
-export type AntdThemeVars = { [key: string]: string }
+export type AntdThemeVars = { [key: string]: string };
 
 export interface AntdTheme {
   lessVars: AntdThemeVars
@@ -36,7 +36,7 @@ export type CompiledTheme = AntdTheme & {
   [key in keyof PreCompiledTheme]: Theme
 } & {
   name: ThemeVariant;
-}
+};
 
 export interface CompiledThemes {
   light: CompiledTheme

@@ -13,8 +13,8 @@ class TestEvent2 extends SuiEvent {
   }
 }
 
-describe('EventManager', () => {
-  test('Basic usage', () => {
+describe("EventManager", () => {
+  test("Basic usage", () => {
     const eventManager = new EventManager<TestEvent1 | TestEvent2>();
     const consumer = jest.fn();
 
@@ -26,7 +26,7 @@ describe('EventManager', () => {
     expect(consumer).toBeCalledTimes(2);
   });
 
-  test('Multiple handlers', () => {
+  test("Multiple handlers", () => {
     const eventManager = new EventManager<TestEvent1>();
     const consumer = jest.fn();
 
@@ -37,7 +37,7 @@ describe('EventManager', () => {
     expect(consumer).toBeCalledTimes(2);
   });
 
-  test('Delete handler', () => {
+  test("Delete handler", () => {
     const eventManager = new EventManager<TestEvent1 | TestEvent2>();
     const consumer = jest.fn();
 

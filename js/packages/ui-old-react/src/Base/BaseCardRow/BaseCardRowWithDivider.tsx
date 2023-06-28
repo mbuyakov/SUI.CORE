@@ -17,7 +17,7 @@ export const BaseCardRowWithDivider: React.FC<IBaseCardRowWithDividerLayout> = p
       .orientationMargin::before {
         width: ${props.orientationMargin}px !important;
       }
-    `
+    `;
 
   return (
     <>
@@ -32,7 +32,7 @@ export const BaseCardRowWithDivider: React.FC<IBaseCardRowWithDividerLayout> = p
         {props.dividerText}
       </Divider>
     </>
-  )
+  );
 
 };
 

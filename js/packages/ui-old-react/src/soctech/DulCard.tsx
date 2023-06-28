@@ -344,6 +344,6 @@ function StringValueDatePicker(props: IStringValueDatePickerProps): JSX.Element 
       value={value ? moment(value) : undefined}
       onChange={newOnChange}
     />
-  )
+  );
 }
 

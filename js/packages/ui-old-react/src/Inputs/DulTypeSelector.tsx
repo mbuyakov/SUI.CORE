@@ -1,5 +1,5 @@
 import {Select} from "@sui/deps-antd";
-import * as React from 'react';
+import * as React from "react";
 import {DulService} from "@/soctech";
 
 export interface IDulTypeSelectorProps {

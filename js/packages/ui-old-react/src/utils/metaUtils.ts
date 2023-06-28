@@ -2,10 +2,10 @@
 import {addPluralEnding, camelCase, capitalize, ColumnInfo, ColumnInfoManager, DataKey, dataKeysToDataTree, getDataByKey, getSUISettings, IGqlFilter, IObjectWithIndex, IRawRoute, query, removePluralEnding, RouteType, stringifyGqlFilter, TableInfo, TableInfoManager, wrapInArray} from "@sui/ui-old-core";
 
 // noinspection ES6PreferShortImport
-import {SelectData} from '../BaseTable';
+import {SelectData} from "../BaseTable";
 
-import {ActionType, isNumberAction} from './actionType';
-import {FilterType} from './filterType';
+import {ActionType, isNumberAction} from "./actionType";
+import {FilterType} from "./filterType";
 
 
 export interface IRouteLink {
@@ -26,7 +26,7 @@ export function parseRoutes(routes: IRawRoute[]): IRouteLink[] {
         routeLinks.push({
           entity: camelCase(entity),
           path: route.path,
-          type: 'card',
+          type: "card",
         });
       });
     }
@@ -35,7 +35,7 @@ export function parseRoutes(routes: IRawRoute[]): IRouteLink[] {
         routeLinks.push({
           entity: camelCase(entity),
           path: route.path,
-          type: 'table',
+          type: "table",
         });
       });
     }
@@ -54,7 +54,7 @@ export function getLinkForTable(
 ): string | null {
   const link = routeLinks.find(value => value.type === type && value.entity === camelCase(tableName));
   if (link) {
-    return id ? link.path.replace(':id', id.toString()) : link.path;
+    return id ? link.path.replace(":id", id.toString()) : link.path;
   }
 
   const metaInitProps = getSUISettings();
@@ -87,7 +87,7 @@ export async function generateCatalogDataPromise(
 
   return isAlphabetSort
     ? catalogData.sort((a, b) => a.title.localeCompare(b.title))
-    : catalogData
+    : catalogData;
 }
 
 export function formatObjectName(objectName: string, pascalCase: boolean = false): string {
@@ -134,7 +134,7 @@ async function __getReferenceRenderColumnInfo(
     if (forwardReferencedForeignLinkColumnInfo != null) {
       return forwardReferencedForeignLinkColumnInfo;
     }
-    if (isAllowedColumnInfo(foreignLinkColumnInfo, roles) && foreignLinkColumnInfo.columnName !== 'id') {
+    if (isAllowedColumnInfo(foreignLinkColumnInfo, roles) && foreignLinkColumnInfo.columnName !== "id") {
       return foreignLinkColumnInfo;
     }
   }
@@ -157,7 +157,7 @@ export interface IDataSet<T = any> {
 }
 
 export function getDataSetRender(dataSet: IDataSet): string {
-  return dataSet.hasOwnProperty('value')
+  return dataSet.hasOwnProperty("value")
     ? (dataSet.value != null ? String(dataSet.value) : dataSet.value)
     : dataSet.id;
 }
@@ -165,7 +165,7 @@ export function getDataSetRender(dataSet: IDataSet): string {
 function __queryFilterString<T>(filter?: IGqlFilter<T>): string {
   return filter
     ? `(${stringifyGqlFilter({filter})})`
-    : '';
+    : "";
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -183,8 +183,8 @@ export async function getDataSet<TValueType = {}, TGroupType = {}>(
 
   if (groupTableInfo) {
     // ${__queryFilterString(groupTableInfoFilter)}
-    groupPrefixDataKey.push(toConnectionName(groupTableInfo), 'nodes');
-    queryDataKeys.push(groupPrefixDataKey.concat(['id']));
+    groupPrefixDataKey.push(toConnectionName(groupTableInfo), "nodes");
+    queryDataKeys.push(groupPrefixDataKey.concat(["id"]));
 
     groupRenderDataKey = await generateRenderDataKey(groupTableInfo, roles);
     if (groupRenderDataKey) {
@@ -199,10 +199,10 @@ export async function getDataSet<TValueType = {}, TGroupType = {}>(
     valuePrefixDataKey.push(toConnectionName(valueTableInfo));
   }
 
-  valuePrefixDataKey.push('nodes');
+  valuePrefixDataKey.push("nodes");
   const valueRenderDataKey = await generateRenderDataKey(valueTableInfo, roles);
 
-  queryDataKeys.push(valuePrefixDataKey.concat(['id']));
+  queryDataKeys.push(valuePrefixDataKey.concat(["id"]));
   if (valueRenderDataKey) {
     queryDataKeys.push(valuePrefixDataKey.concat(valueRenderDataKey));
   }
@@ -320,7 +320,7 @@ export async function generateRenderDataKey(
 }
 
 export async function getReferencedTableInfo(columnInfo: ColumnInfo): Promise<TableInfo | null> {
-  const referencedColumnInfoId = getDataByKey(columnInfo, 'foreignColumnInfo', 0);
+  const referencedColumnInfoId = getDataByKey(columnInfo, "foreignColumnInfo", 0);
   const referencedColumnInfo = referencedColumnInfoId && (await ColumnInfoManager.getById(referencedColumnInfoId));
 
   // noinspection ES6MissingAwait
@@ -339,17 +339,17 @@ export function getFilterType(columnInfo: ColumnInfo, action?: ActionType): Filt
   let filterType: FilterType | null = null;
 
   switch (columnInfo && columnInfo.columnType && columnInfo.columnType.toLowerCase()) {
-    case 'date':
+    case "date":
       filterType = FilterType.DATE;
       break;
-    case 'timestamp without time zone':
+    case "timestamp without time zone":
       filterType = FilterType.TIMESTAMP;
       break;
-    case 'boolean':
+    case "boolean":
       filterType = FilterType.BOOLEAN;
       break;
-    case 'character varying':
-    case 'text':
+    case "character varying":
+    case "text":
       filterType = FilterType.STRING;
   }
 

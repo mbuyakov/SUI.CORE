@@ -1,18 +1,18 @@
 import {ColumnInfo} from "@sui/ui-old-core";
 import {InputNumber} from "@sui/deps-antd";
-import * as React from 'react';
+import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {IBaseTableColLayout} from '../../BaseTable';
+import {IBaseTableColLayout} from "../../BaseTable";
 // noinspection ES6PreferShortImport
-import {IColumnInfoToBaseTableColProps} from '../../utils';
+import {IColumnInfoToBaseTableColProps} from "../../utils";
 // noinspection ES6PreferShortImport
-import {TableRenderSettingsPluginManager} from '../TableRenderSettingsPluginManager';
+import {TableRenderSettingsPluginManager} from "../TableRenderSettingsPluginManager";
 // noinspection ES6PreferShortImport
-import {ITableRenderParams, TableRenderSettingsPopover} from '../TableRenderSettingsPopover';
+import {ITableRenderParams, TableRenderSettingsPopover} from "../TableRenderSettingsPopover";
 
 // noinspection ES6PreferShortImport
-import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
+import {TableRenderParamsPlugin} from "./TableRenderParamsPlugin";
 
 export interface IRoundPluginTRP {
   roundCount?: number;
@@ -21,7 +21,7 @@ export interface IRoundPluginTRP {
 export class RoundPlugin extends TableRenderParamsPlugin<IRoundPluginTRP> {
 
   public constructor() {
-    super('round', 'Округление', true);
+    super("round", "Округление", true);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -35,7 +35,7 @@ export class RoundPlugin extends TableRenderParamsPlugin<IRoundPluginTRP> {
         <span>Число знаков:</span>
         <InputNumber
           value={trsp.state.tableRenderParams.roundCount || undefined}
-          onChange={trsp.updateField('roundCount')}
+          onChange={trsp.updateField("roundCount")}
         />
       </>
     );

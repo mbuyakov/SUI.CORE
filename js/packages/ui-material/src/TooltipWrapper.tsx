@@ -22,4 +22,4 @@ export const TooltipWrapper: React.FC<TooltipWrapperProps> = ({title, children})
   }
 
   return result;
-}
+};

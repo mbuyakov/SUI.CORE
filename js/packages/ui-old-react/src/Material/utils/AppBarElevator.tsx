@@ -15,4 +15,4 @@ export const AppBarElevator: React.FC<{
   });
 
   return React.cloneElement(children, {elevation: scrollTrigger ? 12 : 6});
-}
+};

@@ -1,9 +1,9 @@
-import autobind from 'autobind-decorator';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import * as React from "react";
 
 import {SNILS_MASK} from "@sui/ui-old-core";
 import {SUIMaskedInput} from "@/SUIMaskedInput";
-import {INewSearchProps, LazyTableFilterRowCellProps} from '../types';
+import {INewSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 export type ISnilsColumnFilterProps = LazyTableFilterRowCellProps & INewSearchProps & {
   children?: React.ReactNode
@@ -44,7 +44,7 @@ export class SnilsColumnFilter extends React.Component<ISnilsColumnFilterProps, 
         {...clearProps}
         allowClear={true}
         mask={SNILS_MASK}
-        placeholder={this.props.placeholder as string || 'Фильтр...'}
+        placeholder={this.props.placeholder as string || "Фильтр..."}
         value={this.state.value}
         onChange={this.onChange}
         onPressEnter={this.onPressEnter}

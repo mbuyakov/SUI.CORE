@@ -1,9 +1,9 @@
 import {Empty} from "@sui/deps-antd";
-import * as React from 'react';
+import * as React from "react";
 
 export const EmptyMessageComponent = (): JSX.Element => (
   <Empty
     description="Нет выбранных колонок"
-    style={{maxWidth: '100%', margin: 0, padding: 10, borderBottom: "1px solid rgba(224, 224, 224, 1)"}}
+    style={{maxWidth: "100%", margin: 0, padding: 10, borderBottom: "1px solid rgba(224, 224, 224, 1)"}}
   />
 );

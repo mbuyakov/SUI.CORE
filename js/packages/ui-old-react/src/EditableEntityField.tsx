@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {notification} from "@sui/deps-antd";
-import * as React from 'react';
+import * as React from "react";
 
-import {formatRawForGraphQL, generateUpdate, IObjectWithIndex, NO_DATA_TEXT, PossibleId, PossibleValue} from '@sui/ui-old-core';
-import {errorNotification} from './drawUtils';
+import {formatRawForGraphQL, generateUpdate, IObjectWithIndex, NO_DATA_TEXT, PossibleId, PossibleValue} from "@sui/ui-old-core";
+import {errorNotification} from "./drawUtils";
 
-import {EditablePromisedComponent, IEditablePromisedComponentProps, IPromisedBaseProps} from './Inputs';
-import {WaitData} from './WaitData';
+import {EditablePromisedComponent, IEditablePromisedComponentProps, IPromisedBaseProps} from "./Inputs";
+import {WaitData} from "./WaitData";
 
 
 export interface IEditableEntityFieldProps<T> extends Omit<IEditablePromisedComponentProps<T>, "children"> {
-  children: React.ReactElement<Omit<IPromisedBaseProps<T>, 'promise'>>;
+  children: React.ReactElement<Omit<IPromisedBaseProps<T>, "promise">>;
   customQuery?: string;
   entity: string;
   failMessage: string;
@@ -34,7 +34,7 @@ export class EditableEntityField<T = any> extends React.Component<IEditableEntit
     // @ts-ignore
     const childrenWidth = this.props.children?.props?.style?.width ?? this.props.children?.props?.style?.minWidth;
     return (
-      <div style={{display: 'inline-block', width: (childrenWidth && typeof childrenWidth == "number") ? childrenWidth + 75/* button block width */ : undefined}}>
+      <div style={{display: "inline-block", width: (childrenWidth && typeof childrenWidth == "number") ? childrenWidth + 75/* button block width */ : undefined}}>
         <WaitData<IObjectWithIndex>
           ref={this.waitDataRef}
           alwaysUpdate={true}
@@ -64,7 +64,7 @@ export class EditableEntityField<T = any> extends React.Component<IEditableEntit
                     ? this.props.valuePreSaveConverter(newValue)
                     : newValue;
 
-                  valueForUpdate = typeof (valueForUpdate) === 'string'
+                  valueForUpdate = typeof (valueForUpdate) === "string"
                     ? formatRawForGraphQL(valueForUpdate)
                     : valueForUpdate === undefined
                       ? null

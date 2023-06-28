@@ -59,7 +59,7 @@ function handleExclusion(str: string, exclusionMap: Map<string, string>): string
     const replacedExclusion = str.substr(splitPosition);
     const shouldCapitalize = replacedExclusion.charAt(0) === replacedExclusion.charAt(0).toUpperCase();
 
-    return `${str.substr(0, splitPosition)}${shouldCapitalize ? capitalize(exclusionMap.get(exclusion)) : exclusionMap.get(exclusion)}`
+    return `${str.substr(0, splitPosition)}${shouldCapitalize ? capitalize(exclusionMap.get(exclusion)) : exclusionMap.get(exclusion)}`;
   }
 
   return null;

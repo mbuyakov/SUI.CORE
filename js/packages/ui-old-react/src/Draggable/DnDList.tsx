@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {PlusCircleOutlined} from "@ant-design/icons";
-import {unCapitalize} from '@sui/ui-old-core';
+import {unCapitalize} from "@sui/ui-old-core";
 import {Button, Dropdown, Menu, MenuItemProps} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {Container, Draggable} from "./react18fix";
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuidv4} from "uuid";
 
 // noinspection ES6PreferShortImport
 import {DeletableSmallCard} from "../DeletableSmallCard";
 // noinspection ES6PreferShortImport
-import {Rendered} from '../other';
+import {Rendered} from "../other";
 // noinspection ES6PreferShortImport
 import {DND_LIST__COLS, DND_LIST__PLUS_BTN, DND_LIST__ROWS, DND_LIST__SCROLL_SEMI_PADDING} from "../styles";
 // noinspection ES6PreferShortImport
@@ -20,11 +20,11 @@ import {DnDChild, IBaseDnDChildProps} from "./DnDChild";
 import {ContainerOptions} from "smooth-dnd";
 import {DropResult} from "react-smooth-dnd";
 
-export type Direction = 'vertical' | 'horizontal'
+export type Direction = "vertical" | "horizontal";
 
 export interface IDnDListProps<T extends React.Component> extends IBaseDnDChildProps {
   addButtons?: Array<React.ReactElement<MenuItemProps>>
-  behaviour?: 'move' | 'copy' | 'drop-zone' | 'contain'
+  behaviour?: "move" | "copy" | "drop-zone" | "contain"
   deletableChildren?: boolean
   direction?: Direction
   extra?: React.ReactNode
@@ -69,7 +69,7 @@ export class DnDList<T extends DnDChild> extends DnDChild<IDnDListProps<T>, IDnD
   public getChildRefs(): T[] {
     // // console.log(this.state);
     // Sort map keys as items
-    return this.state.items.map(item => this.state.itemRefs.get(item.props.id))
+    return this.state.items.map(item => this.state.itemRefs.get(item.props.id));
   }
 
   @autobind
@@ -106,7 +106,7 @@ export class DnDList<T extends DnDChild> extends DnDChild<IDnDListProps<T>, IDnD
           ))}
       </Container>
     );
-    if (direction === 'horizontal') {
+    if (direction === "horizontal") {
       container = (
         <div className={DND_LIST__SCROLL_SEMI_PADDING}>
           {container}
@@ -120,7 +120,7 @@ export class DnDList<T extends DnDChild> extends DnDChild<IDnDListProps<T>, IDnD
           <DeletableSmallCard
             onDelete={this.props.onDelete}
             draggable={this.props.draggable}
-            className={direction === 'vertical' ? DND_LIST__ROWS : DND_LIST__COLS}
+            className={direction === "vertical" ? DND_LIST__ROWS : DND_LIST__COLS}
             title={this.props.title}
             extra={this.props.extra}
             bodyStyle={!hasAddButton ? ({gridGap: 0}) : {}}
@@ -129,12 +129,12 @@ export class DnDList<T extends DnDChild> extends DnDChild<IDnDListProps<T>, IDnD
             {container}
             {hasAddButton && (
               <div>
-                {direction === 'vertical' && this.props.addButtons.length === 1
+                {direction === "vertical" && this.props.addButtons.length === 1
                   ? (
                     <Button
                       href={null}
                       type="dashed"
-                      block={direction === 'vertical'}
+                      block={direction === "vertical"}
                       onClick={this.props.addButtons[0].props.onClick as () => void}
                     >
                       {`Добавить ${unCapitalize(this.props.addButtons[0].props.children as string)}`}
@@ -150,10 +150,10 @@ export class DnDList<T extends DnDChild> extends DnDChild<IDnDListProps<T>, IDnD
                         href={null}
                         className={DND_LIST__PLUS_BTN}
                         type="dashed"
-                        block={direction === 'vertical'}
-                        icon={direction === 'horizontal' ? <PlusCircleOutlined/> : null}
+                        block={direction === "vertical"}
+                        icon={direction === "horizontal" ? <PlusCircleOutlined/> : null}
                       >
-                        {direction === 'vertical' && "Добавить"}
+                        {direction === "vertical" && "Добавить"}
                       </Button>
                     </Dropdown>
                   )
@@ -201,6 +201,6 @@ export class DnDList<T extends DnDChild> extends DnDChild<IDnDListProps<T>, IDnD
         return;
       }
       this.state.itemRefs.set(id, ref);
-    }
+    };
   }
 }

@@ -1,7 +1,7 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {Switch, SwitchProps} from "@sui/deps-antd";
-import {AfterChangeContext} from '@/AfterChangeContext';
+import {AfterChangeContext} from "@/AfterChangeContext";
 
 // noinspection ES6PreferShortImport
 import {DisableEditContext} from "../DisableEditContext";

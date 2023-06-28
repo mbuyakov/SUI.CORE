@@ -1,14 +1,14 @@
-import {defaultIfNotBoolean} from '@sui/ui-old-core';
+import {defaultIfNotBoolean} from "@sui/ui-old-core";
 import {Menu} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {DnDList} from '../Draggable';
+import {DnDList} from "../Draggable";
 // noinspection ES6PreferShortImport
-import {MetaCardConfigurator} from '../Meta';
+import {MetaCardConfigurator} from "../Meta";
 // noinspection ES6PreferShortImport
-import {Rendered} from '../other';
+import {Rendered} from "../other";
 
 import {RowSettings} from "./RowSettings";
 

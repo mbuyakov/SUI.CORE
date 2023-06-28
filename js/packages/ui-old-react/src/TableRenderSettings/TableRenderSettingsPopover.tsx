@@ -1,28 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/ban-types */
-import {ExperimentOutlined, WarningTwoTone} from '@ant-design/icons';
-import {chain, ITableInfo, sleep} from '@sui/ui-old-core';
+import {ExperimentOutlined, WarningTwoTone} from "@ant-design/icons";
+import {chain, ITableInfo, sleep} from "@sui/ui-old-core";
 import {Button, Popover, Select, Tooltip} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {PromisedButton} from '../Inputs';
+import {PromisedButton} from "../Inputs";
 // noinspection ES6PreferShortImport
-import {SUI_AUTO_WIDTH, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT} from '../styles';
+import {SUI_AUTO_WIDTH, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT} from "../styles";
 
-import {TableRenderSettingsPluginManager} from './TableRenderSettingsPluginManager';
+import {TableRenderSettingsPluginManager} from "./TableRenderSettingsPluginManager";
 
 const popoverContentStyle: React.CSSProperties = {
-  alignItems: 'center',
-  display: 'grid',
+  alignItems: "center",
+  display: "grid",
   gridGap: 5,
-  gridTemplateColumns: 'auto 1fr',
+  gridTemplateColumns: "auto 1fr",
 };
 
-export type ITableRenderParams<T extends {} = {}> = Omit<T, 'renderType'> & {
+export type ITableRenderParams<T extends {} = {}> = Omit<T, "renderType"> & {
   renderType?: string;
   [index: string]: any;
-}
+};
 
 export interface ITableRenderSettingsPopoverProps {
   // eslint-disable-next-line react/no-unused-prop-types
@@ -56,7 +56,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
     try {
       tableRenderParams = chain<ITableRenderParams<any>, string>(
         params,
-        trp => JSON.parse(trp ? trp.replace(/\\"/g, '"') : '{}'),
+        trp => JSON.parse(trp ? trp.replace(/\\"/g, "\"") : "{}"),
         ...Array.from(TableRenderSettingsPluginManager.plugins.values()).map(plugin => plugin.parseParams),
       );
     } catch (e) {
@@ -98,8 +98,8 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
     return (
       <div className={SUI_ROW_GROW_LEFT}>
         <Select
-          value={this.state.tableRenderParams.renderType || 'raw'}
-          onChange={this.updateField('renderType', true)}
+          value={this.state.tableRenderParams.renderType || "raw"}
+          onChange={this.updateField("renderType", true)}
           getPopupContainer={this.props.getPopupContainer}
         >
           {
@@ -122,8 +122,8 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
                 {this.getPopoverContent(this.state.tableRenderParams.renderType)}
                 <PromisedButton
                   ref={this.saveButtonRef}
-                  style={{width: '100%'}}
-                  promise={(): Promise<void> => this.props.promise(JSON.stringify(this.state.tableRenderParams).replace(/"/g, '\\"'))}
+                  style={{width: "100%"}}
+                  promise={(): Promise<void> => this.props.promise(JSON.stringify(this.state.tableRenderParams).replace(/"/g, "\\\""))}
                   type="primary"
                   disabled={!this.state.changed}
                 >
@@ -150,7 +150,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
       tableRenderParams[field] = value;
       this.setState({tableRenderParams: {...tableRenderParams}, changed: true});
 
-      return save ? this.props.promise(JSON.stringify(tableRenderParams).replace(/"/g, '\\"')) : sleep(Number.MAX_VALUE);
+      return save ? this.props.promise(JSON.stringify(tableRenderParams).replace(/"/g, "\\\"")) : sleep(Number.MAX_VALUE);
     };
   }
 
@@ -164,7 +164,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
             title="Неизвестный плагин"
           >
             <WarningTwoTone
-              style={{transform: 'scale(1.5)'}}
+              style={{transform: "scale(1.5)"}}
               twoToneColor="#ad4e00"
             />
           </Tooltip>

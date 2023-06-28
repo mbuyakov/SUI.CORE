@@ -1,7 +1,7 @@
-import {Getters, Plugin, Template, TemplateConnector, TemplatePlaceholder} from '@sui/deps-dx-react-grid';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import React from 'react';
+import {Getters, Plugin, Template, TemplateConnector, TemplatePlaceholder} from "@sui/deps-dx-react-grid";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import React from "react";
 
 export interface IExportPluginProps {
   icon: JSX.Element;

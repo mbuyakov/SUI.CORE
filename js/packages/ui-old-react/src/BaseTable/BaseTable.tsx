@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {CheckOutlined, CloseOutlined, QuestionOutlined} from '@ant-design/icons';
-import {Getter, Getters, Mui} from '@sui/deps-dx-react-grid';
-import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from '@sui/deps-dx-react-grid';
+import {CheckOutlined, CloseOutlined, QuestionOutlined} from "@ant-design/icons";
+import {Getter, Getters, Mui} from "@sui/deps-dx-react-grid";
+import {CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from "@sui/deps-dx-react-grid";
 import {defaultIfNotBoolean, getDataByKey, getSUISettings} from "@sui/ui-old-core";
 import {Card, Result, Spin} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import classnames from 'classnames';
-import * as React from 'react';
-import {SuiThemeContext} from '@/themes';
-import {BASE_TABLE, BASE_TABLE_NO_PAGINATION, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '@/styles';
+import autobind from "autobind-decorator";
+import classnames from "classnames";
+import * as React from "react";
+import {SuiThemeContext} from "@/themes";
+import {BASE_TABLE, BASE_TABLE_NO_PAGINATION, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from "@/styles";
 import {ColumnChooserContainer, CustomPagingPanelContainer, CustomToggleCell, DoubleScrollbar, EmptyMessageComponent, ExportPlugin, ExtendedIntegratedSelection, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, UserSettingsPlugin, UserSettingsSupportPlugin, WarningPlugin} from "@/BaseTable/extends";
 
-import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter, SnilsColumnFilter, OmsColumnFilter, InnColumnFilter, PhoneColumnFilter} from './filters';
-import {defaultSelection, ISelectionTable} from './ISelectionTable';
-import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout, IGroupSubtotalData, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from './types';
+import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter, SnilsColumnFilter, OmsColumnFilter, InnColumnFilter, PhoneColumnFilter} from "./filters";
+import {defaultSelection, ISelectionTable} from "./ISelectionTable";
+import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout, IGroupSubtotalData, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from "./types";
 import {exportToXlsx, mapColumns} from "./utils";
-import { MuiIcons, TableRow } from '@sui/deps-material';
+import { MuiIcons, TableRow } from "@sui/deps-material";
 import {SuiThemeProvider} from "@sui/ui-themes";
 
 const Cell = Mui.Table.Cell;
@@ -46,7 +46,7 @@ export class BaseTable<TSelection = defaultSelection>
     const id = (row.id != null) ? row.id : row.compoundKey;
 
     if (id === null || id === undefined) {
-      console.error('ROW DOESN\'T HAVE ID!');
+      console.error("ROW DOESN'T HAVE ID!");
     }
 
     return id;
@@ -166,7 +166,7 @@ export class BaseTable<TSelection = defaultSelection>
     if (defaultSorting.length === 0) {
       defaultSorting.push({
         columnName: this.props.cols[0] && this.props.cols[0].id,
-        direction: 'asc',
+        direction: "asc",
       });
     }
 
@@ -433,8 +433,8 @@ export class BaseTable<TSelection = defaultSelection>
                   pageSizes={this.props.pageSizes || (virtual ? undefined : [10, 25, 50, 100, 0])}
                   messages={{
                     info: virtual ? BaseTable.virtualPageInfo : BaseTable.pageInfo,
-                    rowsPerPage: 'Записей на страницу',
-                    showAll: 'Все',
+                    rowsPerPage: "Записей на страницу",
+                    showAll: "Все",
                   }}
                 />}
                 {(selectionEnabled || highlightEnabled) && (
@@ -459,7 +459,7 @@ export class BaseTable<TSelection = defaultSelection>
                     rootComponent={this.toolbarRootComponent}
                   />
                 )}
-                {visibilityEnabled && <Mui.ColumnChooser containerComponent={ColumnChooserContainer} messages={{showColumnChooser: 'Отобразить выбор колонок'}}/>}
+                {visibilityEnabled && <Mui.ColumnChooser containerComponent={ColumnChooserContainer} messages={{showColumnChooser: "Отобразить выбор колонок"}}/>}
                 {allowExport && (
                   <ExportPlugin
                     onClick={this.onExport}
@@ -468,7 +468,7 @@ export class BaseTable<TSelection = defaultSelection>
                   />
                 )}
                 {groupingEnabled && <Mui.GroupingPanel
-                  messages={{groupByColumn: 'Перетащите заголовок колонки сюда для группировки'}}
+                  messages={{groupByColumn: "Перетащите заголовок колонки сюда для группировки"}}
                   showGroupingControls={true}
                   showSortingControls={true}
                 />}
@@ -581,7 +581,7 @@ export class BaseTable<TSelection = defaultSelection>
   @autobind
   private toolbarRootComponent(props: any): JSX.Element {
     return (
-      <ToolbarRoot {...props} style={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? {} : {display: 'none'}}>
+      <ToolbarRoot {...props} style={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? {} : {display: "none"}}>
         {(this.props.warnings && this.props.warnings.length ? [<WarningPlugin messages={this.props.warnings} key={-1}/>] : []).concat([props.children])}
       </ToolbarRoot>
     );

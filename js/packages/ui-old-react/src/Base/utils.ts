@@ -15,9 +15,9 @@ export function clearFields(
     if (typeof field === "string") {
       form.setFieldValue(field, defaultEmptyValue);
     } else {
-      form.setFieldValue(field.fieldName, field.emptyValue)
+      form.setFieldValue(field.fieldName, field.emptyValue);
     }
-  })
+  });
 }
 
 export function clearFieldsWithUndefined(

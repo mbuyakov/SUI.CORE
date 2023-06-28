@@ -1,6 +1,6 @@
-import {GqlCacheManager} from '@/gql';
-import {IName} from '@/types';
-import {CacheManager, ICacheEntry} from '@sui/lib-cache-abstract';
+import {GqlCacheManager} from "@/gql";
+import {IName} from "@/types";
+import {CacheManager, ICacheEntry} from "@sui/lib-cache-abstract";
 
 export class Name {
   public description?: string;

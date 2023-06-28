@@ -73,7 +73,7 @@ export class WatchOdometers extends React.Component<IWatchOdometersProps, IWatch
     }`, true).then(value => {
       const data = new Map<string, ICustomOdometerData>();
 
-      (JSON.parse(value.json || '[]') as IObjectWithIndex[]).forEach(element =>
+      (JSON.parse(value.json || "[]") as IObjectWithIndex[]).forEach(element =>
         data.set(element.name, {current: element.current, difference: element.difference}));
 
       this.setState({data});

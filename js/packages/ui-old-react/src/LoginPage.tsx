@@ -1,6 +1,6 @@
 import React, {HTMLAttributes, KeyboardEvent, useContext} from "react";
 import {Backdrop, Card, CardContent, CircularProgress, Divider, IconButton, InputAdornment, TextField} from "@mui/material";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
@@ -53,18 +53,18 @@ export const LoginPage: React.FC<{
     <>
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100%',
-          backgroundColor: theme.name === "dark" ? "#000" : theme.lessVars['layout-body-background']
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+          backgroundColor: theme.name === "dark" ? "#000" : theme.lessVars["layout-body-background"]
         }}
       >
         <BlockUIConditionally functionToCheck={blockUiFunction}>
           <Card
             style={{
-              position: 'relative',
-              width: '100%',
+              position: "relative",
+              width: "100%",
               maxWidth: 400,
               margin: 30,
               zIndex: 2
@@ -170,5 +170,5 @@ export const LoginPage: React.FC<{
         {footerExtra}
       </Footer>
     </>
-  )
-}
+  );
+};

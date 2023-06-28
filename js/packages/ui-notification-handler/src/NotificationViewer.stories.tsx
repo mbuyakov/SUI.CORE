@@ -1,12 +1,12 @@
-import type {ComponentStory, Meta} from '@storybook/react';
+import type {ComponentStory, Meta} from "@storybook/react";
 import {NotificationViewer as _NotificationViewer} from "./NotificationViewer";
 import React from "react";
-import {Button, Stack} from '@sui/deps-material';
-import {Container} from '@sui/deps-ioc';
+import {Button, Stack} from "@sui/deps-material";
+import {Container} from "@sui/deps-ioc";
 import {NotificationDispatcher} from "@sui/lib-notification-dispatcher";
 
 const meta: Meta<typeof _NotificationViewer> = {
-  title: 'notification handler/NotificationViewer',
+  title: "notification handler/NotificationViewer",
   component: _NotificationViewer,
 };
 

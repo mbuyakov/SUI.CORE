@@ -46,4 +46,4 @@ export const SuiThemeProvider: React.FC<{
       </ThemeProvider>
     </ConfigProvider>
   );
-}
+};

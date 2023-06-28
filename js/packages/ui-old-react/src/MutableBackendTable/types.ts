@@ -10,7 +10,7 @@ import {IPromisedBaseFormModalOnlyModalProps, IPromisedBaseFormModalProps} from 
 // noinspection ES6PreferShortImport
 import {ExtractProps} from "../other";
 
-import {DEFAULT_MODAL_WIDTH_VARIANT} from './MutableBackendTable';
+import {DEFAULT_MODAL_WIDTH_VARIANT} from "./MutableBackendTable";
 
 type IPromisedBaseFormModalPropsBase<T> = Omit<IPromisedBaseFormModalProps<T>, "onSubmit" | "baseFormProps">;
 export type BaseFormProps<T> = IPromisedBaseFormModalProps<T>["baseFormProps"];

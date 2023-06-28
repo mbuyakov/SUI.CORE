@@ -1,29 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {SaveOutlined} from "@ant-design/icons";
 
-import {ColumnInfoManager, TableInfoManager} from '@sui/ui-old-core';
+import {ColumnInfoManager, TableInfoManager} from "@sui/ui-old-core";
 import {Switch, Tooltip, Tree} from "@sui/deps-antd";
-import autobind from 'autobind-decorator';
-import * as React from 'react';
+import autobind from "autobind-decorator";
+import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {DeletableSmallCard} from '../DeletableSmallCard';
+import {DeletableSmallCard} from "../DeletableSmallCard";
 // noinspection ES6PreferShortImport
-import {DnDList} from '../Draggable';
+import {DnDList} from "../Draggable";
 // noinspection ES6PreferShortImport
-import {ISerializableComponent} from '../Draggable/Serializable';
+import {ISerializableComponent} from "../Draggable/Serializable";
 // noinspection ES6PreferShortImport
-import {PromisedButton} from '../Inputs';
+import {PromisedButton} from "../Inputs";
 // noinspection ES6PreferShortImport
-import {MAIN_SETTINGS__CONTAINER, MAIN_SETTINGS__ITEM_TREE} from '../styles';
+import {MAIN_SETTINGS__CONTAINER, MAIN_SETTINGS__ITEM_TREE} from "../styles";
 // noinspection ES6PreferShortImport
-import {WaitData} from '../WaitData';
+import {WaitData} from "../WaitData";
 
-import {CardSettings, SerializedCardSettings} from './CardSettings';
-import {DebugModeContext} from './DebugModeContext';
-import {FieldsContext} from './FieldsContext';
-import {GetPopupContainerContext} from './GetPopupContainerContext';
-import {ItemSettings} from './ItemSettings';
+import {CardSettings, SerializedCardSettings} from "./CardSettings";
+import {DebugModeContext} from "./DebugModeContext";
+import {FieldsContext} from "./FieldsContext";
+import {GetPopupContainerContext} from "./GetPopupContainerContext";
+import {ItemSettings} from "./ItemSettings";
 
 async function getFieldsForCol(colId: string, includeChildren: boolean = true): Promise<IFieldNode> {
   const colInfo = await ColumnInfoManager.getById(colId);
@@ -69,7 +69,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
   fields?: IFieldNode[]
 }> implements ISerializableComponent<SerializedCardSettings> {
 
-  private static mapFields(fields: IFieldNode[], parentKey: string = ''): JSX.Element[] {
+  private static mapFields(fields: IFieldNode[], parentKey: string = ""): JSX.Element[] {
     return fields.map(field => {
       const key = `${parentKey}${field.colInfoIds}`;
       let child = null;

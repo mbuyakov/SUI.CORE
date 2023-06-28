@@ -1,7 +1,7 @@
 import {AntdTheme, MuiTheme, SuiThemeConfig} from "./types";
 import {createTheme as muiCreateTheme} from "@sui/deps-material";
 
-const PRIMARY_COLOR = "#56CBF8"
+const PRIMARY_COLOR = "#56CBF8";
 
 export const suiDefaultTheme: SuiThemeConfig = {
   common: {

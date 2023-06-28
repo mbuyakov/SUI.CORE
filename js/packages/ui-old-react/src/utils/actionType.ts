@@ -1,16 +1,16 @@
 export enum ActionType {
-  EQUAL = 'EQUAL',
-  NOT_EQUAL = 'NOT_EQUAL',
-  MORE = 'MORE',
-  MORE_OR_EQUAL = 'MORE_OR_EQUAL',
-  LESS = 'LESS',
-  LESS_OR_EQUAL = 'LESS_OR_EQUAL',
-  FILLED = 'FILLED',
-  NOT_FILLED = 'NOT_FILLED',
-  LIKE = 'LIKE',
-  NOT_LIKE = 'NOT_LIKE',
-  IN = 'IN',
-  NOT_IN = 'NOT_IN'
+  EQUAL = "EQUAL",
+  NOT_EQUAL = "NOT_EQUAL",
+  MORE = "MORE",
+  MORE_OR_EQUAL = "MORE_OR_EQUAL",
+  LESS = "LESS",
+  LESS_OR_EQUAL = "LESS_OR_EQUAL",
+  FILLED = "FILLED",
+  NOT_FILLED = "NOT_FILLED",
+  LIKE = "LIKE",
+  NOT_LIKE = "NOT_LIKE",
+  IN = "IN",
+  NOT_IN = "NOT_IN"
 }
 
 // Указывает, требуется ли значение для фильра
@@ -90,10 +90,10 @@ export function getSqlFilter(field?: string, action?: ActionType, filter?: any):
       return `${field} IS NULL`;
     case ActionType.LIKE:
     case ActionType.NOT_LIKE:
-      return `${field} ${action.replace('_', ' ')} ${filter}`;
+      return `${field} ${action.replace("_", " ")} ${filter}`;
     case ActionType.IN:
     case ActionType.NOT_IN:
-      return `${field} ${action.replace('_', ' ')} (${filter})`;
+      return `${field} ${action.replace("_", " ")} (${filter})`;
     default:
       return undefined;
   }

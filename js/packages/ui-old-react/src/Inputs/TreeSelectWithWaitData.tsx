@@ -12,14 +12,14 @@ import {TREE_SELECT_DISABLE_GROUP_SELECTION} from "../styles";
 import {getDataSet, getDataSetRender, getUser, IDataSet} from "../utils";
 
 export type ITreeSelectWithWaitDataProps<TValue, TValueType, TGroupType> =
-  Omit<TreeSelectProps<TValue>, 'treeData' | 'treeNodeFilterProp'> & {
+  Omit<TreeSelectProps<TValue>, "treeData" | "treeNodeFilterProp"> & {
   disableGroupSelection?: boolean;
   groupTableFilter?: IGqlFilter<TGroupType>;
   groupTableIdentifier: string;
   valueTableFilter?: IGqlFilter<TValueType>;
   valueTableIdentifier: string;
   watchFilter?: boolean;
-}
+};
 
 export interface ITreeSelectWithWaitDataState<TValue> {
   dataSet?: IDataSet[];
@@ -64,7 +64,7 @@ export class TreeSelectWithWaitData<TValue = DefaultValueType, TValueType = {}, 
         showCheckedStrategy="SHOW_PARENT"
         {...this.props}
         value={ready ? this.props.value : undefined}
-        style={{...this.props.style, ...(!ready && {filter: 'blur(0.5px)'})}}
+        style={{...this.props.style, ...(!ready && {filter: "blur(0.5px)"})}}
         treeData={this.state.treeData}
         disabled={(this.state.treeData && !ready) || this.props.disabled}
         treeNodeFilterProp="title"

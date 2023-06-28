@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Theme } from "@mui/material/styles";
 // import makeStyles from '@mui/styles/makeStyles';
 import {Typography} from "@mui/material";
@@ -46,6 +46,6 @@ export const Footer: React.FC<React.DetailedHTMLProps<React.HTMLAttributes<HTMLD
       {showAdditionalButtons && <FooterAdditionalActions/>}
     </div>
   );
-}
+};
 
 

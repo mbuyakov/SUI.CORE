@@ -24,11 +24,11 @@ export class ThemeServiceImpl extends ThemeService {
     if (!this.themeVariant.get()) {
       this.themeVariant.set(this.getBrowserTheme());
     }
-    document.body.setAttribute('data-theme', this.themeVariant.get()!);
+    document.body.setAttribute("data-theme", this.themeVariant.get()!);
   }
 
   getBrowserTheme(): SuiThemeVariants {
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light";
   }
@@ -37,7 +37,7 @@ export class ThemeServiceImpl extends ThemeService {
     this.themeVariant.set(theme);
     // noinspection JSIgnoredPromiseFromCall
     this.dispatch(ThemeChangedEvent, new ThemeChangedEvent(theme));
-    document.body.setAttribute('data-theme', theme);
+    document.body.setAttribute("data-theme", theme);
   }
 
   getCurrentTheme(): SuiThemeVariants {

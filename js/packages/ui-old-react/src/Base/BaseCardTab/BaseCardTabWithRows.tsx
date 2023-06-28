@@ -3,10 +3,10 @@ import {Tabs} from "@sui/deps-antd";
 import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {BaseCardRow, IBaseCardRowLayout} from '../BaseCardRow/BaseCardRow';
+import {BaseCardRow, IBaseCardRowLayout} from "../BaseCardRow/BaseCardRow";
 
 // noinspection ES6PreferShortImport
-import {IBaseCardTabLayout} from './BaseCardTab';
+import {IBaseCardTabLayout} from "./BaseCardTab";
 
 export interface IBaseCardTabWithRows<T, ITEM> {
   key?: string;
