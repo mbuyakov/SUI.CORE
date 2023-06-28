@@ -1,8 +1,7 @@
-import {removeDependenciesFromPackageJson, Tree, updateProjectConfiguration} from '@nx/devkit';
+import {Tree} from '@nx/devkit';
 import {LibGeneratorSchema} from './schema';
 import * as jsGen from "@nx/js/src/generators/library/library";
-import {addMinimalPublishScript} from "@nx/js/src/utils/minimal-publish-script";
-import {readProjectConfiguration} from "nx/src/generators/utils/project-configuration";
+import {commonTweaks} from "../util";
 
 export async function libGenerator(tree: Tree, options: LibGeneratorSchema) {
   const name = `${options.type}-${options.name}`;
@@ -17,23 +16,7 @@ export async function libGenerator(tree: Tree, options: LibGeneratorSchema) {
     importPath: `@sui/${name}`
   });
 
-  const publishScriptPath = addMinimalPublishScript(tree);
-
-  const projectConfiguration = readProjectConfiguration(tree, name);
-  projectConfiguration.tags = [`type:${options.type}`];
-  projectConfiguration.targets.publish = {
-    command: `node ${publishScriptPath} ${name} {args.ver} {args.tag}`,
-    dependsOn: ['build']
-  };
-  updateProjectConfiguration(
-    tree,
-    name,
-    projectConfiguration
-  );
-
-  tree.delete(`.prettierignore`);
-  tree.delete(`.prettierrc`);
-  removeDependenciesFromPackageJson(tree, [], ["prettier"]);
+  commonTweaks(tree, options.type, name);
 }
 
 export default libGenerator;

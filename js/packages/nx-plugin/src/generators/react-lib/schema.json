@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "Lib",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["lib","ui","util","deps", "host"],
+      "x-prompt": "What type would you like to use?"
+    },
+    "name": {
+      "type": "string",
+      "x-prompt": "What name would you like to use?"
+    }
+  },
+  "required": ["type", "name"]
+}

@@ -4,7 +4,7 @@
   "license": "Apache 2.0",
   "scripts": {
     "new-lib": "nx g @sui/nx-plugin:lib",
-    "new-react-lib": "test $NAME && nx g @nx/react:library $NAME --unitTestRunner=jest --bundler=rollup --style=@emotion/styled --publishable --importPath @sui/$NAME || echo 'set NAME env'",
+    "new-react-lib": "nx g @sui/nx-plugin:react-lib",
     "build": "nx run-many --target=build --parallel=8",
     "build-detailed": "nx run-many --target=build --output-style=stream --parallel=8",
     "test": "nx run-many --target=test --parallel=8",

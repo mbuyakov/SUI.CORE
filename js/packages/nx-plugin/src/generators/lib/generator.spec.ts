@@ -6,7 +6,7 @@ import { LibGeneratorSchema } from './schema';
 
 describe('lib generator', () => {
   let tree: Tree;
-  const options: LibGeneratorSchema = { name: 'test' };
+  const options: LibGeneratorSchema = { name: 'test', type: 'lib' };
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
@@ -14,7 +14,7 @@ describe('lib generator', () => {
 
   it('should run successfully', async () => {
     await libGenerator(tree, options);
-    const config = readProjectConfiguration(tree, 'test');
+    const config = readProjectConfiguration(tree, 'lib-test');
     expect(config).toBeDefined();
   });
 });

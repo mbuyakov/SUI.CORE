@@ -4,6 +4,11 @@
       "factory": "./src/generators/lib/generator",
       "schema": "./src/generators/lib/schema.json",
       "description": "lib generator"
+    },
+    "react-lib": {
+      "factory": "./src/generators/react-lib/generator",
+      "schema": "./src/generators/react-lib/schema.json",
+      "description": "react-lib generator"
     }
   }
 }
