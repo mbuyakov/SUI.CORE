@@ -2,7 +2,7 @@ import React from "react";
 import {notification} from "@sui/deps-antd";
 import {Typography} from "@sui/deps-material";
 import {useHandler, useService} from "@sui/lib-hooks";
-import {ErrorEvent, NotificationDispatcher, NotificationEvent} from "@sui/lib-notification-dispatcher";
+import {ErrorEvent, NotificationDispatcher, NotificationEvent, NotificationCloseEvent} from "@sui/lib-notification-dispatcher";
 
 export const NotificationViewer: React.FC<{
   children?: React.ReactNode
@@ -57,6 +57,10 @@ export const NotificationViewer: React.FC<{
         </>
       )
     });
+  }), []);
+
+  useHandler(notificationDispatcher.addHandler<NotificationCloseEvent>(NotificationCloseEvent, (event) => {
+    api.destroy(event.key);
   }), []);
 
   return (
