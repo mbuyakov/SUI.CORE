@@ -4,7 +4,7 @@ import {FetchResult} from "apollo-link";
 import gql from "graphql-tag";
 
 import {getSUISettings} from "@/core";
-import {IObjectWithIndex} from "@/other";
+import {IObjectWithIndex} from "@sui/util-types";
 
 /**
  * Stub for PostGraphile error format

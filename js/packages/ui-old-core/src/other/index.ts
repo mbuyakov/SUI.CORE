@@ -1,25 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NotFunction<T> = T extends Function ? never : T;
 
-export type Nullable<T> = T | null | undefined;
-
 export type Merge<T, K> = Pick<T, Exclude<keyof T, keyof K>> & K;
-
-/**
- * Return promise, that resolve after given ms
- */
-export async function sleep(ms: number): Promise<void> {
-  await new Promise(resolve => {
-    setTimeout(resolve, ms);
-  });
-}
-
-export interface IObjectWithIndex {
-  [index: string]: any;
-}
 
 /**
  * Async map

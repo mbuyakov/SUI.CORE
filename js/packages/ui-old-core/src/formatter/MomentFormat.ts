@@ -1,5 +1,5 @@
 import moment, {Moment} from "moment";
-import {Nullable} from "@/other";
+import {Nullable} from "@sui/util-types";
 
 export class MomentFormat {
   static readonly DATE = new MomentFormat("DD.MM.YYYY");

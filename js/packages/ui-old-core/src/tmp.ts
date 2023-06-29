@@ -1,4 +1,4 @@
-export type AuthorityList = { [key in "and" | "or"]: string[]; };
+import {AuthorityList} from "@sui/lib-auth";
 
 export const ROLE_PREFIX = "ROLE_";
 

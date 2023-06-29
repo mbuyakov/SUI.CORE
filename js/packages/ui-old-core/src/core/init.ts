@@ -3,9 +3,8 @@ import ApolloClient from "apollo-client";
 import {setContext} from "apollo-link-context";
 import {Container} from "typescript-ioc";
 
-import {ICoreUser} from "@/user";
-import {UserService} from "@/ioc";
 import {IRawRoute, RouteType} from "@/tmp";
+import {ICoreUser, UserService} from "@sui/lib-auth";
 
 declare let window: Window & {
   SUI: ISUISettings | undefined;

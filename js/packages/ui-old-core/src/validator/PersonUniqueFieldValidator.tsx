@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {DBUniqueValidator} from "@/validator/DBUniqueValidator";
-import {IObjectWithIndex} from "@/other";
+import {IObjectWithIndex} from "@sui/util-types";
 
 export async function PersonUniqueFieldValidator<T = string>(
   fieldName: string,

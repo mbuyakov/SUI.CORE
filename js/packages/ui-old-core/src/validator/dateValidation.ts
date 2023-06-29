@@ -1,5 +1,5 @@
 import moment, {Moment} from "moment";
-import {Nullable} from "@/other";
+import {Nullable} from "@sui/util-types";
 
 export const MOMENT_01_01_1900 = moment("1900-01-01");
 

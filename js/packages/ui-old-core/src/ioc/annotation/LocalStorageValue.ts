@@ -6,8 +6,7 @@ import {Container} from "typescript-ioc";
 import {Logger} from "../utils";
 // noinspection ES6PreferShortImport
 import {LocalStorageService} from "../service/LocalStorageService";
-// noinspection ES6PreferShortImport
-import {Nullable} from "../../other";
+import {Nullable} from "@sui/util-types";
 
 export interface LocalStorageValueWrapper {
   get(): Nullable<string>;

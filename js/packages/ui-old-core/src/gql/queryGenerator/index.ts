@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import {IObjectWithIndex} from "../../other";
 import {addQuotesIfString, camelCase, capitalize, formatRawForGraphQL} from "../../formatter/stringFormatters";
 
 // noinspection ES6PreferShortImport
 import {IGqlFilter} from "../types";
 import {mutate, query} from "../wrapper";
+import {IObjectWithIndex} from "@sui/util-types";
 
 export type PossibleId = string | number;
 export type PossibleValue = string | number | boolean;

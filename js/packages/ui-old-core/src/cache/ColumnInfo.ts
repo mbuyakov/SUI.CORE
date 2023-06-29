@@ -1,12 +1,11 @@
 import {getDataByKey} from "@/dataKey";
 import {GqlCacheManager} from "@/gql";
-import {IObjectWithIndex} from "@/other";
 import {IColumnInfo, IColumnInfoReference, IColumnInfoRole, IColumnInfoTag, IFilterType, ISubtotalType} from "@/types";
 import {formatRoleName} from "@/tmp";
 
 import {Name} from "./Name";
 import {CacheManager, ICacheEntry} from "@sui/lib-cache-abstract";
-import {TableInfo} from "@/cache/TableInfo";
+import {IObjectWithIndex} from "@sui/util-types";
 
 export class ColumnInfo {
   public columnName: string;

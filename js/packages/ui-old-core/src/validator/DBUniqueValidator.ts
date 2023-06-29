@@ -1,6 +1,6 @@
 import {query} from "@/gql";
-import {IObjectWithIndex} from "@/other";
 import {addQuotesIfString} from "@/formatter/stringFormatters";
+import {IObjectWithIndex} from "@sui/util-types";
 
 export type gqlCompareOperations = "equalTo" | "notEqualTo" | "distinctFrom" | "notDistinctFrom";
 
