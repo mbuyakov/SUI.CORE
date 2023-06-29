@@ -4,7 +4,7 @@ import * as React from "react";
 import {NotificationArgsProps} from "./types";
 import {ErrorEvent, NotificationCloseEvent, NotificationEvent} from "./events";
 
-export abstract class NotificationDispatcher extends EventManager<NotificationEvent | ErrorEvent | NotificationCloseEvent> {
+abstract class NotificationDispatcher extends EventManager<NotificationEvent | ErrorEvent | NotificationCloseEvent> {
   public abstract success(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps): void;
 
   public abstract info(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps): void;
@@ -18,7 +18,7 @@ export abstract class NotificationDispatcher extends EventManager<NotificationEv
   public abstract close(key: string): void;
 }
 
-class NotificationDispatcherImpl extends NotificationDispatcher {
+export class NotificationDispatcherImpl extends NotificationDispatcher {
   public success(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps) {
     // noinspection JSIgnoredPromiseFromCall
     this.dispatch(NotificationEvent, new NotificationEvent("SUCCESS", title, message, args));
@@ -51,5 +51,5 @@ class NotificationDispatcherImpl extends NotificationDispatcher {
   }
 }
 
-const _NotificationDispatcherImpl = SingletonAndOnlyIoc(NotificationDispatcherImpl);
-export {_NotificationDispatcherImpl as NotificationDispatcherImpl};
+const _NotificationDispatcher = SingletonAndOnlyIoc(NotificationDispatcher);
+export {_NotificationDispatcher as NotificationDispatcher};
