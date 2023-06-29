@@ -48,6 +48,7 @@ export * from "./FullScreenModal";
 export * from "./GlobalRoutesWrapper";
 export * from "./InputWithApostropheValidation";
 export * from "./LoginPage";
+export * from "./react18dndfix";
 export * from "./ReportTopBarChart";
 export * from "./RoleVisibilityWrapper";
 export * from "./Socket";
