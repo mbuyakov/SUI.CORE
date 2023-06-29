@@ -13,39 +13,45 @@ abstract class NotificationDispatcher extends EventManager<NotificationEvent | E
 
   public abstract error(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps): void;
 
-  public abstract handleError(e: Error, title?: string): void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public abstract handleError(e: any, title?: string): void;
 
   public abstract close(key: string): void;
 }
 
 export class NotificationDispatcherImpl extends NotificationDispatcher {
-  public success(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps) {
+  public override success(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps) {
     // noinspection JSIgnoredPromiseFromCall
     this.dispatch(NotificationEvent, new NotificationEvent("SUCCESS", title, message, args));
   }
 
-  public info(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps) {
+  public override info(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps) {
     // noinspection JSIgnoredPromiseFromCall
     this.dispatch(NotificationEvent, new NotificationEvent("INFO", title, message, args));
   }
 
-  public warning(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps) {
+  public override warning(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps) {
     // noinspection JSIgnoredPromiseFromCall
     this.dispatch(NotificationEvent, new NotificationEvent("WARNING", title, message, args));
   }
 
-  public error(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps) {
+  public override error(title: React.ReactNode, message?: React.ReactNode, args?: NotificationArgsProps) {
     // noinspection JSIgnoredPromiseFromCall
     this.dispatch(NotificationEvent, new NotificationEvent("ERROR", title, message, args));
   }
 
-  public handleError(e: Error, title = "Ошибка при обработке запроса") {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public override handleError(e: any, title = "Ошибка при обработке запроса") {
+    console.error(title, e);
+    if (!(e instanceof Error)) {
+      e = new Error(e);
+    }
     // noinspection JSIgnoredPromiseFromCall
     this.dispatch(ErrorEvent, new ErrorEvent(title, e));
   }
 
 
-  override close(key: string) {
+  public override close(key: string) {
     // noinspection JSIgnoredPromiseFromCall
     this.dispatch(NotificationCloseEvent, new NotificationCloseEvent(key));
   }
