@@ -54,7 +54,7 @@ export class UserList<T extends {}> extends React.Component<IUserListProps<T>> {
               cols: {
                 items: {
                   fieldName: "name",
-                  inputNode: <Input placeholder="Введите ФИО"/>,
+                  inputNode: <Input autoComplete={"off"} placeholder="Введите ФИО"/>,
                   required: true,
                   rules: [this.props.nameValidator ? {validator: this.props.nameValidator} : {}],
                   title: "ФИО"
@@ -65,7 +65,7 @@ export class UserList<T extends {}> extends React.Component<IUserListProps<T>> {
               cols: {
                 items: {
                   fieldName: "email",
-                  inputNode: <Input placeholder="Введите электронную почту"/>,
+                  inputNode: <Input autoComplete={"off"} placeholder="Введите электронную почту"/>,
                   required: true,
                   rules: [{pattern: EMAIL_REGEXP, message: 'Невалидный адрес электронной почты'}],
                   title: "Электронная почта"
@@ -75,8 +75,9 @@ export class UserList<T extends {}> extends React.Component<IUserListProps<T>> {
             {
               cols: {
                 items: {
+                  initialValue: '',
                   fieldName: "username",
-                  inputNode: <Input placeholder="Введите имя пользователя"/>,
+                  inputNode: <Input autoComplete={"off"} placeholder="Введите имя пользователя"/>,
                   required: true,
                   rules: [this.props.userNameValidator ? {validator: this.props.userNameValidator} : {min: MIN_USERNAME_LENGTH, message: MIN_USERNAME_LENGTH_MESSAGE}],
                   title: "Имя пользователя"
@@ -86,8 +87,9 @@ export class UserList<T extends {}> extends React.Component<IUserListProps<T>> {
             {
               cols: {
                 items: {
+                  initialValue: '',
                   fieldName: "password",
-                  inputNode: <Input type="password" placeholder="Введите пароль"/>,
+                  inputNode: <Input autoComplete={"off"} type="password" placeholder="Введите пароль"/>,
                   required: true,
                   rules: [
                     {min: MIN_PASSWORD_LENGTH, message: MIN_PASSWORD_LENGTH_MESSAGE},
