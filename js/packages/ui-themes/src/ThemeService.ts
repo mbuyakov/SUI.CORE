@@ -12,15 +12,18 @@ abstract class ThemeService extends EventManager<ThemeChangedEvent> {
   public abstract getCompiledTheme(): SuiThemeCompiled;
 
   public abstract setCurrentTheme(theme: SuiThemeVariants): void;
+  public abstract isNoDark(): boolean;
 }
 
 export class ThemeServiceImpl extends ThemeService {
   private themeVariant: LSKeyWrapper<SuiThemeVariants> = Container.get(LocalStorageService).getKeyWrapper("theme");
   private readonly compiledTheme: SuiThemeCompiled;
+  private readonly noDark: boolean;
 
-  constructor(compiledTheme: SuiThemeCompiled) {
+  constructor(compiledTheme: SuiThemeCompiled, noDark = false) {
     super();
     this.compiledTheme = compiledTheme;
+    this.noDark = noDark;
     if (!this.themeVariant.get()) {
       this.themeVariant.set(this.getBrowserTheme());
     }
@@ -28,7 +31,7 @@ export class ThemeServiceImpl extends ThemeService {
   }
 
   getBrowserTheme(): SuiThemeVariants {
-    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+    return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches && !this.noDark)
       ? "dark"
       : "light";
   }
@@ -47,6 +50,10 @@ export class ThemeServiceImpl extends ThemeService {
 
   getCompiledTheme(): SuiThemeCompiled {
     return this.compiledTheme;
+  }
+
+  isNoDark(): boolean {
+    return this.noDark;
   }
 }
 
