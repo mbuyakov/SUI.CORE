@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from "react";
-import {Collapse, CollapseProps, List, ListItem, ListItemProps, MenuProps, Typography} from "@mui/material";
+import {Collapse, CollapseProps, List, ListItem, ListItemProps, MenuProps, Typography} from "@sui/deps-material";
 import { Theme } from "@mui/material/styles";
 // import createStyles from '@mui/styles/createStyles';
 // import makeStyles from '@mui/styles/makeStyles';

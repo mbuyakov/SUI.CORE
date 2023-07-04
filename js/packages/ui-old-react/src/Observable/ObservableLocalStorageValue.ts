@@ -1,5 +1,5 @@
 import {LocalStorageService, TOrCallback} from "@sui/ui-old-core";
-import {Container} from "typescript-ioc";
+import {Container} from "@sui/deps-ioc";
 import {Observable} from "@/Observable/Observable";
 import {Nullable} from "@sui/util-types";
 

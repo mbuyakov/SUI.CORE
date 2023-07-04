@@ -2,7 +2,7 @@ import * as React from "react";
 import {ReactElement} from "react";
 import Select from "@mui/material/Select";
 import {PagingPanel as PagingPanelBase, Mui} from "@sui/deps-dx-react-grid";
-import {Input} from "@mui/material";
+import {Input} from "@sui/deps-material";
 import debounce from "lodash/debounce";
 
 const DEBOUNCE_ON_CHANGE_MS = 1000;

@@ -1,4 +1,4 @@
-import {IconButton} from "@mui/material";
+import {IconButton} from "@sui/deps-material";
 import LinkIcon from "@mui/icons-material/Link";
 import autobind from "autobind-decorator";
 import * as React from "react";

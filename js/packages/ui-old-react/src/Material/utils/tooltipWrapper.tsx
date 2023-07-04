@@ -1,6 +1,6 @@
 // Migrated to @sui/ui-material
 
-import {Tooltip} from "@mui/material";
+import {Tooltip} from "@sui/deps-material";
 import React from "react";
 import {Nullable} from "@sui/util-types";
 

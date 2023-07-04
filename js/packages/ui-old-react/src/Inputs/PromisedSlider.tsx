@@ -1,5 +1,5 @@
 /* tslint:disable:no-magic-numbers */
-import {CircularProgress, IconButton} from "@mui/material";
+import {CircularProgress, IconButton} from "@sui/deps-material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import {Slider, SliderSingleProps} from "@sui/deps-antd";
 import * as React from "react";

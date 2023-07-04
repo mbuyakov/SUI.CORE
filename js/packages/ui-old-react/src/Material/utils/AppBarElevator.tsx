@@ -1,4 +1,4 @@
-import {useScrollTrigger} from "@mui/material";
+import {useScrollTrigger} from "@sui/deps-material";
 import React from "react";
 
 export const AppBarElevator: React.FC<{

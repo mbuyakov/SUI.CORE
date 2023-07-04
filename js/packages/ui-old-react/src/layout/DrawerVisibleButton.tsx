@@ -1,5 +1,5 @@
 import {ChevronRight} from "@mui/icons-material";
-import {IconButton} from "@mui/material";
+import {IconButton} from "@sui/deps-material";
 import React, {useContext} from "react";
 import {IconButtonProps} from "@mui/material/IconButton";
 import {BasicLayoutContext} from "@/layout/BasicLayoutContext";

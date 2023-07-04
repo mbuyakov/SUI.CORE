@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import {Container} from "typescript-ioc";
+import {Container} from "@sui/deps-ioc";
 import {ConfigProvider} from "@sui/deps-antd";
 import {SuiThemeContext, ThemeService} from "@/themes";
 import {localeRu} from "@/antdMissedExport";

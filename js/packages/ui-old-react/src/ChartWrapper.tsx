@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types */
 import * as React from "react";
-import {Container} from "typescript-ioc";
+import {Container} from "@sui/deps-ioc";
 import {AMCHARTS, getAmcharts} from "@sui/deps-amcharts";
 import {SUIReactComponent} from "@/SUIReactComponent";
 import {ThemeService} from "./themes";

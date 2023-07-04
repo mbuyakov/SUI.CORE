@@ -1,7 +1,7 @@
 import {InMemoryCache} from "apollo-cache-inmemory";
 import ApolloClient from "apollo-client";
 import {HttpLink} from "apollo-link-http";
-import {Container} from "typescript-ioc";
+import {Container} from "@sui/deps-ioc";
 import {authLink, ColumnInfoManager, IInitSUISettings, ISUISettings, NameManager, TableInfoManager} from "@sui/ui-old-core";
 
 import {parseRoutes, runCheckVersionMismatch} from "@/utils";

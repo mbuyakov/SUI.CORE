@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import autobind from "autobind-decorator";
-import {Singleton} from "typescript-ioc";
+import {Singleton} from "@sui/deps-ioc";
 
 // noinspection ES6PreferShortImport
 import {ROOT_LOGGER_KEY} from "../const";

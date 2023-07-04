@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Container} from "typescript-ioc";
+import {Container} from "@sui/deps-ioc";
 import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
 import {ConfigProvider} from "@sui/deps-antd";
 import {SuiThemeContext, ThemeService, ThemeVariant} from "@/themes";

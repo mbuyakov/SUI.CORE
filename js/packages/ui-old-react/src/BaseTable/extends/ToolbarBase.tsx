@@ -1,4 +1,4 @@
-import {Toolbar} from "@mui/material";
+import {Toolbar} from "@sui/deps-material";
 import {ToolbarProps} from "@mui/material/Toolbar";
 import * as React from "react";
 

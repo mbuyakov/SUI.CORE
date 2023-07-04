@@ -1,7 +1,7 @@
 // Migrated to @sui/ui-promised
 
 
-import {CircularProgress, CircularProgressProps} from "@mui/material";
+import {CircularProgress, CircularProgressProps} from "@sui/deps-material";
 import React from "react";
 import {Nullable} from "@sui/util-types";
 

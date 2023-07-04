@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {CheckOutlined, CloseOutlined, IdcardOutlined, ProfileOutlined, QuestionOutlined, SortAscendingOutlined, SortDescendingOutlined} from "@ant-design/icons";
-import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material";
+import { ThemeProvider, Theme, StyledEngineProvider } from "@sui/deps-material";
 import IconButton from "@mui/material/IconButton";
 import {Cached, Edit} from "@mui/icons-material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";

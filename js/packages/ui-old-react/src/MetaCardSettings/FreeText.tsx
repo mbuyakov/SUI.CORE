@@ -1,4 +1,4 @@
-import {Chip} from "@mui/material";
+import {Chip} from "@sui/deps-material";
 import {Input} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";

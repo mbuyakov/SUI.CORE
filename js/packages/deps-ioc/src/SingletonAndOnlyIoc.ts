@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-restricted-imports
 import {Container, OnlyInstantiableByContainer, Scope} from "typescript-ioc";
 
 // eslint-disable-next-line @typescript-eslint/ban-types

@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {List} from "@mui/material";
+import {List} from "@sui/deps-material";
 import {BasicLayoutContext} from "@/layout/BasicLayoutContext";
 import {RouteListItem} from "@/layout/RouteListItem";
 

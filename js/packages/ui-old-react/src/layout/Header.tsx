@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {AppBar, Theme, Toolbar} from "@mui/material";
+import {AppBar, Theme, Toolbar} from "@sui/deps-material";
 // import createStyles from '@mui/styles/createStyles';
 // import makeStyles from '@mui/styles/makeStyles';
 import MenuIcon from "@mui/icons-material/Menu";

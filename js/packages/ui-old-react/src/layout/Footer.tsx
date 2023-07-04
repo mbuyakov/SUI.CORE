@@ -1,7 +1,7 @@
 import React from "react";
 import { Theme } from "@mui/material/styles";
 // import makeStyles from '@mui/styles/makeStyles';
-import {Typography} from "@mui/material";
+import {Typography} from "@sui/deps-material";
 import classNames from "classnames";
 import {getSUISettings} from "@sui/ui-old-core";
 import {FooterAdditionalActions} from "@/layout/FooterAdditionalActions";

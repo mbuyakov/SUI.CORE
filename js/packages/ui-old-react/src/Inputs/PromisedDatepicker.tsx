@@ -1,4 +1,4 @@
-import {CircularProgress, IconButton} from "@mui/material";
+import {CircularProgress, IconButton} from "@sui/deps-material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import {DatePicker, DatePickerProps} from "@sui/deps-antd";
 import moment from "moment";

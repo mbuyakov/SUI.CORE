@@ -1,4 +1,4 @@
-import {Container} from "typescript-ioc";
+import {Container} from "@sui/deps-ioc";
 import {UserService, UserServiceImpl} from "./UserService";
 import {LocalStorageService, LocalStorageServiceImpl} from "@sui/lib-storage";
 import {getPrivileges, getUser, hasAnyPrivilege, hasPrivilege, hasRole, isAdmin} from "./utils";

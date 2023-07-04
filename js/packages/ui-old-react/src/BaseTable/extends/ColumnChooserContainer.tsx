@@ -1,4 +1,4 @@
-import {List} from "@mui/material";
+import {List} from "@sui/deps-material";
 import React from "react";
 
 export const ColumnChooserContainer: React.FC<{ children: JSX.Element[] }> = ({children, ...restProps}) => (

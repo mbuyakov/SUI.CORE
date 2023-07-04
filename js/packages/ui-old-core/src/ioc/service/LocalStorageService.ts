@@ -1,4 +1,4 @@
-import {Container} from "typescript-ioc";
+import {Container} from "@sui/deps-ioc";
 
 export class LocalStorageService {
 

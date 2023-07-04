@@ -1,4 +1,4 @@
-import {IconButton, IconButtonProps} from "@mui/material";
+import {IconButton, IconButtonProps} from "@sui/deps-material";
 import React from "react";
 import {ProgressIcon} from "@/Material/ProgessIcon";
 import {tooltipWrapper} from "@/Material/utils/tooltipWrapper";

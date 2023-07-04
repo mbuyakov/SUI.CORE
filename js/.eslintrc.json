@@ -66,12 +66,21 @@
               {
                 "group": ["react-idle-timer", "react-idle-timer/*"],
                 "message": "Please use @sui/ui-idle-tracker instead."
+              },
+              {
+                "group": ["typescript-ioc", "typescript-ioc/*"],
+                "message": "Please use @sui/deps-material instead."
+              },
+              {
+                "group": ["@mui/material", "@mui/material/*", "@mui/icons-material", "@mui/icons-material/*"],
+                "message": "Please use @sui/deps-material instead."
               }
             ]
           }
         ],
         "@typescript-eslint/semi": ["error", "always"],
-        "@typescript-eslint/quotes": ["error", "double"]
+        "@typescript-eslint/quotes": ["error", "double"],
+        "no-duplicate-imports": "error"
       }
     }
   ],

@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 // import createStyles from '@mui/styles/createStyles';
 // import makeStyles from '@mui/styles/makeStyles';
-import {Divider, SwipeableDrawer, Theme} from "@mui/material";
+import {Divider, SwipeableDrawer, Theme} from "@sui/deps-material";
 import clsx from "clsx";
 import {BasicLayoutContext} from "@/layout/BasicLayoutContext";
 import {DrawerVisibleButton} from "@/layout/DrawerVisibleButton";

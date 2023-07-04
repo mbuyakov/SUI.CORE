@@ -1,4 +1,4 @@
-import {CircularProgress, IconButton, IconButtonProps, Tooltip} from "@mui/material";
+import {CircularProgress, IconButton, IconButtonProps, Tooltip} from "@sui/deps-material";
 import * as React from "react";
 
 import {IPromisedBaseState, PromisedBase} from "./PromisedBase";

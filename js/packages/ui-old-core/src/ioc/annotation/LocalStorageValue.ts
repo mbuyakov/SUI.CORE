@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {Container} from "typescript-ioc";
+import {Container} from "@sui/deps-ioc";
 
 // Don't touch import
 // noinspection ES6PreferShortImport

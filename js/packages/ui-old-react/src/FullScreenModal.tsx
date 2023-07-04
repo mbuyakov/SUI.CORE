@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import autobind from "autobind-decorator";
 import React from "react";
-import {AppBar, Dialog, DialogProps, IconButton, Slide, Toolbar} from "@mui/material";
+import {AppBar, Dialog, DialogProps, IconButton, Slide, Toolbar} from "@sui/deps-material";
 import { Theme } from "@mui/material/styles";
 // import withStyles from '@mui/styles/withStyles';
 import {TransitionProps} from "@mui/material/transitions";

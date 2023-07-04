@@ -1,7 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import classNames from "clsx";
-import { TableCell, styled, IconButton } from "@mui/material";
+import { TableCell, styled, IconButton } from "@sui/deps-material";
 
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";

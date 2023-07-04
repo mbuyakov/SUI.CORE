@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {CssBaseline, Theme} from "@mui/material";
+import {CssBaseline, Theme} from "@sui/deps-material";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import {IRawRoute} from "@sui/ui-old-core";
 import pathToRegexp from "path-to-regexp";

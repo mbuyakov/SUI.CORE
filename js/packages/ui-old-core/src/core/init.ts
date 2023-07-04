@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ApolloClient from "apollo-client";
 import {setContext} from "apollo-link-context";
-import {Container} from "typescript-ioc";
+import {Container} from "@sui/deps-ioc";
 
 import {IRawRoute, RouteType} from "@/tmp";
 import {ICoreUser, UserService} from "@sui/lib-auth";

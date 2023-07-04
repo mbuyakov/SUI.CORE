@@ -1,4 +1,4 @@
-import {ButtonProps, Divider, IconButtonProps, ListItemIcon, ListItemText, MenuItem, MenuItemProps, MenuProps, Tooltip} from "@mui/material";
+import {ButtonProps, Divider, IconButtonProps, ListItemIcon, ListItemText, MenuItem, MenuItemProps, MenuProps, Tooltip} from "@sui/deps-material";
 import React, {useMemo} from "react";
 import HoverMenu from "material-ui-popup-state/HoverMenu";
 import {bindHover, bindMenu, usePopupState} from "material-ui-popup-state/hooks";

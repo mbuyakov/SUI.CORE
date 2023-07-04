@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {EditOutlined, OrderedListOutlined} from "@ant-design/icons";
-import {Chip} from "@mui/material";
+import {Chip} from "@sui/deps-material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import SettingsIcon from "@mui/icons-material/Settings";
 import {capitalize, ColumnInfo, ColumnInfoManager, IName, Merge, NameManager, TableInfoManager} from "@sui/ui-old-core";

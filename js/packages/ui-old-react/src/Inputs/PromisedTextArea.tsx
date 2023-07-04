@@ -1,4 +1,4 @@
-import {CircularProgress, IconButton} from "@mui/material";
+import {CircularProgress, IconButton} from "@sui/deps-material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import {trimIfString} from "@sui/ui-old-core";
 import autobind from "autobind-decorator";
