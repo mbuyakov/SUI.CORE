@@ -24,7 +24,6 @@ export * from "./Report";
 export * from "./soctech";
 export * from "./styles";
 export * from "./TableRenderSettings";
-export * from "./themes";
 export * from "./TransitionBar";
 export * from "./translate";
 export * from "./UserSetting";
