@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {EMAIL_REGEXP, IObjectWithIndex, OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
+import {EMAIL_REGEXP, OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
 import {Input} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import React from "react";
@@ -15,6 +15,7 @@ import {ExtractProps} from "../other";
 
 import {MAX_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH_MESSAGE, MIN_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH_MESSAGE, MIN_USERNAME_LENGTH, MIN_USERNAME_LENGTH_MESSAGE} from "./const";
 import {ICreateUserFormValues} from "./types";
+import {IObjectWithIndex} from "@sui/util-types";
 
 const TABLE_NAME = "user_ui";
 const isDeleted = (user: { deleted?: boolean }): boolean => !!user.deleted;

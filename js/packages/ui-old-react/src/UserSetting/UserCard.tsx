@@ -9,11 +9,11 @@ import {BaseCard, IBaseCardItemLayout, IBaseCardRowLayout} from "../Base";
 // noinspection ES6PreferShortImport
 import {EditablePromisedComponent, PromisedButton, PromisedInput, PromisedSelect} from "../Inputs";
 // noinspection ES6PreferShortImport
-import {isAdmin} from "../utils";
 // noinspection ES6PreferShortImport
 import {WaitData} from "../WaitData";
 
 import {MAX_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH_MESSAGE, MIN_NAME_LENGTH, MIN_NAME_LENGTH_MESSAGE, MIN_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH_MESSAGE, MIN_USERNAME_LENGTH, MIN_USERNAME_LENGTH_MESSAGE} from "./const";
+import {isAdmin} from "@sui/lib-auth";
 
 const COLSPAN = 2;
 

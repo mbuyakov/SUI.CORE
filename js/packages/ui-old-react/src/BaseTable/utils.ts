@@ -1,10 +1,11 @@
 import {getXlsx, WritingOptions} from "@sui/deps-amcharts";
-import {defaultIfNotBoolean, getDataByKey, IObjectWithIndex, NO_DATA_TEXT} from "@sui/ui-old-core";
+import {defaultIfNotBoolean, getDataByKey, NO_DATA_TEXT} from "@sui/ui-old-core";
 
 // noinspection ES6PreferShortImport
 import {translate} from "../translate";
 
 import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout} from "./types";
+import {IObjectWithIndex} from "@sui/util-types";
 
 export function mapColumns(cols: IBaseTableColLayout[]): IFormattedBaseTableColLayout[] {
   return cols.map(col => ({

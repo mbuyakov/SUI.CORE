@@ -1,5 +1,4 @@
 /* eslint-disable */
-import {IObjectWithIndex} from '@sui/ui-old-core';
 import {Observable, ObservableHandlerStub} from "@/Observable";
 import {BASE_FORM_CLASS} from "@/styles";
 import {SUIReactComponent} from "@/SUIReactComponent";
@@ -13,6 +12,7 @@ import * as React from 'react';
 import {BaseCard, IBaseCardProps} from './BaseCard';
 import {BaseFormContext} from './BaseFormContext';
 import {IBaseFormItemLayout, renderIBaseFormItemLayout} from './BaseFormItemLayout';
+import {IObjectWithIndex} from "@sui/util-types";
 
 export type ValuesGetter = (fields: string[]) => IObjectWithIndex;
 

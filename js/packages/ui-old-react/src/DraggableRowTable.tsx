@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {IObjectWithIndex} from "@sui/ui-old-core";
 import {Table, TableProps} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import update from "immutability-helper";
@@ -10,6 +9,7 @@ import HTML5Backend from "react-dnd-html5-backend";
 
 import {ExtractProps} from "./other";
 import {WaitData} from "./WaitData";
+import {IObjectWithIndex} from "@sui/util-types";
 
 let dragingIndex = -1;
 

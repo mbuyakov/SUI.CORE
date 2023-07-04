@@ -1,8 +1,8 @@
 import merge from "lodash/merge";
 import { createTheme, DeprecatedThemeOptions, adaptV4Theme } from "@mui/material/styles";
-import {Nullable} from "@sui/ui-old-core";
 import {AntdThemeVars, CompiledThemes, SuiThemeConfig, ThemeAndOptions, DeprecatedThemeOptionsGetter, ThemesConfig, ThemeVariant} from "@/themes/types";
 import {defaultMuiTheme, defaultThemesConfig} from "@/themes/defaultThemesConfig";
+import {Nullable} from "@sui/util-types";
 
 const lightAntdTheme = {};
 const darkAntdTheme = {};

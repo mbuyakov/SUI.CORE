@@ -8,7 +8,7 @@ import JSzip from "jszip";
 import difference from "lodash/difference";
 import * as React from "react";
 import {v4 as uuidv4} from "uuid";
-import {asyncMap, camelCase, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, formatRawForGraphQL, generateCreate, getDataByKey, getSUISettings, IObjectWithIndex, IUserSetting, mutate, query, TableInfo, TableInfoManager, toMap, wrapInArray} from "@sui/ui-old-core";
+import {asyncMap, camelCase, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, formatRawForGraphQL, generateCreate, getDataByKey, getSUISettings, IUserSetting, mutate, query, TableInfo, TableInfoManager, toMap, wrapInArray} from "@sui/ui-old-core";
 import {LazyStubNoDataCell, LazyStubNoDataCellSmall} from "@/BackendTable/LazyStubNoDataCell";
 import {LoadingNoDataCell, LoadingNoDataCellSmall} from "@/BackendTable/LoadingNoDataCell";
 
@@ -17,7 +17,7 @@ import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
 // noinspection ES6PreferShortImport
 import {exportToXlsx} from "../BaseTable/utils";
 // noinspection ES6PreferShortImport
-import {BaseTable, colToBaseTableCol, CompiledTheme, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE, DEFAULT_SERVICE_COLUMN_WIDTH, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, getUser, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAdmin, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from "../index";
+import {BaseTable, colToBaseTableCol, CompiledTheme, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE, DEFAULT_SERVICE_COLUMN_WIDTH, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from "../index";
 // noinspection ES6PreferShortImport
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 // noinspection ES6PreferShortImport
@@ -29,6 +29,8 @@ import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
 import {RestBackendDataSource} from "./RestBackendDataSource";
 import {IconButton, MuiIcons } from "@sui/deps-material";
 import {Tooltip} from "@sui/deps-antd";
+import {IObjectWithIndex} from "@sui/util-types";
+import {getUser, isAdmin} from "@sui/lib-auth";
 
 const DX_REACT_GROUP_SEPARATOR = "|";
 const CHILDREN_KEY = "__children";

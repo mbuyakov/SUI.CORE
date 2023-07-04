@@ -2,13 +2,13 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import autobind from "autobind-decorator";
 import React from "react";
-import {sleep} from "@sui/ui-old-core";
 import {AppBar, Dialog, DialogProps, IconButton, Slide, Toolbar} from "@mui/material";
 import { Theme } from "@mui/material/styles";
 // import withStyles from '@mui/styles/withStyles';
 import {TransitionProps} from "@mui/material/transitions";
 // import {ClassNameMap} from "@mui/styles";
 import {AppBarElevator} from "@/Material";
+import {sleep} from "@sui/util-chore";
 
 //TODO styles
 type ChildrenWithPopupContainer = (getPopupContainer?: () => HTMLElement) => JSX.Element;

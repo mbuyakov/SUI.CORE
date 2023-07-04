@@ -1,14 +1,16 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import {asyncMap, camelCase, ColumnInfo, formatRoleName, groupBy, IObjectWithIndex, IRole, TableInfoManager, toMap} from "@sui/ui-old-core";
+import {asyncMap, camelCase, ColumnInfo, formatRoleName, groupBy, IRole, TableInfoManager, toMap} from "@sui/ui-old-core";
 
 
-import {getDataSet, getDataSetRender, getUser} from "../utils";
+import {getDataSet, getDataSetRender} from "../utils";
 
 import {ITransitionBarProps, TransitionBar} from "./TransitionBar";
 import {IResolution, ITransition, ITransitionStatus} from "./types";
 import {fetchAllRows, fetchJoinTable, findColumnByReferencedTable} from "./utils";
+import {getUser} from "@sui/lib-auth";
+import {IObjectWithIndex} from "@sui/util-types";
 
 const ROLE_TABLE_NAME = "roles";
 const NAME_FIELD = "__name";

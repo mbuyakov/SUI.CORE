@@ -6,7 +6,8 @@ import {notification} from "@sui/deps-antd";
 import moment from "moment";
 import {getSUISettings} from "@sui/ui-old-core";
 import {IMaterialDropdownItem, MaterialDropdown} from "@/Material";
-import {downloadFile, getUser} from "@/utils";
+import {downloadFile} from "@/utils";
+import {getUser} from "@sui/lib-auth";
 
 export const FooterAdditionalActions: React.FC = () => {
   const theme = useTheme();

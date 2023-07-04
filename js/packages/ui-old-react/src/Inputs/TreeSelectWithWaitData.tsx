@@ -9,7 +9,8 @@ import {DefaultValueType} from "../compatibleTypes";
 // noinspection ES6PreferShortImport
 import {TREE_SELECT_DISABLE_GROUP_SELECTION} from "../styles";
 // noinspection ES6PreferShortImport
-import {getDataSet, getDataSetRender, getUser, IDataSet} from "../utils";
+import {getDataSet, getDataSetRender, IDataSet} from "../utils";
+import {getUser} from "@sui/lib-auth";
 
 export type ITreeSelectWithWaitDataProps<TValue, TValueType, TGroupType> =
   Omit<TreeSelectProps<TValue>, "treeData" | "treeNodeFilterProp"> & {

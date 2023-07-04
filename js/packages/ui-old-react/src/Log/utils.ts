@@ -1,12 +1,13 @@
-import {IObjectWithIndex, IUser, query, toMap} from "@sui/ui-old-core";
+import { IUser, query, toMap} from "@sui/ui-old-core";
 import axios, {AxiosRequestConfig} from "axios";
 
 // noinspection ES6PreferShortImport
 import {errorNotification} from "../drawUtils";
 // noinspection ES6PreferShortImport
-import {getUser} from "../utils";
 
 import {IAuditLogTableRow} from "./AuditLogTable";
+import {getUser} from "@sui/lib-auth";
+import {IObjectWithIndex} from "@sui/util-types";
 
 function formatConfig(config?: AxiosRequestConfig): AxiosRequestConfig {
   return {

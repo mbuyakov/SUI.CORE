@@ -1,8 +1,8 @@
 // Migrated to @sui/ui-material
 
-import {Nullable} from "@sui/ui-old-core";
 import {Tooltip} from "@mui/material";
 import React from "react";
+import {Nullable} from "@sui/util-types";
 
 export const tooltipWrapper = (tooltip: Nullable<string>, component: JSX.Element): JSX.Element => {
   // Div required for tooltip on disabled button

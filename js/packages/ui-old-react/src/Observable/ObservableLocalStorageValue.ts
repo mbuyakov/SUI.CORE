@@ -1,6 +1,7 @@
-import {LocalStorageService, Nullable, TOrCallback} from "@sui/ui-old-core";
+import {LocalStorageService, TOrCallback} from "@sui/ui-old-core";
 import {Container} from "typescript-ioc";
 import {Observable} from "@/Observable/Observable";
+import {Nullable} from "@sui/util-types";
 
 export class ObservableLocalStorageValue<T extends string> extends Observable<T> {
 

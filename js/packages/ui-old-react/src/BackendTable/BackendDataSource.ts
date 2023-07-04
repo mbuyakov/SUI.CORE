@@ -1,4 +1,4 @@
-import {IObjectWithIndex} from "@sui/ui-old-core";
+import {IObjectWithIndex} from "@sui/util-types";
 
 export const MESSAGE_ID_KEY = "__messageId";
 

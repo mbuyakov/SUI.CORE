@@ -1,6 +1,6 @@
-import {Nullable} from "@sui/ui-old-core";
 import {useState} from "react";
 import {useAsyncEffect} from "./async";
+import {Nullable} from "@sui/util-types";
 
 export interface UsePromiseState<T> {
   loading: boolean;

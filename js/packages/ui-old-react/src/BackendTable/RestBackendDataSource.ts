@@ -1,11 +1,11 @@
-import {getSUISettings, IObjectWithIndex} from "@sui/ui-old-core";
+import {getSUISettings} from "@sui/ui-old-core";
 import axios from "axios";
 import {v4 as uuidv4} from "uuid";
 
-// noinspection ES6PreferShortImport
-import {getUser} from "../utils";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
+import {IObjectWithIndex} from "@sui/util-types";
+import {getUser} from "@sui/lib-auth";
 
 export class RestBackendDataSource extends BackendDataSource {
 

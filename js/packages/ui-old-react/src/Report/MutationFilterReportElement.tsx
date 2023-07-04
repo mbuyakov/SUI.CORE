@@ -2,9 +2,10 @@
 import autobind from "autobind-decorator";
 import React from "react";
 
-import {IObjectWithIndex, mutate} from "@sui/ui-old-core";
+import {mutate} from "@sui/ui-old-core";
 
 import {FilterReportElement, IFilterReportElementProps} from "./FilterReportElement";
+import {IObjectWithIndex} from "@sui/util-types";
 
 export async function jsonMutationDataFetcher<TRaw = any, TData = any>(
   mutationName: string,

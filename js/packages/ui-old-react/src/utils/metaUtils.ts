@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {addPluralEnding, camelCase, capitalize, ColumnInfo, ColumnInfoManager, DataKey, dataKeysToDataTree, getDataByKey, getSUISettings, IGqlFilter, IObjectWithIndex, IRawRoute, query, removePluralEnding, RouteType, stringifyGqlFilter, TableInfo, TableInfoManager, wrapInArray} from "@sui/ui-old-core";
+import {addPluralEnding, camelCase, capitalize, ColumnInfo, ColumnInfoManager, DataKey, dataKeysToDataTree, getDataByKey, getSUISettings, IGqlFilter, IRawRoute, query, removePluralEnding, RouteType, stringifyGqlFilter, TableInfo, TableInfoManager, wrapInArray} from "@sui/ui-old-core";
 
 // noinspection ES6PreferShortImport
 import {SelectData} from "../BaseTable";
 
 import {ActionType, isNumberAction} from "./actionType";
 import {FilterType} from "./filterType";
+import {IObjectWithIndex} from "@sui/util-types";
 
 
 export interface IRouteLink {

@@ -1,4 +1,3 @@
-export * from "./access";
 export * from "./additionalTabs";
 export * from "./BackendTable";
 export * from "./Base";

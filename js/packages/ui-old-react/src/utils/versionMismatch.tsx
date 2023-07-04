@@ -1,8 +1,11 @@
 import React from "react";
 import axios from "axios";
-import {getSUISettings, IObjectWithIndex, sleep, UserService} from "@sui/ui-old-core";
+import {getSUISettings} from "@sui/ui-old-core";
 import {Container} from "typescript-ioc";
 import {NotificationDispatcher} from "@sui/lib-notification-dispatcher";
+import {sleep} from "@sui/util-chore";
+import {UserService} from "@sui/lib-auth";
+import {IObjectWithIndex} from "@sui/util-types";
 
 export function checkVersionMismatch(): Promise<false | { newVersion: string }> {
   if (process.env.NODE_ENV !== "production") {

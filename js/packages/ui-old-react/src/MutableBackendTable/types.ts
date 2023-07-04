@@ -1,4 +1,3 @@
-import {IObjectWithIndex} from "@sui/ui-old-core";
 import {ButtonProps} from "@sui/deps-antd";
 
 // noinspection ES6PreferShortImport
@@ -11,6 +10,7 @@ import {IPromisedBaseFormModalOnlyModalProps, IPromisedBaseFormModalProps} from 
 import {ExtractProps} from "../other";
 
 import {DEFAULT_MODAL_WIDTH_VARIANT} from "./MutableBackendTable";
+import {IObjectWithIndex} from "@sui/util-types";
 
 type IPromisedBaseFormModalPropsBase<T> = Omit<IPromisedBaseFormModalProps<T>, "onSubmit" | "baseFormProps">;
 export type BaseFormProps<T> = IPromisedBaseFormModalProps<T>["baseFormProps"];

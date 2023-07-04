@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
-import {dateDisabledForIssueDate, DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, IObjectWithIndex, MomentFormat, Nullable} from "@sui/ui-old-core";
+import {dateDisabledForIssueDate, DEPARTMENT_CODE_DESC, DEPARTMENT_CODE_REGEX, MomentFormat} from "@sui/ui-old-core";
 import moment, {Moment} from "moment";
 import {IBaseCardRowLayout, IBaseFormItemLayout, ValuesGetter} from "@/Base";
 import {CustomInputWithRegex, CustomInputWithRegexProps, DulTypeSelector, IDulTypeSelectorProps} from "@/Inputs";
 import {DulService, IallDocTypes} from "@/soctech/DulService";
 import {datePickerLocaleRu} from "@/antdMissedExport";
 import {DatePicker, DatePickerProps} from "@sui/deps-antd";
+import {IObjectWithIndex, Nullable} from "@sui/util-types";
 
 export const RUSSIAN_PASSPORT_DOC_CODE = 21;
 export const issuedByRegex = "^[0-9А-Яа-я\\s№.\\-\"\'()]{1,250}$";

@@ -1,13 +1,13 @@
 import axios, {AxiosPromise, AxiosResponse} from "axios";
-import {IObjectWithIndex, Nullable} from "@sui/ui-old-core";
 import {CheckOutlined, CloseOutlined} from "@ant-design/icons";
 import * as React from "react";
 import {MAX_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH_MESSAGE, MIN_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH_MESSAGE, PASSWORD_EMAIL_MATCH_MESSAGE, PASSWORD_REGEX, PASSWORD_REGEX_MESSAGE, PASSWORD_USERNAME_MATCH_MESSAGE} from "@/UserSetting/const";
 
 // noinspection ES6PreferShortImport
 import {errorNotification} from "../drawUtils";
+import {IObjectWithIndex, Nullable} from "@sui/util-types";
+import {getUser} from "@sui/lib-auth";
 // noinspection ES6PreferShortImport
-import {getUser} from "../utils";
 
 export function doHandledUserRestRequest<T, R = void>(
   uri: string,

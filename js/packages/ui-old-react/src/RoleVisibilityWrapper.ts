@@ -1,6 +1,6 @@
 import React from "react";
+import {getUser} from "@sui/lib-auth";
 
-import {getUser} from "./utils";
 
 export interface IRoleVisibilityWrapperProps<T = React.ReactNode> {
   content: T;

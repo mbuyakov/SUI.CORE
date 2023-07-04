@@ -1,9 +1,9 @@
 // Migrated to @sui/ui-promised
 
 
-import {Nullable} from "@sui/ui-old-core";
 import {CircularProgress, CircularProgressProps} from "@mui/material";
 import React from "react";
+import {Nullable} from "@sui/util-types";
 
 export type ProgressIconProps = Omit<CircularProgressProps, "size"> & {
   size: Nullable<"small" | "medium" | "large">;

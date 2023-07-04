@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/ban-types */
 import {ExperimentOutlined, WarningTwoTone} from "@ant-design/icons";
-import {chain, ITableInfo, sleep} from "@sui/ui-old-core";
+import {chain, ITableInfo} from "@sui/ui-old-core";
 import {Button, Popover, Select, Tooltip} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
@@ -11,6 +11,7 @@ import {PromisedButton} from "../Inputs";
 import {SUI_AUTO_WIDTH, SUI_ROW_CONTAINER, SUI_ROW_GROW_LEFT} from "../styles";
 
 import {TableRenderSettingsPluginManager} from "./TableRenderSettingsPluginManager";
+import {sleep} from "@sui/util-chore";
 
 const popoverContentStyle: React.CSSProperties = {
   alignItems: "center",

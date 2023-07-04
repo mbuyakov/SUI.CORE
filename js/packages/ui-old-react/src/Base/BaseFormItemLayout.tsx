@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {IObjectWithIndex} from "@sui/ui-old-core";
 import {Form, FormItemProps} from "@sui/deps-antd";
 import {RuleItem, RuleType} from "async-validator";
 import autobind from "autobind-decorator";
@@ -12,6 +11,7 @@ import {SUIReactComponent} from "@/SUIReactComponent";
 import {DEFAULT_ITEM_RENDERER} from "./BaseCardItemLayout";
 import {BaseForm, IFormField, ValuesGetter} from "./BaseForm";
 import {BaseFormContext} from "./BaseFormContext";
+import {IObjectWithIndex} from "@sui/util-types";
 
 const FILL_FIELD_TEXT = "Заполните поле";
 

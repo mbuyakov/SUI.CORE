@@ -7,7 +7,8 @@ import {SelectValue} from "@/antdMissedExport";
 // noinspection ES6PreferShortImport
 import {ExtractProps} from "../other";
 // noinspection ES6PreferShortImport
-import {getDataSet, getDataSetRender, getUser, IDataSet} from "../utils";
+import {getDataSet, getDataSetRender, IDataSet} from "../utils";
+import {getUser} from "@sui/lib-auth";
 
 export type ISelectWithWaitDataProps<TValueType, TGroupType> = Omit<SelectProps<SelectValue>, "mode"> & {
   groupTableFilter?: IGqlFilter<TGroupType>;

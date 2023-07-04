@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {Filter, FilterOperation, Grouping, GroupKey, Sorting, Table as TableBase, TableBandHeader as TableBandHeaderBase, TableFilterRow, TableRowDetail} from "@sui/deps-dx-react-grid";
-import {DataKey, IObjectWithIndex} from "@sui/ui-old-core";
+import {DataKey} from "@sui/ui-old-core";
 import * as React from "react";
 import {TableRenderParamsPlugin} from "@/TableRenderSettings";
 
@@ -8,6 +8,7 @@ import {TableRenderParamsPlugin} from "@/TableRenderSettings";
 import { CompiledTheme } from "@/themes";
 import {IBaseTableUserSettings} from "./extends/UserSettingsPlugin";
 import { CardType } from "@sui/deps-antd";
+import {IObjectWithIndex} from "@sui/util-types";
 
 export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode;
 export type TableSearchType = "select" | "date" | "boolean" | "string" | "none";

@@ -1,4 +1,3 @@
-import {Nullable} from "@sui/ui-old-core";
 import {Popconfirm, PopconfirmProps, Popover, PopoverProps} from "@sui/deps-antd";
 import asyncValidator from "async-validator";
 import autobind from "autobind-decorator";
@@ -8,6 +7,7 @@ import * as React from "react";
 import {FixedRuleItem} from "../Base";
 
 import {IPromisedErrorPopoverProps, PromisedErrorPopover} from "./PromisedErrorPopover";
+import {Nullable} from "@sui/util-types";
 
 export type ValidatorFunction<V> = (value: V) => string | void;
 export type ComposeValidator<V> = ValidatorFunction<V> | FixedRuleItem[] | null;

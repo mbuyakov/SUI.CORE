@@ -8,8 +8,8 @@ import {Location} from "history";
 import {getSUISettings, IRawRoute} from "@sui/ui-old-core";
 import {BasicLayoutContext} from "@/layout/BasicLayoutContext";
 import {DrawerListSubmenu} from "@/layout/DrawerListSubmenu";
-import {checkAuthority} from "@/access";
 import {RouterLink} from "@/Link";
+import {checkAuthority} from "@sui/lib-auth";
 
 function matchPath(location: Location<unknown>, path: string): boolean {
   return !!matchPathRR(location.pathname, {

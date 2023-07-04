@@ -1,7 +1,6 @@
 /* eslint-disable no-console,@typescript-eslint/no-explicit-any */
-import {Container} from "typescript-ioc";
-import {getDataByKey, ICoreUser, IObjectWithIndex, UserService} from "@sui/ui-old-core";
 import {notification} from "@sui/deps-antd";
+import {IObjectWithIndex} from "@sui/util-types";
 
 
 export * from "./actionType";
@@ -70,12 +69,4 @@ export function downloadFile(file: Blob, fileName: string): void {
     document.body.appendChild(element);
     element.click();
   }
-}
-
-export function getUser<META = Record<string, never>>(): ICoreUser<META> {
-  return (Container.get(UserService) as UserService<META>).getUser();
-}
-
-export function isAdmin(): boolean {
-  return (getDataByKey(getUser(), "roles") || []).includes("ADMIN");
 }

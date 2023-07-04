@@ -1,12 +1,13 @@
 import {IFrame, StompConfig} from "@stomp/stompjs";
-import {getSUISettings, IObjectWithIndex, Logger, sleep} from "@sui/ui-old-core";
+import {getSUISettings, Logger} from "@sui/ui-old-core";
 
 // noinspection ES6PreferShortImport
 import {Socket} from "../Socket";
-// noinspection ES6PreferShortImport
-import {getUser} from "../utils";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
+import {IObjectWithIndex} from "@sui/util-types";
+import {getUser} from "@sui/lib-auth";
+import {sleep} from "@sui/util-chore";
 
 
 const SEND_DESTINATION = "/data";

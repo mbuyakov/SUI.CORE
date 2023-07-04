@@ -10,9 +10,9 @@ import {SuiThemeContext} from "@/themes";
 import {BasicLayoutContext} from "@/layout/BasicLayoutContext";
 import {Header} from "@/layout/Header";
 import {Drawer} from "@/layout/Drawer";
-import {isAdmin} from "@/utils";
 import {Authorized} from "@/layout/Authorized";
 import {Exception404} from "@/exception";
+import {isAdmin} from "@sui/lib-auth";
 
 
 //TODO restore style

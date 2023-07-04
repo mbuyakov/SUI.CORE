@@ -4,11 +4,12 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 
 // noinspection ES6PreferShortImport
-import {getLinkForTable, getRenderValue, getUser, RenderValue} from "../utils";
+import {getLinkForTable, getRenderValue, RenderValue} from "../utils";
 // noinspection ES6PreferShortImport
 import {WaitData} from "../WaitData";
 
 import {RouterLink} from "./RouterLink";
+import {getUser} from "@sui/lib-auth";
 
 interface IMetaLinkProps {
   id: string | number;

@@ -17,11 +17,12 @@ import {SerializedCardSettings, SerializedFreeText, SerializedItemSettings, Seri
 // noinspection ES6PreferShortImport
 import {TableSettingsDialog} from "../plugins";
 // noinspection ES6PreferShortImport
-import {getLinkForTable, getReferencedTableInfo, isAdmin} from "../utils";
+import {getLinkForTable, getReferencedTableInfo} from "../utils";
 // noinspection ES6PreferShortImport
 import {WaitData} from "../WaitData";
 
 import {MetaCardConfigurator} from "./MetaCardConfigurator";
+import {isAdmin} from "@sui/lib-auth";
 
 export interface IMetaCardProps {
   itemId: string;
