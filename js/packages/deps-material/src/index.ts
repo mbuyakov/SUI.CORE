@@ -1,4 +1,4 @@
-/* eslint-disable no-restricted-imports,@typescript-eslint/quotes */
+/* eslint-disable no-restricted-imports,@typescript-eslint/quotes,@typescript-eslint/no-namespace */
 export * as MuiIcons from "@mui/icons-material";
 
 

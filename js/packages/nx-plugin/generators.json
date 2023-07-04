@@ -9,6 +9,11 @@
       "factory": "./src/generators/react-lib/generator",
       "schema": "./src/generators/react-lib/schema.json",
       "description": "react-lib generator"
+    },
+    "sui-migrator": {
+      "factory": "./src/generators/sui-migrator/generator",
+      "schema": "./src/generators/sui-migrator/schema.json",
+      "description": "sui-migrator generator"
     }
   }
 }
