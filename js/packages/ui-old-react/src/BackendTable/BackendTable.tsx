@@ -17,7 +17,7 @@ import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
 // noinspection ES6PreferShortImport
 import {exportToXlsx} from "../BaseTable/utils";
 // noinspection ES6PreferShortImport
-import {BaseTable, colToBaseTableCol, CompiledTheme, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE, DEFAULT_SERVICE_COLUMN_WIDTH, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, IBaseTableColLayout, IBaseTableProps, IDLE_TIMER_REF, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from "../index";
+import {BaseTable, colToBaseTableCol, CompiledTheme, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE, DEFAULT_SERVICE_COLUMN_WIDTH, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from "../index";
 // noinspection ES6PreferShortImport
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 // noinspection ES6PreferShortImport
@@ -31,6 +31,7 @@ import {IconButton, MuiIcons } from "@sui/deps-material";
 import {Tooltip} from "@sui/deps-antd";
 import {IObjectWithIndex} from "@sui/util-types";
 import {getUser, isAdmin} from "@sui/lib-auth";
+import {IdleTimerConsumer, IIdleTimer} from "@sui/ui-idle-tracker";
 
 const DX_REACT_GROUP_SEPARATOR = "|";
 const CHILDREN_KEY = "__children";
@@ -145,6 +146,8 @@ export class BackendTable<TSelection = defaultSelection>
   private additionalStateMap: Map<string, IBackendTableState<TSelection>> = new Map<string, IBackendTableState<TSelection>>();
   private backendDataSource: BackendDataSource;
   private baseTableRef: React.RefObject<BaseTable<TSelection>> = React.createRef<BaseTable<TSelection>>();
+  private idleTimer: IIdleTimer;
+
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public constructor(props: any) {
@@ -300,78 +303,85 @@ export class BackendTable<TSelection = defaultSelection>
     const lazyStub = this.state.lazyStub;
 
     return (
-      <WaitData
-        data={this.state.cols}
-        error={!!this.state.error}
-        errorTip={this.state.error}
-        hideChildren={!(this.state.cols)}
-        alwaysUpdate={true}
-      >
-        <BaseTable<TSelection>
-          {...this.props}
-          {...this.state}
-          groupingEnabled={lazyStub ? false : this.props.groupingEnabled}
-          sortingEnabled={lazyStub ? false : this.props.sortingEnabled}
-          paginationEnabled={lazyStub ? false : this.props.paginationEnabled}
-          noDataCellComponent={this.state.loading ? LoadingNoDataCell : lazyStub ? LazyStubNoDataCell(this.showAll) : undefined}
-          noDataCellComponentSmall={this.state.loading ? LoadingNoDataCellSmall : lazyStub ? LazyStubNoDataCellSmall(this.showAll) : undefined}
-          defaultFilters={undefined}
-          allowExport={!lazyStub && this.props.allowExport}
-          cols={this.state.cols || []}
-          rows={lazyStub ? [] : this.state.data}
-          ref={this.baseTableRef}
-          title={this.props.title || this.state.title}
-          paperStyle={{
-            ...this.props.paperStyle,
-          }}
-          noColsContent={
-            admin && (
-              <TableSettingsDialog
-                id={this.state.tableInfo && this.state.tableInfo.id}
-                style={{
-                  height: 0,
-                  display: "flex",
-                  justifyContent: "flex-end",
+      <IdleTimerConsumer>
+        {idleTimer => {
+          this.idleTimer = idleTimer;
+          return (
+            <WaitData
+              data={this.state.cols}
+              error={!!this.state.error}
+              errorTip={this.state.error}
+              hideChildren={!(this.state.cols)}
+              alwaysUpdate={true}
+            >
+              <BaseTable<TSelection>
+                {...this.props}
+                {...this.state}
+                groupingEnabled={lazyStub ? false : this.props.groupingEnabled}
+                sortingEnabled={lazyStub ? false : this.props.sortingEnabled}
+                paginationEnabled={lazyStub ? false : this.props.paginationEnabled}
+                noDataCellComponent={this.state.loading ? LoadingNoDataCell : lazyStub ? LazyStubNoDataCell(this.showAll) : undefined}
+                noDataCellComponentSmall={this.state.loading ? LoadingNoDataCellSmall : lazyStub ? LazyStubNoDataCellSmall(this.showAll) : undefined}
+                defaultFilters={undefined}
+                allowExport={!lazyStub && this.props.allowExport}
+                cols={this.state.cols || []}
+                rows={lazyStub ? [] : this.state.data}
+                ref={this.baseTableRef}
+                title={this.props.title || this.state.title}
+                paperStyle={{
+                  ...this.props.paperStyle,
                 }}
-                buttonStyle={{
-                  margin: 16,
-                  height: 48,
-                }}
+                noColsContent={
+                  admin && (
+                    <TableSettingsDialog
+                      id={this.state.tableInfo && this.state.tableInfo.id}
+                      style={{
+                        height: 0,
+                        display: "flex",
+                        justifyContent: "flex-end",
+                      }}
+                      buttonStyle={{
+                        margin: 16,
+                        height: 48,
+                      }}
+                    />
+                  )
+                }
+                toolbarButtons={[
+                  (allowExportAll && !virtual && !lazyStub) && (
+                    <ExportPlugin
+                      onClick={this.exportAll}
+                      tooltip="Выгрузка всех строк в Excel"
+                      icon={<MuiIcons.CloudDownloadOutlined/>}
+                    />
+                  ),
+                  (<ClearFiltersPlugin handleClick={this.clearFilters}/>),
+                  (<RefreshMetaTablePlugin handleClick={this.refresh}/>),
+                  (<ResetUserSettingsPlugin onClick={this.resetUserSettings}/>),
+                  // admin && (<RawModePlugin enabled={this.state.rawMode} onClick={this.changeRaw}/>),
+                  admin && !hideTableSettings && (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
+                ].filter(Boolean)}
+                rowStyler={this.generateRowStyler()}
+                warnings={admin ? this.state.warnings : undefined}
+                pageSizes={this.state.tableInfo?.pageSizes || DEFAULT_PAGE_SIZES}
+                defaultCurrentPage={this.state.defaultCurrentPage}
+                exportValueFormatter={this.exportValueFormatter}
+                // remote functions
+                getChildGroups={this.getChildGroups}
+                onCurrentPageChange={this.onCurrentPageChange}
+                onExpandedGroupsChange={this.onExpandedGroupsChange}
+                onFiltersChange={this.onFiltersChange}
+                onGroupingChange={this.onGroupingChange}
+                onPageSizeChange={this.onPageSizeChange}
+                onSortingChange={this.onSortingChange}
+                // other
+                beforeExport={this.beforeExport}
+                onSettingsChange={this.onSettingsChange}
               />
-            )
-          }
-          toolbarButtons={[
-            (allowExportAll && !virtual && !lazyStub) && (
-              <ExportPlugin
-                onClick={this.exportAll}
-                tooltip="Выгрузка всех строк в Excel"
-                icon={<MuiIcons.CloudDownloadOutlined/>}
-              />
-            ),
-            (<ClearFiltersPlugin handleClick={this.clearFilters}/>),
-            (<RefreshMetaTablePlugin handleClick={this.refresh}/>),
-            (<ResetUserSettingsPlugin onClick={this.resetUserSettings}/>),
-            // admin && (<RawModePlugin enabled={this.state.rawMode} onClick={this.changeRaw}/>),
-            admin && !hideTableSettings && (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
-          ].filter(Boolean)}
-          rowStyler={this.generateRowStyler()}
-          warnings={admin ? this.state.warnings : undefined}
-          pageSizes={this.state.tableInfo?.pageSizes || DEFAULT_PAGE_SIZES}
-          defaultCurrentPage={this.state.defaultCurrentPage}
-          exportValueFormatter={this.exportValueFormatter}
-          // remote functions
-          getChildGroups={this.getChildGroups}
-          onCurrentPageChange={this.onCurrentPageChange}
-          onExpandedGroupsChange={this.onExpandedGroupsChange}
-          onFiltersChange={this.onFiltersChange}
-          onGroupingChange={this.onGroupingChange}
-          onPageSizeChange={this.onPageSizeChange}
-          onSortingChange={this.onSortingChange}
-          // other
-          beforeExport={this.beforeExport}
-          onSettingsChange={this.onSettingsChange}
-        />
-      </WaitData>
+            </WaitData>
+          );
+        }}
+      </IdleTimerConsumer>
     );
   }
 
@@ -1126,7 +1136,7 @@ export class BackendTable<TSelection = defaultSelection>
     });
 
     const resetIdleTimerIntervalId = setInterval(
-      (): void => IDLE_TIMER_REF.current?.reset(),
+      () => this.idleTimer?.reset(),
       5000
     );
 

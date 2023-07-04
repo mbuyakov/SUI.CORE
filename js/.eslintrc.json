@@ -62,6 +62,10 @@
               {
                 "group": ["antd", "antd/*", "antd5", "antd5/*"],
                 "message": "Please use @sui/deps-antd instead."
+              },
+              {
+                "group": ["react-idle-timer", "react-idle-timer/*"],
+                "message": "Please use @sui/ui-idle-tracker instead."
               }
             ]
           }

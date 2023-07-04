@@ -32,6 +32,7 @@
       "@sui/nx-plugin": ["packages/nx-plugin/src/index.ts"],
       "@sui/ui-actions": ["packages/ui-actions/src/index.ts"],
       "@sui/ui-charts": ["packages/ui-charts/src/index.ts"],
+      "@sui/ui-idle-tracker": ["packages/ui-idle-tracker/src/index.ts"],
       "@sui/ui-material": ["packages/ui-material/src/index.ts"],
       "@sui/ui-module-manager": ["packages/ui-module-manager/src/index.ts"],
       "@sui/ui-notification-handler": ["packages/ui-notification-handler/src/index.ts"],

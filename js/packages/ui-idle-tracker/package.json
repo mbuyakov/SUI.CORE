@@ -1,0 +1,7 @@
+{
+  "name": "@sui/ui-idle-tracker",
+  "version": "0.0.1",
+  "dependencies": {
+    "react-idle-timer": "5.7.2"
+  }
+}

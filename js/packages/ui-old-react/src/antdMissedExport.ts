@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 export type {ButtonType, ButtonGroupProps} from "antd5/lib/button";
 export type {SelectValue} from "antd5/lib/select";
 export type {CheckboxChangeEvent} from "antd5/lib/checkbox";

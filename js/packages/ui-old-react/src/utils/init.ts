@@ -1,5 +1,3 @@
-import * as React from "react";
-import IdleTimer from "react-idle-timer";
 import {ColumnInfo, TableInfo} from "@sui/ui-old-core";
 
 
@@ -10,5 +8,3 @@ export interface IColumnInfoToBaseTableColProps {
   roles: string[]; // TODO: roles - быстрый фикс, продумать в будущем
   tableInfo: TableInfo;
 }
-
-export const IDLE_TIMER_REF = React.createRef<IdleTimer>();
