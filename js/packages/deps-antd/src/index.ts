@@ -1,4 +1,3 @@
-// Need to correct indexed suggestion in IDEA
 export * from "./original_index";
 export * from "./moment";
 
