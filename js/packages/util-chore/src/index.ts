@@ -3,3 +3,4 @@ export * from "./clamp";
 export * from "./dataKey";
 export * from "./lazyInit";
 export * from "./sleep";
+export * from "./tOrCallback";
