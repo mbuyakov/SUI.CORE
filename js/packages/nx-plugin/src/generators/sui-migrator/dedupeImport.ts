@@ -80,9 +80,10 @@ export function dedupeImport(content: string): string {
           );
         }
 
-        return rows.map(printNode).join("\n")
-          .replace("{ ", "{")
-          .replace(" }", "}");
+        return rows.map(printNode)
+          .join("\n")
+          .replace(/{ /g, "{")
+          .replace(/ }/g, "}")
       });
     }
   });

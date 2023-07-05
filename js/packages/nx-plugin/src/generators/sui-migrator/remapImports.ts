@@ -42,7 +42,7 @@ export function remapImports(projectName: string, content: string): string {
     );
 
     return printNode(node)
-      .replace("{ ", "{")
-      .replace(" }", "}");
+      .replace(/{ /g, "{")
+      .replace(/ }/g, "}");
   });
 }
