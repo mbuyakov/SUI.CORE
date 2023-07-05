@@ -6,7 +6,6 @@ import {Card, Result, Spin} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import classnames from "classnames";
 import * as React from "react";
-import {SuiThemeContext} from "@/themes";
 import {BASE_TABLE, BASE_TABLE_NO_PAGINATION, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from "@/styles";
 import {ColumnChooserContainer, CustomPagingPanelContainer, CustomToggleCell, DoubleScrollbar, EmptyMessageComponent, ExportPlugin, ExtendedIntegratedSelection, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, UserSettingsPlugin, UserSettingsSupportPlugin, WarningPlugin} from "@/BaseTable/extends";
 
@@ -15,7 +14,7 @@ import {defaultSelection, ISelectionTable} from "./ISelectionTable";
 import {IBaseTableColLayout, IBaseTableProps, IFormattedBaseTableColLayout, IGroupSubtotalData, INewSearchProps, IRemoteBaseTableFields, IRemoteBaseTableFunctions, TableCellRender} from "./types";
 import {exportToXlsx, mapColumns} from "./utils";
 import { MuiIcons, TableRow } from "@sui/deps-material";
-import {SuiThemeProvider} from "@sui/ui-themes";
+import {SuiThemeProvider, SuiThemeContext} from "@sui/ui-themes";
 
 const Cell = Mui.Table.Cell;
 const SelectionCell = Mui.TableSelection.Cell;

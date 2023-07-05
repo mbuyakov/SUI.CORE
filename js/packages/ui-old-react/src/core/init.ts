@@ -5,19 +5,13 @@ import {Container} from "@sui/deps-ioc";
 import {authLink, ColumnInfoManager, IInitSUISettings, ISUISettings, NameManager, TableInfoManager} from "@sui/ui-old-core";
 
 import {parseRoutes, runCheckVersionMismatch} from "@/utils";
-import {ThemesConfig} from "@/themes";
 
 declare let window: Window & {
   SUI: ISUISettings | undefined;
 };
 
-type _IInitSUISettings = IInitSUISettings & {
-  themes: ThemesConfig,
-  noDark?: boolean
-};
-
 // noinspection JSUnusedGlobalSymbols
-export function initSUI(settings: _IInitSUISettings): void {
+export function initSUI(settings: IInitSUISettings): void {
   window.SUI = {
     ...settings,
     apolloClient: new ApolloClient({
@@ -27,7 +21,6 @@ export function initSUI(settings: _IInitSUISettings): void {
       })),
     }),
   };
-
 
   Container.bindName("sui").to(settings);
 

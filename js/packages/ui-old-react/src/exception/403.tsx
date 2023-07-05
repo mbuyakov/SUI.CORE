@@ -1,4 +1,4 @@
-import {MuiIcons, Button, IconButton} from "@sui/deps-material";
+import {MuiIcons, Button} from "@sui/deps-material";
 import React from "react";
 import {Result} from "@sui/deps-antd";
 import {useHistory} from "react-router-dom";

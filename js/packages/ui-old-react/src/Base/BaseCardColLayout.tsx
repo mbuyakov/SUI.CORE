@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
 import React from "react";
-import {SuiThemeContext} from "@/themes";
 
 // noinspection ES6PreferShortImport
 import {BASE_CARD_COL_TITLE, BASE_CARD_COLS} from "../styles";
@@ -45,24 +44,20 @@ export function renderIBaseCardColsLayout<T, ITEM>(sourceItem: any, cols: Array<
   }
 
   return (
-    <SuiThemeContext.Consumer>
-      {(): JSX.Element => (
-        <table className={BASE_CARD_COLS}>
-          {anyHasTitle && (
-            <thead>
-            <tr>
-              {cols.map(col => (<>
-                <th className={BASE_CARD_COL_TITLE} colSpan={col.wideTitle ? 2 : 1}>{col.title}</th>
-                {!col.wideTitle && <th/>}
-              </>))}
-            </tr>
-            </thead>
-          )}
-          <tbody>
-          {rows}
-          </tbody>
-        </table>
+    <table className={BASE_CARD_COLS}>
+      {anyHasTitle && (
+        <thead>
+        <tr>
+          {cols.map(col => (<>
+            <th className={BASE_CARD_COL_TITLE} colSpan={col.wideTitle ? 2 : 1}>{col.title}</th>
+            {!col.wideTitle && <th/>}
+          </>))}
+        </tr>
+        </thead>
       )}
-    </SuiThemeContext.Consumer>
+      <tbody>
+      {rows}
+      </tbody>
+    </table>
   );
 }

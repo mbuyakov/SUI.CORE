@@ -1,17 +1,17 @@
 import React, {useContext} from "react";
-import {CssBaseline, Theme, ThemeProvider, StyledEngineProvider} from "@sui/deps-material";
+import {CssBaseline} from "@sui/deps-material";
 import {IRawRoute} from "@sui/ui-old-core";
 import pathToRegexp from "path-to-regexp";
 import {Location} from "history";
 import {Footer} from "@/layout/Footer";
 import {useMediaQuery} from "@/hooks";
-import {SuiThemeContext} from "@/themes";
 import {BasicLayoutContext} from "@/layout/BasicLayoutContext";
 import {Header} from "@/layout/Header";
 import {Drawer} from "@/layout/Drawer";
 import {Authorized} from "@/layout/Authorized";
 import {Exception404} from "@/exception";
 import {isAdmin} from "@sui/lib-auth";
+import {SuiThemeContext, SuiThemeProvider} from "@sui/ui-themes";
 
 
 //TODO restore style
@@ -89,8 +89,8 @@ export const BasicLayout: React.FC<{
   const isNarrow = window.matchMedia(NARROW_MEDIA_QUERY).matches;
   const isMobile = isMobileProps || isMobileQuery;
 
-  const {muiTheme, drawerMaterialTheme} = useContext(SuiThemeContext);
-  const closeDrawerWidth = Number(muiTheme.spacing(7)) + 1;
+  const theme = useContext(SuiThemeContext);
+  const closeDrawerWidth = Number(theme.mui.spacing(7)) + 1;
   const [drawerState, setDrawerState] = React.useState<boolean>(!isMobile && !isNarrow);
 
   useMediaQuery(NARROW_MEDIA_QUERY, isNowNarrow => {
@@ -111,14 +111,12 @@ export const BasicLayout: React.FC<{
         <Header isMobile={isMobile}>
           {header}
         </Header>
-        <StyledEngineProvider injectFirst>
-          <ThemeProvider theme={drawerMaterialTheme}>
-            <Drawer
-              title={title}
-              isMobile={isMobile}
-            />
-          </ThemeProvider>
-        </StyledEngineProvider>
+        <SuiThemeProvider component="drawer">
+          <Drawer
+            title={title}
+            isMobile={isMobile}
+          />
+        </SuiThemeProvider>
       </BasicLayoutContext.Provider>
       <main /*className={classes.main}*/>
         <div /*className={classes.toolbar}*//>
@@ -135,5 +133,6 @@ export const BasicLayout: React.FC<{
         </Footer>
       </main>
     </div>
-  );
+  )
+    ;
 };

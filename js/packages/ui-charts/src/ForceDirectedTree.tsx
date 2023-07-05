@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import autobind from "autobind-decorator";
 import React from "react";
 import {AMCHARTS} from "@sui/deps-amcharts";
 
@@ -17,7 +16,7 @@ export interface IForceDirectedTreeAdditionalSettingProps {
   series: InstanceType<AMCHARTS["am4forceDirected"]["ForceDirectedSeries"]>;
 }
 
-interface IForceDirectedTreeProps<T> {
+interface IForceDirectedTreeProps<T extends {}> {
   data: Array<IForceDirectedTreeDataElement<T>>;
   nodesLabelText?: string;
   nodesTooltipText?: string;
@@ -26,7 +25,7 @@ interface IForceDirectedTreeProps<T> {
   additionalSetting?(props: IForceDirectedTreeAdditionalSettingProps): void;
 }
 
-export class ForceDirectedTree<TElement = {}> extends React.Component<IForceDirectedTreeProps<TElement>> {
+export class ForceDirectedTree<TElement extends {} = {}> extends React.Component<IForceDirectedTreeProps<TElement>> {
 
   public render(): JSX.Element {
     return (
@@ -41,8 +40,7 @@ export class ForceDirectedTree<TElement = {}> extends React.Component<IForceDire
     );
   }
 
-  @autobind
-  private onChartCreated(chart: InstanceType<AMCHARTS["am4forceDirected"]["ForceDirectedTree"]>, amcharts: AMCHARTS): void {
+  private onChartCreated = (chart: InstanceType<AMCHARTS["am4forceDirected"]["ForceDirectedTree"]>, amcharts: AMCHARTS) => {
     const series = chart.series.push(new amcharts.am4forceDirected.ForceDirectedSeries());
 
     console.log("ForceDirectedTree data", chart.data);
@@ -73,6 +71,6 @@ export class ForceDirectedTree<TElement = {}> extends React.Component<IForceDire
         series
       });
     }
-  }
+  };
 
 }

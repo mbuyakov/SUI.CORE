@@ -5,7 +5,7 @@ import {SuiThemeComponents, SuiThemeVariants} from "./types";
 import {useHandler, useService} from "@sui/lib-hooks";
 import {ThemeService} from "./ThemeService";
 import {ThemeChangedEvent} from "./ThemeChangedEvent";
-import {KludgeForStorybook} from "./KludgeForStorybook";
+import {KludgeForStorybook, SuiThemeContext} from "./contexts";
 
 export const SuiThemeProvider: React.FC<{
   component: SuiThemeComponents | "base",
@@ -35,15 +35,17 @@ export const SuiThemeProvider: React.FC<{
     throw new Error(`No theme for component ${component} in ${variant} variant`);
   }
   return (
-    <ConfigProvider
-      locale={ruRU}
-      theme={componentTheme.antd}
-    >
-      <ThemeProvider
-        theme={componentTheme.mui}
+    <SuiThemeContext.Provider value={{...componentTheme, name: variant}}>
+      <ConfigProvider
+        locale={ruRU}
+        theme={componentTheme.antd}
       >
-        {children}
-      </ThemeProvider>
-    </ConfigProvider>
+        <ThemeProvider
+          theme={componentTheme.mui}
+        >
+          {children}
+        </ThemeProvider>
+      </ConfigProvider>
+    </SuiThemeContext.Provider>
   );
 };

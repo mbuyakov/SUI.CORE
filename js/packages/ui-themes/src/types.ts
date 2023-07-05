@@ -31,3 +31,5 @@ export type SuiTheme<T> = {
 
 export type SuiThemeConfig = Partial<SuiTheme<SuiComponentsThemeConfig>> & { common?: SuiComponentsThemeConfig };
 export type SuiThemeCompiled = SuiTheme<SuiComponentsThemeCompiled>;
+
+export type ISuiThemeContext = SuiComponentThemeCompiled & {name: SuiThemeVariants};

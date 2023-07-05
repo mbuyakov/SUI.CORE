@@ -118,6 +118,8 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
 
               if (this.props.tooltipTemplate) {
                 series.columns.template.tooltipText = this.props.tooltipTemplate;
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 series.tooltip.pointerOrientation = "vertical";
               }
 

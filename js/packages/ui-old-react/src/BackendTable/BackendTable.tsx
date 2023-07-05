@@ -16,7 +16,7 @@ import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
 // noinspection ES6PreferShortImport
 import {exportToXlsx} from "../BaseTable/utils";
 // noinspection ES6PreferShortImport
-import {BaseTable, colToBaseTableCol, CompiledTheme, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE, DEFAULT_SERVICE_COLUMN_WIDTH, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from "../index";
+import {BaseTable, colToBaseTableCol, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE, DEFAULT_SERVICE_COLUMN_WIDTH, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from "../index";
 // noinspection ES6PreferShortImport
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 // noinspection ES6PreferShortImport
@@ -30,6 +30,7 @@ import {IconButton, MuiIcons } from "@sui/deps-material";
 import {IObjectWithIndex} from "@sui/util-types";
 import {getUser, isAdmin} from "@sui/lib-auth";
 import {IdleTimerConsumer, IIdleTimer} from "@sui/ui-idle-tracker";
+import {ISuiThemeContext} from "@sui/ui-themes";
 
 const DX_REACT_GROUP_SEPARATOR = "|";
 const CHILDREN_KEY = "__children";
@@ -118,7 +119,7 @@ type IBackendTableState<T> = {
   tableInfo?: TableInfo;
   title?: string;
   warnings?: Array<string | JSX.Element>;
-  colorSettingsRowStyler?(row: any, theme: CompiledTheme): React.CSSProperties;
+  colorSettingsRowStyler?(row: any, theme: ISuiThemeContext): React.CSSProperties;
 } & IRemoteBaseTableFields;
 
 function calculateParentExpandedGroups(realExpandedGroupKeys: IExpandedGroup[], key: GroupKey): IExpandedGroup[] {
@@ -481,7 +482,7 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private generateRowStyler(): (row: any, theme: CompiledTheme) => React.CSSProperties {
+  private generateRowStyler(): (row: any, theme: ISuiThemeContext) => React.CSSProperties {
     const stylers = [this.state.colorSettingsRowStyler, this.props.rowStyler].filter(Boolean);
 
     if (stylers.length) {

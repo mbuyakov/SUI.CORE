@@ -45,7 +45,6 @@ export function ChartWrapper<T extends { new(): any }>(getType: (amcharts: AMCHA
     useAsyncEffect(async () => {
       const amcharts = await getAmcharts();
       if (!chart) {
-        console.log(theme);
         if (theme === "dark") {
           amcharts.am4core.useTheme(amcharts.am4themes_dark);
         } else {

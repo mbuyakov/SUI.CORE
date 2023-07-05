@@ -20,7 +20,8 @@
     "dedupe-lock": "npx yarn-deduplicate yarn.lock --strategy fewer",
     "find-duplicate": "npx yarn-duplicate",
     "clean-cache": "rimraf ./node_modules/.cache",
-    "publish": "nx run-many --target=publish"
+    "publish": "nx run-many --target=publish",
+    "graph": "nx graph"
   },
   "private": true,
   "dependencies": {

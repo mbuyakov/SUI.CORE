@@ -1,4 +1,3 @@
-import autobind from "autobind-decorator";
 import React from "react";
 import {AMCHARTS} from "@sui/deps-amcharts";
 import {XYChartWrapper} from "./ChartWrapper";
@@ -45,12 +44,12 @@ export class CategoryColumnChart extends React.Component<ICategoryColumnChartPro
     );
   }
 
-  @autobind
-  private createSeries(
+
+  private createSeries = (
     chart: InstanceType<AMCHARTS["am4charts"]["XYChart"]>,
     seriesProps: ICategoryColumnChartSeries,
     amcharts: AMCHARTS
-  ): InstanceType<AMCHARTS["am4charts"]["ColumnSeries"]> {
+  ): InstanceType<AMCHARTS["am4charts"]["ColumnSeries"]> => {
     const series = chart.series.push(new amcharts.am4charts.ColumnSeries());
 
     series.dataFields.valueY = seriesProps.valueY;
@@ -65,10 +64,9 @@ export class CategoryColumnChart extends React.Component<ICategoryColumnChartPro
     }
 
     return series;
-  }
+  };
 
-  @autobind
-  private onChartCreated(chart: InstanceType<AMCHARTS["am4charts"]["XYChart"]>, amcharts: AMCHARTS): void {
+  private onChartCreated = (chart: InstanceType<AMCHARTS["am4charts"]["XYChart"]>, amcharts: AMCHARTS) =>  {
     const categoryAxis = chart.xAxes.push(new amcharts.am4charts.CategoryAxis());
     categoryAxis.dataFields.category = this.props.categoryX;
     categoryAxis.renderer.grid.template.location = 0;
@@ -110,20 +108,21 @@ export class CategoryColumnChart extends React.Component<ICategoryColumnChartPro
         amcharts
       });
     }
-  }
+  };
 
-  @autobind
-  private exportTooltip(chart: InstanceType<AMCHARTS["am4charts"]["XYChart"]>, seriesMap: Map<string, any>, enable: boolean): void {
+  private exportTooltip = (chart: InstanceType<AMCHARTS["am4charts"]["XYChart"]>, seriesMap: Map<string, any>, enable: boolean) => {
     chart.yAxes.each(value => value.cursorTooltipEnabled = enable);
     chart.xAxes.each(value => value.cursorTooltipEnabled = enable);
     chart.cursor.lineY.disabled = !enable;
     chart.cursor.lineX.disabled = !enable;
     seriesMap.forEach(series => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       series.columns.each(column => {
           column.tooltip.disabled = !enable;
         }
       );
     });
-  }
+  };
 
 }

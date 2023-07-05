@@ -2,10 +2,9 @@ import {toMap} from "@sui/ui-old-core";
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-// noinspection ES6PreferShortImport
-import {ForceDirectedTree, IForceDirectedTreeAdditionalSettingProps} from "../ForceDirectedTree";
 
 import {ITransition, ITransitionStatus} from "./types";
+import {ForceDirectedTree, IForceDirectedTreeAdditionalSettingProps} from "@sui/ui-charts";
 
 const CHART_HEIGHT = 500;
 

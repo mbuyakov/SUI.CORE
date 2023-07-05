@@ -5,10 +5,10 @@ import * as React from "react";
 import {TableRenderParamsPlugin} from "@/TableRenderSettings";
 
 // noinspection ES6PreferShortImport
-import { CompiledTheme } from "@/themes";
 import {IBaseTableUserSettings} from "./extends/UserSettingsPlugin";
 import { CardType } from "@sui/deps-antd";
 import {IObjectWithIndex} from "@sui/util-types";
+import {ISuiThemeContext} from "@sui/ui-themes";
 
 export type TableCellRender = (value: any, row: any, tableColumn: any) => React.ReactNode;
 export type TableSearchType = "select" | "date" | "boolean" | "string" | "none";
@@ -180,7 +180,7 @@ export interface IBaseTableProps<TSelection = any> {
 
   onSettingsChange?(settings: IBaseTableUserSettings): void;
 
-  rowStyler?(row: any, theme: CompiledTheme): React.CSSProperties;
+  rowStyler?(row: any, theme: ISuiThemeContext): React.CSSProperties;
 
   selectionFilter?(row: any): boolean;
 }

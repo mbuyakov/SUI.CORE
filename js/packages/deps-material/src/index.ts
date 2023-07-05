@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-imports,@typescript-eslint/quotes,@typescript-eslint/no-namespace */
 export * as MuiIcons from "@mui/icons-material";
 
+export {TransitionProps} from "@mui/material/transitions";
 
 // Taken from @mui/material/index.d.ts
 import * as React from 'react';
