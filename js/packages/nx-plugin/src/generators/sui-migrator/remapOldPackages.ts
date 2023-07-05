@@ -3,14 +3,35 @@ import {factory, ImportDeclaration, ImportSpecifier, isNamedImports, StringLiter
 import {logRemap, printNode} from "./util";
 
 const newImports = {
+  "@sui/ui-observable": [
+    "Observable",
+    "IObservableBinderProps",
+    "ObservableBinder",
+    "ObservableLocalStorageValue",
+    "ObservableHandler",
+    "ObservableHandlerStub",
+    "joinObservables2",
+    "joinObservables3",
+    "joinObservables4",
+    "joinObservables5",
+    "joinObservables6"
+  ],
   "@sui/util-chore": [
     "DataKey",
     "normalizeDataKey",
     "concatDataKey",
     "getDataByKey",
     "DataKeyNode",
-    "dataKeysToDataTree"
+    "dataKeysToDataTree",
+    "TOrCallback",
+    "getTOrCall"
   ],
+  "@sui/util-types": [
+    "Class",
+    "Nullable",
+    "NotFunction",
+    "IObjectWithIndex"
+  ]
 };
 
 const inversedNewImports = Object.keys(newImports)

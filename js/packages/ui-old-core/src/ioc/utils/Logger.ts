@@ -1,6 +1,6 @@
 /* eslint-disable no-console,@typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars */
 import {Container} from "@sui/deps-ioc";
-import {getTOrCall, TOrCallback} from "@/other";
+import {getTOrCall, TOrCallback} from "@sui/util-chore";
 import {OneOrArray, wrapInArray} from "@/typeWrappers";
 // Don't touch import
 // noinspection ES6PreferShortImport

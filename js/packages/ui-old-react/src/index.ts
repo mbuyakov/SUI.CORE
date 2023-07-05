@@ -16,7 +16,6 @@ export * from "./Meta";
 export * from "./MetaCardSettings";
 export * from "./Modal";
 export * from "./MutableBackendTable";
-export * from "./Observable";
 export * from "./other";
 export * from "./plugins";
 export * from "./Popover";

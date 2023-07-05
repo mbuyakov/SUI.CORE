@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Observable, ObservableHandler} from "@/Observable";
+import {Observable, ObservableHandler} from "@sui/ui-observable";
 
 export function useObservableSubscribe<T>(observable: Observable<T>, handler: ObservableHandler<T>): void {
 

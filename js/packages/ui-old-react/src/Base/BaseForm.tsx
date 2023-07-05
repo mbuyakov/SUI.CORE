@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {Observable, ObservableHandlerStub} from "@/Observable";
+import {Observable, ObservableHandlerStub} from "@sui/ui-observable";
 import {BASE_FORM_CLASS} from "@/styles";
 import {SUIReactComponent} from "@/SUIReactComponent";
 import {hasErrors} from '@/utils';

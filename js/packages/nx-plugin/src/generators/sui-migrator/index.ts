@@ -2,6 +2,7 @@ export * from "./dedupeImport";
 export * from "./generator";
 export * from "./remapIcons";
 export * from "./remapImports";
+export * from "./remapOldPackages";
 export * from "./schema";
 export * from "./schema";
 export * from "./tsqeury";
