@@ -15,6 +15,9 @@ export function remapIcons(content: string): string {
     return content;
   }
 
+  content = tsquery.remove(content, "ImportDeclaration:has(StringLiteral[value=/@mui.icons-material.*/])", () => true, true);
+  content = tsquery.remove(content, "ImportDeclaration:has(StringLiteral[value=/@material-ui.icons.*/])", () => true, true);
+
   const nameMap = {};
 
   iconsImports.forEach(importDeclaration => {

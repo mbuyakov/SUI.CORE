@@ -25,6 +25,7 @@ import {test3} from "antd";
 import { test4 } from "@sui/deps-material";
 import { test5, test6 } from "@sui/deps-material";
 import { test7 } from "@sui/deps-material";
+import {test8} from "antd";
 import MenuIcon from "@mui/icons-material/Menu";
 import {DeleteForever} from "@mui/icons-material";
 
@@ -43,8 +44,7 @@ import {test3} from "antd";
 import { test4 } from "@sui/deps-material";
 import { test5, test6 } from "@sui/deps-material";
 import { test7 } from "@sui/deps-material";
-import MenuIcon from "@mui/icons-material/Menu";
-import {DeleteForever} from "@mui/icons-material";
+import {test8} from "antd";
 
 const a = <MuiIcons.Menu attr="1">2</MuiIcons.Menu>;
 const b = <MuiIcons.Menu attr="1"/>;
