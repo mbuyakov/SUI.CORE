@@ -1,23 +1,64 @@
-import {remapImports} from "./generator";
+import {remapIcons} from "./remapIcons";
+import {remapImports} from "./remapImports";
 
-describe("sui-migrator generator", () => {
-  it("remapImports", () => {
-    const prev = `
+const source = `
 import {test1} from "@nemui/material";
 import {test2} from "@mui/material";
 import {test3} from "antd";
 import {test4} from "@mui/material/test";
 import {test5, test6} from "@mui/material/test";
 import test7 from "@mui/material/test";
+import MenuIcon from "@mui/icons-material/Menu";
+import {DeleteForever} from "@mui/icons-material";
+
+const a = <MenuIcon attr="1">2</MenuIcon>;
+const b = <MenuIcon attr="1"/>;
+
+const c = <DeleteForever attr="1">2</DeleteForever>;
+const d = <DeleteForever attr="1"/>;
     `.trim();
-    const after = `
+
+const afterRemapImports = `
 import {test1} from "@nemui/material";
 import { test2 } from "@sui/deps-material";
 import {test3} from "antd";
 import { test4 } from "@sui/deps-material";
 import { test5, test6 } from "@sui/deps-material";
 import { test7 } from "@sui/deps-material";
+import MenuIcon from "@mui/icons-material/Menu";
+import {DeleteForever} from "@mui/icons-material";
+
+const a = <MenuIcon attr="1">2</MenuIcon>;
+const b = <MenuIcon attr="1"/>;
+
+const c = <DeleteForever attr="1">2</DeleteForever>;
+const d = <DeleteForever attr="1"/>;
     `.trim();
-    expect(remapImports("deps-antd", prev).trim()).toBe(after);
+
+const afterRemapIcons = `
+import { MuiIcons } from "@sui/deps-material";
+import {test1} from "@nemui/material";
+import { test2 } from "@sui/deps-material";
+import {test3} from "antd";
+import { test4 } from "@sui/deps-material";
+import { test5, test6 } from "@sui/deps-material";
+import { test7 } from "@sui/deps-material";
+import MenuIcon from "@mui/icons-material/Menu";
+import {DeleteForever} from "@mui/icons-material";
+
+const a = <MuiIcons.Menu attr="1">2</MuiIcons.Menu>;
+const b = <MuiIcons.Menu attr="1"/>;
+
+const c = <MuiIcons.DeleteForever attr="1">2</MuiIcons.DeleteForever>;
+const d = <MuiIcons.DeleteForever attr="1"/>;
+    `.trim();
+
+describe("sui-migrator generator", () => {
+  it("remapImports", () => {
+    expect(remapImports("deps-antd", source).trim()).toBe(afterRemapImports);
+  });
+
+  it("remapIcons", () => {
+    expect(remapIcons(afterRemapImports).trim()).toBe(afterRemapIcons);
   });
 });
