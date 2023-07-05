@@ -10,6 +10,8 @@ import {test4} from "@mui/material/test";
 import {test5, test6} from "@mui/material/test";
 import test7 from "@mui/material/test";
 import {test8} from "antd";
+import {test9} from "@mui/material-fake";
+import {test10} from "antd/lib";
 import MenuIcon from "@mui/icons-material/Menu";
 import {DeleteForever} from "@mui/icons-material";
 
@@ -28,6 +30,8 @@ import { test4 } from "@sui/deps-material";
 import { test5, test6 } from "@sui/deps-material";
 import { test7 } from "@sui/deps-material";
 import {test8} from "antd";
+import {test9} from "@mui/material-fake";
+import {test10} from "antd/lib";
 import MenuIcon from "@mui/icons-material/Menu";
 import {DeleteForever} from "@mui/icons-material";
 
@@ -47,6 +51,8 @@ import { test4 } from "@sui/deps-material";
 import { test5, test6 } from "@sui/deps-material";
 import { test7 } from "@sui/deps-material";
 import {test8} from "antd";
+import {test9} from "@mui/material-fake";
+import {test10} from "antd/lib";
 
 const a = <MuiIcons.Menu attr="1">2</MuiIcons.Menu>;
 const b = <MuiIcons.Menu attr="1"/>;
@@ -59,6 +65,8 @@ const afterDedupeImport = `
 import {MuiIcons, test2, test4, test5, test6, test7} from "@sui/deps-material";
 import {test1} from "@nemui/material";
 import {test3, test8} from "antd";
+import {test9} from "@mui/material-fake";
+import {test10} from "antd/lib";
 
 const a = <MuiIcons.Menu attr="1">2</MuiIcons.Menu>;
 const b = <MuiIcons.Menu attr="1"/>;

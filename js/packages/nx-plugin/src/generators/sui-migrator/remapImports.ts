@@ -11,7 +11,7 @@ export function remapImports(projectName: string, content: string): string {
     for (const oldName of Object.keys(mapModules)) {
       if (
         mapModules[oldName] != `@sui/${projectName}` // Don't replace yourself
-        && moduleName.startsWith(oldName) // If import contain out managed modules
+        && (moduleName == oldName || moduleName.startsWith(oldName + "/")) // If import contain out managed modules
         ) {
         newName = mapModules[oldName];
       }
