@@ -1,4 +1,4 @@
-import * as dataKey from "./index";
+import * as dataKey from "./dataKey";
 
 test("NormalizeDataKey", () => {
   expect(dataKey.normalizeDataKey(["1", 2])).toEqual(["1", 2]);

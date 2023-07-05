@@ -1,7 +1,6 @@
 export * from "./cache";
 export * from "./comparators";
 export * from "./core";
-export * from "./dataKey";
 export * from "./formatter";
 export * from "./gql";
 export * from "./ioc";

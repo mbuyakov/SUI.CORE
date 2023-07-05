@@ -83,7 +83,7 @@ export class DataKeyNode {
 /**
  * Map DataKeys to tree (use to generate gql query)
  */
-export function dataKeysToDataTree(dataKeys: DataKey[], rootKey: string = ""): DataKeyNode {
+export function dataKeysToDataTree(dataKeys: DataKey[], rootKey = ""): DataKeyNode {
   function appendKey(node: DataKeyNode, key: string[] | string): void {
     if (Array.isArray(key)) {
       if (key.length === 1) {
