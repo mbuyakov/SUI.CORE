@@ -3,7 +3,6 @@ import {LocalStorageService} from "./LocalStorageService";
 export abstract class LSKeyWrapper<T extends string = string> {
   abstract get(): T | null;
   abstract set(value: Nullable<T>): void;
-  abstract remove(): void;
 }
 
 export class LSKeyWrapperImpl<T extends string = string> extends LSKeyWrapper<T> {
@@ -22,9 +21,5 @@ export class LSKeyWrapperImpl<T extends string = string> extends LSKeyWrapper<T>
 
   override set(value: Nullable<T>) {
     this.localStorageService.setItem<T>(this.key, value);
-  }
-
-  override remove() {
-    this.localStorageService.removeItem(this.key);
   }
 }

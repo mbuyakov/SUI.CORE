@@ -3,10 +3,9 @@ import * as React from "react";
 
 // noinspection ES6PreferShortImport
 import {BaseForm, IBaseFormProps} from "../Base";
-// noinspection ES6PreferShortImport
-import {Observable, ObservableBinder} from "../Observable";
 
 import {defaultModalFooter, IPromisedModalProps, PromisedModal} from "./PromisedModal";
+import {Observable, ObservableBinder} from "@sui/ui-observable";
 
 export type IPromisedBaseFormModalOnlyModalProps = Omit<IPromisedModalProps, "ref" | "customFooter" | "promise">;
 
