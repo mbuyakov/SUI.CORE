@@ -1,4 +1,4 @@
-import {factory, Identifier, ImportDeclaration, JsxElement, JsxSelfClosingElement, NamedImports, StringLiteral} from "typescript";
+import {factory, ImportDeclaration, NamedImports, StringLiteral} from "typescript";
 import {logRemap, printNode} from "./util";
 import {tsquery} from "./tsqeury";
 

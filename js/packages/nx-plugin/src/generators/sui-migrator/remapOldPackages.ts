@@ -1,12 +1,15 @@
 import {tsquery} from "@phenomnomnominal/tsquery";
-import {factory, ImportDeclaration, ImportSpecifier, NamedImports, StringLiteral} from "typescript";
+import {factory, ImportDeclaration, ImportSpecifier, isNamedImports, StringLiteral} from "typescript";
 import {logRemap, printNode} from "./util";
 
 const newImports = {
   "@sui/util-chore": [
     "DataKey",
-    "dataKeysToDataTree",
-    "getDataByKey"
+    "normalizeDataKey",
+    "concatDataKey",
+    "getDataByKey",
+    "DataKeyNode",
+    "dataKeysToDataTree"
   ],
 };
 
@@ -22,11 +25,15 @@ export function remapOldPackages(content: string): string {
   return tsquery.replace(content, "ImportDeclaration", (node: ImportDeclaration) => {
     const moduleName = (node.moduleSpecifier as StringLiteral).text;
 
-    if (!["@sui/all", "@sui/ui-old-core", "@sui/ui-old-react"].includes(moduleName)) {
+    if (!(["@sui/all", "@sui/ui-old-core", "@sui/ui-old-react"].includes(moduleName) || moduleName.startsWith("@/"))) {
       return;
     }
 
-    let importSpecifiers: ImportSpecifier[] = [...(node.importClause.namedBindings as NamedImports).elements];
+    if (!isNamedImports(node.importClause.namedBindings)){
+      return;
+    }
+
+    let importSpecifiers: ImportSpecifier[] = [...node.importClause.namedBindings.elements];
 
     if (importSpecifiers.every(it => !inversedNewImports[it.name.text])) {
       return;
