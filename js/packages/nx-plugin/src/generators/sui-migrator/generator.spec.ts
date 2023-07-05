@@ -14,6 +14,7 @@ import {test9} from "@mui/material-fake";
 import {test10} from "antd/lib";
 import MenuIcon from "@mui/icons-material/Menu";
 import {DeleteForever} from "@mui/icons-material";
+import {Container} from "typescript-ioc";
 
 const a = <MenuIcon attr="1">2</MenuIcon>;
 const b = <MenuIcon attr="1"/>;
@@ -24,16 +25,17 @@ const d = <DeleteForever attr="1"/>;
 
 const afterRemapImports = `
 import {test1} from "@nemui/material";
-import { test2 } from "@sui/deps-material";
+import {test2} from "@sui/deps-material";
 import {test3} from "antd";
-import { test4 } from "@sui/deps-material";
-import { test5, test6 } from "@sui/deps-material";
-import { test7 } from "@sui/deps-material";
+import {test4} from "@sui/deps-material";
+import {test5, test6} from "@sui/deps-material";
+import {test7} from "@sui/deps-material";
 import {test8} from "antd";
 import {test9} from "@mui/material-fake";
 import {test10} from "antd/lib";
 import MenuIcon from "@mui/icons-material/Menu";
 import {DeleteForever} from "@mui/icons-material";
+import {Container} from "@sui/deps-ioc";
 
 const a = <MenuIcon attr="1">2</MenuIcon>;
 const b = <MenuIcon attr="1"/>;
@@ -43,16 +45,17 @@ const d = <DeleteForever attr="1"/>;
     `.trim();
 
 const afterRemapIcons = `
-import { MuiIcons } from "@sui/deps-material";
+import {MuiIcons} from "@sui/deps-material";
 import {test1} from "@nemui/material";
-import { test2 } from "@sui/deps-material";
+import {test2} from "@sui/deps-material";
 import {test3} from "antd";
-import { test4 } from "@sui/deps-material";
-import { test5, test6 } from "@sui/deps-material";
-import { test7 } from "@sui/deps-material";
+import {test4} from "@sui/deps-material";
+import {test5, test6} from "@sui/deps-material";
+import {test7} from "@sui/deps-material";
 import {test8} from "antd";
 import {test9} from "@mui/material-fake";
 import {test10} from "antd/lib";
+import {Container} from "@sui/deps-ioc";
 
 const a = <MuiIcons.Menu attr="1">2</MuiIcons.Menu>;
 const b = <MuiIcons.Menu attr="1"/>;
@@ -67,6 +70,7 @@ import {test1} from "@nemui/material";
 import {test3, test8} from "antd";
 import {test9} from "@mui/material-fake";
 import {test10} from "antd/lib";
+import {Container} from "@sui/deps-ioc";
 
 const a = <MuiIcons.Menu attr="1">2</MuiIcons.Menu>;
 const b = <MuiIcons.Menu attr="1"/>;

@@ -72,22 +72,26 @@ export function remapIcons(content: string): string {
 
     importReplaced = true;
     return printNode(
-      factory.createImportDeclaration(
-        undefined,
-        factory.createImportClause(
-          false,
+        factory.createImportDeclaration(
           undefined,
-          factory.createNamedImports([
-            factory.createImportSpecifier(
-              false,
-              undefined,
-              factory.createIdentifier("MuiIcons")
-            )
-          ])
-        ),
-        factory.createStringLiteral("@sui/deps-material")
+          factory.createImportClause(
+            false,
+            undefined,
+            factory.createNamedImports([
+              factory.createImportSpecifier(
+                false,
+                undefined,
+                factory.createIdentifier("MuiIcons")
+              )
+            ])
+          ),
+          factory.createStringLiteral("@sui/deps-material")
+        )
       )
-    ) + "\n" + importDeclaration.getText();
+        .replace("{ ", "{")
+        .replace(" }", "}")
+      + "\n"
+      + importDeclaration.getText();
   });
 
   return content;

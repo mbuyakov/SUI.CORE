@@ -41,6 +41,8 @@ export function remapImports(projectName: string, content: string): string {
       node.assertClause
     );
 
-    return printNode(node);
+    return printNode(node)
+      .replace("{ ", "{")
+      .replace(" }", "}");
   });
 }
