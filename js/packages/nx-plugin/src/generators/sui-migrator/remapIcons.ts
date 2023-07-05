@@ -1,4 +1,4 @@
-import {factory, ImportDeclaration, JsxElement, JsxSelfClosingElement, NamedImports, StringLiteral} from "typescript";
+import {factory, Identifier, ImportDeclaration, JsxElement, JsxSelfClosingElement, NamedImports, StringLiteral} from "typescript";
 import {logRemap, printNode} from "./util";
 import {tsquery} from "./tsqeury";
 
@@ -33,34 +33,9 @@ export function remapIcons(content: string): string {
 
   Object.keys(nameMap).forEach(key => {
     logRemap("remapIcons", `Replace ${key} to ${nameMap[key]}`);
-    content = tsquery.jsxReplace(content, `JsxElement:has(JsxOpeningElement:has(Identifier[name="${key}"]))`, (node: JsxElement) => {
-      node = factory.updateJsxElement(
-        node,
-        factory.updateJsxOpeningElement(
-          node.openingElement,
-          factory.createIdentifier(nameMap[key]),
-          node.openingElement.typeArguments,
-          node.openingElement.attributes
-        ),
-        node.children,
-        factory.updateJsxClosingElement(
-          node.closingElement,
-          factory.createIdentifier(nameMap[key])
-        )
-      );
 
-      return printNode(node);
-    });
-
-    content = tsquery.jsxReplace(content, `JsxSelfClosingElement:has(Identifier[name="${key}"])`, (node: JsxSelfClosingElement) => {
-      node = factory.updateJsxSelfClosingElement(
-        node,
-        factory.createIdentifier(nameMap[key]),
-        node.typeArguments,
-        node.attributes
-      );
-
-      return printNode(node);
+    content = tsquery.jsxReplace(content, `Identifier[name="${key}"]`, () => {
+      return nameMap[key];
     });
   });
 
