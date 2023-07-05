@@ -4,6 +4,7 @@ import {SuiMigratorGeneratorSchema} from "./schema";
 import {remapImports} from "./remapImports";
 import {remapIcons} from "./remapIcons";
 import {chalk} from "./util";
+import {dedupeImport} from "./dedupeImport";
 
 function visitAllFiles(tree: Tree, path: string, callback: (filePath: string) => void) {
   tree.children(path).forEach((fileName) => {
@@ -28,6 +29,7 @@ export async function suiMigratorGenerator(tree: Tree, schema: SuiMigratorGenera
 
       newContent = remapImports(project.name, newContent);
       newContent = remapIcons(newContent);
+      newContent = dedupeImport(newContent);
 
       if (newContent !== content) {
         tree.write(filePath, newContent);

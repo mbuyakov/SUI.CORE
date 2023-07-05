@@ -1,10 +1,11 @@
 import {tsquery} from "./tsqeury";
-import {factory, Identifier, ImportDeclaration, ImportSpecifier, NamedImports, StringLiteral} from "typescript";
+import {factory, Identifier, ImportDeclaration, ImportSpecifier, isNamespaceImport, NamedImports, NamespaceImport, StringLiteral} from "typescript";
 import {logRemap, printNode} from "./util";
 
 type ImportData = {
   count: number,
   importSpecifiers: ImportSpecifier[],
+  nsImport?: NamespaceImport,
   defaultImport?: Identifier
 };
 
@@ -18,7 +19,13 @@ export function dedupeImport(content: string): string {
     const mapEntry: ImportData = (importMap[moduleName] = importMap[moduleName] || {count: 0, importSpecifiers: []});
     mapEntry.count++;
     mapEntry.defaultImport = importDeclaration.importClause.name || mapEntry.defaultImport;
-    mapEntry.importSpecifiers.push(...(importDeclaration.importClause.namedBindings as NamedImports).elements);
+    if (importDeclaration.importClause.namedBindings) {
+      if (isNamespaceImport(importDeclaration.importClause.namedBindings)) {
+        mapEntry.nsImport = importDeclaration.importClause.namedBindings;
+      } else {
+        mapEntry.importSpecifiers.push(...(importDeclaration.importClause.namedBindings as NamedImports).elements);
+      }
+    }
   });
 
   Object.keys(importMap).forEach(moduleName => {
@@ -37,21 +44,36 @@ export function dedupeImport(content: string): string {
         }
       }, true);
 
-      content = tsquery.replace(content, `ImportDeclaration:has(StringLiteral[value="${moduleName}"])`, (node: ImportDeclaration) => {
-        node = factory.updateImportDeclaration(
-          node,
-          undefined,
-          factory.updateImportClause(
-            node.importClause,
-            node.importClause.isTypeOnly,
-            mapEntry.defaultImport,
-            factory.createNamedImports(mapEntry.importSpecifiers)
-          ),
-          node.moduleSpecifier,
-          node.assertClause
+      content = tsquery.replace(content, `ImportDeclaration:has(StringLiteral[value="${moduleName}"])`, () => {
+        const rows = [];
+
+        rows.push(
+          factory.createImportDeclaration(
+            undefined,
+            factory.createImportClause(
+              false,
+              mapEntry.defaultImport,
+              factory.createNamedImports(mapEntry.importSpecifiers)
+            ),
+            factory.createStringLiteral(moduleName)
+          )
         );
 
-        return printNode(node)
+        if (mapEntry.nsImport) {
+          rows.push(
+            factory.createImportDeclaration(
+              undefined,
+              factory.createImportClause(
+                false,
+                undefined,
+                mapEntry.nsImport
+              ),
+              factory.createStringLiteral(moduleName)
+            )
+          );
+        }
+
+        return rows.map(printNode).join("\n")
           .replace("{ ", "{")
           .replace(" }", "}");
       });

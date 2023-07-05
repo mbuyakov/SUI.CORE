@@ -15,6 +15,9 @@ import {test10} from "antd/lib";
 import MenuIcon from "@mui/icons-material/Menu";
 import {DeleteForever} from "@mui/icons-material";
 import {Container} from "typescript-ioc";
+import * as colors from "colors";
+import test11 from "colors";
+import {test12} from "colors";
 
 const a = <MenuIcon attr="1">2</MenuIcon>;
 const b = <MenuIcon attr="1"/>;
@@ -36,6 +39,9 @@ import {test10} from "antd/lib";
 import MenuIcon from "@mui/icons-material/Menu";
 import {DeleteForever} from "@mui/icons-material";
 import {Container} from "@sui/deps-ioc";
+import * as colors from "colors";
+import test11 from "colors";
+import {test12} from "colors";
 
 const a = <MenuIcon attr="1">2</MenuIcon>;
 const b = <MenuIcon attr="1"/>;
@@ -56,6 +62,9 @@ import {test8} from "antd";
 import {test9} from "@mui/material-fake";
 import {test10} from "antd/lib";
 import {Container} from "@sui/deps-ioc";
+import * as colors from "colors";
+import test11 from "colors";
+import {test12} from "colors";
 
 const a = <MuiIcons.Menu attr="1">2</MuiIcons.Menu>;
 const b = <MuiIcons.Menu attr="1"/>;
@@ -71,6 +80,8 @@ import {test3, test8} from "antd";
 import {test9} from "@mui/material-fake";
 import {test10} from "antd/lib";
 import {Container} from "@sui/deps-ioc";
+import test11, {test12} from "colors";
+import * as colors from "colors";
 
 const a = <MuiIcons.Menu attr="1">2</MuiIcons.Menu>;
 const b = <MuiIcons.Menu attr="1"/>;
