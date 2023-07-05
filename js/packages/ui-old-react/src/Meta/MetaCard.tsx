@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import {Cached} from "@mui/icons-material";
+import {MuiIcons, IconButton, Tooltip} from "@sui/deps-material";
 import {addPluralEnding, addQuotesIfString, capitalize, ColumnInfoManager, DataKey, dataKeysToDataTree, getDataByKey, isValidUuid, NameManager, NO_DATA_TEXT, normalizeDataKey, query, TableInfoManager, wrapInArray, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
 import {Card} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
@@ -104,7 +102,7 @@ export class MetaCard extends React.Component<IMetaCardProps, {
                   marginTop: -12,
                 }}
                 size="large">
-                <Cached/>
+                <MuiIcons.Cached/>
               </IconButton>
             </Tooltip>
             {isAdmin() && this.state.tableInfoId && <TableSettingsDialog

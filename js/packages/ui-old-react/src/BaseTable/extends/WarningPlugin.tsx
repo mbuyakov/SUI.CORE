@@ -1,6 +1,4 @@
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import Warning from "@mui/icons-material/Warning";
+import {MuiIcons, IconButton, Tooltip} from "@sui/deps-material";
 import {Divider, Popover} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import React from "react";
@@ -31,7 +29,7 @@ export class WarningPlugin extends React.Component<IWarningPluginProps, {
         style={{marginLeft: -12, marginRight: 8}}
         onClick={this.openPopover}
         size="large">
-        <Warning fontSize="large" className={YELLOW_BLINK}/>
+        <MuiIcons.Warning fontSize="large" className={YELLOW_BLINK}/>
       </IconButton>
     );
 

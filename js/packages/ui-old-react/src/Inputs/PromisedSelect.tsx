@@ -1,5 +1,4 @@
-import {CircularProgress, IconButton} from "@sui/deps-material";
-import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import {MuiIcons, CircularProgress, IconButton} from "@sui/deps-material";
 import * as React from "react";
 import {Select, SelectProps} from "@sui/deps-antd";
 import {SUI_ROW_GRID} from "@/styles";
@@ -29,7 +28,7 @@ export class PromisedSelect<T extends SelectValue> extends PromisedBase<Promised
         onClick={this.saveWithoutValue}
         size="small"
       >
-        {this.state.loading ? (<CircularProgress size={16}/>) : (<SaveOutlinedIcon/>)}
+        {this.state.loading ? (<CircularProgress size={16}/>) : (<MuiIcons.SaveOutlined/>)}
       </IconButton>
     );
     const withPopover: JSX.Element = (

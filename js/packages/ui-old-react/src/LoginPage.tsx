@@ -1,9 +1,5 @@
+import {MuiIcons, Backdrop, Card, CardContent, CircularProgress, Divider, IconButton, InputAdornment, TextField, Alert} from "@sui/deps-material";
 import React, {HTMLAttributes, KeyboardEvent, useContext} from "react";
-import {Backdrop, Card, CardContent, CircularProgress, Divider, IconButton, InputAdornment, TextField} from "@sui/deps-material";
-import Alert from "@mui/material/Alert";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {SuiThemeContext, ThemeSwitchButton} from "@/themes";
 import {BlockUIConditionally} from "@/other";
 import {SUI_ROW_CONTAINER} from "@/styles";
@@ -109,7 +105,7 @@ export const LoginPage: React.FC<{
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <PersonOutlinedIcon/>
+                        <MuiIcons.PersonOutlined/>
                       </InputAdornment>
                     )
                   }}
@@ -125,7 +121,7 @@ export const LoginPage: React.FC<{
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <LockOutlinedIcon/>
+                        <MuiIcons.LockOutlined/>
                       </InputAdornment>
                     ),
                     endAdornment: (
@@ -135,7 +131,7 @@ export const LoginPage: React.FC<{
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
                         >
-                          {showPassword ? <VisibilityOff/> : <Visibility/>}
+                          {showPassword ? <MuiIcons.VisibilityOff/> : <MuiIcons.Visibility/>}
                         </IconButton>
                       </InputAdornment>
                     )

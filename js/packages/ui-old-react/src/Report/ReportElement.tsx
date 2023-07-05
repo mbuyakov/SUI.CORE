@@ -1,5 +1,5 @@
 import {PrinterOutlined} from "@ant-design/icons";
-import {Button, Card} from "@sui/deps-antd";
+import {Button, Card, CardType} from "@sui/deps-antd";
 import * as React from "react";
 import ReactToPrint from "react-to-print";
 
@@ -7,7 +7,6 @@ import ReactToPrint from "react-to-print";
 import {SMALL_HEADER_PADDING} from "../styles";
 
 import {PrintModeContext} from "./PrintModeContext";
-import {CardType} from "@sui/deps-antd";
 
 interface IReportElement {
   children?: React.ReactNode

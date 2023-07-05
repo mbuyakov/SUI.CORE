@@ -1,7 +1,5 @@
+import {MuiIcons, IconButton, Tooltip} from "@sui/deps-material";
 import {Plugin, Template, TemplateConnector, TemplatePlaceholder} from "@sui/deps-dx-react-grid";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import Build from "@mui/icons-material/Build";
 import autobind from "autobind-decorator";
 import React from "react";
 
@@ -29,7 +27,7 @@ export class TableSettingsDialog extends React.Component<ITableSettingsDialogPro
             onClick={this.handleClickOpen}
             color="primary"
             size="large">
-            <Build/>
+            <MuiIcons.Build/>
           </IconButton>
         </Tooltip>
         <FullScreenTableSettings

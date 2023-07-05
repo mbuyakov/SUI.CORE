@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {MuiIcons, Chip} from "@sui/deps-material";
 import {EditOutlined, OrderedListOutlined} from "@ant-design/icons";
-import {Chip} from "@sui/deps-material";
-import CancelIcon from "@mui/icons-material/Cancel";
-import SettingsIcon from "@mui/icons-material/Settings";
 import {capitalize, ColumnInfo, ColumnInfoManager, IName, Merge, NameManager, TableInfoManager} from "@sui/ui-old-core";
 import {Input, Popover, Select, Spin, Switch, Tooltip} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
@@ -154,11 +152,11 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
                             </>)}
                           </div>}
                       >
-                        <SettingsIcon
+                        <MuiIcons.Settings
                           className={ITEM_SETTINGS__SETTINGS_ICON}
                         />
                       </Popover>
-                      <CancelIcon
+                      <MuiIcons.Cancel
                         className={ITEM_SETTINGS__DELETE_ICON}
                         onClick={this.props.onDelete}
                       />

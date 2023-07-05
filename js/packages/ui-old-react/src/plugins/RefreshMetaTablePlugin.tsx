@@ -1,7 +1,5 @@
+import {MuiIcons, IconButton, Tooltip} from "@sui/deps-material";
 import {Plugin, Template, TemplateConnector, TemplatePlaceholder} from "@sui/deps-dx-react-grid";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import {Cached} from "@mui/icons-material";
 import React from "react";
 
 export class RefreshMetaTablePlugin extends React.Component<{
@@ -20,7 +18,7 @@ export class RefreshMetaTablePlugin extends React.Component<{
                 enterDelay={300}
               >
                 <IconButton onClick={this.props.handleClick} size="large">
-                  <Cached
+                  <MuiIcons.Cached
                     // style={{color: '#1890ff'}}
                   />
                 </IconButton>

@@ -1,6 +1,5 @@
 /* tslint:disable:no-magic-numbers */
-import {CircularProgress, IconButton} from "@sui/deps-material";
-import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import {MuiIcons, CircularProgress, IconButton} from "@sui/deps-material";
 import {Slider, SliderSingleProps} from "@sui/deps-antd";
 import * as React from "react";
 import {SUI_ROW_GRID} from "@/styles";
@@ -28,7 +27,7 @@ export class PromisedSlider extends PromisedBase<PromisedSliderProps, IPromisedB
         onClick={this.saveWithoutValue}
         size="small"
       >
-        {this.state.loading ? (<CircularProgress size={16}/>) : (<SaveOutlinedIcon/>)}
+        {this.state.loading ? (<CircularProgress size={16}/>) : (<MuiIcons.SaveOutlined/>)}
       </IconButton>
     );
 

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/ban-ts-comment */
-import {Getters} from "@sui/deps-dx-react-grid";
-import {Grouping, GroupKey, Sorting, TableColumnWidthInfo, TableFilterRow} from "@sui/deps-dx-react-grid";
-import {Modal, notification} from "@sui/deps-antd";
+import {Getters, Grouping, GroupKey, Sorting, TableColumnWidthInfo, TableFilterRow} from "@sui/deps-dx-react-grid";
+import {Modal, notification, Tooltip} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import axios from "axios";
 import JSzip from "jszip";
@@ -28,7 +27,6 @@ import {LazyFilter} from "../BaseTable/types";
 import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
 import {RestBackendDataSource} from "./RestBackendDataSource";
 import {IconButton, MuiIcons } from "@sui/deps-material";
-import {Tooltip} from "@sui/deps-antd";
 import {IObjectWithIndex} from "@sui/util-types";
 import {getUser, isAdmin} from "@sui/lib-auth";
 import {IdleTimerConsumer, IIdleTimer} from "@sui/ui-idle-tracker";

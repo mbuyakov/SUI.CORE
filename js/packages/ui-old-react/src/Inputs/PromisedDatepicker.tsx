@@ -1,5 +1,4 @@
-import {CircularProgress, IconButton} from "@sui/deps-material";
-import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import {MuiIcons, CircularProgress, IconButton} from "@sui/deps-material";
 import {DatePicker, DatePickerProps} from "@sui/deps-antd";
 import moment from "moment";
 import * as React from "react";
@@ -31,7 +30,7 @@ export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps,
         onClick={this.saveWithoutValue}
         size="small"
       >
-        {this.state.loading ? (<CircularProgress size={16}/>) : (<SaveOutlinedIcon/>)}
+        {this.state.loading ? (<CircularProgress size={16}/>) : (<MuiIcons.SaveOutlined/>)}
       </IconButton>
     );
     const datePickerWithPopover: JSX.Element = this.wrapInValidationPopover(

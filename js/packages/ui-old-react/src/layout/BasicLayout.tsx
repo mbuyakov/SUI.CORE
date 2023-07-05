@@ -1,6 +1,5 @@
 import React, {useContext} from "react";
-import {CssBaseline, Theme} from "@sui/deps-material";
-import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
+import {CssBaseline, Theme, ThemeProvider, StyledEngineProvider} from "@sui/deps-material";
 import {IRawRoute} from "@sui/ui-old-core";
 import pathToRegexp from "path-to-regexp";
 import {Location} from "history";

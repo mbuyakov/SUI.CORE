@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {Getter, Plugin, Template} from "@sui/deps-dx-react-grid";
-import {GroupKey, TableRow as TableRowProps} from "@sui/deps-dx-react-grid";
-import {Mui} from "@sui/deps-dx-react-grid";
+import {Getter, Plugin, Template, GroupKey, TableRow as TableRowProps, Mui} from "@sui/deps-dx-react-grid";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {NO_DATA_TEXT, stringSymbolEquals} from "@sui/ui-old-core";

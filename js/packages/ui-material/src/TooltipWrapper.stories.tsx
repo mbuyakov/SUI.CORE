@@ -1,5 +1,4 @@
-import type {Meta} from "@storybook/react";
-import {ComponentStory} from "@storybook/react";
+import {Meta, ComponentStory} from "@storybook/react";
 import {TooltipWrapper as _TooltipWrapper} from "./TooltipWrapper";
 import React from "react";
 import {Button, Stack} from "@sui/deps-material";

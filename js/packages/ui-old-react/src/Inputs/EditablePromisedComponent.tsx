@@ -1,6 +1,4 @@
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
-import CreateIcon from "@mui/icons-material/CreateOutlined";
+import {MuiIcons, IconButton} from "@sui/deps-material";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {AfterChangeContext} from "@/AfterChangeContext";
@@ -68,7 +66,7 @@ export class EditablePromisedComponent<T>
                                 style={{marginLeft: 6, padding: 0}}
                                 size="small"
                               >
-                                {editMode ? (<CloseIcon/>) : (<CreateIcon/>)}
+                                {editMode ? (<MuiIcons.Close/>) : (<MuiIcons.CreateOutlined/>)}
                               </IconButton>
                             )}
                           </div>

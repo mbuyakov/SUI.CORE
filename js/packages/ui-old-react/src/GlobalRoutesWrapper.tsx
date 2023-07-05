@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Container} from "@sui/deps-ioc";
-import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
+import {ThemeProvider, Theme, StyledEngineProvider} from "@sui/deps-material";
 import {ConfigProvider} from "@sui/deps-antd";
 import {SuiThemeContext, ThemeService, ThemeVariant} from "@/themes";
 import {localeRu} from "@/antdMissedExport";

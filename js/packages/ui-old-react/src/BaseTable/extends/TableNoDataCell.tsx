@@ -1,4 +1,4 @@
-import TableCell from "@mui/material/TableCell";
+import {TableCell} from "@sui/deps-material";
 import * as React from "react";
 import {Empty} from "@sui/deps-antd";
 import {TABLE_NO_DATA_CELL_SMALL} from "@/styles";

@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {MuiIcons, ThemeProvider, Theme, StyledEngineProvider, IconButton} from "@sui/deps-material";
 import {CheckOutlined, CloseOutlined, IdcardOutlined, ProfileOutlined, QuestionOutlined, SortAscendingOutlined, SortDescendingOutlined} from "@ant-design/icons";
-import { ThemeProvider, Theme, StyledEngineProvider } from "@sui/deps-material";
-import IconButton from "@mui/material/IconButton";
-import {Cached, Edit} from "@mui/icons-material";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {Button, Popover, Select, Table} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
@@ -61,7 +58,7 @@ export function FullScreenTableSettings(props: {
             tooltipText="Обновить метасхему"
             progressColor="secondary"
           >
-            <Cached style={{color: "white"}}/>
+            <MuiIcons.Cached style={{color: "white"}}/>
           </PromisedMaterialIconButton>
         </div>
       </div>}
@@ -279,7 +276,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                     content={
                                       <PromisedInput
                                         rowStyle={{width: 200 - 32}}
-                                        icon={<ChevronRightIcon/>}
+                                        icon={<MuiIcons.ChevronRight/>}
                                         type="number"
                                         promise={(value: any): any => {
                                           getSUISettings().routerPushFn(getLinkForTable(data.tableInfoById.tableName, "card", value));
@@ -378,7 +375,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                     style={{marginLeft: 6}}
                                     size="small"
                                   >
-                                    <Edit/>
+                                    <MuiIcons.Edit/>
                                   </IconButton>
                                 )}
                               />

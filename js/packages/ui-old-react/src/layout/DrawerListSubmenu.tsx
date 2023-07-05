@@ -1,9 +1,7 @@
+import {MuiIcons, Collapse, CollapseProps, List, ListItem, ListItemProps, MenuProps, Typography, Theme} from "@sui/deps-material";
 import React, {useMemo, useState} from "react";
-import {Collapse, CollapseProps, List, ListItem, ListItemProps, MenuProps, Typography} from "@sui/deps-material";
-import { Theme } from "@mui/material/styles";
 // import createStyles from '@mui/styles/createStyles';
 // import makeStyles from '@mui/styles/makeStyles';
-import {ExpandMore} from "@mui/icons-material";
 import clsx from "clsx";
 import {bindHover, bindMenu, usePopupState} from "material-ui-popup-state/hooks";
 import HoverMenu from "material-ui-popup-state/HoverMenu";
@@ -57,7 +55,7 @@ export const DrawerListSubmenu: React.FC<ListItemProps<"div"> & {
     >
       {children}
       <UpendRotator rotate={active || isOpen}>
-        <ExpandMore/>
+        <MuiIcons.ExpandMore/>
       </UpendRotator>
     </ListItem>
   );

@@ -1,7 +1,6 @@
+import {MuiIcons, Button} from "@sui/deps-material";
 import {Result} from "@sui/deps-antd";
 import React from "react";
-import {Button} from "@sui/deps-material";
-import {ArrowBackOutlined} from "@mui/icons-material";
 import {useHistory} from "react-router-dom";
 
 export const Exception404: React.FC = () => {
@@ -14,7 +13,7 @@ export const Exception404: React.FC = () => {
       extra={
         <Button
           size="large"
-          startIcon={<ArrowBackOutlined/>}
+          startIcon={<MuiIcons.ArrowBackOutlined/>}
           onClick={() => history.goBack()}
         >
           Вернуться назад

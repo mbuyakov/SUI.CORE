@@ -1,5 +1,4 @@
-import {Toolbar} from "@sui/deps-material";
-import {ToolbarProps} from "@mui/material/Toolbar";
+import {Toolbar, ToolbarProps} from "@sui/deps-material";
 import * as React from "react";
 
 export function ToolbarBase<T extends ToolbarProps>(children: React.ReactNode): (props: T) => JSX.Element {

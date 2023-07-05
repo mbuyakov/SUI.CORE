@@ -1,4 +1,4 @@
-import { Theme } from "@mui/material/styles";
+import {Theme} from "@sui/deps-material";
 // import createStyles from '@mui/styles/createStyles';
 // import makeStyles from '@mui/styles/makeStyles';
 import React from "react";

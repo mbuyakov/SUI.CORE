@@ -1,8 +1,6 @@
 /* tslint:disable:no-magic-numbers */
+import {MuiIcons, IconButton, Tooltip} from "@sui/deps-material";
 import {Getters, Plugin, Template, TemplateConnector, TemplatePlaceholder} from "@sui/deps-dx-react-grid";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import RotateLeftIcon from "@mui/icons-material/RotateLeft";
 import React from "react";
 
 export interface IResetUserSettingsPluginProps {
@@ -25,7 +23,7 @@ export function ResetUserSettingsPlugin(props: IResetUserSettingsPluginProps): J
                 enterDelay={300}
               >
                 <IconButton onClick={onClick} size="large">
-                  <RotateLeftIcon/>
+                  <MuiIcons.RotateLeft/>
                 </IconButton>
               </Tooltip>
             );

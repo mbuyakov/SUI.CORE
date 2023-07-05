@@ -1,4 +1,4 @@
-import TableCell from "@mui/material/TableCell";
+import {TableCell} from "@sui/deps-material";
 import * as React from "react";
 import {FileSearchOutlined} from "@ant-design/icons";
 import {Empty} from "@sui/deps-antd";

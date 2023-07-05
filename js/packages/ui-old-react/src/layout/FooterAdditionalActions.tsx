@@ -1,6 +1,5 @@
+import {MuiIcons, useTheme} from "@sui/deps-material";
 import React from "react";
-import BugReportIcon from "@mui/icons-material/BugReport";
-import {useTheme} from "@mui/material/styles";
 import axios from "axios";
 import {notification} from "@sui/deps-antd";
 import moment from "moment";
@@ -52,7 +51,7 @@ export const FooterAdditionalActions: React.FC = () => {
 
   return (<MaterialDropdown
     iconButtonProps={{
-      children: (<BugReportIcon/>),
+      children: (<MuiIcons.BugReport/>),
       size: "small",
       style: {
         color: theme.palette.text.disabled

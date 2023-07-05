@@ -1,5 +1,4 @@
-import {CircularProgress, IconButton} from "@sui/deps-material";
-import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import {MuiIcons, CircularProgress, IconButton} from "@sui/deps-material";
 import {trimIfString} from "@sui/ui-old-core";
 import autobind from "autobind-decorator";
 import * as React from "react";
@@ -36,7 +35,7 @@ export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromi
         onClick={this.saveWithoutValue}
         size="small"
       >
-        {this.state.loading ? (<CircularProgress size={16}/>) : (this.props.icon || <SaveOutlinedIcon/>)}
+        {this.state.loading ? (<CircularProgress size={16}/>) : (this.props.icon || <MuiIcons.SaveOutlined/>)}
       </IconButton>
     );
     saveButton = (this.state.savedValue !== this.state.value)

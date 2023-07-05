@@ -1,11 +1,7 @@
-import Typography from "@mui/material/Typography";
-import CloseIcon from "@mui/icons-material/Close";
+import {MuiIcons, Typography, AppBar, Dialog, DialogProps, IconButton, Slide, Toolbar, Theme, TransitionProps} from "@sui/deps-material";
 import autobind from "autobind-decorator";
 import React from "react";
-import {AppBar, Dialog, DialogProps, IconButton, Slide, Toolbar} from "@sui/deps-material";
-import { Theme } from "@mui/material/styles";
 // import withStyles from '@mui/styles/withStyles';
-import {TransitionProps} from "@mui/material/transitions";
 // import {ClassNameMap} from "@mui/styles";
 import {AppBarElevator} from "@/Material";
 import {sleep} from "@sui/util-chore";
@@ -71,7 +67,7 @@ class FullScreenModalImpl extends React.Component<IFullScreenModalProps, {
           <AppBar>
             <Toolbar>
               <IconButton color="inherit" onClick={this.close} aria-label="Close" size="large">
-                <CloseIcon/>
+                <MuiIcons.Close/>
               </IconButton>
               <Typography variant="h6" color="inherit" style={{flex: 1}}>
                 {this.props.title}

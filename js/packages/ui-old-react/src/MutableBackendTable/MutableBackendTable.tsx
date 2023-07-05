@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {MuiIcons} from "@sui/deps-material";
 import {DeleteOutlined, PlusCircleOutlined} from "@ant-design/icons";
-import CreateIcon from "@mui/icons-material/CreateOutlined";
 import {defaultIfNotBoolean, getDataByKey, unCapitalize, wrapInArray} from "@sui/ui-old-core";
 import {Button, notification} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
@@ -97,7 +97,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
                   ? (
                     <PromisedMaterialIconButton
                       style={DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE}
-                      icon={<CreateIcon/>}
+                      icon={<MuiIcons.CreateOutlined/>}
                       promise={this.handleEditClickFn(row)}
                     />
                   )

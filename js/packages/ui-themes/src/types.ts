@@ -1,5 +1,4 @@
-import type {Theme as MuiTheme} from "@sui/deps-material";
-import {createTheme as muiCreateTheme} from "@sui/deps-material";
+import {Theme as MuiTheme, createTheme as muiCreateTheme} from "@sui/deps-material";
 import {theme as antdTheme, ThemeConfig as AntdTheme} from "@sui/deps-antd";
 
 export type SuiThemeComponents = "drawer" | "baseTable";

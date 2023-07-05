@@ -1,5 +1,4 @@
-import {IconButton} from "@sui/deps-material";
-import LinkIcon from "@mui/icons-material/Link";
+import {MuiIcons, IconButton} from "@sui/deps-material";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {RouteComponentProps, Router, withRouter} from "react-router";
@@ -18,7 +17,7 @@ class __MaterialIconModalLink extends React.Component<IMaterialIconModalLinkProp
   public render(): JSX.Element {
     return (
       <IconButton onClick={this.onClick} size="large">
-        {this.props.icon || <LinkIcon/>}
+        {this.props.icon || <MuiIcons.Link/>}
       </IconButton>
     );
   }

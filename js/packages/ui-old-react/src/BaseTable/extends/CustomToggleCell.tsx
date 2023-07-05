@@ -1,10 +1,8 @@
+import {MuiIcons, TableCell, styled, IconButton} from "@sui/deps-material";
 import * as React from "react";
 import PropTypes from "prop-types";
 import classNames from "clsx";
-import { TableCell, styled, IconButton } from "@sui/deps-material";
 
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
 const PREFIX = "TableDetailToggleCell";
 export const classes = {
@@ -42,8 +40,8 @@ export const CustomToggleCell = ({
       <IconButton onClick={handleClick}>
         {
           expanded
-            ? <ExpandMore />
-            : <KeyboardArrowRight />
+            ? <MuiIcons.ExpandMore />
+            : <MuiIcons.KeyboardArrowRight />
         }
       </IconButton>
     </StyledTableCell>

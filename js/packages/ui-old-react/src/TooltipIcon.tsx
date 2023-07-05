@@ -1,5 +1,5 @@
+import {MuiIcons} from "@sui/deps-material";
 import Icon from "@ant-design/icons";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import {Tooltip} from "@sui/deps-antd";
 import * as React from "react";
 
@@ -12,7 +12,7 @@ export class TooltipIcon extends React.Component<{
   public render(): JSX.Element {
     return (
       <Tooltip title={this.props.children} overlayStyle={this.props.style}>
-        <Icon component={HelpOutlineIcon as IAntIconComponent} style={{marginLeft: 4, transform: "scale(0.85) translateY(2px)", color: "#56CBF8"}}/>
+        <Icon component={MuiIcons.HelpOutline as IAntIconComponent} style={{marginLeft: 4, transform: "scale(0.85) translateY(2px)", color: "#56CBF8"}}/>
       </Tooltip>
     );
   }
