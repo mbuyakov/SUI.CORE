@@ -32,6 +32,3 @@ export function logRemap(prefix: string, text: string) {
   text = chalk.bold(text);
   console.log(prefix + " " + text);
 }
-
-
-
