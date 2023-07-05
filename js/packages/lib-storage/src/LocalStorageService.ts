@@ -4,7 +4,6 @@ import {LSKeyWrapper, LSKeyWrapperImpl} from "./LSKeyWrapper";
 abstract class LocalStorageService {
   abstract getItem<T extends string>(key: string): T | null;
   abstract setItem<T extends string>(key: string, value: Nullable<T>): void;
-  abstract removeItem(key: string): void;
   abstract getKeyWrapper<T extends string>(key: string): LSKeyWrapper<T>;
 }
 
@@ -21,10 +20,6 @@ export class LocalStorageServiceImpl extends LocalStorageService {
     } else {
       localStorage.setItem(`${this.projectKey}_${key}`, value);
     }
-  }
-
-  override removeItem(key: string) {
-    localStorage.removeItem(`${this.projectKey}_${key}`);
   }
 
   override getKeyWrapper<T extends string>(key: string): LSKeyWrapper<T> {
