@@ -1,5 +1,6 @@
 import {getXlsx, WritingOptions} from "@sui/deps-amcharts";
-import {defaultIfNotBoolean, getDataByKey, NO_DATA_TEXT} from "@sui/ui-old-core";
+import {getDataByKey} from "@sui/util-chore";
+import {defaultIfNotBoolean, NO_DATA_TEXT} from "@sui/ui-old-core";
 
 // noinspection ES6PreferShortImport
 import {translate} from "../translate";

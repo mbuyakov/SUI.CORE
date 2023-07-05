@@ -1,7 +1,7 @@
 /* eslint-disable */
 import * as React from "react";
 
-import {getDataByKey} from '@sui/ui-old-core';
+import {getDataByKey} from "@sui/util-chore";
 
 declare let window: Window & {
   DnDChildData: {

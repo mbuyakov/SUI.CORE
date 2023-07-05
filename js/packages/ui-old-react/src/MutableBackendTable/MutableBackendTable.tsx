@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {MuiIcons} from "@sui/deps-material";
 import {DeleteOutlined, PlusCircleOutlined} from "@ant-design/icons";
-import {defaultIfNotBoolean, getDataByKey, unCapitalize, wrapInArray} from "@sui/ui-old-core";
+import {getDataByKey, sleep} from "@sui/util-chore";
+import {defaultIfNotBoolean, unCapitalize, wrapInArray} from "@sui/ui-old-core";
 import {Button, notification} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
@@ -14,7 +15,6 @@ import {PromisedButton, PromisedMaterialIconButton} from "../Inputs";
 
 import {IMutableBackendTableProps} from "./types";
 import {IObjectWithIndex} from "@sui/util-types";
-import {sleep} from "@sui/util-chore";
 
 
 export const MutableBackendTableButtonGap = 32;

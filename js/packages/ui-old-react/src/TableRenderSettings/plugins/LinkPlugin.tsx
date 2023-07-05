@@ -1,4 +1,5 @@
-import {ColumnInfo, ColumnInfoManager, getDataByKey} from "@sui/ui-old-core";
+import {getDataByKey} from "@sui/util-chore";
+import {ColumnInfo, ColumnInfoManager} from "@sui/ui-old-core";
 import {Select} from "@sui/deps-antd";
 import * as React from "react";
 import {RouterLink} from "@/Link";

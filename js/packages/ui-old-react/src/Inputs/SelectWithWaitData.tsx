@@ -1,4 +1,5 @@
-import {getDataByKey, IGqlFilter, NO_DATA_TEXT, TableInfoManager} from "@sui/ui-old-core";
+import {getDataByKey} from "@sui/util-chore";
+import {IGqlFilter, NO_DATA_TEXT, TableInfoManager} from "@sui/ui-old-core";
 import {Select, SelectProps} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";

@@ -5,7 +5,8 @@ import {Button, Popover, Select, Table} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {Link} from "@sui/deps-router";
-import {generateMultiUpdate, generateUpdate, generateUpdateFn, getDataByKey, getSUISettings, IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IRole, ISubtotalType, ITableInfo, mutate, query, TableInfo, TableInfoManager} from "@sui/ui-old-core";
+import {getDataByKey, sleep} from "@sui/util-chore";
+import {generateMultiUpdate, generateUpdate, generateUpdateFn, getSUISettings, IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IRole, ISubtotalType, ITableInfo, mutate, query, TableInfo, TableInfoManager} from "@sui/ui-old-core";
 import axios from "axios";
 
 import {AdditionalTab} from "./additionalTabs";
@@ -21,7 +22,6 @@ import {TableRenderSettingsPopover} from "./TableRenderSettings";
 import {TooltipIcon} from "./TooltipIcon";
 import {draw, fullReloadTableInfo, getLinkForTable} from "./utils";
 import {WaitData} from "./WaitData";
-import {sleep} from "@sui/util-chore";
 import {IObjectWithIndex} from "@sui/util-types";
 import {getUser} from "@sui/lib-auth";
 

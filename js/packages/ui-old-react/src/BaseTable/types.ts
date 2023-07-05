@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {Filter, FilterOperation, Grouping, GroupKey, Sorting, Table as TableBase, TableBandHeader as TableBandHeaderBase, TableFilterRow, TableRowDetail} from "@sui/deps-dx-react-grid";
-import {DataKey} from "@sui/ui-old-core";
+import {DataKey} from "@sui/util-chore";
 import * as React from "react";
 import {TableRenderParamsPlugin} from "@/TableRenderSettings";
 

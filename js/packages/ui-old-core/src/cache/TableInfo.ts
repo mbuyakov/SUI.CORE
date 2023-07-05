@@ -1,6 +1,6 @@
 import autobind from "autobind-decorator";
 
-import {getDataByKey} from "@/dataKey";
+import {getDataByKey} from "@sui/util-chore";
 import {GqlCacheManager, query} from "@/gql";
 import {Logger} from "@/ioc/utils";
 import {asyncMap} from "@/other";

@@ -2,7 +2,8 @@
 import autobind from "autobind-decorator";
 import moment, {Moment} from "moment";
 import * as React from "react";
-import {GET_DEFAULT_CALENDAR_RANGES, getDataByKey} from "@sui/ui-old-core";
+import {getDataByKey} from "@sui/util-chore";
+import {GET_DEFAULT_CALENDAR_RANGES} from "@sui/ui-old-core";
 import {RangePickerValue} from "@/compatibleTypes";
 import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from "@/BaseTable";
 import {SuiRangePicker} from "@/Inputs/SuiRangePicker";

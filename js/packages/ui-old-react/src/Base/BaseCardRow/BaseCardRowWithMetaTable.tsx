@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React from "react";
-import {addQuotesIfString, getDataByKey} from "@sui/ui-old-core";
+import {getDataByKey} from "@sui/util-chore";
+import {addQuotesIfString} from "@sui/ui-old-core";
 import {BackendTable} from "@/BackendTable";
 import {BaseCardRowParent} from "@/Base/BaseCardRow/types";
 import {IBaseCardRowLayout} from "@/Base/BaseCardRow/BaseCardRow";

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 
-import {concatDataKey, DataKey, getDataByKey} from "@sui/ui-old-core";
+import {DataKey, getDataByKey, concatDataKey} from "@sui/util-chore";
 
 import {RouterLink, RouterLinkType} from "./RouterLink";
 

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {addPluralEnding, camelCase, capitalize, ColumnInfo, ColumnInfoManager, DataKey, dataKeysToDataTree, getDataByKey, getSUISettings, IGqlFilter, IRawRoute, query, removePluralEnding, RouteType, stringifyGqlFilter, TableInfo, TableInfoManager, wrapInArray} from "@sui/ui-old-core";
+import {DataKey, dataKeysToDataTree, getDataByKey} from "@sui/util-chore";
+import {addPluralEnding, camelCase, capitalize, ColumnInfo, ColumnInfoManager, getSUISettings, IGqlFilter, IRawRoute, query, removePluralEnding, RouteType, stringifyGqlFilter, TableInfo, TableInfoManager, wrapInArray} from "@sui/ui-old-core";
 
 // noinspection ES6PreferShortImport
 import {SelectData} from "../BaseTable";

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {getDataByKey, Merge} from "@sui/ui-old-core";
+import {getDataByKey} from "@sui/util-chore";
+import {Merge} from "@sui/ui-old-core";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {ContainerOptions} from "react-smooth-dnd";

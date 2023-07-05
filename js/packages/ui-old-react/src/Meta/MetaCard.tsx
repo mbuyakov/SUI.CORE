@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {MuiIcons, IconButton, Tooltip} from "@sui/deps-material";
-import {addPluralEnding, addQuotesIfString, capitalize, ColumnInfoManager, DataKey, dataKeysToDataTree, getDataByKey, isValidUuid, NameManager, NO_DATA_TEXT, normalizeDataKey, query, TableInfoManager, wrapInArray, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
+import {DataKey, dataKeysToDataTree, getDataByKey, normalizeDataKey} from "@sui/util-chore";
+import {addPluralEnding, addQuotesIfString, capitalize, ColumnInfoManager, isValidUuid, NameManager, NO_DATA_TEXT, query, TableInfoManager, wrapInArray, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
 import {Card} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import camelCase from "lodash/camelCase";

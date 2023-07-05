@@ -1,4 +1,5 @@
-import {getDataByKey, IGqlFilter, TableInfoManager} from "@sui/ui-old-core";
+import {getDataByKey} from "@sui/util-chore";
+import {IGqlFilter, TableInfoManager} from "@sui/ui-old-core";
 import {TreeSelect, TreeSelectProps} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import classNames from "classnames";

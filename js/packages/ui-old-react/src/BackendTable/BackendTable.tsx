@@ -7,7 +7,8 @@ import JSzip from "jszip";
 import difference from "lodash/difference";
 import * as React from "react";
 import {v4 as uuidv4} from "uuid";
-import {asyncMap, camelCase, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, formatRawForGraphQL, generateCreate, getDataByKey, getSUISettings, IUserSetting, mutate, query, TableInfo, TableInfoManager, toMap, wrapInArray} from "@sui/ui-old-core";
+import {getDataByKey} from "@sui/util-chore";
+import {asyncMap, camelCase, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, formatRawForGraphQL, generateCreate, getSUISettings, IUserSetting, mutate, query, TableInfo, TableInfoManager, toMap, wrapInArray} from "@sui/ui-old-core";
 import {LazyStubNoDataCell, LazyStubNoDataCellSmall} from "@/BackendTable/LazyStubNoDataCell";
 import {LoadingNoDataCell, LoadingNoDataCellSmall} from "@/BackendTable/LoadingNoDataCell";
 

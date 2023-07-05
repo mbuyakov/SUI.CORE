@@ -1,4 +1,5 @@
-import {ColumnInfo, ColumnInfoManager, getDataByKey, TableInfoManager} from "@sui/ui-old-core";
+import {getDataByKey} from "@sui/util-chore";
+import {ColumnInfo, ColumnInfoManager, TableInfoManager} from "@sui/ui-old-core";
 
 import {booleanRender, IBaseTableColLayout, SortingDirection} from "../BaseTable";
 import {TableRenderSettingsPluginManager, TableRenderSettingsPopover} from "../TableRenderSettings";

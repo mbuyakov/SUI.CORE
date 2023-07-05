@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {CheckOutlined, CloseOutlined, QuestionOutlined} from "@ant-design/icons";
 import {Getter, Getters, Mui, CustomGrouping, CustomPaging, Filter, FilteringState, GroupingState, IntegratedFiltering, IntegratedGrouping, IntegratedPaging, IntegratedSorting, PagingState, RowDetailState, SelectionState, Sorting, SortingState, TableColumnWidthInfo} from "@sui/deps-dx-react-grid";
-import {defaultIfNotBoolean, getDataByKey, getSUISettings} from "@sui/ui-old-core";
+import {getDataByKey} from "@sui/util-chore";
+import {defaultIfNotBoolean, getSUISettings} from "@sui/ui-old-core";
 import {Card, Result, Spin} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import classnames from "classnames";

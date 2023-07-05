@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {CheckOutlined, CloseOutlined, WarningTwoTone} from "@ant-design/icons";
-import {concatDataKey, DataKey, defaultIfNotBoolean, getDataByKey, NO_DATA_TEXT} from "@sui/ui-old-core";
+import {DataKey, getDataByKey, concatDataKey} from "@sui/util-chore";
+import {defaultIfNotBoolean, NO_DATA_TEXT} from "@sui/ui-old-core";
 import {Tooltip} from "@sui/deps-antd";
 import * as React from "react";
 

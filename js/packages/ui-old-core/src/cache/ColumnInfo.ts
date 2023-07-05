@@ -1,4 +1,4 @@
-import {getDataByKey} from "@/dataKey";
+import {getDataByKey} from "@sui/util-chore";
 import {GqlCacheManager} from "@/gql";
 import {IColumnInfo, IColumnInfoReference, IColumnInfoRole, IColumnInfoTag, IFilterType, ISubtotalType} from "@/types";
 import {formatRoleName} from "@/tmp";
