@@ -1,6 +1,5 @@
 import {SingletonAndOnlyIoc} from "./SingletonAndOnlyIoc";
-import {Container} from "typescript-ioc";
-
+import {Container} from "./export";
 class SmthClass {
 
 }

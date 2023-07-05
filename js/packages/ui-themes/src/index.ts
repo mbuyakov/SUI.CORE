@@ -4,5 +4,6 @@ export * from "./SuiThemeProvider";
 export * from "./ThemeChangedEvent";
 export * from "./themeMerger";
 export * from "./ThemeService";
+export * from "./ThemeSwitchButton";
 export * from "./types";
 export * from "./UiThemesModule";
