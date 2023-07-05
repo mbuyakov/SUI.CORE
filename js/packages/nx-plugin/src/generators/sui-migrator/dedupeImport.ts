@@ -18,8 +18,8 @@ export function dedupeImport(content: string): string {
     const moduleName = (importDeclaration.moduleSpecifier as StringLiteral).text;
     const mapEntry: ImportData = (importMap[moduleName] = importMap[moduleName] || {count: 0, importSpecifiers: []});
     mapEntry.count++;
-    mapEntry.defaultImport = importDeclaration.importClause.name || mapEntry.defaultImport;
-    if (importDeclaration.importClause.namedBindings) {
+    mapEntry.defaultImport = importDeclaration?.importClause?.name || mapEntry.defaultImport;
+    if (importDeclaration?.importClause?.namedBindings) {
       if (isNamespaceImport(importDeclaration.importClause.namedBindings)) {
         mapEntry.nsImport = importDeclaration.importClause.namedBindings;
       } else {

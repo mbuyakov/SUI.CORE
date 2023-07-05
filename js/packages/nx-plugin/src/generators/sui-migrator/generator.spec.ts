@@ -18,6 +18,7 @@ import {Container} from "typescript-ioc";
 import * as colors from "colors";
 import test11 from "colors";
 import {test12} from "colors";
+import "odometer/themes/odometer-theme-default.css";
 
 const a = <MenuIcon attr="1">2</MenuIcon>;
 const b = <MenuIcon attr="1"/>;
@@ -42,6 +43,7 @@ import {Container} from "@sui/deps-ioc";
 import * as colors from "colors";
 import test11 from "colors";
 import {test12} from "colors";
+import "odometer/themes/odometer-theme-default.css";
 
 const a = <MenuIcon attr="1">2</MenuIcon>;
 const b = <MenuIcon attr="1"/>;
@@ -65,6 +67,7 @@ import {Container} from "@sui/deps-ioc";
 import * as colors from "colors";
 import test11 from "colors";
 import {test12} from "colors";
+import "odometer/themes/odometer-theme-default.css";
 
 const a = <MuiIcons.Menu attr="1">2</MuiIcons.Menu>;
 const b = <MuiIcons.Menu attr="1"/>;
@@ -82,6 +85,7 @@ import {test10} from "antd/lib";
 import {Container} from "@sui/deps-ioc";
 import test11, {test12} from "colors";
 import * as colors from "colors";
+import "odometer/themes/odometer-theme-default.css";
 
 const a = <MuiIcons.Menu attr="1">2</MuiIcons.Menu>;
 const b = <MuiIcons.Menu attr="1"/>;
