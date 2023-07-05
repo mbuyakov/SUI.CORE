@@ -1,12 +1,6 @@
-import autobind from "autobind-decorator";
 import {v4 as uuidv4} from "uuid";
-import {getTOrCall, TOrCallback} from "@sui/ui-old-core";
-
-export type ObservableHandler<T> = (newValue: T, oldValue?: T) => void;
-
-export interface ObservableHandlerStub {
-  unsubscribe(): void
-}
+import {getTOrCall, TOrCallback} from "@sui/util-chore";
+import {ObservableHandler, ObservableHandlerStub} from "./types";
 
 export class Observable<T> {
 
@@ -14,28 +8,24 @@ export class Observable<T> {
   private value: T;
 
   public constructor(initialValue?: TOrCallback<T>) {
-    this.value = getTOrCall(initialValue);
+    this.value = getTOrCall(initialValue!);
   }
 
-  @autobind
   public getValue(): T {
     return this.value;
   }
 
-  @autobind
   public setValue(value: T): void {
     const oldValue = this.value;
     this.value = value;
     Array.from(this.handlers.values()).forEach(cb => cb(value, oldValue));
   }
 
-  @autobind
   public forceTrigger(): void {
-    this.setValue(this.value);
+    this.setValue(this.value!);
   }
 
-  @autobind
-  public subscribe(cb: ObservableHandler<T>, triggerOnSubscribe: boolean = false): ObservableHandlerStub {
+  public subscribe(cb: ObservableHandler<T>, triggerOnSubscribe = false): ObservableHandlerStub {
     const id = uuidv4();
 
     this.handlers.set(id, cb);

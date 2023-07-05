@@ -37,6 +37,7 @@
       "@sui/ui-material": ["packages/ui-material/src/index.ts"],
       "@sui/ui-module-manager": ["packages/ui-module-manager/src/index.ts"],
       "@sui/ui-notification-handler": ["packages/ui-notification-handler/src/index.ts"],
+      "@sui/ui-observable": ["packages/ui-observable/src/index.ts"],
       "@sui/ui-old-core": ["packages/ui-old-core/src/index.ts"],
       "@sui/ui-old-react": ["packages/ui-old-react/src/index.ts"],
       "@sui/ui-old-sentry": ["packages/ui-old-sentry/src/index.ts"],
