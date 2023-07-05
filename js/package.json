@@ -13,7 +13,7 @@
     "test-detailed": "nx run-many --target=test --output-style=stream --parallel=8",
     "lint": "nx run-many --target=lint --parallel=8",
     "lint-detailed": "nx run-many --target=lint --output-style=stream --parallel=8",
-    "ci": "nx run-many --target=lint,test,build",
+    "ci": "nx run-many --target=lint,test,build --parallel=8",
     "ci-detailed": "nx run-many --target=lint,test,build --output-style=stream --parallel=8",
     "storybook": "nx storybook host-storybook",
     "update-nx": "nx migrate latest",
