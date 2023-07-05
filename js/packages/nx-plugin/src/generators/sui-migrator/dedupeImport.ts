@@ -29,7 +29,14 @@ export function dedupeImport(content: string): string {
   });
 
   Object.keys(importMap).forEach(moduleName => {
-    if (importMap[moduleName].count > 1) {
+    const mapEntry = importMap[moduleName];
+    if (
+      importMap[moduleName].count > 2 ||
+      // If exactly tro import - it might me smth like
+      // import * as React from "react"; -- nsImport
+      // import {useMemo} from "react";  -- importSpecifiers
+      (importMap[moduleName].count == 2 && !(mapEntry.nsImport && (mapEntry.defaultImport || mapEntry.importSpecifiers)))
+    ) {
       logRemap("dedupeImport", `Dedupe import from ${moduleName}`);
       const mapEntry = importMap[moduleName];
 
