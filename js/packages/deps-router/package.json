@@ -1,0 +1,12 @@
+{
+  "name": "@sui/deps-router",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "dependencies": {
+    "react-router": "5.1.2",
+    "react-router-dom": "5.1.2"
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "5.1.2"
+  }
+}

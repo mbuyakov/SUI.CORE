@@ -4,7 +4,7 @@ import {CheckOutlined, CloseOutlined, IdcardOutlined, ProfileOutlined, QuestionO
 import {Button, Popover, Select, Table} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {Link} from "react-router-dom";
+import {Link} from "@sui/deps-router";
 import {generateMultiUpdate, generateUpdate, generateUpdateFn, getDataByKey, getSUISettings, IColumnInfo, IColumnInfoTag, IFilterType, IGraphQLConnection, IName, IRole, ISubtotalType, ITableInfo, mutate, query, TableInfo, TableInfoManager} from "@sui/ui-old-core";
 import axios from "axios";
 

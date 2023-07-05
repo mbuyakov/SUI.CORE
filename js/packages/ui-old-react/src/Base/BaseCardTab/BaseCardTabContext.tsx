@@ -1,5 +1,5 @@
 import * as React from "react";
-import {generatePath, match, RouteComponentProps, withRouter} from "react-router-dom";
+import {generatePath, match, RouteComponentProps, withRouter} from "@sui/deps-router";
 import autobind from "autobind-decorator";
 import {ReactInstance} from "react";
 

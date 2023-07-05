@@ -78,6 +78,10 @@
               {
                 "group": ["@devexpress/dx-react-core", "@devexpress/dx-react-core/*", "@devexpress/dx-react-grid", "@devexpress/dx-react-grid/*", "@devexpress/dx-react-grid-material-ui", "@devexpress/dx-react-grid-material-ui/*"],
                 "message": "Please use @sui/deps-dx-react-grid"
+              },
+              {
+                "group": ["react-router-dom", "react-router-dom/*", "react-router", "react-router/*"],
+                "message": "Please use @sui/deps-router"
               }
             ]
           }

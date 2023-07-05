@@ -21,6 +21,8 @@ export const mapModules = {
   "antd": "@sui/deps-antd",
   "typescript-ioc": "@sui/deps-ioc",
   "@sui/amcharts": "@sui/deps-amcharts",
+  "react-router": "@sui/deps-router",
+  "react-router-dom": "@sui/deps-router",
 };
 
 export function logRemap(prefix: string, text: string) {

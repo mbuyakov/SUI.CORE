@@ -1,6 +1,6 @@
 import {Button} from "@sui/deps-antd";
 import * as React from "react";
-import {Link} from "react-router-dom";
+import {Link} from "@sui/deps-router";
 import {ButtonType, SizeType} from "@/antdMissedExport";
 
 // noinspection ES6PreferShortImport

@@ -20,6 +20,7 @@
       "@sui/deps-dx-react-grid": ["packages/deps-dx-react-grid/src/index.ts"],
       "@sui/deps-ioc": ["packages/deps-ioc/src/index.ts"],
       "@sui/deps-material": ["packages/deps-material/src/index.ts"],
+      "@sui/deps-router": ["packages/deps-router/src/index.ts"],
       "@sui/host-storybook": ["packages/host-storybook/src/index.ts"],
       "@sui/lib-auth": ["packages/lib-auth/src/index.ts"],
       "@sui/lib-cache-abstract": ["packages/lib-cache-abstract/src/index.ts"],

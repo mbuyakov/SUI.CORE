@@ -1,6 +1,6 @@
 import React from "react";
 import {IRawRoute} from "@sui/ui-old-core";
-import {Redirect} from "react-router-dom";
+import {Redirect} from "@sui/deps-router";
 import {Location} from "history";
 import {Exception403} from "@/exception";
 import {useService} from "@/hooks";

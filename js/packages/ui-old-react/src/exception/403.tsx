@@ -1,7 +1,7 @@
 import {MuiIcons, Button} from "@sui/deps-material";
 import React from "react";
 import {Result} from "@sui/deps-antd";
-import {useHistory} from "react-router-dom";
+import {useHistory} from "@sui/deps-router";
 
 export const Exception403: React.FC = () => {
   const history = useHistory();

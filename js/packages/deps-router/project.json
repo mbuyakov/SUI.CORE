@@ -1,0 +1,58 @@
+{
+  "name": "deps-router",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/deps-router/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/deps-router",
+        "main": "packages/deps-router/src/index.ts",
+        "tsConfig": "packages/deps-router/tsconfig.lib.json",
+        "assets": [
+          "packages/deps-router/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/deps-router/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "packages/deps-router/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs deps-router {args.ver} {args.tag}",
+      "dependsOn": [
+        "build"
+      ]
+    }
+  },
+  "tags": [
+    "type:deps"
+  ]
+}

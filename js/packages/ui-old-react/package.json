@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "devDependencies": {
     "@types/classnames": "^2.2.10",
-    "@types/jsonpack": "^1.1.0",
-    "@types/react-router-dom": "^5.1.3"
+    "@types/jsonpack": "^1.1.0"
   },
   "dependencies": {
     "antd-mask-input": "0.1.15",
@@ -18,7 +17,6 @@
     "react-dnd-html5-backend": "^10.0.2",
     "react-media": "^1.10.0",
     "react-odometerjs": "^2.1.1",
-    "react-router-dom": "^5.1.2",
     "react-smooth-dnd": "^0.11.1",
     "react-to-print": "^2.6.3",
     "theme-switcher": "^1.0.2"
