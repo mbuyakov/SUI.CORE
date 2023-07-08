@@ -1,9 +1,47 @@
 import {AntdTheme, MuiTheme, SuiThemeConfig} from "./types";
-import {createTheme as muiCreateTheme} from "@sui/deps-material";
+import {createTheme as muiCreateTheme, PaletteOptions} from "@sui/deps-material";
 
 const PRIMARY_COLOR = "#56CBF8";
-const ERROR_COLOR = "#FF6565";
-const SUCCESS_COLOR = "#A2E8AB";
+const SUCCESS_COLOR = "#52C41A";
+const WARNING_COLOR = "#FAAD14";
+const ERROR_COLOR = "#FF4D4F";
+const INFO_COLOR = "#4CB0D6";
+
+const LIGHT_BACKGROUND_LAYOUT_COLOR = "#F0F2F5";
+const LIGHT_BACKGROUND_CONTAINER_COLOR = "#FFFFFF";
+
+const DARK_BACKGROUND_LAYOUT_COLOR = "#000000";
+const DARK_BACKGROUND_CONTAINER_COLOR = "#141414";
+
+const LIGHT_TEXT_PRIMARY_COLOR = "rgba(0, 0, 0, 0.87)";
+const LIGHT_TEXT_SECONDARY_COLOR = "rgba(0, 0, 0, 0.6)";
+const LIGHT_TEXT_DISABLED_COLOR = "rgba(0, 0, 0, 0.25)";
+
+const DARK_TEXT_PRIMARY_COLOR = "rgba(255, 255, 255, 1)";
+const DARK_TEXT_SECONDARY_COLOR = "rgba(255, 255, 255, 0.7)";
+const DARK_TEXT_DISABLED_COLOR = "rgba(255, 255, 255, 0.5)";
+
+const DEFAULT_BORDER_RADIUS = 8;
+const DEFAULT_FONT_SIZE = 15;
+
+const commonMuiPalette: PaletteOptions = {
+  primary: {
+    main: PRIMARY_COLOR,
+  },
+  success: {
+    main: SUCCESS_COLOR
+  },
+  warning: {
+    main: WARNING_COLOR
+  },
+  error: {
+    main: ERROR_COLOR
+  },
+  info: {
+    main: INFO_COLOR
+  }
+};
+
 export const muiDefaultTheme: MuiTheme = muiCreateTheme();
 
 export const antdDefaultTheme: AntdTheme = {
@@ -11,26 +49,90 @@ export const antdDefaultTheme: AntdTheme = {
   components: {}
 };
 
+// See:
+// https://ant.design/theme-editor
+// https://zenoo.github.io/mui-theme-creator/
 export const suiDefaultTheme: SuiThemeConfig = {
   common: {
     base: {
       antd: (base, theme) => ({
         ...base,
+        components: {
+          ...base.components,
+          Button: {
+            lineWidth: 2,
+          }
+        },
         token: {
           ...base.token,
           colorPrimary: PRIMARY_COLOR,
+          colorSuccess: SUCCESS_COLOR,
+          colorWarning: WARNING_COLOR,
           colorError: ERROR_COLOR,
+          colorInfo: INFO_COLOR,
           colorHighlight: ERROR_COLOR,
-          colorSuccess: SUCCESS_COLOR
+          borderRadius: DEFAULT_BORDER_RADIUS,
+          fontSize: DEFAULT_FONT_SIZE,
+          // colorBorder: "rgba(217, 217, 217, 0.6)"
         }
       }),
       mui: (base, createTheme) => createTheme({
         ...base,
+        components: {
+          MuiToolbar: {
+            styleOverrides: {
+              gutters: {
+                [base.breakpoints.up("sm")]: {
+                  paddingLeft: base.spacing(2), // 3 -> 2
+                  paddingRight: base.spacing(2) // 3 -> 2
+                }
+              }
+            }
+          },
+          MuiTooltip: {
+            styleOverrides: {
+              tooltip: {
+                fontSize: "1em"
+              }
+            }
+          }
+        },
+        zIndex: (Object.keys(base.zIndex) as (keyof typeof base.zIndex)[]).reduce((prev, cur) => {
+          prev[cur] = base.zIndex[cur] - 900;
+          return prev;
+        }, {} as typeof base.zIndex)
+      })
+    }
+  },
+  light: {
+    base: {
+      antd: (base) => {
+        return {
+          ...base,
+          token: {
+            ...base.token,
+            colorBgLayout: LIGHT_BACKGROUND_LAYOUT_COLOR,
+            colorBgContainer: LIGHT_BACKGROUND_CONTAINER_COLOR,
+            colorText: LIGHT_TEXT_PRIMARY_COLOR,
+            colorTextSecondary: LIGHT_TEXT_SECONDARY_COLOR,
+            colorTextTertiary: LIGHT_TEXT_SECONDARY_COLOR,
+            colorTextDisabled: LIGHT_TEXT_DISABLED_COLOR
+          }
+        };
+      },
+      mui: (base, createTheme) => createTheme({
+        ...base,
         palette: {
           ...base.palette,
-          primary: {
-            ...base.palette.primary,
-            main: PRIMARY_COLOR
+          ...commonMuiPalette,
+          background: {
+            default: LIGHT_BACKGROUND_LAYOUT_COLOR,
+            paper: LIGHT_BACKGROUND_CONTAINER_COLOR
+          },
+          text: {
+            primary: LIGHT_TEXT_PRIMARY_COLOR,
+            secondary: LIGHT_TEXT_SECONDARY_COLOR,
+            disabled: LIGHT_TEXT_DISABLED_COLOR
           }
         }
       })
@@ -43,14 +145,30 @@ export const suiDefaultTheme: SuiThemeConfig = {
         palette: {
           // ...base.palette, - break dark palette
           mode: "dark",
-          primary: {
-            main: PRIMARY_COLOR
+          ...commonMuiPalette,
+          background: {
+            default: DARK_BACKGROUND_LAYOUT_COLOR,
+            paper: DARK_BACKGROUND_CONTAINER_COLOR
+          },
+          text: {
+            primary: DARK_TEXT_PRIMARY_COLOR,
+            secondary: DARK_TEXT_SECONDARY_COLOR,
+            disabled: DARK_TEXT_DISABLED_COLOR
           }
         }
       }),
       antd: (base, theme) => ({
         ...base,
-        algorithm: theme.darkAlgorithm
+        algorithm: theme.darkAlgorithm,
+        token: {
+          ...base.token,
+          colorBgLayout: DARK_BACKGROUND_LAYOUT_COLOR,
+          colorBgContainer: DARK_BACKGROUND_CONTAINER_COLOR,
+          colorText: DARK_TEXT_PRIMARY_COLOR,
+          colorTextSecondary: DARK_TEXT_SECONDARY_COLOR,
+          colorTextTertiary: DARK_TEXT_SECONDARY_COLOR,
+          colorTextDisabled: DARK_TEXT_DISABLED_COLOR
+        }
       })
     }
   }
@@ -58,45 +176,6 @@ export const suiDefaultTheme: SuiThemeConfig = {
 
 // export const defaultThemesConfig = {
 //   common: {
-//     lessVars: {
-//       "layout-header-height": "48px",
-//       "card-padding-wider": "24px",
-//       "warning-color": "#FCF69B",
-//       "border-radius-base": "8px",
-//       "btn-border-radius-sm": "6px",
-//       "btn-border-width": "2px",
-//       "font-size-base": "15px",
-//       "btn-font-size-sm": "14px",
-//       "border-color-base": "rgba(217, 217, 217, 0.6)",
-//       "btn-shadow": "none"
-//     },
-//     materialThemeConfig: theme => ({
-//       zIndex: Object.keys(theme.zIndex).reduce((prev, cur) => {
-//         prev[cur] = theme.zIndex[cur] - 900;
-//         return prev;
-//       }, {}),
-//       palette: {
-//         primary: {
-//           main: "#56CBF8",
-//           contrastText: "#FFFFFF"
-//         }
-//       },
-//       overrides: {
-//         MuiToolbar: {
-//           gutters: {
-//             [theme.breakpoints.up("sm")]: {
-//               paddingLeft: theme.spacing(2), // 3 -> 2
-//               paddingRight: theme.spacing(2)
-//             }
-//           }
-//         },
-//         MuiTooltip: {
-//           tooltip: {
-//             fontSize: "1em",
-//           },
-//         }
-//       }
-//     }),
 //     // Antd style
 //     drawerMaterialThemeConfig: (theme) => {
 //       const textColor = "rgba(255,255,255,0.65)";
@@ -143,12 +222,6 @@ export const suiDefaultTheme: SuiThemeConfig = {
 //   },
 //   light: {
 //     materialThemeConfig: {
-//       palette: {
-//         mode: "light",
-//         background: {
-//           default: "#f0f2f5" // Match antd
-//         }
-//       },
 //       overrides: {
 //         MuiInput: {
 //           input: {
@@ -184,13 +257,6 @@ export const suiDefaultTheme: SuiThemeConfig = {
 //   },
 //   dark: {
 //     materialThemeConfig: {
-//       palette: {
-//         mode: "dark",
-//         background: {
-//           default: "#000000", // Match antd
-//           paper: "#141414"
-//         }
-//       },
 //       overrides: {
 //         MuiInput: {
 //           input: {
