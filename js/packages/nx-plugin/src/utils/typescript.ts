@@ -1,6 +1,8 @@
 import {TSQueryApi, TSQueryOptions, TSQueryStringTransformer} from "@phenomnomnominal/tsquery/dist/src/tsquery-types";
+// eslint-disable-next-line no-restricted-imports
 import {tsquery as _tsquery} from "@phenomnomnominal/tsquery";
-import {ScriptKind, Node} from "typescript";
+import {ScriptKind, Node, createPrinter, EmitHint, NewLineKind, isImportDeclaration} from "typescript";
+
 
 // Copy of original tsquery.replace with added scriptKind for ast
 function jsxReplace(
@@ -61,3 +63,18 @@ const api: TSQueryApiExtended = <TSQueryApiExtended>_tsquery;
 api.jsxReplace = jsxReplace;
 api.remove = remove;
 export const tsquery = api;
+
+
+export const printer = createPrinter({
+  newLine: NewLineKind.LineFeed,
+});
+
+export function printNode(node: Node) {
+  let text =  printer.printNode(EmitHint.Unspecified, node, node.getSourceFile());
+  if (isImportDeclaration(node)) {
+    text = text
+      .replace("{ ", "{")
+      .replace(" }", "}");
+  }
+  return text;
+}

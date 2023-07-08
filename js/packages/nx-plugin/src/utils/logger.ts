@@ -55,7 +55,7 @@ export function stopSpinner(text = "Done") {
 }
 
 export function logWithPrefix(prefix: string, text: string, level: string = logSymbols.info) {
-  text = `${replaceToUtf("|")}    ${level} ${chalk.dim(prefix)} ${text}`;
+  text = `${level} ${chalk.dim(prefix)} ${text}`;
   if (spinner?.isSpinning) {
     spinner.stop();
 
@@ -72,7 +72,7 @@ export function logWithPrefix(prefix: string, text: string, level: string = logS
       console.log(`${replaceToUtf("|-")} ${stripAnsi(spinner.text)}`);
     }
 
-    console.log(text);
+    console.log(`${replaceToUtf("|")}    ${text}`);
     spinner.start();
   } else {
     console.log(text);

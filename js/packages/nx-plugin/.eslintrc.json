@@ -28,8 +28,16 @@
         "no-restricted-imports": [
           "error",
           {
-            "name": "chalk",
-            "message": "Please use chalk.ts from utils instead"
+            "paths": [
+              {
+                "name": "chalk",
+                "message": "Please use chalk.ts from utils instead"
+              },
+              {
+                "name": "@phenomnomnominal/tsquery",
+                "message": "Please use typescript.ts from utils instead"
+              }
+            ]
           }
         ]
       }

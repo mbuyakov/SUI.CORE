@@ -1,7 +1,6 @@
-import {tsquery} from "./tsqeury";
 import {factory, Identifier, ImportDeclaration, ImportSpecifier, isNamespaceImport, NamedImports, NamespaceImport, StringLiteral} from "typescript";
-import {printNode} from "./util";
-import {logSymbols, logWithPrefix} from "../../utils/logger";
+import {printNode, tsquery} from "../../../utils/typescript";
+import {logWithPrefix} from "../../../utils/logger";
 
 type ImportData = {
   count: number,
@@ -39,6 +38,7 @@ export function dedupeImport(content: string): string {
       (importMap[moduleName].count == 2 && !(mapEntry.nsImport && (mapEntry.defaultImport || mapEntry.importSpecifiers)))
     ) {
       logWithPrefix("dedupeImport", `Dedupe import from ${moduleName}`);
+
       const mapEntry = importMap[moduleName];
 
       // Leave only first import
@@ -81,10 +81,9 @@ export function dedupeImport(content: string): string {
           );
         }
 
-        return rows.map(printNode)
-          .join("\n")
-          .replace(/{ /g, "{")
-          .replace(/ }/g, "}");
+        return rows
+          .map(printNode)
+          .join("\n");
       });
     }
   });

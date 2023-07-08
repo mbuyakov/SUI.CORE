@@ -1,7 +1,6 @@
 import {factory, ImportDeclaration, NamedImports, StringLiteral} from "typescript";
-import {printNode} from "./util";
-import {tsquery} from "./tsqeury";
-import {logWithPrefix} from "../../utils/logger";
+import {logWithPrefix} from "../../../utils/logger";
+import {printNode, tsquery} from "../../../utils/typescript";
 
 const SUFFIX = "MuiIcons.";
 
@@ -64,8 +63,6 @@ export function remapIcons(content: string): string {
           factory.createStringLiteral("@sui/deps-material")
         )
       )
-        .replace(/{ /g, "{")
-        .replace(/ }/g, "}")
       + "\n"
       + importDeclaration.getText();
   });

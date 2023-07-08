@@ -1,7 +1,7 @@
-import {remapIcons} from "./remapIcons";
-import {remapImports} from "./remapImports";
-import {dedupeImport} from "./dedupeImport";
-import {remapOldPackages} from "./remapOldPackages";
+import {remapIcons} from "./modules/remapIcons";
+import {remapImports} from "./modules/remapImports";
+import {dedupeImport} from "./modules/dedupeImport";
+import {remapOldPackages} from "./modules/remapOldPackages";
 
 const source = `
 import {test1} from "@nemui/material";

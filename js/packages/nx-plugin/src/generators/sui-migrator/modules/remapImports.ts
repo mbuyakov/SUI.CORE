@@ -1,7 +1,7 @@
-import {tsquery} from "@phenomnomnominal/tsquery";
 import {factory, ImportDeclaration, StringLiteral} from "typescript";
-import {mapModules, printNode} from "./util";
-import {logSymbols, logWithPrefix} from "../../utils/logger";
+import {mapModules} from  "../../../utils/consts";
+import {logWithPrefix} from "../../../utils/logger";
+import {printNode, tsquery} from "../../../utils/typescript";
 
 export function remapImports(projectName: string, content: string): string {
 
@@ -42,8 +42,6 @@ export function remapImports(projectName: string, content: string): string {
       node.assertClause
     );
 
-    return printNode(node)
-      .replace(/{ /g, "{")
-      .replace(/ }/g, "}");
+    return printNode(node);
   });
 }

@@ -1,39 +1,8 @@
-import {tsquery} from "@phenomnomnominal/tsquery";
 import {factory, ImportDeclaration, ImportSpecifier, isNamedImports, StringLiteral} from "typescript";
-import {printNode} from "./util";
-import {logWithPrefix} from "../../utils/logger";
+import {logWithPrefix} from "../../../utils/logger";
+import {tsquery, printNode} from "../../../utils/typescript";
+import {newImports} from  "../../../utils/consts";
 
-const newImports = {
-  "@sui/ui-observable": [
-    "Observable",
-    "IObservableBinderProps",
-    "ObservableBinder",
-    "ObservableLocalStorageValue",
-    "ObservableHandler",
-    "ObservableHandlerStub",
-    "joinObservables2",
-    "joinObservables3",
-    "joinObservables4",
-    "joinObservables5",
-    "joinObservables6"
-  ],
-  "@sui/util-chore": [
-    "DataKey",
-    "normalizeDataKey",
-    "concatDataKey",
-    "getDataByKey",
-    "DataKeyNode",
-    "dataKeysToDataTree",
-    "TOrCallback",
-    "getTOrCall"
-  ],
-  "@sui/util-types": [
-    "Class",
-    "Nullable",
-    "NotFunction",
-    "IObjectWithIndex"
-  ]
-};
 
 const inversedNewImports = Object.keys(newImports)
   .flatMap(key => newImports[key].map(value => [value, key]))
@@ -105,9 +74,8 @@ export function remapOldPackages(content: string): string {
       );
     }
 
-    return imports.map(printNode)
-      .join("\n")
-      .replace(/{ /g, "{")
-      .replace(/ }/g, "}");
+    return imports
+      .map(printNode)
+      .join("\n");
   });
 }
