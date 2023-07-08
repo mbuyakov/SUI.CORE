@@ -10,6 +10,18 @@ export {logSymbols as logSymbols};
 let spinner: Ora | undefined;
 let lastLoggedPrefix: string | undefined;
 let lastLoggedText: string | undefined;
+let prevPrefixHasExtendedLog = false;
+function replaceToUtf(text: string) {
+  if (isUnicodeSupported()) {
+    text = text
+      .replace(/\/-/g, "┏ ")
+      .replace(/\\-/g, "┗ ")
+      .replace(/\|-/g, "┣━")
+      .replace(/\|/g, "┃")
+      .replace(/-/g, "━");
+  }
+  return text;
+}
 
 export function setSpinnerPrefix(prefix: string) {
   if (!spinner) {
@@ -31,6 +43,9 @@ export function setSpinnerText(text: string) {
 export function stopSpinner(text = "Done") {
   if (lastLoggedPrefix == spinner.prefixText) {
     spinner.prefixText = replaceToUtf("\\-");
+    prevPrefixHasExtendedLog = true;
+  } else {
+    prevPrefixHasExtendedLog = false;
   }
 
   spinner?.succeed(text);
@@ -39,31 +54,22 @@ export function stopSpinner(text = "Done") {
   lastLoggedPrefix = null;
 }
 
-function replaceToUtf(text: string) {
-  if (isUnicodeSupported()) {
-    text = text
-      .replace(/\/-/g, "┏ ")
-      .replace(/\\-/g, "┗ ")
-      .replace(/\|-/g, "┣━")
-      .replace(/\|/g, "┃")
-      .replace(/-/g, "━");
-  }
-  return text;
-}
-
 export function logWithPrefix(prefix: string, text: string, level: string = logSymbols.info) {
-  text = replaceToUtf(`|    ${level} ${chalk.dim(prefix)} ${text}`);
+  text = `${replaceToUtf("|")}    ${level} ${chalk.dim(prefix)} ${text}`;
   if (spinner?.isSpinning) {
     spinner.stop();
 
     if (lastLoggedPrefix != spinner.prefixText) {
       lastLoggedPrefix = spinner.prefixText as string;
-      console.log(replaceToUtf(`\n/-${chalk.bold(stripAnsi(spinner.prefixText as string))}`));
+      if (prevPrefixHasExtendedLog) {
+        console.log("");
+      }
+      console.log(`${replaceToUtf("/-")}${chalk.bold(stripAnsi(spinner.prefixText as string))}`);
     }
 
     if (lastLoggedText != spinner.text) {
       lastLoggedText = spinner.text;
-      console.log(replaceToUtf(`|- ${stripAnsi(spinner.text)}`));
+      console.log(`${replaceToUtf("|-")} ${stripAnsi(spinner.text)}`);
     }
 
     console.log(text);

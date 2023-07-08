@@ -14,6 +14,11 @@
       "factory": "./src/generators/sui-migrator/generator",
       "schema": "./src/generators/sui-migrator/schema.json",
       "description": "sui-migrator generator"
+    },
+    "index": {
+      "factory": "./src/generators/index/generator",
+      "schema": "./src/generators/index/schema.json",
+      "description": "index generator"
     }
   }
 }
