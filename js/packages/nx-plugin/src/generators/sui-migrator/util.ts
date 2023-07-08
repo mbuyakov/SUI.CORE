@@ -1,12 +1,5 @@
 import {createPrinter, EmitHint, NewLineKind, Node} from "typescript";
 
-// Don't touch. _chalk.default for real run, _chalk for jest
-import * as _chalk from "chalk";
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-export const chalk: import("chalk").Chalk = _chalk.default ?? _chalk;
-
 export const printer = createPrinter({
   newLine: NewLineKind.LineFeed,
 });
@@ -24,13 +17,3 @@ export const mapModules = {
   "react-router": "@sui/deps-router",
   "react-router-dom": "@sui/deps-router",
 };
-
-export function logRemap(prefix: string, text: string) {
-  prefix = " " + prefix + " ";
-  prefix = chalk.cyan(prefix);
-  prefix = chalk.bold(prefix);
-  prefix = chalk.inverse(prefix);
-  text = chalk.yellow(text);
-  text = chalk.bold(text);
-  console.log(prefix + " " + text);
-}

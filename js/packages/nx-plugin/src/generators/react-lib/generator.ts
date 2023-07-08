@@ -2,7 +2,7 @@ import {Tree} from "@nx/devkit";
 import {ReactLibGeneratorSchema} from "./schema";
 import * as reactGen from "@nx/react";
 import {Linter} from "@nx/linter";
-import {commonTweaks} from "../util";
+import {commonTweaks} from "../utils";
 
 export async function reactLibGenerator(tree: Tree, options: ReactLibGeneratorSchema) {
   const name = `${options.type}-${options.name}`;

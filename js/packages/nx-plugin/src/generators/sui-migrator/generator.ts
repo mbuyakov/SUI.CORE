@@ -3,14 +3,14 @@ import {getProjects} from "nx/src/generators/utils/project-configuration";
 import {SuiMigratorGeneratorSchema} from "./schema";
 import {remapImports} from "./remapImports";
 import {remapIcons} from "./remapIcons";
-import {chalk} from "./util";
 import {dedupeImport} from "./dedupeImport";
 import {remapOldPackages} from "./remapOldPackages";
+import {setSpinnerPrefix, stopSpinner, setSpinnerText} from "../../utils/logger";
 
 function visitAllFiles(tree: Tree, path: string, callback: (filePath: string) => void) {
   tree.children(path).forEach((fileName) => {
     const filePath = `${path}/${fileName}`;
-    console.log(chalk.grey(`Process path ${filePath}`));
+    setSpinnerText(filePath);
     if (!tree.isFile(filePath)) {
       visitAllFiles(tree, filePath, callback);
     } else {
@@ -22,7 +22,7 @@ function visitAllFiles(tree: Tree, path: string, callback: (filePath: string) =>
 export async function suiMigratorGenerator(tree: Tree, schema: SuiMigratorGeneratorSchema) {
   const projects = getProjects(tree);
   projects.forEach(project => {
-    console.log(`Process project ${project.name}`);
+    setSpinnerPrefix(`Process project ${project.name}`);
     visitAllFiles(tree, project.sourceRoot, (filePath) => {
       const fileEntry = tree.read(filePath);
       const content = fileEntry.toString();
@@ -37,6 +37,7 @@ export async function suiMigratorGenerator(tree: Tree, schema: SuiMigratorGenera
         tree.write(filePath, newContent);
       }
     });
+    stopSpinner();
   });
 }
 

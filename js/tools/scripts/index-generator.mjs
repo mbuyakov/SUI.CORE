@@ -5,6 +5,9 @@ const isDirectory = it => fs.statSync(it).isDirectory();
 const isFile = it => fs.statSync(it).isFile();
 
 fs.readdirSync("packages").forEach(packageName => {
+  if (packageName === "nx-plugin") {
+    return;
+  }
   if (fs.statSync(`packages/${packageName}`).isDirectory()) {
     console.log(`Processing package ${packageName}`);
     if (fs.existsSync(`packages/${packageName}/src`)) {

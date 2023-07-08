@@ -1,6 +1,7 @@
 import {tsquery} from "@phenomnomnominal/tsquery";
 import {factory, ImportDeclaration, StringLiteral} from "typescript";
-import {logRemap, mapModules, printNode} from "./util";
+import {mapModules, printNode} from "./util";
+import {logSymbols, logWithPrefix} from "../../utils/logger";
 
 export function remapImports(projectName: string, content: string): string {
 
@@ -21,7 +22,7 @@ export function remapImports(projectName: string, content: string): string {
       return;
     }
 
-    logRemap("remapImports", `Replace ${moduleName} to ${newName}`);
+    logWithPrefix("remapImports", `Replace ${moduleName} to ${newName}`);
 
     // If used import default - probably it's from submodule, replace with named import
     const namedImports = node.importClause.namedBindings || factory.createNamedImports([

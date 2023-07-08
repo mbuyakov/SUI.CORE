@@ -1,6 +1,7 @@
 import {tsquery} from "./tsqeury";
 import {factory, Identifier, ImportDeclaration, ImportSpecifier, isNamespaceImport, NamedImports, NamespaceImport, StringLiteral} from "typescript";
-import {logRemap, printNode} from "./util";
+import {printNode} from "./util";
+import {logSymbols, logWithPrefix} from "../../utils/logger";
 
 type ImportData = {
   count: number,
@@ -37,7 +38,7 @@ export function dedupeImport(content: string): string {
       // import {useMemo} from "react";  -- importSpecifiers
       (importMap[moduleName].count == 2 && !(mapEntry.nsImport && (mapEntry.defaultImport || mapEntry.importSpecifiers)))
     ) {
-      logRemap("dedupeImport", `Dedupe import from ${moduleName}`);
+      logWithPrefix("dedupeImport", `Dedupe import from ${moduleName}`);
       const mapEntry = importMap[moduleName];
 
       // Leave only first import

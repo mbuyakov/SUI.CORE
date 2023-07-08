@@ -1,6 +1,7 @@
 import {tsquery} from "@phenomnomnominal/tsquery";
 import {factory, ImportDeclaration, ImportSpecifier, isNamedImports, StringLiteral} from "typescript";
-import {logRemap, printNode} from "./util";
+import {printNode} from "./util";
+import {logWithPrefix} from "../../utils/logger";
 
 const newImports = {
   "@sui/ui-observable": [
@@ -64,7 +65,7 @@ export function remapOldPackages(content: string): string {
 
     importSpecifiers = importSpecifiers.filter(it => {
       if (inversedNewImports[it.name.text]) {
-        logRemap("remapOldPackages", `Replace ${it.name.text} from ${moduleName} to ${inversedNewImports[it.name.text]}`);
+        logWithPrefix("remapOldPackages", `Replace ${it.name.text} from ${moduleName} to ${inversedNewImports[it.name.text]}`);
 
         imports.push(
           factory.createImportDeclaration(

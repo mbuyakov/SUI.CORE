@@ -1,6 +1,7 @@
 import {factory, ImportDeclaration, NamedImports, StringLiteral} from "typescript";
-import {logRemap, printNode} from "./util";
+import {printNode} from "./util";
 import {tsquery} from "./tsqeury";
+import {logWithPrefix} from "../../utils/logger";
 
 const SUFFIX = "MuiIcons.";
 
@@ -32,7 +33,7 @@ export function remapIcons(content: string): string {
   });
 
   Object.keys(nameMap).forEach(key => {
-    logRemap("remapIcons", `Replace ${key} to ${nameMap[key]}`);
+    logWithPrefix("remapIcons", `Replace ${key} to ${nameMap[key]}`);
 
     content = tsquery.jsxReplace(content, `Identifier[name="${key}"]`, () => {
       return nameMap[key];
