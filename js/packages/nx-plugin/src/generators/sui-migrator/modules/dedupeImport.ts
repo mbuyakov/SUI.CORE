@@ -10,7 +10,7 @@ type ImportData = {
 };
 
 export function dedupeImport(content: string): string {
-  const imports = tsquery.query<ImportDeclaration>(content, "ImportDeclaration");
+  const imports = tsquery.query<ImportDeclaration>(content, "ImportDeclaration:has(ImportClause)");
 
   const importMap: { [index: string]: ImportData } = {};
 
@@ -32,7 +32,7 @@ export function dedupeImport(content: string): string {
     const mapEntry = importMap[moduleName];
     if (
       importMap[moduleName].count > 2 ||
-      // If exactly tro import - it might me smth like
+      // If exactly two import - it might me smth like
       // import * as React from "react"; -- nsImport
       // import {useMemo} from "react";  -- importSpecifiers
       (importMap[moduleName].count == 2 && !(mapEntry.nsImport && (mapEntry.defaultImport || mapEntry.importSpecifiers)))
@@ -43,7 +43,7 @@ export function dedupeImport(content: string): string {
 
       // Leave only first import
       let isFirst = true;
-      content = tsquery.remove(content, `ImportDeclaration:has(StringLiteral[value="${moduleName}"])`, () => {
+      content = tsquery.remove(content, `ImportDeclaration:has(ImportClause):has(StringLiteral[value="${moduleName}"])`, () => {
         if (isFirst) {
           isFirst = false;
           return false;
@@ -52,7 +52,7 @@ export function dedupeImport(content: string): string {
         }
       }, true);
 
-      content = tsquery.replace(content, `ImportDeclaration:has(StringLiteral[value="${moduleName}"])`, () => {
+      content = tsquery.replace(content, `ImportDeclaration:has(ImportClause):has(StringLiteral[value="${moduleName}"])`, () => {
         const rows = [];
 
         rows.push(
