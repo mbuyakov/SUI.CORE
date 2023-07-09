@@ -1,4 +1,5 @@
 export const mapModules = {
+  "@material-ui/icons": "@mui/icons-material",
   "@material-ui/core": "@sui/deps-material",
   "@mui/material": "@sui/deps-material",
   "antd": "@sui/deps-antd",
