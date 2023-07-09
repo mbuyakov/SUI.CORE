@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`remap imports should replace default import from subpath 1`] = `"import {Button} from \\"@sui/deps-material\\";"`;
+
+exports[`remap imports should replace named import 1`] = `"import {Button} from \\"@sui/deps-material\\";"`;
