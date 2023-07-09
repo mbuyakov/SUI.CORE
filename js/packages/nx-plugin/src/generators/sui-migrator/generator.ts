@@ -1,4 +1,4 @@
-import {Tree} from "@nx/devkit";
+import {readJson, Tree} from "@nx/devkit";
 import {SuiMigratorGeneratorSchema} from "./schema";
 import {visitAllFiles, visitAllProjects} from "../utils";
 import {remapImports} from "./modules/remapImports";
@@ -19,9 +19,11 @@ export async function suiMigratorGenerator(tree: Tree, schema: SuiMigratorGenera
       const content = fileEntry.toString();
       let newContent = content.toString();
 
-      newContent = remapImports(project.name, newContent);
+      const projectName = readJson(tree, `${project.root}/package.json`).name;
+
+      newContent = remapImports(projectName, newContent);
       newContent = remapIcons(newContent);
-      newContent = remapOldPackages(newContent);
+      newContent = remapOldPackages(projectName, newContent);
       newContent = dedupeImport(newContent);
 
       if (newContent !== content) {

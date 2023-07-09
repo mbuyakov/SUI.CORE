@@ -69,6 +69,6 @@ const g = MuiIcons.Menu as any;
 
 describe("sui-migrator generator", () => {
   it("remapOldPackages", () => {
-    expect(remapOldPackages(afterRemapIcons).trim()).toBe(afterRemapOldPackages);
+    expect(remapOldPackages("@sui/deps-antd", afterRemapIcons).trim()).toBe(afterRemapOldPackages);
   });
 });

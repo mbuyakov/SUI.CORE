@@ -12,13 +12,13 @@ describe("remap imports", () => {
 import {a} from "@sui/deps-material";
 import {b} from "antd";
     `.trim();
-    expect(remapImports("deps-antd",source)).toBe(source);
+    expect(remapImports("@sui/deps-antd",source)).toBe(source);
     expect(consoleLog).not.toBeCalled();
   });
 
   it("should replace default import from subpath", () => {
     const consoleLog = jest.spyOn(console, "log");
-    expect(remapImports("deps-antd", `
+    expect(remapImports("@sui/deps-antd", `
 import Button from "@mui/material/Button";
     `.trim())).toMatchSnapshot();
     expect(consoleLog).toBeCalledTimes(1);
@@ -26,7 +26,7 @@ import Button from "@mui/material/Button";
 
   it("should replace named import", () => {
     const consoleLog = jest.spyOn(console, "log");
-    expect(remapImports("deps-antd",`
+    expect(remapImports("@sui/deps-antd",`
 import {Button} from "@mui/material";
     `.trim())).toMatchSnapshot();
     expect(consoleLog).toBeCalledTimes(1);

@@ -14,7 +14,7 @@ export function remapImports(projectName: string, content: string): string {
     if (
       !newName
       // Don't replace yourself
-      || newName === `@sui/${projectName}`
+      || newName === projectName
     ) {
       return;
     }

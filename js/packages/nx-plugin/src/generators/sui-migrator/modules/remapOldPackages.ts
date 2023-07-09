@@ -11,12 +11,16 @@ const inversedNewImports = Object.keys(newImports)
     return prev;
   }, {});
 
-export function remapOldPackages(content: string): string {
+const oldModules = ["@sui/all", "@sui/ui-old-core", "@sui/ui-old-react"];
+export function remapOldPackages(packageName: string, content: string): string {
 
   return tsquery.replace(content, "ImportDeclaration", (node: ImportDeclaration) => {
     const moduleName = (node.moduleSpecifier as StringLiteral).text;
 
-    if (!(["@sui/all", "@sui/ui-old-core", "@sui/ui-old-react"].includes(moduleName) || moduleName.startsWith("@/"))) {
+    const isOldModule = oldModules.includes(packageName);
+    const isImportFromOldModule = oldModules.includes(moduleName);
+
+    if (!(isImportFromOldModule || (isOldModule && moduleName.startsWith("@/")))) {
       return;
     }
 
