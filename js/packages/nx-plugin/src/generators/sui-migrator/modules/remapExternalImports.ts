@@ -3,7 +3,7 @@ import {mapModules} from "../../../utils/consts";
 import {logWithPrefix} from "../../../utils/logger";
 import {printNode, tsquery} from "../../../utils/typescript";
 
-export function remapImports(projectName: string, content: string): string {
+export function remapExternalImports(projectName: string, content: string): string {
 
   return tsquery.replace(content, "ImportDeclaration:has(ImportClause)", (node: ImportDeclaration) => {
     const moduleName = (node.moduleSpecifier as StringLiteral).text;
@@ -19,7 +19,7 @@ export function remapImports(projectName: string, content: string): string {
       return;
     }
 
-    logWithPrefix("remapImports", `Replace ${moduleName} to ${newName}`);
+    logWithPrefix("remapExternalImports", `Replace ${moduleName} to ${newName}`);
 
     let namedImports = node.importClause.namedBindings;
 

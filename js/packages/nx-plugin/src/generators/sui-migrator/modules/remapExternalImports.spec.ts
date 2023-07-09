@@ -1,6 +1,6 @@
-import {remapImports} from "./remapImports";
+import {remapExternalImports} from "./remapExternalImports";
 
-describe("remap imports", () => {
+describe("remap external imports", () => {
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -12,13 +12,13 @@ describe("remap imports", () => {
 import {a} from "@sui/deps-material";
 import {b} from "antd";
     `.trim();
-    expect(remapImports("@sui/deps-antd",source)).toBe(source);
+    expect(remapExternalImports("@sui/deps-antd",source)).toBe(source);
     expect(consoleLog).not.toBeCalled();
   });
 
   it("should replace default import from subpath", () => {
     const consoleLog = jest.spyOn(console, "log");
-    expect(remapImports("@sui/deps-antd", `
+    expect(remapExternalImports("@sui/deps-antd", `
 import Button from "@mui/material/Button";
     `.trim())).toMatchSnapshot();
     expect(consoleLog).toBeCalledTimes(1);
@@ -26,7 +26,7 @@ import Button from "@mui/material/Button";
 
   it("should replace named import", () => {
     const consoleLog = jest.spyOn(console, "log");
-    expect(remapImports("@sui/deps-antd",`
+    expect(remapExternalImports("@sui/deps-antd",`
 import {Button} from "@mui/material";
     `.trim())).toMatchSnapshot();
     expect(consoleLog).toBeCalledTimes(1);
