@@ -5,18 +5,12 @@ import {printNode, tsquery} from "../../../utils/typescript";
 const SUFFIX = "MuiIcons.";
 
 export function remapIcons(content: string): string {
-  const ast = tsquery.ast(content);
-
   const iconsImports: ImportDeclaration[] = [];
-  iconsImports.push(...tsquery<ImportDeclaration>(ast, "ImportDeclaration:has(StringLiteral[value=/@mui.icons-material.*/])"));
-  iconsImports.push(...tsquery<ImportDeclaration>(ast, "ImportDeclaration:has(StringLiteral[value=/@material-ui.icons.*/])"));
 
-  if (!iconsImports.length) {
-    return content;
-  }
-
-  content = tsquery.remove(content, "ImportDeclaration:has(StringLiteral[value=/@mui.icons-material.*/])", () => true, true);
-  content = tsquery.remove(content, "ImportDeclaration:has(StringLiteral[value=/@material-ui.icons.*/])", () => true, true);
+  content = tsquery.jsxReplace(content, "ImportDeclaration:has(StringLiteral[value=/@mui.icons-material.*/])", (node: ImportDeclaration) => {
+    iconsImports.push(node);
+    return "import {MuiIcons} from \"@sui/deps-material\";";
+  });
 
   const nameMap = {};
 
@@ -37,34 +31,6 @@ export function remapIcons(content: string): string {
     content = tsquery.jsxReplace(content, `Identifier[name="${key}"]`, () => {
       return nameMap[key];
     });
-  });
-
-  let importReplaced = false;
-  content = tsquery.replace(content, "ImportDeclaration", (importDeclaration: ImportDeclaration) => {
-    if (importReplaced) {
-      return;
-    }
-
-    importReplaced = true;
-    return printNode(
-        factory.createImportDeclaration(
-          undefined,
-          factory.createImportClause(
-            false,
-            undefined,
-            factory.createNamedImports([
-              factory.createImportSpecifier(
-                false,
-                undefined,
-                factory.createIdentifier("MuiIcons")
-              )
-            ])
-          ),
-          factory.createStringLiteral("@sui/deps-material")
-        )
-      )
-      + "\n"
-      + importDeclaration.getText();
   });
 
   return content;
