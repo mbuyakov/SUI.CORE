@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`remap icons should replace default import from subpath 1`] = `
+"import {MuiIcons} from \\"@sui/deps-material\\";
+
+const a = <MuiIcons.Menu attr=\\"1\\">2</MuiIcons.Menu>;
+const b = <MuiIcons.Menu attr=\\"1\\"/>;
+const c = <DrawerVisibleButton
+            edge=\\"start\\"
+            disableRotate={isMobile}
+            icon={isMobile && <MuiIcons.Menu/>}
+          />;
+const d = MuiIcons.Menu as any;"
+`;
+
+exports[`remap icons should replace named import 1`] = `
+"import {MuiIcons} from \\"@sui/deps-material\\";
+
+const a = <MuiIcons.DeleteForever attr=\\"1\\">2</MuiIcons.DeleteForever>;
+const b = <MuiIcons.DeleteForever attr=\\"1\\"/>;
+const c = <DrawerVisibleButton
+            edge=\\"start\\"
+            disableRotate={isMobile}
+            icon={isMobile && <MuiIcons.DeleteForever/>}
+          />;
+const d = MuiIcons.DeleteForever as any;"
+`;
