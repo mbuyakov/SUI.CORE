@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dedupe import should leave as in named import & namespace 1`] = `
+"import {a} from \\"a\\";
+import {b as b} from \\"b\\";
+import c from \\"c\\";
+import * as d from \\"a\\";
+import \\"a\\";"
+`;
+
+exports[`dedupe import should merge multiple named import 1`] = `
+"import {a, b as b} from \\"a\\";
+import c from \\"c\\";
+import * as d from \\"d\\";
+import \\"a\\";"
+`;
+
+exports[`dedupe import should merge named import & default + namespace on next line 1`] = `
+"import c, {a, b as b} from \\"a\\";
+import * as d from \\"a\\";
+import {f} from \\"b\\";
+import \\"a\\";"
+`;
+
+exports[`dedupe import should merge named import & default 1`] = `
+"import c, {a} from \\"a\\";
+import {b as b} from \\"b\\";
+import * as d from \\"d\\";
+import \\"a\\";"
+`;
