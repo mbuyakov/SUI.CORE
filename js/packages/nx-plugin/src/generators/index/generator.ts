@@ -10,7 +10,12 @@ export async function indexGenerator(tree: Tree, options: IndexGeneratorSchema) 
     if (project.name === "nx-plugin") {
       return;
     }
+
+
     visitAllFolders(tree, project.sourceRoot, folderPath => {
+      if (folderPath.endsWith("__snapshots__")) {
+        return;
+      }
       const filePath = `${folderPath}/index.ts`;
       const content = tree.exists(filePath) ? tree.read(filePath).toString() : "";
       let newContent = "";
@@ -27,7 +32,10 @@ export async function indexGenerator(tree: Tree, options: IndexGeneratorSchema) 
       const allContent = tree.children(folderPath);
 
       const folders = allContent
-        .filter(it => !tree.isFile(`${folderPath}/${it}`))
+        .filter(it =>
+          !tree.isFile(`${folderPath}/${it}`)
+          && it != "__snapshots__"
+        )
         .sort(naturalSorter);
 
       const files = allContent
