@@ -79,6 +79,17 @@ export const suiDefaultTheme: SuiThemeConfig = {
       mui: (base, createTheme) => createTheme({
         ...base,
         components: {
+          MuiDialog: {
+            styleOverrides: {
+              paperFullScreen: {
+                // Ios. Leave statusbar as is
+                marginTop: "env(safe-area-inset-top)",
+                height: "calc(100% - env(safe-area-inset-top))",
+                // Ios. Padding for bottom control
+                paddingBottom: "env(safe-area-inset-bottom)"
+              }
+            }
+          },
           MuiToolbar: {
             styleOverrides: {
               gutters: {
