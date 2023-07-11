@@ -7,7 +7,7 @@ export function remapExternalImports(projectName: string, content: string): stri
 
   return tsquery.replace(content, "ImportDeclaration:has(ImportClause)", (node: ImportDeclaration) => {
     const moduleName = (node.moduleSpecifier as StringLiteral).text;
-    let newName = Object.entries(mapModules)
+    const newName = Object.entries(mapModules)
       .find(([oldName]) => moduleName == oldName || moduleName.startsWith(oldName + "/"))
       ?.[1];
 
