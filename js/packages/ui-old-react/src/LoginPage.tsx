@@ -46,15 +46,21 @@ export const LoginPage: React.FC<{
   const handleMouseDownPassword = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault(), []);
 
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        // TODO
+        // backgroundColor: theme.name === "dark" ? "#000" : theme.lessVars['layout-body-background']
+      }}
+    >
       <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          height: "100%",
-          // TODO
-          // backgroundColor: theme.name === "dark" ? "#000" : theme.lessVars["layout-body-background"]
+          flexGrow: 1
         }}
       >
         <BlockUIConditionally functionToCheck={blockUiFunction}>
@@ -159,13 +165,11 @@ export const LoginPage: React.FC<{
       <Footer
         showAdditionalButtons={false}
         style={{
-          position: "absolute",
-          bottom: 0,
           width: "100%"
         }}
       >
         {footerExtra}
       </Footer>
-    </>
+    </div>
   );
 };
