@@ -1,4 +1,4 @@
-FROM nexus.suilib.ru/openjdk:8-jre-alpine
+FROM nexus.suilib.ru/adoptopenjdk/openjdk8:jdk8u372-b07-alpine
 
 # Utilities for file compression
 # https://github.com/AdoptOpenJDK/openjdk-build/issues/693
