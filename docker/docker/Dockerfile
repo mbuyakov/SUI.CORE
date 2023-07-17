@@ -1,7 +1,7 @@
 FROM nexus.suilib.ru/docker:20.10.14
 RUN echo -e 'https://nexus.suilib.ru/repository/alpine/v3.15/main/\nhttps://nexus.suilib.ru/repository/alpine/v3.15/community' > /etc/apk/repositories && apk update
 RUN apk add -v curl nano mc python3 py3-pip git bash
-RUN pip install jinja2-cli && \
+RUN pip install jinja2-cli pyyaml && \
     git config --global --add safe.directory '*'
 
 ENV DOCKER_CONFIG=/.docker
