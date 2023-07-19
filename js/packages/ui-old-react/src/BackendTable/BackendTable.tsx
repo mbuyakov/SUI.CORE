@@ -363,7 +363,7 @@ export class BackendTable<TSelection = defaultSelection>
                 ].filter(Boolean)}
                 rowStyler={this.generateRowStyler()}
                 warnings={admin ? this.state.warnings : undefined}
-                pageSizes={this.state.tableInfo?.pageSizes || DEFAULT_PAGE_SIZES}
+                pageSizes={this.props.pageSizes || this.state.tableInfo?.pageSizes || DEFAULT_PAGE_SIZES}
                 defaultCurrentPage={this.state.defaultCurrentPage}
                 exportValueFormatter={this.exportValueFormatter}
                 // remote functions
