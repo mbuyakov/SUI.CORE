@@ -14,6 +14,7 @@ module.exports = {
     schema: process.env.POSTGRES_SCHEMA.split(","),
     watch: true,
     bodySizeLimit: "100MB",
-    maxPoolSize: Number(process.env.POSTGRES_POOL)
+    maxPoolSize: Number(process.env.POSTGRES_POOL),
+    port: Number(process.env.PORT),
   },
 };
