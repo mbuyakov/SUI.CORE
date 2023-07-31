@@ -1,7 +1,7 @@
 import {Tree} from "@nx/devkit";
 import {LibGeneratorSchema} from "./schema";
 import * as jsGen from "@nx/js/src/generators/library/library";
-import {commonTweaks} from "../utils";
+import {commonTweaks} from "../../utils/commonTweaks";
 
 export async function libGenerator(tree: Tree, options: LibGeneratorSchema) {
   const name = `${options.type}-${options.name}`;

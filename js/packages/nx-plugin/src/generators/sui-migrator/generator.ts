@@ -1,10 +1,10 @@
 import {readJson, Tree} from "@nx/devkit";
 import {SuiMigratorGeneratorSchema} from "./schema";
-import {visitAllFiles, visitAllProjects} from "../utils";
 import {remapExternalImports} from "./modules/remapExternalImports";
 import {remapIcons} from "./modules/remapIcons";
 import {remapOldPackages} from "./modules/remapOldPackages";
 import {dedupeImport} from "./modules/dedupeImport";
+import {visitAllFiles, visitAllProjects} from "../../utils/visitors";
 
 export async function suiMigratorGenerator(tree: Tree, schema: SuiMigratorGeneratorSchema) {
   visitAllProjects(tree, project => {

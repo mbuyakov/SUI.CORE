@@ -1,7 +1,7 @@
 import {Tree} from "@nx/devkit";
 import {IndexGeneratorSchema} from "./schema";
-import {visitAllFolders, visitAllProjects} from "../utils";
 import {logSymbols, logWithPrefix} from "../../utils/logger";
+import {visitAllFolders, visitAllProjects} from "../../utils/visitors";
 
 const naturalSorter = (a, b) => a.toLowerCase().localeCompare(b.toLowerCase());
 
