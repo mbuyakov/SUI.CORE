@@ -9,9 +9,9 @@ describe("index generator", () => {
   let tree: Tree;
   const options: IndexGeneratorSchema = { name: "test" };
 
-  beforeEach(() => {
+  beforeEach(async () => {
     tree = createTreeWithEmptyWorkspace();
-    libGenerator(tree, {
+    await libGenerator(tree, {
       type: "lib",
       name: "test"
     });
