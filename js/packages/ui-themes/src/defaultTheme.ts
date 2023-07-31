@@ -2,6 +2,7 @@ import {AntdTheme, MuiTheme, SuiThemeConfig} from "./types";
 import {createTheme as muiCreateTheme, PaletteOptions} from "@sui/deps-material";
 
 const PRIMARY_COLOR = "#56CBF8";
+const SECONDARY_COLOR = "#F50057";
 const SUCCESS_COLOR = "#52C41A";
 const WARNING_COLOR = "#FAAD14";
 const ERROR_COLOR = "#FF4D4F";
@@ -27,18 +28,27 @@ const DEFAULT_FONT_SIZE = 15;
 const commonMuiPalette: PaletteOptions = {
   primary: {
     main: PRIMARY_COLOR,
+    contrastText: "#FFF"
+  },
+  secondary: {
+    main: SECONDARY_COLOR,
+    contrastText: "#FFF"
   },
   success: {
-    main: SUCCESS_COLOR
+    main: SUCCESS_COLOR,
+    contrastText: "#FFF"
   },
   warning: {
-    main: WARNING_COLOR
+    main: WARNING_COLOR,
+    contrastText: "#FFF"
   },
   error: {
-    main: ERROR_COLOR
+    main: ERROR_COLOR,
+    contrastText: "#FFF"
   },
   info: {
-    main: INFO_COLOR
+    main: INFO_COLOR,
+    contrastText: "#FFF"
   }
 };
 
