@@ -11,7 +11,8 @@
         "outputPath": "dist/packages/lib-event-manager",
         "main": "packages/lib-event-manager/src/index.ts",
         "tsConfig": "packages/lib-event-manager/tsconfig.lib.json",
-        "assets": ["packages/lib-event-manager/*.md"]
+        "assets": ["packages/lib-event-manager/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "publish": {

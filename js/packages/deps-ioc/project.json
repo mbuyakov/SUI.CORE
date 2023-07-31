@@ -11,7 +11,8 @@
         "outputPath": "dist/packages/deps-ioc",
         "main": "packages/deps-ioc/src/index.ts",
         "tsConfig": "packages/deps-ioc/tsconfig.lib.json",
-        "assets": ["packages/deps-ioc/*.md"]
+        "assets": ["packages/deps-ioc/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "publish": {

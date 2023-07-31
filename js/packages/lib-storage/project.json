@@ -11,7 +11,8 @@
         "outputPath": "dist/packages/lib-storage",
         "main": "packages/lib-storage/src/index.ts",
         "tsConfig": "packages/lib-storage/tsconfig.lib.json",
-        "assets": ["packages/lib-storage/*.md"]
+        "assets": ["packages/lib-storage/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "publish": {

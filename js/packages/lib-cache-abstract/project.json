@@ -11,7 +11,8 @@
         "outputPath": "dist/packages/lib-cache-abstract",
         "main": "packages/lib-cache-abstract/src/index.ts",
         "tsConfig": "packages/lib-cache-abstract/tsconfig.lib.json",
-        "assets": ["packages/lib-cache-abstract/*.md"]
+        "assets": ["packages/lib-cache-abstract/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "publish": {

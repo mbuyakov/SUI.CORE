@@ -11,7 +11,8 @@
         "outputPath": "dist/packages/lib-module-manager",
         "main": "packages/lib-module-manager/src/index.ts",
         "tsConfig": "packages/lib-module-manager/tsconfig.lib.json",
-        "assets": ["packages/lib-module-manager/*.md"]
+        "assets": ["packages/lib-module-manager/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "publish": {

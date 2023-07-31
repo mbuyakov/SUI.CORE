@@ -11,7 +11,8 @@
         "outputPath": "dist/packages/util-types",
         "main": "packages/util-types/src/index.ts",
         "tsConfig": "packages/util-types/tsconfig.lib.json",
-        "assets": ["packages/util-types/*.md"]
+        "assets": ["packages/util-types/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "publish": {

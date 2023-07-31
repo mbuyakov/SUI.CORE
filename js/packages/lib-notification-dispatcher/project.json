@@ -11,7 +11,8 @@
         "outputPath": "dist/packages/lib-notification-dispatcher",
         "main": "packages/lib-notification-dispatcher/src/index.ts",
         "tsConfig": "packages/lib-notification-dispatcher/tsconfig.lib.json",
-        "assets": ["packages/lib-notification-dispatcher/*.md"]
+        "assets": ["packages/lib-notification-dispatcher/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "publish": {

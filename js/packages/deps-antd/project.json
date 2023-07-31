@@ -11,7 +11,8 @@
         "outputPath": "dist/packages/deps-antd",
         "main": "packages/deps-antd/src/index.ts",
         "tsConfig": "packages/deps-antd/tsconfig.lib.json",
-        "assets": ["packages/deps-antd/*.md"]
+        "assets": ["packages/deps-antd/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "publish": {

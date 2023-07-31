@@ -11,7 +11,8 @@
         "outputPath": "dist/packages/deps-material",
         "main": "packages/deps-material/src/index.ts",
         "tsConfig": "packages/deps-material/tsconfig.lib.json",
-        "assets": ["packages/deps-material/*.md"]
+        "assets": ["packages/deps-material/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "publish": {

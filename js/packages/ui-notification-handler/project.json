@@ -9,9 +9,7 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "packages/ui-notification-handler/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["packages/ui-notification-handler/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "build": {
@@ -32,7 +30,8 @@
             "output": "."
           }
         ],
-        "babelUpwardRootMode": true
+        "babelUpwardRootMode": true,
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "publish": {

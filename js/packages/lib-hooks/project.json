@@ -11,7 +11,8 @@
         "outputPath": "dist/packages/lib-hooks",
         "main": "packages/lib-hooks/src/index.ts",
         "tsConfig": "packages/lib-hooks/tsconfig.lib.json",
-        "assets": ["packages/lib-hooks/*.md"]
+        "assets": ["packages/lib-hooks/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "publish": {

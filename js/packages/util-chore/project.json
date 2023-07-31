@@ -11,7 +11,8 @@
         "outputPath": "dist/packages/util-chore",
         "main": "packages/util-chore/src/index.ts",
         "tsConfig": "packages/util-chore/tsconfig.lib.json",
-        "assets": ["packages/util-chore/*.md"]
+        "assets": ["packages/util-chore/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "publish": {

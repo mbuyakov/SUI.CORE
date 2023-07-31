@@ -3,36 +3,24 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/ui-idle-tracker/src",
   "projectType": "library",
-  "tags": [
-    "type:ui"
-  ],
+  "tags": ["type:ui"],
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "packages/ui-idle-tracker/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["packages/ui-idle-tracker/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "build": {
       "executor": "@nx/rollup:rollup",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/ui-idle-tracker",
         "tsConfig": "packages/ui-idle-tracker/tsconfig.lib.json",
         "project": "packages/ui-idle-tracker/package.json",
         "entryFile": "packages/ui-idle-tracker/src/index.ts",
-        "external": [
-          "react",
-          "react-dom",
-          "@emotion/react/jsx-runtime"
-        ],
+        "external": ["react", "react-dom", "@emotion/react/jsx-runtime"],
         "rollupConfig": "@nx/react/plugins/bundle-rollup",
         "compiler": "babel",
         "assets": [
@@ -41,14 +29,13 @@
             "input": ".",
             "output": "."
           }
-        ]
+        ],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/ui-idle-tracker/jest.config.ts",
         "passWithNoTests": true
@@ -62,9 +49,7 @@
     },
     "publish": {
       "command": "node tools/scripts/publish.mjs ui-idle-tracker {args.ver} {args.tag}",
-      "dependsOn": [
-        "build"
-      ]
+      "dependsOn": ["build"]
     }
   }
 }
