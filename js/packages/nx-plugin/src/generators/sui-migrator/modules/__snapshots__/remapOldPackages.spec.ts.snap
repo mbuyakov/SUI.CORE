@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`remap old imports should replace old import 1`] = `
+"import {DataKey} from \\"@sui/util-chore\\";
+import {Test} from \\"@sui/ui-old-react\\";
+import {dataKeysToDataTree} from \\"@sui/util-chore\\";"
+`;
