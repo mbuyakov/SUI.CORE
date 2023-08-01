@@ -36,6 +36,19 @@
         "jestConfig": "packages/bundle-all/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "sonar": {
+      "executor": "@koliveira15/nx-sonarqube:scan",
+      "options": {
+        "name": "bundle-all",
+        "hostUrl": "https://sonar.suilib.ru",
+        "projectKey": "SUI",
+        "skipTargetDefaults": false,
+        "branches": false,
+        "qualityGate": false,
+        "qualityGateTimeout": "300",
+        "skipImplicitDeps": false
+      }
     }
   },
   "tags": []
