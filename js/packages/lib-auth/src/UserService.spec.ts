@@ -48,9 +48,10 @@ describe("UserService", () => {
 
   test("Login", () => {
     userService.login(user);
-    expect(() => userService.getUser()).toBeDefined();
+    expect(userService.getUser()).toBeDefined();
 
-    expect(() => getUser()).toBeDefined();
+    expect(getUser()).toBeDefined();
+    expect(userService.getToken()).toBe("1");
   });
 
   test("Has role", () => {
@@ -106,7 +107,7 @@ describe("UserService", () => {
 
   test("Logout", () => {
     userService.login(user);
-    expect(() => userService.getUser()).toBeDefined();
+    expect(userService.getUser()).toBeDefined();
     userService.logout(false);
     expect(() => userService.getUser()).toThrow("User not initialized");
   });
