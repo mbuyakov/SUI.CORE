@@ -1,4 +1,12 @@
-import {readJson, removeDependenciesFromPackageJson, Tree, updateJson, readProjectConfiguration, updateProjectConfiguration} from "@nx/devkit";
+import {
+  addDependenciesToPackageJson,
+  readJson,
+  readProjectConfiguration,
+  removeDependenciesFromPackageJson,
+  Tree,
+  updateJson,
+  updateProjectConfiguration
+} from "@nx/devkit";
 import {addMinimalPublishScript} from "@nx/js/src/utils/minimal-publish-script";
 
 export function commonTweaks(tree: Tree, type: string, name: string) {
@@ -37,5 +45,16 @@ export function commonTweaks(tree: Tree, type: string, name: string) {
       config.compilerOptions.paths["@/*"] = ["packages/ui-old-react/src/*"];
       return config;
     });
+  }
+
+  if (tree.isFile("packages/bundle-all/package.json")) {
+    addDependenciesToPackageJson(
+      tree,
+      {
+        [`@sui/${name}`]: "0.0.1"
+      },
+      {},
+      "packages/bundle-all/package.json"
+    );
   }
 }
