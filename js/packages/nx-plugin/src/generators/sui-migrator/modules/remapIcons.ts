@@ -1,6 +1,6 @@
-import {factory, ImportDeclaration, NamedImports, StringLiteral} from "typescript";
+import {ImportDeclaration, NamedImports, StringLiteral} from "typescript";
 import {logWithPrefix} from "../../../utils/logger";
-import {printNode, tsquery} from "../../../utils/typescript";
+import {tsquery} from "../../../utils/typescript";
 
 const SUFFIX = "MuiIcons.";
 

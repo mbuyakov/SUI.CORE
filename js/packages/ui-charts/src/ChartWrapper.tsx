@@ -20,7 +20,7 @@ export function ChartWrapper<T extends { new(): any }>(getType: (amcharts: AMCHA
     // Convert it to base 36 (numbers + letters), and grab the first 9 characters
     // after the decimal.
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const id = useMemo(() => Math.random().toString(36).substr(2, 9), []);
+    const id = useMemo(() => Math.random().toString(36).substring(2, 9), []);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [chart, setChart] = useState<Nullable<InstanceType<T>>>();
 

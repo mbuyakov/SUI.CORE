@@ -17,7 +17,7 @@ abstract class UserService {
 
   public abstract login(user: ICoreUser): void;
 
-  public abstract logout(userCommand: boolean): void;
+  public abstract logout(userCommand: boolean): Promise<void>;
 
   public abstract isLoggedIn(): boolean;
 

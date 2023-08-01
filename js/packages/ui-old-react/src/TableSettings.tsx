@@ -488,7 +488,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       popconfirmSettings={true}
                                       promise={(newValue: boolean): Promise<any> => {
                                         let promise = Promise.resolve();
-                                        value.map(col => {
+                                        value.forEach(col => {
                                           promise = promise.then(() => this.updateColField(col.id, "visible", newValue, false));
                                         });
 
@@ -688,7 +688,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       popconfirmSettings={true}
                                       promise={(newValue: boolean): Promise<any> => {
                                         let promise = Promise.resolve();
-                                        value.map(col => {
+                                        value.forEach(col => {
                                           promise = promise.then(() => this.updateColField(col.id, "defaultVisible", newValue, false));
                                         });
 

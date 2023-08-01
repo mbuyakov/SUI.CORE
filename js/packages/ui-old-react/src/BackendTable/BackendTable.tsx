@@ -8,7 +8,24 @@ import difference from "lodash/difference";
 import * as React from "react";
 import {v4 as uuidv4} from "uuid";
 import {getDataByKey} from "@sui/util-chore";
-import {asyncMap, camelCase, ColumnInfo, ColumnInfoManager, DEFAULT_PAGE_SIZES, defaultIfNotBoolean, formatRawForGraphQL, generateCreate, getSUISettings, IUserSetting, mutate, query, TableInfo, TableInfoManager, toMap, wrapInArray} from "@sui/ui-old-core";
+import {
+  asyncMap,
+  camelCase,
+  ColumnInfo,
+  ColumnInfoManager,
+  DEFAULT_PAGE_SIZES,
+  defaultIfNotBoolean,
+  formatRawForGraphQL,
+  generateCreate,
+  getSUISettings,
+  IUserSetting,
+  mutate,
+  query,
+  TableInfo,
+  TableInfoManager,
+  toMap,
+  wrapInArray
+} from "@sui/ui-old-core";
 import {LazyStubNoDataCell, LazyStubNoDataCellSmall} from "@/BackendTable/LazyStubNoDataCell";
 import {LoadingNoDataCell, LoadingNoDataCellSmall} from "@/BackendTable/LoadingNoDataCell";
 
@@ -17,7 +34,33 @@ import {IBaseTableUserSettings} from "../BaseTable/extends/UserSettingsPlugin";
 // noinspection ES6PreferShortImport
 import {exportToXlsx} from "../BaseTable/utils";
 // noinspection ES6PreferShortImport
-import {BaseTable, colToBaseTableCol, DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE, DEFAULT_SERVICE_COLUMN_WIDTH, defaultSelection, downloadFile, errorNotification, ExportPlugin, getAllowedColumnInfos, getStateFromUrlParam, IBaseTableColLayout, IBaseTableProps, IGroupSubtotalData, IInnerTableStateDefinition, IRemoteBaseTableFields, isAllowedColumnInfo, ISelectionTable, mergeDefaultFilters, putTableStateToUrlParam, RefreshMetaTablePlugin, RouterLink, SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS, TableSettingsDialog, TableSettingsPlugin, WaitData} from "../index";
+import {
+  BaseTable,
+  colToBaseTableCol,
+  DEFAULT_SERVICE_COLUMN_ICON_BUTTON_STYLE,
+  DEFAULT_SERVICE_COLUMN_WIDTH,
+  defaultSelection,
+  downloadFile,
+  errorNotification,
+  ExportPlugin,
+  getAllowedColumnInfos,
+  getStateFromUrlParam,
+  IBaseTableColLayout,
+  IBaseTableProps,
+  IGroupSubtotalData,
+  IInnerTableStateDefinition,
+  IRemoteBaseTableFields,
+  isAllowedColumnInfo,
+  ISelectionTable,
+  mergeDefaultFilters,
+  putTableStateToUrlParam,
+  RefreshMetaTablePlugin,
+  RouterLink,
+  SUI_BACKEND_TABLE_HIDE_MODAL_BUTTONS,
+  TableSettingsDialog,
+  TableSettingsPlugin,
+  WaitData
+} from "../index";
 // noinspection ES6PreferShortImport
 import {ClearFiltersPlugin} from "../plugins/ClearFiltersPlugin";
 // noinspection ES6PreferShortImport
@@ -27,7 +70,7 @@ import {LazyFilter} from "../BaseTable/types";
 
 import {BackendDataSource, MESSAGE_ID_KEY} from "./BackendDataSource";
 import {RestBackendDataSource} from "./RestBackendDataSource";
-import {IconButton, MuiIcons } from "@sui/deps-material";
+import {IconButton, MuiIcons} from "@sui/deps-material";
 import {IObjectWithIndex} from "@sui/util-types";
 import {getUser, isAdmin} from "@sui/lib-auth";
 import {IdleTimerConsumer, IIdleTimer} from "@sui/ui-idle-tracker";
@@ -140,7 +183,9 @@ function calculateParentExpandedGroups(realExpandedGroupKeys: IExpandedGroup[], 
 }
 
 export class BackendTable<TSelection = defaultSelection>
-  extends React.Component<Omit<IBaseTableProps<TSelection>, "rows" | "cols" | "defaultFilters" | "defaultCurrentPage" | "customFilterComponent"> & IBackendTableProps & { innerRef?: React.RefObject<BackendTable<TSelection>> }, IBackendTableState<TSelection>>
+  extends React.Component<Omit<IBaseTableProps<TSelection>, "rows" | "cols" | "defaultFilters" | "defaultCurrentPage" | "customFilterComponent"> & IBackendTableProps & {
+    innerRef?: React.RefObject<BackendTable<TSelection>>
+  }, IBackendTableState<TSelection>>
   implements ISelectionTable<TSelection> {
 
   private additionalStateMap: Map<string, IBackendTableState<TSelection>> = new Map<string, IBackendTableState<TSelection>>();
@@ -244,7 +289,9 @@ export class BackendTable<TSelection = defaultSelection>
       }
 
       if (filterChanged || defaultFilterChanged) {
-        this.setState(newState, () => this.reinit());
+        this.setState(newState, () => {
+          this.reinit();
+        });
       }
     }
   }
@@ -359,7 +406,8 @@ export class BackendTable<TSelection = defaultSelection>
                   (<RefreshMetaTablePlugin handleClick={this.refresh}/>),
                   (<ResetUserSettingsPlugin onClick={this.resetUserSettings}/>),
                   // admin && (<RawModePlugin enabled={this.state.rawMode} onClick={this.changeRaw}/>),
-                  admin && !hideTableSettings && (<TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
+                  admin && !hideTableSettings && (
+                    <TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
                 ].filter(Boolean)}
                 rowStyler={this.generateRowStyler()}
                 warnings={admin ? this.state.warnings : undefined}
@@ -459,7 +507,7 @@ export class BackendTable<TSelection = defaultSelection>
 
     if (Array.isArray(value)) {
       return (value as any[])
-        .map(it => (it !== null && typeof(it) === "object") ? JSON.stringify(it) : it)
+        .map(it => (it !== null && typeof (it) === "object") ? JSON.stringify(it) : it)
         .toString();
     }
 
@@ -494,7 +542,11 @@ export class BackendTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private getChildGroups(currentRows: any[], grouping: Grouping): Array<{ childRows?: any[], key: number | string, value?: any }> {
+  private getChildGroups(currentRows: any[], grouping: Grouping): Array<{
+    childRows?: any[],
+    key: number | string,
+    value?: any
+  }> {
     const groupRowField = this.getGroupRowField(grouping);
 
     return currentRows.map(currentRow => ({
@@ -841,7 +893,10 @@ export class BackendTable<TSelection = defaultSelection>
         && (!this.state.defaultFilter || this.state.defaultFilter.every(it => it.columnName !== DELETED_COLUMN));
       const defaultSorting: Sorting[] = sortedColumns
         .filter(columnInfo => columnInfo.defaultSorting)
-        .map(columnInfo => ({columnName: columnInfo.columnName, direction: columnInfo.defaultSorting as "asc" | "desc"}));
+        .map(columnInfo => ({
+          columnName: columnInfo.columnName,
+          direction: columnInfo.defaultSorting as "asc" | "desc"
+        }));
       const defaultGrouping: Grouping[] = sortedColumns
         .filter(columnInfo => columnInfo.defaultGrouping)
         .map(columnInfo => ({columnName: columnInfo.columnName}));
