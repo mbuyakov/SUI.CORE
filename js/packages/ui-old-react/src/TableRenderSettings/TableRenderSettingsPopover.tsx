@@ -92,7 +92,7 @@ export class TableRenderSettingsPopover<T> extends React.Component<ITableRenderS
     this.setState({popoverVisible: true});
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     // console.log(this.props.tableRenderParams, this.state.tableRenderParams, typeof this.state.tableRenderParams.color === "boolean");
     const plugin = this.state.tableRenderParams.renderType && TableRenderSettingsPluginManager.plugins.get(this.state.tableRenderParams.renderType);
 

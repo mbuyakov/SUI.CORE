@@ -13,7 +13,7 @@ interface IExternalLinkProps {
 
 export class ExternalLink extends React.Component<IExternalLinkProps> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <a
         href={this.props.to}

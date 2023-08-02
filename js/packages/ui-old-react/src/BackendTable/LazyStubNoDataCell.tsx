@@ -3,7 +3,7 @@ import * as React from "react";
 import {Empty} from "@sui/deps-antd";
 import {TABLE_NO_DATA_CELL_SMALL} from "@/styles";
 
-export const LazyStubNoDataCell = (showAll: () => void) => ({colSpan}: { colSpan?: number | undefined }): JSX.Element => (
+export const LazyStubNoDataCell = (showAll: () => void) => ({colSpan}: { colSpan?: number | undefined }): React.JSX.Element => (
   <TableCell
     style={{height: 180}}
     colSpan={colSpan}
@@ -20,7 +20,7 @@ export const LazyStubNoDataCell = (showAll: () => void) => ({colSpan}: { colSpan
   </TableCell>
 );
 
-export const LazyStubNoDataCellSmall = (showAll: () => void) => ({colSpan}: { colSpan?: number | undefined }): JSX.Element => (
+export const LazyStubNoDataCellSmall = (showAll: () => void) => ({colSpan}: { colSpan?: number | undefined }): React.JSX.Element => (
   <TableCell
     style={{
       paddingLeft: 64

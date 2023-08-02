@@ -23,7 +23,7 @@ export interface IEditableEntityFieldProps<T> extends Omit<IEditablePromisedComp
 
   customDefaultValue?(value: T): any;
 
-  selectValueGenerator?(data: any): JSX.Element[];
+  selectValueGenerator?(data: any): React.JSX.Element[];
 
   valuePreSaveConverter?(value: T): PossibleValue;
 }
@@ -31,7 +31,7 @@ export interface IEditableEntityFieldProps<T> extends Omit<IEditablePromisedComp
 export class EditableEntityField<T = any> extends React.Component<IEditableEntityFieldProps<T>> {
   private readonly waitDataRef: React.RefObject<WaitData> = React.createRef<WaitData>();
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     // @ts-ignore
     const childrenWidth = this.props.children?.props?.style?.width ?? this.props.children?.props?.style?.minWidth;
     return (

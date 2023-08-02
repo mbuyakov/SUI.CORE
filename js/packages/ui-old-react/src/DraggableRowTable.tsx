@@ -14,7 +14,7 @@ import {IObjectWithIndex} from "@sui/util-types";
 let dragingIndex = -1;
 
 class BodyRow extends React.Component<any> {
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const {
       isOver,
       connectDragSource,
@@ -115,7 +115,7 @@ class DraggableRowTableClass<T extends IObjectWithIndex> extends React.Component
     this.setState({data: nextProps.dataSource});
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <WaitData
         delay={0}
@@ -163,7 +163,7 @@ class DraggableRowTableClass<T extends IObjectWithIndex> extends React.Component
 export class DraggableRowTable<T> extends React.Component<ExtractProps<DraggableRowTableClass<T>> & {
   onOrderChanged(sortedDataSource: T[]): Promise<any>
 }> {
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <DndProvider backend={HTML5Backend}>
         <DraggableRowTableClass<T> {...this.props as any} />

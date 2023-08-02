@@ -78,7 +78,7 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
     this.setState({popoverVisible: true});
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <div className={SUI_ROW_GROW_LEFT}>
         <PromisedSwitch

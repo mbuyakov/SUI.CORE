@@ -11,7 +11,7 @@ export interface ISUIMaskedInputProps extends Omit<MaskedInputProps, "id" | "onC
   pasteFormatter?(value: string): string;
 }
 
-export function SUIMaskedInput(props: ISUIMaskedInputProps): JSX.Element {
+export function SUIMaskedInput(props: ISUIMaskedInputProps): React.JSX.Element {
   const {pasteFormatter, ...inputProps} = props;
 
   const id = React.useMemo(() => `SUIMaskedInput-${uuidv4()}`, []);

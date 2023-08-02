@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import ApolloClient from "apollo-client";
+import React from "react";
 import {setContext} from "apollo-link-context";
 import {Container} from "@sui/deps-ioc";
 
@@ -38,7 +40,7 @@ export interface IInitSUISettings {
     [role: string]: any[];
   };
   layout: {
-    getIcon(icon: string): JSX.Element;
+    getIcon(icon: string): React.JSX.Element;
     formatMessage(
       messageDescriptor: MessageDescriptor,
       values?: { [key: string]: MessageValue },

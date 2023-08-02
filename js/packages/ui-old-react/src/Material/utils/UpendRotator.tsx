@@ -21,7 +21,7 @@ import clsx from "clsx";
 // );
 
 export const UpendRotator: React.FC<{
-  children: JSX.Element,
+  children: React.JSX.Element,
   rotate: boolean
 }> = ({
         children,

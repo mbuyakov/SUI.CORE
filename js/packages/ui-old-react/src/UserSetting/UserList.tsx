@@ -40,7 +40,7 @@ interface IUserListProps<T> {
 // eslint-disable-next-line @typescript-eslint/ban-types
 export class UserList<T extends {}> extends React.Component<IUserListProps<T>> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <MutableBackendTable<ICreateUserFormValues<T>>
         table={TABLE_NAME}

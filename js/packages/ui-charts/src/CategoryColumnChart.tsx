@@ -31,7 +31,7 @@ interface ICategoryColumnChartProps {
 
 export class CategoryColumnChart extends React.Component<ICategoryColumnChartProps> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <XYChartWrapper
         style={{

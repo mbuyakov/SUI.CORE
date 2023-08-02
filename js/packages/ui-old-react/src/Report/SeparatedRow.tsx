@@ -3,16 +3,16 @@ import * as React from "react";
 
 interface ISeparatedRowProps {
   data: React.ReactNode[][];
-  divider?: string | JSX.Element;
+  divider?: string | React.JSX.Element;
 
-  customDivider?(index: number, prevNode: React.ReactNode, nextNode: React.ReactNode): JSX.Element | string;
+  customDivider?(index: number, prevNode: React.ReactNode, nextNode: React.ReactNode): React.JSX.Element | string;
 }
 
 const defaultDivider = (<Divider type="vertical" style={{margin: 0, backgroundColor: "#888"}}/>);
 
 export class SeparatedRow extends React.Component<ISeparatedRowProps> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const data = this.props.data;
 
     return (

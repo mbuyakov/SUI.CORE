@@ -27,7 +27,7 @@ interface IForceDirectedTreeProps<T extends {}> {
 
 export class ForceDirectedTree<TElement extends {} = {}> extends React.Component<IForceDirectedTreeProps<TElement>> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <ForceDirectedTreeWrapper
         data={this.props.data}

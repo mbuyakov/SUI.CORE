@@ -64,7 +64,7 @@ export class MetaCard extends React.Component<IMetaCardProps, {
     }
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     //console.log(this);
 
     return (
@@ -172,7 +172,7 @@ export class MetaCard extends React.Component<IMetaCardProps, {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             dataKey: row.field,
-            render: (item: any): JSX.Element => plugin.render({props: row, item}),
+            render: (item: any): React.JSX.Element => plugin.render({props: row, item}),
           },
         };
 
@@ -197,7 +197,7 @@ export class MetaCard extends React.Component<IMetaCardProps, {
             if (item.linkEnabled) {
               const link = getLinkForTable((await TableInfoManager.getById(columnInfo.tableInfoId)).tableName, "card", ":id");
               if (link) {
-                item.render = (value: any, obj: any): JSX.Element => value && (
+                item.render = (value: any, obj: any): React.JSX.Element => value && (
                   <RouterLink
                     to={link.replace(
                       ":id",

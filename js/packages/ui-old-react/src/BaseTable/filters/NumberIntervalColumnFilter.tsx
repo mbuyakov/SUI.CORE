@@ -42,7 +42,7 @@ export class NumberIntervalColumnFilter extends React.Component<INumberIntervalC
     }
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <div
         style={{

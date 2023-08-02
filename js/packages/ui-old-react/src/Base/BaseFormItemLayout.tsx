@@ -31,7 +31,7 @@ export type FixedRuleItem = Omit<RuleItem, "pattern"> & {
 export interface IBaseFormItemLayoutBase {
   fieldName: string;
   initialValue?: any;
-  inputNode?: JSX.Element; // Required. Mark as non-required because IBaseFormItemLayoutMask
+  inputNode?: React.JSX.Element; // Required. Mark as non-required because IBaseFormItemLayoutMask
   required?: boolean;
   requiredType?: RuleType;
   rules?: FixedRuleItem[];
@@ -39,7 +39,7 @@ export interface IBaseFormItemLayoutBase {
   valuePropName?: string;
   afterChange?(value: any, form: BaseForm, oldValue: any): void,
   getValueFromEvent?(...args: any[]): any;
-  helpRenderer?(error: string): string | JSX.Element;
+  helpRenderer?(error: string): string | React.JSX.Element;
   mapFormValuesToInputNodeProps?(get: ValuesGetter): IObjectWithIndex;
   mapFormValuesToRequired?(get: ValuesGetter): boolean;
   titleVerticalAlign?: "baseline" | "bottom" | "middle" | "sub" | "super" | "text-bottom" | "text-top" | "top";

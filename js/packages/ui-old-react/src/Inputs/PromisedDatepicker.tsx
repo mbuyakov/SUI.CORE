@@ -21,10 +21,10 @@ export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps,
     };
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {promise, popconfirmSettings, ...selectProps} = this.props;
-    const saveButton: JSX.Element = this.wrapConfirmAndError(
+    const saveButton: React.JSX.Element = this.wrapConfirmAndError(
       <IconButton
         disabled={this.state.loading}
         onClick={this.saveWithoutValue}
@@ -33,7 +33,7 @@ export class PromisedDatepicker extends PromisedBase<PromisedDatepickerProps,
         {this.state.loading ? (<CircularProgress size={16}/>) : (<MuiIcons.SaveOutlined/>)}
       </IconButton>
     );
-    const datePickerWithPopover: JSX.Element = this.wrapInValidationPopover(
+    const datePickerWithPopover: React.JSX.Element = this.wrapInValidationPopover(
       <DatePicker
         {...selectProps as DatePickerProps}
         disabled={this.props.disabled || this.state.loading}

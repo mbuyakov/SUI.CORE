@@ -4,7 +4,7 @@ import {FileSearchOutlined} from "@ant-design/icons";
 import {Empty} from "@sui/deps-antd";
 import {TABLE_NO_DATA_CELL_SMALL} from "@/styles";
 
-export const LoadingNoDataCell = ({colSpan}: { colSpan?: number | undefined }): JSX.Element => (
+export const LoadingNoDataCell = ({colSpan}: { colSpan?: number | undefined }): React.JSX.Element => (
   <TableCell
     style={{height: 180}}
     colSpan={colSpan}
@@ -13,7 +13,7 @@ export const LoadingNoDataCell = ({colSpan}: { colSpan?: number | undefined }): 
   </TableCell>
 );
 
-export const LoadingNoDataCellSmall = ({colSpan}: { colSpan?: number | undefined }): JSX.Element => (
+export const LoadingNoDataCellSmall = ({colSpan}: { colSpan?: number | undefined }): React.JSX.Element => (
   <TableCell
     style={{
       paddingLeft: 64

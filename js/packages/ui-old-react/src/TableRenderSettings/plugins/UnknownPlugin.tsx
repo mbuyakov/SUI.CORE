@@ -23,7 +23,7 @@ export class UnknownPlugin extends TableRenderParamsPlugin<{}> {
   }
 
   public async baseTableColGenerator(result: IBaseTableColLayout, _renderColumnInfo: ColumnInfo | null, _props: IColumnInfoToBaseTableColProps, tableRenderParams: ITableRenderParams): Promise<void> {
-    result.render = (): JSX.Element => (
+    result.render = (): React.JSX.Element => (
       <Tooltip
         title={`Неизвестный режим ${tableRenderParams.renderType}`}
       >

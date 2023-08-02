@@ -26,7 +26,7 @@ export interface IDnfActionsProps {
 
 export class DnfActions extends React.Component<IDnfActionsProps> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <Button.Group {...this.props.buttonGroupProps}>
         <Button

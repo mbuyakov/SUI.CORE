@@ -1,5 +1,7 @@
 // noinspection ES6PreferShortImport
+// noinspection ES6PreferShortImport
 import {ISerializable, SerializableDnDChild} from "../Draggable/Serializable";
+import React from "react";
 // noinspection ES6PreferShortImport
 import {Rendered} from "../other";
 
@@ -19,5 +21,5 @@ export abstract class MetaCardPlugin<T extends ISerializable> {
 
   public abstract getNewSettingsInstance(fromPlain: boolean): Rendered<SerializableDnDChild<T>>;
 
-  public abstract render(params: IMetaCardRenderParams<T>): JSX.Element;
+  public abstract render(params: IMetaCardRenderParams<T>): React.JSX.Element;
 }

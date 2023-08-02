@@ -21,15 +21,15 @@ export interface IDnfFormProps {
   addConjunctionButtonTitle?: string;
   addDisjunctionButtonProps?: Omit<ButtonProps, "onClick">;
   addDisjunctionButtonTitle?: string;
-  andDivider?: JSX.Element;
-  orDivider?: JSX.Element;
+  andDivider?: React.JSX.Element;
+  orDivider?: React.JSX.Element;
   allowClear?: boolean;
   disableRowSwap?: boolean;
   gap?: number;
   andCardProps?: CardProps;
   addDisjunctionFormItemProps?: FormItemProps;
 
-  rowCreator(meta: IRowCreatorMeta): JSX.Element;
+  rowCreator(meta: IRowCreatorMeta): React.JSX.Element;
 }
 
 export class DnfForm extends React.Component<IDnfFormProps> {
@@ -37,7 +37,7 @@ export class DnfForm extends React.Component<IDnfFormProps> {
   // tslint:disable-next-line:typedef
   public static DEFAULT_GAP = 8;
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const gap = this.props.gap || DnfForm.DEFAULT_GAP;
 
     return (

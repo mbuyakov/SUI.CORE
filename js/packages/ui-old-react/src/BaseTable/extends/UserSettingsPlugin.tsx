@@ -29,7 +29,7 @@ export class UserSettingsPlugin extends React.Component<IUserSettingsPluginProps
 
   private lastSavedUserSettings: IBaseTableUserSettings;
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <Plugin name="UserSettings">
         {/* Watchers */}

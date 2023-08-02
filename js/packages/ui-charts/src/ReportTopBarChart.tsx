@@ -31,7 +31,7 @@ interface ITopBarChartProps {
 
   additionalSetting?(props: IReportTopBarChartSettingProps): void;
 
-  categoryAxisLabelGenerator(element: IObjectWithIndex): string | JSX.Element;
+  categoryAxisLabelGenerator(element: IObjectWithIndex): string | React.JSX.Element;
 
   onSeriesClick?(event: any): void;
 }
@@ -63,7 +63,7 @@ export class ReportTopBarChart extends React.Component<ITopBarChartProps, {
     this.updateState();
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const data = this.props.data || [];
     const length = data.length;
 

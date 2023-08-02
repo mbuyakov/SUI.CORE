@@ -99,7 +99,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
     return LAST_ROW_VERSION;
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const isVersionNotLast = this.isVersionNotLast();
     const type = this.props.startType || this.detectType();
     switch (type) {

@@ -27,7 +27,7 @@ export interface IRouterLinkProps {
 
 export class RouterLink extends React.Component<IRouterLinkProps> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <Link
         style={{...(this.props.monospace ? {fontFamily: "monospace"} : {}), ...(this.props.style || {})}}

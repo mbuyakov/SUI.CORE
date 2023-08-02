@@ -35,7 +35,7 @@ export class OmsColumnFilter extends React.Component<IOmsColumnFilterProps, IOms
     }
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {children, ...clearProps} = this.props;
 

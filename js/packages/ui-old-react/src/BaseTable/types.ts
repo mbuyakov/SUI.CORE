@@ -41,7 +41,7 @@ export interface ICommonColumnSearchProps {
   placeholder?: string | [string, string];
 }
 
-export type SelectData = Array<{ title?: string | JSX.Element; value: string | number; }>;
+export type SelectData = Array<{ title?: string | React.JSX.Element; value: string | number; }>;
 
 export type INewSearchProps = ICommonColumnSearchProps & {
   format?: string; // for datetime and date
@@ -105,7 +105,7 @@ export interface IRemoteBaseTableFields {
 }
 
 export interface IRemoteBaseTableFunctions {
-  customFilterComponent?(props: LazyTableFilterRowCellProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
+  customFilterComponent?(props: LazyTableFilterRowCellProps, column: IBaseTableColLayout, type?: string): React.JSX.Element | null;
 
   getChildGroups?(currentRows: any[], grouping: Grouping, rootRows: any[]): Array<{ childRows?: any[], key: number | string, value?: any }>; // Remote grouping
   onCurrentPageChange?(currentPage: number): void; // Remote paging
@@ -129,7 +129,7 @@ export interface IBaseTableProps<TSelection = any> {
   defaultWidth?: number;
   disabledFilters?: string[];
   doubleVerticalScroll?: boolean;
-  extra?: string | JSX.Element;
+  extra?: string | React.JSX.Element;
   filteringEnabled?: boolean;
   fitToCardBody?: boolean;
   fitToCollapseBody?: boolean;
@@ -156,19 +156,19 @@ export interface IBaseTableProps<TSelection = any> {
   selectionEnabled?: boolean;
   singleSelection?: boolean;
   sortingEnabled?: boolean;
-  title?: string | JSX.Element;
-  toolbarButtons?: JSX.Element[];
+  title?: string | React.JSX.Element;
+  toolbarButtons?: React.JSX.Element[];
   toolbarEnabled?: boolean;
   virtual?: boolean;
   visibilityEnabled?: boolean;
-  warnings?: Array<JSX.Element | string>;
+  warnings?: Array<React.JSX.Element | string>;
 
   beforeExport?(): Promise<boolean>; // TODO: Костыль, удалить при переводе экспорта на бек
   cellStyler?(row: any, value: any, column: IBaseTableColLayout): React.CSSProperties;
 
-  customFilterComponent?(props: TableFilterRow.CellProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
+  customFilterComponent?(props: TableFilterRow.CellProps, column: IBaseTableColLayout, type?: string): React.JSX.Element | null;
 
-  customSubtotalInfo?(subtotalData: IGroupSubtotalData): JSX.Element;
+  customSubtotalInfo?(subtotalData: IGroupSubtotalData): React.JSX.Element;
 
   expandableFilter?(row: any): boolean;
 

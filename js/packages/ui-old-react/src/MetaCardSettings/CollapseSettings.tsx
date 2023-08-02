@@ -45,7 +45,7 @@ export class CollapseSettings extends SerializableDnDChild<SerializedCollapseSet
     return LAST_COLLAPSE_VERSION;
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const isVersionNotLast = this.isVersionNotLast();
 
     return (

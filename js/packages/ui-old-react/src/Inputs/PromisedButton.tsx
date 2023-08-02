@@ -11,7 +11,7 @@ interface IPromisedButtonProps extends ButtonProps {
 // eslint-disable-next-line @typescript-eslint/ban-types
 export class PromisedButton extends PromisedBase<IPromisedButtonProps, IPromisedBaseState<{}>, {}> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {promise, ...buttonProps} = this.props;
 

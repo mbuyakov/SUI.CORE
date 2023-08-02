@@ -83,14 +83,14 @@ export function passwordValidator({password, username, email}: IPasswordValidato
   };
 }
 
-export function PasswordValidatorHelp({validationResult}: {validationResult: IPasswordValidatorResult}): JSX.Element {
-  const successRender = (message: string): JSX.Element => (
+export function PasswordValidatorHelp({validationResult}: {validationResult: IPasswordValidatorResult}): React.JSX.Element {
+  const successRender = (message: string): React.JSX.Element => (
     <div>
       <CheckOutlined style={{color: "green"}}/>
       <span style={{marginLeft: 12, color: "green"}}>{message}</span>
     </div>
   );
-  const errorRender = (message: string): JSX.Element => (
+  const errorRender = (message: string): React.JSX.Element => (
     <div>
       <CloseOutlined style={{color: "red"}}/>
       <span style={{marginLeft: 12, color: "red"}}>{message}</span>

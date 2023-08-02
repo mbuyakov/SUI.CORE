@@ -8,7 +8,7 @@ import {Nullable} from "@sui/util-types";
 
 export type ISuiRangePickerProps = RangePickerProps & { formatter?(value: string, event: InputEvent): string };
 
-export function SuiRangePicker(props: ISuiRangePickerProps): JSX.Element {
+export function SuiRangePicker(props: ISuiRangePickerProps): React.JSX.Element {
   const {formatter, ...rangePickerProps} = props;
 
   const classForSearch = React.useMemo(() => `SuiRangePicker-${uuidv4()}`, []);

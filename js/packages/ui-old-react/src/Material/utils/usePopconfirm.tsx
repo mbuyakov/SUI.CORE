@@ -4,7 +4,7 @@ import React, {useState} from "react";
 export type IPopconfirmSettings = Omit<PopconfirmProps, "onConfirm" | "onCancel" | "visible">;
 
 export interface IusePopconfirmState {
-  wrapper(element: JSX.Element): JSX.Element;
+  wrapper(element: React.JSX.Element): React.JSX.Element;
 
   getResult(): Promise<boolean>;
 }
@@ -13,7 +13,7 @@ export const usePopconfirm: (settings?: IPopconfirmSettings) => IusePopconfirmSt
   const [visible, setVisible] = useState(false);
   const [actions, setActions] = useState<{ onConfirm(): void, onCancel(): void }>();
 
-  const wrapper = (element): JSX.Element => settings
+  const wrapper = (element): React.JSX.Element => settings
     ? (
       <Popconfirm
         visible={visible}

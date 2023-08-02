@@ -7,13 +7,13 @@ export interface IResetUserSettingsPluginProps {
   onClick(getters: Getters): void | Promise<void>;
 }
 
-export function ResetUserSettingsPlugin(props: IResetUserSettingsPluginProps): JSX.Element {
+export function ResetUserSettingsPlugin(props: IResetUserSettingsPluginProps): React.JSX.Element {
   return (
     <Plugin>
       <Template name="toolbarContent">
         <TemplatePlaceholder/>
         <TemplateConnector>
-          {(getters: Getters): JSX.Element => {
+          {(getters: Getters): React.JSX.Element => {
             const onClick = (): void | Promise<void> => props.onClick(getters);
 
             return (

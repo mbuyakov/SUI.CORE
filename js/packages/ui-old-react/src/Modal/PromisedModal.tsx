@@ -7,7 +7,7 @@ import {PromisedButton} from "../Inputs";
 // noinspection ES6PreferShortImport
 import {ExtractProps} from "../other";
 
-export const defaultModalFooter = (okButton: JSX.Element, cancelButton: JSX.Element): React.ReactNode => (
+export const defaultModalFooter = (okButton: React.JSX.Element, cancelButton: React.JSX.Element): React.ReactNode => (
   <div
     style={{
       display: "grid",
@@ -25,7 +25,7 @@ export interface IPromisedModalProps extends Omit<ModalProps, "visible" | "onOk"
   defaultVisible?: boolean;
   okButtonProps?: Omit<ExtractProps<PromisedButton>, "promise" | "children">,
 
-  customFooter?(okButton: JSX.Element, cancelButton: JSX.Element): React.ReactNode;
+  customFooter?(okButton: React.JSX.Element, cancelButton: React.JSX.Element): React.ReactNode;
 
   onOpen?(): Promise<void>;
 
@@ -50,7 +50,7 @@ export class PromisedModal
     }
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const onCancel = this.onModalClose;
     const okButtonProps = this.props.okButtonProps || {};
 

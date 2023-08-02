@@ -35,7 +35,7 @@ export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPlu
   ): Promise<void> {
     const linkTableName = tableRenderParams.linkTableName || " ";
     const linkTemplate = !isBlank(linkTableName) && getLinkForTable(linkTableName, "card", ":id") || null;
-    result.render = (value: any): JSX.Element => {
+    result.render = (value: any): React.JSX.Element => {
       const [isExpanded, setExpanded] = React.useState(false);
       let links = getLinkFromJsonValue(value);
       const linksLength = links.length;

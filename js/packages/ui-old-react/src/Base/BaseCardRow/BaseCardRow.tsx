@@ -20,7 +20,7 @@ export const BaseCardRow: <T, ITEM>(props: {
   rowIndex: number,
   parent: BaseCardRowParent,
   rowsLength: number,
-}) => JSX.Element = props => {
+}) => React.JSX.Element = props => {
   const row = props.row;
   if (isRowWithDivider(row)) {
     return (

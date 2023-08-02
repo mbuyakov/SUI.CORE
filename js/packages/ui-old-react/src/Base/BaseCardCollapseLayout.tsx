@@ -14,7 +14,7 @@ export interface IBaseCardCollapseLayout<T, ITEM> {
   title: string;
 }
 
-export function renderIBaseCardCollapseLayout<T, ITEM>(sourceItem: T, panel: IBaseCardCollapseLayout<T, ITEM>, index: number, fitCollapsePanel: boolean, rowsCount: number): JSX.Element {
+export function renderIBaseCardCollapseLayout<T, ITEM>(sourceItem: T, panel: IBaseCardCollapseLayout<T, ITEM>, index: number, fitCollapsePanel: boolean, rowsCount: number): React.JSX.Element {
   const padding = defaultIfNotBoolean(panel.padding, true);
 
   return (

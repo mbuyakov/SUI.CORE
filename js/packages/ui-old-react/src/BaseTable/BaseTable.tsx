@@ -23,12 +23,12 @@ const PagingPanelContainer = CustomPagingPanelContainer;
 const ToolbarRoot = Mui.Toolbar.Root;
 const TableGroupRowContent = Mui.TableGroupRow.Content;
 
-export function defaultSubtotalInfo(subtotalData: IGroupSubtotalData): JSX.Element {
+export function defaultSubtotalInfo(subtotalData: IGroupSubtotalData): React.JSX.Element {
   return (<span>  (<em>Записей: {subtotalData.elements}</em>)</span>);
 }
 
 // Не нашел куда добавить
-export function booleanRender(value: boolean | null | undefined): JSX.Element {
+export function booleanRender(value: boolean | null | undefined): React.JSX.Element {
   return (typeof (value) === "boolean")
     ? value
       ? <CheckOutlined/>
@@ -61,7 +61,7 @@ export class BaseTable<TSelection = defaultSelection>
 
   private exportData?: any[];
 
-  private CellComponent = (props: any): JSX.Element => {
+  private CellComponent = (props: any): React.JSX.Element => {
     const render: TableCellRender = props.column.render;
     const value = Array.isArray(props.value) && (props.value[0] ? typeof props.value[0] !== "object" : true)
       ? props.value.toString()
@@ -77,7 +77,7 @@ export class BaseTable<TSelection = defaultSelection>
     );
   };
 
-  private FilterCell = (props: any): JSX.Element => (
+  private FilterCell = (props: any): React.JSX.Element => (
     <Mui.Table.Cell
       {...props as any}
     >
@@ -85,7 +85,7 @@ export class BaseTable<TSelection = defaultSelection>
     </Mui.Table.Cell>
   );
 
-  private RowComponent = (props: any): JSX.Element => (
+  private RowComponent = (props: any): React.JSX.Element => (
     <SuiThemeContext.Consumer>
       {theme => (
         <TableRow
@@ -96,14 +96,14 @@ export class BaseTable<TSelection = defaultSelection>
     </SuiThemeContext.Consumer>
   );
 
-  private ToggleCellComponent = (props: any): JSX.Element => (
+  private ToggleCellComponent = (props: any): React.JSX.Element => (
     (this.props.expandableFilter && !this.props.expandableFilter(props.row))
       ? <Cell {...props} />
       // customize icons
       : <CustomToggleCell {...props} />
   );
 
-  private SelectionCellComponent = (props: any): JSX.Element => (
+  private SelectionCellComponent = (props: any): React.JSX.Element => (
     (props.row.__SUI_available_to_select)
       ? <SelectionCell {...props} />
       : <Cell {...props} />
@@ -231,7 +231,7 @@ export class BaseTable<TSelection = defaultSelection>
         maxWidth: col.width,
       }));
 
-    function pagingContainerComponent(props: any): JSX.Element {
+    function pagingContainerComponent(props: any): React.JSX.Element {
       return (
         <PagingPanelContainer
           {...props}
@@ -279,7 +279,7 @@ export class BaseTable<TSelection = defaultSelection>
     const hasSubtotals = (this.props.cols || []).some(col => !!col.subtotal);
     const groupSubtotalData = this.props.groupSubtotalData;
 
-    const tableGroupRowContentComponent = (props: any): JSX.Element => {
+    const tableGroupRowContentComponent = (props: any): React.JSX.Element => {
       const subtotalData = groupSubtotalData && groupSubtotalData.get(props.row.compoundKey);
 
       return (

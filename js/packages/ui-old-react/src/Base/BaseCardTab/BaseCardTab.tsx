@@ -9,7 +9,7 @@ export type IBaseCardTabLayout<T, ITEM> =
   IBaseCardTabWithBlocks<T, ITEM> |
   IBaseCardTabCustom<T>;
 
-export function renderIBaseCardTabLayout<T, ITEM>(sourceItem: T, tab: IBaseCardTabLayout<T, ITEM>, tabIndex: number, forceRenderTabs: boolean): JSX.Element {
+export function renderIBaseCardTabLayout<T, ITEM>(sourceItem: T, tab: IBaseCardTabLayout<T, ITEM>, tabIndex: number, forceRenderTabs: boolean): React.JSX.Element {
   if (isCustomTab(tab)) {
     return (
       BaseCardTabCustom({

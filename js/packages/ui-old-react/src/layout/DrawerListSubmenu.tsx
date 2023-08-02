@@ -27,7 +27,7 @@ import {UpendRotator} from "@/Material";
 export const DrawerListSubmenu: React.FC<ListItemProps<"div"> & {
   active: boolean;
   hoverMode: boolean;
-  items: JSX.Element[];
+  items: React.JSX.Element[];
   CollapseProps?: Omit<CollapseProps, "in" | "timeout" | "children">;
   MenuProps?: Omit<MenuProps, "children" | "open">;
 }> = ({

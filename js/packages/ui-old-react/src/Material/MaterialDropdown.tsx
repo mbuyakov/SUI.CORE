@@ -10,7 +10,7 @@ import {IPopconfirmSettings, useOnClick, usePopconfirm} from "@/Material/utils";
 export type DropdownItem = Omit<MenuItemProps, "onClick"> & {
   key: string;
   tooltip?: string;
-  icon?: JSX.Element;
+  icon?: React.JSX.Element;
   text?: React.ReactNode;
   onClick?: () => void;
 };
@@ -66,7 +66,7 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
   }, {popconfirm, popupState});
   const loading = onClickLoading || props.loading;
 
-  let button: JSX.Element = null;
+  let button: React.JSX.Element = null;
 
   if (isIMaterialDropdownButtonProps(props)) {
     button = (

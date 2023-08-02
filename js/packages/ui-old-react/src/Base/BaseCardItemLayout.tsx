@@ -8,7 +8,7 @@ import * as React from "react";
 import {BaseTable, IBaseTableProps} from "../BaseTable";
 
 
-export type CardItemRender<T> = (value: any, item: T) => JSX.Element | string;
+export type CardItemRender<T> = (value: any, item: T) => React.JSX.Element | string;
 
 export interface IBaseCardItemLayout<T> {
   dataKey?: DataKey;

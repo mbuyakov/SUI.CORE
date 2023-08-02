@@ -20,7 +20,7 @@ export class PromisedErrorPopover extends React.Component<IPromisedErrorPopoverP
     this.state = {};
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     this.onUpdate();
 
     return (

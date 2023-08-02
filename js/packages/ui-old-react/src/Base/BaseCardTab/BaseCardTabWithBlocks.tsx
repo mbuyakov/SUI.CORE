@@ -15,7 +15,7 @@ export const BaseCardTabWithBlocks: <T, ITEM>(props: IBaseCardTabWithBlocks<T, I
   sourceItem: T
   tabIndex: number,
   forceRenderTabs: boolean
-}) => JSX.Element = props => (
+}) => React.JSX.Element = props => (
   <Tabs.TabPane
     key={props.key ?? props.tabIndex.toString()}
     tab={<span>{props.title}</span>}

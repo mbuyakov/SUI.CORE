@@ -16,10 +16,10 @@ export interface IBaseCardColLayout<T, ITEM> {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function renderIBaseCardColsLayout<T, ITEM>(sourceItem: any, cols: Array<IBaseCardColLayout<T, ITEM>>): JSX.Element {
+export function renderIBaseCardColsLayout<T, ITEM>(sourceItem: any, cols: Array<IBaseCardColLayout<T, ITEM>>): React.JSX.Element {
   const anyHasTitle = cols.some(col => col.title);
   const maxRows = Math.max(...cols.map(col => wrapInArrayWithoutNulls<any>(col.items).length));
-  const rows: JSX.Element[] = [];
+  const rows: React.JSX.Element[] = [];
 
   for (let curRowIndex = 0; curRowIndex < maxRows; curRowIndex++) {
     const itemsInRow: React.ReactNode[] = [];

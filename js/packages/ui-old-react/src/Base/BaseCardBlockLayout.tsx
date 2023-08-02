@@ -10,7 +10,7 @@ export interface IBaseCardBlockLayout<T, ITEM> {
 
 export const BaseCardBlock: <T, ITEM>(props: IBaseCardBlockLayout<T, ITEM> & {
   sourceItem: T
-}) => JSX.Element = props => {
+}) => React.JSX.Element = props => {
   const rows = wrapInArrayWithoutNulls(props.rows);
   const noPadding = rows.length == 1 && isRowWithCollapse(rows[0]); // If block have only collapsePanels - disable padding
   return (

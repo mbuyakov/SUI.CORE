@@ -50,7 +50,7 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
     }
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <SuiRangePicker
         {...this.props}

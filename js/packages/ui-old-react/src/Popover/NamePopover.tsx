@@ -19,7 +19,7 @@ interface INamePopoverProps {
 
   onChanged(newId: string): Promise<void> | void;
 
-  render?(type: NamePopoverRenderType): JSX.Element;
+  render?(type: NamePopoverRenderType): React.JSX.Element;
 }
 
 export class NamePopover extends React.Component<INamePopoverProps, {
@@ -48,7 +48,7 @@ export class NamePopover extends React.Component<INamePopoverProps, {
     this.setState({selectedNameId: nextProps.id});
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const renderType: NamePopoverRenderType = this.props.id ? "edit" : "choose";
 
     return (

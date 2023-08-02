@@ -10,7 +10,7 @@ import {ICommonColumnSearchProps, LazyTableFilterRowCellProps} from "../types";
 
 
 export interface ISelectColumnFilterData {
-  title?: string | JSX.Element;
+  title?: string | React.JSX.Element;
   value: string | number;
 }
 
@@ -58,7 +58,7 @@ export class BaseSelectFilter<T = SelectValue> extends React.Component<IBaseSele
     }
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {defaultValue, ...restProps} = this.props;
     //const filterValue = this.props.mode == "multiple" ? (this.props.disabled ? getDataByKey(this.props.filter, "value") : this.state?.value) : getDataByKey(this.props.filter, "value");

@@ -131,14 +131,14 @@ export interface IBackendTableProps {
   titleEnabled?: boolean;
   watchFilters?: boolean;
   lazyMode?: boolean;
-  cardLinkFnIcon?: JSX.Element;
+  cardLinkFnIcon?: React.JSX.Element;
   cardLinkTooltip?: string;
   ignoreFilterFromUrlState?: boolean;
 
   cardLinkFn?(id: string, row: IObjectWithIndex): string;
 
   // Подмена типов для красивого интерфейса
-  customFilterComponent?(props: ICustomFilterProps, column: IBaseTableColLayout, type?: string): JSX.Element | null;
+  customFilterComponent?(props: ICustomFilterProps, column: IBaseTableColLayout, type?: string): React.JSX.Element | null;
 }
 
 export interface IExpandedGroup {
@@ -162,7 +162,7 @@ type IBackendTableState<T> = {
   realExpandedGroups?: IExpandedGroup[];
   tableInfo?: TableInfo;
   title?: string;
-  warnings?: Array<string | JSX.Element>;
+  warnings?: Array<string | React.JSX.Element>;
   colorSettingsRowStyler?(row: any, theme: ISuiThemeContext): React.CSSProperties;
 } & IRemoteBaseTableFields;
 
@@ -341,7 +341,7 @@ export class BackendTable<TSelection = defaultSelection>
     await this.resendInitMessage();
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const admin = isAdmin();
     const suiSettings = getSUISettings();
     const allowExportAll = suiSettings.permissions?.exportAll ? suiSettings.permissions.exportAll(getUser()) : admin;
@@ -381,7 +381,7 @@ export class BackendTable<TSelection = defaultSelection>
                 noColsContent={
                   admin && (
                     <TableSettingsDialog
-                      id={this.state.tableInfo && this.state.tableInfo.id}
+                      id={this.state.tableInfo?.id}
                       style={{
                         height: 0,
                         display: "flex",
@@ -407,7 +407,7 @@ export class BackendTable<TSelection = defaultSelection>
                   (<ResetUserSettingsPlugin onClick={this.resetUserSettings}/>),
                   // admin && (<RawModePlugin enabled={this.state.rawMode} onClick={this.changeRaw}/>),
                   admin && !hideTableSettings && (
-                    <TableSettingsPlugin id={this.state.tableInfo && this.state.tableInfo.id}/>),
+                    <TableSettingsPlugin id={this.state.tableInfo?.id}/>),
                 ].filter(Boolean)}
                 rowStyler={this.generateRowStyler()}
                 warnings={admin ? this.state.warnings : undefined}
@@ -1095,7 +1095,7 @@ export class BackendTable<TSelection = defaultSelection>
           title: " ",
           width: DEFAULT_SERVICE_COLUMN_WIDTH,
           dataKey: "id",
-          render: (value: any, row: IObjectWithIndex): JSX.Element => (
+          render: (value: any, row: IObjectWithIndex): React.JSX.Element => (
             <RouterLink
               to={this.props.cardLinkFn(value, row)}
               type="link"

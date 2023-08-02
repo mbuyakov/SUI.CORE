@@ -329,7 +329,7 @@ interface IStringValueDatePickerProps extends Omit<DatePickerProps, "picker" | "
   onChange?(value: Nullable<string>): void;
 }
 
-function StringValueDatePicker(props: IStringValueDatePickerProps): JSX.Element {
+function StringValueDatePicker(props: IStringValueDatePickerProps): React.JSX.Element {
   const {value, onChange, ...restPickerProps} = props;
 
   const newOnChange = (newValue: Nullable<Moment>): void => {

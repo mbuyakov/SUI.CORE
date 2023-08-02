@@ -33,7 +33,7 @@ export class InnColumnFilter extends React.Component<IInnColumnFilterProps, IInn
     }
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {children, ...clearProps} = this.props;
 

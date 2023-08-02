@@ -88,7 +88,7 @@ export class AuditLogTable extends React.Component<IAuditLogTableProps> {
           {
             id: "userName",
             title: "Пользователь",
-            render: (value: string, row: IObjectWithIndex): JSX.Element => (
+            render: (value: string, row: IObjectWithIndex): React.JSX.Element => (
               <RouterLink
                 to={getLinkForTable("users", "card", row.userId)}
                 text={row.userName}

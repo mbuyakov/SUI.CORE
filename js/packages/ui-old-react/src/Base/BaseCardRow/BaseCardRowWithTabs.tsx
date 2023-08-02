@@ -15,7 +15,7 @@ export interface IBaseCardRowWithTabsLayout<T, ITEM> {
 
 export const BaseCardRowWithTabs: <T, ITEM>(props: IBaseCardRowWithTabsLayout<T, ITEM> & {
   sourceItem: T
-}) => JSX.Element = props => {
+}) => React.JSX.Element = props => {
   const tabs = wrapInArrayWithoutNulls(props.tabs);
   return (
     props.tabsInCard

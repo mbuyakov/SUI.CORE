@@ -56,7 +56,7 @@ export class TreeSelectWithWaitData<TValue = DefaultValueType, TValueType = {}, 
     return this.state.dataSet;
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const ready = this.state.ready;
 
     return (

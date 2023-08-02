@@ -9,7 +9,7 @@ type ManagedTabsProps = Omit<TabsProps, "onChange" | "activeKey" | "defaultActiv
 
 export class ManagedTabs extends React.Component<ManagedTabsProps> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const {routeKey, ...rest} = this.props;
     return (
       <BaseCardTabContextProvider

@@ -12,7 +12,7 @@ interface IReportElement {
   children?: React.ReactNode
   cardBodyStyle?: React.CSSProperties;
   cardStyle?: React.CSSProperties;
-  header?: JSX.Element | string;
+  header?: React.JSX.Element | string;
   minHeight?: number;
   print?: boolean
   type?: CardType;
@@ -32,7 +32,7 @@ export class ReportElement extends React.Component<IReportElement, {
     };
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <Card
         className={SMALL_HEADER_PADDING}

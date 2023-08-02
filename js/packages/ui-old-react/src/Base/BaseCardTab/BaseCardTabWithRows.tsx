@@ -19,7 +19,7 @@ export const BaseCardTabWithRows: <T, ITEM>(props: IBaseCardTabWithRows<T, ITEM>
   sourceItem: T
   tabIndex: number,
   forceRenderTabs: boolean
-}) => JSX.Element = props => (
+}) => React.JSX.Element = props => (
   <Tabs.TabPane
     key={props.key ?? props.tabIndex.toString()}
     tab={<span>{props.title}</span>}

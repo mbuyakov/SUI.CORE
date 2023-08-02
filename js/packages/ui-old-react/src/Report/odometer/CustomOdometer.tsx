@@ -24,7 +24,7 @@ const odometerAnimationDuration = 500;
 
 export class CustomOdometer extends React.Component<ICustomOdometerProps> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const difference = this.props.data && this.props.data.difference || 0;
 
     return (

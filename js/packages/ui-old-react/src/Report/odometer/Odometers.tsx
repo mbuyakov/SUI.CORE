@@ -7,7 +7,7 @@ export interface IOdometerDefinition {
   disableDifferenceOdometer?: boolean;
   id: string;
   odometerClassName?: string;
-  title: string | JSX.Element;
+  title: string | React.JSX.Element;
 }
 
 export interface IOdometersProps {
@@ -26,7 +26,7 @@ export const defaultSectionStyle = {
 
 export class Odometers extends React.Component<IOdometersProps> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <div
         style={this.props.containerStyle}

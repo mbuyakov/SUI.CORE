@@ -1,4 +1,5 @@
 import {ButtonProps} from "@sui/deps-antd";
+import React from "react";
 
 // noinspection ES6PreferShortImport
 import {BackendTable} from "../BackendTable";
@@ -39,6 +40,6 @@ export type IMutableBackendTableProps<TValues, TSelection, TEditValues = TValues
   // Others
   editableFilter?(row: IObjectWithIndex): boolean;
   mutationRoles?: string[];
-  customExtra?(createButton: JSX.Element, deleteButton: JSX.Element): JSX.Element;
+  customExtra?(createButton: React.JSX.Element, deleteButton: React.JSX.Element): React.JSX.Element;
   disableDeleteNotification?: boolean;
 };

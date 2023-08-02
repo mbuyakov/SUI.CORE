@@ -15,7 +15,7 @@ export type PromisedInputProps<V> = {
   allowEmpty?: boolean;
   customInput?: Rendered<React.Component<InputProps>>;
   disabled?: boolean;
-  icon?: JSX.Element;
+  icon?: React.JSX.Element;
   mask?: string;
   rowStyle?: React.CSSProperties;
   totalValueLength?: number;
@@ -46,11 +46,11 @@ export class PromisedInput<V = string | number> extends PromisedBase<PromisedInp
     };
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const input = this.props.customInput || <Input/>;
 
     const isEmptyAndEmptyNotAllowed = !this.props.allowEmpty && typeof this.state.value !== "number" && !trimIfString(this.state.value);
-    let saveButton: JSX.Element | null = (
+    let saveButton: React.JSX.Element | null = (
       <IconButton
         disabled={this.state.loading || isEmptyAndEmptyNotAllowed || !this.isValidatorTextEmpty()}
         onClick={this.saveWithoutValue}

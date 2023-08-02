@@ -4,7 +4,7 @@ import {Tooltip} from "@sui/deps-material";
 import React from "react";
 import {Nullable} from "@sui/util-types";
 
-export const tooltipWrapper = (tooltip: Nullable<string>, component: JSX.Element): JSX.Element => {
+export const tooltipWrapper = (tooltip: Nullable<string>, component: React.JSX.Element): React.JSX.Element => {
   // Div required for tooltip on disabled button
   component = (
     <div>

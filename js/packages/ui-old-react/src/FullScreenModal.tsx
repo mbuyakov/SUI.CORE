@@ -7,7 +7,7 @@ import {AppBarElevator} from "@/Material";
 import {sleep} from "@sui/util-chore";
 
 //TODO styles
-type ChildrenWithPopupContainer = (getPopupContainer?: () => HTMLElement) => JSX.Element;
+type ChildrenWithPopupContainer = (getPopupContainer?: () => HTMLElement) => React.JSX.Element;
 
 const styles = (theme: Theme) => ({
   toolbar: {
@@ -27,10 +27,10 @@ const Transition = React.forwardRef((
 
 interface IFullScreenModalProps {
   // classes?: ClassNameMap<'toolbar' | 'container'>,
-  children: JSX.Element | ChildrenWithPopupContainer,
+  children: React.JSX.Element | ChildrenWithPopupContainer,
   defaultOpen?: boolean;
   dialogProps?: Omit<DialogProps, "children" | "fullScreen" | "open" | "onClose">;
-  title: string | JSX.Element;
+  title: string | React.JSX.Element;
   withoutTransition?: boolean;
 
   onClose?(): void;
@@ -51,7 +51,7 @@ class FullScreenModalImpl extends React.Component<IFullScreenModalProps, {
     this.setState({open: true});
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
 
     return (
       <Dialog

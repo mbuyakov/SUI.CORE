@@ -18,7 +18,7 @@ export interface ITransitionGraphProps<TStatus, TID> {
 
 export class TransitionGraph<TStatus extends ITransitionStatus<TID>, TID> extends React.Component<ITransitionGraphProps<TStatus, TID>> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const {
       statuses,
       transitions,

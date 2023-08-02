@@ -5,13 +5,13 @@ import React from "react";
 export class RefreshMetaTablePlugin extends React.Component<{
   handleClick(): Promise<void>;
 }> {
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <Plugin>
         <Template name="toolbarContent">
           <TemplatePlaceholder/>
           <TemplateConnector>
-            {(): JSX.Element => (
+            {(): React.JSX.Element => (
               <Tooltip
                 title='Обновить данные'
                 placement='bottom'

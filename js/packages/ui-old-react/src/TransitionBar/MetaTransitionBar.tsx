@@ -247,7 +247,7 @@ export class MetaTransitionBar<TStatus extends ITransitionStatus<TID>, TAction =
     });
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const {transitionFormatter, ...barProps} = this.props;
     const transitions = this.state.transitions;
 

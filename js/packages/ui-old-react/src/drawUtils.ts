@@ -6,7 +6,7 @@ const MESSAGE_TIMEOUT = 3;
 /**
  * Draw error notification about data loading
  */
-export function loadingErrorNotification(descr: JSX.Element | string): void {
+export function loadingErrorNotification(descr: React.JSX.Element | string): void {
   errorNotification("Ошибка при загрузке данных", descr);
 }
 

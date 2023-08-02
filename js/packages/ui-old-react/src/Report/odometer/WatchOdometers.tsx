@@ -45,7 +45,7 @@ export class WatchOdometers extends React.Component<IWatchOdometersProps, IWatch
     clearInterval(this.intervalId);
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <Odometers
         {...this.props}

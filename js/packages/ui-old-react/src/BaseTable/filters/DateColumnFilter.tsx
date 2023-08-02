@@ -7,7 +7,7 @@ import {BaseDatetimeIntervalColumnFilter} from "./BaseDatetimeIntervalColumnFilt
 
 export class DateColumnFilter extends React.Component<LazyTableFilterRowCellProps & INewSearchProps> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <BaseDatetimeIntervalColumnFilter
         {...this.props}

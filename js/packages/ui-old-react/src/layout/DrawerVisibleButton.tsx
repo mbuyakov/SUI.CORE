@@ -6,7 +6,7 @@ import {UpendRotator} from "@/Material";
 export const DrawerVisibleButton: React.FC<Omit<IconButtonProps, "onClick"> & {
   forceDrawerOpen?: boolean;
   disableRotate?: boolean;
-  icon?: JSX.Element;
+  icon?: React.JSX.Element;
 }> = ({
         forceDrawerOpen,
         disableRotate,

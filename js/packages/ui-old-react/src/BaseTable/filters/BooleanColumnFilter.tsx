@@ -16,7 +16,7 @@ export type BooleanColumnFilterProps = LazyTableFilterRowCellProps
 
 export class BooleanColumnFilter extends React.Component<BooleanColumnFilterProps & INewSearchProps> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <BaseSelectFilter<string>
         {...this.props}

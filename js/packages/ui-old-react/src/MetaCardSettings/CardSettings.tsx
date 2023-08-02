@@ -36,7 +36,7 @@ export class CardSettings extends React.Component<ICardSettingsProps> implements
     return LAST_CARD_SETTINGS_VERSION;
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <div>
         <DnDList<ItemSettings | FreeText>

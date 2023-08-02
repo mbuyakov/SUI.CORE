@@ -56,7 +56,7 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
     return LAST_ITEM_VERSION;
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const isVersionNotLast = this.isVersionNotLast();
 
     return (

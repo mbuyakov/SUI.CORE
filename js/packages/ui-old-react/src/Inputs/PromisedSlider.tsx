@@ -17,11 +17,11 @@ export class PromisedSlider extends PromisedBase<PromisedSliderProps, IPromisedB
     };
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {promise, popconfirmSettings, ...sliderProps} = this.props;
 
-    const saveButton: JSX.Element = this.wrapConfirmAndError(
+    const saveButton: React.JSX.Element = this.wrapConfirmAndError(
       <IconButton
         disabled={this.state.loading || (this.state.savedValue === this.state.value)}
         onClick={this.saveWithoutValue}

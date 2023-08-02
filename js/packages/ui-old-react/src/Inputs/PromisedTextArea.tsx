@@ -12,7 +12,7 @@ export type PromisedTextAreaProps = {
   allowEmpty?: boolean;
   defaultValue?: string;
   disabled?: boolean;
-  icon?: JSX.Element;
+  icon?: React.JSX.Element;
   rowClassName?: string;
   rowStyle?: React.CSSProperties;
 } & IPromisedBaseProps<string> & Omit<TextAreaProps, "onChange" | "value">;
@@ -27,9 +27,9 @@ export class PromisedTextArea extends PromisedBase<PromisedTextAreaProps, IPromi
     };
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const isEmptyAndEmptyNotAllowed = !this.props.allowEmpty && !trimIfString(this.state.value);
-    let saveButton: JSX.Element | null = (
+    let saveButton: React.JSX.Element | null = (
       <IconButton
         disabled={this.state.loading || isEmptyAndEmptyNotAllowed || !this.isValidatorTextEmpty()}
         onClick={this.saveWithoutValue}

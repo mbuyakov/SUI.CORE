@@ -49,7 +49,7 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
     }
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const data: any = this.props.selectData;
     const value: any = this.state.value ?? (this.isMultiple() ? [] : undefined);
 

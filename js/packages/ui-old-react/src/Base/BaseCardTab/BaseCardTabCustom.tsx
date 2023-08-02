@@ -7,14 +7,14 @@ import {IBaseCardTabLayout} from "./BaseCardTab";
 export interface IBaseCardTabCustom<T> {
   key?: string;
   title: string;
-  render(item: T): JSX.Element | string;
+  render(item: T): React.JSX.Element | string;
 }
 
 export const BaseCardTabCustom: <T>(props: IBaseCardTabCustom<T> & {
   sourceItem: T,
   tabIndex: number,
   forceRenderTabs: boolean
-}) => JSX.Element = props => (
+}) => React.JSX.Element = props => (
   <Tabs.TabPane
     key={props.key ?? props.tabIndex.toString()}
     tab={<span>{props.title}</span>}

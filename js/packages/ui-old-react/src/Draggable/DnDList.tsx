@@ -83,7 +83,7 @@ export class DnDList<T extends DnDChild> extends DnDChild<IDnDListProps<T>, IDnD
     this.setState({items: applyDrag(this.state.items, dropResult, this.__internalProcessItem)});
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const card = !this.props.noCard;
     const direction = this.props.direction || "vertical";
     const hasAddButton = this.props.addButtons && this.props.addButtons.length > 0;

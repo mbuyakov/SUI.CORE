@@ -20,7 +20,7 @@ export class RowsList extends React.Component<{
   titleEnabled?: boolean
   onDelete?(): void
 }> {
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const titleEnabled = defaultIfNotBoolean(this.props.titleEnabled, true);
 
     return (

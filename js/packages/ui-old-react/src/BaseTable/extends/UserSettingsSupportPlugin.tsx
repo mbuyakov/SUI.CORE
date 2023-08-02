@@ -8,7 +8,7 @@ const fullColumnWidthsComputed = (getters: Getters): TableColumnWidthInfo[] => (
 // (т.к. он применяется до TableColumnVisibility)
 export class UserSettingsSupportPlugin extends React.Component {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <Plugin name="UserSettingsSupport">
         <Getter

@@ -43,7 +43,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
     this.state = {};
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <DisableEditContext.Consumer>
         {(disableEdit): JSX.Element => {
@@ -92,7 +92,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
           if (rowEditable) {
             _serviceColumns.unshift({
               id: "__edit",
-              render: (_: null, row: IObjectWithIndex): JSX.Element =>
+              render: (_: null, row: IObjectWithIndex): React.JSX.Element =>
                 (!editableFilter || editableFilter(row))
                   ? (
                     <PromisedMaterialIconButton

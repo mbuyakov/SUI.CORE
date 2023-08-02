@@ -18,9 +18,9 @@ const renderTabBar = (): React.ReactElement => <React.Fragment/>;
 
 export interface IBaseCardProps<T, ITEM> {
   cardStyle?: React.CSSProperties;
-  cardTitle?: JSX.Element | string; // only for noCard: false
+  cardTitle?: React.JSX.Element | string; // only for noCard: false
   className?: string; // only for noCard: false
-  extra?: string | JSX.Element;
+  extra?: string | React.JSX.Element;
   forceRenderTabs?: boolean;
   item?: T;
   noCard?: boolean; // Paradox mode
@@ -33,7 +33,7 @@ export interface IBaseCardProps<T, ITEM> {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Component<IBaseCardProps<T, ITEM>> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     let tabList;
     let tabBarExtraContent;
     let body;

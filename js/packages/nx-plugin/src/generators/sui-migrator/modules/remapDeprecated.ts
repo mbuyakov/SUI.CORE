@@ -9,7 +9,6 @@ export function remapDeprecated(content: string): string {
     if (node.left.getText() == "JSX") {
       shouldAddImport = true;
       logWithPrefix("remapDeprecated", `Replace JSX.${node.right.getText()} to React.JSX.${node.right.getText()}`);
-      // import React from "react";
 
       return printNode(
         factory.createQualifiedName(

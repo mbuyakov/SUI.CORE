@@ -23,7 +23,7 @@ export type ISelectWithWaitDataProps<TValueType, TGroupType> = Omit<SelectProps<
 
 export interface ISelectWithWaitDataState {
   dataSet?: IDataSet[];
-  options?: JSX.Element[];
+  options?: React.JSX.Element[];
   placeholder?: string;
   ready?: boolean;
 }
@@ -54,7 +54,7 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
     return this.state.dataSet;
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const ready = this.state.ready;
 
     return (
@@ -106,7 +106,7 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
       this.props.groupTableFilter
     );
 
-    let options: JSX.Element[];
+    let options: React.JSX.Element[];
     let firstElement: IDataSet;
 
     if (groupTableInfo) {

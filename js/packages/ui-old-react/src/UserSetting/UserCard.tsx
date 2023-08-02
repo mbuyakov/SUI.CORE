@@ -21,7 +21,7 @@ interface IUserCardProps<TDetail, TAdditional> {
   additionalMainInfoRows?: OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseCardItemLayout<any>>>;
   additionalRows?: OneOrArrayWithNulls<IBaseCardRowLayout<any, IBaseCardItemLayout<any>>>;
   allowDeleteOperations?: boolean;
-  extraHeader?: JSX.Element;
+  extraHeader?: React.JSX.Element;
   roles?: IRole[];
   userData: IUser<TDetail> & TAdditional;
 
@@ -42,7 +42,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
     this.state = {};
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <WaitData
         data={this.props.userData}
@@ -95,7 +95,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                     items: {
                       title: "ФИО",
                       dataKey: "name",
-                      render: (name: string): JSX.Element => (
+                      render: (name: string): React.JSX.Element => (
                         <EditablePromisedComponent>
                           <PromisedInput
                             promise={this.props.updateMainInfoPartFn("name")}
@@ -113,7 +113,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                     items: {
                       title: "Электронная почта",
                       dataKey: "email",
-                      render: (email: string): JSX.Element => (
+                      render: (email: string): React.JSX.Element => (
                         <EditablePromisedComponent>
                           <PromisedInput
                             promise={this.props.updateMainInfoPartFn("email")}
@@ -131,7 +131,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                     items: {
                       title: "Имя пользователя",
                       dataKey: "username",
-                      render: (username: string): JSX.Element => (
+                      render: (username: string): React.JSX.Element => (
                         <EditablePromisedComponent>
                           <PromisedInput
                             promise={this.props.updateMainInfoPartFn("username")}
@@ -153,7 +153,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                     colspan: COLSPAN,
                     items: {
                       title: "Пароль",
-                      render: (): JSX.Element => (
+                      render: (): React.JSX.Element => (
                         <EditablePromisedComponent
                           nonEditRender={(): string => "********"}
                         >
@@ -180,7 +180,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
                     items: {
                       title: "Список ролей",
                       dataKey: ["userRolesByUserId", "nodes"],
-                      render: (userRoles: IUserRole[] | undefined): JSX.Element => (
+                      render: (userRoles: IUserRole[] | undefined): React.JSX.Element => (
                         <EditablePromisedComponent
                           nonEditRender={(roleIds: string[] | undefined): string => roleIds?.length
                             ? this.props.roles?.filter(role => roleIds.includes(role.id)).map(role => role.rusName).join(", ")

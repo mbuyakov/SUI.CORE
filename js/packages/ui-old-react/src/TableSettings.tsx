@@ -35,7 +35,7 @@ export function FullScreenTableSettings(props: {
   defaultOpen?: boolean
   dialogRef?: React.RefObject<FullScreenModalClass>,
   id: string,
-}): JSX.Element {
+}): React.JSX.Element {
   const {id, dialogRef, defaultOpen} = props;
 
   return (
@@ -227,7 +227,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
     await this.updateData();
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <WaitData<ITableSettingsState>
         data={this.state.tableInfoById && this.state.allRoles && this.state.allSubtotalTypes && this.state}
@@ -252,7 +252,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                   cols: {
                     items: [
                       {
-                        render: (): JSX.Element =>
+                        render: (): React.JSX.Element =>
                           (
                             this.props.popupMode
                               // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -356,7 +356,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                         {
                           title: "Имя таблицы в интерфейсе",
                           dataKey: ["nameByNameId"],
-                          render: (value: IName | undefined): JSX.Element => (
+                          render: (value: IName | undefined): React.JSX.Element => (
                             <div
                               style={{
                                 display: "grid",
@@ -385,7 +385,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                         {
                           title: "Разбиение на страницы",
                           dataKey: "pageSizes",
-                          render: (value: string): JSX.Element => (
+                          render: (value: string): React.JSX.Element => (
                             <PromisedInput<string>
                               defaultValue={value}
                               validator={(value): string | undefined => PAGE_SIZE_REGEXP.test(value) ? undefined : "Некорректный формат. Пример: 10,25,100"}
@@ -412,7 +412,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                           }
                         ].map(setting => ({
                           ...setting,
-                          render: (value: string): JSX.Element => (
+                          render: (value: string): React.JSX.Element => (
                             <div style={{width: 500}}>
                               <PromisedSelect<string>
                                 defaultValue={value}
@@ -433,7 +433,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                         {
                           title: "Справочник",
                           dataKey: "isCatalog",
-                          render: (value: boolean): JSX.Element => (
+                          render: (value: boolean): React.JSX.Element => (
                             <PromisedSwitch
                               defaultChecked={value}
                               promise={isCatalog => (
@@ -449,7 +449,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                         isCatalog && {
                           title: "По алфавиту",
                           dataKey: "isAlphabetSort",
-                          render: (value: boolean): JSX.Element => (
+                          render: (value: boolean): React.JSX.Element => (
                             <PromisedSwitch
                               defaultChecked={value}
                               promise={generateUpdateFn("tableInfo", this.props.id, "isAlphabetSort")}
@@ -459,7 +459,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                         auditable && {
                           title: "Вести аудит",
                           dataKey: "isAudited",
-                          render: (value: boolean): JSX.Element => (
+                          render: (value: boolean): React.JSX.Element => (
                             <PromisedSwitch
                               defaultChecked={value}
                               promise={this.onIsAuditedChangeFn}
@@ -482,7 +482,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                 {
                                   title: "Доступность для всех колонок",
                                   dataKey: ["columnInfosByTableInfoId", "nodes"],
-                                  render: (value: IColumnInfo[]): JSX.Element => (
+                                  render: (value: IColumnInfo[]): React.JSX.Element => (
                                     <PromisedSwitch
                                       defaultChecked={value.every(col => col.visible)}
                                       popconfirmSettings={true}
@@ -510,7 +510,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                               items: [
                                 {
                                   dataKey: ["columnInfosByTableInfoId", "nodes"],
-                                  render: (value: IColumnInfo[]): JSX.Element => (
+                                  render: (value: IColumnInfo[]): React.JSX.Element => (
                                     <DraggableRowTable
                                       scroll={{x: true}}
                                       pagination={false}
@@ -682,7 +682,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                 {
                                   title: "Отображение по умолчанию для всех колонок",
                                   dataKey: ["columnInfosByTableInfoId", "nodes"],
-                                  render: (value: IColumnInfo[]): JSX.Element => (
+                                  render: (value: IColumnInfo[]): React.JSX.Element => (
                                     <PromisedSwitch
                                       defaultChecked={value.every(col => col.defaultVisible)}
                                       popconfirmSettings={true}
@@ -710,11 +710,11 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                               items: [
                                 {
                                   dataKey: ["columnInfosByTableInfoId", "nodes"],
-                                  render: (value: IColumnInfo[], item: any): JSX.Element => (
+                                  render: (value: IColumnInfo[], item: any): React.JSX.Element => (
                                     <Table
                                       components={{
                                         body: {
-                                          row: (props: any): JSX.Element => {
+                                          row: (props: any): React.JSX.Element => {
                                             const visible = props.children[0].props.record.visible;
 
                                             return (
@@ -870,7 +870,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                       rows: {
                         cols: {
                           items: {
-                            render: (_: any, item: any): JSX.Element => {
+                            render: (_: any, item: any): React.JSX.Element => {
                               let plain;
                               try {
                                 plain = JSON.parse(item.cardRenderParams);
@@ -902,7 +902,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                       rows: {
                         cols: {
                           items: {
-                            render: (_: any, item: ITableInfo): JSX.Element => (<AdditionalTab tableInfo={new TableInfo(item)}/>),
+                            render: (_: any, item: ITableInfo): React.JSX.Element => (<AdditionalTab tableInfo={new TableInfo(item)}/>),
                           },
                         },
                       },

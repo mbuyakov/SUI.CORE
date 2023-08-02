@@ -69,7 +69,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
   fields?: IFieldNode[]
 }> implements ISerializableComponent<SerializedCardSettings> {
 
-  private static mapFields(fields: IFieldNode[], parentKey: string = ""): JSX.Element[] {
+  private static mapFields(fields: IFieldNode[], parentKey: string = ""): React.JSX.Element[] {
     return fields.map(field => {
       const key = `${parentKey}${field.colInfoIds}`;
       let child = null;

@@ -40,7 +40,7 @@ export class ColSettings extends SerializableDnDChild<SerializedColSettings> {
     return LAST_COL_VERSION;
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <DnDList<ItemSettings>
         ref={this.itemsRef}

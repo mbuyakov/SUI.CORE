@@ -6,13 +6,13 @@ export class RawModePlugin extends React.Component<{
   enabled: boolean;
   onClick(): void;
 }> {
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <Plugin>
         <Template name="toolbarContent">
           <TemplatePlaceholder/>
           <TemplateConnector>
-            {(): JSX.Element => (
+            {(): React.JSX.Element => (
               <Tooltip title='"Сырой" режим' placement='bottom' enterDelay={300}>
                 <IconButton onClick={this.props.onClick} size="large">
                   <MuiIcons.BugReport style={this.props.enabled ? {color: "#ff4d4f"} : {}}/>

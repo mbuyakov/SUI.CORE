@@ -22,11 +22,11 @@ export interface IFilterReportElementProps<TData, TFilter>
   initialFilter: TFilter;
   popoverProps?: Omit<PopoverProps, "children" | "content" | "trigger">;
 
-  children(data: TData, filter: TFilter): JSX.Element;
+  children(data: TData, filter: TFilter): React.JSX.Element;
 
   fetchData(filter: TFilter): Promise<TData>;
 
-  popoverContent(filter: TFilter, filterChangeHandler: FilterChangeHandler<TFilter>): JSX.Element;
+  popoverContent(filter: TFilter, filterChangeHandler: FilterChangeHandler<TFilter>): React.JSX.Element;
 }
 
 export interface IFilterReportElementState<TData, TFilter> {
@@ -54,7 +54,7 @@ export class FilterReportElement<TData, TFilter = {}>
     this.setState({data: await this.props.fetchData(this.state.filter)});
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const {children, ...restProps} = this.props;
     const {data, filter, lastFetchedFilter, loading, popoverOpened} = this.state;
 

@@ -42,7 +42,7 @@ function hasTooltip(tooltipProps?: TooltipProps): boolean {
 function wrapInTooltip(
   element: React.ReactElement,
   tooltipProps?: TooltipProps
-): string | JSX.Element {
+): string | React.JSX.Element {
   return hasTooltip(tooltipProps)
     ? (
       <Tooltip
@@ -56,7 +56,7 @@ function wrapInTooltip(
 function wrapInPopover(
   element: React.ReactElement,
   popconfirmProps?: PopconfirmProps
-): string | JSX.Element {
+): string | React.JSX.Element {
   return hasPopconfirm(popconfirmProps)
     ? (
       <Popconfirm
@@ -67,7 +67,7 @@ function wrapInPopover(
     ) : element;
 }
 
-const loadingIcon = (loading: boolean): JSX.Element => loading ? <span><LoadingOutlined/>&nbsp;</span> : null;
+const loadingIcon = (loading: boolean): React.JSX.Element => loading ? <span><LoadingOutlined/>&nbsp;</span> : null;
 
 // TODO: Popconfirm for resolutions
 export class TransitionBar<TStatus extends { id: TID }, TID = string>
@@ -78,7 +78,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
     this.state = {loading: false};
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const {
       buttonGroupProps,
       commonButtonProps = {},

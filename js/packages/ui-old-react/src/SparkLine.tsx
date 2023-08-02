@@ -6,7 +6,7 @@ interface ISparkLineProps {
   value: number;
 }
 
-export function SparkLine(props: ISparkLineProps): JSX.Element {
+export function SparkLine(props: ISparkLineProps): React.JSX.Element {
   const {value} = props;
 
   return (

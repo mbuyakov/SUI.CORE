@@ -152,7 +152,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   }
 
   // eslint-disable-next-line react/no-unused-class-component-methods
-  protected wrapConfirmAndError(child: JSX.Element | null): JSX.Element {
+  protected wrapConfirmAndError(child: React.JSX.Element | null): React.JSX.Element {
     const childWithErrorPopover = (
       <PromisedErrorPopover
         {...this.props.errorPopoverProps}
@@ -184,7 +184,7 @@ export abstract class PromisedBase<P, S extends IPromisedBaseState<V>, V> extend
   }
 
   // eslint-disable-next-line react/no-unused-class-component-methods
-  protected wrapInValidationPopover(child: JSX.Element | null): JSX.Element {
+  protected wrapInValidationPopover(child: React.JSX.Element | null): React.JSX.Element {
     if (!this.getValidator()) {
       return child;
     }

@@ -1,4 +1,5 @@
 import {OneOrArrayWithNulls, wrapInArrayWithoutNulls} from "@sui/ui-old-core";
+import React from "react";
 import {IBaseCardColLayout, renderIBaseCardColsLayout} from "@/Base/BaseCardColLayout";
 import {IBaseCardRowLayout} from "@/Base/BaseCardRow/BaseCardRow";
 
@@ -8,7 +9,7 @@ export interface IBaseCardRowWithColsLayout<T, ITEM> {
 
 export const BaseCardRowWithCols: <T, ITEM>(props: IBaseCardRowWithColsLayout<T, ITEM> & {
   sourceItem: T
-}) => JSX.Element = props => (
+}) => React.JSX.Element = props => (
   renderIBaseCardColsLayout(props.sourceItem, wrapInArrayWithoutNulls(props.cols))
 );
 

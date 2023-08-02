@@ -7,7 +7,7 @@ import React from "react";
 import {YELLOW_BLINK} from "../../styles";
 
 export interface IWarningPluginProps {
-  messages?: Array<JSX.Element | string>
+  messages?: Array<React.JSX.Element | string>
 }
 
 export class WarningPlugin extends React.Component<IWarningPluginProps, {

@@ -45,7 +45,7 @@ export type IMutationFilterReportElementProps<TData, TFilter, TRaw = any> = Omit
 export class MutationFilterReportElement<TData, TFilter = {}, TRaw = any>
   extends React.Component<IMutationFilterReportElementProps<TData, TFilter, TRaw>> {
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <FilterReportElement<TData, TFilter>
         {...this.props}

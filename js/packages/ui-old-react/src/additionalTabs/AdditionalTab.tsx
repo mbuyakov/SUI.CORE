@@ -20,7 +20,7 @@ export class AdditionalTab extends React.Component<IAdditionalTabProps, IAdditio
     this.state = {value: props.tableInfo.colorSettings ? JSON.parse(props.tableInfo.colorSettings)?.expression : null};
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <Card
         type="inner"

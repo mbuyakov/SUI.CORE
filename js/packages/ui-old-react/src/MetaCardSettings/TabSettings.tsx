@@ -49,7 +49,7 @@ export class TabSettings extends SerializableDnDChild<SerializedTabSettings> {
     return TAB_LAST_VERSION;
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const isVersionNotLast = this.isVersionNotLast();
 
     return (

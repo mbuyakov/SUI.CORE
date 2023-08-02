@@ -3,7 +3,7 @@ import React from "react";
 
 export const AppBarElevator: React.FC<{
   target?: Node | Window
-  children: JSX.Element
+  children: React.JSX.Element
 }> = ({
         target,
         children

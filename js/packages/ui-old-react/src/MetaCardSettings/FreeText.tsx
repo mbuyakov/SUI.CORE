@@ -35,7 +35,7 @@ export class FreeText extends SerializableDnDChild<SerializedFreeText> {
     return LAST_FREE_TEXT_VERSION;
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <Chip
         onDelete={this.props.onDelete}

@@ -18,7 +18,7 @@ interface IEditModeContainerProps {
   defaultEditMode?: boolean;
 }
 
-function EditModeContainer(props: IEditModeContainerProps): JSX.Element {
+function EditModeContainer(props: IEditModeContainerProps): React.JSX.Element {
   const [editMode, setEditMode] = useState(!!props.defaultEditMode || false);
   let providerValue: IEditModeContext = {outerDisable: false, setEditMode};
 

@@ -33,7 +33,7 @@ export class GroupSummaryRow extends React.Component<IGroupSummaryRowProps> {
     }, [] as TableRowProps[]);
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <Plugin>
         <Getter

@@ -18,7 +18,7 @@ export class TableSettingsDialog extends React.Component<ITableSettingsDialogPro
 
   private readonly dialogRef: React.RefObject<FullScreenModalClass> = React.createRef<FullScreenModalClass>();
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <div style={this.props.style}>
         <Tooltip title='Редактировать права и видимость колонок' placement='bottom' enterDelay={300}>
@@ -49,13 +49,13 @@ export class TableSettingsDialog extends React.Component<ITableSettingsDialogPro
 export class TableSettingsPlugin extends React.Component<{
   id: string;
 }> {
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <Plugin>
         <Template name="toolbarContent">
           <TemplatePlaceholder/>
           <TemplateConnector>
-            {(): JSX.Element => (
+            {(): React.JSX.Element => (
               <TableSettingsDialog id={this.props.id}/>
             )}
           </TemplateConnector>

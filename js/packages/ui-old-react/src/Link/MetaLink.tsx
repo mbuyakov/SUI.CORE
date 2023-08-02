@@ -23,14 +23,14 @@ interface IMetaLinkState {
   renderValue?: RenderValue;
 }
 
-export function metaLinkRender(table: string, withLink: boolean = false): (id: string | number | null | undefined) => JSX.Element | string {
-  return (id): JSX.Element | string =>
+export function metaLinkRender(table: string, withLink: boolean = false): (id: string | number | null | undefined) => React.JSX.Element | string {
+  return (id): React.JSX.Element | string =>
     (id != null)
       ? <MetaLink tableInfoIdentifier={table} withLink={withLink} id={id}/>
       : NO_DATA_TEXT;
 }
 
-export function renderMetaLinkArray(table: string, ids: Array<string | number>, withLink: boolean = false): JSX.Element | string {
+export function renderMetaLinkArray(table: string, ids: Array<string | number>, withLink: boolean = false): React.JSX.Element | string {
   const render = metaLinkRender(table, withLink);
 
   return (ids && ids.length)

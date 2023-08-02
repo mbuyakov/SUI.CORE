@@ -19,10 +19,10 @@ export class PromisedSelect<T extends SelectValue> extends PromisedBase<Promised
     };
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {promise, popconfirmSettings, ...selectProps} = this.props;
-    const saveButton: JSX.Element = this.wrapConfirmAndError(
+    const saveButton: React.JSX.Element = this.wrapConfirmAndError(
       <IconButton
         disabled={this.state.loading || !this.isValidatorTextEmpty()}
         onClick={this.saveWithoutValue}
@@ -31,7 +31,7 @@ export class PromisedSelect<T extends SelectValue> extends PromisedBase<Promised
         {this.state.loading ? (<CircularProgress size={16}/>) : (<MuiIcons.SaveOutlined/>)}
       </IconButton>
     );
-    const withPopover: JSX.Element = (
+    const withPopover: React.JSX.Element = (
       <DisableEditContext.Consumer>
         {(disableEdit): JSX.Element => {
           return this.wrapInValidationPopover(

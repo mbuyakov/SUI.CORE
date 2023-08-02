@@ -43,7 +43,7 @@ export class TagsPopover extends React.Component<ITagsPopoverProps, {
     this.setState({selectedTags: nextProps.colTagsConnection.nodes.map(con => con.tagByTagId.id)});
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <Popover
         visible={this.state.visible}

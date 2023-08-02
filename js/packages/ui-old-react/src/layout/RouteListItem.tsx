@@ -92,7 +92,7 @@ export const RouteListItem: React.FC<ListItemProps<"div"> & {
 
   const newBase = `${base}.${route.name}`;
   const title = getSUISettings().layout.formatMessage({id: newBase});
-  let listItem: JSX.Element;
+  let listItem: React.JSX.Element;
 
   // Icon + title
   const listItemContent = customListItemContent ?? (

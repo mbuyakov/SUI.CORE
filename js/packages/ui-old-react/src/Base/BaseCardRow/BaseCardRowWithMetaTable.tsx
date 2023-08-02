@@ -47,7 +47,7 @@ export const BaseCardRowWithMetaTable: <T>(props: IBaseCardRowWithMetaTableLayou
   rowsLength: number,
   parent: BaseCardRowParent,
   sourceItem: T
-}) => JSX.Element = props => (
+}) => React.JSX.Element = props => (
   <BackendTable
     cardType="inner"
     {...props.metaTableProps}

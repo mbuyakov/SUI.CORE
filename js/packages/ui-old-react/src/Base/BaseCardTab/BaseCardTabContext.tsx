@@ -32,7 +32,7 @@ class BaseCardTabContextProviderInner extends React.Component<BaseCardTabContext
     };
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       // eslint-disable-next-line react/jsx-no-constructed-context-values
       <BaseCardTabContext.Provider value={{setTab: this.setTab, tab: this.state.tab}}>

@@ -13,7 +13,7 @@ export const BaseCardRowWithCollapse: <T, ITEM>(props: IBaseCardRowWithCollapseL
   rowIndex: number,
   rowsLength: number,
   sourceItem: T
-}) => JSX.Element = props => (
+}) => React.JSX.Element = props => (
   <Collapse
     style={{
       borderBottom: props.fitCollapsePanel && props.rowIndex === (props.rowsLength - 1) ? 0 : undefined,

@@ -86,7 +86,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
               rows: {
                 cols: {
                   items: {
-                    render: (): JSX.Element => (
+                    render: (): React.JSX.Element => (
                       <AuditLogTable
                         {...tableProps}
                         extra={(
@@ -129,7 +129,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
               rows: {
                 cols: {
                   items: {
-                    render: (): JSX.Element => (
+                    render: (): React.JSX.Element => (
                       <AuditLogTable
                         {...tableProps}
                         extra={(

@@ -13,7 +13,7 @@ export interface IPromisedBaseFormModalProps<TValues> extends IPromisedBaseFormM
   baseFormProps: Omit<IBaseFormProps, "children" | "onSubmit" | "ref">;
   modalHeader?: React.ReactNode;
 
-  customFooter?(okButton: JSX.Element, cancelButton: JSX.Element, hasErrors: Observable<boolean>): React.ReactNode;
+  customFooter?(okButton: React.JSX.Element, cancelButton: React.JSX.Element, hasErrors: Observable<boolean>): React.ReactNode;
 
   onSubmit?(values: TValues): Promise<boolean>;
 }
@@ -26,7 +26,7 @@ export class PromisedBaseFormModal<T extends {}> extends React.Component<IPromis
   public formRef: React.RefObject<BaseForm> = React.createRef();
   public modalRef: React.RefObject<PromisedModal> = React.createRef();
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const hasErrors = this.formRef.current && this.formRef.current.hasErrors;
