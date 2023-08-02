@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`remap deprecated should replace JSX 1`] = `
+"import smth from \\"smth\\";
+import React from \\"react\\";
+const a: React.JSX.Element = null;"
+`;
