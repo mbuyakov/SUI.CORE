@@ -67,4 +67,15 @@ import "a";
     `.trim())).toMatchSnapshot();
     expect(consoleLog).toBeCalledTimes(1);
   });
+
+  it("should merge two same import", () => {
+    const consoleLog = jest.spyOn(console, "log");
+    expect(dedupeImport(`
+import React from "react";
+import React from "react";
+    `).trim()).toBe(`
+import React from "react";
+    `.trim());
+    expect(consoleLog).toBeCalledTimes(1);
+  });
 });

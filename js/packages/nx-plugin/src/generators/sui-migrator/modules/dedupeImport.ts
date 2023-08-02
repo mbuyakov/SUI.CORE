@@ -61,7 +61,7 @@ export function dedupeImport(content: string): string {
             factory.createImportClause(
               false,
               mapEntry.defaultImport,
-              factory.createNamedImports(mapEntry.importSpecifiers)
+              mapEntry.importSpecifiers.length ? factory.createNamedImports(mapEntry.importSpecifiers) : undefined
             ),
             factory.createStringLiteral(moduleName)
           )
