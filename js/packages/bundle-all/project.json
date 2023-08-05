@@ -47,7 +47,8 @@
         "branches": false,
         "qualityGate": false,
         "qualityGateTimeout": "300",
-        "skipImplicitDeps": false
+        "skipImplicitDeps": false,
+        "testInclusions": "**/*.spec.ts,**/*.spec.tsx"
       }
     }
   },

@@ -1,0 +1,12 @@
+diff --git a/node_modules/@koliveira15/nx-sonarqube/src/executors/scan/utils/utils.js b/node_modules/@koliveira15/nx-sonarqube/src/executors/scan/utils/utils.js
+index 732b182..eea79a4 100644
+--- a/node_modules/@koliveira15/nx-sonarqube/src/executors/scan/utils/utils.js
++++ b/node_modules/@koliveira15/nx-sonarqube/src/executors/scan/utils/utils.js
+@@ -61,6 +61,7 @@ function determinePaths(options, context) {
+                         lcovPaths.push((0, devkit_1.joinPathFragments)(nodes[0]
+                             .getText()
+                             .replace(new RegExp(/'/g), '')
++                            .replace(new RegExp(/"/g), '')
+                             .replace(/^(?:\.\.\/)+/, ''), 'lcov.info'));
+                     }
+                     else {
