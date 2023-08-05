@@ -7,8 +7,8 @@ export class Observable<T> {
   private readonly handlers: Map<string, ObservableHandler<T>> = new Map();
   private value: T;
 
-  public constructor(initialValue?: TOrCallback<T>) {
-    this.value = getTOrCall(initialValue!);
+  public constructor(initialValue: TOrCallback<T>) {
+    this.value = getTOrCall(initialValue);
   }
 
   public getValue(): T {
@@ -22,7 +22,7 @@ export class Observable<T> {
   }
 
   public forceTrigger(): void {
-    this.setValue(this.value!);
+    this.setValue(this.value);
   }
 
   public subscribe(cb: ObservableHandler<T>, triggerOnSubscribe = false): ObservableHandlerStub {
