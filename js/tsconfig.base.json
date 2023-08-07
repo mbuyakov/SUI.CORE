@@ -30,6 +30,7 @@
       "@sui/lib-module-manager": ["packages/lib-module-manager/src/index.ts"],
       "@sui/lib-notification-dispatcher": ["packages/lib-notification-dispatcher/src/index.ts"],
       "@sui/lib-storage": ["packages/lib-storage/src/index.ts"],
+      "@sui/lib-typescript-ast": ["packages/lib-typescript-ast/src/index.ts"],
       "@sui/nx-plugin": ["packages/nx-plugin/src/index.ts"],
       "@sui/ui-actions": ["packages/ui-actions/src/index.ts"],
       "@sui/ui-charts": ["packages/ui-charts/src/index.ts"],

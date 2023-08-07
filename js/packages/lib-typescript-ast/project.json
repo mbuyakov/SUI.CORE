@@ -1,0 +1,59 @@
+{
+  "name": "lib-typescript-ast",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/lib-typescript-ast/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/lib-typescript-ast",
+        "main": "packages/lib-typescript-ast/src/index.ts",
+        "tsConfig": "packages/lib-typescript-ast/tsconfig.lib.json",
+        "assets": [
+          "packages/lib-typescript-ast/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/lib-typescript-ast/**/*.ts",
+          "packages/lib-typescript-ast/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "packages/lib-typescript-ast/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs lib-typescript-ast {args.ver} {args.tag}",
+      "dependsOn": [
+        "build"
+      ]
+    }
+  },
+  "tags": [
+    "type:lib"
+  ]
+}

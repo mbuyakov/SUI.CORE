@@ -18,6 +18,7 @@
     "@sui/lib-module-manager": "0.0.1",
     "@sui/lib-notification-dispatcher": "0.0.1",
     "@sui/lib-storage": "0.0.1",
+    "@sui/lib-typescript-ast": "0.0.1",
     "@sui/nx-plugin": "0.0.1",
     "@sui/ui-actions": "0.0.1",
     "@sui/ui-charts": "0.0.1",

@@ -82,6 +82,10 @@
               {
                 "group": ["react-router-dom", "react-router-dom/*", "react-router", "react-router/*"],
                 "message": "Please use @sui/deps-router"
+              },
+              {
+                "group": ["@phenomnomnominal/tsquery", "@phenomnomnominal/tsquery/*"],
+                "message": "Please use @sui/lib-typescript-ast instead"
               }
             ]
           }
