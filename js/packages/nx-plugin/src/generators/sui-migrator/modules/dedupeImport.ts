@@ -1,6 +1,23 @@
-import {factory, Identifier, ImportDeclaration, ImportSpecifier, isNamespaceImport, NamedImports, NamespaceImport, StringLiteral} from "typescript";
-import {printNode, tsquery} from "../../../utils/typescript";
+import {
+  Identifier,
+  ImportDeclaration,
+  ImportSpecifier,
+  isNamespaceImport,
+  NamedImports,
+  NamespaceImport,
+  StringLiteral
+} from "typescript";
 import {logWithPrefix} from "../../../utils/logger";
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import {
+  astQuery,
+  astRemove,
+  astReplace,
+  ParsedImport,
+  parseImportSpecifier,
+  printImport,
+  printNodes
+} from "@sui/lib-typescript-ast";
 
 type ImportData = {
   count: number,
@@ -10,7 +27,7 @@ type ImportData = {
 };
 
 export function dedupeImport(content: string): string {
-  const imports = tsquery.query<ImportDeclaration>(content, "ImportDeclaration:has(ImportClause)");
+  const imports = astQuery<ImportDeclaration>(content, "ImportDeclaration:has(ImportClause)");
 
   const importMap: { [index: string]: ImportData } = {};
 
@@ -43,7 +60,7 @@ export function dedupeImport(content: string): string {
 
       // Leave only first import
       let isFirst = true;
-      content = tsquery.remove(content, `ImportDeclaration:has(ImportClause):has(StringLiteral[value="${moduleName}"])`, () => {
+      content = astRemove(content, `ImportDeclaration:has(ImportClause):has(StringLiteral[value="${moduleName}"])`, () => {
         if (isFirst) {
           isFirst = false;
           return false;
@@ -52,38 +69,24 @@ export function dedupeImport(content: string): string {
         }
       }, true);
 
-      content = tsquery.replace(content, `ImportDeclaration:has(ImportClause):has(StringLiteral[value="${moduleName}"])`, () => {
-        const rows = [];
+      content = astReplace(content, `ImportDeclaration:has(ImportClause):has(StringLiteral[value="${moduleName}"])`, () => {
+        const rows: ParsedImport[] = [];
 
-        rows.push(
-          factory.createImportDeclaration(
-            undefined,
-            factory.createImportClause(
-              false,
-              mapEntry.defaultImport,
-              mapEntry.importSpecifiers.length ? factory.createNamedImports(mapEntry.importSpecifiers) : undefined
-            ),
-            factory.createStringLiteral(moduleName)
-          )
-        );
+        rows.push({
+          import: mapEntry.defaultImport?.text,
+          namedImports: mapEntry.importSpecifiers.map(it => parseImportSpecifier(it)),
+          from: moduleName
+        });
 
         if (mapEntry.nsImport) {
-          rows.push(
-            factory.createImportDeclaration(
-              undefined,
-              factory.createImportClause(
-                false,
-                undefined,
-                mapEntry.nsImport
-              ),
-              factory.createStringLiteral(moduleName)
-            )
-          );
+          rows.push({
+            nsImport: mapEntry.nsImport.name.text,
+            namedImports: [],
+            from: moduleName
+          });
         }
 
-        return rows
-          .map(printNode)
-          .join("\n");
+        return printNodes(rows.map(it => printImport(it)));
       });
     }
   });

@@ -1,13 +1,14 @@
 import {ImportDeclaration, NamedImports, StringLiteral} from "typescript";
 import {logWithPrefix} from "../../../utils/logger";
-import {tsquery} from "../../../utils/typescript";
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import {astReplace} from "@sui/lib-typescript-ast";
 
 const SUFFIX = "MuiIcons.";
 
 export function remapIcons(content: string): string {
   const iconsImports: ImportDeclaration[] = [];
 
-  content = tsquery.jsxReplace(content, "ImportDeclaration:has(StringLiteral[value=/@mui.icons-material.*/])", (node: ImportDeclaration) => {
+  content = astReplace(content, "ImportDeclaration:has(StringLiteral[value=/@mui.icons-material.*/])", (node: ImportDeclaration) => {
     iconsImports.push(node);
     return "import {MuiIcons} from \"@sui/deps-material\";";
   });
@@ -28,7 +29,7 @@ export function remapIcons(content: string): string {
   Object.keys(nameMap).forEach(key => {
     logWithPrefix("remapIcons", `Replace ${key} to ${nameMap[key]}`);
 
-    content = tsquery.jsxReplace(content, `Identifier[name="${key}"]`, () => {
+    content = astReplace(content, `Identifier[name="${key}"]`, () => {
       return nameMap[key];
     });
   });

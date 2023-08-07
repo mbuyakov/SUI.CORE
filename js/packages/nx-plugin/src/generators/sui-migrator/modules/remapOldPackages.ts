@@ -1,7 +1,8 @@
-import {factory, ImportDeclaration, ImportSpecifier, isNamedImports, StringLiteral} from "typescript";
+import {ImportDeclaration, ImportSpecifier, isNamedImports, StringLiteral} from "typescript";
 import {logWithPrefix} from "../../../utils/logger";
-import {tsquery, printNode} from "../../../utils/typescript";
 import {newImports} from  "../../../utils/consts";
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import {astReplace, ParsedImport, parseImportSpecifier, printImport, printNodes} from "@sui/lib-typescript-ast";
 
 
 const inversedNewImports = Object.keys(newImports)
@@ -14,7 +15,7 @@ const inversedNewImports = Object.keys(newImports)
 const oldModules = ["@sui/all", "@sui/ui-old-core", "@sui/ui-old-react"];
 export function remapOldPackages(packageName: string, content: string): string {
 
-  return tsquery.replace(content, "ImportDeclaration", (node: ImportDeclaration) => {
+  return astReplace(content, "ImportDeclaration", (node: ImportDeclaration) => {
     const moduleName = (node.moduleSpecifier as StringLiteral).text;
 
     const isOldModule = oldModules.includes(packageName);
@@ -34,29 +35,20 @@ export function remapOldPackages(packageName: string, content: string): string {
       return;
     }
 
-    const imports: ImportDeclaration[] = [];
+    const imports: ParsedImport[] = [];
 
     importSpecifiers = importSpecifiers.filter(it => {
       if (inversedNewImports[it.name.text]) {
         logWithPrefix("remapOldPackages", `Replace ${it.name.text} from ${moduleName} to ${inversedNewImports[it.name.text]}`);
 
-        imports.push(
-          factory.createImportDeclaration(
-            undefined,
-            factory.createImportClause(
-              false,
-              undefined,
-              factory.createNamedImports([
-                factory.createImportSpecifier(
-                  false,
-                  undefined,
-                  factory.createIdentifier(it.name.text)
-                )
-              ])
-            ),
-            factory.createStringLiteral(inversedNewImports[it.name.text])
-          )
-        );
+        imports.push({
+          namedImports: [
+            {
+              originalName: it.name.text
+            }
+          ],
+          from: inversedNewImports[it.name.text]
+        });
 
         return false;
       } else {
@@ -65,21 +57,12 @@ export function remapOldPackages(packageName: string, content: string): string {
     });
 
     if (importSpecifiers.length) {
-      imports.push(
-        factory.createImportDeclaration(
-          undefined,
-          factory.createImportClause(
-            false,
-            undefined,
-            factory.createNamedImports(importSpecifiers)
-          ),
-          factory.createStringLiteral(moduleName)
-        )
-      );
+      imports.push({
+        namedImports: importSpecifiers.map(it => parseImportSpecifier(it)),
+        from: moduleName
+      });
     }
 
-    return imports
-      .map(printNode)
-      .join("\n");
+    return printNodes(imports.map(it => printImport(it)));
   });
 }

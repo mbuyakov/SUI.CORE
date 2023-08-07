@@ -1,11 +1,12 @@
 import {factory, ImportDeclaration, StringLiteral} from "typescript";
 import {mapModules} from "../../../utils/consts";
 import {logWithPrefix} from "../../../utils/logger";
-import {printNode, tsquery} from "../../../utils/typescript";
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import {astReplace, printNode} from "@sui/lib-typescript-ast";
 
 export function remapExternalImports(projectName: string, content: string): string {
 
-  return tsquery.replace(content, "ImportDeclaration:has(ImportClause)", (node: ImportDeclaration) => {
+  return astReplace(content, "ImportDeclaration:has(ImportClause)", (node: ImportDeclaration) => {
     const moduleName = (node.moduleSpecifier as StringLiteral).text;
     const newName = Object.entries(mapModules)
       .find(([oldName]) => moduleName == oldName || moduleName.startsWith(oldName + "/"))

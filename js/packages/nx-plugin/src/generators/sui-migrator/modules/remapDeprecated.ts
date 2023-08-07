@@ -1,11 +1,11 @@
-import {factory, ImportDeclaration, isNamespaceImport, QualifiedName} from "typescript";
+import {factory, ImportDeclaration, QualifiedName} from "typescript";
 import {logWithPrefix} from "../../../utils/logger";
-import {printNode, tsquery} from "../../../utils/typescript";
+import {astQuery, astReplace, parseImport, printNode} from "@sui/lib-typescript-ast";
 
 
 export function remapDeprecated(content: string): string {
   let shouldAddImport = false;
-  content = tsquery.replace(content, "QualifiedName", (node: QualifiedName) => {
+  content = astReplace(content, "QualifiedName", (node: QualifiedName) => {
     if (node.left.getText() == "JSX") {
       shouldAddImport = true;
       logWithPrefix("remapDeprecated", `Replace JSX.${node.right.getText()} to React.JSX.${node.right.getText()}`);
@@ -25,23 +25,19 @@ export function remapDeprecated(content: string): string {
   // Check if import exist
   if (shouldAddImport) {
     let hasReactImport = false;
-    tsquery.query<ImportDeclaration>(content, "ImportDeclaration")
-      .forEach(node => {
-        if (node.moduleSpecifier?.getText() == "\"react\"") {
-          if (
-            node.importClause?.name?.getText() == "React" // ref: import React from "react"
-            || (isNamespaceImport(node.importClause?.namedBindings) && node.importClause?.namedBindings.name.getText() == "React") // ref: import * as React from "react"
-          ) {
-            hasReactImport = true;
-          }
-        }
-      });
+    astQuery<ImportDeclaration>(content, "ImportDeclaration").forEach(node => {
+      const parsedImport = parseImport(node);
+      if (parsedImport.from == "react" && (parsedImport.import == "React" || parsedImport.nsImport == "React")) {
+        hasReactImport = true;
+      }
+    });
+
     shouldAddImport = !hasReactImport;
   }
 
   if (shouldAddImport) {
     let isFirst = true;
-    content = tsquery.replace(content, "ImportDeclaration", (node: ImportDeclaration) => {
+    content = astReplace(content, "ImportDeclaration", (node: ImportDeclaration) => {
       if (isFirst) {
         isFirst = false;
         return printNode(node) + "\nimport React from \"react\";";
