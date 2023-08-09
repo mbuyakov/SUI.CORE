@@ -1,7 +1,7 @@
 import {factory, ImportClause, ImportDeclaration} from "typescript";
-import {ParsedImport} from "./ParsedImport";
+import {ParsedImportDeclaration} from "./ParsedImportDeclaration";
 
-export function printImport(parsedImport: ParsedImport): ImportDeclaration {
+export function printImportDeclaration(parsedImport: ParsedImportDeclaration): ImportDeclaration {
   let importClause: ImportClause | undefined = undefined;
 
   if (parsedImport.import || parsedImport.nsImport || parsedImport.namedImports.length) {

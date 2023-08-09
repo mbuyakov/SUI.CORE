@@ -2,7 +2,7 @@ export interface ImportWithAlias {
   originalName: string;
   alias?: string;
 }
-export interface ParsedImport {
+export interface ParsedImportDeclaration {
   from: string;
   import?: string;
   nsImport?: string;

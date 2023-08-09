@@ -1,14 +1,14 @@
 import {ImportDeclaration, ImportSpecifier, isNamedImports, isNamespaceImport, StringLiteral} from "typescript";
-import {ImportWithAlias, ParsedImport} from "./ParsedImport";
+import {ImportWithAlias, ParsedImportDeclaration} from "./ParsedImportDeclaration";
 
-export function parseImport(importDeclaration: ImportDeclaration): ParsedImport {
-  const ret: ParsedImport = {
+export function parseImportDeclaration(importDeclaration: ImportDeclaration): ParsedImportDeclaration {
+  const ret: ParsedImportDeclaration = {
     from: (importDeclaration.moduleSpecifier as StringLiteral).text,
     namedImports: [],
   };
 
   if (importDeclaration.importClause?.name) {
-    ret.import = importDeclaration.importClause?.name.text;
+    ret.import = importDeclaration.importClause.name.text;
   }
 
   if (importDeclaration.importClause?.namedBindings) {

@@ -2,7 +2,7 @@ import {ImportDeclaration, ImportSpecifier, isNamedImports, StringLiteral} from 
 import {logWithPrefix} from "../../../utils/logger";
 import {newImports} from  "../../../utils/consts";
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import {astReplace, ParsedImport, parseImportSpecifier, printImport, printNodes} from "@sui/lib-typescript-ast";
+import {astReplace, ParsedImportDeclaration, parseImportSpecifier, printImportDeclaration, printNodes} from "@sui/lib-typescript-ast";
 
 
 const inversedNewImports = Object.keys(newImports)
@@ -35,7 +35,7 @@ export function remapOldPackages(packageName: string, content: string): string {
       return;
     }
 
-    const imports: ParsedImport[] = [];
+    const imports: ParsedImportDeclaration[] = [];
 
     importSpecifiers = importSpecifiers.filter(it => {
       if (inversedNewImports[it.name.text]) {
@@ -63,6 +63,6 @@ export function remapOldPackages(packageName: string, content: string): string {
       });
     }
 
-    return printNodes(imports.map(it => printImport(it)));
+    return printNodes(imports.map(it => printImportDeclaration(it)));
   });
 }

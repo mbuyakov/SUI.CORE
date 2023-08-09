@@ -13,9 +13,9 @@ import {
   astQuery,
   astRemove,
   astReplace,
-  ParsedImport,
+  ParsedImportDeclaration,
   parseImportSpecifier,
-  printImport,
+  printImportDeclaration,
   printNodes
 } from "@sui/lib-typescript-ast";
 
@@ -70,7 +70,7 @@ export function dedupeImport(content: string): string {
       }, true);
 
       content = astReplace(content, `ImportDeclaration:has(ImportClause):has(StringLiteral[value="${moduleName}"])`, () => {
-        const rows: ParsedImport[] = [];
+        const rows: ParsedImportDeclaration[] = [];
 
         rows.push({
           import: mapEntry.defaultImport?.text,
@@ -86,7 +86,7 @@ export function dedupeImport(content: string): string {
           });
         }
 
-        return printNodes(rows.map(it => printImport(it)));
+        return printNodes(rows.map(it => printImportDeclaration(it)));
       });
     }
   });

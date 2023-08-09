@@ -1,6 +1,6 @@
 import {factory, ImportDeclaration, QualifiedName} from "typescript";
 import {logWithPrefix} from "../../../utils/logger";
-import {astQuery, astReplace, parseImport, printNode} from "@sui/lib-typescript-ast";
+import {astQuery, astReplace, parseImportDeclaration, printNode} from "@sui/lib-typescript-ast";
 
 
 export function remapDeprecated(content: string): string {
@@ -26,7 +26,7 @@ export function remapDeprecated(content: string): string {
   if (shouldAddImport) {
     let hasReactImport = false;
     astQuery<ImportDeclaration>(content, "ImportDeclaration").forEach(node => {
-      const parsedImport = parseImport(node);
+      const parsedImport = parseImportDeclaration(node);
       if (parsedImport.from == "react" && (parsedImport.import == "React" || parsedImport.nsImport == "React")) {
         hasReactImport = true;
       }
