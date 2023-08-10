@@ -12,36 +12,6 @@
         "lintFilePatterns": ["packages/host-storybook/**/*.{ts,tsx,js,jsx}"]
       }
     },
-    "build": {
-      "executor": "@nx/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/host-storybook",
-        "tsConfig": "packages/host-storybook/tsconfig.lib.json",
-        "project": "packages/host-storybook/package.json",
-        "entryFile": "packages/host-storybook/src/index.ts",
-        "external": ["@emotion/react/jsx-runtime"],
-        "rollupConfig": "@nx/react/plugins/bundle-rollup",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "packages/host-storybook/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ],
-        "babelUpwardRootMode": true,
-        "updateBuildableProjectDepsInPackageJson": true
-      }
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "packages/host-storybook/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
     "storybook": {
       "executor": "@nx/storybook:storybook",
       "options": {
