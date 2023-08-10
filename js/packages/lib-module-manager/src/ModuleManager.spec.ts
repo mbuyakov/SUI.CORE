@@ -61,12 +61,21 @@ describe("ModuleManager", () => {
     expect(moduleInitializedEventHandler).toBeCalledTimes(3);
   });
 
-  test("Failed module event fired", async () => {
+  test("Failed module event fired if module throw", async () => {
     const moduleManager = new ModuleManager("test", "test");
     const failedEventHandler = jest.fn();
     moduleManager.addHandler(ModuleFailedEvent, failedEventHandler);
     moduleManager.addModule(new FailedModule());
     await expect(moduleManager.init()).rejects.toThrow("I'm failed");
+    expect(failedEventHandler).toBeCalledTimes(1);
+  });
+
+  test("Failed module event fired if module has unsatisfied deps", async () => {
+    const moduleManager = new ModuleManager("test", "test");
+    const failedEventHandler = jest.fn();
+    moduleManager.addHandler(ModuleFailedEvent, failedEventHandler);
+    moduleManager.addModule(new Module2());
+    await expect(moduleManager.init()).rejects.toThrow("Required module Module1 not founded");
     expect(failedEventHandler).toBeCalledTimes(1);
   });
 
