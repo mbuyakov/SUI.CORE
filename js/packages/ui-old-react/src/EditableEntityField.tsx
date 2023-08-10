@@ -46,7 +46,7 @@ export class EditableEntityField<T = any> extends React.Component<IEditableEntit
             }
           }`}
         >
-          {(data): JSX.Element => (
+          {(data): React.JSX.Element => (
             <EditablePromisedComponent
               {...this.props}
               nonEditRender={(): React.ReactNode => {

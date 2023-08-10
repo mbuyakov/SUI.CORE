@@ -124,7 +124,7 @@ export class MainSettings extends React.Component<IMainSettingsProps, {
     return LAST_MAIN_SETTINGS_VERSION;
   }
 
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     return (
       <div>
         <GetPopupContainerContext.Provider value={this.props.getPopupContainer}>

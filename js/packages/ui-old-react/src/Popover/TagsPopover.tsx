@@ -101,7 +101,7 @@ export class TagsPopover extends React.Component<ITagsPopoverProps, {
                 alwaysUpdate={true}
                 hideChildren={false}
               >
-                {(data): JSX.Element => (
+                {(data): React.JSX.Element => (
                   <div className={SUI_ROW_GROW_LEFT}>
                     <Select<string[]>
                       mode="multiple"

@@ -138,7 +138,7 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   // TODO cyclomatic-complexity
-  public render(): JSX.Element {
+  public render(): React.JSX.Element {
     const rowDetail = this.props.rowDetailComponent;
     const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
     const groupingEnabled = defaultIfNotBoolean(this.props.groupingEnabled, true);
@@ -296,7 +296,7 @@ export class BaseTable<TSelection = defaultSelection>
 
     return (
       <SuiThemeContext.Consumer>
-        {(theme): JSX.Element => (
+        {(theme): React.JSX.Element => (
           <SuiThemeProvider
             component="baseTable"
           >
@@ -578,7 +578,7 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   @autobind
-  private toolbarRootComponent(props: any): JSX.Element {
+  private toolbarRootComponent(props: any): React.JSX.Element {
     return (
       <ToolbarRoot {...props} style={defaultIfNotBoolean(this.props.toolbarEnabled, true) ? {} : {display: "none"}}>
         {(this.props.warnings && this.props.warnings.length ? [<WarningPlugin messages={this.props.warnings} key={-1}/>] : []).concat([props.children])}

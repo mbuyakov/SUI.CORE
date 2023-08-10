@@ -44,7 +44,7 @@ export class GroupSummaryRow extends React.Component<IGroupSummaryRowProps> {
           name="tableCell"
           predicate={GroupSummaryRow.isSummaryRow as any}
         >
-          {(cellProps: Mui.Table.DataCellProps): JSX.Element => {
+          {(cellProps: Mui.Table.DataCellProps): React.JSX.Element => {
             const column = cellProps.tableColumn.column as unknown as IBaseTableColLayout;
 
             return (

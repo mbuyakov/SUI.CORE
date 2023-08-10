@@ -40,7 +40,7 @@ export class OldAuditTable extends React.Component<IOldAuditTableProps> {
         }`}
         extractKeysLevel={2}
       >
-        {(content): JSX.Element => (
+        {(content): React.JSX.Element => (
           <pre>
             {JSON.stringify(JSON.parse(content || "{}"), null, 2)}
           </pre>

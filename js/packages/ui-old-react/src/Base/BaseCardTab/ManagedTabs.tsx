@@ -17,7 +17,7 @@ export class ManagedTabs extends React.Component<ManagedTabsProps> {
         defaultTab={rest.defaultActiveKey}
       >
         <BaseCardTabContextConsumer>
-          {(baseCardTabContext): JSX.Element => (
+          {(baseCardTabContext): React.JSX.Element => (
             <Tabs
               {...rest}
               activeKey={baseCardTabContext.tab}

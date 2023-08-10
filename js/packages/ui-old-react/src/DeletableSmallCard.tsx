@@ -27,7 +27,7 @@ export const DeletableSmallCard: React.FC<Omit<CardProps, "size" | "type"> & {
         {isVersionNotLast && <OldVersionWarning ids={isVersionNotLast}/>}
         {settingsPopover &&
           <GetPopupContainerContext.Consumer>
-            {(getPopupContainer): JSX.Element => (
+            {(getPopupContainer): React.JSX.Element => (
               <Popover
                 getPopupContainer={getPopupContainer}
                 content={settingsPopover}

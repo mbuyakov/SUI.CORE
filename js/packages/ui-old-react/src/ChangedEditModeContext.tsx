@@ -25,7 +25,7 @@ function EditModeContainer(props: IEditModeContainerProps): React.JSX.Element {
   return (
     // receive outer disable value to push to the inner disable context
     <DisableEditContext.Consumer>
-      {(disable): JSX.Element => {
+      {(disable): React.JSX.Element => {
         if (providerValue.outerDisable !== disable) {
           providerValue = {outerDisable: false, setEditMode};
         }

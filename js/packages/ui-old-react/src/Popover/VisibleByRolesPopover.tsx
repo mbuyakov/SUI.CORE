@@ -132,7 +132,7 @@ export class VisibleByRolesPopover extends React.Component<IVisibleByRolesPopove
   }
 
   @autobind
-  private dropdownRender(menu: React.ReactNode): JSX.Element {
+  private dropdownRender(menu: React.ReactNode): React.JSX.Element {
     return (
       <div>
         {menu}

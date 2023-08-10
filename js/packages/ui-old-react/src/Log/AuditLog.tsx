@@ -192,7 +192,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
   }
 
   @autobind
-  private generateRefreshButton(onClick: () => Promise<void>, disabled?: boolean): JSX.Element {
+  private generateRefreshButton(onClick: () => Promise<void>, disabled?: boolean): React.JSX.Element {
     return (
       <PromisedButton
         type="primary"
@@ -205,7 +205,7 @@ export class AuditLog extends React.Component<IAuditLogProps, IAuditLogState> {
   }
 
   @autobind
-  private generateTableInfoSelect(value: string | undefined, onChange: (value: string) => void): JSX.Element {
+  private generateTableInfoSelect(value: string | undefined, onChange: (value: string) => void): React.JSX.Element {
     return (
       <Select
         placeholder="Выберите таблицу"

@@ -33,16 +33,16 @@ export class EditablePromisedComponent<T>
   public render(): React.ReactNode {
     return (
       <AfterChangeContext.Consumer>
-        {(afterChange): JSX.Element => {
+        {(afterChange): React.JSX.Element => {
           this.afterChange = afterChange;
           return (
             <ChangedEditModeContext.Consumer>
-              {(editModeValue): JSX.Element => {
+              {(editModeValue): React.JSX.Element => {
                 this.setOuterEditMode = editModeValue.setEditMode;
 
                 return (
                   <DisableEditContext.Consumer>
-                    {(disableEdit): JSX.Element => {
+                    {(disableEdit): React.JSX.Element => {
                       const editAllowed = !this.props.disableEdit
                         && (!disableEdit || !!this.state?.editMode)
                         && (!this.props.editRoles || hasAnyRole(this.props.editRoles));

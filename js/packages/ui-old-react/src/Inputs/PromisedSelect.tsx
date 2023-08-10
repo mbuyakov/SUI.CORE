@@ -33,7 +33,7 @@ export class PromisedSelect<T extends SelectValue> extends PromisedBase<Promised
     );
     const withPopover: React.JSX.Element = (
       <DisableEditContext.Consumer>
-        {(disableEdit): JSX.Element => {
+        {(disableEdit): React.JSX.Element => {
           return this.wrapInValidationPopover(
             <Select<T>
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment

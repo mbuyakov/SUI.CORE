@@ -169,7 +169,7 @@ export class RowSettings extends SerializableDnDChild<SerializedRowSettings, IRo
               ].map(setting => [
                 (<span>{setting.title}</span>),
                 (<FieldsContext.Consumer>
-                  {(fields): JSX.Element => (
+                  {(fields): React.JSX.Element => (
                     <Mentions
                       defaultValue={this.state.metaTableProps[setting.field]}
                       onChange={this.onFilterChanged(setting.field)}

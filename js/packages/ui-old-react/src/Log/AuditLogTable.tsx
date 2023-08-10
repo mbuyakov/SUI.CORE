@@ -113,7 +113,7 @@ export class AuditLogTable extends React.Component<IAuditLogTableProps> {
   }
 
   @autobind
-  private rowDetails({row}: { row: IAuditLogTableRow }): JSX.Element {
+  private rowDetails({row}: { row: IAuditLogTableRow }): React.JSX.Element {
     return (<pre>{JSON.stringify(row.content, null, 2)}</pre>);
   }
 

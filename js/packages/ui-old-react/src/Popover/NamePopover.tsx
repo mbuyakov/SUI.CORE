@@ -109,7 +109,7 @@ export class NamePopover extends React.Component<INamePopoverProps, {
                 alwaysUpdate={true}
                 hideChildren={false}
               >
-                {(data: { allNames: IGraphQLConnection<IName> }): JSX.Element => (
+                {(data: { allNames: IGraphQLConnection<IName> }): React.JSX.Element => (
                   <div className={SUI_ROW_GROW_LEFT}>
                     <Select<string>
                       showSearch={true}

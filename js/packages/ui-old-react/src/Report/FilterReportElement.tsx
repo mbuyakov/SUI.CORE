@@ -106,7 +106,7 @@ export class FilterReportElement<TData, TFilter = {}>
             alwaysUpdate={true}
             disableUnwrapOnReady={true}
           >
-            {(): JSX.Element => children(data, lastFetchedFilter)}
+            {(): React.JSX.Element => children(data, lastFetchedFilter)}
           </WaitData>
           {!hasHeader && (
             <span

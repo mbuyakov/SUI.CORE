@@ -61,9 +61,9 @@ export class ItemSettings extends SerializableDnDChild<SerializedItemSettings> {
 
     return (
       <GetPopupContainerContext.Consumer>
-        {(getPopupContainer): JSX.Element => (
+        {(getPopupContainer): React.JSX.Element => (
           <DebugModeContext.Consumer>
-            {(debugMode): JSX.Element => (
+            {(debugMode): React.JSX.Element => (
               <Chip
                 label={
                   <>

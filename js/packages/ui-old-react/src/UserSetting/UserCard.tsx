@@ -48,7 +48,7 @@ export class UserCard<TDetail = {}, TAdditional = {}> extends React.Component<IU
         data={this.props.userData}
         alwaysUpdate={true}
       >
-        {(userData): JSX.Element => (
+        {(userData): React.JSX.Element => (
           <Card
             style={{width: 700}}
           >

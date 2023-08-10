@@ -46,7 +46,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
   public render(): React.JSX.Element {
     return (
       <DisableEditContext.Consumer>
-        {(disableEdit): JSX.Element => {
+        {(disableEdit): React.JSX.Element => {
           const {
             mutationRoles,
             getEditInitialValues,
@@ -151,7 +151,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
   }
 
   @autobind
-  public generateDeleteButton(): JSX.Element {
+  public generateDeleteButton(): React.JSX.Element {
     const deleteButtonProps = this.props.deleteButtonProps;
     return (
       <PromisedButton
@@ -170,7 +170,7 @@ export class MutableBackendTable<TValues extends {}, TSelection = number, TEditV
   }
 
   @autobind
-  public generateCreateButton(): JSX.Element {
+  public generateCreateButton(): React.JSX.Element {
     const createButtonProps = this.props.createButtonProps;
     return (
       <Button

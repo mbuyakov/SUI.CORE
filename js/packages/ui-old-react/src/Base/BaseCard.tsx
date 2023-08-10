@@ -77,7 +77,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
         // Body = tabs
         body = (
           <BaseCardTabContextConsumer>
-            {(baseCardTabContext): JSX.Element => (
+            {(baseCardTabContext): React.JSX.Element => (
               <Tabs style={{padding: hasBlocks ? 0 : 24}} renderTabBar={renderTabBar} activeKey={baseCardTabContext.tab}>
                 {firstChildrenTabs.map((tab, tabIndex) => renderIBaseCardTabLayout(this.props.item, tab, tabIndex, this.props.forceRenderTabs))}
               </Tabs>
@@ -124,7 +124,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
           this.props.className;
         ret = (
           <BaseCardTabContextConsumer>
-            {(baseCardTabContext): JSX.Element => (
+            {(baseCardTabContext): React.JSX.Element => (
               <>
                 {needTitleCard && <Card
                   title={this.props.cardTitle}
@@ -146,7 +146,7 @@ export class BaseCard<T = any, ITEM = IBaseCardItemLayout<T>> extends React.Comp
       } else {
         ret = (
           <BaseCardTabContextConsumer>
-            {(baseCardTabContext): JSX.Element => (
+            {(baseCardTabContext): React.JSX.Element => (
               <Card
                 title={this.props.cardTitle}
                 tabList={tabList}

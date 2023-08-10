@@ -33,11 +33,11 @@ export class PromisedSwitch extends PromisedBase<PromisedSwitchProps, IPromisedB
 
     return (
       <AfterChangeContext.Consumer>
-        {(afterChange): JSX.Element => {
+        {(afterChange): React.JSX.Element => {
           this.setAfterChange(afterChange);
           return (
             <DisableEditContext.Consumer>
-              {(disableEdit): JSX.Element => {
+              {(disableEdit): React.JSX.Element => {
                 return this.wrapConfirmAndError(
                   <Switch
                     {...switchProps}

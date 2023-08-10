@@ -42,7 +42,7 @@ export class DnfForm extends React.Component<IDnfFormProps> {
 
     return (
       <Form.List {...this.props.orListProps}>
-        {(orFields, orOperations, {errors: orErrors}): JSX.Element => {
+        {(orFields, orOperations, {errors: orErrors}): React.JSX.Element => {
           const disableOrSwap = this.props.disableRowSwap || orFields.length <= 1;
 
           return (
@@ -73,7 +73,7 @@ export class DnfForm extends React.Component<IDnfFormProps> {
                         {...this.props.andListProps}
                         name={[orField.name, this.props.andListProps.name as string]}
                       >
-                        {(andFields, andOperations, {errors: andErrors}): JSX.Element => {
+                        {(andFields, andOperations, {errors: andErrors}): React.JSX.Element => {
                           const disableAndSwap = this.props.disableRowSwap || andFields.length <= 1;
 
                           return (

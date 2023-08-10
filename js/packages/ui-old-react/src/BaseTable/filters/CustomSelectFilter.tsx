@@ -58,7 +58,7 @@ export class CustomSelectFilter<T extends string | string[] | number | number[]>
         {...(CustomSelectFilter.isPromise(data) ? {promise: data} : {data})}
         alwaysUpdate={true}
       >
-        {(selectData): JSX.Element => (
+        {(selectData): React.JSX.Element => (
           <BaseSelectFilter<T>
             // Multiple render issue
             maxTagCount={5}

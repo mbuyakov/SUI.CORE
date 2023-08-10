@@ -55,7 +55,7 @@ export class ReportElement extends React.Component<IReportElement, {
         extra={this.props.print ? (
           <ReactToPrint
             // eslint-disable-next-line react/no-unstable-nested-components
-            trigger={(): JSX.Element => (<Button icon={<PrinterOutlined/>}/>)}
+            trigger={(): React.JSX.Element => (<Button icon={<PrinterOutlined/>}/>)}
             content={(): HTMLDivElement => this.printContentRef.current}
             onBeforeGetContent={(): Promise<void> => new Promise(resolve => {this.setState({printMode: true}, resolve);})}
             onAfterPrint={(): void => this.setState({printMode: false})}

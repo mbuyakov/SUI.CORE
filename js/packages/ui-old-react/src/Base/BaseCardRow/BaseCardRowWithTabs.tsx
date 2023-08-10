@@ -29,7 +29,7 @@ export const BaseCardRowWithTabs: <T, ITEM>(props: IBaseCardRowWithTabsLayout<T,
       )
       : (
         <BaseCardContext.Consumer>
-          {({forceRenderTabs}): JSX.Element => (
+          {({forceRenderTabs}): React.JSX.Element => (
             <ManagedTabs
               routeKey={props.tabsRouteKey}
               defaultActiveKey={tabs?.[0]?.key ?? "0"}

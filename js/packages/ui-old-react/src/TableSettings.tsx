@@ -47,7 +47,7 @@ export function FullScreenTableSettings(props: {
         <WaitData<string>
           promise={TableInfoManager.getById(id).then(table => table.getNameOrTableName())}
         >
-          {(name): JSX.Element => (<span>{name}</span>)}
+          {(name): React.JSX.Element => (<span>{name}</span>)}
         </WaitData>
         <div style={{display: "flex", justifyContent: "flex-end"}}>
           <PromisedMaterialIconButton
@@ -64,7 +64,7 @@ export function FullScreenTableSettings(props: {
       </div>}
       defaultOpen={defaultOpen || false}
     >
-      {(getPopupContainer): JSX.Element => (
+      {(getPopupContainer): React.JSX.Element => (
         <TableSettings
           startTimeout={200}
           popupMode={true}
@@ -236,7 +236,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
         delay={this.props.startTimeout ? 0 : SPIN_DELAY}
         hideChildren={false}
       >
-        {(data): JSX.Element => {
+        {(data): React.JSX.Element => {
           if (!data) {
             return <div style={{height: 300}}/>;
           }
@@ -370,7 +370,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                 id={value && value.id}
                                 onChanged={this.onNameChanged}
                                 getPopupContainer={this.props.getPopupContainer}
-                                render={(): JSX.Element => (
+                                render={(): React.JSX.Element => (
                                   <IconButton
                                     style={{marginLeft: 6}}
                                     size="small"
@@ -549,7 +549,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       />
                                       <Table.Column<IColumnInfo>
                                         title="Обязательность"
-                                        render={(_, record): JSX.Element => (
+                                        render={(_, record): React.JSX.Element => (
                                           record.isNullable ? <CloseOutlined style={{fontSize: 18}}/> : <CheckOutlined style={{fontSize: 18}}/>
                                         )}
                                       />
@@ -559,7 +559,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       />
                                       <Table.Column<IColumnInfo>
                                         title="Имя"
-                                        render={(_, record): JSX.Element => (
+                                        render={(_, record): React.JSX.Element => (
                                           <div className={SUI_ROW_GROW_LEFT}>
                                             {record.nameByNameId
                                               ? (
@@ -602,7 +602,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       />
                                       <Table.Column<IColumnInfo>
                                         title="Теги"
-                                        render={(_, record): JSX.Element => (
+                                        render={(_, record): React.JSX.Element => (
                                           <div className={SUI_ROW_GROW_LEFT}>
                                             {record.columnInfoTagsByColumnInfoId.nodes.length > 0
                                               ? <ul style={{paddingLeft: 16, marginBottom: 0}}>
@@ -653,7 +653,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                           }))
                                         }
                                         onFilter={(f: any, record): boolean => record.columnInfoRolesByColumnInfoId.nodes.some(node => f.includes(node.roleId))}
-                                        render={(_, record): JSX.Element => (
+                                        render={(_, record): React.JSX.Element => (
                                           <VisibleByRolesPopover
                                             getPopupContainer={this.props.getPopupContainer}
                                             roles={data.allRoles.nodes}
@@ -740,7 +740,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       />
                                       <Table.Column<IColumnInfo>
                                         title="Настройки рендера"
-                                        render={(_, record): JSX.Element => (
+                                        render={(_, record): React.JSX.Element => (
                                           <div className={SUI_ROW}>
                                             <TableRenderSettingsPopover
                                               getPopupContainer={this.props.getPopupContainer}
@@ -754,7 +754,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       <Table.Column<IColumnInfo>
                                         title="Отображается по умолчанию"
                                         width={130}
-                                        render={(_, record): JSX.Element => (
+                                        render={(_, record): React.JSX.Element => (
                                           <div className={SUI_ROW}>
                                             <PromisedSwitch
                                               defaultChecked={record.defaultVisible}
@@ -766,7 +766,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       <Table.Column<IColumnInfo>
                                         title="Группировка по умолчанию"
                                         width={120}
-                                        render={(_, record): JSX.Element => (
+                                        render={(_, record): React.JSX.Element => (
                                           <div className={SUI_ROW}>
                                             <PromisedSwitch
                                               defaultChecked={record.defaultGrouping}
@@ -778,7 +778,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       <Table.Column<IColumnInfo>
                                         title="Сортировка по умолчанию"
                                         width={120}
-                                        render={(_, record): JSX.Element => (
+                                        render={(_, record): React.JSX.Element => (
                                           <div className={SUI_ROW}>
                                             <Button
                                               href={null}
@@ -803,7 +803,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       <Table.Column<IColumnInfo>
                                         title="Ширина"
                                         width={150}
-                                        render={(_, record): JSX.Element => (
+                                        render={(_, record): React.JSX.Element => (
                                           <PromisedInput
                                             type="number"
                                             defaultValue={record.width}
@@ -814,7 +814,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       <Table.Column<IColumnInfo>
                                         title="Перенос слов"
                                         width={120}
-                                        render={(_, record): JSX.Element => (
+                                        render={(_, record): React.JSX.Element => (
                                           <PromisedSwitch
                                             defaultChecked={record.wordWrapEnabled}
                                             promise={this.updateColFieldFn(record.id, "wordWrapEnabled")}
@@ -824,7 +824,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       <Table.Column<IColumnInfo>
                                         width={150}
                                         title="Фильтр"
-                                        render={(_, record): JSX.Element => (
+                                        render={(_, record): React.JSX.Element => (
                                           <PromisedSelect
                                             getPopupContainer={this.props.getPopupContainer}
                                             defaultValue={record.filterTypeId}
@@ -842,7 +842,7 @@ class _TableSettings extends React.Component<ITableSettingsProps, ITableSettings
                                       <Table.Column<IColumnInfo>
                                         width={150}
                                         title="Подытог"
-                                        render={(_, record): JSX.Element => (
+                                        render={(_, record): React.JSX.Element => (
                                           <PromisedSelect
                                             getPopupContainer={this.props.getPopupContainer}
                                             defaultValue={record.subtotalTypeId}

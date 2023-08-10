@@ -186,7 +186,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
                 >
                   {transitionContent}
                 </Button>
-              ), tooltip) as JSX.Element;
+              ), tooltip) as React.JSX.Element;
 
             return wrapInPopover(
               result,

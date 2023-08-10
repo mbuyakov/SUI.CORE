@@ -75,7 +75,7 @@ export class SelectWithWaitData<TValueType = {}, TGroupType = {}>
   }
 
   @autobind
-  private generateOptions(data: IDataSet[]): JSX.Element[] {
+  private generateOptions(data: IDataSet[]): React.JSX.Element[] {
     const optionRender = this.props.customOptionRender || getDataSetRender;
 
     return (data || []).map(element => (
