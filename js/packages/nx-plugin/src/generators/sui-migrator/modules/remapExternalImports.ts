@@ -1,7 +1,6 @@
 import {factory, ImportDeclaration, StringLiteral} from "typescript";
 import {mapModules} from "../../../utils/consts";
 import {logWithPrefix} from "../../../utils/logger";
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import {astReplace, printNode} from "@sui/lib-typescript-ast";
 
 export function remapExternalImports(projectName: string, content: string): string {

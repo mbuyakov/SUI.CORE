@@ -1,6 +1,5 @@
 import {ImportDeclaration, NamedImports, StringLiteral} from "typescript";
 import {logWithPrefix} from "../../../utils/logger";
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import {astReplace} from "@sui/lib-typescript-ast";
 
 const SUFFIX = "MuiIcons.";

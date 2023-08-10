@@ -4,6 +4,7 @@
   "type": "commonjs",
   "generators": "./generators.json",
   "dependencies": {
+    "@nx/devkit": "16.6.0",
     "ora": "^5.4.1"
   }
 }

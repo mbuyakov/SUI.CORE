@@ -8,7 +8,6 @@ import {
   StringLiteral
 } from "typescript";
 import {logWithPrefix} from "../../../utils/logger";
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import {
   astQuery,
   astRemove,
@@ -40,7 +39,7 @@ export function dedupeImport(content: string): string {
       if (isNamespaceImport(importDeclaration.importClause.namedBindings)) {
         mapEntry.nsImport = importDeclaration.importClause.namedBindings;
       } else {
-        mapEntry.importSpecifiers.push(...(importDeclaration.importClause.namedBindings as NamedImports).elements);
+        mapEntry.importSpecifiers.push(...importDeclaration.importClause.namedBindings.elements);
       }
     }
   });

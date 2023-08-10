@@ -1,7 +1,6 @@
 import {ImportDeclaration, ImportSpecifier, isNamedImports, StringLiteral} from "typescript";
 import {logWithPrefix} from "../../../utils/logger";
 import {newImports} from  "../../../utils/consts";
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import {astReplace, ParsedImportDeclaration, parseImportSpecifier, printImportDeclaration, printNodes} from "@sui/lib-typescript-ast";
 
 
