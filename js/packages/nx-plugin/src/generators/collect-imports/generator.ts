@@ -15,7 +15,6 @@ import {
 } from "typescript";
 import {logWithPrefix, setSpinnerText} from "../../utils/logger";
 import {importsByNewPackage} from "../sui-migrator/modules/support/remapOldPackages";
-import {oldToNewDeps} from "../sui-migrator/modules/support/remapExternalImports";
 import {parseExportDeclaration} from "./modules/parseExportDeclaration";
 import {parseVariableStatement} from "./modules/parseVariableStatement";
 import {parseCommonNamedNode} from "./modules/parseCommonNamedNode";
@@ -40,8 +39,6 @@ export function collectImportsGenerator(tree: Tree, options: CollectImportsGener
     if (project.name === "nx-plugin"
       // Don't parse old modules
       || oldPackages.includes(packageName)
-      // Don't parse modules that replaces by remapExternalImports
-      || Object.values(oldToNewDeps).includes(packageName)
     ) {
       return;
     }
@@ -60,7 +57,7 @@ export function collectImportsGenerator(tree: Tree, options: CollectImportsGener
       const content = tree.read(filePath).toString();
       const imports: string[] = [];
 
-      if (!content.includes("export")) {
+      if (!content.includes("export") || content.includes("SKIP_IMPORT_COLLECTING")) {
         return;
       }
 

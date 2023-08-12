@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/quotes */
+// SKIP_IMPORT_COLLECTING
 //src: https://github.com/ant-design/ant-design/blob/5.1.5/components/index.ts
 export { default as Affix } from 'antd5/es/affix';
 export type { AffixProps } from 'antd5/es/affix';
