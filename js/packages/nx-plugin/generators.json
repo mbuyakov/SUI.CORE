@@ -19,6 +19,11 @@
       "factory": "./src/generators/index/generator",
       "schema": "./src/generators/index/schema.json",
       "description": "index generator"
+    },
+    "collect-imports": {
+      "factory": "./src/generators/collect-imports/generator",
+      "schema": "./src/generators/collect-imports/schema.json",
+      "description": "collect-imports generator"
     }
   }
 }

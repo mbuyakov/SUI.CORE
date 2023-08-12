@@ -8,6 +8,7 @@ import {
   printNodes
 } from "@sui/lib-typescript-ast";
 import {importsByNewPackage} from "./support/remapOldPackages";
+import {oldPackages} from "../../../utils/oldPackages";
 
 
 const newPackageByImports = Object.keys(importsByNewPackage)
@@ -16,8 +17,6 @@ const newPackageByImports = Object.keys(importsByNewPackage)
     prev[cur[0]] = cur[1];
     return prev;
   }, {});
-
-const oldPackages = ["@sui/all", "@sui/ui-old-core", "@sui/ui-old-react"];
 
 export function remapOldPackages(packageName: string, content: string): string {
   const isOldPackage = oldPackages.includes(packageName);

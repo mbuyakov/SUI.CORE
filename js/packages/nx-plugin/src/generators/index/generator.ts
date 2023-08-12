@@ -1,4 +1,4 @@
-import {ProjectConfiguration, Tree} from "@nx/devkit";
+import {Tree} from "@nx/devkit";
 import {IndexGeneratorSchema} from "./schema";
 import {logSymbols, logWithPrefix} from "../../utils/logger";
 import {visitAllFolders, visitAllProjects} from "../../utils/visitors";

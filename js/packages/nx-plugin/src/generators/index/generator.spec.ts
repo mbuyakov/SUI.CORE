@@ -1,13 +1,14 @@
-import { createTreeWithEmptyWorkspace } from "@nx/devkit/testing";
-import {Tree, readProjectConfiguration} from "@nx/devkit";
+import {createTreeWithEmptyWorkspace} from "@nx/devkit/testing";
+import {ProjectConfiguration, readProjectConfiguration, Tree} from "@nx/devkit";
 
-import { indexGenerator } from "./generator";
-import { IndexGeneratorSchema } from "./schema";
+import {indexGenerator} from "./generator";
+import {IndexGeneratorSchema} from "./schema";
 import libGenerator from "../lib/generator";
 
 describe("index generator", () => {
   let tree: Tree;
-  const options: IndexGeneratorSchema = { name: "test" };
+  let config: ProjectConfiguration;
+  const options: IndexGeneratorSchema = {};
 
   beforeEach(async () => {
     tree = createTreeWithEmptyWorkspace();
@@ -15,14 +16,13 @@ describe("index generator", () => {
       type: "lib",
       name: "test"
     });
-    const config = readProjectConfiguration(tree, "lib-test");
+    config = readProjectConfiguration(tree, "lib-test");
     tree.delete(`${config.sourceRoot}/index.ts`);
     tree.delete(`${config.sourceRoot}/lib/lib-test.ts`);
     tree.delete(`${config.sourceRoot}/lib`);
   });
 
   it("should generate index with files", async () => {
-    const config = readProjectConfiguration(tree, "lib-test");
     tree.write(`${config.sourceRoot}/a.ts`, "");
     tree.write(`${config.sourceRoot}/b.ts`, "");
     tree.write(`${config.sourceRoot}/b.spec.ts`, "");
@@ -34,7 +34,6 @@ export * from "./b";
   });
 
   it("should update index file if contains only imports", async () => {
-    const config = readProjectConfiguration(tree, "lib-test");
     tree.write(`${config.sourceRoot}/a.ts`, "");
     tree.write(`${config.sourceRoot}/b.ts`, "");
     tree.write(`${config.sourceRoot}/index.ts`, "export * from \"./a\";");
@@ -46,7 +45,6 @@ export * from "./b";
   });
 
   it("should skip if index file has custom data", async () => {
-    const config = readProjectConfiguration(tree, "lib-test");
     tree.write(`${config.sourceRoot}/a.ts`, "");
     tree.write(`${config.sourceRoot}/b.ts`, "");
     tree.write(`${config.sourceRoot}/index.ts`, "test");
@@ -55,7 +53,6 @@ export * from "./b";
   });
 
   it("should generate index with folders", async () => {
-    const config = readProjectConfiguration(tree, "lib-test");
     tree.write(`${config.sourceRoot}/__snapshots__/tmp.txt`, "");
     tree.write(`${config.sourceRoot}/a/a.ts`, "");
     tree.write(`${config.sourceRoot}/b/b.ts`, "");
@@ -69,7 +66,6 @@ export * from "./b";
   });
 
   it("should generate index with files and folders", async () => {
-    const config = readProjectConfiguration(tree, "lib-test");
     tree.write(`${config.sourceRoot}/a/a.ts`, "");
     tree.write(`${config.sourceRoot}/b/b.ts`, "");
     tree.write(`${config.sourceRoot}/c.ts`, "");
@@ -85,7 +81,6 @@ export * from "./d";
   });
 
   it("should generate index in sub-folder", async () => {
-    const config = readProjectConfiguration(tree, "lib-test");
     tree.write(`${config.sourceRoot}/a/a.ts`, "");
     tree.write(`${config.sourceRoot}/a/b.ts`, "");
     await indexGenerator(tree, options);
