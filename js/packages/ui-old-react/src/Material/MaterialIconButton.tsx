@@ -1,8 +1,9 @@
 import {IconButton, IconButtonProps} from "@sui/deps-material";
 import React from "react";
-import {ProgressIcon} from "@/Material/ProgessIcon";
+import {ProgressIcon} from "@sui/ui-material";
 import {tooltipWrapper} from "@/Material/utils/tooltipWrapper";
-import {IPopconfirmSettings, useOnClick, usePopconfirm} from "@/Material/utils";
+import {useOnClick, usePopconfirm} from "@sui/ui-actions";
+import {IPopconfirmSettings} from "@/Material/utils";
 
 
 export type MaterialIconButtonProps = Omit<IconButtonProps, "onClick"> & {

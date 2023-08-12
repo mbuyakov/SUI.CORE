@@ -18,6 +18,7 @@ export function useOnClick<T = never>(onClick: (arg: T) => void | Promise<void>,
   const usePromiseState = usePromise(promise);
   const onClickCb = useCallback((arg: T) => {
     setPromise(async () => {
+      //TODO
       // if (integration?.popupState) {
       //   integration.popupState.close();
       // }

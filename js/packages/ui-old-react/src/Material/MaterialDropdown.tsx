@@ -5,7 +5,8 @@ import {bindHover, bindMenu, usePopupState} from "material-ui-popup-state/hooks"
 import {v4 as uuidv4} from "uuid";
 import {MaterialIconButton} from "@/Material/MaterialIconButton";
 import {MaterialButton} from "@/Material/MaterialButton";
-import {IPopconfirmSettings, useOnClick, usePopconfirm} from "@/Material/utils";
+import {useOnClick, usePopconfirm} from "@sui/ui-actions";
+import {IPopconfirmSettings} from "@/Material/utils";
 
 export type DropdownItem = Omit<MenuItemProps, "onClick"> & {
   key: string;

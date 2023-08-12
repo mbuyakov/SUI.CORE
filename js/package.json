@@ -6,6 +6,7 @@
     "postinstall": "patch-package",
     "new-lib": "nx g @sui/nx-plugin:lib",
     "new-react-lib": "nx g @sui/nx-plugin:react-lib",
+    "collect-imports": "nx g @sui/nx-plugin:collect-imports",
     "sui-migrator": "nx g @sui/nx-plugin:sui-migrator",
     "index-generator": "nx g @sui/nx-plugin:index",
     "build": "nx run-many --target=build --parallel=8",

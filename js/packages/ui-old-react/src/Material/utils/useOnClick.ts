@@ -1,6 +1,6 @@
 import {useCallback, useState} from "react";
 import {PopupState} from "material-ui-popup-state/hooks";
-import {usePromise, UsePromiseState} from "@/hooks";
+import {usePromise, UsePromiseState} from "@sui/lib-hooks";
 import {IusePopconfirmState} from "@/Material";
 
 export type UseOnClickState<T> = UsePromiseState<void> & {
