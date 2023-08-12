@@ -1,25 +1,26 @@
 import {factory, ImportDeclaration, StringLiteral} from "typescript";
-import {mapModules} from "../../../utils/consts";
 import {logWithPrefix} from "../../../utils/logger";
 import {astReplace, printNode} from "@sui/lib-typescript-ast";
+import {oldToNewDeps} from "./support/remapExternalImports";
 
+const oldToNewDepsEntries = Object.entries(oldToNewDeps);
 export function remapExternalImports(projectName: string, content: string): string {
 
   return astReplace(content, "ImportDeclaration:has(ImportClause)", (node: ImportDeclaration) => {
-    const moduleName = (node.moduleSpecifier as StringLiteral).text;
-    const newName = Object.entries(mapModules)
-      .find(([oldName]) => moduleName == oldName || moduleName.startsWith(oldName + "/"))
+    const currentDepName = (node.moduleSpecifier as StringLiteral).text;
+    const newDepName = oldToNewDepsEntries
+      .find(([oldDepName]) => currentDepName == oldDepName || currentDepName.startsWith(oldDepName + "/"))
       ?.[1];
 
     if (
-      !newName
+      !newDepName
       // Don't replace yourself
-      || newName === projectName
+      || newDepName === projectName
     ) {
       return;
     }
 
-    logWithPrefix("remapExternalImports", `Replace ${moduleName} to ${newName}`);
+    logWithPrefix("remapExternalImports", `Replace ${currentDepName} to ${newDepName}`);
 
     let namedImports = node.importClause.namedBindings;
 
@@ -39,7 +40,7 @@ export function remapExternalImports(projectName: string, content: string): stri
           undefined,
           namedImports
         ),
-        factory.createStringLiteral(newName),
+        factory.createStringLiteral(newDepName),
         node.assertClause
       )
     );

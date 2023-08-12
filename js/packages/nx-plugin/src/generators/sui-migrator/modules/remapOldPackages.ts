@@ -1,52 +1,62 @@
-import {ImportDeclaration, ImportSpecifier, isNamedImports, StringLiteral} from "typescript";
+import {ImportDeclaration} from "typescript";
 import {logWithPrefix} from "../../../utils/logger";
-import {newImports} from  "../../../utils/consts";
-import {astReplace, ParsedImportDeclaration, parseImportSpecifier, printImportDeclaration, printNodes} from "@sui/lib-typescript-ast";
+import {
+  astReplace,
+  ParsedImportDeclaration,
+  parseImportDeclaration,
+  printImportDeclaration,
+  printNodes
+} from "@sui/lib-typescript-ast";
+import {importsByNewPackage} from "./support/remapOldPackages";
 
 
-const inversedNewImports = Object.keys(newImports)
-  .flatMap(key => newImports[key].map(value => [value, key]))
+const newPackageByImports = Object.keys(importsByNewPackage)
+  .flatMap(key => importsByNewPackage[key].map(value => [value, key]))
   .reduce((prev, cur) => {
     prev[cur[0]] = cur[1];
     return prev;
   }, {});
 
-const oldModules = ["@sui/all", "@sui/ui-old-core", "@sui/ui-old-react"];
+const oldPackages = ["@sui/all", "@sui/ui-old-core", "@sui/ui-old-react"];
+
 export function remapOldPackages(packageName: string, content: string): string {
+  const isOldPackage = oldPackages.includes(packageName);
 
   return astReplace(content, "ImportDeclaration", (node: ImportDeclaration) => {
-    const moduleName = (node.moduleSpecifier as StringLiteral).text;
+    const parsedImport = parseImportDeclaration(node);
+    const isImportFromOldModule = oldPackages.includes(parsedImport.from);
 
-    const isOldModule = oldModules.includes(packageName);
-    const isImportFromOldModule = oldModules.includes(moduleName);
-
-    if (!(isImportFromOldModule || (isOldModule && moduleName.startsWith("@/")))) {
+    if (
+      !isImportFromOldModule
+      // for internal SUI packages
+      && !(isOldPackage && parsedImport.from.startsWith("@/"))) {
       return;
     }
 
-    if (!isNamedImports(node.importClause.namedBindings)){
+    if (!parsedImport.namedImports.length) {
       return;
     }
 
-    let importSpecifiers: ImportSpecifier[] = [...node.importClause.namedBindings.elements];
-
-    if (importSpecifiers.every(it => !inversedNewImports[it.name.text])) {
+    let namedImports = [...parsedImport.namedImports];
+    if (namedImports.every(it => !newPackageByImports[it.originalName])) {
       return;
     }
 
     const imports: ParsedImportDeclaration[] = [];
 
-    importSpecifiers = importSpecifiers.filter(it => {
-      if (inversedNewImports[it.name.text]) {
-        logWithPrefix("remapOldPackages", `Replace ${it.name.text} from ${moduleName} to ${inversedNewImports[it.name.text]}`);
+    namedImports = namedImports.filter(it => {
+      const newPackageByImport = newPackageByImports[it.originalName];
+      if (newPackageByImport) {
+        logWithPrefix("remapOldPackages", `Replace ${it.originalName} from ${parsedImport.from} to ${newPackageByImport}`);
 
         imports.push({
           namedImports: [
             {
-              originalName: it.name.text
+              originalName: it.originalName,
+              alias: it.alias
             }
           ],
-          from: inversedNewImports[it.name.text]
+          from: newPackageByImport
         });
 
         return false;
@@ -55,10 +65,10 @@ export function remapOldPackages(packageName: string, content: string): string {
       }
     });
 
-    if (importSpecifiers.length) {
+    if (namedImports.length) {
       imports.push({
-        namedImports: importSpecifiers.map(it => parseImportSpecifier(it)),
-        from: moduleName
+        namedImports,
+        from: parsedImport.from
       });
     }
 
