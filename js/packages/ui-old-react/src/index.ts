@@ -29,7 +29,6 @@ export * from "./UserSetting";
 export * from "./utils";
 
 export * from "./AfterChangeContext";
-export * from "./antdMissedExport";
 export * from "./ChangedEditModeContext";
 export * from "./compatibleTypes";
 export * from "./DeletableSmallCard";

@@ -1,9 +1,8 @@
 import {getDataByKey} from "@sui/util-chore";
 import {IGqlFilter, NO_DATA_TEXT, TableInfoManager} from "@sui/ui-old-core";
-import {Select, SelectProps} from "@sui/deps-antd";
+import {Select, SelectProps, SelectValue} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {SelectValue} from "@/antdMissedExport";
 
 // noinspection ES6PreferShortImport
 import {ExtractProps} from "../other";

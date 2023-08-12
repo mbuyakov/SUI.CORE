@@ -1,10 +1,9 @@
 import {MuiIcons, CircularProgress, IconButton} from "@sui/deps-material";
 import * as React from "react";
-import {Select, SelectProps} from "@sui/deps-antd";
+import {Select, SelectProps, SelectValue} from "@sui/deps-antd";
 import {SUI_ROW_GRID} from "@/styles";
 import {DisableEditContext} from "@/DisableEditContext";
 
-import {SelectValue} from "@/antdMissedExport";
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 
 export type PromisedSelectProps<T> = IPromisedBaseProps<T> & Omit<SelectProps<T>, "onChange" | "value">;

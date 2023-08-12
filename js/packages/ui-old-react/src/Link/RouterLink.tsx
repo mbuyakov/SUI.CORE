@@ -1,7 +1,6 @@
-import {Button} from "@sui/deps-antd";
+import {Button, ButtonType, SizeType} from "@sui/deps-antd";
 import * as React from "react";
 import {Link} from "@sui/deps-router";
-import {ButtonType, SizeType} from "@/antdMissedExport";
 
 // noinspection ES6PreferShortImport
 import {appendStateToLink, ITableStateDefinition} from "../BackendTable";

@@ -1,10 +1,9 @@
 import {DownOutlined, LoadingOutlined, ShareAltOutlined} from "@ant-design/icons";
 import {defaultIfNotBoolean} from "@sui/ui-old-core";
-import {Button, Dropdown, Menu, Modal, ModalFuncProps, Popconfirm, PopconfirmProps, Tooltip, TooltipProps} from "@sui/deps-antd";
+import {Button, Dropdown, Menu, Modal, ModalFuncProps, Popconfirm, PopconfirmProps, Tooltip, TooltipProps, ButtonGroupProps} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
 import classNames from "classnames";
 import * as React from "react";
-import {ButtonGroupProps} from "@/antdMissedExport";
 
 // noinspection ES6PreferShortImport
 import {INFO_MODAL_FIX, NO_BORDER_MODAL} from "../styles";

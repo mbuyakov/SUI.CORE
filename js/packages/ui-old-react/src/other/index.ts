@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as H from "history";
 import * as React from "react";
-import {CustomIconComponentProps} from "@/antdMissedExport";
+import {CustomIconComponentProps} from "@sui/deps-antd";
 
 export * from "./AddressFlag";
 export * from "./BlockUIConditionally";

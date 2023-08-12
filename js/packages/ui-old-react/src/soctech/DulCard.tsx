@@ -5,7 +5,6 @@ import moment, {Moment} from "moment";
 import {IBaseCardRowLayout, IBaseFormItemLayout, ValuesGetter} from "@/Base";
 import {CustomInputWithRegex, CustomInputWithRegexProps, DulTypeSelector, IDulTypeSelectorProps} from "@/Inputs";
 import {DulService, IallDocTypes} from "@/soctech/DulService";
-import {datePickerLocaleRu} from "@/antdMissedExport";
 import {DatePicker, DatePickerProps} from "@sui/deps-antd";
 import {IObjectWithIndex, Nullable} from "@sui/util-types";
 
@@ -174,7 +173,6 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
     },
     inputNode: (
       <StringValueDatePicker
-        locale={datePickerLocaleRu as any}
         format={MomentFormat.DATE_PICKER_FORMATS}
       />
     ),

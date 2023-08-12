@@ -1,10 +1,8 @@
-import {MuiIcons, Collapse, CollapseProps, List, ListItem, ListItemProps, MenuProps, Typography, Theme} from "@sui/deps-material";
+import {MuiIcons, Collapse, CollapseProps, List, ListItem, ListItemProps, MenuProps, Typography, Theme, bindHover, bindMenu, usePopupState, HoverMenu} from "@sui/deps-material";
 import React, {useMemo, useState} from "react";
 // import createStyles from '@mui/styles/createStyles';
 // import makeStyles from '@mui/styles/makeStyles';
 import clsx from "clsx";
-import {bindHover, bindMenu, usePopupState} from "material-ui-popup-state/hooks";
-import HoverMenu from "material-ui-popup-state/HoverMenu";
 import {v4 as uuidv4} from "uuid";
 import {UpendRotator} from "@/Material";
 

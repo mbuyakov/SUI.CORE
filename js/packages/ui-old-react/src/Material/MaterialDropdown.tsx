@@ -1,7 +1,5 @@
-import {ButtonProps, Divider, IconButtonProps, ListItemIcon, ListItemText, MenuItem, MenuItemProps, MenuProps, Tooltip} from "@sui/deps-material";
+import {ButtonProps, Divider, IconButtonProps, ListItemIcon, ListItemText, MenuItem, MenuItemProps, MenuProps, Tooltip, HoverMenu, bindHover, bindMenu, usePopupState} from "@sui/deps-material";
 import React, {useMemo} from "react";
-import HoverMenu from "material-ui-popup-state/HoverMenu";
-import {bindHover, bindMenu, usePopupState} from "material-ui-popup-state/hooks";
 import {v4 as uuidv4} from "uuid";
 import {MaterialIconButton} from "@/Material/MaterialIconButton";
 import {MaterialButton} from "@/Material/MaterialButton";
@@ -97,7 +95,6 @@ export const MaterialDropdown: React.FC<IMaterialDropdownProps> = props => {
       {button}
       <HoverMenu
         {...bindMenu(popupState)}
-        getContentAnchorEl={null}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left"

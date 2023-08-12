@@ -157,13 +157,13 @@ export class BaseForm extends SUIReactComponent<IBaseFormProps, {
   @autobind
   public getOrCreateFormField(field: string): IFormField {
     if (!this.formFields.has(field)) {
-      const error = new Observable<string | null | undefined>();
+      const error = new Observable<string | null | undefined>(undefined);
       const errorObservableHandlerStub = error.subscribe(newError => {
         this.fieldErrors[field] = newError;
         this.__checkHasErrors();
       });
 
-      const value = new Observable<any>();
+      const value = new Observable<any>(undefined);
       const valueObservableHandlerStub = value.subscribe(() => this.validateField(field));
       const newFormField: IFormField = {
         error,

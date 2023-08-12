@@ -1,6 +1,5 @@
-import {Button} from "@sui/deps-antd";
+import {Button, ButtonType} from "@sui/deps-antd";
 import * as React from "react";
-import {ButtonType} from "@/antdMissedExport";
 
 import {RouterLinkType} from "./RouterLink";
 

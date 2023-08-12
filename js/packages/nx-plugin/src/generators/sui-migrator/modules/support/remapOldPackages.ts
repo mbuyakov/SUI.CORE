@@ -59,12 +59,25 @@ export const importsByNewPackage = {
   ],
   "@sui/deps-antd": [
     "ArgsProps",
+    "ButtonGroupProps",
+    "ButtonHTMLType",
+    "ButtonType",
     "Calendar",
     "CardType",
+    "CheckboxChangeEvent",
+    "ColumnType",
+    "CustomIconComponentProps",
     "DatePicker",
     "DatePickerProps",
+    "FormListProps",
+    "NamePath",
+    "PresetColorType",
     "RangePickerProps",
+    "RcFile",
     "ruRU",
+    "SelectValue",
+    "SizeType",
+    "TextAreaProps",
     "ThemeConfig"
   ],
   "@sui/deps-ioc": [
@@ -75,7 +88,12 @@ export const importsByNewPackage = {
     "SingletonAndOnlyIoc"
   ],
   "@sui/deps-material": [
-    "TransitionProps"
+    "bindHover",
+    "bindMenu",
+    "HoverMenu",
+    "PopupState",
+    "TransitionProps",
+    "usePopupState"
   ],
   "@sui/lib-auth": [
     "AccessRights",

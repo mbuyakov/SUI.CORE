@@ -2,9 +2,8 @@ import {MuiIcons, CircularProgress, IconButton} from "@sui/deps-material";
 import {trimIfString} from "@sui/ui-old-core";
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {Input, Tooltip} from "@sui/deps-antd";
+import {Input, Tooltip, TextAreaProps} from "@sui/deps-antd";
 import {SUI_ROW_GRID} from "@/styles";
-import {TextAreaProps} from "@/antdMissedExport";
 
 import {IPromisedBaseProps, IPromisedBaseState, PromisedBase} from "./PromisedBase";
 

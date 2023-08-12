@@ -1,8 +1,7 @@
 /* tslint:disable:member-ordering */
 import {ArrowDownOutlined, ArrowUpOutlined, MinusCircleOutlined} from "@ant-design/icons";
-import {Button, ButtonProps} from "@sui/deps-antd";
+import {Button, ButtonProps, ButtonGroupProps, ButtonHTMLType, SizeType} from "@sui/deps-antd";
 import React from "react";
-import {ButtonGroupProps, ButtonHTMLType, SizeType} from "@/antdMissedExport";
 
 const defaultCommonButtonProps = {
   htmlType: "button" as ButtonHTMLType,
