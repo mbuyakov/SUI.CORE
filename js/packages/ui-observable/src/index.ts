@@ -1,3 +1,5 @@
+export * from "./hooks";
+
 export * from "./joinObservables";
 export * from "./Observable";
 export * from "./ObservableBinder";

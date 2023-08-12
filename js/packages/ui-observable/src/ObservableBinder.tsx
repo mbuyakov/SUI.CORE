@@ -1,6 +1,6 @@
 import React from "react";
 import {Observable} from "./Observable";
-import {ObservableHandlerStub} from "./types";
+import {useObservableValue} from "./hooks";
 
 export interface IObservableBinderProps<T> {
   observable: Observable<T>
@@ -8,24 +8,8 @@ export interface IObservableBinderProps<T> {
   children(value: T): React.ReactNode
 }
 
-export class ObservableBinder<T> extends React.Component<IObservableBinderProps<T>, {
-  value: T
-}> {
-  private handler: ObservableHandlerStub;
+export const ObservableBinder: <T>(props: IObservableBinderProps<T>) => React.ReactNode = (props) => {
+  const value = useObservableValue(props.observable);
+  return props.children(value);
+};
 
-  public constructor(props: IObservableBinderProps<T>) {
-    super(props);
-    this.state = {
-      value: props.observable.getValue()
-    };
-    this.handler = props.observable.subscribe(value => this.setState({value}));
-  }
-
-  public render(): React.ReactNode {
-    return this.props.children(this.state.value);
-  }
-
-  public componentWillUnmount() {
-    this.handler?.unsubscribe();
-  }
-}
