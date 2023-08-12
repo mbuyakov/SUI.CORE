@@ -18,7 +18,8 @@
       "files": ["*.json"],
       "parser": "jsonc-eslint-parser",
       "rules": {
-        "@nx/dependency-checks": "error"
+        // Breaked due to custom version of @phenomnomnominal/tsquery in this package
+        "@nx/dependency-checks": 0
       }
     }
   ]

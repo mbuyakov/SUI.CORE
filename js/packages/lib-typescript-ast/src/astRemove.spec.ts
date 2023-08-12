@@ -1,5 +1,4 @@
-import {astReplace} from "./astReplace";
-import {NumericLiteral, VariableStatement} from "typescript";
+import {VariableStatement} from "typescript";
 import {astRemove} from "./astRemove";
 
 describe("ast remove", () => {
