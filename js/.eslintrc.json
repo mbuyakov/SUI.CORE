@@ -72,7 +72,7 @@
                 "message": "Please use @sui/deps-ioc instead."
               },
               {
-                "group": ["@mui/material", "@mui/material/*", "@mui/icons-material", "@mui/icons-material/*"],
+                "group": ["@mui/material", "@mui/material/*", "@mui/icons-material", "@mui/icons-material/*", "material-ui-popup-state", "material-ui-popup-state/*"],
                 "message": "Please use @sui/deps-material instead."
               },
               {

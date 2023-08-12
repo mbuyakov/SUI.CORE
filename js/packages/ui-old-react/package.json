@@ -9,7 +9,6 @@
     "antd-mask-input": "0.1.15",
     "classnames": "^2.2.6",
     "immutability-helper": "^3.0.2",
-    "material-ui-popup-state": "1.9.3",
     "rc-trigger": "^5.0.4",
     "rc-util": "^5.4.0",
     "react-container-query": "^0.11.2",

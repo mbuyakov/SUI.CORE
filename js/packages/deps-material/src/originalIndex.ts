@@ -1,6 +1,6 @@
-/* eslint-disable no-restricted-imports,@typescript-eslint/quotes,@typescript-eslint/no-namespace */
+/* eslint-disable */
 // SKIP_IMPORT_COLLECTING
-// Taken from @mui/material/index.d.ts
+// src: https://github.com/mui/material-ui/blob/v5.14.4/packages/mui-material/src/index.d.ts
 import * as React from 'react';
 import { DistributiveOmit } from '@mui/types';
 import { StyledComponentProps } from '@mui/material/styles';
@@ -14,13 +14,13 @@ export { StyledComponentProps };
  * @deprecated will be removed in v5 for internal usage only
  */
 export type StandardProps<
-  C,
+  ComponentProps,
   ClassKey extends string,
-  Removals extends keyof C = never,
-> = DistributiveOmit<C, 'classes' | Removals> &
+  Removals extends keyof ComponentProps = never,
+> = DistributiveOmit<ComponentProps, 'classes' | Removals> &
   StyledComponentProps<ClassKey> & {
   className?: string;
-  ref?: C extends { ref?: infer RefType } ? RefType : React.Ref<unknown>;
+  ref?: ComponentProps extends { ref?: infer RefType } ? RefType : React.Ref<unknown>;
   style?: React.CSSProperties;
 };
 
@@ -32,13 +32,13 @@ export type StandardProps<
  * However, we don't declare classes on this type.
  * It is recommended to declare them manually with an interface so that each class can have a separate JSDoc.
  */
-export type InternalStandardProps<C, Removals extends keyof C = never> = DistributiveOmit<
-  C,
-  'classes' | Removals
-> &
+export type InternalStandardProps<
+  ComponentProps,
+  Removals extends keyof ComponentProps = never,
+> = DistributiveOmit<ComponentProps, 'classes' | Removals> &
   // each component declares it's classes in a separate interface for proper JSDoc
   StyledComponentProps<never> & {
-  ref?: C extends { ref?: infer RefType } ? RefType : React.Ref<unknown>;
+  ref?: ComponentProps extends { ref?: infer RefType } ? RefType : React.Ref<unknown>;
   // TODO: Remove implicit props. Up to each component.
   className?: string;
   style?: React.CSSProperties;
@@ -483,7 +483,7 @@ export * from '@mui/material/GlobalStyles';
  */
 export { StyledEngineProvider } from '@mui/material/styles';
 
-export { default as unstable_composeClasses } from '@mui/base/composeClasses';
+export { unstable_composeClasses } from '@mui/base/composeClasses';
 
 export { default as generateUtilityClass } from '@mui/material/generateUtilityClass';
 export * from '@mui/material/generateUtilityClass';
