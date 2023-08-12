@@ -36,10 +36,8 @@ export function collectImportsGenerator(tree: Tree, options: CollectImportsGener
   visitAllProjects(tree, project => {
     const packageName = readJson(tree, `${project.root}/package.json`).name;
 
-    if (project.name === "nx-plugin"
-      // Don't parse old modules
-      || oldPackages.includes(packageName)
-    ) {
+    // Don't parse old modules
+    if (oldPackages.includes(packageName)) {
       return;
     }
 

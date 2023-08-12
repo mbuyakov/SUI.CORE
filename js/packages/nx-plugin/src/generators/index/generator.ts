@@ -63,10 +63,6 @@ function visitFolder(tree: Tree, folderPath: string) {
 
 export async function indexGenerator(tree: Tree, options: IndexGeneratorSchema) {
   visitAllProjects(tree, project => {
-    if (project.name === "nx-plugin") {
-      return;
-    }
-
     visitAllFolders(tree, project.sourceRoot, folderPath => {
       if (folderPath.endsWith("__snapshots__")) {
         return;

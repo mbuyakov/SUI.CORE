@@ -249,7 +249,8 @@ export const importsByNewPackage = {
     "ObservableBinder",
     "ObservableHandler",
     "ObservableHandlerStub",
-    "ObservableLocalStorageValue"
+    "ObservableLocalStorageValue",
+    "useObservableSubscribe"
   ],
   "@sui/ui-old-sentry": [
     "getSentry",

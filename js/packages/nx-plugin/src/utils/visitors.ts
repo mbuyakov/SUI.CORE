@@ -32,6 +32,10 @@ export function visitAllFolders(tree: Tree, path: string, callback: (folderPath:
 export function visitAllProjects(tree: Tree, callback: (project: ProjectConfiguration) => void) {
   const projects = getProjects(tree);
   projects.forEach(project => {
+    if (project.name == "nx-plugin") {
+      return;
+    }
+
     setSpinnerPrefix(`Process project ${project.name}`);
     callback(project);
     stopSpinner();
