@@ -20,7 +20,7 @@ import {parseVariableStatement} from "./modules/parseVariableStatement";
 import {parseCommonNamedNode} from "./modules/parseCommonNamedNode";
 
 const naturalSorter = (a, b) => a.toLowerCase().localeCompare(b.toLowerCase());
-const MAP_FILE_PATH = "packages/nx-plugin/src/generators/sui-migrator/modules/support/remapOldPackages.ts";
+export const MAP_FILE_PATH = "packages/nx-plugin/src/generators/sui-migrator/modules/support/remapOldPackages.ts";
 const newImportsByNewPackage: { [index: string]: string[] } = {};
 
 function addExport(packageName: string, name: string) {
@@ -29,6 +29,42 @@ function addExport(packageName: string, name: string) {
   }
   newImportsByNewPackage[packageName] = newImportsByNewPackage[packageName] || [];
   newImportsByNewPackage[packageName].push(name);
+}
+
+function collectImportsFromFile(tree: Tree, packageName: string, filePath: string) {
+  if (
+    (
+      !filePath.endsWith(".ts")
+      && !filePath.endsWith(".tsx")
+    )
+    || filePath.includes(".stories.")
+  ) {
+    return;
+  }
+
+  const content = tree.read(filePath).toString();
+  const imports: string[] = [];
+
+  if (!content.includes("export") || content.includes("SKIP_IMPORT_COLLECTING")) {
+    return;
+  }
+
+  astQuery(content, "ExportKeyword").forEach(it => {
+    it = it.parent;
+
+    if (isExportAssignment(it)) {
+      return;
+    } else if (isExportDeclaration(it)) {
+      imports.push(...parseExportDeclaration(it));
+    } else if (isVariableStatement(it)) {
+      imports.push(...parseVariableStatement(it));
+    } else if (isFunctionDeclaration(it) || isTypeAliasDeclaration(it) || isClassDeclaration(it) || isInterfaceDeclaration(it)) {
+      imports.push(parseCommonNamedNode(it));
+    } else {
+      throw new Error(`unknown parent type ${SyntaxKind[it.kind]} from ${filePath}`);
+    }
+  });
+  imports.forEach(it => addExport(packageName, it));
 }
 
 export function collectImportsGenerator(tree: Tree, options: CollectImportsGeneratorSchema) {
@@ -42,39 +78,7 @@ export function collectImportsGenerator(tree: Tree, options: CollectImportsGener
     }
 
     visitAllFiles(tree, project.sourceRoot, filePath => {
-      if (
-        (
-          !filePath.endsWith(".ts")
-          && !filePath.endsWith(".tsx")
-        )
-        || filePath.includes(".stories.")
-      ) {
-        return;
-      }
-
-      const content = tree.read(filePath).toString();
-      const imports: string[] = [];
-
-      if (!content.includes("export") || content.includes("SKIP_IMPORT_COLLECTING")) {
-        return;
-      }
-
-      astQuery(content, "ExportKeyword").forEach(it => {
-        it = it.parent;
-
-        if (isExportAssignment(it)) {
-          return;
-        } else if (isExportDeclaration(it)) {
-          imports.push(...parseExportDeclaration(it));
-        } else if (isVariableStatement(it)) {
-          imports.push(...parseVariableStatement(it));
-        } else if (isFunctionDeclaration(it) || isTypeAliasDeclaration(it) || isClassDeclaration(it) || isInterfaceDeclaration(it)) {
-          imports.push(parseCommonNamedNode(it));
-        } else {
-          throw new Error(`unknown parent type ${SyntaxKind[it.kind]} from ${filePath}`);
-        }
-      });
-      imports.forEach(it => addExport(packageName, it));
+      collectImportsFromFile(tree, packageName, filePath);
     });
 
     setSpinnerText("common");

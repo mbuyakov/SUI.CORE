@@ -5,26 +5,32 @@ export function printImportDeclaration(parsedImport: ParsedImportDeclaration): I
   let importClause: ImportClause | undefined = undefined;
 
   if (parsedImport.import || parsedImport.nsImport || parsedImport.namedImports.length) {
+    const nsImport = parsedImport.nsImport
+      ? factory.createNamespaceImport(factory.createIdentifier(parsedImport.nsImport))
+      : undefined;
+
+    const namedImports = parsedImport.namedImports.length
+      ? factory.createNamedImports(
+        parsedImport.namedImports.map(it => {
+          const propertyName = it.alias
+            ? factory.createIdentifier(it.originalName)
+            : undefined;
+
+          return factory.createImportSpecifier(
+            false,
+            propertyName,
+            factory.createIdentifier(it.alias ?? it.originalName)
+          );
+        })
+      )
+      : undefined;
+
     importClause = factory.createImportClause(
       false,
       parsedImport.import
         ? factory.createIdentifier(parsedImport.import)
         : undefined,
-      parsedImport.nsImport
-        ? factory.createNamespaceImport(factory.createIdentifier(parsedImport.nsImport))
-        : parsedImport.namedImports.length
-          ? factory.createNamedImports(
-            parsedImport.namedImports.map(it =>
-            factory.createImportSpecifier(
-              false,
-              it.alias
-                ? factory.createIdentifier(it.originalName)
-                : undefined,
-              factory.createIdentifier(it.alias ? it.alias : it.originalName)
-            )
-            )
-          )
-          : undefined
+      nsImport ?? namedImports
     );
   }
 

@@ -3,7 +3,6 @@ import {
   ImportDeclaration,
   ImportSpecifier,
   isNamespaceImport,
-  NamedImports,
   NamespaceImport,
   StringLiteral
 } from "typescript";
