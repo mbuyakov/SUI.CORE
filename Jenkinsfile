@@ -124,6 +124,9 @@ pipeline {
               }
             }
             stage("[JS] Build") {
+              environment {
+                NX_REJECT_UNKNOWN_LOCAL_CACHE = 0
+              }
               steps {
                 sh """
                   cd js
