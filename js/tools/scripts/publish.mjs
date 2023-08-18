@@ -6,8 +6,8 @@
  *
  * You might need to authenticate with NPM before running this script.
  */
-
-import { readCachedProjectGraph } from '@nrwl/devkit';
+import devkit from "@nx/devkit";
+const { readCachedProjectGraph }  = devkit;
 import { execSync } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
 import chalk from 'chalk';
@@ -73,4 +73,4 @@ try {
 }
 
 // Execute "yarn publish" to publish
-execSync(`yarn publish --registry https://nexus.suilib.ru/repository/npm-sui/ --non-interactive --no-git-tag-version --new-version ${version}${tag ? ` --tag ${tag}` : ""}`);
+execSync(`yarn publish --registry https://nexus.suilib.ru/repository/npm-sui/ --non-interactive --no-git-tag-version --new-version ${version}${(!tag || tag === "undefined") ? "" : ` --tag ${tag}`}`);

@@ -120,7 +120,6 @@ pipeline {
                 sh """
                   cd js
                   yarn install --frozen-lockfile
-                  yarn bootstrap
                 """
               }
             }
@@ -145,7 +144,7 @@ pipeline {
                   echo '@sui:registry = https://nexus.suilib.ru/repository/npm-sui/' > .npmrc
                   npx npm-cli-adduser
                   cd js
-                  yarn lcm publish 9.0.${BUILD_NUMBER}${SUFFIX}
+                  yarn run publish --ver 10.0.0-${SUFFIX}.${BUILD_NUMBER}
                 """
               }
             }
