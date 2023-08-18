@@ -8,6 +8,7 @@
     "sui-migrator": "nx g @sui/nx-plugin:sui-migrator",
     "magic": "run-s index-generator collect-imports sui-migrator",
     "postinstall": "patch-package",
+    "new-generator": "nx generate @nx/plugin:generator --project=nx-plugin",
     "new-lib": "nx g @sui/nx-plugin:lib",
     "new-react-lib": "nx g @sui/nx-plugin:react-lib",
     "build": "nx run-many --target=build --parallel=8",
@@ -24,7 +25,7 @@
     "dedupe-lock": "npx yarn-deduplicate yarn.lock --strategy fewer",
     "find-duplicate": "npx yarn-duplicate",
     "clean-cache": "rimraf ./node_modules/.cache",
-    "publish": "nx run-many --target=publish",
+    "publish": "nx run-many --target=publish --parallel=8",
     "graph": "nx graph"
   },
   "private": true,

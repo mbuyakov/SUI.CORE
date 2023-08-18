@@ -136,6 +136,7 @@ pipeline {
             }
             stage("[JS] Publish") {
               environment {
+                NX_REJECT_UNKNOWN_LOCAL_CACHE = 0
                 NPM_REGISTRY = "https://nexus.suilib.ru/repository/npm-sui/"
                 NPM_SCOPE = "@sui"
                 NPM_USER = "jenkins"
