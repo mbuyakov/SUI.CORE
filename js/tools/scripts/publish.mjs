@@ -73,4 +73,4 @@ try {
 }
 
 // Execute "yarn publish" to publish
-execSync(`yarn publish  --verbose --registry https://nexus.suilib.ru/repository/npm-sui/ --non-interactive --no-git-tag-version --new-version ${version}${(!tag || tag === "undefined") ? "" : ` --tag ${tag}`}`);
+execSync(`yarn publish  --verbose --registry https://nexus.suilib.ru/repository/npm-sui/ --non-interactive --no-git-tag-version --new-version ${version}${(!tag || tag === "undefined") ? "" : ` --tag ${tag}`}`, {stdio: "inherit"});
