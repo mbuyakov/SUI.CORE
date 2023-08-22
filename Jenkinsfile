@@ -12,7 +12,7 @@ pipeline {
   }
 
   environment {
-    SUFFIX = "${env.BRANCH_NAME == "master" ? " " : ("-" + env.BRANCH_NAME)}"
+    SUFFIX = "${"-" + env.BRANCH_NAME}"
   }
 
   agent any
@@ -148,7 +148,7 @@ pipeline {
                   echo '@sui:registry = https://nexus.suilib.ru/repository/npm-sui/' > .npmrc
                   npx npm-cli-adduser
                   cd js
-                  yarn run publish --ver 10.0.0-${SUFFIX}.${BUILD_NUMBER}
+                  yarn run publish --ver 10.0.0${SUFFIX}.${BUILD_NUMBER}
                 """
               }
             }
