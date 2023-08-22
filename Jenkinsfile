@@ -120,23 +120,20 @@ pipeline {
                 sh """
                   cd js
                   yarn install --frozen-lockfile
+                  yarn nx reset
                 """
               }
             }
             stage("[JS] Build") {
-              environment {
-                NX_REJECT_UNKNOWN_LOCAL_CACHE = 0
-              }
               steps {
                 sh """
                   cd js
-                  yarn ci
+                  yarn ci-detailed
                 """
               }
             }
             stage("[JS] Publish") {
               environment {
-                NX_REJECT_UNKNOWN_LOCAL_CACHE = 0
                 NPM_REGISTRY = "https://nexus.suilib.ru/repository/npm-sui/"
                 NPM_SCOPE = "@sui"
                 NPM_USER = "jenkins"

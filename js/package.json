@@ -24,8 +24,8 @@
     "update-nx": "nx migrate latest",
     "dedupe-lock": "npx yarn-deduplicate yarn.lock --strategy fewer",
     "find-duplicate": "npx yarn-duplicate",
-    "clean-cache": "rimraf ./node_modules/.cache",
-    "publish": "nx run-many --target=publish --parallel=1",
+    "clean-cache": "nx reset",
+    "publish": "nx run-many --target=publish --output-style=stream --parallel=1",
     "graph": "nx graph"
   },
   "private": true,
