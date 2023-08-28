@@ -109,7 +109,7 @@ pipeline {
           }
           agent {
             docker {
-              image 'node:16-alpine'
+              image 'node:18-alpine'
               reuseNode true
               args '-e HOME=$HOME'
             }
@@ -124,15 +124,7 @@ pipeline {
                 """
               }
             }
-            stage("[JS] Build") {
-              steps {
-                sh """
-                  cd js
-                  yarn ci-detailed
-                """
-              }
-            }
-            stage("[JS] Publish") {
+            stage("[JS] Build & publish") {
               environment {
                 NPM_REGISTRY = "https://nexus.suilib.ru/repository/npm-sui/"
                 NPM_SCOPE = "@sui"
@@ -145,7 +137,7 @@ pipeline {
                   echo '@sui:registry = https://nexus.suilib.ru/repository/npm-sui/' > .npmrc
                   npx npm-cli-adduser
                   cd js
-                  yarn run publish --ver 10.0.0${SUFFIX}.${BUILD_NUMBER}
+                  yarn ci-publish-detailed --ver 10.0.0${SUFFIX}.${BUILD_NUMBER}
                 """
               }
             }
