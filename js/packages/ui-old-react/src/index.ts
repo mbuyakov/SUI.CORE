@@ -5,7 +5,6 @@ export * from "./BaseTable";
 export * from "./core";
 export * from "./Dnf";
 export * from "./Draggable";
-export * from "./exception";
 export * from "./hooks";
 export * from "./Inputs";
 export * from "./layout";

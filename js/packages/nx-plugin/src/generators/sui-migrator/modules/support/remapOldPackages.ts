@@ -225,6 +225,10 @@ export const importsByNewPackage = {
     "UiIdleTrackerModule",
     "useIdleTimerContext"
   ],
+  "@sui/ui-layout": [
+    "Exception403",
+    "Exception404"
+  ],
   "@sui/ui-material": [
     "ProgressIcon",
     "ProgressIconProps",

@@ -23,6 +23,7 @@
     "@sui/ui-actions": "0.0.1",
     "@sui/ui-charts": "0.0.1",
     "@sui/ui-idle-tracker": "0.0.1",
+    "@sui/ui-layout": "0.0.1",
     "@sui/ui-material": "0.0.1",
     "@sui/ui-module-manager": "0.0.1",
     "@sui/ui-notification-handler": "0.0.1",

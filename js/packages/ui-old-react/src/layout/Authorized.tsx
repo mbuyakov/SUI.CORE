@@ -2,7 +2,7 @@ import React from "react";
 import {IRawRoute} from "@sui/ui-old-core";
 import {Redirect} from "@sui/deps-router";
 import {Location} from "history";
-import {Exception403} from "@/exception";
+import {Exception403} from "@sui/ui-layout";
 import {useService} from "@sui/lib-hooks";
 import {checkAuthority, UserService} from "@sui/lib-auth";
 

@@ -9,7 +9,7 @@ import {BasicLayoutContext} from "@/layout/BasicLayoutContext";
 import {Header} from "@/layout/Header";
 import {Drawer} from "@/layout/Drawer";
 import {Authorized} from "@/layout/Authorized";
-import {Exception404} from "@/exception";
+import {Exception404} from "@sui/ui-layout";
 import {isAdmin} from "@sui/lib-auth";
 import {SuiThemeContext, SuiThemeProvider} from "@sui/ui-themes";
 

@@ -1,15 +1,15 @@
-import {MuiIcons, Button} from "@sui/deps-material";
-import {Result} from "@sui/deps-antd";
 import React from "react";
 import {useHistory} from "@sui/deps-router";
+import {Result} from "@sui/deps-antd";
+import {Button, MuiIcons} from "@sui/deps-material";
 
-export const Exception404: React.FC = () => {
+export const Exception403: React.FC = () => {
   const history = useHistory();
 
   return (
     <Result
-      status="404"
-      title="Страница не найдена"
+      status="403"
+      title="Извините, у вас нет доступа к этой странице"
       extra={
         <Button
           size="large"
@@ -22,5 +22,3 @@ export const Exception404: React.FC = () => {
     />
   );
 };
-
-export default Exception404;

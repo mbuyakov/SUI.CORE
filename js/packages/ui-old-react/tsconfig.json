@@ -67,6 +67,9 @@
       "@sui/ui-idle-tracker": [
         "packages/ui-idle-tracker/src/index.ts"
       ],
+      "@sui/ui-layout": [
+        "packages/ui-layout/src/index.ts"
+      ],
       "@sui/ui-material": [
         "packages/ui-material/src/index.ts"
       ],
