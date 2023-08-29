@@ -24,7 +24,10 @@ const withModuleRoot: DecoratorFn = (Story) => {
           center: Color.fromHex("#f2ca07"),
           left: Color.fromHex("#00baab")
         },
-        UiThemesModule: {}
+        UiThemesModule: {},
+        LibAuthModule: {
+            disabled: true
+        }
       }}
     >
       <Story />

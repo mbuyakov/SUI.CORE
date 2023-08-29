@@ -1,19 +1,25 @@
 import * as React from "react";
 
 export abstract class SuiModule {
-  public readonly name: string;
-  public readonly deps: string[];
+    public readonly name: string;
+    public readonly deps: string[];
 
-  protected constructor(name: string, deps: string[] = []) {
-    this.name = name;
-    this.deps = deps;
-  }
+    protected abstract getName(): string;
+    protected getDeps(): SuiModule[] {
+        return [];
+    };
 
-  public init(): Promise<void> {
-    return Promise.resolve();
-  }
+    public constructor() {
+        this.name = this.getName();
+        this.deps = this.getDeps().map(it => it.getName());
+    }
 
-  public modifyRoot(root: React.ReactNode): React.ReactNode {
-    return root;
-  }
+    public init(): Promise<void> {
+        return Promise.resolve();
+    }
+
+    public modifyRoot(root: React.ReactNode): React.ReactNode {
+        return root;
+    }
 }
+

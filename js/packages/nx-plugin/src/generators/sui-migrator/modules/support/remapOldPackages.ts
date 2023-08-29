@@ -122,6 +122,7 @@ export const importsByNewPackage = {
   "@sui/lib-color": [
     "Color",
     "ColorHeatMap",
+    "ColorHeatMapImpl",
     "findColorBetween",
     "IColorHeatMapSettings",
     "LibColorModule"
@@ -154,7 +155,8 @@ export const importsByNewPackage = {
     "ModuleInitializedEvent",
     "ModuleManager",
     "ModuleWithDurationEvent",
-    "SuiModule"
+    "SuiModule",
+    "SuiModuleWithSettings"
   ],
   "@sui/lib-notification-dispatcher": [
     "ErrorEvent",
@@ -167,7 +169,7 @@ export const importsByNewPackage = {
     "NotificationSeverity"
   ],
   "@sui/lib-storage": [
-    "LocalStorageModule",
+    "LibStorageModule",
     "LocalStorageService",
     "LocalStorageServiceImpl",
     "LSKeyWrapper",
@@ -236,7 +238,9 @@ export const importsByNewPackage = {
     "TooltipWrapperProps"
   ],
   "@sui/ui-module-manager": [
-    "ModuleManagerRoot"
+    "DisablableModuleSettings",
+    "ModuleManagerRoot",
+    "ModulesSettings"
   ],
   "@sui/ui-notification-handler": [
     "NotificationViewer",
