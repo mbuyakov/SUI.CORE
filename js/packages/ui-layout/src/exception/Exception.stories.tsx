@@ -3,7 +3,7 @@ import {Exception403} from "./Exception403";
 import {Exception404} from "./Exception404";
 
 const meta: Meta = {
-  title: "layout/Pages/Exception",
+  title: "layout/Exception",
 };
 
 export default meta;
