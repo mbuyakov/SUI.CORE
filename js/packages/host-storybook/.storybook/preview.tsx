@@ -1,11 +1,9 @@
 import React from "react";
 import {DecoratorFn} from "@storybook/react";
 import {ModuleManagerRoot} from "@sui/ui-module-manager";
-import {UiNotificationHandlerModule} from "@sui/ui-notification-handler";
-import {LibNotificationDispatcherModule} from "@sui/lib-notification-dispatcher";
-import {KludgeForStorybook, UiThemesModule} from "@sui/ui-themes";
-import {LocalStorageModule} from "@sui/lib-storage";
+import {KludgeForStorybook} from "@sui/ui-themes";
 import {HashRouter} from "@sui/deps-router";
+import {Color} from "@sui/lib-color";
 
 const withRouter: DecoratorFn = (Story) => {
   return (
@@ -20,11 +18,13 @@ const withModuleRoot: DecoratorFn = (Story) => {
     <ModuleManagerRoot
       projectKey="storybook"
       restUrl="restUrl"
-      settings={async (mm) => {
-        mm.addModule(new LibNotificationDispatcherModule());
-        mm.addModule(new UiNotificationHandlerModule());
-        mm.addModule(new LocalStorageModule());
-        mm.addModule(new UiThemesModule({}));
+      settings={{
+        LibColorModule: {
+          right: Color.fromHex("#fd625d"),
+          center: Color.fromHex("#f2ca07"),
+          left: Color.fromHex("#00baab")
+        },
+        UiThemesModule: {}
       }}
     >
       <Story />
