@@ -63,8 +63,8 @@ export class EditablePromisedComponent<T>
                             {(editMode || editAllowed) && (
                               <IconButton
                                 onClick={(): void => {
-                                  this.props.onClick && this.props.onClick()
-                                  this.switchEdit()
+                                  this.props.onClick && this.props.onClick();
+                                  this.switchEdit();
                                 }}
                                 style={{marginLeft: 6, padding: 0}}
                                 size="small"
