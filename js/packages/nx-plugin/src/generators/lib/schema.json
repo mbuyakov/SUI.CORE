@@ -6,7 +6,7 @@
   "properties": {
     "type": {
       "type": "string",
-      "enum": ["lib","ui","util","deps", "host"],
+      "enum": ["lib","ui","util","deps", "host", "bundle"],
       "x-prompt": "What type would you like to use?"
     },
     "name": {
