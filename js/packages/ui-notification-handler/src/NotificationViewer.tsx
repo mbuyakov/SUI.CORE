@@ -51,7 +51,7 @@ export const NotificationViewer: React.FC<{
           <Typography>
             {event.error.toString()}
           </Typography>
-          <Typography variant="body2">
+          <Typography variant="body2" style={{whiteSpace: "pre"}}>
             {event.error.stack}
           </Typography>
         </>
