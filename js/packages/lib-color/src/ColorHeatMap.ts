@@ -18,10 +18,16 @@ export interface IColorHeatMapSettings {
   right: Color,
 }
 
-class ColorHeatMap {
+abstract class ColorHeatMap {
+  // 0 - 99
+  public abstract get(value: number): Color;
+}
+
+export class ColorHeatMapImpl extends ColorHeatMap {
   private readonly cache: Map<number, Color> = new Map<number, Color>();
 
   public constructor(settings: IColorHeatMapSettings) {
+    super();
     for (let i = 0; i < 100; i++) {
       const left = i >= 50 ? settings.center : settings.left;
       const right = i >= 50 ? settings.right : settings.center;
@@ -30,7 +36,7 @@ class ColorHeatMap {
   }
 
   // 0 - 99
-  public get(value: number): Color {
+  public override get(value: number): Color {
     return this.cache.get(clamp(0, 99, Math.floor(value)))!;
   }
 }
