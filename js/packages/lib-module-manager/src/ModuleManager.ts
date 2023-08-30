@@ -49,7 +49,11 @@ export class ModuleManager extends EventManager<
   }
 
   public async init(): Promise<void> {
-    return this.initModule("MainModule");
+    console.time("SUI init");
+    console.groupCollapsed("SUI init");
+    await this.initModule("MainModule");
+    console.groupEnd();
+    console.timeEnd("SUI init");
   }
 
   public modifyRoot(root: React.ReactNode): React.ReactNode {
