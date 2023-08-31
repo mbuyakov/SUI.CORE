@@ -27,6 +27,9 @@ const withModuleRoot: DecoratorFn = (Story) => {
         UiThemesModule: {},
         LibAuthModule: {
             disabled: true
+        },
+        UiIdleTrackerModule: {
+          disabled: true
         }
       }}
     >

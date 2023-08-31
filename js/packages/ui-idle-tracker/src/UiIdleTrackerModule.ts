@@ -1,27 +1,34 @@
-import {SuiModule} from "@sui/lib-module-manager";
+import {SuiModule, SuiModuleWithSettings} from "@sui/lib-module-manager";
 import React from "react";
 import {IdleTracker} from "./IdleTracker";
 import {Container} from "@sui/deps-ioc";
-import {UserService} from "@sui/lib-auth";
+import {LibAuthModule, UserService} from "@sui/lib-auth";
 
-export class UiIdleTrackerModule extends SuiModule {
-  private readonly timeout: number;
-  constructor(timeout: number) {
-    super("UiIdleTrackerModule", ["LibAuth"]);
-    this.timeout = timeout;
+export type IdleTrackerSettings = {
+  timeout: number
+};
+
+export class UiIdleTrackerModule extends SuiModuleWithSettings<IdleTrackerSettings> {
+
+
+  protected getDeps(): SuiModule[] {
+    return [new LibAuthModule(undefined as never)];
   }
-
 
   modifyRoot(root: React.ReactNode): React.ReactNode {
     const userService = Container.get(UserService);
     return React.createElement(
       IdleTracker,
       {
-        timeout: this.timeout,
+        timeout: this.settings.timeout,
         onIdle: () => userService.setIsUserActive(false),
         onActive: () => userService.setIsUserActive(true)
       },
       root
     );
+  }
+
+  protected getName(): string {
+    return "UiIdleTrackerModule";
   }
 }
