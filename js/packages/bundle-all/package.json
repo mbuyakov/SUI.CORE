@@ -6,6 +6,7 @@
     "@sui/deps-amcharts": "0.0.1",
     "@sui/deps-antd": "0.0.1",
     "@sui/deps-dx-react-grid": "0.0.1",
+    "@sui/deps-gql": "0.0.1",
     "@sui/deps-ioc": "0.0.1",
     "@sui/deps-material": "0.0.1",
     "@sui/deps-router": "0.0.1",

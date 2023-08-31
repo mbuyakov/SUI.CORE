@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import ApolloClient from "apollo-client";
 import React from "react";
-import {setContext} from "apollo-link-context";
+import {ApolloClient, setContext} from "@sui/deps-gql";
 import {Container} from "@sui/deps-ioc";
 
 import {IRawRoute, RouteType} from "@/tmp";

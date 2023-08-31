@@ -16,6 +16,9 @@
       "@sui/deps-dx-react-grid": [
         "packages/deps-dx-react-grid/src/index.ts"
       ],
+      "@sui/deps-gql": [
+        "packages/deps-gql/src/index.ts"
+      ],
       "@sui/deps-ioc": [
         "packages/deps-ioc/src/index.ts"
       ],

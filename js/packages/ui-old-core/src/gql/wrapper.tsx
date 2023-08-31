@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {ApolloQueryResult} from "apollo-client";
-import {FetchResult} from "apollo-link";
-import gql from "graphql-tag";
 
 import {getSUISettings} from "@/core";
 import {IObjectWithIndex} from "@sui/util-types";
-
+import {gql, ApolloQueryResult, FetchResult} from "@sui/deps-gql";
 /**
  * Stub for PostGraphile error format
  * If promise resolved and resolve contain errors field - print all error in console and throw first error
@@ -15,10 +12,13 @@ async function rejectOnError<T>(promise: Promise<ApolloQueryResult<T> | FetchRes
     (resolve, reject): void => {
       promise
         .then(value => {
+          // @ts-ignore
           if (value.errors) {
+            // @ts-ignore
             value.errors.forEach((error: any) => {
               console.error("PostGraphile error", error);
             });
+            // @ts-ignore
             reject(value.errors[0].message);
           } else {
             resolve(value.data === null ? undefined : value.data);

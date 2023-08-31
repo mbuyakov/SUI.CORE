@@ -86,6 +86,10 @@
               {
                 "group": ["@phenomnomnominal/tsquery", "@phenomnomnominal/tsquery/*"],
                 "message": "Please use @sui/lib-typescript-ast instead"
+              },
+              {
+                "group": ["graphql-tag", "graphql-tag/*", "apollo-link-context", "apollo-link-context/*", "apollo-link", "apollo-link/*", "apollo-client", "apollo-client/*", "apollo-cache-inmemory", "apollo-cache-inmemory/*", "apollo-link-http", "apollo-link-http/*"],
+                "message": "Please use @sui/deps-gql instead"
               }
             ]
           }

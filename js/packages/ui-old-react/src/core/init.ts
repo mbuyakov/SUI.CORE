@@ -1,6 +1,4 @@
-import {InMemoryCache} from "apollo-cache-inmemory";
-import ApolloClient from "apollo-client";
-import {HttpLink} from "apollo-link-http";
+import {InMemoryCache, ApolloClient, HttpLink} from "@sui/deps-gql";
 import {Container} from "@sui/deps-ioc";
 import {authLink, ColumnInfoManager, IInitSUISettings, ISUISettings, NameManager, TableInfoManager} from "@sui/ui-old-core";
 

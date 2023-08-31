@@ -2,7 +2,6 @@ import {ArrowLeftOutlined, CloseOutlined} from "@ant-design/icons";
 import {IGraphQLConnection, IName, mutate, query} from "@sui/ui-old-core";
 import {Alert, Button, Input, Popover, Select} from "@sui/deps-antd";
 import autobind from "autobind-decorator";
-import gql from "graphql-tag";
 import * as React from "react";
 
 // noinspection ES6PreferShortImport
@@ -205,7 +204,7 @@ export class NamePopover extends React.Component<INamePopoverProps, {
   @autobind
   private onNewName(): void {
     this.setState({savingInProcess: true, errorText: null});
-    query<{ allNames: IGraphQLConnection<IName> }>(gql`{
+    query<{ allNames: IGraphQLConnection<IName> }>(`{
       allNames(filter: {name: {equalTo: "${this.state.name.replace(/"/g, "\\\"")}"}}) {
         totalCount
       }
@@ -215,7 +214,7 @@ export class NamePopover extends React.Component<INamePopoverProps, {
           throw "Запись с таким именем уже существует";
         }
       })
-      .then(() => mutate<{ createName: { name: { id: string } } }>(gql`mutation {
+      .then(() => mutate<{ createName: { name: { id: string } } }>(`mutation {
         createName(input: {name: {name: "${this.state.name.replace(/"/g, "\\\"")}", description: "${(this.state.description || "").replace(/ "/g, "\\\"")}"}}) {
           name {
             id
