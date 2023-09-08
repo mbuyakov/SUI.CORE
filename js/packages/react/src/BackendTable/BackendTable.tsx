@@ -293,10 +293,13 @@ export class BackendTable<TSelection = defaultSelection>
   public render(): JSX.Element {
     const admin = isAdmin();
     const suiSettings = getSUISettings();
-    const allowExportAll = suiSettings.permissions?.exportAll ? suiSettings.permissions.exportAll(getUser()) : admin;
     const hideTableSettings = !!suiSettings.hideTableSettings;
     const virtual = this.props.virtual;
     const lazyStub = this.state.lazyStub;
+
+    const allowExportAll = (suiSettings.permissions?.exportAll && this.state.tableInfo)
+      ? suiSettings.permissions.exportAll(getUser(), this.state.tableInfo)
+      : admin;
 
     return (
       <WaitData
