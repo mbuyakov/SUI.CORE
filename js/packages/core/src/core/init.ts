@@ -7,6 +7,7 @@ import {ColorHeatMap, IColorHeatMapSettings} from '@/color';
 import {ICoreUser} from '@/user';
 import {UserService} from "@/ioc";
 import {IRawRoute, RouteType} from '@/tmp';
+import {TableInfo} from "@/cache";
 
 declare let window: Window & {
   SUI: ISUISettings | undefined;
@@ -14,6 +15,8 @@ declare let window: Window & {
 };
 
 export type Permission = (user: ICoreUser) => boolean;
+
+export type TableInfoPermission = (user: ICoreUser, tableInfo: TableInfo) => boolean;
 
 interface MessageDescriptor {
   id: string;
@@ -35,7 +38,7 @@ export interface IInitSUISettings {
   offlineMode?: boolean;
   hideTableSettings?: boolean;
   percentToColorSettings: IColorHeatMapSettings;
-  permissions?: { exportAll?: Permission };
+  permissions?: { exportAll?: TableInfoPermission };
   routes: IRawRoute[];
   chart?: { queue: boolean, onlyShowOnViewport: boolean };
   ACCESS_RIGHTS: {

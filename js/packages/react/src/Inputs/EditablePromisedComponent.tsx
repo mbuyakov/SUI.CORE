@@ -17,8 +17,8 @@ export interface IEditablePromisedComponentProps<T> {
   children: React.ReactElement<IPromisedBaseProps<T>>;
   disableEdit?: boolean;
   editRoles?: string[];
-
   nonEditRender?(value: T): React.ReactNode;
+  onClick?: () => unknown;
 }
 
 export class EditablePromisedComponent<T>
@@ -64,8 +64,11 @@ export class EditablePromisedComponent<T>
                             {editMode ? React.cloneElement(this.props.children, {promise: this.getPromise}) : (this.props.nonEditRender || this.DEFAULT_RENDERER).apply(null, [this.props.children.props.defaultValue])}
                             {(editMode || editAllowed) && (
                               <IconButton
-                                onClick={this.switchEdit}
-                                style={{marginLeft: 6}}
+                                onClick={(): void => {
+                                  this.props.onClick && this.props.onClick()
+                                  this.switchEdit()
+                                }}
+                                style={{marginLeft: 6, padding: 0}}
                                 size="small"
                               >
                                 {editMode ? (<CloseIcon/>) : (<CreateIcon/>)}

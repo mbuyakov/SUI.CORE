@@ -15,15 +15,6 @@ import {BaseFormContext} from './BaseFormContext';
 
 const FILL_FIELD_TEXT = 'Заполните поле';
 
-const TITLE_STYLE: React.CSSProperties = {
-  verticalAlign: 'top',
-  paddingRight: 12,
-  color: "rgba(121, 119, 119, 0.65)",
-  wordWrap: "break-word",
-  paddingBottom: 8,
-  paddingTop: 6
-};
-
 export type FixedRuleItem = Omit<RuleItem, 'pattern'> & {
   pattern?: string | RegExp
 }
@@ -42,6 +33,11 @@ export interface IBaseFormItemLayoutBase {
   helpRenderer?(error: string): string | JSX.Element;
   mapFormValuesToInputNodeProps?(get: ValuesGetter): IObjectWithIndex;
   mapFormValuesToRequired?(get: ValuesGetter): boolean;
+  titleVerticalAlign?: "baseline" | "bottom" | "middle" | "sub" | "super" | "text-bottom" | "text-top" | "top";
+  dataVerticalAlign?: "baseline" | "bottom" | "middle" | "sub" | "super" | "text-bottom" | "text-top" | "top";
+  titleStyle?: React.CSSProperties;
+  dataStyle?: React.CSSProperties;
+  formItemStyle?: React.CSSProperties;
 }
 
 export type IBaseFormItemLayoutMask = Omit<IBaseFormItemLayoutBase, 'inputNode' | 'valuePropName' | 'getValueFromEvent'> & {
@@ -93,13 +89,26 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
   private formFieldName?: string;
   private formField?: IFormField;
   private readonly subscribedFields: string[] = [];
-
   public constructor(props: IBaseFormItemLayoutBase) {
     super(props);
     this.state = {
       subscribedFormFieldValues: {},
     };
   }
+  private TITLE_STYLE: React.CSSProperties = {
+    verticalAlign: this.props.titleVerticalAlign || "top",
+    paddingRight: 12,
+    color: "rgba(121, 119, 119, 0.65)",
+    wordWrap: "break-word",
+    paddingBottom: 8,
+    paddingTop: 6,
+    ...this.props.titleStyle
+  };
+
+  private DATA_STYLE: React.CSSProperties = {
+    verticalAlign: this.props.dataVerticalAlign || "top",
+    ...this.props.dataStyle
+  };
 
   public render(): React.ReactNode {
     return (
@@ -170,6 +179,7 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
               ? (this.props.helpRenderer ? this.props.helpRenderer(errors) : errors)
               : undefined,
             validateStatus: errors ? 'error' : '',
+            style: this.props.formItemStyle,
           };
 
           let additionalProps: IObjectWithIndex = {};
@@ -210,14 +220,14 @@ export class BaseFormItem extends SUIReactComponent<IBaseFormItemLayoutBase & {
           const data = verticalLabel
             ? (
               <td colSpan={2 + (this.props.colspan - 1) * 2} style={{verticalAlign: 'top', paddingRight: 12}}>
-                {title && (<div style={TITLE_STYLE}>{title}</div>)}
-                <div aria-label={item.fieldName}>{formItem}</div>
+                {title && (<div style={this.TITLE_STYLE}>{title}</div>)}
+                <div aria-label={item.fieldName} style={this.DATA_STYLE}>{formItem}</div>
               </td>
             )
             : (
               <>
-                {title && <td style={TITLE_STYLE}>{title}</td>}
-                <td aria-label={item.fieldName} colSpan={(title ? 1 : 2) + ((this.props.colspan - 1) * 2)} style={{verticalAlign: 'top', paddingBottom: 8}}>
+                {title && <td style={this.TITLE_STYLE}>{title}</td>}
+                <td aria-label={item.fieldName} colSpan={(title ? 1 : 2) + ((this.props.colspan - 1) * 2)} style={{paddingBottom: 8, ...this.DATA_STYLE}}>
                   {formItem}
                 </td>
               </>

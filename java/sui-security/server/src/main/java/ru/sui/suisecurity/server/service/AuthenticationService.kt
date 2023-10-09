@@ -28,7 +28,6 @@ import ru.sui.suisecurity.base.security.UserPrincipal
 import ru.sui.suisecurity.base.service.AuthenticationLogService
 import ru.sui.suisecurity.base.service.SuiMetaSettingService
 import ru.sui.suisecurity.base.session.SessionManager
-import ru.sui.suisecurity.base.session.SessionService
 import ru.sui.suisecurity.base.utils.*
 import java.time.Duration
 import java.time.Instant
@@ -49,7 +48,6 @@ class AuthenticationService(
     private val sessionManager: SessionManager,
     private val authenticationLogService: AuthenticationLogService,
     private val customUserDetailsService: CustomUserDetailsService,
-    private val sessionService: SessionService,
     private val suiMetaSettingService: SuiMetaSettingService,
     // repos
     private val authenticationResultRepository: AuthenticationResultRepository,
@@ -58,7 +56,6 @@ class AuthenticationService(
 ) {
 
     private val INCORRECT_PASSWORD_ENTRY_LIMIT = "incorrect_password_entry_limit"
-    private val TOO_MANY_INACTIVITY_DAYS = "too_many_inactivity_days"
 
     fun login(token: UsernamePasswordAuthenticationToken): LoginResult {
         var loginResultCode: String = SUCCESS_LOGIN_AUTH_RESULT_CODE
@@ -86,17 +83,6 @@ class AuthenticationService(
             }
 
             val user = findUserByFormLogin(formLogin)
-
-            if ((user != null) && !user.blocked && (suiMetaSettingService.getDuration("allowable_user_inactivity_days") != null)
-                && (sessionService.findLastActivity(user.id) != null)
-                && suiMetaSettingService.getDuration("allowable_user_inactivity_days")
-                    ?.after(sessionService.findLastActivity(user.id)?.lastUserActivity) == true
-            ) {
-                user.blocked = true
-                user.blockReason = TOO_MANY_INACTIVITY_DAYS
-                userRepository.save(user)
-            }
-
 
             // Проверяем, что пользователь не заблокирован
             if (user != null && user.blocked) {
