@@ -1,6 +1,5 @@
 export * from "./BooleanTooltipPlugin";
 export * from "./DateFormatterPlugin";
-export * from "./ExclamationCircleTooltipPlugin";
 export * from "./LinkPlugin";
 export * from "./MultipleLinkPlugin";
 export * from "./RawPlugin";
