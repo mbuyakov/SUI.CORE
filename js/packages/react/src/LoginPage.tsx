@@ -112,6 +112,7 @@ export const LoginPage: React.FC<{
                 <TextField
                   inputRef={usernameRef}
                   disabled={loading || disabled}
+                  onChange={() => {usernameRef.current.value = usernameRef.current.value.replace(/\s/g, '')}}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -126,6 +127,7 @@ export const LoginPage: React.FC<{
                   inputRef={passwordRef}
                   disabled={loading || disabled}
                   inputProps={{inputMode}}
+                  onChange={() => {passwordRef.current.value = passwordRef.current.value.replace(/\s/g, '')}}
                   // inputProps and InputProps is NOT same props
                   // eslint-disable-next-line react/jsx-no-duplicate-props
                   InputProps={{
