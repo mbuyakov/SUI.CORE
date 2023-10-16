@@ -18,6 +18,7 @@ import {LibStorageModule} from "@sui/lib-storage";
 import {IColorHeatMapSettings, LibColorModule} from "@sui/lib-color";
 import {AccessRights, LibAuthModule} from "@sui/lib-auth";
 import {IdleTrackerSettings, UiIdleTrackerModule} from "@sui/ui-idle-tracker";
+import {LibSentryModule, SentrySettings} from "@sui/lib-sentry";
 
 export type DisablableModuleSettings<T> = T & {
     disabled?: boolean
@@ -34,6 +35,7 @@ export type ModulesSettings = {
     UiThemesModule: DisablableModuleSettings<SuiThemeConfig>,
     LibAuthModule: DisablableModuleSettings<AccessRights>,
     UiIdleTrackerModule: DisablableModuleSettings<IdleTrackerSettings>,
+    LibSentryModule: DisablableModuleSettings<SentrySettings>,
 };
 
 const isDisabledModule = (it: DisablableModuleSettings<any>): boolean => {
@@ -68,6 +70,7 @@ export const ModuleManagerRoot: React.FC<{
             !isDisabledModule(settings.UiThemesModule) && moduleManager.addModule(new UiThemesModule(settings.UiThemesModule));
             !isDisabledModule(settings.LibAuthModule) && moduleManager.addModule(new LibAuthModule(settings.LibAuthModule));
             !isDisabledModule(settings.UiIdleTrackerModule) && moduleManager.addModule(new UiIdleTrackerModule(settings.UiIdleTrackerModule));
+            !isDisabledModule(settings.LibSentryModule) && moduleManager.addModule(new LibSentryModule(settings.LibSentryModule));
 
             if (additionalSettings) {
                 await additionalSettings(moduleManager);

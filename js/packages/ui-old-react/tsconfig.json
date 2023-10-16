@@ -52,6 +52,9 @@
       "@sui/lib-notification-dispatcher": [
         "packages/lib-notification-dispatcher/src/index.ts"
       ],
+      "@sui/lib-sentry": [
+        "packages/lib-sentry/src/index.ts"
+      ],
       "@sui/lib-storage": [
         "packages/lib-storage/src/index.ts"
       ],
@@ -90,9 +93,6 @@
       ],
       "@sui/ui-old-react": [
         "packages/ui-old-react/src/index.ts"
-      ],
-      "@sui/ui-old-sentry": [
-        "packages/ui-old-sentry/src/index.ts"
       ],
       "@sui/ui-themes": [
         "packages/ui-themes/src/index.ts"

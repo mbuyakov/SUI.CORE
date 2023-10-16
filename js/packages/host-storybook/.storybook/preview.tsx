@@ -30,6 +30,9 @@ const withModuleRoot: DecoratorFn = (Story) => {
         },
         UiIdleTrackerModule: {
           disabled: true
+        },
+        LibSentryModule: {
+          disabled: true
         }
       }}
     >

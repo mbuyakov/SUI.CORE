@@ -261,11 +261,6 @@ export const importsByNewPackage = {
     "useObservableSubscribe",
     "useObservableValue"
   ],
-  "@sui/ui-old-sentry": [
-    "getSentry",
-    "initSentry",
-    "ISentry"
-  ],
   "@sui/ui-themes": [
     "antdDefaultTheme",
     "AntdTheme",
