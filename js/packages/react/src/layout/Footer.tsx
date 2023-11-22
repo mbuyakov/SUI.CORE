@@ -8,7 +8,6 @@ import {FooterAdditionalActions} from "@/layout/FooterAdditionalActions";
 const useStyles = makeStyles((theme: Theme) => ({
   footer: {
     maxWidth: document.documentElement.style.width != '' ? document.documentElement.style.width : undefined,
-    marginBottom: "env(safe-area-inset-bottom)",
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3),
     paddingLeft: theme.spacing(6),
