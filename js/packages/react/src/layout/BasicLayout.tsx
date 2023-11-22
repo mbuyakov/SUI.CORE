@@ -27,7 +27,7 @@ const useStyles = makeStyles<Theme, {
       ...theme.mixins.toolbar,
     },
     main: ({drawerWidth, isMobile}) => ({
-      minHeight: '100vh',
+      minHeight: 'calc(100vh - calc(env(safe-area-inset-top) + env(safe-area-inset-bottom)))',
       maxWidth: `calc(100% - ${isMobile ? 0 : drawerWidth}px)`,
       flexGrow: 1,
       display: 'flex',
