@@ -7,10 +7,12 @@ import {IBaseCardRowLayout, IBaseFormItemLayout, ValuesGetter} from "@/Base";
 import {CustomInputWithRegex, CustomInputWithRegexProps, DulTypeSelector, IDulTypeSelectorProps} from "@/Inputs";
 import {DulService, IallDocTypes} from "@/soctech/DulService";
 import {datePickerLocaleRu} from "@/antdMissedExport";
+import {SUIDepartmentCodeInput} from "@/SUIDepartmentCodeInput";
 
 export const RUSSIAN_PASSPORT_DOC_CODE = 21;
 export const issuedByRegex = "^[0-9А-Яа-я\\s№.\\-\"\'()]{1,250}$";
 export const issuedByDesc = "Разрешены русские буквы, цифры и символы №.-\"\'() до 250 знаков";
+export const departmentCodeMask = "111-111";
 
 export interface IDulCardFormItemsProps<T = any> {
   birthday?: Nullable<string> | ((get: ValuesGetter) => Nullable<string>);
@@ -184,19 +186,14 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
     fieldName: departmentCodeFieldName,
     mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
       const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
-      return isRussianDocType(docTypeId)
-        ? {
-          regex: DEPARTMENT_CODE_REGEX,
-          desc: DEPARTMENT_CODE_DESC,
-          ...propsDisabled(get)
-        }
-        : {disabled: true};
+      return !isRussianDocType(docTypeId) && {disabled: true};
     },
-    rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
+    rules: [{
+      pattern: DEPARTMENT_CODE_REGEX,
+      message: DEPARTMENT_CODE_DESC
+    }],
     inputNode: (
-      <CustomInputWithRegex
-        checkDisabled={props.checkDisabled}
-      />
+      <SUIDepartmentCodeInput mask={departmentCodeMask}/>
     )
   };
 
