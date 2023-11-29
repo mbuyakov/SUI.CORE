@@ -181,10 +181,25 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
   const departmentCodeItem: IBaseFormItemLayout = {
     title: "Код подразделения",
     fieldName: departmentCodeFieldName,
-    rules: [{pattern: DEPARTMENT_CODE_REGEX, message: DEPARTMENT_CODE_DESC}],
-    inputNode: (
-      <SUIDepartmentCodeInput mask={departmentCodeMask}/>
-    )
+    rules: [
+      {
+        validator: (rule, value, callback): void => {
+          if (!value) {
+            callback("");
+            return;
+          }
+
+          if (RegExp(DEPARTMENT_CODE_REGEX).test(value)) {
+            callback("")
+            return;
+          }
+
+          callback(DEPARTMENT_CODE_DESC);
+        }
+      }
+    ],
+    // rules: [{pattern: DEPARTMENT_CODE_REGEX,  message: DEPARTMENT_CODE_DESC}],
+    inputNode: <SUIDepartmentCodeInput mask={departmentCodeMask}/>
   };
 
   const issuedByItem: IBaseFormItemLayout = {
