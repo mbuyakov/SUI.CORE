@@ -185,14 +185,15 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
   const departmentCodeItem: IBaseFormItemLayout = {
     title: "Код подразделения",
     fieldName: departmentCodeFieldName,
+    mapFormValuesToRequired(get: ValuesGetter): boolean {
+      const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
+      return isIssuedByAndDepartmentRequired(docTypeId);
+    },
     mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
       const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
       return !isIssuedByAndDepartmentRequired(docTypeId) && {disabled: true};
     },
-    rules: [{
-      pattern: DEPARTMENT_CODE_REGEX,
-      message: DEPARTMENT_CODE_DESC
-    }],
+    rules: [{pattern: DEPARTMENT_CODE_REGEX, message: DEPARTMENT_CODE_DESC}],
     inputNode: (
       <SUIDepartmentCodeInput mask={departmentCodeMask}/>
     )
