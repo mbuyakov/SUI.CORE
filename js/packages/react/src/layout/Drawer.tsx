@@ -11,6 +11,7 @@ const useStyles = makeStyles<Theme, {
 }>((theme: Theme) =>
   createStyles({
     drawer: ({drawerWidth}) => ({
+      marginTop: "env(safe-area-inset-top)",
       width: drawerWidth,
       flexShrink: 0,
       borderRight: 0,

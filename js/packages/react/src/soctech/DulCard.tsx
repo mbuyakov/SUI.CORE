@@ -7,10 +7,13 @@ import {IBaseCardRowLayout, IBaseFormItemLayout, ValuesGetter} from "@/Base";
 import {CustomInputWithRegex, CustomInputWithRegexProps, DulTypeSelector, IDulTypeSelectorProps} from "@/Inputs";
 import {DulService, IallDocTypes} from "@/soctech/DulService";
 import {datePickerLocaleRu} from "@/antdMissedExport";
+import {SUIDepartmentCodeInput} from "@/SUIDepartmentCodeInput";
 
-export const RUSSIAN_PASSPORT_DOC_CODE = 21;
+export const ISSUED_BY_AND_DEPARTMENT_REQUIRED_DOC_CODES = [12, 21];
+
 export const issuedByRegex = "^[0-9А-Яа-я\\s№.\\-\"\'()]{1,250}$";
 export const issuedByDesc = "Разрешены русские буквы, цифры и символы №.-\"\'() до 250 знаков";
+export const departmentCodeMask = "111-111";
 
 export interface IDulCardFormItemsProps<T = any> {
   birthday?: Nullable<string> | ((get: ValuesGetter) => Nullable<string>);
@@ -69,13 +72,13 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
       const docType = getDocTypeById(value);
 
       if (docType) {
-        const isRussianDocTypeValue = isRussianDocType(docType.id);
+        const isIssuedByAndDepartmentRequiredValue = isIssuedByAndDepartmentRequired(docType.id);
 
         form.setFieldsValues({
           [seriesFieldName]: docType.seriesRegex ? form.getFieldValue(seriesFieldName) : undefined,
           [numberFieldName]: docType.numberRegex ? form.getFieldValue(numberFieldName) : undefined,
-          [departmentCodeFieldName]: isRussianDocTypeValue ? form.getFieldValue(departmentCodeFieldName) : undefined,
-          [issuedByFieldName]: isRussianDocTypeValue ? form.getFieldValue(issuedByFieldName) : undefined
+          [departmentCodeFieldName]: isIssuedByAndDepartmentRequiredValue ? form.getFieldValue(departmentCodeFieldName) : undefined,
+          [issuedByFieldName]: isIssuedByAndDepartmentRequiredValue ? form.getFieldValue(issuedByFieldName) : undefined
         });
       } else {
         form.setFieldsValues({
@@ -182,21 +185,17 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
   const departmentCodeItem: IBaseFormItemLayout = {
     title: "Код подразделения",
     fieldName: departmentCodeFieldName,
+    mapFormValuesToRequired(get: ValuesGetter): boolean {
+      const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
+      return isIssuedByAndDepartmentRequired(docTypeId);
+    },
     mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
       const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
-      return isRussianDocType(docTypeId)
-        ? {
-          regex: DEPARTMENT_CODE_REGEX,
-          desc: DEPARTMENT_CODE_DESC,
-          ...propsDisabled(get)
-        }
-        : {disabled: true};
+      return !isIssuedByAndDepartmentRequired(docTypeId) && {disabled: true};
     },
-    rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
+    rules: [{pattern: DEPARTMENT_CODE_REGEX, message: DEPARTMENT_CODE_DESC}],
     inputNode: (
-      <CustomInputWithRegex
-        checkDisabled={props.checkDisabled}
-      />
+      <SUIDepartmentCodeInput mask={departmentCodeMask}/>
     )
   };
 
@@ -205,12 +204,8 @@ export function dulCardFormItems<T = any>(props: IDulCardFormItemsProps<T>): Arr
     fieldName: issuedByFieldName,
     mapFormValuesToInputNodeProps: (get: ValuesGetter): CustomInputWithRegexProps => {
       const docTypeId: Nullable<string> = get([docTypeIdFieldName])?.[docTypeIdFieldName];
-      return isRussianDocType(docTypeId)
-        ? {
-          regex: issuedByRegex,
-          desc: issuedByDesc,
-          ...propsDisabled(get)
-        }
+      return isIssuedByAndDepartmentRequired(docTypeId)
+        ? {regex: issuedByRegex, desc: issuedByDesc, ...propsDisabled(get)}
         : {disabled: true};
     },
     rules: [{validator: CustomInputWithRegex.stringWithErrorValidator}],
@@ -245,8 +240,8 @@ export function getDocTypeById(docTypeId: Nullable<string>): IallDocTypes | null
   return docTypeId && DulService.allDocTypes().find(ridt => ridt.id === docTypeId) || null;
 }
 
-export function isRussianDocType(docTypeId: Nullable<string>): boolean {
-  return !!docTypeId && getDocTypeById(docTypeId)?.docCode === RUSSIAN_PASSPORT_DOC_CODE;
+export function isIssuedByAndDepartmentRequired(docTypeId: Nullable<string>): boolean {
+  return !!docTypeId && ISSUED_BY_AND_DEPARTMENT_REQUIRED_DOC_CODES.includes(getDocTypeById(docTypeId)?.docCode);
 }
 
 function trueIfEmpty(value: boolean): boolean {
