@@ -12,6 +12,7 @@ type DatetimeType = "date" | "datetime";
 interface IBaseDatetimeIntervalColumnFilterProps {
   format?: string;
   pickerMode: DatetimeType;
+  disabledDate?: (date: Moment) => boolean;
 }
 
 interface IBaseDatetimeIntervalColumnFilterState {
