@@ -14,6 +14,7 @@ interface IBaseDatetimeIntervalColumnFilterProps {
   pickerMode: DatetimeType;
   disabledDate?: (date: Moment) => boolean;
   defaultPickerValue?: [Moment, Moment];
+  disableRanges?: boolean
 }
 
 interface IBaseDatetimeIntervalColumnFilterState {
@@ -52,14 +53,15 @@ export class BaseDatetimeIntervalColumnFilter extends React.Component<FullBaseDa
   }
 
   public render(): JSX.Element {
+    const {disableRanges, ...suiRangePickerProps} = this.props;
     return (
       <SuiRangePicker
-        {...this.props}
+        {...suiRangePickerProps}
         allowClear={true}
         placeholder={this.props.placeholder as [string, string] || ["Начало", "Конец"]}
         style={{width: "100%"}}
         showTime={this.props.pickerMode === "datetime"}
-        ranges={GET_DEFAULT_CALENDAR_RANGES()}
+        ranges={!disableRanges && GET_DEFAULT_CALENDAR_RANGES()}
         value={this.state.filterValue}
         onChange={this.onChange}
         onOpenChange={this.onOpenChange}
