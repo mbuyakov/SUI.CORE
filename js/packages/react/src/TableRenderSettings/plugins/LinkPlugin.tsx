@@ -17,6 +17,7 @@ import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 export interface ILinkPluginTRP {
   customColumnInfoId: string
   isLink?: boolean
+  isNeedPreWrap?: boolean
 }
 
 export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
@@ -55,7 +56,7 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
             return (
               <RouterLink
                 to={link.replace(':id', id)}
-                text={value}
+                text={tableRenderParams.isNeedPreWrap ? <div style={{whiteSpace: "pre-wrap"}}>{value}</div> : value}
                 type={tableRenderParams.isLink ? "link" : "button"}
                 monospace={false}
               />
@@ -98,6 +99,11 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
         <Checkbox
           checked={trsp.state.tableRenderParams.isLink || undefined}
           onChange={(e): Promise<void> => trsp.updateField('isLink')(e.target.checked)}
+        />
+        <span>Нужо перенести текст?:</span>
+        <Checkbox
+          checked={trsp.state.tableRenderParams.isNeedPreWrap || undefined}
+          onChange={(e): Promise<void> => trsp.updateField('isNeedPreWrap')(e.target.checked)}
         />
       </>
     );
