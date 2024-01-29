@@ -95,12 +95,12 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
         >
           {columns.map(column => (<Select.Option key={column.id} value={column.id}>{column.nameByNameId ? column.nameByNameId.name : column.columnName}</Select.Option>))}
         </Select>
-        <span>Тип ссылка?:</span>
+        <span>Тип ссылка?</span>
         <Checkbox
           checked={trsp.state.tableRenderParams.isLink || undefined}
           onChange={(e): Promise<void> => trsp.updateField('isLink')(e.target.checked)}
         />
-        <span>Нужо перенести текст?:</span>
+        <span>Нужно перенести текст?</span>
         <Checkbox
           checked={trsp.state.tableRenderParams.isNeedPreWrap || undefined}
           onChange={(e): Promise<void> => trsp.updateField('isNeedPreWrap')(e.target.checked)}
