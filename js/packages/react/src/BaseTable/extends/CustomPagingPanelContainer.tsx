@@ -17,18 +17,20 @@ export function CustomPagingPanelContainer(props: ICustomPagingContainer): React
   const input = props.totalPages <= MAX_NUMBER_TO_SELECT_IN_MENU
     ? (
       <Select
+        key={`select-${props.currentPage}`}
         native
         defaultValue={props.currentPage}
         disableUnderline={true}
         onChange={(event): void => props.onCurrentPageChange && props.onCurrentPageChange(event.target.value as number || 0)}
       >
         {Array.from({length: props.totalPages}, (_, key) => (
-          <option value={key}>{key + 1}</option>
+          <option key={key} value={key}>{key + 1}</option>
         ))}
       </Select>
     )
     : (
       <Input
+        key={`input-${props.currentPage}`}
         defaultValue={props.currentPage + 1}
         disableUnderline
         inputProps={{
