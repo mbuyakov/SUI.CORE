@@ -1,5 +1,5 @@
 import {ColumnInfo, ColumnInfoManager, getDataByKey} from "@sui/core";
-import {Select} from "antd";
+import {Checkbox, Select} from "antd";
 import * as React from 'react';
 import {RouterLink} from '@/Link';
 import {IBaseTableColLayout} from '@/BaseTable';
@@ -16,6 +16,8 @@ import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 
 export interface ILinkPluginTRP {
   customColumnInfoId: string
+  isLink?: boolean
+  isNeedPreWrap?: boolean
 }
 
 export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
@@ -54,8 +56,8 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
             return (
               <RouterLink
                 to={link.replace(':id', id)}
-                text={value}
-                type="button"
+                text={tableRenderParams.isNeedPreWrap ? <div style={{whiteSpace: "pre-wrap"}}>{value}</div> : value}
+                type={tableRenderParams.isLink ? "link" : "button"}
                 monospace={false}
               />
             )
@@ -93,6 +95,16 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
         >
           {columns.map(column => (<Select.Option key={column.id} value={column.id}>{column.nameByNameId ? column.nameByNameId.name : column.columnName}</Select.Option>))}
         </Select>
+        <span>Тип ссылка?</span>
+        <Checkbox
+          checked={trsp.state.tableRenderParams.isLink || undefined}
+          onChange={(e): Promise<void> => trsp.updateField('isLink')(e.target.checked)}
+        />
+        <span>Нужно перенести текст?</span>
+        <Checkbox
+          checked={trsp.state.tableRenderParams.isNeedPreWrap || undefined}
+          onChange={(e): Promise<void> => trsp.updateField('isNeedPreWrap')(e.target.checked)}
+        />
       </>
     );
   }
