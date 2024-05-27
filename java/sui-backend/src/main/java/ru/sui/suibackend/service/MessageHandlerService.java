@@ -88,6 +88,7 @@ public class MessageHandlerService {
         case FILTER_CHANGE:
           val filterChangeMessage = parsedTreeToMessage(parsedPayload, FilterChangeMessage.class);
           userState.setFilters(filterChangeMessage.getFilters());
+          userState.setOffset(0L);
           break;
         case SORT_CHANGE:
           val sortChangeMessage = parsedTreeToMessage(parsedPayload, SortChangeMessage.class);
