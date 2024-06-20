@@ -10,9 +10,11 @@ export interface IBaseTableUserSettings {
   columnWidths: TableColumnWidthInfo[];
   hiddenColumnNames: string[];
   order: string[];
+  pageSize: number;
 }
 
 export interface IUserSettingsPluginProps {
+  pageSizeEnabled: boolean;
   onSettingsChange(settings: IBaseTableUserSettings): void;
 }
 
@@ -21,6 +23,7 @@ function generateUserSettings(getters: Getters): IBaseTableUserSettings {
     columnWidths: getters.fullColumnWidths,
     hiddenColumnNames: getters.hiddenColumnNames || [],
     order: getters.fullOrder,
+    pageSize: getters.pageSize
   }
 }
 
@@ -42,6 +45,10 @@ export class UserSettingsPlugin extends React.Component<IUserSettingsPluginProps
           name="hiddenColumnNames"
           computed={this.computedForWatcher("hiddenColumnNames")}
         />
+        {this.props.pageSizeEnabled && <Getter
+          name="pageSize"
+          computed={this.computedForWatcher("pageSize")}
+        />}
       </Plugin>
     );
   }

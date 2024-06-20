@@ -432,7 +432,10 @@ export class BaseTable<TSelection = defaultSelection>
                 {paginationEnabled && <PagingPanel
                   // eslint-disable-next-line react/jsx-no-bind
                   containerComponent={pagingContainerComponent}
-                  pageSizes={this.props.pageSizes || (virtual ? undefined : [10, 25, 50, 100, 0])}
+                  pageSizes={virtual
+                    ? undefined
+                    : (this.props.pageSizes || [10, 25, 50, 100, 0])
+                  }
                   messages={{
                     info: virtual ? BaseTable.virtualPageInfo : BaseTable.pageInfo,
                     rowsPerPage: 'Записей на страницу',
@@ -476,7 +479,12 @@ export class BaseTable<TSelection = defaultSelection>
                 />}
                 {this.props.columnBands && (<TableBandHeader columnBands={this.props.columnBands}/>)}
                 {this.props.toolbarButtons}
-                {userSettingsEnabled && (<UserSettingsPlugin onSettingsChange={this.props.onSettingsChange}/>)}
+                {userSettingsEnabled && (
+                  <UserSettingsPlugin
+                    onSettingsChange={this.props.onSettingsChange}
+                    pageSizeEnabled={paginationEnabled && !virtual}
+                  />)
+                }
               </Grid>}
               {this.props.loading && (
                 <div className={LOADING_SPIN_WRAPPER}>

@@ -149,6 +149,7 @@ export class BackendTable<TSelection = defaultSelection>
   public constructor(props: any) {
     super(props);
     const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
+    const virtual = defaultIfNotBoolean(this.props.virtual, true);
 
     let defaultFilter = (this.props.defaultFilter && wrapInArray(this.props.defaultFilter)) || undefined;
     let filter = (this.props.filter && wrapInArray(this.props.filter)) || undefined;
@@ -181,8 +182,8 @@ export class BackendTable<TSelection = defaultSelection>
       }
     }
 
-    const defaultCurrentPage = paginationEnabled ? pageNumber : 0;
-    const resultPageSize = paginationEnabled ? (pageSize || 10) : 1000000000;
+    const defaultCurrentPage = (paginationEnabled && !virtual) ? pageNumber : 0;
+    const resultPageSize = (paginationEnabled && !virtual) ? (pageSize || 10) : 1000000000;
 
     this.state = {
       defaultFilter,
@@ -1100,12 +1101,13 @@ export class BackendTable<TSelection = defaultSelection>
         });
       }
 
-      this.setState({
+      this.setState(prevState => ({
         cols: allColumns,
         tableInfo,
         colorSettingsRowStyler,
         warnings,
-      });
+        pageSize: prevState.pageSize != 1000000000 && userSettings.pageSize ? userSettings.pageSize : prevState.pageSize
+      }));
     }
   }
 
