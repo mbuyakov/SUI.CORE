@@ -1106,7 +1106,7 @@ export class BackendTable<TSelection = defaultSelection>
         tableInfo,
         colorSettingsRowStyler,
         warnings,
-        pageSize: prevState.pageSize != 1000000000 && userSettings.pageSize ? userSettings.pageSize : prevState.pageSize
+        pageSize: prevState.pageSize != 1000000000 && userSettings?.pageSize ? userSettings.pageSize : prevState.pageSize
       }));
     }
   }
