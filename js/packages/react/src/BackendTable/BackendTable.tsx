@@ -149,7 +149,7 @@ export class BackendTable<TSelection = defaultSelection>
   public constructor(props: any) {
     super(props);
     const paginationEnabled = defaultIfNotBoolean(this.props.paginationEnabled, true);
-    const virtual = defaultIfNotBoolean(this.props.virtual, true);
+    const virtual = defaultIfNotBoolean(this.props.virtual, false);
 
     let defaultFilter = (this.props.defaultFilter && wrapInArray(this.props.defaultFilter)) || undefined;
     let filter = (this.props.filter && wrapInArray(this.props.filter)) || undefined;
