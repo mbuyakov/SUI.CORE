@@ -18,6 +18,7 @@ subprojects {
   apply plugin: 'java'
   apply plugin: 'io.spring.dependency-management'
   apply plugin: 'io.franzbecker.gradle-lombok'
+  apply plugin: 'maven-publish'
 
   compileJava.options.encoding = 'UTF-8'
   sourceCompatibility = '1.8'
@@ -96,4 +97,15 @@ subprojects {
   }
 
   build.finalizedBy(writeNewPom)
+
+  publishing {
+    publications {
+      mavenJava(MavenPublication) {
+        groupId = 'ru.sui'
+        artifactId = project.name
+        version = project.version
+        from components.java
+      }
+    }
+  }
 }
