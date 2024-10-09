@@ -75,7 +75,7 @@ export const authLink = setContext((_, {headers}) => {
   return {
     headers: {
       ...headers,
-      ...(user ? {'user-id': user.id} : {}),
+      ...(user ? {'user-id': user.id, 'Authorization': `Bearer ${user.accessToken}`} : {}),
     },
   };
 });

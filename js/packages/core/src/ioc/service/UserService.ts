@@ -5,6 +5,7 @@ import {Nullable, sleep} from '@/other';
 import {ICoreUser} from '@/user';
 import {getSUISettings} from '@/core';
 
+import {ColumnInfoManager, NameManager, TableInfoManager} from "@/cache";
 // Don't touch import
 // noinspection ES6PreferShortImport
 import {_LocalStorageValue} from '../annotation/LocalStorageValue';
@@ -55,6 +56,12 @@ export class UserService<META = Record<string, never>> {
 
     // noinspection JSIgnoredPromiseFromCall
     this.runTokenChecker();
+    const settings = getSUISettings();
+    if (!settings.offlineMode) {
+      const timeLabel = 'MetaInfoManagers load';
+      console.time(timeLabel);
+      Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));
+    }
   }
 
   private async runTokenChecker(): Promise<void> {
