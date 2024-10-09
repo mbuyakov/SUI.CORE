@@ -1,4 +1,4 @@
-FROM nexus.suilib.ru/node:14.13.1-alpine3.12
+FROM nexus.suilib.ru/node:20
 COPY . .
 RUN yarn install --frozen-lockfile
 ENV POSTGRES_PORT 5432
