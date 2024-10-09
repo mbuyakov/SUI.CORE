@@ -50,6 +50,32 @@ app.use((req, res, next) => {
     }
     next();
 });
+app.use(async (req, res, next) => {
+    // console.log(req.body);
+    try {
+        const authToken = req.headers.authorization?.replace("Bearer ", "");
+        if (!authToken) {
+            throw new Error("No token in request");
+        }
+        const introspectResult = await fetch(process.env.TOKEN_CHECK_URL, {
+            method: "POST",
+            body: authToken
+        });
+        const introspectResultBody = await introspectResult.text();
+        if (introspectResult.status != 200) {
+            throw new Error("Introspect result not 200");
+        }
+        if (introspectResultBody != "true") {
+            throw new Error("Introspect result not true");
+        }
+    } catch (e: any) {
+        console.error("Token check failed", e);
+        res.send({"error": "Token check failed: " + e});
+        res.end();
+        return;
+    }
+    next();
+});
 app.use(pgMiddleware);
 
 const server = app.listen(process.env.PORT, () => {
