@@ -33,11 +33,6 @@ export function initSUI(settings: _IInitSUISettings): void {
   Container.bindName('sui').to(settings);
 
   parseRoutes(settings.routes);
-  if (!settings.offlineMode) {
-    const timeLabel = 'MetaInfoManagers load';
-    console.time(timeLabel);
-    Promise.all([TableInfoManager.loadAll(), ColumnInfoManager.loadAll(), NameManager.loadAll()]).then(() => console.timeEnd(timeLabel));
-  }
 
   window.SUI_CORE_PTC_CACHE = new ColorHeatMap(settings.percentToColorSettings);
 
