@@ -244,7 +244,7 @@ public class MetaSchemaRefresher {
     }
 
     private void saveMetaState(MetaState metaState) {
-        val BATCH_SIZE = 1000;
+        val BATCH_SIZE = 300;
         val tableInfoMetaInfo = metaState.getTableInfoMetaInfo();
         val tableInfoByInformationSchemaTable = tableInfoMetaInfo.getMetaElementMap();
         val columnInfoMetaInfo = metaState.getColumnInfoMetaInfo();
