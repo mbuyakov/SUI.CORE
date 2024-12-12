@@ -17,10 +17,22 @@ import ru.sui.suientity.entity.suimeta.TableInfo;
 import ru.sui.suientity.repository.suimeta.ColumnInfoReferenceRepository;
 import ru.sui.suientity.repository.suimeta.ColumnInfoRepository;
 import ru.sui.suientity.repository.suimeta.TableInfoRepository;
-import ru.sui.suimetaschemaservice.model.*;
+import ru.sui.suimetaschemaservice.model.InformationSchemaColumn;
+import ru.sui.suimetaschemaservice.model.InformationSchemaTable;
+import ru.sui.suimetaschemaservice.model.MetaInfo;
+import ru.sui.suimetaschemaservice.model.MetaState;
+import ru.sui.suimetaschemaservice.model.PossibleReference;
+import ru.sui.suimetaschemaservice.utils.CustomBatchIterator;
 import ru.sui.suimetaschemaservice.utils.MetaUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -232,6 +244,7 @@ public class MetaSchemaRefresher {
     }
 
     private void saveMetaState(MetaState metaState) {
+        val BATCH_SIZE = 1000;
         val tableInfoMetaInfo = metaState.getTableInfoMetaInfo();
         val tableInfoByInformationSchemaTable = tableInfoMetaInfo.getMetaElementMap();
         val columnInfoMetaInfo = metaState.getColumnInfoMetaInfo();
@@ -281,13 +294,16 @@ public class MetaSchemaRefresher {
                 (columnInfo, columnInfoReferences) -> columnInfo.getReferences().addAll(columnInfoReferences));
 
         if (!columnInfoReferenceMetaInfo.getNonexistentElements().isEmpty()) {
-            columnInfoReferenceRepository.deleteInBatch(columnInfoReferenceMetaInfo.getNonexistentElements());
+            CustomBatchIterator.batchStreamOf(columnInfoReferenceMetaInfo.getNonexistentElements().stream(), BATCH_SIZE)
+                    .forEach(it -> columnInfoReferenceRepository.deleteInBatch(it));
         }
         if (!columnInfoMetaInfo.getNonexistentElements().isEmpty()) {
-            columnInfoRepository.deleteInBatch(columnInfoMetaInfo.getNonexistentElements());
+            CustomBatchIterator.batchStreamOf(columnInfoMetaInfo.getNonexistentElements().stream(), BATCH_SIZE)
+                    .forEach(it -> columnInfoRepository.deleteInBatch(it));
         }
         if (!tableInfoMetaInfo.getNonexistentElements().isEmpty()) {
-            tableInfoRepository.deleteInBatch(tableInfoMetaInfo.getNonexistentElements());
+            CustomBatchIterator.batchStreamOf(tableInfoMetaInfo.getNonexistentElements().stream(), BATCH_SIZE)
+                    .forEach(it -> tableInfoRepository.deleteInBatch(it));
         }
 
         tableInfoRepository.saveAll(tableInfoMetaInfo.getMetaElementMap().values());
