@@ -10,6 +10,7 @@ import {IBaseCardTabLayout} from './BaseCardTab';
 
 export interface IBaseCardTabWithRows<T, ITEM> {
   key?: string;
+  disabled?: boolean;
   rows: OneOrArrayWithNulls<IBaseCardRowLayout<T, ITEM>>;
   title: string;
 }
@@ -22,6 +23,7 @@ export const BaseCardTabWithRows: <T, ITEM>(props: IBaseCardTabWithRows<T, ITEM>
 }) => JSX.Element = props => (
   <Tabs.TabPane
     key={props.key ?? props.tabIndex.toString()}
+    disabled={props.disabled}
     tab={<span>{props.title}</span>}
     forceRender={props.forceRenderTabs}
   >
