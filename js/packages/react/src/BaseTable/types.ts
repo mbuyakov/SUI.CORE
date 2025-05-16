@@ -117,6 +117,7 @@ export interface IRemoteBaseTableFunctions {
 
 export interface IBaseTableProps<TSelection = any> {
   allowExport?: boolean;
+  alwaysIncludeInitialSelection?: boolean;
   borderless?: boolean;
   cardType?: CardType;
   className?: string;
