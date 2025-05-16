@@ -117,7 +117,7 @@ export interface IRemoteBaseTableFunctions {
 
 export interface IBaseTableProps<TSelection = any> {
   allowExport?: boolean;
-  alwaysIncludeInitialSelection?: boolean;
+  alwaysIncludeAdditionalSelection?: boolean;
   borderless?: boolean;
   cardType?: CardType;
   className?: string;
@@ -141,6 +141,7 @@ export interface IBaseTableProps<TSelection = any> {
   hideSubtotalRow?: boolean;
   highlightRow?: boolean;
   initialSelection?: TSelection[];
+  additionalSelection?: TSelection[];
   loading?: boolean;
   minColumnWidth?: number;
   noColsContent?: React.ReactNode;

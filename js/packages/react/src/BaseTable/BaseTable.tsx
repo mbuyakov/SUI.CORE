@@ -576,8 +576,8 @@ export class BaseTable<TSelection = defaultSelection>
   private onSelectionChange(selection: TSelection[]): void {
     const newSelection = (this.props.singleSelection || this.props.highlightRow)
       ? selection.filter(element => !this.state.selection.includes(element))
-      : defaultIfNotBoolean(this.props.alwaysIncludeInitialSelection, false)
-        ? [...new Set([...selection, ...this.props.initialSelection])]
+      : defaultIfNotBoolean(this.props.alwaysIncludeAdditionalSelection, false)
+        ? [...new Set([...selection, ...this.props.additionalSelection || []])]
         : selection;
 
     this.setState(
