@@ -22,7 +22,7 @@ export interface ITransitionBarProps<TStatus extends ITransitionStatus<TID>, TID
   transitionGraphModalProps?: Omit<ModalFuncProps, "content">;
   transitions: Array<ITransition<TID>>;
 
-  onTransit(toStatus: TStatus, resolution?: IResolution): Promise<void>;
+  onTransit(toStatus: TStatus, resolution?: IResolution, transition?: ITransition<TID>): Promise<void>;
 
   statusNameExtractor(status: TStatus): string;
 }
@@ -218,7 +218,7 @@ export class TransitionBar<TStatus extends { id: TID }, TID = string>
         ? transition.resolutions.find(element => element.id === resolutionId)
         : undefined;
 
-      return this.props.onTransit(toStatus, resolution)
+      return this.props.onTransit(toStatus, resolution, transition)
         .finally(() => this.setState({loading: false}));
     }
   }
