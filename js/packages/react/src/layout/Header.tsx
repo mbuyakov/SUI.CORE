@@ -24,9 +24,11 @@ const useStyles = makeStyles<Theme, {
 
 export const Header: React.FC<{
   isMobile: boolean;
+  hideDrawerVisibleButton?: boolean;
 }> = ({
         isMobile,
-        children
+        children,
+        hideDrawerVisibleButton = false,
       }) => {
 
   const {drawerWidth} = useContext(BasicLayoutContext);
@@ -39,11 +41,11 @@ export const Header: React.FC<{
         className={styles.appBar}
       >
         <Toolbar>
-          <DrawerVisibleButton
+          {!hideDrawerVisibleButton && <DrawerVisibleButton
             edge="start"
             disableRotate={isMobile}
             icon={isMobile && <MenuIcon/>}
-          />
+          />}
           {children}
         </Toolbar>
       </AppBar>

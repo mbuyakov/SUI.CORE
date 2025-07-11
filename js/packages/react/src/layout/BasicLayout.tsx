@@ -70,6 +70,7 @@ export const BasicLayout: React.FC<{
   showAdditionalFooterButtons?: boolean;
   location: Location;
   isMobile?: boolean;
+  hideDrawerVisibleButton?: boolean;
 }> = ({
         children,
         title,
@@ -80,6 +81,7 @@ export const BasicLayout: React.FC<{
         showAdditionalFooterButtons,
         location,
         isMobile: isMobileProps,
+        hideDrawerVisibleButton,
       }) => {
 
   // max-device-width for Chrome emulator, max-width for usual page
@@ -106,7 +108,7 @@ export const BasicLayout: React.FC<{
       <CssBaseline/>
       {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
       <BasicLayoutContext.Provider value={{drawerOpen: drawerState, setDrawerState, openDrawerWidth, drawerWidth, routes}}>
-        <Header isMobile={isMobile}>
+        <Header isMobile={isMobile} hideDrawerVisibleButton={hideDrawerVisibleButton}>
           {header}
         </Header>
         <ThemeProvider theme={drawerMaterialTheme}>
