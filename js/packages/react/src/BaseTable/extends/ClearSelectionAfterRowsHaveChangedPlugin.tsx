@@ -27,12 +27,13 @@ export class ClearSelectionAfterRowsHaveChangedPlugin extends React.Component<IC
     return (getters): any => {
       const ids = getters.rows.map(it => it?.id).filter(Boolean);
 
-      if (!this.lastSavedIds?.length) {
-        this.lastSavedIds = ids;
-      } else if (this.props.selection?.length && (this.lastSavedIds?.length != ids?.length || !this.lastSavedIds.every(id => ids.includes(id)))) {
+      if (this.props.selection?.length
+        && (this.lastSavedIds?.length != ids?.length || !this.lastSavedIds.every(id => ids.includes(id)))
+      ) {
         this.props.clearSelection();
-        this.lastSavedIds = ids;
       }
+
+      this.lastSavedIds = ids;
 
       return getters[property];
     }
