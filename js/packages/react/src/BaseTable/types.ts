@@ -163,6 +163,7 @@ export interface IBaseTableProps<TSelection = any> {
   virtual?: boolean;
   visibilityEnabled?: boolean;
   warnings?: Array<JSX.Element | string>;
+  clearSelectionAfterChange?: boolean;
 
   beforeExport?(): Promise<boolean>; // TODO: Костыль, удалить при переводе экспорта на бек
   cellStyler?(row: any, value: any, column: IBaseTableColLayout): React.CSSProperties;

@@ -13,7 +13,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import {SuiThemeContext} from '@/themes';
 import {BASE_TABLE, BASE_TABLE_NO_PAGINATION, HIDE_BUTTONS, LOADING_SPIN_WRAPPER} from '@/styles';
-import {ColumnChooserContainer, CustomPagingPanelContainer, CustomToggleCell, DoubleScrollbar, EmptyMessageComponent, ExportPlugin, ExtendedIntegratedSelection, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, UserSettingsPlugin, UserSettingsSupportPlugin, WarningPlugin} from "@/BaseTable/extends";
+import {ColumnChooserContainer, CustomPagingPanelContainer, CustomToggleCell, DoubleScrollbar, EmptyMessageComponent, ExportPlugin, ExtendedIntegratedSelection, GroupSummaryRow, TableNoDataCell, TableNoDataCellSmall, UserSettingsPlugin, UserSettingsSupportPlugin, WarningPlugin, ClearSelectionAfterRowsHaveChangedPlugin} from "@/BaseTable/extends";
 
 import {BooleanColumnFilter, CustomSelectFilter, DateColumnFilter, DatetimeColumnFilter, NumberIntervalColumnFilter, StringColumnFilter, SnilsColumnFilter, OmsColumnFilter, InnColumnFilter, PhoneColumnFilter} from './filters';
 import {defaultSelection, ISelectionTable} from './ISelectionTable';
@@ -126,8 +126,14 @@ export class BaseTable<TSelection = defaultSelection>
   }
 
   // eslint-disable-next-line react/no-unused-class-component-methods
+  @autobind
   public clearSelection(): void {
-    return this.setState({selection: []});
+    return this.setState({selection: []},
+      () => {
+        if (this.props.onSelectionChange && this.props.clearSelectionAfterChange) {
+          this.props.onSelectionChange([]);
+        }
+      });
   }
 
   // eslint-disable-next-line react/no-unused-class-component-methods
@@ -394,6 +400,7 @@ export class BaseTable<TSelection = defaultSelection>
                     : <IntegratedPaging/>
                 )}
                 {(selectionEnabled || highlightEnabled) && (<ExtendedIntegratedSelection selectionFilter={this.props.selectionFilter}/>)}
+                {this.props.clearSelectionAfterChange && <ClearSelectionAfterRowsHaveChangedPlugin selection={this.state.selection} clearSelection={this.clearSelection}/>}
                 <DragDropProvider/>
                 {virtual
                   ? (

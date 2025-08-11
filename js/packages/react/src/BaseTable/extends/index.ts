@@ -11,3 +11,4 @@ export * from "./ToolbarBase";
 export * from "./UserSettingsPlugin";
 export * from "./UserSettingsSupportPlugin";
 export * from "./WarningPlugin";
+export * from "./ClearSelectionAfterRowsHaveChangedPlugin";
