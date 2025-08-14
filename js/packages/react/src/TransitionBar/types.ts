@@ -1,5 +1,6 @@
 import {ButtonProps, DropDownProps, MenuItemProps, MenuProps, PopconfirmProps, TooltipProps} from "antd";
 import React from 'react';
+import {IObjectWithIndex} from "@sui/core";
 
 export type TransitionButtonProps = Omit<ButtonProps, "children" | "disabled" | "onClick">;
 
@@ -20,6 +21,7 @@ export interface IResolution extends IButtonBase {
 }
 
 export interface ITransition<TID = string> extends IButtonBase {
+  __ACTION: IObjectWithIndex;
   buttonProps?: TransitionButtonProps;
   dropDownProps?: Omit<DropDownProps, "overlay">; // Only if has resolutions
   fromId: TID;
