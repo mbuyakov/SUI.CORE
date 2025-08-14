@@ -1,5 +1,5 @@
 import {ColumnInfo, ColumnInfoManager, getDataByKey} from "@sui/core";
-import {Checkbox, Select} from "antd";
+import {Checkbox, Select, Input} from "antd";
 import * as React from 'react';
 import {RouterLink} from '@/Link';
 import {IBaseTableColLayout} from '@/BaseTable';
@@ -16,6 +16,7 @@ import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 
 export interface ILinkPluginTRP {
   customColumnInfoId: string
+  tab?: string
   isLink?: boolean
   isNeedPreWrap?: boolean
 }
@@ -55,7 +56,7 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
           if (id || id === 0) {
             return (
               <RouterLink
-                to={link.replace(':id', id)}
+                to={link.replace(':id', id).replace(/:tab\??/, tableRenderParams.tab)}
                 text={tableRenderParams.isNeedPreWrap ? <div style={{whiteSpace: "pre-wrap"}}>{value}</div> : value}
                 type={tableRenderParams.isLink ? "link" : "button"}
                 monospace={false}
@@ -95,6 +96,11 @@ export class LinkPlugin extends TableRenderParamsPlugin<ILinkPluginTRP> {
         >
           {columns.map(column => (<Select.Option key={column.id} value={column.id}>{column.nameByNameId ? column.nameByNameId.name : column.columnName}</Select.Option>))}
         </Select>
+        <span>Tab:</span>
+          <Input
+            value={trsp.state.tableRenderParams.tab || undefined}
+            onChange={(e): Promise<void> => trsp.updateField('tab')(e.target.value)}
+          />
         <span>Тип ссылка?</span>
         <Checkbox
           checked={trsp.state.tableRenderParams.isLink || undefined}
