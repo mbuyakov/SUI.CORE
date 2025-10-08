@@ -114,7 +114,7 @@ export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayou
     data = NO_DATA_TEXT;
   }
 
-  const title = item.title && `${item.title as string}: `;
+  const title = item.title;
 
   const titleStyle = {
     verticalAlign: item.titleVerticalAlign,
@@ -133,7 +133,7 @@ export function renderIBaseCardItem<T>(sourceItem: any, item: IBaseCardItemLayou
 
   data = (
     <>
-      {title && <td style={titleStyle}>{title}</td>}
+      {title && <td style={titleStyle}>{title}{typeof item.title === "string" ? ": " : null}</td>}
       <td colSpan={(title ? 1 : 2) + ((colspan - 1) * 2)} style={dataStyle}>{data}</td>
     </>
   );
