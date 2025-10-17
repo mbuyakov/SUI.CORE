@@ -21,6 +21,7 @@ import {TableRenderParamsPlugin} from './TableRenderParamsPlugin';
 export interface IMultipleLinkPluginParams {
   linkTableName: string
   limitCount: boolean
+  tab?: string
 }
 
 export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPluginParams> {
@@ -47,7 +48,7 @@ export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPlu
           {!!linkTemplate ? links.map(link => (
               <RouterLink
                 key={link.id}
-                to={linkTemplate.replace(':id', link.id)}
+                to={linkTemplate.replace(':id', link.id).replace(/:tab\??/, tableRenderParams.tab)}
                 text={link.name}
                 type="button"
                 monospace={false}
@@ -82,6 +83,11 @@ export class MultipleLinkPlugin extends TableRenderParamsPlugin<IMultipleLinkPlu
         <Checkbox
           checked={trsp.state.tableRenderParams.limitCount || undefined}
           onChange={(e): Promise<void> => trsp.updateField('limitCount')(e.target.checked)}
+        />
+        <span>Tab:</span>
+        <Input
+          value={trsp.state.tableRenderParams.tab || undefined}
+          onChange={(e): Promise<void> => trsp.updateField('tab')(e.target.value)}
         />
       </>
     );
