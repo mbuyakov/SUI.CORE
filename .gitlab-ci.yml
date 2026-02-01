@@ -1,0 +1,33 @@
+variables:
+  NPM_REGISTRY_PUBLIC: "https://nexus.suilib.ru/repository/npm-public/" # Worldwide "https://registry.yarnpkg.com/"
+  NPM_REGISTRY_SUI_REPO: "https://nexus.suilib.ru/repository/npm-sui/"
+  NPM_REGISTRY_USER: "" # Set in variables
+  NPM_REGISTRY_PASSWORD: "" # Set in variables
+
+  BASEIMAGEREGISTRY: "nexus.suilib.ru/" # Worldwide ""
+
+stages:
+  - build
+
+js:
+  image:
+    name: ${BASEIMAGEREGISTRY}library/node:16-alpine
+    entrypoint: [""]
+  stage: build
+  tags:
+    - sui-docker
+  before_script:
+    - echo "@sui:registry = ${NPM_REGISTRY_SUI_REPO}" > .npmrc
+    - |
+      NPM_REGISTRY="${NPM_REGISTRY_SUI_REPO}" \
+      NPM_SCOPE="@sui/" \
+      NPM_USER="${NPM_REGISTRY_USER}" \
+      NPM_EMAIL="gitlab@ci.local" \
+      NPM_PASS="${NPM_REGISTRY_PASSWORD}" \
+      npx npm-cli-adduser
+  script:
+    - cd js
+    - yarn install --frozen-lockfile
+    - yarn bootstrap
+    - yarn ci
+    - yarn lcm publish 9.0.0-${CI_COMMIT_SHORT_SHA}
