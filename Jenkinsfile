@@ -5,7 +5,6 @@ pipeline {
   }
 
   parameters {
-    booleanParam(defaultValue: true, description: 'Build Docker', name: 'build_docker')
     booleanParam(defaultValue: true, description: 'Build JVM', name: 'build_jvm')
     booleanParam(defaultValue: true, description: 'Build JS', name: 'build_js')
     booleanParam(defaultValue: false, description: 'Clean workspace', name: 'clean_ws')
@@ -20,43 +19,6 @@ pipeline {
   stages {
     stage("Parralel") {
       parallel {
-        stage("Docker") {
-          when {
-            environment name: 'build_docker', value: 'true'
-          }
-          stages {
-            stage("[Docker] Build") {
-              steps {
-                sh """
-                  cd docker
-                  docker build -t nexus.suilib.ru:10401/repository/docker-sui/sui-baseimage:${BUILD_NUMBER}${SUFFIX} baseimage
-                  docker build -t nexus.suilib.ru:10401/repository/docker-sui/sui-docker:${BUILD_NUMBER}${SUFFIX} docker
-                  docker build -t nexus.suilib.ru:10401/repository/docker-sui/sui-postgraphile:${BUILD_NUMBER}${SUFFIX} postgraphile
-                """
-              }
-            }
-            stage("[Docker] Publish") {
-              environment {
-                NEXUS = credentials('suilib-nexus')
-              }
-              steps {
-                sh """
-                  docker login nexus.suilib.ru:10401/repository/docker-sui/ --username ${NEXUS_USR} --password ${NEXUS_PSW}
-                  docker push nexus.suilib.ru:10401/repository/docker-sui/sui-baseimage:${BUILD_NUMBER}${SUFFIX}
-                  docker push nexus.suilib.ru:10401/repository/docker-sui/sui-docker:${BUILD_NUMBER}${SUFFIX}
-                  docker push nexus.suilib.ru:10401/repository/docker-sui/sui-postgraphile:${BUILD_NUMBER}${SUFFIX}
-                """
-              }
-              post {
-                always {
-                  sh """
-                    docker logout nexus.suilib.ru:10401/repository/docker-sui/
-                  """
-                }
-              }
-            }
-          }
-        }
         stage("JVM") {
           when {
             environment name: 'build_jvm', value: 'true'
