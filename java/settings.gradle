@@ -1,3 +1,11 @@
+pluginManagement {
+    repositories {
+        maven {
+            url = System.env.MAVEN_GRADLE_PLUGINS_REPOSITORY ?: "https://plugins.gradle.org/m2/"
+        }
+    }
+}
+
 include(':sui-all')
 include(':sui-audit:common')
 include(':sui-audit:log-mover')

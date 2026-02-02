@@ -5,12 +5,33 @@ plugins {
   id 'org.jetbrains.kotlin.plugin.spring' version '1.3.41' apply false
 }
 
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'idea'
 
 allprojects {
   group = 'ru.sui'
-  version = "${System.env.BUILD_NUMBER}${System.env.SUFFIX}"
+  version = System.env.BUILD_VERSION ?: ""
+
+  def mavenCentralUrl = System.env.MVN_REPOSITORY_CENTRAL ?: "https://repo1.maven.org/maven2/"
+  def mavenClouderaUrl = System.env.MVN_REPOSITORY_CDH ?: "https://repository.cloudera.com/artifactory/cloudera-repos/"
+  def mavenGradlePluginsUrl = System.env.MVN_REPOSITORY_GRADLE_PLUGINS ?: "https://plugins.gradle.org/m2/"
+
+  repositories {
+    maven {
+      url mavenCentralUrl
+    }
+    maven {
+      url mavenClouderaUrl
+    }
+  }
+
+  buildscript {
+    repositories {
+      maven {
+        url mavenGradlePluginsUrl
+      }
+    }
+  }
 }
 
 subprojects {
@@ -52,22 +73,7 @@ subprojects {
     parquetHadoopVersion = '1.10.1'
   }
 
-  repositories {
-    mavenCentral()
-    jcenter()
-    maven {
-      url 'https://repository.cloudera.com/artifactory/cloudera-repos/'
-    }
-    maven {
-      url = 'https://repo.spring.io/milestone/'
-    }
-  }
-
   buildscript {
-    repositories {
-      mavenCentral()
-      jcenter()
-    }
     dependencies {
       classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootGradlePluginVersion}")
       classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
@@ -101,10 +107,17 @@ subprojects {
   publishing {
     publications {
       mavenJava(MavenPublication) {
-        groupId = 'ru.sui'
-        artifactId = project.name
-        version = project.version
         from components.java
+      }
+    }
+    repositories {
+      maven {
+        url System.env.MVN_REPOSITORY_SUI
+        allowInsecureProtocol = true
+        credentials {
+          username = System.env.MVN_REPOSITORY_USER
+          password = System.env.MVN_REPOSITORY_PASSWORD
+        }
       }
     }
   }

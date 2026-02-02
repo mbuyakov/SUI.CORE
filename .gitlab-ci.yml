@@ -4,10 +4,31 @@ variables:
   NPM_REGISTRY_USER: "" # Set in variables
   NPM_REGISTRY_PASSWORD: "" # Set in variables
 
+  MVN_REPOSITORY_CENTRAL: "https://nexus.suilib.ru/repository/mvn-central-proxy/" # Worldwide "https://repo1.maven.org/maven2/"
+  MVN_REPOSITORY_CDH: "https://nexus.suilib.ru/repository/mvn-cdh-proxy/" # Worldwide "https://repository.cloudera.com/artifactory/cloudera-repos/"
+  MVN_REPOSITORY_GRADLE_PLUGINS: "https://nexus.suilib.ru/repository/mvn-gradle-plugins-proxy/" # Worldwide "https://plugins.gradle.org/m2/"
+  MVN_REPOSITORY_SUI: "https://nexus.suilib.ru/repository/mvn-sui/"
+  MVN_REPOSITORY_USER: "" # Set in variables
+  MVN_REPOSITORY_PASSWORD: "" # Set in variables
+
   BASEIMAGEREGISTRY: "nexus.suilib.ru/" # Worldwide ""
+
+  BUILD_VERSION: "9.0.0-${CI_COMMIT_SHORT_SHA}"
 
 stages:
   - build
+
+java:
+  image:
+    name: ${BASEIMAGEREGISTRY}library/gradle:6.7-jdk8
+    entrypoint: [""]
+  stage: build
+  tags:
+    - sui-docker
+  script:
+    - cd java
+    - gradle build --no-daemon
+    - gradle publish --no-daemon
 
 js:
   image:
@@ -30,4 +51,4 @@ js:
     - yarn install --frozen-lockfile
     - yarn bootstrap
     - yarn ci
-    - yarn lcm publish 9.0.0-${CI_COMMIT_SHORT_SHA}
+    - yarn lcm publish ${BUILD_VERSION}
